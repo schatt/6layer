@@ -1,0 +1,182 @@
+name: SixLayerFramework
+options:
+  bundleIdPrefix: com.schatt
+  organization: Schatt.com
+  classPrefix: SixLayer
+  deploymentTarget:
+    iOS: 18.0
+    macOS: 15.0
+  xcodeVersion: "16.4"
+  xcodeProjectFormat: 16.4
+  createIntermediateGroups: true
+  indentWidth: 2
+  tabWidth: 2
+  usesTabs: false
+configs:
+  Debug: debug
+  Release: release
+  TestFlight: release
+
+packages:
+  ZIPFoundation:
+    url: https://github.com/weichsel/ZIPFoundation.git
+    from: 0.9.19
+  ViewInspector:
+    url: https://github.com/nalexn/ViewInspector.git
+    from: 0.10.2
+
+settings:
+  base:
+    SWIFT_VERSION: 6.1
+    MARKETING_VERSION: 1.0.0
+    DEVELOPMENT_TEAM: Y53G7YPJSZ
+    ENABLE_PREVIEWS: YES
+    CODE_SIGN_STYLE: Automatic
+    FRAMEWORK_SEARCH_PATHS: ["$(inherited)", "$(SDKROOT)/System/Library/Frameworks"]
+    CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION: YES
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    ASSETCATALOG_GENERATE_ASSET_SYMBOL_EXTENSIONS: YES
+    ASSETCATALOG_GENERATE_STRING_CATALOG_SYMBOLS: YES
+    MOMC_NO_WARNINGS: YES
+    MOMC_OUTPUT_SUFFIX: ""
+    MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS: YES
+    MOMC_NO_DELETE_RULE_WARNINGS: YES
+    MOMC_OUTPUT_DIR: "$(DERIVED_FILE_DIR)/CoreDataGenerated"
+    SWIFT_INCLUDE_PATHS: ["$(DERIVED_FILE_DIR)/CoreDataGenerated"]
+    SWIFT_ACTIVE_COMPILATION_CONDITIONS: ["$(inherited)", "DEBUG"]
+    SWIFT_OBJC_INTERFACE_HEADER_NAME: "$(PRODUCT_NAME)-Swift.h"
+    SWIFT_OBJC_BRIDGING_HEADER: ""
+    SWIFT_OBJC_INTERFACE_HEADER_DIR: "$(DERIVED_FILE_DIR)/CoreDataGenerated"
+    ENABLE_TESTABILITY: YES
+    ENABLE_TESTING_SEARCH_PATHS: YES
+    GCC_PREPROCESSOR_DEFINITIONS: ["$(inherited)", "DEBUG=1"]
+  configs:
+    Debug:
+      SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+      DEAD_CODE_STRIPPING: YES
+      OTHER_LDFLAGS: 
+        - "-Xlinker"
+        - "-interposable"
+    TestFlight:
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+      DEAD_CODE_STRIPPING: YES
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
+      VALIDATE_PRODUCT: YES
+    Release:
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+      VALIDATE_PRODUCT: YES
+      DEAD_CODE_STRIPPING: YES
+
+targets:
+  "SixLayerShared iOS":
+    type: framework
+    platform: iOS
+    deploymentTarget: 18.0
+    sources:
+      - path: src/Shared/Models
+      - path: src/Shared/Services
+      - path: src/Shared/Utils
+      - path: src/Shared/Components
+      - path: src/Shared/Resources
+      - path: src/Shared/Views
+      - path: src/Shared/Views/Extensions
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.shared.ios
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_TESTABILITY: YES
+        SUPPORTS_MACCATALYST: NO
+        DEFINES_MODULE: YES
+        PRODUCT_MODULE_NAME: SixLayerShared_iOS
+        EXCLUDED_SOURCE_FILE_NAMES: ["FunctionIndex*.md", "README*.md"]
+      configs:
+        TestFlight:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
+
+  "SixLayerShared macOS":
+    type: framework
+    platform: macOS
+    deploymentTarget: 15.0
+    sources:
+      - path: src/Shared/Models
+      - path: src/Shared/Services
+      - path: src/Shared/Utils
+      - path: src/Shared/Components
+      - path: src/Shared/Resources
+      - path: src/Shared/Views
+      - path: src/Shared/Views/Extensions
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.shared.macos
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_TESTABILITY: YES
+        DEFINES_MODULE: YES
+        PRODUCT_MODULE_NAME: SixLayerShared_macOS
+        EXCLUDED_SOURCE_FILE_NAMES: ["FunctionIndex*.md", "README*.md"]
+      configs:
+        TestFlight:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
+
+  "SixLayerIOS":
+    type: framework
+    platform: iOS
+    deploymentTarget: 18.0
+    sources:
+      - path: src/iOS
+    dependencies:
+      - target: "SixLayerShared iOS"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.ios
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_TESTABILITY: YES
+        SUPPORTS_MACCATALYST: NO
+        DEFINES_MODULE: YES
+        PRODUCT_MODULE_NAME: SixLayerIOS
+      configs:
+        TestFlight:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
+
+  "SixLayerMacOS":
+    type: framework
+    platform: macOS
+    deploymentTarget: 15.0
+    sources:
+      - path: src/macOS
+    dependencies:
+      - target: "SixLayerShared macOS"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.macos
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_TESTABILITY: YES
+        DEFINES_MODULE: YES
+        PRODUCT_MODULE_NAME: SixLayerMacOS
+      configs:
+        TestFlight:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
+
+  "SixLayerFrameworkTests":
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: 18.0
+    sources:
+      - path: Tests
+    dependencies:
+      - target: "SixLayerShared iOS"
+      - target: "SixLayerIOS"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.tests
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SixLayerFramework.app/$(BUNDLE_EXECUTABLE_FOLDER_NAME)/SixLayerFramework"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        CODE_SIGN_STYLE: Automatic
