@@ -1,31 +1,26 @@
-//
-//  iOSSpecificHelpers.swift
-//  SixLayerFramework
-//
-//  iOS-specific UI helper functions
-//  Optimized for touch interfaces and iOS Human Interface Guidelines
-//
-
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
 
 // MARK: - iOS-Specific UI Helpers
 
-/// iOS-optimized card component with touch-friendly design
-public struct iOSOptimizedCard: View {
+/// iOS-optimized card with touch-friendly design
+public struct iOSOptimizedCard<Content: View>: View {
     private let title: String
     private let subtitle: String?
-    private let content: AnyView
+    private let content: Content
     private let action: (() -> Void)?
     
     public init(
         title: String,
         subtitle: String? = nil,
-        @ViewBuilder content: () -> some View,
+        @ViewBuilder content: () -> Content,
         action: (() -> Void)? = nil
     ) {
         self.title = title
         self.subtitle = subtitle
-        self.content = AnyView(content())
+        self.content = content()
         self.action = action
     }
     
@@ -34,7 +29,7 @@ public struct iOSOptimizedCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(title)
                     .font(.title2)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
                     .dynamicTypeSize(.large...(.accessibility3))
                 
                 if let subtitle = subtitle {
@@ -46,19 +41,10 @@ public struct iOSOptimizedCard: View {
             }
             
             content
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            if let action = action {
-                Button("Action") {
-                    action()
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large) // Touch-friendly size
                 .frame(maxWidth: .infinity)
-            }
         }
         .padding(20) // iOS standard padding
-        .background(Color(.systemBackground))
+        .background(Color.platformBackground)
         .cornerRadius(16) // iOS standard corner radius
         .shadow(radius: 3, y: 2)
         .contentShape(Rectangle()) // Better touch handling
@@ -90,7 +76,7 @@ public struct iOSTouchListItem<Content: View>: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
-        .background(Color(.systemBackground))
+        .background(Color.platformBackground)
         .contentShape(Rectangle())
         .onTapGesture {
             action?()
@@ -103,8 +89,11 @@ public struct iOSTouchFormField: View {
     private let label: String
     private let placeholder: String
     @Binding private var text: String
+    #if os(iOS)
     private let keyboardType: UIKeyboardType
+    #endif
     
+    #if os(iOS)
     public init(
         label: String,
         placeholder: String,
@@ -116,6 +105,17 @@ public struct iOSTouchFormField: View {
         self._text = text
         self.keyboardType = keyboardType
     }
+    #else
+    public init(
+        label: String,
+        placeholder: String,
+        text: Binding<String>
+    ) {
+        self.label = label
+        self.placeholder = placeholder
+        self._text = text
+    }
+    #endif
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -126,7 +126,9 @@ public struct iOSTouchFormField: View {
             
             TextField(placeholder, text: $text)
                 .textFieldStyle(.roundedBorder)
+                #if os(iOS)
                 .keyboardType(keyboardType)
+                #endif
                 .frame(height: 44) // iOS minimum touch target
                 .font(.body)
                 .dynamicTypeSize(.large...(.accessibility3))
@@ -142,7 +144,7 @@ public extension View {
         self
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
-            .background(Color(.systemBackground))
+            .background(Color.platformBackground)
             .cornerRadius(12)
             .shadow(radius: 2, y: 1)
     }

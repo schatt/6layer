@@ -1340,11 +1340,19 @@ extension View {
     @ViewBuilder
     func platformVehicleImage(imageData: Data?) -> some View {
         if let imageData = imageData, let platformImage = PlatformImage(data: imageData) {
-            Image(platformImage: platformImage)
+            #if os(iOS)
+            Image(uiImage: platformImage.uiImage)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 24, height: 24)
                 .clipShape(Circle())
+            #elseif os(macOS)
+            Image(nsImage: platformImage.nsImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 24, height: 24)
+                .clipShape(Circle())
+            #endif
         } else {
             Image(systemName: "car.fill")
                 .foregroundColor(.blue)
@@ -1824,26 +1832,34 @@ extension View {
             DocumentPickerViewController(allowedContentTypes: allowedContentTypes, onFileSelected: onFileSelected)
         }
         #else
-        self.onChange(of: isPresented.wrappedValue) { _, newValue in
-            if newValue {
-                let panel = NSOpenPanel()
-                panel.allowsMultipleSelection = false
-                panel.canChooseDirectories = false
-                panel.canChooseFiles = true
-                panel.allowedContentTypes = allowedContentTypes
+        if #available(macOS 14.0, *) {
+            self.onChange(of: isPresented.wrappedValue) { _, newValue in
+                if newValue {
+                    let panel = NSOpenPanel()
+                    panel.allowsMultipleSelection = false
+                    panel.canChooseDirectories = false
+                    panel.canChooseFiles = true
+                    panel.allowedContentTypes = allowedContentTypes
 
-                if panel.runModal() == .OK {
-                    if let url = panel.url {
-                        if url.startAccessingSecurityScopedResource() {
-                            defer { url.stopAccessingSecurityScopedResource() }
-                            onFileSelected(url)
-                        } else {
-                            print("Failed to access security-scoped resource for \(url)")
+                    if panel.runModal() == .OK {
+                        if let url = panel.url {
+                            if url.startAccessingSecurityScopedResource() {
+                                defer { url.stopAccessingSecurityScopedResource() }
+                                onFileSelected(url)
+                            } else {
+                                print("Failed to access security-scoped resource for \(url)")
+                            }
                         }
                     }
+                    isPresented.wrappedValue = false
                 }
-                isPresented.wrappedValue = false
             }
+        } else {
+            // Fallback for older macOS versions
+            EmptyView()
+                .onAppear {
+                    handleFilePickerFallback(allowedContentTypes: allowedContentTypes, onFileSelected: onFileSelected, isPresented: isPresented)
+                }
         }
         #endif
     }
@@ -1999,6 +2015,8 @@ public func platformModalContainer_Form_L4(
     // Convert SheetDetent to PlatformPresentationDetent
     let platformDetents: [PlatformPresentationDetent] = strategy.detents.map { detent in
         switch detent {
+        case .small:
+            return .medium // Map small to medium for compatibility
         case .medium:
             return .medium
         case .large:
@@ -2012,4 +2030,32 @@ public func platformModalContainer_Form_L4(
         .platformSheet(isPresented: .constant(true), detents: platformDetents) {
             EmptyView()
         }
+}
+
+// MARK: - Helper Functions
+
+/// Helper function to handle file picker fallback for older macOS versions
+private func handleFilePickerFallback(
+    allowedContentTypes: [UTType],
+    onFileSelected: @escaping (URL) -> Void,
+    isPresented: Binding<Bool>
+) {
+    let panel = NSOpenPanel()
+    panel.allowsMultipleSelection = false
+    panel.canChooseDirectories = false
+    panel.canChooseFiles = true
+    panel.allowedContentTypes = allowedContentTypes
+
+    if panel.runModal() == .OK {
+        if let url = panel.url {
+            let shouldStopAccess = url.startAccessingSecurityScopedResource()
+            onFileSelected(url)
+            if shouldStopAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
+        } else {
+            print("Failed to access security-scoped resource")
+        }
+    }
+    isPresented.wrappedValue = false
 }

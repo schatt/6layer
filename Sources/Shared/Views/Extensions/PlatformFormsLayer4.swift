@@ -141,6 +141,42 @@ public func platformFormContainer_L4<Content: View>(
             .background(Color.groupedBackground)
         )
         
-
+    case .custom:
+        // Custom container implementation
+        let spacing: CGFloat = {
+            switch strategy.fieldLayout {
+            case .compact: return 8
+            case .standard: return 16
+            case .spacious: return 20
+            case .adaptive: return 16
+            }
+        }()
+        return AnyView(
+            VStack(spacing: spacing) {
+                content()
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .cornerRadius(8)
+        )
+        
+    case .adaptive:
+        // Adaptive container that adjusts based on content
+        let spacing: CGFloat = {
+            switch strategy.fieldLayout {
+            case .compact: return 8
+            case .standard: return 16
+            case .spacious: return 20
+            case .adaptive: return 16
+            }
+        }()
+        return AnyView(
+            VStack(spacing: spacing) {
+                content()
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .cornerRadius(12)
+        )
     }
 }

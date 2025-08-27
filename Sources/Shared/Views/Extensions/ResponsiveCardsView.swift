@@ -71,7 +71,7 @@ struct ResponsiveCardsView: View {
     @ViewBuilder
     private func responsiveCardGrid(for cards: [ResponsiveCardData], in geometry: GeometryProxy) -> some View {
         let screenWidth = geometry.size.width
-        let screenHeight = geometry.size.height
+        let _ = geometry.size.height // Unused but kept for future use
         
         // Layer 2: Layout Decision Engine - Use existing platform function
         let layoutDecision = determineOptimalCardLayout_L2(
@@ -188,6 +188,93 @@ struct ResponsiveCardsView: View {
         ) {
             ForEach(cards) { card in
                 ResponsiveCardView(data: card)
+            }
+        }
+        .padding(16)
+    }
+    
+    @ViewBuilder
+    private func responsiveCardCompactLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: max(1, layout.columns - 1)),
+            spacing: 8
+        ) {
+            ForEach(cards) { card in
+                ResponsiveCardView(data: card)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(8)
+    }
+    
+    @ViewBuilder
+    private func responsiveCardSpaciousLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible(), spacing: 24), count: max(1, layout.columns - 1)),
+            spacing: 24
+        ) {
+            ForEach(cards) { card in
+                ResponsiveCardView(data: card)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(24)
+    }
+    
+    @ViewBuilder
+    private func responsiveCardUniformLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: layout.columns),
+            spacing: layout.spacing
+        ) {
+            ForEach(cards) { card in
+                ResponsiveCardView(data: card)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(16)
+    }
+    
+    @ViewBuilder
+    private func responsiveCardResponsiveLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
+        GeometryReader { geometry in
+            let columns = Int(geometry.size.width / 300)
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: max(1, columns)),
+                spacing: layout.spacing
+            ) {
+                ForEach(cards) { card in
+                    ResponsiveCardView(data: card)
+                }
+            }
+            .padding(16)
+        }
+    }
+    
+    @ViewBuilder
+    private func responsiveCardDynamicLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: layout.columns),
+            spacing: layout.spacing
+        ) {
+            ForEach(cards) { card in
+                ResponsiveCardView(data: card)
+                    .frame(maxWidth: .infinity)
             }
         }
         .padding(16)

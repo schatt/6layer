@@ -40,7 +40,7 @@ public enum HintPriority: Int, CaseIterable, Comparable, Sendable {
 // MARK: - Framework User Extensibility
 
 /// Base class for framework users to create custom hints
-open class CustomHint: ExtensibleHint {
+open class CustomHint: ExtensibleHint, @unchecked Sendable {
     public let hintType: String
     public let priority: HintPriority
     public let overridesDefault: Bool

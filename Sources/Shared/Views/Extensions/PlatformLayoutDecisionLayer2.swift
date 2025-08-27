@@ -222,13 +222,13 @@ public enum PerformanceStrategy: String, CaseIterable {
 /// Device capabilities for layout decisions
 public struct DeviceCapabilities {
     public let screenSize: CGSize
-    public let orientation: UIDeviceOrientation
+    public let orientation: DeviceOrientation
     public let memoryAvailable: Int64
     
     public init() {
         #if os(iOS)
         self.screenSize = UIScreen.main.bounds.size
-        self.orientation = UIDevice.current.orientation
+        self.orientation = DeviceOrientation.fromUIDeviceOrientation(UIDevice.current.orientation)
         #else
         self.screenSize = CGSize(width: 1024, height: 768)
         self.orientation = .portrait
@@ -237,6 +237,32 @@ public struct DeviceCapabilities {
         // Placeholder for memory availability
         self.memoryAvailable = 1024 * 1024 * 1024 // 1GB default
     }
+}
+
+/// Cross-platform device orientation
+public enum DeviceOrientation: String, CaseIterable {
+    case portrait = "portrait"
+    case landscape = "landscape"
+    case portraitUpsideDown = "portraitUpsideDown"
+    case landscapeLeft = "landscapeLeft"
+    case landscapeRight = "landscapeRight"
+    case flat = "flat"
+    case unknown = "unknown"
+    
+    #if os(iOS)
+    static func fromUIDeviceOrientation(_ uiOrientation: UIDeviceOrientation) -> DeviceOrientation {
+        switch uiOrientation {
+        case .portrait: return .portrait
+        case .portraitUpsideDown: return .portraitUpsideDown
+        case .landscapeLeft: return .landscapeLeft
+        case .landscapeRight: return .landscapeRight
+        case .faceUp: return .flat
+        case .faceDown: return .flat
+        case .unknown: return .unknown
+        @unknown default: return .unknown
+        }
+    }
+    #endif
 }
 
 // Responsive behavior types are defined in PlatformTypes.swift to avoid duplication

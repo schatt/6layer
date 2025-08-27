@@ -145,7 +145,7 @@ public enum ContentComplexity: String, CaseIterable, Sendable {
 // MARK: - Layout Preference
 
 /// Represents the preferred layout approach for content
-public enum LayoutPreference: String, CaseIterable {
+public enum LayoutPreference: String, CaseIterable, Sendable {
     case compact = "compact"
     case adaptive = "adaptive"
     case spacious = "spacious"
@@ -157,6 +157,7 @@ public enum LayoutPreference: String, CaseIterable {
 /// Provides information about device capabilities for optimization
 public struct PlatformDeviceCapabilities {
     /// Current device type
+    @MainActor
     public static var deviceType: DeviceType {
         return DeviceType.current
     }
@@ -311,11 +312,15 @@ public struct ModalLayoutDecision {
 }
 
 /// Represents sheet detents for modal presentations
-public enum SheetDetent: String, CaseIterable {
-    case small = "small"
-    case medium = "medium"
-    case large = "large"
-    case custom = "custom"
+public enum SheetDetent: CaseIterable {
+    case small
+    case medium
+    case large
+    case custom(height: CGFloat)
+    
+    public static var allCases: [SheetDetent] {
+        return [.small, .medium, .large, .custom(height: 300)] // Default height for custom
+    }
 }
 
 /// Represents form strategy for different platforms
@@ -414,6 +419,33 @@ public enum ResponsiveType: String, CaseIterable {
     case adaptive = "adaptive"
     case fluid = "fluid"
     case breakpoint = "breakpoint"
+}
+
+// MARK: - Cross-Platform Image Types
+
+/// Cross-platform image type for consistent image handling
+public struct PlatformImage {
+    #if os(iOS)
+    private let _uiImage: UIImage
+    #elseif os(macOS)
+    private let _nsImage: NSImage
+    #endif
+    
+    public init?(data: Data) {
+        #if os(iOS)
+        guard let uiImage = UIImage(data: data) else { return nil }
+        self._uiImage = uiImage
+        #elseif os(macOS)
+        guard let nsImage = NSImage(data: data) else { return nil }
+        self._nsImage = nsImage
+        #endif
+    }
+    
+    #if os(iOS)
+    public var uiImage: UIImage { return _uiImage }
+    #elseif os(macOS)
+    public var nsImage: NSImage { return _nsImage }
+    #endif
 }
 
 // MARK: - Content Analysis Types

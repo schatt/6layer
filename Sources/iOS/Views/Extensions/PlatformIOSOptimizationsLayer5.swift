@@ -1,4 +1,7 @@
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
 
 // MARK: - Platform iOS Optimizations Layer 5: Platform-Specific Enhancements
 /// This layer provides iOS-specific optimizations and enhancements that
@@ -9,12 +12,20 @@ extension View {
     
     /// Platform-specific iOS navigation bar with consistent styling
     /// Provides iOS-specific navigation bar appearance and behavior
+    #if os(iOS)
     func platformIOSNavigationBar(
         title: String? = nil,
         displayMode: NavigationBarItem.TitleDisplayMode = .automatic
     ) -> some View {
         self.navigationBarTitle(title ?? "", displayMode: displayMode)
     }
+    #else
+    func platformIOSNavigationBar(
+        title: String? = nil
+    ) -> some View {
+        self
+    }
+    #endif
     
     /// Platform-specific iOS toolbar with consistent styling
     /// Provides iOS-specific toolbar appearance and behavior
@@ -71,6 +82,7 @@ extension View {
     
     /// Platform-specific iOS haptic feedback with consistent behavior
     /// Provides iOS-specific haptic feedback patterns
+    #if os(iOS)
     func platformIOSHapticFeedback(
         style: IOSHapticStyle = .light,
         onTrigger trigger: Bool = true
@@ -102,6 +114,14 @@ extension View {
             impactFeedback.impactOccurred()
         }
     }
+    #else
+    func platformIOSHapticFeedback(
+        style: Any = "light",
+        onTrigger trigger: Bool = true
+    ) -> some View {
+        return self
+    }
+    #endif
     
     /// Platform-specific iOS accessibility with consistent behavior
     /// Provides iOS-specific accessibility enhancements
@@ -120,6 +140,7 @@ extension View {
     
     /// Platform-specific iOS animations with consistent behavior
     /// Provides iOS-specific animation patterns
+    #if os(iOS)
     func platformIOSAnimation(
         type: IOSAnimationType = .spring,
         duration: Double = 0.3
@@ -141,6 +162,14 @@ extension View {
         
         return self.animation(animation, value: UUID())
     }
+    #else
+    func platformIOSAnimation(
+        type: Any = "spring",
+        duration: Double = 0.3
+    ) -> some View {
+        return self
+    }
+    #endif
     
     /// Platform-specific iOS layout with consistent behavior
     /// Provides iOS-specific layout optimizations
@@ -148,6 +177,7 @@ extension View {
         safeAreaInsets: Bool = true,
         keyboardAware: Bool = false
     ) -> some View {
+        #if os(iOS)
         self
             .ignoresSafeArea(safeAreaInsets ? .keyboard : .all, edges: .bottom)
             .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
@@ -156,6 +186,9 @@ extension View {
             .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
                 // Handle keyboard dismissal
             }
+        #else
+        self
+        #endif
     }
     
     /// Platform-specific iOS pull-to-refresh with consistent behavior
@@ -182,6 +215,7 @@ extension View {
     }
 }
 
+#if os(iOS)
 /// iOS-specific haptic feedback styles
 enum IOSHapticStyle {
     case light
@@ -200,3 +234,4 @@ enum IOSAnimationType {
     case easeInOut
     case linear
 }
+#endif

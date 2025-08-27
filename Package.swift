@@ -7,23 +7,13 @@ let package = Package(
     name: "SixLayerFramework",
     platforms: [
         .iOS(.v15),
-        .macOS(.v12)
+        .macOS(.v13)
     ],
     products: [
-        // Main framework product
+        // Main framework product - single library for all platforms
         .library(
             name: "SixLayerFramework",
             targets: ["SixLayerFramework"]
-        ),
-        
-        // Platform-specific optimization libraries
-        .library(
-            name: "SixLayerIOS",
-            targets: ["SixLayerIOS"]
-        ),
-        .library(
-            name: "SixLayerMacOS",
-            targets: ["SixLayerMacOS"]
         )
     ],
     dependencies: [
@@ -31,60 +21,39 @@ let package = Package(
         .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.0")
     ],
     targets: [
-        // Main shared framework target
+        // Main framework target - includes all platform-specific code
         .target(
             name: "SixLayerFramework",
             dependencies: ["ZIPFoundation"],
-            path: "Sources/Shared",
-            exclude: ["ProjectHelpers"],
+            path: "Sources",
             sources: [
-                "Models",
-                "Views",
-                "Views/Extensions"
+                "Shared/Models",
+                "Shared/Views",
+                "Shared/Views/Extensions",
+                "iOS/Views",
+                "iOS/Views/Extensions", 
+                "iOS/ProjectHelpers",
+                "macOS/Views",
+                "macOS/Views/Extensions",
+                "macOS/ProjectHelpers"
             ]
         ),
         
-        // iOS-specific optimizations
-        .target(
-            name: "SixLayerIOS",
-            dependencies: ["SixLayerFramework"],
-            path: "Sources/iOS",
-            sources: [
-                "Views",
-                "Views/Extensions",
-                "ProjectHelpers"
-            ]
-        ),
-        
-        // macOS-specific optimizations
-        .target(
-            name: "SixLayerMacOS",
-            dependencies: ["SixLayerFramework"],
-            path: "Sources/macOS",
-            sources: [
-                "Views",
-                "Views/Extensions",
-                "ProjectHelpers"
-            ]
-        ),
-        
-        // iOS tests
+        // Framework tests
         .testTarget(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                "SixLayerIOS",
                 "ViewInspector"
             ],
             path: "Tests/SixLayerFrameworkTests"
         ),
         
-        // macOS tests
+        // macOS-specific tests
         .testTarget(
             name: "SixLayerMacOSTests",
             dependencies: [
                 "SixLayerFramework",
-                "SixLayerMacOS",
                 "ViewInspector"
             ],
             path: "Tests/SixLayerMacOSTests"

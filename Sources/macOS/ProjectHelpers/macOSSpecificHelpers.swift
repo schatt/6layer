@@ -193,11 +193,20 @@ public struct macOSDesktopDataItem: Identifiable {
             text: .constant("")
         )
         
-        macOSDesktopListItem(
-            title: "Desktop List Item",
-            subtitle: "With subtitle",
-            icon: "star.fill"
-        ) {
+        macOSDesktopListItem {
+            HStack {
+                Image(systemName: "star.fill")
+                    .foregroundColor(.yellow)
+                VStack(alignment: .leading) {
+                    Text("Desktop List Item")
+                        .font(.headline)
+                    Text("With subtitle")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+            }
+        } action: {
             print("Desktop list item clicked")
         }
         .macOSStyle()
