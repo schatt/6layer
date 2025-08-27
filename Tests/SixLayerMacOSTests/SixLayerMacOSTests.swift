@@ -1,14 +1,15 @@
 import XCTest
 @testable import SixLayerFramework
+@testable import SixLayerMacOS
 
-final class SixLayerFrameworkTests: XCTestCase {
+final class SixLayerMacOSTests: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // Put tear down code here. This method is called after the invocation of each test method in the class.
     }
 
     func testExample() throws {
