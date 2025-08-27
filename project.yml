@@ -163,6 +163,30 @@ targets:
         TestFlight:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
 
+  "SixLayerMacOSApp":
+    type: application
+    platform: macOS
+    deploymentTarget: 15.0
+    sources:
+      - path: src/macOS/App
+    dependencies:
+      - target: "SixLayerShared macOS"
+      - target: "SixLayerMacOS"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.macos.app
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_TESTABILITY: YES
+        PRODUCT_NAME: SixLayerMacOSApp
+        MACOSX_DEPLOYMENT_TARGET: 15.0
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
+      configs:
+        TestFlight:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: TESTFLIGHT
+
   "SixLayerFrameworkTests":
     type: bundle.unit-test
     platform: iOS
@@ -178,5 +202,23 @@ targets:
         MARKETING_VERSION: 1.0.0
         GENERATE_INFOPLIST_FILE: YES
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SixLayerFramework.app/$(BUNDLE_EXECUTABLE_FOLDER_NAME)/SixLayerFramework"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        CODE_SIGN_STYLE: Automatic
+
+  "SixLayerMacOSTests":
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: 15.0
+    sources:
+      - path: Tests
+    dependencies:
+      - target: "SixLayerShared macOS"
+      - target: "SixLayerMacOS"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.macos.tests
+        MARKETING_VERSION: 1.0.0
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SixLayerMacOSApp.app/$(BUNDLE_EXECUTABLE_FOLDER_NAME)/SixLayerMacOSApp"
         BUNDLE_LOADER: "$(TEST_HOST)"
         CODE_SIGN_STYLE: Automatic
