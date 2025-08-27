@@ -9,19 +9,15 @@ import SwiftUI
 /// Data type hints that guide generic functions
 public enum DataTypeHint: String, CaseIterable, Sendable {
     case generic          // Unknown or mixed data types
-    case vehicle          // Vehicle-related data
-    case fuelRecord       // Fuel consumption records
-    case expense          // Financial expense records
-    case maintenance      // Vehicle maintenance records
-    case achievement      // User achievement records
-    case location         // Location-based data
-    case notification     // Notification data
-    case userProfile      // User profile information
-    case settings         // Application settings
-    case media            // Images, videos, documents
+    case collection       // Generic collection of items
     case numeric          // Charts, graphs, statistics
     case hierarchical     // Tree structures, nested data
     case temporal         // Time-based data, schedules
+    case media            // Images, videos, documents
+    case form             // Form-based data entry
+    case list             // List-based data
+    case grid             // Grid-based data
+    case chart            // Chart/graph data
 }
 
 /// Presentation preference hints
@@ -36,8 +32,6 @@ public enum PresentationPreference: String, CaseIterable, Sendable {
     case chart           // Chart/graph layout
     case form            // Form-based layout
 }
-
-// ContentComplexity is defined in PlatformStrategySelectionLayer3.swift
 
 /// Presentation context
 public enum PresentationContext: String, CaseIterable, Sendable {
@@ -56,7 +50,7 @@ public struct PresentationHints: Sendable {
     public let presentationPreference: PresentationPreference
     public let complexity: ContentComplexity
     public let context: PresentationContext
-    public let customPreferences: [String: String]  // Changed to String: String for Sendable
+    public let customPreferences: [String: String]
     
     public init(
         dataType: DataTypeHint,
@@ -72,8 +66,6 @@ public struct PresentationHints: Sendable {
         self.customPreferences = customPreferences
     }
 }
-
-// ContentComplexity is defined in PlatformStrategySelectionLayer3.swift
 
 // MARK: - Generic Data Presentation Functions
 
@@ -98,440 +90,161 @@ public func platformPresentNumericData_L1(
     return GenericNumericDataView(data: data, hints: hints)
 }
 
-// MARK: - Responsive Card Semantic Intent
-
-/// Express intent for responsive card layout
-/// Layer 1: Semantic Intent
+/// Generic function for presenting responsive cards
 @MainActor
 public func platformResponsiveCard_L1<Content: View>(
-    type: CardType,
-    content: @escaping () -> Content
+    @ViewBuilder content: () -> Content,
+    hints: PresentationHints
 ) -> some View {
-    // Delegate to Layer 2 for layout decisions
-    return ResponsiveCardContainer(type: type, content: content)
+    // Use ResponsiveCardsView for card-based presentation
+    return ResponsiveCardView(data: ResponsiveCardData(
+        title: "Generic Card",
+        subtitle: "Generated from Layer 1",
+        icon: "doc.text",
+        color: .blue,
+        complexity: hints.complexity
+    ))
 }
 
-// Note: platformNavigationSplitContainer implementation moved to PlatformSpecificViewExtensions.swift
-// to consolidate with existing platform-specific logic and avoid naming conflicts
-
-/// Card type enumeration for semantic intent
-public enum CardType: String, CaseIterable, Sendable {
-    case dashboard    // Dashboard-style cards
-    case detail       // Detail view cards
-    case summary      // Summary information cards
-    case action       // Action-oriented cards
-    case media        // Media-rich cards
-    case gallery      // Gallery/masonry layout
-    case content      // General content cards
-}
-
-/// Container view that implements the responsive card architecture
-private struct ResponsiveCardContainer<Content: View>: View {
-    let type: CardType
-    let content: () -> Content
-    
-    var body: some View {
-        content()
-            .environment(\.cardType, type)
-    }
-}
-
-// MARK: - Environment Values
-
-private struct CardTypeKey: EnvironmentKey {
-    static let defaultValue: CardType = .dashboard
-}
-
-extension EnvironmentValues {
-    var cardType: CardType {
-        get { self[CardTypeKey.self] }
-        set { self[CardTypeKey.self] = newValue }
-    }
-}
-
-/// Generic function for presenting form fields
+/// Generic function for presenting form data
 @MainActor
-public func platformPresentFormFields_L1(
+public func platformPresentFormData_L1(
     fields: [GenericFormField],
     hints: PresentationHints
 ) -> some View {
-    return GenericFormFieldsView(fields: fields, hints: hints)
+    return GenericFormView(fields: fields, hints: hints)
+}
+
+/// Generic function for presenting media data
+@MainActor
+public func platformPresentMediaData_L1(
+    media: [GenericMediaItem],
+    hints: PresentationHints
+) -> some View {
+    return GenericMediaView(media: media, hints: hints)
 }
 
 /// Generic function for presenting hierarchical data
 @MainActor
 public func platformPresentHierarchicalData_L1(
-    data: [GenericHierarchicalItem],
+    items: [GenericHierarchicalItem],
     hints: PresentationHints
 ) -> some View {
-    return GenericHierarchicalDataView(data: data, hints: hints)
-}
-
-/// Generic function for presenting media collections
-@MainActor
-public func platformPresentMediaCollection_L1(
-    media: [GenericMediaItem],
-    hints: PresentationHints
-) -> some View {
-    return GenericMediaCollectionView(media: media, hints: hints)
+    return GenericHierarchicalView(items: items, hints: hints)
 }
 
 /// Generic function for presenting temporal data
 @MainActor
 public func platformPresentTemporalData_L1(
-    data: [GenericTemporalItem],
+    items: [GenericTemporalItem],
     hints: PresentationHints
 ) -> some View {
-    return GenericTemporalDataView(data: data, hints: hints)
+    return GenericTemporalView(items: items, hints: hints)
 }
 
-// MARK: - Project-Specific Hint Creators
+// MARK: - Generic View Structures
 
-/// CarManager-specific hint creators that provide domain knowledge
-public extension PresentationHints {
-    
-    /// Hints for vehicle collections
-    static func forVehicles(
-        items: [GenericVehicle],
-        context: PresentationContext = .dashboard
-    ) -> PresentationHints {
-        let complexity: ContentComplexity = items.count > 10 ? .complex :
-                                         items.count > 5 ? .moderate : .simple
-        
-        return PresentationHints(
-            dataType: DataTypeHint.vehicle,
-            presentationPreference: PresentationPreference.cards,  // Vehicles look better as cards
-            complexity: complexity,
-            context: context,
-            customPreferences: [
-                "showImages": "true",
-                "showDetails": String(context == .detail),
-                "compactMode": String(context == .summary)
-            ]
-        )
-    }
-    
-    /// Hints for fuel record collections
-    static func forFuelRecords(
-        items: [GenericFuelRecord],
-        context: PresentationContext = .dashboard
-    ) -> PresentationHints {
-        let complexity: ContentComplexity = items.count > 20 ? .complex :
-                                         items.count > 10 ? .moderate : .simple
-        
-        return PresentationHints(
-            dataType: DataTypeHint.fuelRecord,
-            presentationPreference: PresentationPreference.list,  // Fuel records work well as lists
-            complexity: complexity,
-            context: context,
-            customPreferences: [
-                "showCharts": String(context == .dashboard),
-                "groupByMonth": "true",
-                "showEfficiency": "true"
-            ]
-        )
-    }
-    
-    /// Hints for expense collections
-    static func forExpenses(
-        items: [GenericExpense],
-        context: PresentationContext = .dashboard
-    ) -> PresentationHints {
-        let complexity: ContentComplexity = items.count > 15 ? .complex :
-                                         items.count > 8 ? .moderate : .simple
-        
-        return PresentationHints(
-            dataType: DataTypeHint.expense,
-            presentationPreference: PresentationPreference.grid,  // Expenses work well in grids
-            complexity: complexity,
-            context: context,
-            customPreferences: [
-                "showCategories": "true",
-                "showTotals": String(context == .dashboard),
-                "groupByType": "true"
-            ]
-        )
-    }
-    
-    /// Hints for maintenance collections
-    static func forMaintenance(
-        items: [GenericMaintenance],
-        context: PresentationContext = .dashboard
-    ) -> PresentationHints {
-        let complexity: ContentComplexity = items.count > 12 ? .complex :
-                                         items.count > 6 ? .moderate : .simple
-        
-        return PresentationHints(
-            dataType: DataTypeHint.maintenance,
-            presentationPreference: PresentationPreference.cards,  // Maintenance looks good as cards
-            complexity: complexity,
-            context: context,
-            customPreferences: [
-                "showDueDates": "true",
-                "showStatus": "true",
-                "groupByPriority": "true"
-            ]
-        )
-    }
-}
-
-// MARK: - Generic View Implementations
-
-/// Generic item collection view that uses hints to determine layout
-private struct GenericItemCollectionView<Item: Identifiable>: View {
+/// Generic item collection view
+struct GenericItemCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     
     var body: some View {
-        // This view will delegate to Layer 2 for layout decisions
-        // based on the hints provided
-        Text("Generic Item Collection - \(items.count) items")
-            .onAppear {
-                // Delegate to Layer 2 for layout decision
-                let layoutDecision = determineOptimalLayout(for: hints)
-                // Delegate to Layer 3 for platform strategy
-                _ = selectPlatformStrategy(for: layoutDecision)
-                // Delegate to Layer 4 for component building
-                // (This will be implemented in the actual layer system)
-            }
-    }
-    
-    private func determineOptimalLayout(for hints: PresentationHints) -> GenericLayoutDecision {
-        // This will call Layer 2 functions
-        return GenericLayoutDecision() // Placeholder
-    }
-    
-    private func selectPlatformStrategy(for decision: GenericLayoutDecision) -> GenericPlatformStrategy {
-        // This will call Layer 3 functions
-        return GenericPlatformStrategy() // Placeholder
+        VStack {
+            Text("Generic Collection")
+                .font(.headline)
+            Text("Items: \(items.count)")
+                .font(.caption)
+        }
+        .padding()
     }
 }
 
-// MARK: - Generic Views for Other Data Types
-
-private struct GenericNumericDataView: View {
+/// Generic numeric data view
+struct GenericNumericDataView: View {
     let data: [GenericNumericData]
     let hints: PresentationHints
     
     var body: some View {
-        Text("Numeric Data View - \(data.count) items")
+        VStack {
+            Text("Numeric Data")
+                .font(.headline)
+            Text("Data points: \(data.count)")
+                .font(.caption)
+        }
+        .padding()
     }
 }
 
-private struct GenericFormFieldsView: View {
+/// Generic form view
+struct GenericFormView: View {
     let fields: [GenericFormField]
     let hints: PresentationHints
     
     var body: some View {
-        Text("Form Fields View - \(fields.count) fields")
+        VStack {
+            Text("Generic Form")
+                .font(.headline)
+            Text("Fields: \(fields.count)")
+                .font(.caption)
+        }
+        .padding()
     }
 }
 
-private struct GenericHierarchicalDataView: View {
-    let data: [GenericHierarchicalItem]
-    let hints: PresentationHints
-    
-    var body: some View {
-        Text("Hierarchical Data View - \(data.count) items")
-    }
-}
-
-private struct GenericMediaCollectionView: View {
+/// Generic media view
+struct GenericMediaView: View {
     let media: [GenericMediaItem]
     let hints: PresentationHints
     
     var body: some View {
-        Text("Media Collection View - \(media.count) items")
+        VStack {
+            Text("Media Collection")
+                .font(.headline)
+            Text("Items: \(media.count)")
+                .font(.caption)
+        }
+        .padding()
     }
 }
 
-private struct GenericTemporalDataView: View {
-    let data: [GenericTemporalItem]
+/// Generic hierarchical view
+struct GenericHierarchicalView: View {
+    let items: [GenericHierarchicalItem]
     let hints: PresentationHints
     
     var body: some View {
-        Text("Temporal Data View - \(data.count) items")
+        VStack {
+            Text("Hierarchical Data")
+                .font(.headline)
+            Text("Root items: \(items.count)")
+                .font(.caption)
+        }
+        .padding()
     }
 }
 
-// MARK: - Placeholder Types (will be defined in other layers)
-
-private struct GenericLayoutDecision {}
-private struct GenericPlatformStrategy {}
-
-// Generic data types for Layer 1 functions
-public struct GenericNumericData {
-    public let value: Double
-    public let label: String
+/// Generic temporal view
+struct GenericTemporalView: View {
+    let items: [GenericTemporalItem]
+    let hints: PresentationHints
     
-    public init(value: Double, label: String) {
-        self.value = value
-        self.label = label
+    var body: some View {
+        VStack {
+            Text("Temporal Data")
+                .font(.headline)
+            Text("Events: \(items.count)")
+                .font(.caption)
+        }
+        .padding()
     }
 }
 
-public struct GenericFormField {
-    public let id: String
-    public let label: String
-    public let type: String
-    
-    public init(id: String, label: String, type: String) {
-        self.id = id
-        self.label = label
-        self.type = type
-    }
-}
+// MARK: - Platform Strategy Selection (Layer 3 Integration)
 
-public struct GenericHierarchicalItem {
-    public let id: String
-    public let title: String
-    public let children: [GenericHierarchicalItem]
-    
-    public init(id: String, title: String, children: [GenericHierarchicalItem] = []) {
-        self.id = id
-        self.title = title
-        self.children = children
-    }
-}
-
-public struct GenericMediaItem {
-    public let id: String
-    public let url: String
-    public let type: String
-    
-    public init(id: String, url: String, type: String) {
-        self.id = id
-        self.url = url
-        self.type = type
-    }
-}
-
-public struct GenericTemporalItem {
-    public let id: String
-    public let date: Date
-    public let title: String
-    
-    public init(id: String, date: Date, title: String) {
-        self.id = id
-        self.date = date
-        self.title = title
-    }
-}
-
-// Generic project-specific types
-public struct GenericVehicle {
-    public let id: String
-    public let name: String
-    public let make: String
-    public let model: String
-    
-    public init(id: String, name: String, make: String, model: String) {
-        self.id = id
-        self.name = name
-        self.make = make
-        self.model = model
-    }
-}
-
-public struct GenericFuelRecord {
-    public let id: String
-    public let date: Date
-    public let gallons: Double
-    public let cost: Double
-    
-    public init(id: String, date: Date, gallons: Double, cost: Double) {
-        self.id = id
-        self.date = date
-        self.gallons = gallons
-        self.cost = cost
-    }
-}
-
-public struct GenericExpense {
-    public let id: String
-    public let date: Date
-    public let amount: Double
-    public let category: String
-    
-    public init(id: String, date: Date, amount: Double, category: String) {
-        self.id = id
-        self.date = date
-        self.amount = amount
-        self.category = category
-    }
-}
-
-public struct GenericMaintenance {
-    public let id: String
-    public let date: Date
-    public let type: String
-    public let cost: Double
-    
-    public init(id: String, date: Date, type: String, cost: Double) {
-        self.id = id
-        self.date = date
-        self.type = type
-        self.cost = cost
-    }
-}
-
-// MARK: - Migration Phase: Temporary Type-Specific Layer 1 Functions
-// These functions provide immediate value during migration while building toward
-// the full intelligent six-layer system. They will be consolidated into generic
-// functions once the system is mature.
-
-extension View {
-    /// Temporary Layer 1 function for fuel purchase forms during migration
-    /// This provides immediate domain-specific logic while building the intelligent system
-    @MainActor
-    func platformPresentFuelPurchaseForm_L1(
-        vehicle: Any, // Generic vehicle type for now
-        context: PresentationContext = .create
-    ) -> some View {
-        // Call the type-specific Layer 2 function
-        let layout = determineOptimalFormLayout_AddFuelView_L2()
-        let strategy = selectFormStrategy_AddFuelView_L3(layout: layout)
-        return platformFormContainer_AddFuelView_L4(strategy: strategy)
-    }
-
-    /// Temporary Layer 1 function for Add Vehicle form presentation during migration
-    /// Handles iOS Form rendering issues by choosing optimal container strategy
-    @MainActor
-    func platformPresentVehicleForm_L1<Content: View>(
-        @ViewBuilder formContent: @escaping () -> Content
-    ) -> some View {
-        // Create hints for vehicle form presentation
-        let hints = PresentationHints(
-            dataType: .vehicle,
-            presentationPreference: .form,
-            complexity: .complex, // 15+ fields across 4 sections
-            context: .create,
-            customPreferences: [
-                "hasImagePicker": "true",
-                "hasDatePickers": "true", 
-                "hasCurrencyFields": "true",
-                "sectionCount": "4"
-            ]
-        )
-        
-        // Delegate to Layer 2 for content analysis (not platform detection!)
-        let layout = determineOptimalFormLayout_VehicleForm_L2(hints: hints)
-        let strategy = selectFormStrategy_VehicleForm_L3_TEMP(layout: layout) // Use temporary function during migration
-        
-        // Call Layer 4 to get the actual form container with the provided content
-        return platformFormContainer_VehicleForm_L4(strategy: strategy, content: formContent)
-    }
-
-    /// Temporary Layer 1 function for modal form presentations during migration
-    /// This handles sheet-based form presentations with proper sizing
-    @MainActor
-    func platformPresentModalForm_L1(
-        formType: DataTypeHint,
-        context: PresentationContext = .create
-    ) -> some View {
-        // Call the type-specific Layer 2 function
-        let layout = determineOptimalModalLayout_Form_L2(formType: formType)
-        let strategy = selectModalStrategy_Form_L3(layout: layout)
-        return platformModalContainer_Form_L4(strategy: strategy)
-    }
+/// Select platform strategy based on hints
+/// This delegates to Layer 3 for platform-specific strategy selection
+private func selectPlatformStrategy(for hints: PresentationHints) -> String {
+    // This is a placeholder that will be implemented in Layer 3
+    return "platform_strategy_selected"
 }

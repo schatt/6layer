@@ -75,10 +75,10 @@ struct ResponsiveCardsView: View {
         
         // Layer 2: Layout Decision Engine - Use existing platform function
         let layoutDecision = determineOptimalCardLayout_L2(
-            cardCount: cards.count,
+            contentCount: cards.count,
             screenWidth: screenWidth,
-            screenHeight: screenHeight,
-            deviceType: DeviceType.current
+            deviceType: DeviceType.current,
+            contentComplexity: .moderate
         )
         
         // Layer 3: Strategy Selection - Use existing platform function

@@ -161,6 +161,10 @@ func applyPlatformPerformanceOptimizations<Content: View>(
         return content()
     case .macOS:
         return content()
+    case .watchOS:
+        return content()
+    case .tvOS:
+        return content()
     }
 }
 
@@ -177,6 +181,10 @@ func applyPlatformMemoryOptimizations<Content: View>(
     case .iOS:
         return content()
     case .macOS:
+        return content()
+    case .watchOS:
+        return content()
+    case .tvOS:
         return content()
     }
 }
@@ -196,6 +204,10 @@ func applyPlatformAccessibilityEnhancements<Content: View>(
     case .iOS:
         return content()
     case .macOS:
+        return content()
+    case .watchOS:
+        return content()
+    case .tvOS:
         return content()
     }
 }
@@ -218,7 +230,10 @@ func optimizeForDevice<Content: View>(
         return content()
     case .mac:
         return content()
-    // TODO: Add tv support when needed
+    case .tv:
+        return content()
+    case .watch:
+        return content()
     }
 }
 

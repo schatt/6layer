@@ -11,15 +11,8 @@ import AppKit
 // Import shared types and platform extensions
 @_exported import struct SwiftUI.Color
 
-// Device type detection
-public enum DeviceType {
-    case phone, pad, mac
-
-    @MainActor
-    public static var current: DeviceType {
-        return PlatformDeviceCapabilities.deviceType
-    }
-}
+// Device type detection - using shared type from PlatformTypes.swift
+@_exported import struct SwiftUI.Color
 
 // Screen size classes
 enum ScreenSizeClass {
@@ -139,6 +132,10 @@ struct ResponsivePadding: ViewModifier {
             return 20
         case .mac:
             return 24
+        case .tv:
+            return 24
+        case .watch:
+            return 12
         }
     }
 }

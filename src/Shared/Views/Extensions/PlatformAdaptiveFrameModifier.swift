@@ -54,11 +54,11 @@ struct AdaptiveFrameModifier: ViewModifier {
     #if DEBUG
     static func testContentAnalysis() {
         let testCases = [
-            FormContentMetrics(fieldCount: 3, sectionCount: 2, hasComplexContent: false),  // Simple form
-            FormContentMetrics(fieldCount: 8, sectionCount: 4, hasComplexContent: false),  // Medium form
-            FormContentMetrics(fieldCount: 12, sectionCount: 6, hasComplexContent: true),  // Complex form
-            FormContentMetrics(fieldCount: 1, sectionCount: 1, hasComplexContent: false),  // Minimal form
-            FormContentMetrics(fieldCount: 20, sectionCount: 8, hasComplexContent: true)   // Very complex form
+            FormContentMetrics(fieldCount: 3, estimatedComplexity: .simple, preferredLayout: .compact, sectionCount: 2, hasComplexContent: false),  // Simple form
+            FormContentMetrics(fieldCount: 8, estimatedComplexity: .moderate, preferredLayout: .adaptive, sectionCount: 4, hasComplexContent: false),  // Medium form
+            FormContentMetrics(fieldCount: 12, estimatedComplexity: .complex, preferredLayout: .spacious, sectionCount: 6, hasComplexContent: true),  // Complex form
+            FormContentMetrics(fieldCount: 1, estimatedComplexity: .simple, preferredLayout: .compact, sectionCount: 1, hasComplexContent: false),  // Minimal form
+            FormContentMetrics(fieldCount: 20, estimatedComplexity: .veryComplex, preferredLayout: .custom, sectionCount: 8, hasComplexContent: true)   // Very complex form
         ]
         
         print("=== Adaptive Sizing System Test ===")

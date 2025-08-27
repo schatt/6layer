@@ -83,6 +83,7 @@ targets:
       - path: src/Shared/Resources
       - path: src/Shared/Views
       - path: src/Shared/Views/Extensions
+      - path: src/Shared/ProjectHelpers
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.schatt.SixLayerFramework.shared.ios

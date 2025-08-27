@@ -101,11 +101,11 @@ enum ValidationType {
 
 // MARK: - Migration Phase: Temporary Type-Specific Layer 4 Functions
 
-/// Temporary Layer 4 function for vehicle form container implementation
+/// Generic Layer 4 function for form container implementation
 /// This implements the actual container based on the strategy from Layer 3
 @MainActor
-public func platformFormContainer_VehicleForm_L4<Content: View>(
-    strategy: VehicleFormStrategy,
+public func platformFormContainer_L4<Content: View>(
+    strategy: FormStrategy,
     @ViewBuilder content: @escaping () -> Content
 ) -> some View {
     
@@ -123,11 +123,11 @@ public func platformFormContainer_VehicleForm_L4<Content: View>(
     case .scrollView:
         // Use ScrollView + VStack (reliable on iOS, works on macOS too)
         let spacing: CGFloat = {
-            switch strategy.spacing {
-            case .tight: return 8
+            switch strategy.fieldLayout {
+            case .compact: return 8
             case .standard: return 16
-            case .comfortable: return 20
-            case .generous: return 24
+            case .spacious: return 20
+            case .adaptive: return 16
             }
         }()
         
