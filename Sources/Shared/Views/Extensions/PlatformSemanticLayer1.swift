@@ -39,6 +39,8 @@ public enum PresentationPreference: String, CaseIterable, Sendable {
     case chart           // Chart/graph layout
     case form            // Form-based layout
     case detail          // Detailed view layout
+    case modal           // Modal presentation
+    case navigation      // Navigation stack
     case custom          // Custom layout
 }
 
