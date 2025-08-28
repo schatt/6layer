@@ -75,7 +75,7 @@ final class CoreArchitectureTests: XCTestCase {
         let preferences = PresentationPreference.allCases
         
         // Then
-        XCTAssertEqual(preferences.count, 12)
+        XCTAssertEqual(preferences.count, 15)
         XCTAssertTrue(preferences.contains(.card))
         XCTAssertTrue(preferences.contains(.list))
         XCTAssertTrue(preferences.contains(.grid))

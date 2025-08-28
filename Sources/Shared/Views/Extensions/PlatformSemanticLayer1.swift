@@ -29,6 +29,7 @@ public enum DataTypeHint: String, CaseIterable, Sendable {
 /// Presentation preference hints
 public enum PresentationPreference: String, CaseIterable, Sendable {
     case automatic        // Let the system decide
+    case compact         // Compact layout
     case card            // Card-based layout
     case cards           // Card-based layout (plural)
     case list            // List-based layout
