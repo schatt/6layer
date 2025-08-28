@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - Platform Forms Layer 3: Layout Implementation
+// MARK: - Platform Forms Layer 4: Layout Implementation
 /// This layer provides platform-specific form components that implement
 /// form patterns across iOS and macOS. This layer handles the specific
 /// implementation of form components.
@@ -20,20 +20,28 @@ extension View {
                     content()
                 } header: {
                     Text(header)
+                        .font(.headline)
+                        .foregroundColor(Color.platformLabel)
                 } footer: {
                     Text(footer)
+                        .font(.caption)
+                        .foregroundColor(Color.platformSecondaryLabel)
                 }
             } else if let header = header {
                 Section {
                     content()
                 } header: {
                     Text(header)
+                        .font(.headline)
+                        .foregroundColor(Color.platformLabel)
                 }
             } else if let footer = footer {
                 Section {
                     content()
                 } footer: {
                     Text(footer)
+                        .font(.caption)
+                        .foregroundColor(Color.platformSecondaryLabel)
                 }
             } else {
                 Section {
@@ -54,6 +62,30 @@ extension View {
         .padding(.vertical, 4)
     }
     
+    /// Platform-specific form field group for related fields
+    /// Groups related fields with visual separation
+    func platformFormFieldGroup<Content: View>(
+        title: String? = nil,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if let title = title {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(Color.platformLabel)
+                    .padding(.horizontal, 4)
+            }
+            
+            VStack(spacing: 8) {
+                content()
+            }
+            .padding()
+            .background(Color.platformSecondaryBackground)
+            .cornerRadius(8)
+        }
+    }
+    
     /// Platform-specific validation message with consistent styling
     /// Provides standardized validation message appearance across platforms
     func platformValidationMessage(
@@ -71,6 +103,24 @@ extension View {
         }
         .padding(.horizontal, 4)
         .padding(.vertical, 2)
+        .background(type.color.opacity(0.1))
+        .cornerRadius(4)
+    }
+    
+    /// Platform-specific form divider with consistent styling
+    /// Provides visual separation between form sections
+    func platformFormDivider() -> some View {
+        Rectangle()
+            .fill(Color.platformSeparator)
+            .frame(height: 1)
+            .padding(.vertical, 8)
+    }
+    
+    /// Platform-specific form spacing with consistent sizing
+    /// Provides standardized spacing between form elements
+    func platformFormSpacing(_ size: FormSpacing) -> some View {
+        Spacer()
+            .frame(height: size.rawValue)
     }
 }
 
@@ -99,6 +149,16 @@ enum ValidationType {
     }
 }
 
+// MARK: - Form Spacing
+
+/// Standardized form spacing values
+enum FormSpacing: CGFloat, CaseIterable {
+    case small = 8
+    case medium = 16
+    case large = 24
+    case extraLarge = 32
+}
+
 // MARK: - Migration Phase: Temporary Type-Specific Layer 4 Functions
 
 /// Generic Layer 4 function for form container implementation
@@ -117,7 +177,7 @@ public func platformFormContainer_L4<Content: View>(
             Form {
                 content()
             }
-            .background(Color.groupedBackground)
+            .background(Color.platformGroupedBackground)
         )
         
     case .standard:
@@ -138,7 +198,7 @@ public func platformFormContainer_L4<Content: View>(
                 content()
             }
             .padding()
-            .background(Color.secondary.opacity(0.1))
+            .background(Color.platformSecondaryBackground)
             .cornerRadius(8)
         )
         
@@ -163,7 +223,7 @@ public func platformFormContainer_L4<Content: View>(
                 }
                 .padding(.vertical)
             }
-            .background(Color.groupedBackground)
+            .background(Color.platformGroupedBackground)
         )
         
     case .custom:
@@ -184,7 +244,7 @@ public func platformFormContainer_L4<Content: View>(
                 content()
             }
             .padding()
-            .background(Color.secondary.opacity(0.1))
+            .background(Color.platformSecondaryBackground)
             .cornerRadius(8)
         )
         
@@ -206,7 +266,7 @@ public func platformFormContainer_L4<Content: View>(
                 content()
             }
             .padding()
-            .background(Color.secondary.opacity(0.1))
+            .background(Color.platformSecondaryBackground)
             .cornerRadius(12)
         )
     }

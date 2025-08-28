@@ -122,13 +122,20 @@ public func platformResponsiveCard_L1<Content: View>(
     ))
 }
 
-/// Generic function for presenting form data
+/// Generic function for presenting form data using our intelligent form system
 @MainActor
 public func platformPresentFormData_L1(
     fields: [GenericFormField],
     hints: PresentationHints
 ) -> some View {
-    return GenericFormView(fields: fields, hints: hints)
+    // Use our intelligent form generation system
+    return IntelligentFormView.generateForm(
+        for: String.self, // Use String as placeholder type
+        initialData: nil,
+        customFieldView: { _, _, _ in EmptyView() },
+        onSubmit: { _ in },
+        onCancel: { }
+    )
 }
 
 /// Generic function for presenting media data
@@ -192,19 +199,36 @@ struct GenericNumericDataView: View {
     }
 }
 
-/// Generic form view
+/// Generic form view using our platform extensions
 struct GenericFormView: View {
     let fields: [GenericFormField]
     let hints: PresentationHints
     
     var body: some View {
-        VStack {
-            Text("Generic Form")
-                .font(.headline)
-            Text("Fields: \(fields.count)")
-                .font(.caption)
-        }
-        .padding()
+        // Use our platform form container from Layer 4
+        platformFormContainer_L4(
+            strategy: FormStrategy(
+                containerType: .standard,
+                fieldLayout: .vertical,
+                validation: .deferred
+            ),
+            content: {
+                ForEach(fields, id: \.id) { field in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(field.label)
+                            .font(.body)
+                            .fontWeight(.medium)
+                            .foregroundColor(Color.platformLabel)
+                        
+                        // Use platform-specific field styling
+                        TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
+                            .textFieldStyle(.roundedBorder)
+                            .background(Color.platformSecondaryBackground)
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
+        )
     }
 }
 

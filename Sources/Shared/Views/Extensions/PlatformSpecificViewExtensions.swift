@@ -1990,18 +1990,30 @@ extension View {
 // the full intelligent component system. They will be consolidated into generic
 // functions once the system is mature.
 
-/// Temporary Layer 4 function for implementing form container for AddFuelView
-/// This provides immediate domain-specific container logic while building the intelligent system
+/// Layer 4 function for implementing form container for AddFuelView
+/// This provides domain-specific container logic using our platform extensions
 @MainActor
 public func platformFormContainer_AddFuelView_L4(
     strategy: FormStrategy
 ) -> some View {
-    // Hardcoded for now, will become intelligent later
-    // Implement the form container based on the strategy
-    return EmptyView()
-        .platformFormContainer()
-        .platformAdaptiveFrame()
-        .platformFormStyle()
+    // Use our platform form container from Layer 4
+    return platformFormContainer_L4(
+        strategy: strategy,
+        content: {
+            // AddFuelView specific form fields would go here
+            // For now, provide a placeholder that uses our platform system
+            VStack(spacing: 16) {
+                Text("Add Fuel Form")
+                    .font(.headline)
+                    .foregroundColor(Color.platformLabel)
+                
+                Text("Form container using platform strategy: \(strategy.containerType.rawValue)")
+                    .font(.caption)
+                    .foregroundColor(Color.platformSecondaryLabel)
+            }
+            .padding()
+        }
+    )
 }
 
 /// Temporary Layer 4 function for implementing modal container for forms

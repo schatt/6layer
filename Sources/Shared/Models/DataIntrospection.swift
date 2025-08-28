@@ -33,6 +33,8 @@ public struct DataIntrospectionEngine {
         )
     }
     
+
+    
     /// Analyze a collection of data items
     public static func analyzeCollection<T>(_ items: [T]) -> CollectionAnalysisResult {
         guard let firstItem = items.first else {
