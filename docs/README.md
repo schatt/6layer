@@ -1,60 +1,70 @@
-# iOS-Specific Project UI Helper Functions
+# SixLayer Framework Documentation
 
-This directory is for **iOS-specific UI helper functions** that extend the SixLayer framework for iOS applications.
+Welcome to the SixLayer Framework documentation. This directory contains comprehensive guides and references for understanding and extending the framework.
 
-## 🎯 Purpose
+## 📚 Documentation Overview
 
-- **iOS-specific UI patterns** and components
-- **Touch-optimized interfaces** for mobile devices
-- **iOS Human Interface Guidelines** compliance
-- **Platform-specific behaviors** and animations
+### 🚀 Getting Started
+- **[README_6LayerArchitecture.md](README_6LayerArchitecture.md)** - Complete architecture overview
+- **[README_UsageExamples.md](README_UsageExamples.md)** - Practical usage examples and patterns
+- **[DeveloperExtensionGuide.md](DeveloperExtensionGuide.md)** - **NEW!** Complete guide for developers extending the framework
+- **[ExtensionQuickReference.md](ExtensionQuickReference.md)** - **NEW!** Quick reference card for common patterns
 
-## 📱 iOS Considerations
+### 🏗️ Architecture Details
+- **[README_Layer1_Semantic.md](README_Layer1_Semantic.md)** - Semantic intent layer
+- **[README_Layer2_Decision.md](README_Layer2_Decision.md)** - Layout decision engine
+- **[README_Layer3_Strategy.md](README_Layer3_Strategy.md)** - Strategy selection layer
+- **[README_Layer4_Implementation.md](README_Layer4_Implementation.md)** - Component implementation
+- **[README_Layer5_Performance.md](README_Layer5_Performance.md)** - Performance optimization
+- **[README_Layer6_Platform.md](README_Layer6_Platform.md)** - Platform-specific features
 
-- **Touch targets** should be at least 44x44 points
-- **Safe areas** and notch handling
-- **Dynamic Type** support for accessibility
-- **Dark Mode** and appearance adaptations
-- **Haptic feedback** integration
+### 🔧 Advanced Topics
+- **[HintsSystemExtensibility.md](HintsSystemExtensibility.md)** - Custom hints and extensibility
+- **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
+- **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
+- **[migration_guide.md](migration_guide.md)** - Migration from other frameworks
 
-## 📁 Structure
+### 📱 Platform-Specific
+- **[keyboard-consistency-guidelines.md](keyboard-consistency-guidelines.md)** - Cross-platform keyboard handling
+- **[keyboard-consistency-audit.md](keyboard-consistency-audit.md)** - Keyboard consistency analysis
 
-```
-ProjectHelpers/
-├── README.md                    # This file
-├── iOSSpecificCards.swift       # iOS-optimized card components
-├── TouchOptimizedViews.swift    # Touch-friendly UI components
-├── iOSAnimations.swift          # iOS-specific animations
-└── YourIOSHelpers.swift         # Your custom iOS helpers
-```
+## 🎯 Quick Navigation
 
-## 🚀 How to Use
+**For New Developers:**
+1. Start with [README_6LayerArchitecture.md](README_6LayerArchitecture.md)
+2. Review [README_UsageExamples.md](README_UsageExamples.md)
+3. Use [DeveloperExtensionGuide.md](DeveloperExtensionGuide.md) for custom development
 
-1. **Add iOS-specific helpers** to this directory
-2. **Import them** in your iOS-specific code
-3. **Follow iOS HIG** for consistency
-4. **Test on different devices** and orientations
+**For Framework Extension:**
+1. Read [DeveloperExtensionGuide.md](DeveloperExtensionGuide.md) for comprehensive guidance
+2. Study [HintsSystemExtensibility.md](HintsSystemExtensibility.md) for advanced customization
+3. Reference [FunctionIndex.md](FunctionIndex.md) for API details
 
-## 💡 Example
+**For Platform-Specific Development:**
+1. Review [platform-specific-patterns.md](platform-specific-patterns.md)
+2. Check [keyboard-consistency-guidelines.md](keyboard-consistency-guidelines.md)
 
-```swift
-// In iOSSpecificCards.swift
-import SwiftUI
-import SixLayerShared
+## 🔍 Finding What You Need
 
-public struct iOSOptimizedCard: View {
-    public init() {}
-    
-    public var body: some View {
-        // iOS-specific implementation
-        // Touch-optimized, follows iOS HIG
-    }
-}
-```
+- **Function Reference**: Use [FunctionIndex.md](FunctionIndex.md) for complete API documentation
+- **Examples**: Check [README_UsageExamples.md](README_UsageExamples.md) for practical code samples
+- **Architecture**: See [README_6LayerArchitecture.md](README_6LayerArchitecture.md) for system overview
+- **Extension**: Use [DeveloperExtensionGuide.md](DeveloperExtensionGuide.md) for custom development
 
-## ⚠️ Important Notes
+## 📖 Documentation Standards
 
-- **iOS-specific only** - don't mix with cross-platform code
-- **Follow iOS HIG** for consistent user experience
-- **Test on real devices** when possible
-- **Consider accessibility** and Dynamic Type
+All documentation follows these principles:
+- **Clear examples** with working code
+- **Progressive complexity** from basic to advanced
+- **Cross-references** between related topics
+- **Practical guidance** for real-world usage
+- **Best practices** and common patterns
+
+## 🤝 Contributing to Documentation
+
+When updating documentation:
+1. Maintain the existing structure and style
+2. Update cross-references when adding new files
+3. Include practical examples and code samples
+4. Follow the established naming conventions
+5. Update this README when adding new documentation files

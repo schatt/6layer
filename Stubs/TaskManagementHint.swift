@@ -61,7 +61,7 @@ class TaskManagementHint: CustomHint {
                 "showPriority": showPriority,
                 "showDueDate": showDueDate,
                 "groupingStyle": groupingStyle.rawValue,
-                "recommendedLayout": determineOptimalLayout(for: taskType),
+                "recommendedLayout": TaskManagementHint.determineOptimalLayout(for: taskType),
                 "showProgress": showProgress,
                 "allowDragAndDrop": allowDragAndDrop,
                 "quickActions": taskType.quickActions,
@@ -75,7 +75,7 @@ class TaskManagementHint: CustomHint {
     // MARK: - Helper Methods
     
     /// Determine optimal layout based on task type
-    private func determineOptimalLayout(for taskType: TaskType) -> String {
+    private static func determineOptimalLayout(for taskType: TaskType) -> String {
         switch taskType {
         case .simple: return "list"
         case .complex: return "cards"

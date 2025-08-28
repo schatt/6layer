@@ -60,27 +60,43 @@ import SixLayerFramework
 // Layer 1: Semantic intent
 platformPresentItemCollection_L1(
     items: vehicles,
-    type: .vehicle,
-    context: .dashboard
-) { vehicle in
-    VehicleCardView(vehicle: vehicle)
-}
+    hints: PresentationHints(
+        dataType: .collection,
+        presentationPreference: .cards,
+        complexity: .moderate,
+        context: .dashboard
+    )
+)
 ```
 
 ### Advanced Example
 
 ```swift
 // Layer 1: Semantic form presentation
-platformPresentFormFields_L1(
-    type: .vehicleCreation,
-    complexity: .complex,
-    layout: .adaptive
-) {
-    TextField("Make", text: $make)
-    TextField("Model", text: $model)
-    TextField("Year", text: $year)
-}
+platformPresentFormData_L1(
+    fields: formFields,
+    hints: PresentationHints(
+        dataType: .form,
+        presentationPreference: .automatic,
+        complexity: .complex,
+        context: .input
+    )
+)
 ```
+
+## 🔧 Extending the Framework
+
+The SixLayer Framework is designed to be highly extensible. Developers can:
+
+- **Create custom views** that integrate seamlessly with the framework
+- **Use the hints system** to influence layout decisions and behavior
+- **Leverage all six layers** for progressive enhancement
+- **Maintain platform independence** while adding custom functionality
+
+For comprehensive guidance on extending the framework, see:
+- **[Developer Extension Guide](docs/DeveloperExtensionGuide.md)** - Complete guide for developers
+- **[Hints System Extensibility](docs/HintsSystemExtensibility.md)** - Advanced customization
+- **[Usage Examples](docs/README_UsageExamples.md)** - Practical examples and patterns
 
 ## 🏗️ Project Structure
 

@@ -9,6 +9,11 @@ import SwiftUI
 /// Data type hints that guide generic functions
 public enum DataTypeHint: String, CaseIterable, Sendable {
     case generic          // Unknown or mixed data types
+    case text             // Text-based content
+    case number           // Numeric content
+    case date             // Date/time content
+    case image            // Image content
+    case boolean          // Boolean/true-false content
     case collection       // Generic collection of items
     case numeric          // Charts, graphs, statistics
     case hierarchical     // Tree structures, nested data
@@ -18,12 +23,14 @@ public enum DataTypeHint: String, CaseIterable, Sendable {
     case list             // List-based data
     case grid             // Grid-based data
     case chart            // Chart/graph data
+    case custom           // Custom data type
 }
 
 /// Presentation preference hints
 public enum PresentationPreference: String, CaseIterable, Sendable {
     case automatic        // Let the system decide
-    case cards           // Card-based layout
+    case card            // Card-based layout
+    case cards           // Card-based layout (plural)
     case list            // List-based layout
     case grid            // Grid-based layout
     case coverFlow       // Cover flow layout
@@ -31,6 +38,8 @@ public enum PresentationPreference: String, CaseIterable, Sendable {
     case table           // Table-based layout
     case chart           // Chart/graph layout
     case form            // Form-based layout
+    case detail          // Detailed view layout
+    case custom          // Custom layout
 }
 
 /// Presentation context
@@ -42,6 +51,10 @@ public enum PresentationContext: String, CaseIterable, Sendable {
     case create          // Creation interface
     case search          // Search results
     case browse          // Browsing interface
+    case list            // List view context
+    case form            // Form view context
+    case modal           // Modal presentation context
+    case navigation      // Navigation context
 }
 
 /// Comprehensive hints structure for guiding generic functions

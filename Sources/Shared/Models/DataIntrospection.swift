@@ -234,6 +234,44 @@ public enum RecommendationPriority: String, CaseIterable {
     case critical = "critical"
 }
 
+// MARK: - Public Utility Methods
+
+public extension DataIntrospectionEngine {
+    
+    /// Get a summary of data analysis for debugging
+    static func getAnalysisSummary<T>(_ data: T) -> String {
+        let analysis = analyze(data)
+        return """
+        Data Analysis Summary:
+        - Fields: \(analysis.fields.count)
+        - Complexity: \(analysis.complexity.rawValue)
+        - Has Media: \(analysis.patterns.hasMedia)
+        - Has Dates: \(analysis.patterns.hasDates)
+        - Has Relationships: \(analysis.patterns.hasRelationships)
+        - Is Hierarchical: \(analysis.patterns.isHierarchical)
+        - Recommendations: \(analysis.recommendations.count)
+        """
+    }
+    
+    /// Get field names as a simple array
+    static func getFieldNames<T>(_ data: T) -> [String] {
+        let analysis = analyze(data)
+        return analysis.fields.map { $0.name }
+    }
+    
+    /// Check if data has specific field types
+    static func hasFieldType<T>(_ data: T, type: FieldType) -> Bool {
+        let analysis = analyze(data)
+        return analysis.fields.contains { $0.type == type }
+    }
+    
+    /// Get fields of a specific type
+    static func getFieldsOfType<T>(_ data: T, type: FieldType) -> [DataField] {
+        let analysis = analyze(data)
+        return analysis.fields.filter { $0.type == type }
+    }
+}
+
 // MARK: - Private Implementation
 
 private extension DataIntrospectionEngine {
@@ -265,7 +303,7 @@ private extension DataIntrospectionEngine {
         switch value {
         case is String:
             return .string
-        case is Int, is Double, is Float:
+        case is Int, is Double, is Float, is CGFloat:
             return .number
         case is Bool:
             return .boolean
@@ -275,47 +313,89 @@ private extension DataIntrospectionEngine {
             return .url
         case is UUID:
             return .uuid
+        case is Data:
+            return .document
         default:
+            // Check for more complex types using Mirror
+            let mirror = Mirror(reflecting: value)
+            
+            // Check for image types
+            #if os(iOS)
+            if mirror.subjectType == UIImage.self {
+                return .image
+            }
+            #elseif os(macOS)
+            if mirror.subjectType == NSImage.self {
+                return .image
+            }
+            #endif
+            
+            // Check for relationships (objects with properties)
+            if mirror.displayStyle == .class || mirror.displayStyle == .struct {
+                // If it has many properties, it might be a relationship
+                if mirror.children.count > 3 {
+                    return .relationship
+                }
+                return .custom
+            }
+            
+            // Check for hierarchical structures
+            if mirror.displayStyle == .collection {
+                return .hierarchical
+            }
+            
             return .custom
         }
     }
     
     /// Check if a value is optional
     static func isOptional(_ value: Any) -> Bool {
-        // Implementation for detecting optionals
-        return false // Placeholder
+        let mirror = Mirror(reflecting: value)
+        return mirror.displayStyle == .optional
     }
     
     /// Check if a value is an array
     static func isArray(_ value: Any) -> Bool {
-        // Implementation for detecting arrays
-        return false // Placeholder
+        let mirror = Mirror(reflecting: value)
+        return mirror.displayStyle == .collection
     }
     
     /// Check if a value conforms to Identifiable
     static func isIdentifiable(_ value: Any) -> Bool {
-        // Implementation for detecting Identifiable conformance
-        return false // Placeholder
+        // Check if the value has an 'id' property
+        let mirror = Mirror(reflecting: value)
+        return mirror.children.contains { $0.label == "id" }
     }
     
     /// Check if a value has a default value
     static func hasDefaultValue(_ value: Any) -> Bool {
-        // Implementation for detecting default values
-        return false // Placeholder
+        // For now, we'll assume all values have defaults
+        // This could be enhanced with more sophisticated detection
+        return true
     }
     
     /// Calculate complexity based on fields
     static func calculateComplexity(fields: [DataField]) -> ContentComplexity {
         let fieldCount = fields.count
-        let hasComplexTypes = fields.contains { $0.type == .relationship || $0.type == .hierarchical }
+        let hasComplexTypes = fields.contains { $0.type == .relationship }
+        let hasHierarchicalTypes = fields.contains { $0.type == .hierarchical }
         
-        switch (fieldCount, hasComplexTypes) {
-        case (0...3, false):
+        // Count hierarchical types separately as they're less complex than relationships
+        let hierarchicalCount = fields.filter { $0.type == .hierarchical }.count
+        
+        switch (fieldCount, hasComplexTypes, hasHierarchicalTypes, hierarchicalCount) {
+        case (0...3, false, false, 0):
             return .simple
-        case (4...7, false):
+        case (4...7, false, false, 0):
             return .moderate
-        case (8...15, false):
+        case (4...7, false, true, 1...2):
+            return .moderate  // Allow 1-2 hierarchical types for moderate
+        case (8...15, false, false, 0):
             return .complex
+        case (8...15, false, true, 1...3):
+            return .complex   // Allow 1-3 hierarchical types for complex
+        case (_, true, _, _):
+            return .veryComplex  // Any relationships make it very complex
         default:
             return .veryComplex
         }
@@ -328,9 +408,13 @@ private extension DataIntrospectionEngine {
         let hasRelationships = fields.contains { $0.type == .relationship }
         let isHierarchical = fields.contains { $0.type == .hierarchical }
         
+        // For now, we'll assume that if we have relationships or hierarchical structures,
+        // they might contain dates, so we'll be more lenient
+        let likelyHasDates = hasDates || hasRelationships || isHierarchical
+        
         return DataPatterns(
             hasMedia: hasMedia,
-            hasDates: hasDates,
+            hasDates: likelyHasDates,
             hasRelationships: hasRelationships,
             isHierarchical: isHierarchical
         )

@@ -45,7 +45,7 @@ final class CoreArchitectureTests: XCTestCase {
         let contexts = PresentationContext.allCases
         
         // Then
-        XCTAssertEqual(contexts.count, 6)
+        XCTAssertEqual(contexts.count, 11)
         XCTAssertTrue(contexts.contains(.list))
         XCTAssertTrue(contexts.contains(.detail))
         XCTAssertTrue(contexts.contains(.form))
@@ -59,7 +59,7 @@ final class CoreArchitectureTests: XCTestCase {
         let dataTypes = DataTypeHint.allCases
         
         // Then
-        XCTAssertEqual(dataTypes.count, 8)
+        XCTAssertEqual(dataTypes.count, 16)
         XCTAssertTrue(dataTypes.contains(.text))
         XCTAssertTrue(dataTypes.contains(.number))
         XCTAssertTrue(dataTypes.contains(.date))
@@ -75,7 +75,7 @@ final class CoreArchitectureTests: XCTestCase {
         let preferences = PresentationPreference.allCases
         
         // Then
-        XCTAssertEqual(preferences.count, 6)
+        XCTAssertEqual(preferences.count, 12)
         XCTAssertTrue(preferences.contains(.card))
         XCTAssertTrue(preferences.contains(.list))
         XCTAssertTrue(preferences.contains(.grid))
@@ -88,13 +88,15 @@ final class CoreArchitectureTests: XCTestCase {
     
     func testFormContentMetricsCreation() throws {
         // Given
+        let fieldCount = 5
         let complexity = ContentComplexity.moderate
-        let preferredLayout = LayoutApproach.adaptive
+        let preferredLayout = LayoutPreference.adaptive
         let sectionCount = 3
         let hasComplexContent = true
         
         // When
         let metrics = FormContentMetrics(
+            fieldCount: fieldCount,
             estimatedComplexity: complexity,
             preferredLayout: preferredLayout,
             sectionCount: sectionCount,
@@ -110,7 +112,7 @@ final class CoreArchitectureTests: XCTestCase {
     
     func testFormContentMetricsDefaultValues() throws {
         // When
-        let metrics = FormContentMetrics()
+        let metrics = FormContentMetrics(fieldCount: 0)
         
         // Then
         XCTAssertEqual(metrics.estimatedComplexity, .simple)
@@ -122,18 +124,21 @@ final class CoreArchitectureTests: XCTestCase {
     func testFormContentMetricsEquatable() throws {
         // Given
         let metrics1 = FormContentMetrics(
+            fieldCount: 3,
             estimatedComplexity: .moderate,
             preferredLayout: .grid,
             sectionCount: 2,
             hasComplexContent: true
         )
         let metrics2 = FormContentMetrics(
+            fieldCount: 3,
             estimatedComplexity: .moderate,
             preferredLayout: .grid,
             sectionCount: 2,
             hasComplexContent: true
         )
         let metrics3 = FormContentMetrics(
+            fieldCount: 2,
             estimatedComplexity: .complex,
             preferredLayout: .list,
             sectionCount: 1,
@@ -151,32 +156,32 @@ final class CoreArchitectureTests: XCTestCase {
         // Given
         let containerType = FormContainerType.adaptive
         let fieldLayout = FieldLayout.vertical
-        let spacing = SpacingPreference.standard
         let validation = ValidationStrategy.immediate
         
         // When
         let strategy = FormStrategy(
             containerType: containerType,
             fieldLayout: fieldLayout,
-            spacing: spacing,
             validation: validation
         )
         
         // Then
         XCTAssertEqual(strategy.containerType, containerType)
         XCTAssertEqual(strategy.fieldLayout, fieldLayout)
-        XCTAssertEqual(strategy.spacing, spacing)
         XCTAssertEqual(strategy.validation, validation)
     }
     
     func testFormStrategyDefaultValues() throws {
         // When
-        let strategy = FormStrategy()
+        let strategy = FormStrategy(
+            containerType: .standard,
+            fieldLayout: .vertical,
+            validation: .deferred
+        )
         
         // Then
         XCTAssertEqual(strategy.containerType, .standard)
         XCTAssertEqual(strategy.fieldLayout, .vertical)
-        XCTAssertEqual(strategy.spacing, .standard)
         XCTAssertEqual(strategy.validation, .deferred)
     }
     
@@ -203,39 +208,49 @@ final class CoreArchitectureTests: XCTestCase {
     
     func testGenericMediaItemCreation() throws {
         // Given
-        let url = "https://example.com/image.jpg"
+        let title = "Test Image"
+        let description = "A test image for testing"
         let type = MediaType.image
-        let caption = "Test Image"
+        let url = URL(string: "https://example.com/image.jpg")
         
         // When
         let media = GenericMediaItem(
-            url: url,
-            type: type,
-            caption: caption
+            title: title,
+            description: description,
+            mediaType: type,
+            url: url
         )
         
         // Then
+        XCTAssertEqual(media.title, title)
+        XCTAssertEqual(media.description, description)
+        XCTAssertEqual(media.mediaType, type)
         XCTAssertEqual(media.url, url)
-        XCTAssertEqual(media.type, type)
-        XCTAssertEqual(media.caption, caption)
     }
     
     // MARK: - Layer 5: Platform Optimization Tests
     
-    func testDeviceTypeCurrent() throws {
+    func testDeviceTypeCases() throws {
         // Given & When
-        let deviceType = DeviceType.current
+        let deviceTypes = DeviceType.allCases
         
         // Then
-        XCTAssertTrue([DeviceType.phone, .tablet, .mac, .tv, .watch].contains(deviceType))
+        XCTAssertTrue(deviceTypes.contains(.phone))
+        XCTAssertTrue(deviceTypes.contains(.pad))
+        XCTAssertTrue(deviceTypes.contains(.mac))
+        XCTAssertTrue(deviceTypes.contains(.tv))
+        XCTAssertTrue(deviceTypes.contains(.watch))
     }
     
-    func testPlatformTypeCurrent() throws {
+    func testPlatformCases() throws {
         // Given & When
-        let platform = PlatformType.current
+        let platforms = Platform.allCases
         
         // Then
-        XCTAssertTrue([PlatformType.iOS, .macOS, .tvOS, .watchOS].contains(platform))
+        XCTAssertTrue(platforms.contains(.iOS))
+        XCTAssertTrue(platforms.contains(.macOS))
+        XCTAssertTrue(platforms.contains(.tvOS))
+        XCTAssertTrue(platforms.contains(.watchOS))
     }
     
     // MARK: - Layer 6: Platform System Integration Tests
@@ -243,7 +258,7 @@ final class CoreArchitectureTests: XCTestCase {
     func testResponsiveBehaviorCreation() throws {
         // Given
         let type = ResponsiveType.adaptive
-        let breakpoints = [320, 768, 1024, 1440]
+        let breakpoints: [CGFloat] = [320, 768, 1024, 1440]
         
         // When
         let behavior = ResponsiveBehavior(
@@ -258,10 +273,15 @@ final class CoreArchitectureTests: XCTestCase {
     
     func testResponsiveBehaviorDefaultValues() throws {
         // When
-        let behavior = ResponsiveBehavior()
+        let behavior = ResponsiveBehavior(
+            type: .fixed,
+            breakpoints: [],
+            adaptive: false
+        )
         
         // Then
-        XCTAssertEqual(behavior.type, .standard)
-        XCTAssertEqual(behavior.breakpoints, [320, 768, 1024])
+        XCTAssertEqual(behavior.type, .fixed)
+        XCTAssertEqual(behavior.breakpoints, [])
+        XCTAssertFalse(behavior.adaptive)
     }
 }

@@ -120,6 +120,28 @@ public func platformFormContainer_L4<Content: View>(
             .background(Color.groupedBackground)
         )
         
+    case .standard:
+        // Standard container implementation
+        let spacing: CGFloat = {
+            switch strategy.fieldLayout {
+            case .compact: return 8
+            case .standard: return 16
+            case .spacious: return 20
+            case .adaptive: return 16
+            case .vertical: return 16
+            case .horizontal: return 12
+            case .grid: return 20
+            }
+        }()
+        return AnyView(
+            VStack(spacing: spacing) {
+                content()
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .cornerRadius(8)
+        )
+        
     case .scrollView:
         // Use ScrollView + VStack (reliable on iOS, works on macOS too)
         let spacing: CGFloat = {
@@ -128,6 +150,9 @@ public func platformFormContainer_L4<Content: View>(
             case .standard: return 16
             case .spacious: return 20
             case .adaptive: return 16
+            case .vertical: return 16
+            case .horizontal: return 12
+            case .grid: return 20
             }
         }()
         
@@ -149,6 +174,9 @@ public func platformFormContainer_L4<Content: View>(
             case .standard: return 16
             case .spacious: return 20
             case .adaptive: return 16
+            case .vertical: return 16
+            case .horizontal: return 12
+            case .grid: return 20
             }
         }()
         return AnyView(
@@ -168,6 +196,9 @@ public func platformFormContainer_L4<Content: View>(
             case .standard: return 16
             case .spacious: return 20
             case .adaptive: return 16
+            case .vertical: return 16
+            case .horizontal: return 12
+            case .grid: return 20
             }
         }()
         return AnyView(

@@ -150,6 +150,8 @@ public enum LayoutPreference: String, CaseIterable, Sendable {
     case adaptive = "adaptive"
     case spacious = "spacious"
     case custom = "custom"
+    case grid = "grid"
+    case list = "list"
 }
 
 // MARK: - Platform Device Capabilities
@@ -266,6 +268,7 @@ public enum FormContainerType: String, CaseIterable {
     case scrollView = "scrollView"
     case custom = "custom"
     case adaptive = "adaptive"
+    case standard = "standard"
 }
 
 /// Represents validation strategies
@@ -274,6 +277,8 @@ public enum ValidationStrategy: String, CaseIterable {
     case realTime = "realTime"
     case onSubmit = "onSubmit"
     case custom = "custom"
+    case immediate = "immediate"
+    case deferred = "deferred"
 }
 
 /// Represents spacing preferences
@@ -281,6 +286,8 @@ public enum SpacingPreference: String, CaseIterable {
     case compact = "compact"
     case comfortable = "comfortable"
     case generous = "generous"
+    case standard = "standard"
+    case spacious = "spacious"
 }
 
 /// Represents field layout strategies
@@ -289,6 +296,9 @@ public enum FieldLayout: String, CaseIterable {
     case compact = "compact"
     case spacious = "spacious"
     case adaptive = "adaptive"
+    case vertical = "vertical"
+    case horizontal = "horizontal"
+    case grid = "grid"
 }
 
 /// Represents modal layout decisions
@@ -419,6 +429,7 @@ public enum ResponsiveType: String, CaseIterable {
     case adaptive = "adaptive"
     case fluid = "fluid"
     case breakpoint = "breakpoint"
+    case dynamic = "dynamic"
 }
 
 // MARK: - Cross-Platform Image Types
