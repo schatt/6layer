@@ -982,39 +982,41 @@ extension View {
 
 
 
-    /// Platform-specific navigation state management
-    /// Provides consistent navigation state handling across platforms
-    ///
-    /// - Parameters:
-    ///   - path: Binding to the navigation path
-    ///   - root: The root view
-    /// - Returns: A platform-specific navigation container with state management
+    /// Platform-specific navigation with path (iOS 16+ only)
+    /// iOS: Uses NavigationStack with path; macOS: Returns content directly
     func platformNavigationWithPath<Root: View>(
         path: Binding<NavigationPath>,
         @ViewBuilder root: () -> Root
     ) -> some View {
         #if os(iOS)
-        return NavigationStack(path: path, root: root)
+        if #available(iOS 16.0, *) {
+            return NavigationStack(path: path, root: root)
+        } else {
+            // iOS 15 fallback: ignore path, just return root
+            return root()
+        }
         #else
-        return NavigationStack(path: path, root: root)
+        // macOS: return content directly
+        return root()
         #endif
     }
 
-    /// Platform-specific navigation state management with data
-    /// Provides consistent navigation state handling with typed data across platforms
-    ///
-    /// - Parameters:
-    ///   - path: Binding to the navigation path
-    ///   - root: The root view
-    /// - Returns: A platform-specific navigation container with typed state management
+    /// Platform-specific navigation with typed path (iOS 16+ only)
+    /// iOS: Uses NavigationStack with typed path; macOS: Returns content directly
     func platformNavigationWithPath<Data: Hashable, Root: View>(
         path: Binding<[Data]>,
         @ViewBuilder root: () -> Root
     ) -> some View {
         #if os(iOS)
-        return NavigationStack(path: path, root: root)
+        if #available(iOS 16.0, *) {
+            return NavigationStack(path: path, root: root)
+        } else {
+            // iOS 15 fallback: ignore path, just return root
+            return root()
+        }
         #else
-        return NavigationStack(path: path, root: root)
+        // macOS: return content directly
+        return root()
         #endif
     }
 

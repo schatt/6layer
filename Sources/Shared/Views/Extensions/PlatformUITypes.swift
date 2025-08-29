@@ -26,6 +26,7 @@ public enum PlatformPresentationDetent {
     case custom(CGFloat)
 
     #if os(iOS)
+    @available(iOS 16.0, *)
     var presentationDetent: PresentationDetent {
         switch self {
         case .medium: return .medium

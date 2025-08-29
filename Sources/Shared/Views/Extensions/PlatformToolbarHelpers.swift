@@ -1,43 +1,21 @@
 import SwiftUI
 
-func platformConfirmationActionPlacement() -> ToolbarItemPlacement {
-    #if os(iOS)
-    return .confirmationAction
-    #else
-    return .automatic
-    #endif
+// MARK: - Platform-Specific Toolbar Helpers
+
+/// Platform-specific toolbar placement and behavior
+extension View {
+    
+    /// Platform-specific secondary action placement
+    /// iOS: .secondaryAction; macOS: .automatic
+    func platformSecondaryActionPlacement() -> ToolbarItemPlacement {
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            return .secondaryAction
+        } else {
+            return .navigationBarTrailing
+        }
+        #else
+        return .automatic
+        #endif
+    }
 }
-
-func platformCancellationActionPlacement() -> ToolbarItemPlacement {
-    #if os(iOS)
-    return .cancellationAction
-    #else
-    return .automatic
-    #endif
-}
-
-func platformPrimaryActionPlacement() -> ToolbarItemPlacement {
-    #if os(iOS)
-    return .primaryAction
-    #else
-    return .automatic
-    #endif
-}
-
-func platformSecondaryActionPlacement() -> ToolbarItemPlacement {
-    #if os(iOS)
-    return .secondaryAction
-    #else
-    return .automatic
-    #endif
-}
-
-func platformToolbarPlacement() -> ToolbarItemPlacement {
-    #if os(iOS)
-    return .automatic
-    #else
-    return .automatic
-    #endif
-}
-
-

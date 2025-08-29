@@ -96,8 +96,24 @@ func platformToolbarStyling<Content: View>(@ViewBuilder content: () -> Content) 
 func platformModalStyling<Content: View>(@ViewBuilder content: () -> Content) -> some View {
     #if os(iOS)
     return content()
-        .presentationDetents([.medium, .large])
-        .presentationDragIndicator(.visible)
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            .presentationDetents([.medium, .large])
+        } else {
+            // Fallback for iOS 15 and earlier
+        }
+        #else
+        // macOS doesn't have presentationDetents
+        #endif
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            .presentationDragIndicator(.visible)
+        } else {
+            // Fallback for iOS 15 and earlier
+        }
+        #else
+        // macOS doesn't have presentationDragIndicator
+        #endif
     #elseif os(macOS)
     return content()
         .frame(minWidth: 400, minHeight: 300)
@@ -268,11 +284,23 @@ func applyPlatformFeatures<Content: View>(
                 .keyboardShortcut(.return, modifiers: []))
             #endif
         case .contextMenus:
-            enhancedContent = AnyView(enhancedContent
-                .contextMenu {
-                    Button("Copy") { }
-                    Button("Paste") { }
-                })
+            #if os(iOS)
+            if #available(iOS 13.0, *) {
+                enhancedContent = AnyView(enhancedContent
+                    .contextMenu {
+                        Button("Copy") { }
+                        Button("Paste") { }
+                    })
+            }
+            #elseif os(macOS)
+            if #available(macOS 11.0, *) {
+                enhancedContent = AnyView(enhancedContent
+                    .contextMenu {
+                        Button("Copy") { }
+                        Button("Paste") { }
+                    })
+            }
+            #endif
         case .dragAndDrop:
             enhancedContent = AnyView(enhancedContent
                 .onDrop(of: [.text], isTargeted: nil) { _, _ in

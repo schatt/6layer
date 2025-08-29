@@ -1,95 +1,113 @@
 import SwiftUI
 
-// MARK: - Platform Context Menu Extensions
+// MARK: - Cross-Platform Context Menu Extensions
 
-/// Platform-specific context menu extensions that provide consistent behavior
-/// across iOS and macOS while handling platform differences appropriately
+/// Cross-platform context menu extensions that provide consistent behavior
+/// while properly handling platform differences
 extension View {
-
-    /// Basic platform context menu with menu items
-    /// iOS: Uses native context menu; macOS: Uses native context menu
-    /// Both platforms support the same API, so this provides a unified interface
-    ///
-    /// - Parameter content: The menu items to display in the context menu
-    /// - Returns: A view with platform-appropriate context menu behavior
-    ///
-    /// ## Usage Example
-    /// ```swift
-    /// Text("Long press me")
-    ///     .platformContextMenu {
-    ///         Button("Copy") { copyText() }
-    ///         Button("Delete") { deleteText() }
-    ///     }
-    /// ```
-    @ViewBuilder
+    
+    /// Cross-platform context menu with platform-specific behavior
+    /// iOS: Full context menu support; macOS: Full context menu support
     func platformContextMenu<MenuItems: View>(
-        @ViewBuilder content: () -> MenuItems
+        @ViewBuilder menuItems: () -> MenuItems,
+        preview: (() -> some View)? = nil
     ) -> some View {
-        self.contextMenu { content() }
+        #if os(iOS)
+        return iosContextMenu(self, menuItems: menuItems, preview: preview)
+        #elseif os(macOS)
+        return macContextMenu(self, menuItems: menuItems, preview: preview)
+        #else
+        return fallbackContextMenu(self, menuItems: menuItems)
+        #endif
     }
-
-    /// Platform context menu with preview
-    /// iOS: Uses contextMenu with preview; macOS: Uses contextMenu with preview
-    /// Both platforms support the same API, so this provides a unified interface
-    ///
-    /// - Parameters:
-    ///   - preview: The preview content to show
-    ///   - content: The menu items to display in the context menu
-    /// - Returns: A view with platform-appropriate context menu behavior
-    ///
-    /// ## Usage Example
-    /// ```swift
-    /// Text("Long press me")
-    ///     .platformContextMenu(
-    ///         preview: Text("Preview content"),
-    ///         content: {
-    ///             Button("Copy") { copyText() }
-    ///             Button("Delete") { deleteText() }
-    ///         }
-    ///     )
-    /// ```
-    @ViewBuilder
-    func platformContextMenu<Preview: View, MenuItems: View>(
-        preview: Preview,
-        @ViewBuilder content: () -> MenuItems
+    
+    /// Cross-platform context menu with action-based menu items
+    /// iOS: Full context menu support; macOS: Full context menu support
+    func platformContextMenu<MenuItems: View>(
+        @ViewBuilder menuItems: () -> MenuItems
     ) -> some View {
-        self.contextMenu(menuItems: { content() }, preview: { preview })
-    }
-
-    /// Platform context menu with actions
-    /// iOS: Uses contextMenu with actions; macOS: Uses contextMenu with actions
-    /// Both platforms support the same API, so this provides a unified interface
-    ///
-    /// - Parameter actions: The actions to display in the context menu
-    /// - Returns: A view with platform-appropriate context menu behavior
-    ///
-    /// ## Usage Example
-    /// ```swift
-    /// Text("Long press me")
-    ///     .platformContextMenu(actions: [
-    ///         ContextMenuAction("Copy", action: copyText),
-    ///         ContextMenuAction("Delete", action: deleteText)
-    ///     ])
-    /// ```
-    @ViewBuilder
-    func platformContextMenu(actions: [ContextMenuAction]) -> some View {
-        self.contextMenu(menuItems: {
-            ForEach(actions, id: \.title) { action in
-                Button(action.title, action: action.action)
-            }
-        })
+        #if os(iOS)
+        return iosContextMenu(self, menuItems: menuItems)
+        #elseif os(macOS)
+        return macContextMenu(self, menuItems: menuItems)
+        #else
+        return fallbackContextMenu(self, menuItems: menuItems)
+        #endif
     }
 }
 
-// MARK: - Context Menu Action
+// MARK: - Platform-Specific Context Menu Components
 
-/// Represents a context menu action
-public struct ContextMenuAction {
-    public let title: String
-    public let action: () -> Void
-
-    public init(_ title: String, action: @escaping () -> Void) {
-        self.title = title
-        self.action = action
+#if os(iOS)
+/// iOS-specific context menu implementation with preview support
+private func iosContextMenu<MenuItems: View>(
+    _ view: some View,
+    @ViewBuilder menuItems: () -> MenuItems,
+    preview: (() -> some View)? = nil
+) -> some View {
+    if #available(iOS 16.0, *) {
+        if let preview = preview {
+            return AnyView(view.contextMenu(menuItems: menuItems, preview: preview))
+        } else {
+            return AnyView(view.contextMenu(menuItems: menuItems))
+        }
+    } else {
+        // Fallback for iOS 15 and earlier
+        return AnyView(view.contextMenu(menuItems: menuItems))
     }
+}
+
+/// iOS-specific context menu implementation without preview
+private func iosContextMenu<MenuItems: View>(
+    _ view: some View,
+    @ViewBuilder menuItems: () -> MenuItems
+) -> some View {
+    if #available(iOS 16.0, *) {
+        return AnyView(view.contextMenu(menuItems: menuItems))
+    } else {
+        // Fallback for iOS 15 and earlier
+        return AnyView(view.contextMenu(menuItems: menuItems))
+    }
+}
+#endif
+
+#if os(macOS)
+/// macOS-specific context menu implementation with preview support
+private func macContextMenu<MenuItems: View>(
+    _ view: some View,
+    @ViewBuilder menuItems: () -> MenuItems,
+    preview: (() -> some View)? = nil
+) -> some View {
+    if #available(macOS 11.0, *) {
+        if let preview = preview {
+            return AnyView(view.contextMenu(menuItems: menuItems, preview: preview))
+        } else {
+            return AnyView(view.contextMenu(menuItems: menuItems))
+        }
+    } else {
+        // Fallback for older macOS versions - just return the view
+        return AnyView(view)
+    }
+}
+
+/// macOS-specific context menu implementation without preview
+private func macContextMenu<MenuItems: View>(
+    _ view: some View,
+    @ViewBuilder menuItems: () -> MenuItems
+) -> some View {
+    if #available(macOS 11.0, *) {
+        return AnyView(view.contextMenu(menuItems: menuItems))
+    } else {
+        // Fallback for older macOS versions - just return the view
+        return AnyView(view)
+    }
+}
+#endif
+
+/// Fallback context menu for other platforms
+private func fallbackContextMenu<MenuItems: View>(
+    _ view: some View,
+    @ViewBuilder menuItems: () -> MenuItems
+) -> some View {
+    return AnyView(view.contextMenu(menuItems: menuItems))
 }

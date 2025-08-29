@@ -1,111 +1,134 @@
 import SwiftUI
 
-@MainActor @ViewBuilder
-func platformNavigationSplitView<Content: View, Detail: View>(
-    @ViewBuilder content: () -> Content,
-    @ViewBuilder detail: () -> Detail
-) -> some View {
-    #if os(iOS)
-    if #available(iOS 16.0, *) {
-        NavigationStack { content() }
-    } else {
-        content()
+// MARK: - Cross-Platform Navigation Helpers
+
+/// Cross-platform navigation helpers that provide consistent behavior
+/// while properly handling platform differences
+@MainActor
+public struct PlatformNavigationHelpers {
+    
+    /// Cross-platform app navigation with platform-specific behavior
+    /// iOS: Uses NavigationSplitView or NavigationView; macOS: Uses NavigationSplitView
+    public static func platformAppNavigation<SidebarContent: View, DetailContent: View>(
+        columnVisibility: Binding<Bool>,
+        showingSidebar: Binding<Bool>,
+        @ViewBuilder sidebar: () -> SidebarContent,
+        @ViewBuilder detail: () -> DetailContent
+    ) -> some View {
+        #if os(iOS)
+        return iosAppNavigation(columnVisibility: columnVisibility, showingSidebar: showingSidebar, sidebar: sidebar, detail: detail)
+        #elseif os(macOS)
+        return macAppNavigation(columnVisibility: columnVisibility, showingSidebar: showingSidebar, sidebar: sidebar, detail: detail)
+        #else
+        return fallbackAppNavigation(sidebar: sidebar, detail: detail)
+        #endif
     }
-    #else
-    NavigationSplitView { content() } detail: { detail() }
-    #endif
+    
+    /// Cross-platform navigation action with platform-specific behavior
+    /// iOS: Hides sidebar after navigation; macOS: Maintains sidebar state
+    public static func platformNavigationAction<T>(
+        to pane: T,
+        selectedPane: Binding<T?>,
+        columnVisibility: Binding<Bool>?,
+        showingSidebar: Binding<Bool>?
+    ) {
+        #if os(iOS)
+        iosNavigationAction(to: pane, selectedPane: selectedPane, columnVisibility: columnVisibility, showingSidebar: showingSidebar)
+        #elseif os(macOS)
+        macNavigationAction(to: pane, selectedPane: selectedPane, columnVisibility: columnVisibility, showingSidebar: showingSidebar)
+        #else
+        fallbackNavigationAction(to: pane, selectedPane: selectedPane)
+        #endif
+    }
 }
 
-@MainActor @ViewBuilder
-func platformNavigationSplitView<Sidebar: View, Content: View, Detail: View>(
-    @ViewBuilder sidebar: () -> Sidebar,
-    @ViewBuilder content: () -> Content,
-    @ViewBuilder detail: () -> Detail
-) -> some View {
-    #if os(iOS)
-    if #available(iOS 16.0, *) {
-        NavigationStack { content() }
-    } else {
-        content()
-    }
-    #else
-    NavigationSplitView { sidebar() } content: { content() } detail: { detail() }
-    #endif
-}
+// MARK: - Platform-Specific Navigation Components
 
-@MainActor @ViewBuilder
-func platformAppNavigation<SidebarContent: View, DetailContent: View>(
-    @ViewBuilder sidebar: () -> SidebarContent,
-    @ViewBuilder detail: () -> DetailContent
-) -> some View {
-    #if os(iOS)
-    if #available(iOS 16.0, *) {
-        NavigationStack { sidebar() }
-    } else {
-        sidebar()
-    }
-    #else
-    NavigationSplitView { sidebar() } detail: { detail() }
-    #endif
-}
-
-// Overload that accepts bindings for split-view state on platforms that support it
-@MainActor @ViewBuilder
-func platformAppNavigation<SidebarContent: View, DetailContent: View>(
-    columnVisibility: Binding<NavigationSplitViewVisibility>,
+#if os(iOS)
+/// iOS-specific app navigation implementation
+private func iosAppNavigation<SidebarContent: View, DetailContent: View>(
+    columnVisibility: Binding<Bool>,
     showingSidebar: Binding<Bool>,
     @ViewBuilder sidebar: () -> SidebarContent,
     @ViewBuilder detail: () -> DetailContent
 ) -> some View {
-    #if os(iOS)
-    // On iOS, present a single NavigationStack focused on detail content
-    NavigationStack { detail() }
-    #else
-    NavigationSplitView(columnVisibility: columnVisibility) {
-        sidebar()
-    } detail: {
-        detail()
+    if #available(iOS 16.0, *) {
+        // Use NavigationSplitView without columnVisibility for iOS 16+
+        NavigationSplitView {
+            sidebar()
+        } detail: {
+            detail()
+        }
+    } else {
+        // Fallback for iOS 15 and earlier
+        NavigationView {
+            detail()
+        }
     }
-    #endif
 }
 
-func platformNavigationAction<T>(_ action: () -> T) -> T {
-    return action()
-}
-
-// Overload to perform pane navigation with platform-specific split-view coordination
-@MainActor
-func platformNavigationAction<T>(
+/// iOS-specific navigation action implementation
+private func iosNavigationAction<T>(
     to pane: T,
     selectedPane: Binding<T?>,
-    columnVisibility: Binding<NavigationSplitViewVisibility>?,
+    columnVisibility: Binding<Bool>?,
     showingSidebar: Binding<Bool>?
 ) {
     // Update selection
     selectedPane.wrappedValue = pane
-    #if os(iOS)
-    // Ensure sidebar flag is off on iOS single-column navigation (ignored if nil)
-    showingSidebar?.wrappedValue = false
-    _ = columnVisibility // not used on iOS
-    #else
-    // Platform-specific sidebar behavior
-    #if os(macOS)
-    // macOS: Keep sidebar visible when navigating (desktop users expect persistent navigation)
-    if let cv = columnVisibility {
-        cv.wrappedValue = .all
-    }
-    // Ensure sidebar is visible when navigating
-    if let ss = showingSidebar {
-        ss.wrappedValue = true
-    }
-    #else
+    
     // iOS: Hide sidebar after navigation (mobile users expect full-screen content)
     if let cv = columnVisibility {
-        cv.wrappedValue = .detailOnly
+        cv.wrappedValue = false
     }
     // Don't force sidebar visibility on iOS
-    #endif
-    #endif
+}
+#endif
+
+#if os(macOS)
+/// macOS-specific app navigation implementation
+private func macAppNavigation<SidebarContent: View, DetailContent: View>(
+    columnVisibility: Binding<Bool>,
+    showingSidebar: Binding<Bool>,
+    @ViewBuilder sidebar: () -> SidebarContent,
+    @ViewBuilder detail: () -> DetailContent
+) -> some View {
+    NavigationSplitView {
+        sidebar()
+    } detail: {
+        detail()
+    }
 }
 
+/// macOS-specific navigation action implementation
+private func macNavigationAction<T>(
+    to pane: T,
+    selectedPane: Binding<T?>,
+    columnVisibility: Binding<Bool>?,
+    showingSidebar: Binding<Bool>?
+) {
+    // Update selection
+    selectedPane.wrappedValue = pane
+    
+    // macOS: Maintain sidebar state for desktop users
+    if let cv = columnVisibility {
+        cv.wrappedValue = true
+    }
+}
+#endif
 
+/// Fallback navigation action for other platforms
+private func fallbackNavigationAction<T>(
+    to pane: T,
+    selectedPane: Binding<T?>
+) {
+    selectedPane.wrappedValue = pane
+}
+
+/// Fallback app navigation for other platforms
+private func fallbackAppNavigation<SidebarContent: View, DetailContent: View>(
+    @ViewBuilder sidebar: () -> SidebarContent,
+    @ViewBuilder detail: () -> DetailContent
+) -> some View {
+    detail()
+}

@@ -1,35 +1,62 @@
 import SwiftUI
 
-// MARK: - Platform Button Extensions
+// MARK: - Cross-Platform Button Extensions
 
-/// Platform-specific Button extensions that provide consistent behavior
-/// across iOS and macOS while handling platform differences appropriately
+/// Cross-platform button extensions that provide consistent behavior
+/// while properly handling platform differences
 extension View {
 
-    /// Platform-specific navigation button
-    /// iOS: Shows navigation sheet; macOS: Toggles sidebar
-    @ViewBuilder
+    /// Cross-platform navigation button with platform-specific behavior
+    /// iOS: Shows navigation sheet; macOS: Shows sidebar toggle
     func platformNavigationSheetButton(
         action: @escaping () -> Void,
-        sidebarVisibility: Binding<NavigationSplitViewVisibility>? = nil
+        sidebarVisibility: Binding<Bool>? = nil
     ) -> some View {
         #if os(iOS)
-        Button(action: action) {
-            Image(systemName: "list.bullet")
-        }
-        .accessibilityLabel("Navigation")
-        .accessibilityHint("Open navigation sheet")
+        return iosNavigationSheetButton(action: action, sidebarVisibility: sidebarVisibility)
+        #elseif os(macOS)
+        return macNavigationSheetButton(action: action, sidebarVisibility: sidebarVisibility)
         #else
-        Button(action: {
-            if let sidebarVisibility = sidebarVisibility {
-                // Toggle between .automatic and .all
-                sidebarVisibility.wrappedValue = sidebarVisibility.wrappedValue == .all ? .automatic : .all
-            }
-        }) {
-            Image(systemName: "sidebar.left")
-        }
-        .accessibilityLabel("Toggle Sidebar")
-        .accessibilityHint("Show or hide the navigation sidebar")
+        return fallbackNavigationButton(action: action)
         #endif
     }
+}
+
+// MARK: - Platform-Specific Button Components
+
+#if os(iOS)
+/// iOS-specific navigation button implementation
+private func iosNavigationSheetButton(
+    action: @escaping () -> Void,
+    sidebarVisibility: Binding<Bool>? = nil
+) -> some View {
+    Button(action: action) {
+        Image(systemName: "list.bullet")
+    }
+    .accessibilityLabel("Navigation")
+    .accessibilityHint("Open navigation sheet")
+}
+#endif
+
+#if os(macOS)
+/// macOS-specific navigation button implementation
+private func macNavigationSheetButton(
+    action: @escaping () -> Void,
+    sidebarVisibility: Binding<Bool>? = nil
+) -> some View {
+    Button(action: action) {
+        Image(systemName: "sidebar.left")
+    }
+    .accessibilityLabel("Toggle Sidebar")
+    .accessibilityHint("Show or hide the navigation sidebar")
+}
+#endif
+
+/// Fallback navigation button for other platforms
+private func fallbackNavigationButton(action: @escaping () -> Void) -> some View {
+    Button(action: action) {
+        Image(systemName: "list.bullet")
+    }
+    .accessibilityLabel("Navigation")
+    .accessibilityHint("Open navigation")
 }

@@ -102,6 +102,8 @@ extension View {
                 .background(Color.platformGroupedBackground)
         } else {
             // Fallback on earlier versions
+            return self
+                .background(Color.platformGroupedBackground)
         }
         #elseif os(macOS)
         return self
@@ -157,9 +159,15 @@ extension View {
     /// ```
     func platformFormContainer() -> some View {
         #if os(iOS)
-        return self
-            .background(Color.platformGroupedBackground)
-            .scrollContentBackground(.hidden)
+        if #available(iOS 16.0, *) {
+            return self
+                .background(Color.platformGroupedBackground)
+                .scrollContentBackground(.hidden)
+        } else {
+            // Fallback for older iOS versions
+            return self
+                .background(Color.platformGroupedBackground)
+        }
         #elseif os(macOS)
         return self
             .background(Color.platformSecondaryBackground)

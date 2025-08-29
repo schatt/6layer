@@ -412,7 +412,7 @@ private extension CrossPlatformNavigation {
     /// Generate list toolbar based on analysis
     static func platformListToolbar(analysis: CollectionAnalysisResult) -> some View {
         EmptyView()
-            .toolbar {
+            .toolbar(content: {
                 if analysis.collectionType == .medium || analysis.collectionType == .large || analysis.collectionType == .veryLarge {
                     ToolbarItem(placement: .primaryAction) {
                         Button(action: {}) {
@@ -428,7 +428,7 @@ private extension CrossPlatformNavigation {
                         }
                     }
                 }
-            }
+            })
     }
 }
 
