@@ -94,7 +94,11 @@ extension View {
             detail()
         }
         #else
-        NavigationStack {
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                list()
+            }
+        } else {
             list()
         }
         #endif

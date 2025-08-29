@@ -32,7 +32,11 @@ extension View {
     @ViewBuilder
     func platformNavigationContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         #if os(iOS)
-        NavigationStack { content() }
+        if #available(iOS 16.0, *) {
+            NavigationStack { content() }
+        } else {
+            content()
+        }
         #else
         content()
         #endif

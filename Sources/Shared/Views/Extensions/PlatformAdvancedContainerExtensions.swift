@@ -96,9 +96,13 @@ extension View {
     /// ```
     func platformScrollContainer(showsIndicators: Bool = true) -> some View {
         #if os(iOS)
-        return self
-            .scrollIndicators(showsIndicators ? .visible : .hidden)
-            .background(Color.platformGroupedBackground)
+        if #available(iOS 16.0, *) {
+            return self
+                .scrollIndicators(showsIndicators ? .visible : .hidden)
+                .background(Color.platformGroupedBackground)
+        } else {
+            // Fallback on earlier versions
+        }
         #elseif os(macOS)
         return self
             .scrollIndicators(showsIndicators ? .visible : .hidden)

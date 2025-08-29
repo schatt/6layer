@@ -6,6 +6,7 @@
 //  Optimized for mouse/keyboard interfaces and macOS Human Interface Guidelines
 //
 
+#if os(macOS)
 import SwiftUI
 
 // MARK: - macOS-Specific UI Helpers
@@ -56,7 +57,7 @@ public struct macOSDesktopCard: View {
             }
         }
         .padding(16) // macOS standard padding
-        .background(Color(.windowBackgroundColor))
+        .background(Color.cardBackground)
         .cornerRadius(8) // macOS standard corner radius
         .shadow(radius: 2, y: 1)
         .onHover { isHovered in
@@ -93,7 +94,7 @@ public struct macOSDesktopListItem<Content: View>: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color(.windowBackgroundColor))
+        .background(Color.cardBackground)
         .onHover { isHovered in
             // macOS hover effects
             if isHovered {
@@ -142,10 +143,10 @@ public extension View {
     /// macOS-specific styling with proper desktop spacing
     func macOSStyle() -> some View {
         self
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color(.windowBackgroundColor))
-            .cornerRadius(6)
+                    .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.cardBackground)
+        .cornerRadius(6)
             .shadow(radius: 1, y: 1)
     }
     
@@ -214,3 +215,5 @@ public struct macOSDesktopDataItem: Identifiable {
     .padding()
     .frame(width: 400, height: 600)
 }
+
+#endif

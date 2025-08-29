@@ -6,7 +6,11 @@ func platformNavigationSplitView<Content: View, Detail: View>(
     @ViewBuilder detail: () -> Detail
 ) -> some View {
     #if os(iOS)
-    NavigationStack { content() }
+    if #available(iOS 16.0, *) {
+        NavigationStack { content() }
+    } else {
+        content()
+    }
     #else
     NavigationSplitView { content() } detail: { detail() }
     #endif
@@ -19,7 +23,11 @@ func platformNavigationSplitView<Sidebar: View, Content: View, Detail: View>(
     @ViewBuilder detail: () -> Detail
 ) -> some View {
     #if os(iOS)
-    NavigationStack { content() }
+    if #available(iOS 16.0, *) {
+        NavigationStack { content() }
+    } else {
+        content()
+    }
     #else
     NavigationSplitView { sidebar() } content: { content() } detail: { detail() }
     #endif
@@ -31,7 +39,11 @@ func platformAppNavigation<SidebarContent: View, DetailContent: View>(
     @ViewBuilder detail: () -> DetailContent
 ) -> some View {
     #if os(iOS)
-    NavigationStack { sidebar() }
+    if #available(iOS 16.0, *) {
+        NavigationStack { sidebar() }
+    } else {
+        sidebar()
+    }
     #else
     NavigationSplitView { sidebar() } detail: { detail() }
     #endif
