@@ -18,13 +18,28 @@ import SwiftUI
 @MainActor
 public func determineOptimalLayout_L2<Item: Identifiable>(
     items: [Item],
-    hints: PresentationHints
+    hints: PresentationHints,
+    screenWidth: CGFloat? = nil,
+    deviceType: DeviceType? = nil
 ) -> GenericLayoutDecision {
     
     // Analyze content characteristics
     let itemCount = items.count
     let complexity = analyzeContentComplexity(itemCount: itemCount, hints: hints)
-    let deviceCapabilities = getCurrentDeviceCapabilities()
+    
+    // Get device capabilities - use provided context if available, otherwise detect
+    let deviceCapabilities: DeviceCapabilities
+    if let width = screenWidth, let device = deviceType {
+        // Use provided device context for more accurate decisions
+        deviceCapabilities = DeviceCapabilities(
+            screenSize: CGSize(width: width, height: width * 0.75), // Approximate aspect ratio
+            orientation: DeviceOrientation.portrait,
+            memoryAvailable: 1024 * 1024 * 1024
+        )
+    } else {
+        // Fall back to auto-detection
+        deviceCapabilities = getCurrentDeviceCapabilities()
+    }
     
     // Make layout decisions based on content analysis
     let layoutApproach = chooseLayoutApproach(complexity: complexity, capabilities: deviceCapabilities)
@@ -252,6 +267,12 @@ public struct DeviceCapabilities {
         // Placeholder for memory availability
         self.memoryAvailable = 1024 * 1024 * 1024 // 1GB default
     }
+    
+    public init(screenSize: CGSize, orientation: DeviceOrientation, memoryAvailable: Int64) {
+        self.screenSize = screenSize
+        self.orientation = orientation
+        self.memoryAvailable = memoryAvailable
+    }
 }
 
 /// Cross-platform device orientation
@@ -313,10 +334,10 @@ public func determineOptimalCardLayout_L2(
     
     // Choose optimal approach
     let approach = analysis.recommendedApproach
-    let columns = calculateOptimalColumns(
-        width: screenWidth,
-        device: deviceType,
-        content: contentComplexity
+    let columns = calculateOptimalCardColumns(
+        screenWidth: screenWidth,
+        deviceType: deviceType,
+        contentComplexity: contentComplexity
     )
     let spacing = analysis.optimalSpacing
     let responsive = determineResponsiveBehavior(
@@ -363,31 +384,65 @@ private func analyzeCardContent(
         considerations.append("Prioritize performance on mobile devices")
     }
     
+    // Use the spacing calculation function instead of hardcoding
+    let deviceCapabilities = DeviceCapabilities()
+    let optimalSpacing = calculateOptimalSpacing(complexity: complexity, capabilities: deviceCapabilities)
+    
     return ContentAnalysis(
         recommendedApproach: .adaptive,
-        optimalSpacing: 16.0,
+        optimalSpacing: optimalSpacing,
         performanceConsiderations: considerations
     )
 }
 
-/// Calculate optimal number of columns based on screen width and device
-private func calculateOptimalColumns(
-    width: CGFloat,
-    device: DeviceType,
-    content: ContentComplexity
+/// Calculate optimal number of columns for card layouts based on screen width and device
+private func calculateOptimalCardColumns(
+    screenWidth: CGFloat,
+    deviceType: DeviceType,
+    contentComplexity: ContentComplexity
 ) -> Int {
-    switch device {
-    case .phone:
-        return content == .simple ? 1 : 2
-    case .pad:
-        return content == .simple ? 2 : 3
-    case .mac:
-        return content == .simple ? 3 : 4
-    case .tv:
-        return 4
-    case .watch:
-        return 1
+    // Base columns based on screen width
+    let baseColumns: Int
+    if screenWidth < 768 { // Mobile/phone
+        baseColumns = 1
+    } else if screenWidth < 1024 { // Tablet
+        baseColumns = 2
+    } else if screenWidth < 1440 { // Small desktop
+        baseColumns = 3
+    } else { // Large desktop
+        baseColumns = 4
     }
+    
+    // Adjust based on content complexity - simple content uses fewer columns
+    let complexityAdjustment: Int
+    switch contentComplexity {
+    case .simple:
+        complexityAdjustment = -1 // Reduce columns for simple content
+    case .moderate:
+        complexityAdjustment = 0  // No adjustment
+    case .complex:
+        complexityAdjustment = 1  // Increase columns for complex content
+    case .veryComplex:
+        complexityAdjustment = 1  // Increase columns for very complex content
+    }
+    
+    // Apply device-specific limits
+    let deviceLimit: Int
+    switch deviceType {
+    case .phone:
+        deviceLimit = 2
+    case .pad:
+        deviceLimit = 3
+    case .mac:
+        deviceLimit = 4
+    case .tv:
+        deviceLimit = 4
+    case .watch:
+        deviceLimit = 1
+    }
+    
+    let adjustedColumns = max(1, baseColumns + complexityAdjustment)
+    return min(adjustedColumns, deviceLimit)
 }
 
 

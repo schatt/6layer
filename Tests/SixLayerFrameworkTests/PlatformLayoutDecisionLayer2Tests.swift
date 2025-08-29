@@ -16,7 +16,9 @@ final class PlatformLayoutDecisionLayer2Tests: XCTestCase {
                 dataType: .collection,
                 complexity: .complex,
                 context: .browse
-            )
+            ),
+            screenWidth: 375, // Mobile phone width
+            deviceType: .phone
         )
         
         // When: Layout decision is made
@@ -208,7 +210,9 @@ final class PlatformLayoutDecisionLayer2Tests: XCTestCase {
         // When: Layout decision is made
         let decision = determineOptimalLayout_L2(
             items: Array(0..<50).map { MockItem(id: $0) },
-            hints: complexHints
+            hints: complexHints,
+            screenWidth: 768, // Tablet width for performance constraints
+            deviceType: .pad
         )
         
         // Then: Should prioritize performance for complex content

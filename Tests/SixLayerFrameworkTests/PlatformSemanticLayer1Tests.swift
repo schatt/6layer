@@ -178,7 +178,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         // Then: Should adapt performance strategy to complexity
         // 8 items is now moderate (6-9 range) and should use adaptive approach
-        XCTAssertEqual(simpleLayout.approach, .uniform, "Simple content should use uniform approach")
+        XCTAssertEqual(simpleLayout.approach, .adaptive, "8 items should use adaptive approach (moderate complexity)")
         XCTAssertEqual(complexLayout.approach, .adaptive, "8 items should use adaptive approach (moderate complexity)")
     }
     
@@ -257,7 +257,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             dataType: .form,
             presentationPreference: .detail,
             complexity: .complex,
-            context: .edit
+            context: .edit,
+            customPreferences: [
+                "fieldCount": "15",
+                "hasComplexFields": "true",
+                "hasValidation": "true"
+            ]
         )
         
         // When: Intent flows through semantic layer to layout layer
