@@ -1,6 +1,5 @@
 import XCTest
 @testable import SixLayerFramework
-@testable import SixLayerMacOS
 
 final class SixLayerMacOSTests: XCTestCase {
     

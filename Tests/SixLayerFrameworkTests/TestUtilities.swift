@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+@testable import SixLayerFramework
 
 // MARK: - Shared Test Data Models
 

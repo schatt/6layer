@@ -16,8 +16,8 @@ final class FormStateManagementTests: XCTestCase {
         XCTAssertNotNil(formState.isValid)
         XCTAssertNotNil(formState.isDirty)
         
-        // Verify ObservableObject conformance
-        XCTAssertTrue(formState is any ObservableObject)
+        // Verify ObservableObject conformance by checking if it can be used as an ObservableObject
+        let _: any ObservableObject = formState
     }
     
     func testFormStateInitialization() {

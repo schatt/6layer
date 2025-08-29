@@ -314,10 +314,10 @@ final class CrossPlatformNavigationTests: XCTestCase {
         // Given: Navigation with specific presentation hints
         let items = [MockNavigationItem(id: "hinted")]
         let selectedItem = Binding<MockNavigationItem?>(get: { nil }, set: { _ in })
-        let hints = PresentationHints(
+        let hints = createTestHints(
             dataType: .list,
-            context: .browse,
-            presentationPreference: .modal
+            presentationPreference: .modal,
+            context: .browse
         )
         
         // When: Navigation view is created with hints
@@ -331,19 +331,5 @@ final class CrossPlatformNavigationTests: XCTestCase {
         
         // Then: Should respect presentation hints
         XCTAssertNotNil(navigationView, "Should respect presentation hints")
-    }
-}
-
-// MARK: - Test Data Models
-
-struct MockNavigationItem: Identifiable, Hashable {
-    let id: String
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: MockNavigationItem, rhs: MockNavigationItem) -> Bool {
-        return lhs.id == rhs.id
     }
 }

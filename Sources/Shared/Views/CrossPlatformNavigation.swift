@@ -333,9 +333,7 @@ private extension CrossPlatformNavigation {
     ) -> some View {
         List(items, selection: selectedItem) { item in
             NavigationLink(
-                destination: EmptyView(), // Will be handled by parent
-                tag: item,
-                selection: selectedItem
+                value: item
             ) {
                 itemView(item)
             }

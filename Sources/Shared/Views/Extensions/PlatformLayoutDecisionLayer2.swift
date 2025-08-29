@@ -80,9 +80,9 @@ private func analyzeContentComplexity(itemCount: Int, hints: PresentationHints) 
     switch itemCount {
     case 0...5:
         return .simple
-    case 6...15:
+    case 6...9:
         return .moderate
-    case 16...30:
+    case 10...25:
         return .complex
     default:
         return .veryComplex
@@ -105,16 +105,31 @@ private func chooseLayoutApproach(complexity: ContentComplexity, capabilities: D
 private func calculateOptimalColumns(itemCount: Int, complexity: ContentComplexity, capabilities: DeviceCapabilities) -> Int {
     let baseColumns = max(1, min(6, itemCount / 3))
     
+    // Apply complexity-based limits
+    let complexityLimit: Int
     switch complexity {
     case .simple:
-        return min(baseColumns, 3)
+        complexityLimit = 3
     case .moderate:
-        return min(baseColumns, 4)
+        complexityLimit = 4
     case .complex:
-        return min(baseColumns, 5)
+        complexityLimit = 5
     case .veryComplex:
-        return min(baseColumns, 6)
+        complexityLimit = 6
     }
+    
+    // Apply device capability limits
+    let deviceLimit: Int
+    if capabilities.screenSize.width < 768 { // Mobile/phone
+        deviceLimit = 2
+    } else if capabilities.screenSize.width < 1024 { // Tablet
+        deviceLimit = 3
+    } else { // Desktop
+        deviceLimit = 6
+    }
+    
+    // Return the most restrictive limit
+    return min(baseColumns, complexityLimit, deviceLimit)
 }
 
 private func calculateOptimalSpacing(complexity: ContentComplexity, capabilities: DeviceCapabilities) -> CGFloat {

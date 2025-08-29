@@ -17,14 +17,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.0"),
-        .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.0")
+        // Removed unused dependencies: ZIPFoundation and ViewInspector
     ],
     targets: [
         // Main framework target - includes all platform-specific code
         .target(
             name: "SixLayerFramework",
-            dependencies: ["ZIPFoundation"],
+            dependencies: [],
             path: "Sources",
             sources: [
                 "Shared/Models",
@@ -43,8 +42,7 @@ let package = Package(
         .testTarget(
             name: "SixLayerFrameworkTests",
             dependencies: [
-                "SixLayerFramework",
-                "ViewInspector"
+                "SixLayerFramework"
             ],
             path: "Tests/SixLayerFrameworkTests"
         ),
@@ -53,8 +51,7 @@ let package = Package(
         .testTarget(
             name: "SixLayerMacOSTests",
             dependencies: [
-                "SixLayerFramework",
-                "ViewInspector"
+                "SixLayerFramework"
             ],
             path: "Tests/SixLayerMacOSTests"
         )
