@@ -1,7 +1,7 @@
-# 🚀 Six-Layer Framework v1.1.1 Release Notes
+# 🚀 Six-Layer Framework v1.1.0 Release Notes
 
 ## 🎯 **Release Overview**
-**Version**: v1.1.1  
+**Version**: v1.1.0  
 **Release Date**: August 29, 2025  
 **Status**: Production Ready  
 **Breaking Changes**: None  
