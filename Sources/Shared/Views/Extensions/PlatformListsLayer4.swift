@@ -88,18 +88,27 @@ extension View {
         @ViewBuilder detail: () -> DetailContent
     ) -> some View {
         #if os(macOS)
-        NavigationSplitView {
-            list()
-        } detail: {
-            detail()
+        if #available(macOS 13.0, *) {
+            NavigationSplitView {
+                list()
+            } detail: {
+                detail()
+            }
+        } else {
+            HStack {
+                list()
+                detail()
+            }
         }
         #else
         if #available(iOS 16.0, *) {
-            NavigationStack {
+            AnyView(NavigationStack {
                 list()
-            }
+            })
         } else {
-            list()
+            AnyView(NavigationView {
+                list()
+            })
         }
         #endif
     }

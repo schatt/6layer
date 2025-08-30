@@ -95,25 +95,14 @@ func platformToolbarStyling<Content: View>(@ViewBuilder content: () -> Content) 
 /// - Returns: A view with platform-specific modal styling
 func platformModalStyling<Content: View>(@ViewBuilder content: () -> Content) -> some View {
     #if os(iOS)
-    return content()
-        #if os(iOS)
-        if #available(iOS 16.0, *) {
+    if #available(iOS 16.0, *) {
+        return content()
             .presentationDetents([.medium, .large])
-        } else {
-            // Fallback for iOS 15 and earlier
-        }
-        #else
-        // macOS doesn't have presentationDetents
-        #endif
-        #if os(iOS)
-        if #available(iOS 16.0, *) {
             .presentationDragIndicator(.visible)
-        } else {
-            // Fallback for iOS 15 and earlier
-        }
-        #else
-        // macOS doesn't have presentationDragIndicator
-        #endif
+    } else {
+        // Fallback for iOS 15 and earlier
+        return content()
+    }
     #elseif os(macOS)
     return content()
         .frame(minWidth: 400, minHeight: 300)

@@ -274,13 +274,13 @@ private extension CrossPlatformNavigation {
         .sheet(item: selectedItem) { item in
             NavigationView {
                 detailView(item)
-                    .toolbar {
-                        ToolbarItem(placement: .primaryAction) {
-                            Button("Done") {
-                                selectedItem.wrappedValue = nil
+                                            .toolbar {
+                            ToolbarItem(placement: .primaryAction) {
+                                Button("Done") {
+                                    selectedItem.wrappedValue = nil
+                                }
                             }
                         }
-                    }
             }
         }
     }
@@ -332,16 +332,24 @@ private extension CrossPlatformNavigation {
         analysis: CollectionAnalysisResult
     ) -> some View {
         List(items, selection: selectedItem) { item in
-            NavigationLink(
-                value: item
-            ) {
+            #if os(iOS)
+            if #available(iOS 16.0, *) {
+                NavigationLink(value: item) {
+                    itemView(item)
+                }
+            } else {
+                NavigationLink(destination: EmptyView()) {
+                    itemView(item)
+                }
+            }
+            #else
+            NavigationLink(destination: EmptyView()) {
                 itemView(item)
             }
+            #endif
         }
         .navigationTitle(platformNavigationTitle(analysis: analysis))
-        .toolbar {
-            platformListToolbar(analysis: analysis)
-        }
+
     }
     
     /// Generate fallback split view for older macOS versions
@@ -409,27 +417,7 @@ private extension CrossPlatformNavigation {
         }
     }
     
-    /// Generate list toolbar based on analysis
-    static func platformListToolbar(analysis: CollectionAnalysisResult) -> some View {
-        EmptyView()
-            .toolbar(content: {
-                if analysis.collectionType == .medium || analysis.collectionType == .large || analysis.collectionType == .veryLarge {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button(action: {}) {
-                            Image(systemName: "magnifyingglass")
-                        }
-                    }
-                }
-                
-                if analysis.collectionType == .large || analysis.collectionType == .veryLarge {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button(action: {}) {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                        }
-                    }
-                }
-            })
-    }
+
 }
 
 // MARK: - Convenience Extensions

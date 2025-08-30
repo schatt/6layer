@@ -50,7 +50,12 @@ extension View {
         @ViewBuilder destination: @escaping (Item) -> Destination
     ) -> some View {
         #if os(iOS)
-        self.navigationDestination(item: item, destination: destination)
+        if #available(iOS 17.0, *) {
+            self.navigationDestination(item: item, destination: destination)
+        } else {
+            // iOS 15-16 fallback: no navigation destination support
+            self
+        }
         #else
         self
         #endif
@@ -224,28 +229,37 @@ extension View {
     ) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
-            return NavigationLink(value: value, label: label)
+            return AnyView(NavigationLink(value: value, label: label)
                 .navigationDestination(for: Value.self) { value in
                     destination(value)
-                }
+                })
         } else {
             // iOS 15 fallback: use traditional NavigationLink
             if let value = value {
-                return NavigationLink(destination: destination(value), label: label)
+                return AnyView(NavigationLink(destination: destination(value), label: label))
             } else {
-                return NavigationLink(destination: EmptyView(), label: label)
+                return AnyView(NavigationLink(destination: EmptyView(), label: label))
             }
         }
         #elseif os(macOS)
-        return NavigationLink(value: value, label: label)
-            .navigationDestination(for: Value.self) { value in
-                destination(value)
+        if #available(macOS 13.0, *) {
+            return AnyView(NavigationLink(value: value, label: label)
+                .navigationDestination(for: Value.self) { value in
+                    destination(value)
+                })
+        } else {
+            // macOS 12 fallback: use traditional NavigationLink
+            if let value = value {
+                return AnyView(NavigationLink(destination: destination(value), label: label))
+            } else {
+                return AnyView(NavigationLink(destination: EmptyView(), label: label))
             }
+        }
         #else
-        return NavigationLink(value: value, label: label)
+        return AnyView(NavigationLink(value: value, label: label)
             .navigationDestination(for: Value.self) { value in
                 destination(value)
-            }
+            })
         #endif
     }
 
@@ -259,30 +273,35 @@ extension View {
     ) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
-            return NavigationLink(value: tag) {
+            return AnyView(NavigationLink(value: tag) {
                 label()
             }
             .navigationDestination(for: Tag.self) { tag in
                 destination(tag)
-            }
+            })
         } else {
             // iOS 15 fallback: use traditional NavigationLink
-            return NavigationLink(destination: destination(tag), label: label)
+            return AnyView(NavigationLink(destination: destination(tag), label: label))
         }
         #elseif os(macOS)
-        return NavigationLink(value: tag) {
-            label()
-        }
-        .navigationDestination(for: Tag.self) { tag in
-            destination(tag)
+        if #available(macOS 13.0, *) {
+            return AnyView(NavigationLink(value: tag) {
+                label()
+            }
+            .navigationDestination(for: Tag.self) { tag in
+                destination(tag)
+            })
+        } else {
+            // macOS 12 fallback: use traditional NavigationLink
+            return AnyView(NavigationLink(destination: destination(tag), label: label))
         }
         #else
-        return NavigationLink(value: tag) {
+        return AnyView(NavigationLink(value: tag) {
             label()
         }
         .navigationDestination(for: Tag.self) { tag in
             destination(tag)
-        }
+        })
         #endif
     }
 

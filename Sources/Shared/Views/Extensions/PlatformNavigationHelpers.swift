@@ -54,16 +54,16 @@ private func iosAppNavigation<SidebarContent: View, DetailContent: View>(
 ) -> some View {
     if #available(iOS 16.0, *) {
         // Use NavigationSplitView without columnVisibility for iOS 16+
-        NavigationSplitView {
+        AnyView(NavigationSplitView {
             sidebar()
         } detail: {
             detail()
-        }
+        })
     } else {
         // Fallback for iOS 15 and earlier
-        NavigationView {
+        AnyView(NavigationView {
             detail()
-        }
+        })
     }
 }
 
@@ -93,10 +93,18 @@ private func macAppNavigation<SidebarContent: View, DetailContent: View>(
     @ViewBuilder sidebar: () -> SidebarContent,
     @ViewBuilder detail: () -> DetailContent
 ) -> some View {
-    NavigationSplitView {
-        sidebar()
-    } detail: {
-        detail()
+    if #available(macOS 13.0, *) {
+        NavigationSplitView {
+            sidebar()
+        } detail: {
+            detail()
+        }
+    } else {
+        // Fallback for older macOS versions
+        HStack {
+            sidebar()
+            detail()
+        }
     }
 }
 

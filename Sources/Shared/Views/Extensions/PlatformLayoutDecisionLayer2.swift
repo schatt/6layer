@@ -29,7 +29,7 @@ public func determineOptimalLayout_L2<Item: Identifiable>(
     
     // Get device capabilities - use provided context if available, otherwise detect
     let deviceCapabilities: DeviceCapabilities
-    if let width = screenWidth, let device = deviceType {
+    if let width = screenWidth, let _ = deviceType {
         // Use provided device context for more accurate decisions
         deviceCapabilities = DeviceCapabilities(
             screenSize: CGSize(width: width, height: width * 0.75), // Approximate aspect ratio
@@ -345,7 +345,7 @@ public func determineOptimalCardLayout_L2(
         contentComplexity: contentComplexity
     )
     
-    let reasoning = generateStrategyReasoning(
+    let _ = generateStrategyReasoning(
         approach: approach,
         columns: columns,
         spacing: spacing,
