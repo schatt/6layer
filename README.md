@@ -1,5 +1,9 @@
 # SixLayer Framework
 
+[![Version](https://img.shields.io/badge/version-v1.3.0-blue.svg)](https://github.com/yourusername/6layer/releases/tag/v1.3.0)
+[![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/yourusername/6layer)
+[![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
+
 A modern, intelligent UI framework that provides a six-layer abstraction architecture for cross-platform Swift development. This framework eliminates platform-specific UI code while maintaining native performance and user experience.
 
 ## 🏗️ Architecture Overview
@@ -28,11 +32,18 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
+## 🆕 What's New in v1.3.0
+
+- **Public API Access**: All platform functions now have `public` access for external project integration
+- **Updated Platform Support**: iOS 16.0+ and macOS 13.0+ with proper availability checks
+- **Improved Build System**: Cleaner project structure and successful compilation
+- **Enhanced Compatibility**: Better cross-platform support and reduced platform-specific issues
+
 ## 📱 Supported Platforms
 
-- **iOS**: 18.0+
-- **macOS**: 15.0+
-- **Swift**: 6.1+
+- **iOS**: 16.0+
+- **macOS**: 13.0+
+- **Swift**: 5.9+
 
 ## 🛠️ Installation
 
@@ -40,7 +51,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/6layer.git", from: "1.0.0")
+    .package(url: "https://github.com/yourusername/6layer.git", from: "1.3.0")
 ]
 ```
 
@@ -119,13 +130,34 @@ For comprehensive guidance on extending the framework, see:
 └── README.md                      # This file
 ```
 
+## 📋 Changelog
+
+### [v1.3.0] - 2025-01-XX
+- **Public API Access**: All platform functions now have `public` access for external project integration
+- **Updated Platform Support**: iOS 16.0+ and macOS 13.0+ with proper availability checks
+- **Improved Build System**: Cleaner project structure and successful compilation
+- **Enhanced Compatibility**: Better cross-platform support and reduced platform-specific issues
+
+### [v1.2.0] - 2025-01-XX
+- **Validation Engine**: Complete form validation system with custom rules
+- **Advanced Form Types**: Complex form layouts and dynamic field generation
+- **Enhanced Hints System**: Improved layout decision making and customization
+
+### [v1.1.0] - 2025-01-XX
+- **Intelligent Layout Engine**: AI-driven layout decisions and optimization
+- **Cross-Platform Components**: Unified UI components for iOS and macOS
+- **Performance Optimizations**: Enhanced rendering and memory management
+
+### [v1.0.0] - 2025-01-XX
+- **Core Framework Foundation**: Basic six-layer architecture implementation
+- **Platform Abstraction**: Initial cross-platform UI abstraction layer
+- **Basic Components**: Fundamental UI components and extensions
+
 ## 🔧 Development
 
-### Prerequisites
-
-- Xcode 16.4+
-- Swift 6.1+
-- iOS 18.0+ / macOS 15.0+
+- Xcode 15.0+
+- Swift 5.9+
+- iOS 16.0+ / macOS 13.0+
 
 ### Building
 
