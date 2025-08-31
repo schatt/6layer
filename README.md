@@ -1,7 +1,7 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.3.0-blue.svg)](https://github.com/yourusername/6layer/releases/tag/v1.3.0)
-[![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/yourusername/6layer)
+[![Version](https://img.shields.io/badge/version-v1.3.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.3.0)
+[![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
 A modern, intelligent UI framework that provides a six-layer abstraction architecture for cross-platform Swift development. This framework eliminates platform-specific UI code while maintaining native performance and user experience.
@@ -51,7 +51,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/6layer.git", from: "1.3.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.3.0")
 ]
 ```
 
@@ -203,9 +203,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/6layer/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/6layer/discussions)
-- **Documentation**: [Wiki](https://github.com/yourusername/6layer/wiki)
+- **Issues**: [GitHub Issues](https://github.com/schatt/6layer/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/schatt/6layer/discussions)
+- **Documentation**: [Wiki](https://github.com/schatt/6layer/wiki)
 
 ---
 
