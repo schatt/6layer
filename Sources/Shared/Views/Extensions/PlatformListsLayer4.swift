@@ -89,16 +89,16 @@ extension View {
     ) -> some View {
         #if os(macOS)
         if #available(macOS 13.0, *) {
-            NavigationSplitView {
+            AnyView(NavigationSplitView {
                 list()
             } detail: {
                 detail()
-            }
+            })
         } else {
-            HStack {
+            AnyView(HStack {
                 list()
                 detail()
-            }
+            })
         }
         #else
         if #available(iOS 16.0, *) {

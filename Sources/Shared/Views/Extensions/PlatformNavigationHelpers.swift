@@ -94,17 +94,17 @@ private func macAppNavigation<SidebarContent: View, DetailContent: View>(
     @ViewBuilder detail: () -> DetailContent
 ) -> some View {
     if #available(macOS 13.0, *) {
-        NavigationSplitView {
+        AnyView(NavigationSplitView {
             sidebar()
         } detail: {
             detail()
-        }
+        })
     } else {
         // Fallback for older macOS versions
-        HStack {
+        AnyView(HStack {
             sidebar()
             detail()
-        }
+        })
     }
 }
 
