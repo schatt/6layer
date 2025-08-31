@@ -260,9 +260,22 @@ public struct DynamicFormFieldView: View {
                 formState: formState
             )
         case .file:
-            DynamicFileField(
+            EnhancedFileUploadField(
+                field: field,
+                formState: formState,
+                allowedTypes: [.image, .pdf, .text, .audio, .video],
+                maxFileSize: 50 * 1024 * 1024 // 50MB default
+            )
+        case .richtext:
+            RichTextEditorField(
                 field: field,
                 formState: formState
+            )
+        case .autocomplete:
+            AutocompleteField(
+                field: field,
+                formState: formState,
+                suggestions: field.options ?? []
             )
         }
     }

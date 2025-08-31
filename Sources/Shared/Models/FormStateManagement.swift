@@ -46,7 +46,7 @@ public struct FieldState {
 // MARK: - FieldState Equatable Conformance
 
 extension FieldState: Equatable {
-    static func == (lhs: FieldState, rhs: FieldState) -> Bool {
+    public static func == (lhs: FieldState, rhs: FieldState) -> Bool {
         return lhs.isValid == rhs.isValid &&
                lhs.errors == rhs.errors &&
                lhs.isDirty == rhs.isDirty &&
@@ -95,7 +95,7 @@ extension FieldState: Equatable {
 /// Represents a validation error for a form field
 public struct ValidationError: Equatable, Identifiable {
     /// Unique identifier for the error
-    let id = UUID()
+    public let id = UUID()
     
     /// Name of the field that has the error
     let field: String

@@ -58,6 +58,8 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
     case color = "color"
     case range = "range"
     case toggle = "toggle"
+    case richtext = "richtext"
+    case autocomplete = "autocomplete"
     
     /// Check if field type supports options
     public var supportsOptions: Bool {
