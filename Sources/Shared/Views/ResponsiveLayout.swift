@@ -15,7 +15,7 @@ import AppKit
 @_exported import struct SwiftUI.Color
 
 // Screen size classes
-enum ScreenSizeClass {
+public enum ScreenSizeClass {
     case compact, regular, large
 
     static func horizontal(width: CGFloat) -> ScreenSizeClass {
@@ -44,7 +44,7 @@ enum ScreenSizeClass {
 // MARK: - Responsive Container
 
 // MARK: - Responsive Grid
-struct ResponsiveGrid<Content: View>: View {
+public struct ResponsiveGrid<Content: View>: View {
     let columns: [GridItem]
     let spacing: CGFloat
     let content: () -> Content
@@ -55,7 +55,7 @@ struct ResponsiveGrid<Content: View>: View {
         self.content = content
     }
 
-    var body: some View {
+    public var body: some View {
         LazyVGrid(columns: columns, spacing: spacing) {
             content()
         }
@@ -63,8 +63,8 @@ struct ResponsiveGrid<Content: View>: View {
 }
 
 // MARK: - Grid Item Data
-struct GridItemData: Identifiable {
-    var id = UUID()
+public struct GridItemData: Identifiable {
+    public var id = UUID()
     var title: String
     var subtitle: String
     var icon: String
@@ -79,14 +79,14 @@ struct GridItemData: Identifiable {
 }
 
 // MARK: - Responsive Navigation
-struct ResponsiveNavigation<Content: View>: View {
+public struct ResponsiveNavigation<Content: View>: View {
     var content: (Bool) -> Content
 
     init(@ViewBuilder content: @escaping (Bool) -> Content) {
         self.content = content
     }
 
-    var body: some View {
+    public var body: some View {
         ResponsiveContainer { horizontal, _ in
             content(horizontal)
         }
@@ -94,7 +94,7 @@ struct ResponsiveNavigation<Content: View>: View {
 }
 
 // MARK: - Responsive Stack
-struct ResponsiveStack<Content: View>: View {
+public struct ResponsiveStack<Content: View>: View {
     var spacing: CGFloat
     var content: () -> Content
 
@@ -103,7 +103,7 @@ struct ResponsiveStack<Content: View>: View {
         self.content = content
     }
 
-    var body: some View {
+    public var body: some View {
         ResponsiveContainer { horizontal, _ in
             if horizontal {
                 AnyView(HStack(spacing: spacing) {
@@ -119,8 +119,8 @@ struct ResponsiveStack<Content: View>: View {
 }
 
 // MARK: - Responsive Padding
-struct ResponsivePadding: ViewModifier {
-    func body(content: Content) -> some View {
+public struct ResponsivePadding: ViewModifier {
+    public func body(content: Content) -> some View {
         content.padding(paddingValue)
     }
 
@@ -140,14 +140,14 @@ struct ResponsivePadding: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func responsivePadding() -> some View {
         modifier(ResponsivePadding())
     }
 }
 
 // MARK: - Responsive Layout
-struct ResponsiveLayout {
+public struct ResponsiveLayout {
     static func gridColumns(for width: CGFloat, minWidth: CGFloat = 300) -> [GridItem] {
         let count = max(1, Int(width / minWidth))
         return Array(repeating: GridItem(.flexible()), count: count)
@@ -197,14 +197,14 @@ struct ResponsiveLayout {
 }
 
 // MARK: - Example Usage
-struct ResponsiveLayoutExample: View {
+public struct ResponsiveLayoutExample: View {
     let gridItems = [
         GridItemData(title: "Item 1", subtitle: "Description 1", icon: "star.fill", color: .blue),
         GridItemData(title: "Item 2", subtitle: "Description 2", icon: "heart.fill", color: .red),
         GridItemData(title: "Item 3", subtitle: "Description 3", icon: "circle.fill", color: .green)
     ]
 
-    var body: some View {
+    public var body: some View {
         ResponsiveLayout.adaptiveGrid {
             ForEach(gridItems) { item in
                 VStack {
@@ -225,8 +225,8 @@ struct ResponsiveLayoutExample: View {
 }
 
 // MARK: - Example Navigation
-struct ResponsiveNavigationExample: View {
-    var body: some View {
+public struct ResponsiveNavigationExample: View {
+    public var body: some View {
         ResponsiveNavigation { isHorizontal in
             if isHorizontal {
                 NavigationView {

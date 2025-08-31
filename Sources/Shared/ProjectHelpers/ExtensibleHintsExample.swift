@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - Example: E-commerce Product Catalog Hints
 
 /// Custom hint for e-commerce product catalogs
-class EcommerceProductHint: CustomHint {
+public class EcommerceProductHint: CustomHint {
     init(
         category: String,
         showPricing: Bool = true,
@@ -42,7 +42,7 @@ class EcommerceProductHint: CustomHint {
 // MARK: - Example: Social Media Feed Hints
 
 /// Custom hint for social media feeds
-class SocialFeedHint: CustomHint {
+public class SocialFeedHint: CustomHint {
     init(
         contentType: String,
         showInteractions: Bool = true,
@@ -71,7 +71,7 @@ class SocialFeedHint: CustomHint {
 // MARK: - Example: Financial Dashboard Hints
 
 /// Custom hint for financial dashboards
-class FinancialDashboardHint: CustomHint {
+public class FinancialDashboardHint: CustomHint {
     init(
         timeRange: String,
         showCharts: Bool = true,
@@ -100,7 +100,7 @@ class FinancialDashboardHint: CustomHint {
 // MARK: - Example: Blog Post List Hints
 
 /// Custom hint for blog post lists
-class BlogPostHint: CustomHint {
+public class BlogPostHint: CustomHint {
     init(
         showExcerpts: Bool = true,
         showAuthor: Bool = true,
@@ -130,7 +130,7 @@ class BlogPostHint: CustomHint {
 // MARK: - Example: Photo Gallery Hints
 
 /// Custom hint for photo galleries
-class PhotoGalleryHint: CustomHint {
+public class PhotoGalleryHint: CustomHint {
     init(
         showMetadata: Bool = true,
         allowFullscreen: Bool = true,

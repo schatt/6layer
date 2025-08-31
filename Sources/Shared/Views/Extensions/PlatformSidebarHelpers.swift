@@ -4,11 +4,11 @@ import SwiftUI
 
 /// Cross-platform sidebar helpers that provide consistent behavior
 /// while properly handling platform differences
-extension View {
+public extension View {
     
     /// Cross-platform sidebar toggle button with platform-specific behavior
     /// iOS: Toggles sidebar visibility; macOS: Toggles sidebar visibility
-    func platformSidebarToggleButton(columnVisibility: Binding<Bool>) -> some View {
+public func platformSidebarToggleButton(columnVisibility: Binding<Bool>) -> some View {
         #if os(iOS)
         return iosSidebarToggleButton(columnVisibility: columnVisibility)
         #elseif os(macOS)
@@ -20,7 +20,7 @@ extension View {
     
     /// Cross-platform sidebar with platform-specific behavior
     /// iOS: No-op (no sidebar support); macOS: Full sidebar support
-    func platformSidebar<Content: View>(
+public func platformSidebar<Content: View>(
         columnVisibility: Binding<Bool>,
         @ViewBuilder content: () -> Content
     ) -> some View {

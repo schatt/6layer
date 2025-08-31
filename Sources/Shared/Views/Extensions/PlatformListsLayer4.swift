@@ -4,11 +4,11 @@ import SwiftUI
 /// This layer provides platform-specific list components that implement
 /// list patterns across iOS and macOS. This layer handles the specific
 /// implementation of list components.
-extension View {
+public extension View {
     
     /// Platform-specific list row with consistent styling
     /// Provides standardized list row appearance across platforms
-    func platformListRow<Content: View>(
+    public func platformListRow<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         HStack {
@@ -20,7 +20,7 @@ extension View {
     
     /// Platform-specific list section header with consistent styling
     /// Provides standardized section header appearance across platforms
-    func platformListSectionHeader(
+    public func platformListSectionHeader(
         title: String,
         subtitle: String? = nil
     ) -> some View {
@@ -41,7 +41,7 @@ extension View {
     
     /// Platform-specific list empty state with consistent styling
     /// Provides standardized empty state appearance across platforms
-    func platformListEmptyState(
+public func platformListEmptyState(
         systemImage: String,
         title: String,
         message: String
@@ -83,7 +83,7 @@ extension View {
     
     /// Platform-specific list-detail container
     /// Implements the actual UI structure for list-detail patterns
-    func platformListDetailContainer<ListContent: View, DetailContent: View>(
+public func platformListDetailContainer<ListContent: View, DetailContent: View>(
         @ViewBuilder list: () -> ListContent,
         @ViewBuilder detail: () -> DetailContent
     ) -> some View {
@@ -115,7 +115,7 @@ extension View {
     
     /// Platform-specific selectable list row
     /// Implements selection behavior for list-detail patterns
-    func platformSelectableListRow<Content: View>(
+public func platformSelectableListRow<Content: View>(
         isSelected: Bool,
         onSelect: @escaping () -> Void,
         @ViewBuilder content: () -> Content
@@ -134,7 +134,7 @@ extension View {
     
     /// Platform-specific detail pane placeholder
     /// Shows when no item is selected in list-detail views
-    func platformDetailPlaceholder(
+public func platformDetailPlaceholder(
         systemImage: String,
         title: String,
         message: String

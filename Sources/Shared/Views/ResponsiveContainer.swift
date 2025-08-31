@@ -11,8 +11,8 @@ public struct ResponsiveContainer<Content: View>: View {
 }
 
 #if DEBUG
-struct ResponsiveContainer_Previews: PreviewProvider {
-    static var previews: some View {
+public struct ResponsiveContainer_Previews: PreviewProvider {
+    public static var previews: some View {
         ResponsiveContainer { horizontal, vertical in
             VStack {
                 Text(horizontal ? "Horizontal: Yes" : "Horizontal: No")

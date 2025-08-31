@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific toolbar placement for toolbar items
 /// iOS: Uses navigationBarTrailing/navigationBarLeading; macOS: Uses automatic
-enum PlatformToolbarPlacement {
+public enum PlatformToolbarPlacement {
     case leading
     case trailing
     case automatic

@@ -28,7 +28,7 @@ public enum PlatformHapticFeedback {
 
 /// Platform-specific haptic feedback extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
-extension View {
+public extension View {
 
     /// Platform haptic feedback trigger
     /// iOS: Triggers haptic feedback; macOS: No-op (graceful fallback)
@@ -41,7 +41,7 @@ extension View {
     /// Button("Tap me") { }
     ///     .platformHapticFeedback(.light)
     /// ```
-    func platformHapticFeedback(_ feedback: PlatformHapticFeedback) -> some View {
+public func platformHapticFeedback(_ feedback: PlatformHapticFeedback) -> some View {
         #if os(iOS)
         // Trigger haptic feedback on iOS
         switch feedback {
@@ -93,7 +93,7 @@ extension View {
     ///     print("Button tapped with haptic feedback")
     /// }
     /// ```
-    func platformHapticFeedback(
+public func platformHapticFeedback(
         _ feedback: PlatformHapticFeedback,
         action: @escaping () -> Void
     ) -> some View {

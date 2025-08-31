@@ -1,7 +1,7 @@
 import SwiftUI
 
 // Platform-specific Color conveniences
-extension Color {
+public extension Color {
     static var cardBackground: Color {
         #if os(iOS)
         return Color.platformBackground
@@ -218,7 +218,7 @@ extension Color {
 
     /// Platform-specific color encoding
     /// iOS: Uses UIColor; macOS: Uses NSColor
-    func platformColorEncode() -> Data? {
+public func platformColorEncode() -> Data? {
         #if os(macOS)
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         let nsColor = NSColor(self)

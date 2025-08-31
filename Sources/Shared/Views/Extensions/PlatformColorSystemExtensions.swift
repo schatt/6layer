@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific color system that provides consistent theming
 /// across iOS and macOS while respecting platform design guidelines
-extension Color {
+public extension Color {
 
     /// Platform background color
     /// iOS: systemBackground; macOS: windowBackgroundColor
@@ -213,65 +213,65 @@ extension Color {
 
 // MARK: - View Extensions for Platform Colors
 
-extension View {
+public extension View {
 
     /// Apply platform secondary background color
     /// iOS: secondarySystemBackground; macOS: controlBackgroundColor
-    func platformSecondaryBackgroundColor() -> some View {
+public func platformSecondaryBackgroundColor() -> some View {
         self.background(Color.platformSecondaryBackground)
     }
 
     /// Apply platform grouped background color
     /// iOS: systemGroupedBackground; macOS: controlBackgroundColor
-    func platformGroupedBackgroundColor() -> some View {
+public func platformGroupedBackgroundColor() -> some View {
         self.background(Color.platformGroupedBackground)
     }
 
     /// Apply platform foreground color
     /// iOS: label; macOS: labelColor
-    func platformForegroundColor() -> some View {
+public func platformForegroundColor() -> some View {
         self.foregroundColor(Color.platformLabel)
     }
 
     /// Apply platform secondary foreground color
     /// iOS: secondaryLabel; macOS: secondaryLabelColor
-    func platformSecondaryForegroundColor() -> some View {
+public func platformSecondaryForegroundColor() -> some View {
         self.foregroundColor(Color.platformSecondaryLabel)
     }
 
     /// Apply platform tertiary foreground color
     /// iOS: tertiaryLabel; macOS: tertiaryLabelColor
-    func platformTertiaryForegroundColor() -> some View {
+public func platformTertiaryForegroundColor() -> some View {
         self.foregroundColor(Color.platformTertiaryLabel)
     }
 
     /// Apply platform tint color
     /// iOS: systemBlue; macOS: controlAccentColor
-    func platformTintColor() -> some View {
+public func platformTintColor() -> some View {
         self.foregroundColor(Color.platformTint)
     }
 
     /// Apply platform destructive color
     /// iOS: systemRed; macOS: systemRedColor
-    func platformDestructiveColor() -> some View {
+public func platformDestructiveColor() -> some View {
         self.foregroundColor(Color.platformDestructive)
     }
 
     /// Apply platform success color
     /// iOS: systemGreen; macOS: systemGreenColor
-    func platformSuccessColor() -> some View {
+public func platformSuccessColor() -> some View {
         self.foregroundColor(Color.platformSuccess)
     }
 
     /// Apply platform warning color
     /// iOS: systemOrange; macOS: systemOrangeColor
-    func platformWarningColor() -> some View {
+public func platformWarningColor() -> some View {
         self.foregroundColor(Color.platformWarning)
     }
 
     /// Apply platform info color
     /// iOS: systemBlue; macOS: systemBlueColor
-    func platformInfoColor() -> some View {
+public func platformInfoColor() -> some View {
         self.foregroundColor(Color.platformInfo)
     }
 }

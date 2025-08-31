@@ -6,11 +6,11 @@ import SwiftUI
 /// handles performance optimizations, memory management, and technical
 /// implementation details.
 
-extension View {
+public extension View {
     
     /// Platform-specific memory optimization with consistent behavior
     /// Provides memory optimization strategies across platforms
-    func platformMemoryOptimization() -> some View {
+public func platformMemoryOptimization() -> some View {
         #if os(iOS)
         return self
             .drawingGroup() // Enable Metal rendering
@@ -24,7 +24,7 @@ extension View {
     
     /// Platform-specific lazy loading with consistent behavior
     /// Provides lazy loading strategies across platforms
-    func platformLazyLoading<Content: View>(
+public func platformLazyLoading<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         #if os(iOS)
@@ -44,7 +44,7 @@ extension View {
     
     /// Platform-specific rendering optimization with consistent behavior
     /// Provides rendering optimization strategies across platforms
-    func platformRenderingOptimization() -> some View {
+public func platformRenderingOptimization() -> some View {
         #if os(iOS)
         return self
             .drawingGroup() // Enable Metal rendering
@@ -58,7 +58,7 @@ extension View {
     
     /// Platform-specific animation optimization with consistent behavior
     /// Provides animation optimization strategies across platforms
-    func platformAnimationOptimization() -> some View {
+public func platformAnimationOptimization() -> some View {
         #if os(iOS)
         return self
             .animation(.easeInOut(duration: 0.3), value: true)
@@ -72,7 +72,7 @@ extension View {
     
     /// Platform-specific caching optimization with consistent behavior
     /// Provides caching optimization strategies across platforms
-    func platformCachingOptimization() -> some View {
+public func platformCachingOptimization() -> some View {
         #if os(iOS)
         return self
             .id(UUID()) // Force view recreation for caching
@@ -88,7 +88,7 @@ extension View {
 // MARK: - Performance Types
 
 /// Performance optimization strategy configuration
-struct PerformanceOptimizationConfig {
+public struct PerformanceOptimizationConfig {
     let enableMetalRendering: Bool
     let enableLazyLoading: Bool
     let enableCaching: Bool
@@ -103,7 +103,7 @@ struct PerformanceOptimizationConfig {
 }
 
 /// Performance monitoring metrics
-struct PerformanceMonitoringData {
+public struct PerformanceMonitoringData {
     let renderTime: TimeInterval
     let memoryUsage: Int64
     let frameRate: Double
@@ -118,7 +118,7 @@ struct PerformanceMonitoringData {
 }
 
 /// Performance optimization level
-enum PerformanceOptimizationLevel: String, CaseIterable {
+public enum PerformanceOptimizationLevel: String, CaseIterable {
     case none = "None"
     case low = "Low"
     case medium = "Medium"
@@ -137,7 +137,7 @@ enum PerformanceOptimizationLevel: String, CaseIterable {
 }
 
 /// Caching strategy for performance optimization
-enum PerformanceCachingStrategy: String, CaseIterable {
+public enum PerformanceCachingStrategy: String, CaseIterable {
     case none = "None"
     case basic = "Basic"
     case aggressive = "Aggressive"
@@ -154,7 +154,7 @@ enum PerformanceCachingStrategy: String, CaseIterable {
 }
 
 /// Rendering strategy for performance optimization
-enum PerformanceRenderingStrategy: String, CaseIterable {
+public enum PerformanceRenderingStrategy: String, CaseIterable {
     case automatic = "Automatic"
     case immediate = "Immediate"
     case deferred = "Deferred"

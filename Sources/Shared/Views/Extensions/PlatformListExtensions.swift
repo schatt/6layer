@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific List extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
-extension View {
+public extension View {
 
     // MARK: - List Toolbar Extensions
 
@@ -16,7 +16,7 @@ extension View {
     ///   - addButtonTitle: Title for the add button (default: "Add")
     ///   - addButtonIcon: Icon for the add button (default: "plus")
     /// - Returns: A view with platform-specific toolbar
-    func platformListToolbar(
+public func platformListToolbar(
         onAdd: @escaping () -> Void,
         addButtonTitle: String = "Add",
         addButtonIcon: String = "plus"
@@ -48,7 +48,7 @@ extension View {
     /// Applies platform-specific list styling to existing List views
     ///
     /// - Returns: A view with platform-specific list style
-    func platformListStyle() -> some View {
+public func platformListStyle() -> some View {
         #if os(iOS)
         self.listStyle(InsetGroupedListStyle())
         #else
@@ -60,7 +60,7 @@ extension View {
     /// On macOS, applies sidebar style. On iOS, applies insetGrouped style.
     ///
     /// - Returns: A view with platform-specific sidebar list style
-    func platformSidebarListStyle() -> some View {
+public func platformSidebarListStyle() -> some View {
         #if os(iOS)
         return self.listStyle(.insetGrouped)
         #elseif os(macOS)
@@ -80,7 +80,7 @@ extension View {
     ///   - content: The list content
     /// - Returns: A platform-specific list with selection
     @MainActor
-    func platformListWithSelection<SelectionValue: Hashable, Content: View>(
+public func platformListWithSelection<SelectionValue: Hashable, Content: View>(
         selection: Binding<Set<SelectionValue>>,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -99,7 +99,7 @@ extension View {
     ///   - content: The list content
     /// - Returns: A platform-specific list with single selection
     @MainActor
-    func platformListWithSelection<SelectionValue: Hashable, Content: View>(
+public func platformListWithSelection<SelectionValue: Hashable, Content: View>(
         selection: Binding<SelectionValue?>,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -115,7 +115,7 @@ extension View {
     /// Platform-specific backup list container
     /// iOS: Wraps in NavigationView; macOS: Returns content directly with frame
     @ViewBuilder
-    func platformBackupListContainer<Content: View>(
+public func platformBackupListContainer<Content: View>(
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         #if os(iOS)

@@ -4,13 +4,13 @@ import SwiftUI
 /// Consolidated platform-specific styling functions
 /// Reduces conditional compilation blocks by centralizing common patterns
 
-extension View {
+public extension View {
     
     // MARK: - Background Styling
     
     /// Platform-specific background modifier
     /// Applies platform-specific background colors
-    func platformBackground() -> some View {
+public func platformBackground() -> some View {
         #if os(iOS)
         return self.background(Color.platformGroupedBackground)
         #elseif os(macOS)
@@ -21,7 +21,7 @@ extension View {
     }
     
     /// Platform-specific background with custom color
-    func platformBackground(_ color: Color) -> some View {
+public func platformBackground(_ color: Color) -> some View {
         return self.background(color)
     }
     
@@ -29,7 +29,7 @@ extension View {
     
     /// Platform-specific padding modifier
     /// Applies platform-specific padding values
-    func platformPadding() -> some View {
+public func platformPadding() -> some View {
         #if os(iOS)
         return self.padding(16)
         #elseif os(macOS)
@@ -40,24 +40,24 @@ extension View {
     }
     
     /// Platform-specific padding with directional control
-    func platformPadding(_ edges: Edge.Set, _ length: CGFloat? = nil) -> some View {
+public func platformPadding(_ edges: Edge.Set, _ length: CGFloat? = nil) -> some View {
         return self.padding(edges, length)
     }
     
     /// Platform-specific padding with explicit value
-    func platformPadding(_ value: CGFloat) -> some View {
+public func platformPadding(_ value: CGFloat) -> some View {
         return self.padding(value)
     }
     
     /// Platform-specific reduced padding values
-    func platformReducedPadding() -> some View {
+public func platformReducedPadding() -> some View {
         return self.padding(8)
     }
     
     // MARK: - Visual Effects
     
     /// Platform-specific corner radius modifier
-    func platformCornerRadius() -> some View {
+public func platformCornerRadius() -> some View {
         #if os(iOS)
         return self.cornerRadius(12)
         #elseif os(macOS)
@@ -68,12 +68,12 @@ extension View {
     }
     
     /// Platform-specific corner radius with custom value
-    func platformCornerRadius(_ radius: CGFloat) -> some View {
+public func platformCornerRadius(_ radius: CGFloat) -> some View {
         return self.cornerRadius(radius)
     }
     
     /// Platform-specific shadow modifier
-    func platformShadow() -> some View {
+public func platformShadow() -> some View {
         #if os(iOS)
         return self.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
         #elseif os(macOS)
@@ -84,12 +84,12 @@ extension View {
     }
     
     /// Platform-specific shadow with custom parameters
-    func platformShadow(color: Color = .black, radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) -> some View {
+public func platformShadow(color: Color = .black, radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) -> some View {
         return self.shadow(color: color, radius: radius, x: x, y: y)
     }
     
     /// Platform-specific border modifier
-    func platformBorder() -> some View {
+public func platformBorder() -> some View {
         #if os(iOS)
         return self.overlay(
             RoundedRectangle(cornerRadius: 12)
@@ -109,7 +109,7 @@ extension View {
     }
     
     /// Platform-specific border with custom parameters
-    func platformBorder(color: Color, width: CGFloat = 0.5) -> some View {
+public func platformBorder(color: Color, width: CGFloat = 0.5) -> some View {
         return self.overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(color, lineWidth: width)
@@ -119,7 +119,7 @@ extension View {
     // MARK: - Typography
     
     /// Platform-specific font modifier
-    func platformFont() -> some View {
+public func platformFont() -> some View {
         #if os(iOS)
         return self.font(.body)
         #elseif os(macOS)
@@ -130,14 +130,14 @@ extension View {
     }
     
     /// Platform-specific font with custom style
-    func platformFont(_ style: Font) -> some View {
+public func platformFont(_ style: Font) -> some View {
         return self.font(style)
     }
     
     // MARK: - Animation
     
     /// Platform-specific animation modifier
-    func platformAnimation() -> some View {
+public func platformAnimation() -> some View {
         #if os(iOS)
         return self.animation(.easeInOut(duration: 0.3), value: true)
         #elseif os(macOS)
@@ -148,14 +148,14 @@ extension View {
     }
     
     /// Platform-specific animation with custom parameters
-    func platformAnimation(_ animation: Animation?, value: AnyHashable) -> some View {
+public func platformAnimation(_ animation: Animation?, value: AnyHashable) -> some View {
         return self.animation(animation, value: value)
     }
     
     // MARK: - Frame Constraints
     
     /// Platform-specific minimum frame constraints
-    func platformMinFrame() -> some View {
+public func platformMinFrame() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)
@@ -166,7 +166,7 @@ extension View {
     }
     
     /// Platform-specific maximum frame constraints
-    func platformMaxFrame() -> some View {
+public func platformMaxFrame() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)
@@ -177,7 +177,7 @@ extension View {
     }
     
     /// Platform-specific ideal frame constraints
-    func platformIdealFrame() -> some View {
+public func platformIdealFrame() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)
@@ -188,7 +188,7 @@ extension View {
     }
     
     /// Platform-specific adaptive frame constraints
-    func platformAdaptiveFrame() -> some View {
+public func platformAdaptiveFrame() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)
@@ -201,7 +201,7 @@ extension View {
     // MARK: - Form Styling
     
     /// Platform-specific form styling
-    func platformFormStyle() -> some View {
+public func platformFormStyle() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)
@@ -214,7 +214,7 @@ extension View {
     // MARK: - Content Spacing
     
     /// Platform-specific content spacing
-    func platformContentSpacing() -> some View {
+public func platformContentSpacing() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)

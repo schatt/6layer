@@ -4,11 +4,11 @@ import SwiftUI
 
 /// Cross-platform button extensions that provide consistent behavior
 /// while properly handling platform differences
-extension View {
+public extension View {
 
     /// Cross-platform navigation button with platform-specific behavior
     /// iOS: Shows navigation sheet; macOS: Shows sidebar toggle
-    func platformNavigationSheetButton(
+public func platformNavigationSheetButton(
         action: @escaping () -> Void,
         sidebarVisibility: Binding<Bool>? = nil
     ) -> some View {

@@ -471,7 +471,7 @@ private struct DefaultPlatformFieldView: View {
     let value: Any
     let onValueChange: (Any) -> Void
     
-    var body: some View {
+    public var body: some View {
         switch field.type {
         case .string:
             TextField("Enter \(field.name)", text: Binding(
@@ -561,7 +561,7 @@ private struct DefaultPlatformFieldView: View {
 public extension View {
     
     /// Apply intelligent form generation
-    func platformIntelligentForm<T>(
+public func platformIntelligentForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
@@ -578,7 +578,7 @@ public extension View {
     }
     
     /// Apply intelligent form generation for existing data
-    func platformIntelligentForm<T>(
+public func platformIntelligentForm<T>(
         for data: T,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },

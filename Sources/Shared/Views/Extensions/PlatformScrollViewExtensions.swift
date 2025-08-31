@@ -8,7 +8,7 @@ import SwiftUI
 /// Note: This file is prepared for future ScrollView-specific platform extensions.
 /// Currently, no ScrollView extensions exist in PlatformSpecificViewExtensions.swift
 /// to extract, but the file structure is ready for when they are needed.
-extension View {
+public extension View {
 
     // MARK: - ScrollView Style Extensions
     

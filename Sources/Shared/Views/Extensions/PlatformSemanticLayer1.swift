@@ -168,11 +168,11 @@ public func platformPresentTemporalData_L1(
 // MARK: - Generic View Structures
 
 /// Generic item collection view
-struct GenericItemCollectionView<Item: Identifiable>: View {
+public struct GenericItemCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("Generic Collection")
                 .font(.headline)
@@ -184,11 +184,11 @@ struct GenericItemCollectionView<Item: Identifiable>: View {
 }
 
 /// Generic numeric data view
-struct GenericNumericDataView: View {
+public struct GenericNumericDataView: View {
     let data: [GenericNumericData]
     let hints: PresentationHints
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("Numeric Data")
                 .font(.headline)
@@ -200,11 +200,11 @@ struct GenericNumericDataView: View {
 }
 
 /// Generic form view using our platform extensions
-struct GenericFormView: View {
+public struct GenericFormView: View {
     let fields: [GenericFormField]
     let hints: PresentationHints
     
-    var body: some View {
+    public var body: some View {
         // Use our platform form container from Layer 4
         platformFormContainer_L4(
             strategy: FormStrategy(
@@ -233,11 +233,11 @@ struct GenericFormView: View {
 }
 
 /// Generic media view
-struct GenericMediaView: View {
+public struct GenericMediaView: View {
     let media: [GenericMediaItem]
     let hints: PresentationHints
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("Media Collection")
                 .font(.headline)
@@ -249,11 +249,11 @@ struct GenericMediaView: View {
 }
 
 /// Generic hierarchical view
-struct GenericHierarchicalView: View {
+public struct GenericHierarchicalView: View {
     let items: [GenericHierarchicalItem]
     let hints: PresentationHints
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("Hierarchical Data")
                 .font(.headline)
@@ -265,11 +265,11 @@ struct GenericHierarchicalView: View {
 }
 
 /// Generic temporal view
-struct GenericTemporalView: View {
+public struct GenericTemporalView: View {
     let items: [GenericTemporalItem]
     let hints: PresentationHints
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("Temporal Data")
                 .font(.headline)

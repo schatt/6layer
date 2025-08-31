@@ -127,7 +127,7 @@ private extension IntelligentDetailView {
     }
     
     /// Generate a compact detail view
-    static func platformCompactDetailView<T>(
+public static func platformCompactDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -145,7 +145,7 @@ private extension IntelligentDetailView {
     }
     
     /// Generate a standard detail view with sections
-    static func platformStandardDetailView<T>(
+public static func platformStandardDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -179,7 +179,7 @@ private extension IntelligentDetailView {
     }
     
     /// Generate a detailed view with full information
-    static func platformDetailedDetailView<T>(
+public static func platformDetailedDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -225,7 +225,7 @@ private extension IntelligentDetailView {
     }
     
     /// Generate a tabbed view for very complex data
-    static func platformTabbedDetailView<T>(
+public static func platformTabbedDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -330,7 +330,7 @@ private extension IntelligentDetailView {
     }
     
     /// Generate an adaptive detail view
-    static func platformAdaptiveDetailView<T>(
+public static func platformAdaptiveDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -362,7 +362,7 @@ private extension IntelligentDetailView {
     
     /// Generate a field view based on field type
     @ViewBuilder
-    static func platformFieldView(
+public static func platformFieldView(
         field: DataField,
         value: Any,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -387,7 +387,7 @@ private extension IntelligentDetailView {
     
     /// Generate a detailed field view
     @ViewBuilder
-    static func platformDetailedFieldView(
+public static func platformDetailedFieldView(
         field: DataField,
         value: Any,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -436,7 +436,7 @@ private extension IntelligentDetailView {
     
     /// Generate default field value display
     @ViewBuilder
-    static func platformDefaultFieldValue(field: DataField, value: Any) -> some View {
+public static func platformDefaultFieldValue(field: DataField, value: Any) -> some View {
         switch field.type {
         case .string:
             Text(String(describing: value))
@@ -488,7 +488,7 @@ private extension IntelligentDetailView {
     }
     
     /// Generate raw data view for debugging
-    static func platformRawDataView<T>(data: T, analysis: DataAnalysisResult) -> some View {
+public static func platformRawDataView<T>(data: T, analysis: DataAnalysisResult) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 Text("Raw Data Analysis")
@@ -601,7 +601,7 @@ public enum FieldPriority: String, CaseIterable {
 public extension View {
     
     /// Apply intelligent detail view generation
-    func platformIntelligentDetail<T>(
+public func platformIntelligentDetail<T>(
         for data: T,
         hints: PresentationHints? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() }
@@ -614,7 +614,7 @@ public extension View {
     }
     
     /// Apply intelligent detail view generation with default strategy
-    func platformIntelligentDetail<T>(
+public func platformIntelligentDetail<T>(
         for data: T,
         @ViewBuilder customFieldView: @escaping (String, String, FieldType) -> some View = { _, _, _ in EmptyView() }
     ) -> some View {

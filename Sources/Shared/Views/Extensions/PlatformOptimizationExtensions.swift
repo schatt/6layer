@@ -310,7 +310,7 @@ func applyPlatformFeatures<Content: View>(
 // TODO: Use existing DeviceType enum from ResponsiveLayout.swift
 
 /// Platform-specific features to apply
-enum PlatformFeature {
+public enum PlatformFeature {
     case hapticFeedback
     case keyboardShortcuts
     case contextMenus
@@ -319,79 +319,79 @@ enum PlatformFeature {
 
 // MARK: - Extension Methods for View
 
-extension View {
+public extension View {
     
     /// Apply platform-specific form styling
-    func platformFormOptimized() -> some View {
+public func platformFormOptimized() -> some View {
         platformFormStyling {
             self
         }
     }
     
     /// Apply platform-specific field styling
-    func platformFieldOptimized() -> some View {
+public func platformFieldOptimized() -> some View {
         platformFieldStyling {
             self
         }
     }
     
     /// Apply platform-specific navigation styling
-    func platformNavigationOptimized() -> some View {
+public func platformNavigationOptimized() -> some View {
         platformNavigationStyling {
             self
         }
     }
     
     /// Apply platform-specific toolbar styling
-    func platformToolbarOptimized() -> some View {
+public func platformToolbarOptimized() -> some View {
         platformToolbarStyling {
             self
         }
     }
     
     /// Apply platform-specific modal styling
-    func platformModalOptimized() -> some View {
+public func platformModalOptimized() -> some View {
         platformModalStyling {
             self
         }
     }
     
     /// Apply platform-specific list styling
-    func platformListOptimized() -> some View {
+public func platformListOptimized() -> some View {
         platformListStyling {
             self
         }
     }
     
     /// Apply platform-specific grid styling
-    func platformGridOptimized() -> some View {
+public func platformGridOptimized() -> some View {
         platformGridStyling {
             self
         }
     }
     
     /// Apply platform-specific performance optimizations
-    func platformPerformanceOptimized(for platform: Platform) -> some View {
+public func platformPerformanceOptimized(for platform: Platform) -> some View {
         applyPlatformPerformanceOptimizations(content: { self }, platform: platform)
     }
     
     /// Apply platform-specific memory optimizations
-    func platformMemoryOptimized(for platform: Platform) -> some View {
+public func platformMemoryOptimized(for platform: Platform) -> some View {
         applyPlatformMemoryOptimizations(content: { self }, platform: platform)
     }
     
     /// Apply platform-specific accessibility enhancements
-    func platformAccessibilityEnhanced(for platform: Platform) -> some View {
+public func platformAccessibilityEnhanced(for platform: Platform) -> some View {
         applyPlatformAccessibilityEnhancements(content: { self }, platform: platform)
     }
     
     /// Optimize for specific device
-    func platformDeviceOptimized(for device: DeviceType) -> some View {
+public func platformDeviceOptimized(for device: DeviceType) -> some View {
         optimizeForDevice(content: { self }, device: device)
     }
     
     /// Apply platform-specific features
-    func platformFeatures(_ features: [PlatformFeature]) -> some View {
+public func platformFeatures(_ features: [PlatformFeature]) -> some View {
         applyPlatformFeatures(content: { self }, features: features)
     }
 }

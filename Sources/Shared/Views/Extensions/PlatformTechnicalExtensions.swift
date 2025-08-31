@@ -190,7 +190,7 @@ func optimizeRendering<Content: View>(
 // MARK: - Data Structures
 
 /// Performance metrics for optimization decisions
-struct PerformanceMetrics {
+public struct PerformanceMetrics {
     let renderTime: TimeInterval
     let memoryUsage: MemoryUsage
     let frameRate: Double
@@ -198,19 +198,19 @@ struct PerformanceMetrics {
 }
 
 /// Memory usage information
-struct MemoryUsage {
+public struct MemoryUsage {
     let current: UInt64
     let peak: UInt64
     let threshold: UInt64
 }
 
 /// Memory threshold for optimization decisions
-enum MemoryThreshold {
+public enum MemoryThreshold {
     case low, medium, high, critical
 }
 
 /// Rendering complexity level
-enum RenderingComplexity {
+public enum RenderingComplexity {
     case simple, moderate, complex, extreme
 }
 
@@ -220,10 +220,10 @@ enum RenderingComplexity {
 
 // MARK: - Extension Methods for View
 
-extension View {
+public extension View {
     
     /// Apply technical form implementation with performance optimization
-    func platformFormTechnical(
+public func platformFormTechnical(
         alignment: HorizontalAlignment = .center,
         spacing: CGFloat? = nil
     ) -> some View {
@@ -233,42 +233,42 @@ extension View {
     }
     
     /// Apply technical field implementation with performance optimization
-    func platformFieldTechnical(label: String) -> some View {
+public func platformFieldTechnical(label: String) -> some View {
         platformFieldImplementation(label: label) {
             self
         }
     }
     
     /// Apply technical navigation implementation with performance optimization
-    func platformNavigationTechnical(title: String) -> some View {
+public func platformNavigationTechnical(title: String) -> some View {
         platformNavigationImplementation(title: title) {
             self
         }
     }
     
     /// Apply technical toolbar implementation with performance optimization
-    func platformToolbarTechnical(placement: ToolbarItemPlacement) -> some View {
+public func platformToolbarTechnical(placement: ToolbarItemPlacement) -> some View {
         platformToolbarImplementation(placement: placement) {
             self
         }
     }
     
     /// Apply technical modal implementation with performance optimization
-    func platformModalTechnical(isPresented: Binding<Bool>) -> some View {
+public func platformModalTechnical(isPresented: Binding<Bool>) -> some View {
         platformModalImplementation(isPresented: isPresented) {
             self
         }
     }
     
     /// Apply technical list implementation with performance optimization
-    func platformListTechnical() -> some View {
+public func platformListTechnical() -> some View {
         platformListImplementation {
             self
         }
     }
     
     /// Apply technical grid implementation with performance optimization
-    func platformGridTechnical(columns: Int, spacing: CGFloat = 16) -> some View {
+public func platformGridTechnical(columns: Int, spacing: CGFloat = 16) -> some View {
         platformGridImplementation(columns: columns, spacing: spacing) {
             self
         }

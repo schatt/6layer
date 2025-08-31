@@ -4,11 +4,11 @@ import SwiftUI
 
 /// Cross-platform context menu extensions that provide consistent behavior
 /// while properly handling platform differences
-extension View {
+public extension View {
     
     /// Cross-platform context menu with platform-specific behavior
     /// iOS: Full context menu support; macOS: Full context menu support
-    func platformContextMenu<MenuItems: View>(
+public func platformContextMenu<MenuItems: View>(
         @ViewBuilder menuItems: () -> MenuItems,
         preview: (() -> some View)? = nil
     ) -> some View {
@@ -23,7 +23,7 @@ extension View {
     
     /// Cross-platform context menu with action-based menu items
     /// iOS: Full context menu support; macOS: Full context menu support
-    func platformContextMenu<MenuItems: View>(
+public func platformContextMenu<MenuItems: View>(
         @ViewBuilder menuItems: () -> MenuItems
     ) -> some View {
         #if os(iOS)

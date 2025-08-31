@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific accessibility extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
-extension View {
+public extension View {
 
     /// Platform accessibility label
     /// iOS: Uses accessibilityLabel; macOS: Uses accessibilityLabel
@@ -18,7 +18,7 @@ extension View {
     /// Image(systemName: "star.fill")
     ///     .platformAccessibilityLabel("Favorite item")
     /// ```
-    func platformAccessibilityLabel(_ label: String) -> some View {
+public func platformAccessibilityLabel(_ label: String) -> some View {
         self.accessibilityLabel(label)
     }
 
@@ -34,7 +34,7 @@ extension View {
     /// Button("Save") { saveData() }
     ///     .platformAccessibilityHint("Saves your current work")
     /// ```
-    func platformAccessibilityHint(_ hint: String) -> some View {
+public func platformAccessibilityHint(_ hint: String) -> some View {
         self.accessibilityHint(hint)
     }
 
@@ -50,7 +50,7 @@ extension View {
     /// Slider(value: $progress, in: 0...100)
     ///     .platformAccessibilityValue("\(Int(progress)) percent")
     /// ```
-    func platformAccessibilityValue(_ value: String) -> some View {
+public func platformAccessibilityValue(_ value: String) -> some View {
         self.accessibilityValue(value)
     }
 
@@ -66,7 +66,7 @@ extension View {
     /// Text("Clickable text")
     ///     .platformAccessibilityAddTraits(.isButton)
     /// ```
-    func platformAccessibilityAddTraits(_ traits: AccessibilityTraits) -> some View {
+public func platformAccessibilityAddTraits(_ traits: AccessibilityTraits) -> some View {
         self.accessibilityAddTraits(traits)
     }
 
@@ -82,7 +82,7 @@ extension View {
     /// Text("Important notice")
     ///     .platformAccessibilityRemoveTraits(.isButton)
     /// ```
-    func platformAccessibilityRemoveTraits(_ traits: AccessibilityTraits) -> some View {
+public func platformAccessibilityRemoveTraits(_ traits: AccessibilityTraits) -> some View {
         self.accessibilityRemoveTraits(traits)
     }
 
@@ -98,7 +98,7 @@ extension View {
     /// Text("Primary action")
     ///     .platformAccessibilitySortPriority(1)
     /// ```
-    func platformAccessibilitySortPriority(_ priority: Double) -> some View {
+public func platformAccessibilitySortPriority(_ priority: Double) -> some View {
         self.accessibilitySortPriority(priority)
     }
 
@@ -114,7 +114,7 @@ extension View {
     /// Text("Decorative element")
     ///     .platformAccessibilityHidden(true)
     /// ```
-    func platformAccessibilityHidden(_ hidden: Bool) -> some View {
+public func platformAccessibilityHidden(_ hidden: Bool) -> some View {
         self.accessibilityHidden(hidden)
     }
 
@@ -130,7 +130,7 @@ extension View {
     /// Button("Save") { saveData() }
     ///     .platformAccessibilityIdentifier("save-button")
     /// ```
-    func platformAccessibilityIdentifier(_ identifier: String) -> some View {
+public func platformAccessibilityIdentifier(_ identifier: String) -> some View {
         self.accessibilityIdentifier(identifier)
     }
 
@@ -150,7 +150,7 @@ extension View {
     ///         editMode = true
     ///     }
     /// ```
-    func platformAccessibilityAction(named name: String, action: @escaping () -> Void) -> some View {
+public func platformAccessibilityAction(named name: String, action: @escaping () -> Void) -> some View {
         self.accessibilityAction(named: name) {
             action()
         }

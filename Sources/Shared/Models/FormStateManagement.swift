@@ -6,7 +6,7 @@ import Combine
 
 /// Protocol defining the core form state management interface
 @MainActor
-protocol FormState: ObservableObject {
+public protocol FormState: ObservableObject {
     /// Dictionary of field states keyed by field name
     var fields: [String: FieldState] { get }
     
@@ -18,7 +18,7 @@ protocol FormState: ObservableObject {
 }
 
 /// Represents the state of a single form field
-struct FieldState {
+public struct FieldState {
     /// Current value of the field (can be any type)
     var value: Any
     
@@ -93,7 +93,7 @@ extension FieldState: Equatable {
 }
 
 /// Represents a validation error for a form field
-struct ValidationError: Equatable, Identifiable {
+public struct ValidationError: Equatable, Identifiable {
     /// Unique identifier for the error
     let id = UUID()
     
@@ -114,7 +114,7 @@ struct ValidationError: Equatable, Identifiable {
 }
 
 /// Severity levels for validation errors
-enum ValidationSeverity: Equatable, CaseIterable {
+public enum ValidationSeverity: Equatable, CaseIterable {
     case info
     case warning
     case error

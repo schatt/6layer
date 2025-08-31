@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific animation system extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
-extension View {
+public extension View {
 
     /// Platform animation with default parameters
     /// iOS: Uses animation; macOS: Uses animation
@@ -19,7 +19,7 @@ extension View {
     ///     .platformAnimation(.spring)
     /// ```
     @ViewBuilder
-    func platformAnimation(_ animation: PlatformAnimation) -> some View {
+public func platformAnimation(_ animation: PlatformAnimation) -> some View {
         self.animation(animation.swiftUIAnimation, value: UUID())
     }
 
@@ -38,7 +38,7 @@ extension View {
     ///     .platformAnimation(.easeInOut, duration: 0.5)
     /// ```
     @ViewBuilder
-    func platformAnimation(
+public func platformAnimation(
         _ animation: PlatformAnimation,
         duration: Double
     ) -> some View {
@@ -62,7 +62,7 @@ extension View {
     ///     .platformAnimation(.spring, response: 0.5, dampingFraction: 0.8)
     /// ```
     @ViewBuilder
-    func platformAnimation(
+public func platformAnimation(
         _ animation: PlatformAnimation,
         response: Double,
         dampingFraction: Double,

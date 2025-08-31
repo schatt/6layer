@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific menu system extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
-extension View {
+public extension View {
 
     /// Platform menu with menu items
     /// iOS: No-op (menus not supported); macOS: Uses menu with menu items
@@ -21,7 +21,7 @@ extension View {
     ///     }
     /// ```
     @ViewBuilder
-    func platformMenu<MenuItems: View>(
+public func platformMenu<MenuItems: View>(
         @ViewBuilder content: () -> MenuItems
     ) -> some View {
         #if os(macOS)
@@ -55,7 +55,7 @@ extension View {
     ///     )
     /// ```
     @ViewBuilder
-    func platformMenu<Label: View, MenuItems: View>(
+public func platformMenu<Label: View, MenuItems: View>(
         label: Label,
         @ViewBuilder content: () -> MenuItems
     ) -> some View {
@@ -90,7 +90,7 @@ extension View {
     ///     )
     /// ```
     @ViewBuilder
-    func platformMenu<MenuItems: View>(
+public func platformMenu<MenuItems: View>(
         title: String,
         @ViewBuilder content: () -> MenuItems
     ) -> some View {

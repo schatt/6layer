@@ -145,7 +145,7 @@ final class DataBinder<T> {
 // MARK: - Field Binding
 
 /// Type-erased binding for model properties
-class FieldBinding<T> {
+public class FieldBinding<T> {
     private let getValueClosure: (T) -> Any
     private let setValueClosure: (Any, inout T) -> Void
     
@@ -321,7 +321,7 @@ final class DirtyStateManager {
 // MARK: - Supporting Types
 
 /// Represents details about a field change
-struct ChangeDetails {
+public struct ChangeDetails {
     /// The previous value of the field
     let oldValue: Any
     

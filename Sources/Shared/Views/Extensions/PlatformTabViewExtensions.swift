@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Platform-specific TabView extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
-extension View {
+public extension View {
 
     // MARK: - TabView Style Extensions
 
@@ -12,7 +12,7 @@ extension View {
     /// iOS: Uses PageTabViewStyle; macOS: Uses DefaultTabViewStyle
     ///
     /// - Returns: A view with platform-specific tab view style
-    func platformTabViewStyle() -> some View {
+public func platformTabViewStyle() -> some View {
         #if os(iOS)
         self.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         #else

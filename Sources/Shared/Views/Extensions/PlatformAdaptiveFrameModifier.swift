@@ -4,11 +4,11 @@ import SwiftUI
 
 /// ViewModifier for platform-adaptive frame sizing
 /// Analyzes form content and applies appropriate dimensions
-struct AdaptiveFrameModifier: ViewModifier {
+public struct AdaptiveFrameModifier: ViewModifier {
     @State private var calculatedWidth: CGFloat = 600
     @State private var calculatedHeight: CGFloat = 700
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .frame(minWidth: calculatedWidth, minHeight: calculatedHeight)
             .onPreferenceChange(FormContentKey.self) { metrics in

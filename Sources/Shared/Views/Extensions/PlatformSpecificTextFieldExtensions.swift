@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension TextField {
-    func platformTextFieldStyle() -> some View {
+public func platformTextFieldStyle() -> some View {
         #if os(iOS)
         return self.textFieldStyle(.roundedBorder)
         #elseif os(macOS)

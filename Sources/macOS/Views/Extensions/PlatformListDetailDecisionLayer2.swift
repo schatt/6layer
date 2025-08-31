@@ -11,7 +11,7 @@ import SwiftUI
 /// Manages selection state for list-detail views on macOS
 /// macOS: Selection with detail pane display
 @MainActor
-class PlatformListDetailSelection<T: Identifiable>: ObservableObject {
+public class PlatformListDetailSelection<T: Identifiable>: ObservableObject {
     @Published var selectedItem: T?
     @Published var showingDetail = false
     

@@ -12,7 +12,7 @@ import SwiftUI
 
 /// Platform-specific basic container extensions
 /// Provides consistent container behavior across iOS and macOS
-extension View {
+public extension View {
     
     /// Platform-specific VStack container with consistent styling
     /// iOS: Uses VStack with iOS-appropriate styling; macOS: Uses VStack with macOS-appropriate styling
@@ -32,7 +32,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformVStackContainer<Content: View>(
+public func platformVStackContainer<Content: View>(
         alignment: HorizontalAlignment = .center,
         spacing: CGFloat? = nil,
         @ViewBuilder content: () -> Content
@@ -60,7 +60,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformHStackContainer<Content: View>(
+public func platformHStackContainer<Content: View>(
         alignment: VerticalAlignment = .center,
         spacing: CGFloat? = nil,
         @ViewBuilder content: () -> Content
@@ -86,7 +86,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformZStackContainer<Content: View>(
+public func platformZStackContainer<Content: View>(
         alignment: Alignment = .center,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -114,7 +114,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformLazyVStackContainer<Content: View>(
+public func platformLazyVStackContainer<Content: View>(
         alignment: HorizontalAlignment = .center,
         spacing: CGFloat? = nil,
         pinnedViews: PinnedScrollableViews = .init(),
@@ -144,7 +144,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformLazyHStackContainer<Content: View>(
+public func platformLazyHStackContainer<Content: View>(
         alignment: VerticalAlignment = .center,
         spacing: CGFloat? = nil,
         pinnedViews: PinnedScrollableViews = .init(),
@@ -176,7 +176,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformScrollViewContainer<Content: View>(
+public func platformScrollViewContainer<Content: View>(
         _ axes: Axis.Set = .vertical,
         showsIndicators: Bool = true,
         @ViewBuilder content: () -> Content
@@ -204,7 +204,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformGroupBoxContainer<Content: View>(
+public func platformGroupBoxContainer<Content: View>(
         title: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -233,7 +233,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformSectionContainer<Header: View, Footer: View, Content: View>(
+public func platformSectionContainer<Header: View, Footer: View, Content: View>(
         header: Header,
         footer: Footer,
         @ViewBuilder content: () -> Content
@@ -259,7 +259,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformSectionContainer<Header: View, Content: View>(
+public func platformSectionContainer<Header: View, Content: View>(
         header: Header,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -284,7 +284,7 @@ extension View {
     /// }
     /// ```
     @ViewBuilder
-    func platformSectionContainer<Content: View>(
+public func platformSectionContainer<Content: View>(
         header: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -310,7 +310,7 @@ extension View {
     /// ```
     @MainActor
     @ViewBuilder
-    func platformListContainer<Content: View>(
+public func platformListContainer<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         List {

@@ -12,7 +12,7 @@ import SwiftUI
 
 /// Platform-specific advanced container extensions
 /// Provides consistent container behavior across iOS and macOS
-extension View {
+public extension View {
     
     /// Platform-specific LazyVGrid container with adaptive styling
     /// Automatically adapts grid layout and styling for each platform
@@ -34,7 +34,7 @@ extension View {
     /// }
     /// .platformLazyVGridContainer()
     /// ```
-    func platformLazyVGridContainer() -> some View {
+public func platformLazyVGridContainer() -> some View {
         #if os(iOS)
         return self
             .background(Color.platformGroupedBackground)
@@ -63,7 +63,7 @@ extension View {
     /// }
     /// .platformTabContainer()
     /// ```
-    func platformTabContainer() -> some View {
+public func platformTabContainer() -> some View {
         #if os(iOS)
         return self
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -94,7 +94,7 @@ extension View {
     /// }
     /// .platformScrollContainer()
     /// ```
-    func platformScrollContainer(showsIndicators: Bool = true) -> some View {
+public func platformScrollContainer(showsIndicators: Bool = true) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             return self
@@ -128,7 +128,7 @@ extension View {
     /// }
     /// .platformListContainer()
     /// ```
-    func platformListContainer() -> some View {
+public func platformListContainer() -> some View {
         #if os(iOS)
         return self
             .listStyle(.insetGrouped)
@@ -157,7 +157,7 @@ extension View {
     /// }
     /// .platformFormContainer()
     /// ```
-    func platformFormContainer() -> some View {
+public func platformFormContainer() -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             return self

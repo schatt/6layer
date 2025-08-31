@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct PlatformTabStrip: View {
+public struct PlatformTabStrip: View {
     @Binding var selection: Int
     let items: [PlatformTabItem]
 
-    var body: some View {
+    public var body: some View {
         #if os(iOS)
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {

@@ -13,7 +13,7 @@ import UniformTypeIdentifiers
 
 /// Platform-specific drag & drop extensions
 /// Provides consistent drag & drop behavior across iOS and macOS
-extension View {
+public extension View {
     
     /// Platform-specific drop handling with Transferable types
     /// Automatically adapts to platform-specific drag & drop APIs
@@ -35,7 +35,7 @@ extension View {
     ///         return true
     ///     }
     /// ```
-    func platformOnDrop(
+public func platformOnDrop(
         supportedTypes: [UTType],
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
@@ -75,7 +75,7 @@ extension View {
     ///         return true
     ///     }
     /// ```
-    func platformOnDropFiles(
+public func platformOnDropFiles(
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
     ) -> some View {
@@ -102,7 +102,7 @@ extension View {
     ///         return true
     ///     }
     /// ```
-    func platformOnDropImages(
+public func platformOnDropImages(
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
     ) -> some View {
@@ -129,7 +129,7 @@ extension View {
     ///         return true
     ///     }
     /// ```
-    func platformOnDropText(
+public func platformOnDropText(
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
     ) -> some View {

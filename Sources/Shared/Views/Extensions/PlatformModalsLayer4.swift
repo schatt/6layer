@@ -5,11 +5,11 @@ import SwiftUI
 /// Platform-specific modal helper functions that implement consistent
 /// modal patterns across iOS and macOS. This layer handles the specific
 /// implementation of modal components.
-extension View {
+public extension View {
     
     /// Platform-specific sheet presentation with consistent styling
     /// Provides standardized sheet appearance across platforms
-    func platformSheet<SheetContent: View>(
+public func platformSheet<SheetContent: View>(
         isPresented: Binding<Bool>,
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> SheetContent
@@ -32,7 +32,7 @@ extension View {
     
     /// Platform-specific alert presentation with consistent styling
     /// Provides standardized alert appearance across platforms
-    func platformAlert(
+public func platformAlert(
         title: String,
         message: String? = nil,
         primaryButton: Alert.Button,
@@ -61,7 +61,7 @@ extension View {
     
     /// Platform-specific confirmation dialog with consistent styling
     /// Provides standardized confirmation dialog appearance across platforms
-    func platformConfirmationDialog<A: View, M: View>(
+public func platformConfirmationDialog<A: View, M: View>(
         title: String,
         titleVisibility: Visibility = .automatic,
         @ViewBuilder actions: @escaping () -> A,
@@ -96,7 +96,7 @@ extension View {
 
     /// Platform-specific settings dismissal for embedded navigation
     /// Handles dismissal when settings are presented as embedded views in navigation
-    func platformDismissEmbeddedSettings(
+public func platformDismissEmbeddedSettings(
         onClose: @escaping () -> Void
     ) -> some View {
         #if os(macOS)
@@ -112,7 +112,7 @@ extension View {
 
     /// Platform-specific settings dismissal for sheet presentation
     /// Handles dismissal when settings are presented as sheets
-    func platformDismissSheetSettings(
+public func platformDismissSheetSettings(
         presentationMode: Binding<PresentationMode>
     ) -> some View {
         #if os(macOS)
@@ -130,7 +130,7 @@ extension View {
 
     /// Platform-specific settings dismissal for window presentation
     /// Handles dismissal when settings are presented in separate windows
-    func platformDismissWindowSettings() -> some View {
+public func platformDismissWindowSettings() -> some View {
         // Delegate to platform-specific implementations
         #if os(macOS)
         return self.platformDismissWindowSettingsMacOS()

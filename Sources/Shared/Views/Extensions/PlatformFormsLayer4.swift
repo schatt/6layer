@@ -5,11 +5,11 @@ import SwiftUI
 /// form patterns across iOS and macOS. This layer handles the specific
 /// implementation of form components.
 
-extension View {
+public extension View {
     
     /// Platform-specific form section with consistent styling
     /// Provides standardized form section appearance across platforms
-    func platformFormSection<Content: View>(
+public func platformFormSection<Content: View>(
         header: String? = nil,
         footer: String? = nil,
         @ViewBuilder content: () -> Content
@@ -53,7 +53,7 @@ extension View {
     
     /// Platform-specific form field with consistent styling
     /// Provides standardized form field appearance across platforms
-    func platformFormField<Content: View>(
+public func platformFormField<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -64,7 +64,7 @@ extension View {
     
     /// Platform-specific form field group for related fields
     /// Groups related fields with visual separation
-    func platformFormFieldGroup<Content: View>(
+public func platformFormFieldGroup<Content: View>(
         title: String? = nil,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -88,7 +88,7 @@ extension View {
     
     /// Platform-specific validation message with consistent styling
     /// Provides standardized validation message appearance across platforms
-    func platformValidationMessage(
+public func platformValidationMessage(
         _ message: String,
         type: ValidationType = .error
     ) -> some View {
@@ -109,7 +109,7 @@ extension View {
     
     /// Platform-specific form divider with consistent styling
     /// Provides visual separation between form sections
-    func platformFormDivider() -> some View {
+public func platformFormDivider() -> some View {
         Rectangle()
             .fill(Color.platformSeparator)
             .frame(height: 1)
@@ -118,7 +118,7 @@ extension View {
     
     /// Platform-specific form spacing with consistent sizing
     /// Provides standardized spacing between form elements
-    func platformFormSpacing(_ size: FormSpacing) -> some View {
+public func platformFormSpacing(_ size: FormSpacing) -> some View {
         Spacer()
             .frame(height: size.rawValue)
     }
@@ -127,7 +127,7 @@ extension View {
 // MARK: - Validation Types
 
 /// Validation message types for form fields
-enum ValidationType {
+public enum ValidationType {
     case error, warning, success, info
     
     var color: Color {
@@ -152,7 +152,7 @@ enum ValidationType {
 // MARK: - Form Spacing
 
 /// Standardized form spacing values
-enum FormSpacing: CGFloat, CaseIterable {
+public enum FormSpacing: CGFloat, CaseIterable {
     case small = 8
     case medium = 16
     case large = 24

@@ -4,7 +4,7 @@ import SwiftUI
 /// This view demonstrates the complete 6-layer architecture flow for responsive cards
 /// Shows how each layer contributes to the final responsive card layout
 
-struct ResponsiveCardsView: View {
+public struct ResponsiveCardsView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
@@ -54,7 +54,7 @@ struct ResponsiveCardsView: View {
         )
     ]
     
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             // Layer 1: Express semantic intent (simplified for demo)
             responsiveCardGrid(for: cards, in: geometry)
@@ -283,10 +283,10 @@ struct ResponsiveCardsView: View {
 
 // MARK: - Individual Card View
 
-struct ResponsiveCardView: View {
+public struct ResponsiveCardView: View {
     let data: ResponsiveCardData
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // Card header
             HStack {
@@ -355,8 +355,8 @@ struct ResponsiveCardView: View {
 
 // MARK: - Data Models
 
-struct ResponsiveCardData: Identifiable {
-    let id = UUID()
+public struct ResponsiveCardData: Identifiable {
+    public let id = UUID()
     let title: String
     let subtitle: String
     let icon: String

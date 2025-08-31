@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Platform-specific spacing constants for consistent UI spacing
-struct PlatformSpacing {
+public struct PlatformSpacing {
     static let small: CGFloat = {
         #if os(iOS)
         return 4

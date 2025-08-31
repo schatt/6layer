@@ -4,11 +4,11 @@ import SwiftUI
 /// This layer provides platform-specific button components that implement
 /// button patterns across iOS and macOS. This layer handles the specific
 /// implementation of button components.
-extension View {
+public extension View {
     
     /// Platform-specific primary button style
     /// Provides consistent primary button appearance across platforms
-    func platformPrimaryButtonStyle() -> some View {
+public func platformPrimaryButtonStyle() -> some View {
         #if os(iOS)
         return self.buttonStyle(.borderedProminent)
         #elseif os(macOS)
@@ -26,7 +26,7 @@ extension View {
     
     /// Platform-specific secondary button style
     /// Provides consistent secondary button appearance across platforms
-    func platformSecondaryButtonStyle() -> some View {
+public func platformSecondaryButtonStyle() -> some View {
         #if os(iOS)
         return self.buttonStyle(.bordered)
         #elseif os(macOS)
@@ -43,7 +43,7 @@ extension View {
     
     /// Platform-specific destructive button style
     /// Provides consistent destructive button appearance across platforms
-    func platformDestructiveButtonStyle() -> some View {
+public func platformDestructiveButtonStyle() -> some View {
         #if os(iOS)
         return self.buttonStyle(.borderedProminent)
             .foregroundColor(.red)
@@ -64,7 +64,7 @@ extension View {
     
     /// Platform-specific icon button with consistent styling
     /// Provides standardized icon button appearance across platforms
-    func platformIconButton(
+public func platformIconButton(
         systemImage: String,
         accessibilityLabel: String,
         accessibilityHint: String,

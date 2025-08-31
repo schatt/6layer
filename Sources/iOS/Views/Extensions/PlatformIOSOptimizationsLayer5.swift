@@ -8,19 +8,19 @@ import UIKit
 /// leverage iOS platform capabilities. This layer handles platform-specific
 /// features like haptics, iOS-specific navigation, and iOS-only UI patterns.
 
-extension View {
+public extension View {
     
     /// Platform-specific iOS navigation bar with consistent styling
     /// Provides iOS-specific navigation bar appearance and behavior
     #if os(iOS)
-    func platformIOSNavigationBar(
+public func platformIOSNavigationBar(
         title: String? = nil,
         displayMode: NavigationBarItem.TitleDisplayMode = .automatic
     ) -> some View {
         self.navigationBarTitle(title ?? "", displayMode: displayMode)
     }
     #else
-    func platformIOSNavigationBar(
+public func platformIOSNavigationBar(
         title: String? = nil
     ) -> some View {
         self
@@ -29,7 +29,7 @@ extension View {
     
     /// Platform-specific iOS toolbar with consistent styling
     /// Provides iOS-specific toolbar appearance and behavior
-    func platformIOSToolbar<Content: View>(
+public func platformIOSToolbar<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         return self.toolbar {
@@ -39,7 +39,7 @@ extension View {
     
     /// Platform-specific iOS swipe gestures with consistent behavior
     /// Provides iOS-specific swipe gesture handling
-    func platformIOSSwipeGestures(
+public func platformIOSSwipeGestures(
         onSwipeLeft: (() -> Void)? = nil,
         onSwipeRight: (() -> Void)? = nil,
         onSwipeUp: (() -> Void)? = nil,
@@ -83,7 +83,7 @@ extension View {
     /// Platform-specific iOS haptic feedback with consistent behavior
     /// Provides iOS-specific haptic feedback patterns
     #if os(iOS)
-    func platformIOSHapticFeedback(
+public func platformIOSHapticFeedback(
         style: IOSHapticStyle = .light,
         onTrigger trigger: Bool = true
     ) -> some View {
@@ -115,7 +115,7 @@ extension View {
         }
     }
     #else
-    func platformIOSHapticFeedback(
+public func platformIOSHapticFeedback(
         style: Any = "light",
         onTrigger trigger: Bool = true
     ) -> some View {
@@ -125,7 +125,7 @@ extension View {
     
     /// Platform-specific iOS accessibility with consistent behavior
     /// Provides iOS-specific accessibility enhancements
-    func platformIOSAccessibility(
+public func platformIOSAccessibility(
         label: String? = nil,
         hint: String? = nil,
         value: String? = nil,
@@ -141,7 +141,7 @@ extension View {
     /// Platform-specific iOS animations with consistent behavior
     /// Provides iOS-specific animation patterns
     #if os(iOS)
-    func platformIOSAnimation(
+public func platformIOSAnimation(
         type: IOSAnimationType = .spring,
         duration: Double = 0.3
     ) -> some View {
@@ -163,7 +163,7 @@ extension View {
         return self.animation(animation, value: UUID())
     }
     #else
-    func platformIOSAnimation(
+public func platformIOSAnimation(
         type: Any = "spring",
         duration: Double = 0.3
     ) -> some View {
@@ -173,7 +173,7 @@ extension View {
     
     /// Platform-specific iOS layout with consistent behavior
     /// Provides iOS-specific layout optimizations
-    func platformIOSLayout(
+public func platformIOSLayout(
         safeAreaInsets: Bool = true,
         keyboardAware: Bool = false
     ) -> some View {
@@ -193,7 +193,7 @@ extension View {
     
     /// Platform-specific iOS pull-to-refresh with consistent behavior
     /// Provides iOS-specific pull-to-refresh functionality
-    func platformIOSPullToRefresh(
+public func platformIOSPullToRefresh(
         isRefreshing: Binding<Bool>,
         onRefresh: @escaping () -> Void
     ) -> some View {
@@ -206,7 +206,7 @@ extension View {
     
     /// Platform-specific iOS context menu with consistent behavior
     /// Provides iOS-specific context menu functionality
-    func platformIOSContextMenu<MenuItems: View>(
+public func platformIOSContextMenu<MenuItems: View>(
         @ViewBuilder menuItems: () -> MenuItems
     ) -> some View {
         return self.contextMenu {
@@ -217,7 +217,7 @@ extension View {
 
 #if os(iOS)
 /// iOS-specific haptic feedback styles
-enum IOSHapticStyle {
+public enum IOSHapticStyle {
     case light
     case medium
     case heavy
@@ -227,7 +227,7 @@ enum IOSHapticStyle {
 }
 
 /// iOS-specific animation types
-enum IOSAnimationType {
+public enum IOSAnimationType {
     case spring
     case easeIn
     case easeOut
