@@ -59,7 +59,7 @@ This index lists function declarations found in this directory and its first-lev
 - L1686: ` func platformToolbarWithRefreshAction(`
 - L1698: ` func platformToolbarWithEditAction(`
 - L1708: ` func platformToolbarWithDeleteAction(`
-- L1719: ` func platformVehicleImage(imageData: Data?) -> some View`
+
 - L1982: ` func platformTextField(`
 - L2005: ` func platformSecureTextField(`
 - L2023: ` func platformTextEditor(`

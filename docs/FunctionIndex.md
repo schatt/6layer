@@ -190,8 +190,7 @@ Extension context is shown for functions that are part of extensions.
 - **L1144:** ` func platformToolbarWithDeleteAction(`
   - *function*
   - *Convenience method for toolbar with a delete action button (with confirmation)\n*
-- **L1176:** ` func platformVehicleImage(imageData: Data?) -> some View`
-  - *function*
+
 - **L1368:** ` func platformTextField(`
   - *function*
   - *- Parameters:\n- text: Binding to the text value\n- prompt: The placeholder text\n- axis: The text field axis (iOS 16+)\n- Returns: A platform-specific text field\n*
@@ -215,15 +214,9 @@ Extension context is shown for functions that are part of extensions.
 - **L1649:** ` static func platformSystemGray6() -> Color`
   - *static function*
   - *Platform-specific system colors\niOS: Uses UIColor; macOS: Uses NSColor\n*
-- **L1688:** ` static func platformDecimalKeyboardType() -> KeyboardType`
-  - *static function*
-  - *Platform-specific decimal keyboard type\niOS: Uses decimalPad; macOS: Uses default\n*
-- **L1698:** ` func platformEditPaymentToolbar(`
-  - *function*
-  - *Platform-specific edit payment toolbar\niOS: Uses navigationBarLeading/navigationBarTrailing; macOS: Uses automatic\n*
-- **L1725:** ` func platformComparisonViewBackground() -> some View`
-  - *function*
-  - *Platform-specific comparison view background\niOS: Uses systemBackground; macOS: Uses windowBackgroundColor\n*
+
+
+
 - **L1736:** ` func deviceAwareFrame() -> some View`
   - *function*
   - *Device-aware frame sizing for optimal display across different devices\nThis function provides device-specific sizing logic\nLayer 4: Device-specific implementation for iPad vs iPhone sizing differences\n*

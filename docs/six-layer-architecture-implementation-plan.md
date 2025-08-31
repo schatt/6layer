@@ -593,28 +593,27 @@ extension View {
 ```
 
 **Migration Hints Strategy**: During migration, temporary functions use simplified hint structures:
-- **Hardcoded DataTypeHints**: `.fuelRecord`, `.vehicle`, `.expense` for immediate classification
+- **Hardcoded DataTypeHints**: Generic data type hints for immediate classification
 - **Context-Based Decisions**: Use `PresentationContext` to determine form vs. detail vs. summary layouts
-- **Domain Knowledge**: Leverage CarManager-specific knowledge about optimal layouts for each data type
+- **Domain Knowledge**: Leverage domain-specific knowledge about optimal layouts for each data type
 
 #### **Temporary Layer 2: Type-Specific Layout Decisions**
 ```swift
 // Temporary, type-specific Layer 2 functions  
-func determineOptimalFormLayout_AddFuelView_L2() -> FormLayoutDecision
+func determineOptimalFormLayout_Generic_L2() -> FormLayoutDecision
 func determineOptimalModalLayout_Form_L2(formType: DataTypeHint) -> ModalLayoutDecision
 ```
 
 #### **Temporary Layer 3: Type-Specific Strategy Selection**
 ```swift
 // Temporary, type-specific Layer 3 functions
-func selectFormStrategy_AddFuelView_L3(layout: FormLayoutDecision) -> FormStrategy
+func selectFormStrategy_Generic_L3(layout: FormLayoutDecision) -> FormStrategy
 func selectModalStrategy_Form_L3(layout: ModalLayoutDecision) -> ModalStrategy
 ```
 
 #### **Temporary Layer 4: Type-Specific Component Implementation**
 ```swift
 // Temporary, type-specific Layer 4 functions
-func platformFormContainer_AddFuelView_L4(strategy: FormStrategy) -> some View
 func platformModalContainer_Form_L4(strategy: ModalStrategy) -> some View
 ```
 
@@ -642,19 +641,19 @@ Phase 4 (Maturity): Full intelligent system with generic Layer 1-3 functions
 
 ```swift
 // Layer 1: Temporary, usage-specific
-func platformPresentFuelPurchaseForm_L1() -> some View {
-    let layout = determineOptimalFormLayout_AddFuelView_L2()
-    let strategy = selectFormStrategy_AddFuelView_L3(layout: layout)
-    return platformFormContainer_AddFuelView_L4(strategy: strategy)
+func platformPresentGenericForm_L1() -> some View {
+    let layout = determineOptimalFormLayout_Generic_L2()
+    let strategy = selectFormStrategy_Generic_L3(layout: layout)
+    return platformFormContainer_L4(strategy: strategy)
 }
 
 // Layer 2: Temporary, type-specific (will become intelligent)
-func determineOptimalFormLayout_AddFuelView_L2() -> FormLayoutDecision {
+func determineOptimalFormLayout_Generic_L2() -> FormLayoutDecision {
     // Hardcoded for now, will become intelligent later
     return FormLayoutDecision(
         type: .standard,
         complexity: .moderate,
-        fields: ["vehicle", "date", "odometer", "fuel", "price", "station", "location", "notes"]
+        fields: ["field1", "field2", "field3"] // Generic field names
     )
 }
 ```
