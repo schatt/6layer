@@ -1373,30 +1373,7 @@ public func platformDocumentBrowserSheet<Content: View>(
         #endif
     }
 
-    /// Platform-specific vehicle image display
-    /// iOS: Uses PlatformImage; macOS: Uses PlatformImage
-    @ViewBuilder
-public func platformVehicleImage(imageData: Data?) -> some View {
-        if let imageData = imageData, let platformImage = PlatformImage(data: imageData) {
-            #if os(iOS)
-            Image(uiImage: platformImage.uiImage)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 24, height: 24)
-                .clipShape(Circle())
-            #elseif os(macOS)
-            Image(nsImage: platformImage.nsImage)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 24, height: 24)
-                .clipShape(Circle())
-            #endif
-        } else {
-            Image(systemName: "car.fill")
-                .foregroundColor(.blue)
-                .frame(width: 24, height: 24)
-        }
-    }
+
 
 
 
@@ -1840,25 +1817,7 @@ public func platformHelpSheet<Content: View>(
         #endif
     }
 
-    /// Platform-specific iOS Settings navigation
-    /// iOS: Button that opens iOS Settings app; macOS: No-op
-    @ViewBuilder
-public func platformIOSSettingsButton() -> some View {
-        #if os(iOS)
-        Button(action: {
-            if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(settingsUrl)
-            }
-        }) {
-            Label("iOS Settings", systemImage: "gear")
-                .padding(.vertical, 4)
-        }
-        .accessibilityLabel("Open iOS Settings")
-        .accessibilityHint("Opens the iOS Settings app to configure CarManager preferences")
-        #else
-        EmptyView()
-        #endif
-    }
+
 
     /// Platform-specific frame sizing for detail views
     /// iOS: No frame constraints; macOS: Sets minimum width and height
@@ -1960,81 +1919,13 @@ public static func platformSystemGray6() -> Color {
         #endif
     }
 
-    /// Platform-specific maintenance category sheet
-    /// iOS: Wraps in NavigationStack with detents; macOS: Returns content directly
-    @ViewBuilder
-public func platformMaintenanceCategorySheet<Content: View>(
-        isPresented: Binding<Bool>,
-        @ViewBuilder content: @escaping () -> Content
-    ) -> some View {
-        #if os(iOS)
-        if #available(iOS 16.0, *) {
-            self.sheet(isPresented: isPresented) {
-                NavigationStack {
-                    content()
-                }
-                .platformPresentationDetents([.medium, .large])
-            }
-        } else {
-            self.sheet(isPresented: isPresented) {
-                NavigationView {
-                    content()
-                }
-            }
-        }
-        #else
-        self.sheet(isPresented: isPresented) {
-            content()
-        }
-        #endif
-    }
 
-    /// Platform-specific decimal keyboard type
-    /// iOS: Uses decimalPad; macOS: Uses default
-public static func platformDecimalKeyboardType() -> KeyboardType {
-        #if os(iOS)
-        return .decimalPad
-        #else
-        return .default
-        #endif
-    }
 
-    /// Platform-specific edit payment toolbar
-    /// iOS: Uses navigationBarLeading/navigationBarTrailing; macOS: Uses automatic
-public func platformEditPaymentToolbar(
-        onCancel: @escaping () -> Void,
-        onSave: @escaping () -> Void
-    ) -> some View {
-        #if os(iOS)
-        return self.toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel", action: onCancel)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save", action: onSave)
-            }
-        }
-        #else
-        return self.toolbar {
-            ToolbarItem(placement: .automatic) {
-                Button("Cancel", action: onCancel)
-            }
-            ToolbarItem(placement: .automatic) {
-                Button("Save", action: onSave)
-            }
-        }
-        #endif
-    }
 
-    /// Platform-specific comparison view background
-    /// iOS: Uses systemBackground; macOS: Uses windowBackgroundColor
-public func platformComparisonViewBackground() -> some View {
-        #if os(macOS)
-        self.background(Color.platformBackground)
-        #else
-        self.background(Color.platformBackground)
-        #endif
-    }
+
+
+
+
     // MARK: - Device-Aware Frame Sizing (Layer 4: Device-Specific Sizing)
     /// Device-aware frame sizing for optimal display across different devices
     /// This function provides device-specific sizing logic
@@ -2066,31 +1957,7 @@ public func platformComparisonViewBackground() -> some View {
 // the full intelligent component system. They will be consolidated into generic
 // functions once the system is mature.
 
-/// Layer 4 function for implementing form container for AddFuelView
-/// This provides domain-specific container logic using our platform extensions
-@MainActor
-public func platformFormContainer_AddFuelView_L4(
-    strategy: FormStrategy
-) -> some View {
-    // Use our platform form container from Layer 4
-    return platformFormContainer_L4(
-        strategy: strategy,
-        content: {
-            // AddFuelView specific form fields would go here
-            // For now, provide a placeholder that uses our platform system
-            VStack(spacing: 16) {
-                Text("Add Fuel Form")
-                    .font(.headline)
-                    .foregroundColor(Color.platformLabel)
-                
-                Text("Form container using platform strategy: \(strategy.containerType.rawValue)")
-                    .font(.caption)
-                    .foregroundColor(Color.platformSecondaryLabel)
-            }
-            .padding()
-        }
-    )
-}
+
 
 /// Temporary Layer 4 function for implementing modal container for forms
 /// This handles sheet presentation with proper sizing
