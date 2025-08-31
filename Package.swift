@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "SixLayerFramework",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v13)
+        .iOS(.v16),
+        .macOS(.v12)
     ],
     products: [
         // Main framework product - single library for all platforms
