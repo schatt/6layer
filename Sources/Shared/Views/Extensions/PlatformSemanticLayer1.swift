@@ -138,6 +138,26 @@ public func platformPresentFormData_L1(
     )
 }
 
+/// Generic function for presenting modal forms
+/// Uses hints to determine optimal modal presentation strategy
+@MainActor
+public func platformPresentModalForm_L1(
+    formType: DataTypeHint,
+    context: PresentationContext
+) -> some View {
+    // Create presentation hints for modal context
+    let hints = PresentationHints(
+        dataType: formType,
+        presentationPreference: .modal,
+        complexity: .moderate,
+        context: context
+    )
+    
+    // For now, return a basic modal form view
+    // This will be enhanced in future phases to use intelligent form generation
+    return ModalFormView(formType: formType, context: context, hints: hints)
+}
+
 /// Generic function for presenting media data
 @MainActor
 public func platformPresentMediaData_L1(
@@ -277,6 +297,54 @@ public struct GenericTemporalView: View {
                 .font(.caption)
         }
         .padding()
+    }
+}
+
+/// Modal form view for presenting forms in modal context
+public struct ModalFormView: View {
+    let formType: DataTypeHint
+    let context: PresentationContext
+    let hints: PresentationHints
+    
+    public var body: some View {
+        VStack(spacing: 16) {
+            // Modal header
+            HStack {
+                Text("Form: \(formType.rawValue)")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Spacer()
+                Button("Done") {
+                    // TODO: Implement dismiss action
+                }
+                .buttonStyle(.bordered)
+            }
+            .padding(.horizontal)
+            .padding(.top)
+            
+            // Form content placeholder
+            VStack(spacing: 12) {
+                Text("Context: \(context.rawValue)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                Text("This is a placeholder modal form view.")
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                
+                // TODO: Integrate with intelligent form generation system
+                Button("Generate Form") {
+                    // TODO: Implement form generation
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding()
+            
+            Spacer()
+        }
+        .frame(minWidth: 400, minHeight: 300)
+        .background(Color.platformBackground)
     }
 }
 
