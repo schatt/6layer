@@ -362,9 +362,9 @@ struct FormIntent {
 var body: some View {
     platformFormContainer {
         Form {
-            vehicleImageSection
-            vehicleInfoSection
-            purchaseInfoSection
+            imageSection
+            infoSection
+            purchaseSection
             notesSection
         }
     }
@@ -388,9 +388,9 @@ var body: some View {
         layout: .adaptive
     ) {
         Form {
-            vehicleImageSection
-            vehicleInfoSection
-            purchaseInfoSection
+            imageSection
+            infoSection
+            purchaseSection
             notesSection
         }
     }
@@ -587,7 +587,7 @@ case .sheet:
 ```swift
 // Temporary, usage-specific Layer 1 functions (as View extensions)
 extension View {
-    func platformPresentFuelPurchaseForm_L1(vehicle: Any, context: PresentationContext) -> some View
+    func platformPresentGenericForm_L1(data: Any, context: PresentationContext) -> some View
     func platformPresentModalForm_L1(formType: DataTypeHint, context: PresentationContext) -> some View
 }
 ```
@@ -660,7 +660,7 @@ func determineOptimalFormLayout_Generic_L2() -> FormLayoutDecision {
 
 ### **Naming Convention**
 
-- **Temporary Functions**: Include the specific type/use case (e.g., `_AddFuelView_L2`)
+- **Temporary Functions**: Include the specific type/use case (e.g., `_Generic_L2`)
 - **Future Generic Functions**: Remove type specificity (e.g., `determineOptimalFormLayout_L2()`)
 - **Migration Tracking**: Type-specific names make it easy to find all usages when consolidating
 

@@ -102,10 +102,10 @@ Create the actual UI components with platform-adaptive behavior, implementing th
 ### **Navigation Button**
 ```swift
 .platformNavigationButton(
-    title: "Add Vehicle",
+    title: "Add Item",
     systemImage: "plus.circle",
-    accessibilityLabel: "Add new vehicle",
-    accessibilityHint: "Opens form to add a new vehicle"
+    accessibilityLabel: "Add new item",
+    accessibilityHint: "Opens form to add a new item"
 ) {
     // Navigation action
 }
@@ -113,7 +113,7 @@ Create the actual UI components with platform-adaptive behavior, implementing th
 
 ### **Form Section**
 ```swift
-.platformFormSection(title: "Vehicle Information") {
+.platformFormSection(title: "Item Information") {
     // Form content
 }
 ```
@@ -124,9 +124,9 @@ Create the actual UI components with platform-adaptive behavior, implementing th
     columns: 3,
     spacing: 16
 ) {
-    ForEach(vehicles) { vehicle in
-        VehicleCard(vehicle: vehicle)
-    }
+    ForEach(items) { item in
+    ItemCard(item: item)
+}
 }
 ```
 

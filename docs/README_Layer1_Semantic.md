@@ -29,10 +29,10 @@ Define the user's intent in platform-agnostic terms that can be interpreted by t
 ## 📊 Data Types
 
 ### **FormType**
-- `vehicleCreation` - Vehicle creation forms
-- `expenseEntry` - Expense entry forms
-- `fuelFillup` - Fuel fillup forms
-- `maintenanceRecord` - Maintenance record forms
+- `dataCreation` - Data creation forms
+- `dataEntry` - Data entry forms
+- `recordEntry` - Record entry forms
+- `itemRecord` - Item record forms
 - `tireChange` - Tire change forms
 - `warrantyEntry` - Warranty entry forms
 - `insuranceEntry` - Insurance entry forms
@@ -67,7 +67,7 @@ Define the user's intent in platform-agnostic terms that can be interpreted by t
 ### **Basic Form Presentation**
 ```swift
 .platformPresentForm(
-    type: .expenseEntry,
+    type: .dataEntry,
     complexity: .moderate,
     style: .standard
 ) {
@@ -86,7 +86,7 @@ Define the user's intent in platform-agnostic terms that can be interpreted by t
 ```swift
 .platformPresentNavigation(
     style: .sheet,
-    title: "Add Vehicle"
+    title: "Add Item"
 ) {
     // Navigation content
 }

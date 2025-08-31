@@ -123,9 +123,9 @@ This document summarizes the current implementation status of CarManager's six-l
 ## Migration Status
 
 All views have been successfully migrated to use the new layer-numbered function names:
-- `FuelView.swift` → `platformNavigationSplitContainer_L4`
-- `MaintenanceView.swift` → `platformNavigationSplitContainer_L4`
-- `ExpensesView.swift` → `platformNavigationSplitContainer_L4`
+- Generic form views → `platformNavigationSplitContainer_L4`
+- Generic list views → `platformNavigationSplitContainer_L4`
+- Generic detail views → `platformNavigationSplitContainer_L4`
 
 ## Next Steps
 

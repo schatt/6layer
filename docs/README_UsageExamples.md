@@ -74,11 +74,11 @@ let strategy = selectCardLayoutStrategy(
 ```swift
 // Use semantic functions for high-level intent
 .platformPresentForm(
-    type: .expenseEntry,
+    type: .dataEntry,
     complexity: .moderate,
     style: .standard
 ) {
-    ExpenseFormView()
+    DataFormView()
 }
 ```
 
@@ -89,9 +89,9 @@ let strategy = selectCardLayoutStrategy(
     columns: 3,
     spacing: 16
 ) {
-    ForEach(vehicles) { vehicle in
-        VehicleCard(vehicle: vehicle)
-    }
+    ForEach(items) { item in
+    ItemCard(item: item)
+}
 }
 ```
 
@@ -237,13 +237,13 @@ VStack {
 ### **Complex Form with Validation**
 ```swift
 .platformPresentForm(
-    type: .expenseEntry,
+    type: .dataEntry,
     complexity: .complex,
     style: .detailed
 ) {
     VStack(spacing: 20) {
         // Basic information
-        .platformFormSection(title: "Expense Details") {
+        .platformFormSection(title: "Data Details") {
             .platformFormField(label: "Title") {
                 TextField("Expense title", text: $title)
             }
