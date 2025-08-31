@@ -70,7 +70,7 @@ public struct RichTextEditor: UIViewRepresentable {
         
         // Enable rich text editing
         textView.allowsEditingTextAttributes = true
-        textView.dataDetectorTypes = [.link, .phoneNumber, .email]
+        textView.dataDetectorTypes = [.link, .phoneNumber]
         
         return textView
     }
