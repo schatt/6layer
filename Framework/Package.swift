@@ -38,22 +38,7 @@ let package = Package(
             ]
         ),
         
-        // Framework tests
-        .testTarget(
-            name: "SixLayerFrameworkTests",
-            dependencies: [
-                "SixLayerFramework"
-            ],
-            path: "Tests/SixLayerFrameworkTests"
-        ),
-        
-        // macOS-specific tests
-        .testTarget(
-            name: "SixLayerMacOSTests",
-            dependencies: [
-                "SixLayerFramework"
-            ],
-            path: "Tests/SixLayerMacOSTests"
-        )
+        // Test targets moved to Development/Tests/
+        // Tests are now run from the root directory
     ]
 )
