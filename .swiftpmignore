@@ -12,7 +12,6 @@ docs/
 
 # Test files
 Tests/
-Stubs/
 
 # Business logic examples
 carmanager-business-logic/

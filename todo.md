@@ -1,10 +1,20 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v1.6.3 Ready** ✅
+## 📍 **Current Status: v1.6.4 Ready** ✅
 
 **Last Release**: August 30, 2025  
 **Current Phase**: Performance & Accessibility Complete  
-**Next Phase**: Cross-Platform Optimization (Week 13)  
+**Next Phase**: Cross-Platform Optimization (Week 13)
+
+---
+
+## 🚀 **Recent Updates**
+
+### **v1.6.4 - Package Distribution Cleanup** ✅
+- **Fixed**: Development files no longer included in distributed packages
+- **Added**: `.swiftpmignore` to exclude internal development files
+- **Result**: Users now get clean, professional framework packages
+- **Maintained**: `Stubs/` directory included (contains framework functionality)  
 
 ---
 
