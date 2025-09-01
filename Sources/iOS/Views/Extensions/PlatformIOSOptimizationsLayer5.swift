@@ -13,14 +13,14 @@ public extension View {
     /// Platform-specific iOS navigation bar with consistent styling
     /// Provides iOS-specific navigation bar appearance and behavior
     #if os(iOS)
-public func platformIOSNavigationBar(
+    func platformIOSNavigationBar(
         title: String? = nil,
         displayMode: NavigationBarItem.TitleDisplayMode = .automatic
     ) -> some View {
         self.navigationBarTitle(title ?? "", displayMode: displayMode)
     }
     #else
-public func platformIOSNavigationBar(
+    func platformIOSNavigationBar(
         title: String? = nil
     ) -> some View {
         self
@@ -29,7 +29,7 @@ public func platformIOSNavigationBar(
     
     /// Platform-specific iOS toolbar with consistent styling
     /// Provides iOS-specific toolbar appearance and behavior
-public func platformIOSToolbar<Content: View>(
+    func platformIOSToolbar<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         return self.toolbar {
@@ -39,7 +39,7 @@ public func platformIOSToolbar<Content: View>(
     
     /// Platform-specific iOS swipe gestures with consistent behavior
     /// Provides iOS-specific swipe gesture handling
-public func platformIOSSwipeGestures(
+    func platformIOSSwipeGestures(
         onSwipeLeft: (() -> Void)? = nil,
         onSwipeRight: (() -> Void)? = nil,
         onSwipeUp: (() -> Void)? = nil,
@@ -83,7 +83,7 @@ public func platformIOSSwipeGestures(
     /// Platform-specific iOS haptic feedback with consistent behavior
     /// Provides iOS-specific haptic feedback patterns
     #if os(iOS)
-public func platformIOSHapticFeedback(
+    func platformIOSHapticFeedback(
         style: IOSHapticStyle = .light,
         onTrigger trigger: Bool = true
     ) -> some View {
@@ -115,7 +115,7 @@ public func platformIOSHapticFeedback(
         }
     }
     #else
-public func platformIOSHapticFeedback(
+    func platformIOSHapticFeedback(
         style: Any = "light",
         onTrigger trigger: Bool = true
     ) -> some View {
@@ -125,7 +125,7 @@ public func platformIOSHapticFeedback(
     
     /// Platform-specific iOS accessibility with consistent behavior
     /// Provides iOS-specific accessibility enhancements
-public func platformIOSAccessibility(
+    func platformIOSAccessibility(
         label: String? = nil,
         hint: String? = nil,
         value: String? = nil,
@@ -141,7 +141,7 @@ public func platformIOSAccessibility(
     /// Platform-specific iOS animations with consistent behavior
     /// Provides iOS-specific animation patterns
     #if os(iOS)
-public func platformIOSAnimation(
+    func platformIOSAnimation(
         type: IOSAnimationType = .spring,
         duration: Double = 0.3
     ) -> some View {
@@ -163,7 +163,7 @@ public func platformIOSAnimation(
         return self.animation(animation, value: UUID())
     }
     #else
-public func platformIOSAnimation(
+    func platformIOSAnimation(
         type: Any = "spring",
         duration: Double = 0.3
     ) -> some View {
@@ -173,7 +173,7 @@ public func platformIOSAnimation(
     
     /// Platform-specific iOS layout with consistent behavior
     /// Provides iOS-specific layout optimizations
-public func platformIOSLayout(
+    func platformIOSLayout(
         safeAreaInsets: Bool = true,
         keyboardAware: Bool = false
     ) -> some View {
@@ -193,7 +193,7 @@ public func platformIOSLayout(
     
     /// Platform-specific iOS pull-to-refresh with consistent behavior
     /// Provides iOS-specific pull-to-refresh functionality
-public func platformIOSPullToRefresh(
+    func platformIOSPullToRefresh(
         isRefreshing: Binding<Bool>,
         onRefresh: @escaping () -> Void
     ) -> some View {
@@ -206,7 +206,7 @@ public func platformIOSPullToRefresh(
     
     /// Platform-specific iOS context menu with consistent behavior
     /// Provides iOS-specific context menu functionality
-public func platformIOSContextMenu<MenuItems: View>(
+    func platformIOSContextMenu<MenuItems: View>(
         @ViewBuilder menuItems: () -> MenuItems
     ) -> some View {
         return self.contextMenu {
