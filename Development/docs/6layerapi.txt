@@ -1,4 +1,4 @@
-CarManager Six-Layer UI Abstraction Architecture - Implementation Plan
+SixLayer Framework Six-Layer UI Abstraction Architecture - Implementation Plan
 
 ## Layer-Numbered Naming Convention
 

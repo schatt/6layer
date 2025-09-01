@@ -314,7 +314,7 @@ Extension context is shown for functions that are part of extensions.
 - **L141:** `public func determineResponsiveBehavior(`
   - *function*
   - *Determine responsive behavior strategy\nLayer 3: Strategy Selection\n*
-- **L346:** `public func selectFormStrategy_AddFuelView_L3(`
+- **L346:** `public func selectFormStrategy_AddDataView_L3(`
   - *function*
 - **L362:** `public func selectModalStrategy_Form_L3(`
   - *function*
