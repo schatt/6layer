@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.6.6")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.6.7")
 ]
 ```
 
@@ -50,9 +50,9 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 📋 Current Status
 
-**Version**: v1.6.6  
-**Phase**: Performance & Accessibility Complete  
-**Next**: Cross-Platform Optimization (Week 13)
+**Version**: v1.6.7  
+**Phase**: Cross-Platform Optimization Layer 6 Complete  
+**Next**: Performance & Accessibility Enhancements (Week 14)
 
 ## 🤝 Contributing
 
