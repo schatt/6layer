@@ -20,7 +20,7 @@ let package = Package(
         // Removed unused dependencies: ZIPFoundation and ViewInspector
     ],
     targets: [
-        // Main framework target - includes all platform-specific code
+        // Main framework target - includes only the essential framework code
         .target(
             name: "SixLayerFramework",
             dependencies: [],

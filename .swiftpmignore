@@ -1,0 +1,42 @@
+# Swift Package Manager Ignore File
+# Files and directories to exclude from the distributed package
+
+# Development and planning files
+todo.md
+PROJECT_STATUS.md
+status.md
+RELEASE_*.md
+
+# Documentation (keep only essential user docs)
+docs/
+
+# Test files
+Tests/
+Stubs/
+
+# Business logic examples
+carmanager-business-logic/
+
+# Data and configuration
+ShrimpData/
+
+# IDE and development files
+.cursor/
+.git/
+.gitignore
+.swiftpm/
+
+# Build artifacts
+.build/
+DerivedData/
+build/
+
+# macOS system files
+.DS_Store
+
+# IDE files
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+.vscode/
+.idea/
