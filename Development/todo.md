@@ -1,6 +1,6 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v1.6.5 Ready** ✅
+## 📍 **Current Status: v1.6.6 Ready** ✅
 
 **Last Release**: September 1, 2025  
 **Current Phase**: Performance & Accessibility Complete  
@@ -9,6 +9,13 @@
 ---
 
 ## 🚀 **Recent Updates**
+
+### **v1.6.6 - Documentation Reorganization & Cleanup** ✅
+- **Reorganized**: Moved all documentation to `Framework/docs/` directory
+- **User Experience**: Users now see comprehensive documentation in their IDE
+- **Clean Structure**: Framework root remains clean and professional
+- **Documentation Cleanup**: Removed all CarManager-specific references
+- **Result**: Professional framework distribution with discoverable documentation
 
 ### **v1.6.5 - Repository Restructuring** ✅
 - **Restructured**: Separated framework code from development files
