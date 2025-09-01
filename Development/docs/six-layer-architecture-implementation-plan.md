@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the implementation plan for CarManager's six-layer UI abstraction architecture. The goal is to transform the current platform-specific view extensions into an intelligent, layered system that moves from semantic intent to intelligent layout decisions while maintaining 100% backward compatibility.
+This document outlines the implementation plan for the SixLayer Framework's six-layer UI abstraction architecture. The goal is to transform the current platform-specific view extensions into an intelligent, layered system that moves from semantic intent to intelligent layout decisions while maintaining 100% backward compatibility.
 
 **Note**: This architecture has been updated to include Layer 6 (Platform System) and now uses layer-numbered naming convention for all functions.
 
@@ -60,17 +60,17 @@ public struct PresentationHints {
 }
 ```
 
-**Domain-Specific Hint Creators**: Layer 1 includes CarManager-specific hint creators that provide domain knowledge:
+**Domain-Specific Hint Creators**: Layer 1 includes domain-specific hint creators that provide knowledge for different data types:
 
 ```swift
-// Vehicles look better as cards
-PresentationHints.forVehicles(items, context: .dashboard)
+// Items look better as cards
+PresentationHints.forItems(items, context: .dashboard)
 
-// Fuel records work well as lists  
-PresentationHints.forFuelRecords(items, context: .dashboard)
+// Records work well as lists  
+PresentationHints.forRecords(items, context: .dashboard)
 
-// Expenses work well in grids
-PresentationHints.forExpenses(items, context: .dashboard)
+// Data works well in grids
+PresentationHints.forData(items, context: .dashboard)
 ```
 
 **Example**:

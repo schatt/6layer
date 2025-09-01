@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document summarizes the current implementation status of CarManager's six-layer UI abstraction architecture. The architecture has been successfully implemented with a layer-numbered naming convention that eliminates naming conflicts and provides clear architectural boundaries.
+This document summarizes the current implementation status of the SixLayer Framework's six-layer UI abstraction architecture. The architecture has been successfully implemented with a layer-numbered naming convention that eliminates naming conflicts and provides clear architectural boundaries.
 
 ## Architecture Status: ✅ IMPLEMENTED
 

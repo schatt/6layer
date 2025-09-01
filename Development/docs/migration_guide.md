@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides comprehensive guidance for migrating CarManager from Core Data version 1.0 to version 2.0. The migration introduces new entities for achievements, enhanced location tracking, and notification management while maintaining backward compatibility and data integrity.
+This document provides comprehensive guidance for migrating applications from Core Data version 1.0 to version 2.0. The migration introduces new entities for achievements, enhanced location tracking, and notification management while maintaining backward compatibility and data integrity.
 
 ## Migration Architecture
 

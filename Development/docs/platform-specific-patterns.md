@@ -1,6 +1,6 @@
 # Platform-Specific View Patterns
 
-This document provides comprehensive guidance on using the platform-specific view infrastructure in CarManager. The infrastructure is designed to provide consistent, maintainable, and type-safe platform-specific view handling.
+This document provides comprehensive guidance on using the platform-specific view infrastructure in the SixLayer Framework. The infrastructure is designed to provide consistent, maintainable, and type-safe platform-specific view handling.
 
 ## Overview
 
