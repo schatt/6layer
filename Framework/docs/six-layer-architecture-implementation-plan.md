@@ -22,6 +22,29 @@ Level 1: Semantic Intent → Level 2: Layout Decision → Level 3: Strategy Sele
 
 **Naming Convention**: All functions now include their layer number (e.g., `platformResponsiveCard_L1`, `determineOptimalCardLayout_L2`)
 
+## Architecture Philosophy
+
+### **Generic Core + Extensible Business Logic**
+
+The SixLayer Framework follows a **layered extensibility** approach:
+
+1. **Core Layer (Generic)**: Provides business-agnostic functionality
+   - Generic data types (text, number, date, etc.)
+   - Generic presentation functions
+   - Platform optimization and accessibility
+
+2. **Extension Layer (Business-Specific)**: Enables business logic through hints
+   - `CustomHint` system for business-specific behavior
+   - `customPreferences` for business configuration
+   - `EnhancedPresentationHints` for complex business logic
+
+3. **Integration Layer**: Combines generic framework with business needs
+   - Use generic functions with business-specific hints
+   - Extend generic types for business requirements
+   - Maintain framework genericity while enabling business functionality
+
+**Key Principle**: The framework remains generic and reusable across different business domains, while business-specific behavior is achieved through the extensible hints system.
+
 ## Layer Definitions
 
 ### Level 1: Semantic Intent (Semantic Layer)
@@ -35,14 +58,27 @@ Level 1: Semantic Intent → Level 2: Layout Decision → Level 3: Strategy Sele
 - `platformPresentMediaCollection_L1()` - Semantic media collection presentation
 - `platformPresentTemporalData_L1()` - Semantic temporal data presentation
 
-**Hints System**: Layer 1 uses a comprehensive hints system to guide intelligent layout decisions:
+**Hints System**: Layer 1 uses a comprehensive hints system to guide intelligent layout decisions. The framework is designed with a **generic core + extensible business logic** architecture:
 
 ```swift
-/// Data type hints that guide generic functions
+/// Core data type hints remain generic and business-agnostic
 public enum DataTypeHint: String, CaseIterable {
-    case generic, item, record, expense, maintenance, achievement
-    case location, notification, userProfile, settings, media, numeric
-    case hierarchical, temporal
+    case generic          // Unknown or mixed data types
+    case text             // Text-based content
+    case number           // Numeric content
+    case date             // Date/time content
+    case image            // Image content
+    case boolean          // Boolean/true-false content
+    case collection       // Generic collection of items
+    case numeric          // Charts, graphs, statistics
+    case hierarchical     // Tree structures, nested data
+    case temporal         // Time-based data, schedules
+    case media            // Images, videos, documents
+    case form             // Form-based data entry
+    case list             // List-based data
+    case grid             // Grid-based data
+    case chart            // Chart/graph data
+    case custom           // Custom data type for business-specific needs
 }
 
 /// Presentation preference hints
@@ -50,41 +86,77 @@ public enum PresentationPreference: String, CaseIterable {
     case automatic, cards, list, grid, coverFlow, masonry, table, chart, form
 }
 
-/// Comprehensive hints structure
+/// Comprehensive hints structure with extensibility
 public struct PresentationHints {
     let dataType: DataTypeHint
     let presentationPreference: PresentationPreference
     let complexity: ContentComplexity
     let context: PresentationContext
-    let customPreferences: [String: Any]
+    let customPreferences: [String: String]  // Business-specific configuration
 }
 ```
 
-**Domain-Specific Hint Creators**: Layer 1 includes domain-specific hint creators that provide knowledge for different data types:
+**Extensible Business Logic**: Business-specific types and behavior are created through the extensible hints system, not hardcoded into core enums:
 
 ```swift
-// Items look better as cards
-PresentationHints.forItems(items, context: .dashboard)
+// Business-specific behavior through CustomHint system
+let vehicleHint = CustomHint(
+    hintType: "vehicle.form",
+    priority: .high,
+    customData: [
+        "showImagePicker": true,
+        "requiredFields": ["make", "model", "year"],
+        "layoutStyle": "sectioned",
+        "validationMode": "strict"
+    ]
+)
 
-// Records work well as lists  
-PresentationHints.forRecords(items, context: .dashboard)
+// Business-specific configuration through customPreferences
+let hints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    customPreferences: [
+        "businessType": "vehicle",
+        "formStyle": "multiStep",
+        "validationRules": "strict",
+        "showProgress": "true"
+    ]
+)
 
-// Data works well in grids
-PresentationHints.forData(items, context: .dashboard)
+// Combine generic framework with business-specific hints
+let enhancedHints = EnhancedPresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    extensibleHints: [vehicleHint]
+)
 ```
 
 **Example**:
 ```swift
-// Instead of:
+// Instead of hardcoded business logic:
 platformFormContainer { ... }
 .platformAdaptiveFrame()
 
-// Use:
-platformPresentForm(
-    type: .itemCreation,
+// Use the generic framework with business-specific hints:
+let vehicleHints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
     complexity: .complex,
-    layout: .adaptive
-) { ... }
+    context: .create,
+    customPreferences: [
+        "businessType": "vehicle",
+        "formStyle": "multiStep"
+    ]
+)
+
+let formView = platformPresentFormData_L1(
+    fields: createVehicleFields(),
+    hints: vehicleHints
+)
 ```
 
 ### Level 2: Layout Decision Engine

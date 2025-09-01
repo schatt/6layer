@@ -1,49 +1,37 @@
 # 🤖 AI Agent Guide for SixLayer Framework
 
-*This document is specifically designed for AI agents (like Claude, GPT, etc.) to understand how to work with the **ACTUAL** current SixLayer Framework, not outdated documentation.*
-
-## ⚠️ **CRITICAL WARNING**
-
-**The framework documentation is OUTDATED and describes features that don't exist.** This guide reflects the **ACTUAL** current framework structure as of version 1.6.6.
+*This document is specifically designed for AI agents (like Claude, GPT, etc.) to understand how to work with the SixLayer Framework's generic core + extensible business logic architecture.*
 
 ## 🎯 **Purpose of This Guide**
 
 AI agents need to understand:
-- **Actual Framework Architecture**: How the six-layer system **really** works
-- **Real Function Names**: The actual functions that exist, not documented ones
-- **Current Implementation**: What's actually implemented vs. what's planned
-- **Common Mistakes**: What to avoid when helping developers
+- **Framework Architecture**: Generic core with extensible business logic
+- **How to Use Generic Functions**: Layer 1 functions with business-specific hints
+- **Extensible Hints System**: CustomHint and EnhancedPresentationHints
+- **Best Practices**: Combining generic framework with business needs
 
-## 🏗️ **Actual Framework Architecture (Current State)**
+## 🏗️ **Framework Architecture (Correct Understanding)**
 
-### **Six-Layer System (What Actually Exists)**
+### **Generic Core + Extensible Business Logic**
+
+The SixLayer Framework is **NOT** a business-specific framework. It's a **generic foundation** that becomes business-specific through the extensible hints system:
+
 ```
-Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Selection → Layer 4: Component Implementation → Layer 5: Platform Optimization → Layer 6: Platform System
+Generic Core (Framework) + Business-Specific Hints = Business-Specific Behavior
 ```
 
-### **Key Reality Check**
-1. **Layer 1 Functions EXIST** but are generic, not business-specific
-2. **No Business Logic** - The framework is completely generic
-3. **Stub Views** - Most views are placeholder implementations
-4. **Documentation Lag** - Documentation describes future plans, not current reality
+### **Key Architecture Principles:**
 
-## 📝 **Actual Layer 1 Functions (What Really Exists)**
+1. **Core Remains Generic**: Data types, functions, and logic are business-agnostic
+2. **Business Logic Through Hints**: CustomHint system enables business-specific behavior
+3. **Extensibility Without Modification**: Add business logic without changing framework code
+4. **Reusable Across Domains**: Same framework works for vehicles, e-commerce, social media, etc.
 
-### **Current Layer 1 Functions:**
+## 📝 **How the Framework Actually Works**
+
+### **1. Generic Core Functions (What Actually Exists):**
 ```swift
-// ✅ THESE ACTUALLY EXIST:
-
-// Generic collection presentation
-public func platformPresentItemCollection_L1<Item: Identifiable>(
-    items: [Item],
-    hints: PresentationHints
-) -> some View
-
-// Generic numeric data presentation  
-public func platformPresentNumericData_L1(
-    data: [GenericNumericData],
-    hints: PresentationHints
-) -> some View
+// ✅ THESE EXIST and are completely generic:
 
 // Generic form presentation
 public func platformPresentFormData_L1(
@@ -51,87 +39,138 @@ public func platformPresentFormData_L1(
     hints: PresentationHints
 ) -> some View
 
-// Generic modal form presentation
+// Generic collection presentation
+public func platformPresentItemCollection_L1<Item: Identifiable>(
+    items: [Item],
+    hints: PresentationHints
+) -> some View
+
+// Generic modal presentation
 public func platformPresentModalForm_L1(
     formType: DataTypeHint,
     context: PresentationContext
 ) -> some View
-
-// Generic media presentation
-public func platformPresentMediaData_L1(
-    media: [GenericMediaItem],
-    hints: PresentationHints
-) -> some View
-
-// Generic hierarchical data presentation
-public func platformPresentHierarchicalData_L1(
-    items: [GenericHierarchicalItem],
-    hints: PresentationHints
-) -> some View
-
-// Generic temporal data presentation
-public func platformPresentTemporalData_L1(
-    items: [GenericTemporalItem],
-    hints: PresentationHints
-) -> some View
 ```
 
-### **What These Functions Actually Do:**
-- **Return Stub Views**: Most return placeholder `Generic*View` structs
-- **Use Hints System**: Take `PresentationHints` for configuration
-- **Are Completely Generic**: No business logic, no CarManager-specific code
-- **Are Placeholders**: Return basic views with minimal functionality
-
-## 🚫 **What Does NOT Exist (Despite Documentation Claims)**
-
-### **❌ Business-Specific Functions (Documented but Missing):**
+### **2. Generic Data Types (What Actually Exists):**
 ```swift
-// These are documented but DON'T EXIST:
-platformPresentVehicleForm_L1()        // ❌ Missing
-platformPresentFuelForm_L1()           // ❌ Missing  
-platformPresentExpenseForm_L1()        // ❌ Missing
-platformPresentMaintenanceForm_L1()    // ❌ Missing
+// ✅ Core enums remain generic and business-agnostic:
+public enum DataTypeHint: String, CaseIterable {
+    case generic, text, number, date, image, boolean, collection
+    case numeric, hierarchical, temporal, media, form, list, grid, chart
+    case custom  // ← This enables business-specific types
+}
 ```
 
-### **❌ Business-Specific Data Types (Documented but Missing):**
+### **3. Business Logic Through Extensible Hints (What Actually Exists):**
 ```swift
-// These are documented but DON'T EXIST:
-case vehicleCreation                    // ❌ Missing
-case expenseEntry                      // ❌ Missing
-case fuelFillup                        // ❌ Missing
-case maintenanceRecord                 // ❌ Missing
+// ✅ Business-specific behavior through CustomHint system:
+
+// Vehicle-specific hints
+let vehicleHint = CustomHint(
+    hintType: "vehicle.form",
+    priority: .high,
+    customData: [
+        "showImagePicker": true,
+        "requiredFields": ["make", "model", "year"],
+        "layoutStyle": "sectioned",
+        "validationMode": "strict"
+    ]
+)
+
+// E-commerce specific hints
+let ecommerceHint = CustomHint.forEcommerceProduct(
+    category: "electronics",
+    showPricing: true,
+    showReviews: true,
+    layoutStyle: "grid"
+)
+
+// Financial dashboard hints
+let financialHint = CustomHint.forFinancialDashboard(
+    timeRange: "1M",
+    showCharts: true,
+    refreshRate: 60
+)
 ```
 
-### **❌ Advanced Form Generation (Documented but Missing):**
+### **4. Business Configuration Through Custom Preferences:**
 ```swift
-// This is documented but NOT IMPLEMENTED:
-IntelligentFormView.generateForm()     // ❌ Basic stub only
-```
-
-## 🔧 **How to Actually Use the Current Framework**
-
-### **1. Use Generic Functions with Hints**
-```swift
-// ✅ CORRECT: Use what actually exists
+// ✅ Business-specific configuration:
 let hints = PresentationHints(
     dataType: .form,
     presentationPreference: .form,
     complexity: .moderate,
-    context: .create
-)
-
-let formView = platformPresentFormData_L1(
-    fields: genericFields,
-    hints: hints
+    context: .create,
+    customPreferences: [
+        "businessType": "vehicle",
+        "formStyle": "multiStep",
+        "validationRules": "strict",
+        "showProgress": "true"
+    ]
 )
 ```
 
-### **2. Create Custom Business Logic**
+## 🔧 **How to Actually Use the Framework**
+
+### **1. Use Generic Functions with Business-Specific Hints:**
 ```swift
-// ✅ CORRECT: Build business logic on top of generic framework
+// ✅ CORRECT: Generic function + business hints
+let vehicleHints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    customPreferences: [
+        "businessType": "vehicle",
+        "formStyle": "multiStep"
+    ]
+)
+
+let formView = platformPresentFormData_L1(
+    fields: createVehicleFields(),
+    hints: vehicleHints
+)
+```
+
+### **2. Create Business-Specific Hints:**
+```swift
+// ✅ CORRECT: Extend the framework with business logic
+extension CustomHint {
+    static func forVehicleForm(
+        showImagePicker: Bool = true,
+        requiredFields: [String] = ["make", "model", "year"]
+    ) -> CustomHint {
+        return CustomHint(
+            hintType: "vehicle.form",
+            priority: .high,
+            customData: [
+                "showImagePicker": showImagePicker,
+                "requiredFields": requiredFields,
+                "layoutStyle": "sectioned",
+                "validationMode": "strict"
+            ]
+        )
+    }
+}
+
+// Usage:
+let vehicleHint = CustomHint.forVehicleForm()
+let enhancedHints = EnhancedPresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    extensibleHints: [vehicleHint]
+)
+```
+
+### **3. Combine Generic Framework with Business Logic:**
+```swift
+// ✅ CORRECT: Build business functionality on generic foundation
 struct VehicleFormView: View {
     var body: some View {
-        // Use the generic framework
+        // Use generic framework function
         platformPresentFormData_L1(
             fields: createVehicleFields(),
             hints: createVehicleHints()
@@ -148,26 +187,16 @@ struct VehicleFormView: View {
     }
     
     private func createVehicleHints() -> PresentationHints {
+        // Business-specific configuration through hints
         return PresentationHints(
             dataType: .form,
             presentationPreference: .form,
             complexity: .moderate,
-            context: .create
-        )
-    }
-}
-```
-
-### **3. Extend Generic Types**
-```swift
-// ✅ CORRECT: Extend generic types for business needs
-extension GenericFormField {
-    static func vehicleField(name: String, type: FieldType) -> GenericFormField {
-        return GenericFormField(
-            name: name,
-            type: type,
-            isRequired: true,
-            validationRules: []
+            context: .create,
+            customPreferences: [
+                "businessType": "vehicle",
+                "formStyle": "multiStep"
+            ]
         )
     }
 }
@@ -175,80 +204,83 @@ extension GenericFormField {
 
 ## 🚫 **Common Mistakes to Avoid**
 
-### **1. Assuming Business Functions Exist**
+### **1. Expecting Business-Specific Functions:**
 ```swift
 // ❌ WRONG: This function doesn't exist
 let view = platformPresentVehicleForm_L1(data: vehicleData)
 
-// ✅ CORRECT: Use generic function with business logic
+// ✅ CORRECT: Use generic function with business hints
 let view = platformPresentFormData_L1(
     fields: convertVehicleToFields(vehicleData),
     hints: createVehicleHints()
 )
 ```
 
-### **2. Believing Documentation is Current**
+### **2. Assuming Business Types Are Built-In:**
 ```swift
-// ❌ WRONG: Documentation says this exists
-case vehicleCreation
+// ❌ WRONG: These cases don't exist in core enums
+case vehicleCreation, expenseEntry, fuelFillup
 
-// ✅ CORRECT: Use what actually exists
-case form
+// ✅ CORRECT: Use generic types with business hints
+case form  // Generic type
+// Business logic in hints:
+customPreferences: ["businessType": "vehicle"]
 ```
 
-### **3. Expecting Advanced Features**
+### **3. Ignoring the Extensible Hints System:**
 ```swift
-// ❌ WRONG: Expecting intelligent form generation
-let form = IntelligentFormView.generateForm(for: Vehicle.self, ...)
+// ❌ WRONG: Trying to hardcode business logic
+if businessType == "vehicle" { ... }
 
-// ✅ CORRECT: Use basic stub implementation
-let form = platformPresentFormData_L1(fields: fields, hints: hints)
+// ✅ CORRECT: Use the hints system
+let hints = PresentationHints(...)
+let customData = hints.customPreferences
+if customData["businessType"] == "vehicle" { ... }
 ```
 
 ## 📚 **What the Framework Actually Provides**
 
 ### **✅ What's Real and Working:**
-1. **Generic Data Types**: `GenericFormField`, `GenericMediaItem`, etc.
-2. **Hints System**: `PresentationHints`, `DataTypeHint`, `ContentComplexity`
-3. **Layer Structure**: Basic six-layer architecture with stub implementations
-4. **Platform Detection**: iOS/macOS platform detection and optimization
-5. **Basic Views**: Placeholder views for all major data types
+1. **Generic Core Functions**: `platformPresentFormData_L1`, `platformPresentItemCollection_L1`
+2. **Generic Data Types**: `DataTypeHint`, `PresentationPreference`, `PresentationContext`
+3. **Extensible Hints System**: `CustomHint`, `EnhancedPresentationHints`
+4. **Business Configuration**: `customPreferences`, `extensibleHints`
+5. **Hint Processing**: `HintProcessingEngine` for intelligent decision making
 
-### **❌ What's Not Implemented:**
-1. **Business Logic**: No CarManager-specific functionality
-2. **Intelligent Forms**: Basic form generation only
-3. **Advanced UI**: Most views are simple placeholders
-4. **Data Binding**: No automatic data binding or validation
-5. **Performance Optimization**: Basic structure only
+### **✅ What's Extensible:**
+1. **Business-Specific Behavior**: Through `CustomHint` system
+2. **Business Configuration**: Through `customPreferences`
+3. **Complex Business Logic**: Through `EnhancedPresentationHints`
+4. **Domain-Specific Hints**: Through `CustomHint` extensions
 
 ## 🎯 **Working with Developers**
 
 ### **Questions to Ask:**
 - "What business logic do you need to implement?"
-- "How can we use the generic framework functions for your use case?"
-- "What data types are you working with?"
-- "Do you need to extend the generic types?"
+- "How can we use the generic framework functions with business-specific hints?"
+- "What business configuration do you need?"
+- "Should we create a custom hint for this business logic?"
 
 ### **Red Flags to Watch For:**
 - Developer expects business-specific functions to exist
-- Developer believes documentation is current
-- Developer wants to use "intelligent" features that aren't implemented
-- Developer assumes advanced form generation exists
+- Developer wants to hardcode business logic in framework
+- Developer ignores the extensible hints system
+- Developer assumes business types are built into core enums
 
 ### **Correct Approach:**
-1. **Acknowledge Reality**: The framework is generic and basic
-2. **Use Generic Functions**: Leverage what actually exists
-3. **Build Business Logic**: Create business-specific implementations
-4. **Extend Framework**: Add business logic on top of generic foundation
+1. **Use Generic Functions**: Leverage what exists
+2. **Create Business Hints**: Use `CustomHint` system
+3. **Configure Through Preferences**: Use `customPreferences`
+4. **Extend Without Modifying**: Add business logic through hints
 
 ## 🔍 **Debugging Common Issues**
 
 ### **Issue: "Function doesn't exist"**
 ```swift
-// Problem: Developer tries to use documented function
+// Problem: Developer tries to use business-specific function
 platformPresentVehicleForm_L1(data: vehicleData)
 
-// Solution: Use generic function with business logic
+// Solution: Use generic function with business hints
 platformPresentFormData_L1(
     fields: convertVehicleToFields(vehicleData),
     hints: createVehicleHints()
@@ -260,64 +292,77 @@ platformPresentFormData_L1(
 // Problem: Developer expects business-specific enum cases
 case vehicleCreation
 
-// Solution: Use generic data types
-case form
+// Solution: Use generic types with business hints
+case form  // Generic type
+// Business logic in hints:
+customPreferences: ["businessType": "vehicle"]
 ```
 
-### **Issue: "Advanced features not working"**
+### **Issue: "How to make it business-specific"**
 ```swift
-// Problem: Developer expects intelligent form generation
-let form = IntelligentFormView.generateForm(...)
+// Problem: Developer wants business logic
+// Solution: Use the extensible hints system
+let businessHint = CustomHint(
+    hintType: "your.business.type",
+    customData: ["key": "value"]
+)
 
-// Solution: Use basic form presentation
-let form = platformPresentFormData_L1(fields: fields, hints: hints)
+let hints = EnhancedPresentationHints(
+    dataType: .form,
+    extensibleHints: [businessHint]
+)
 ```
 
 ## 📖 **Resources for AI Agents**
 
 ### **Key Files to Reference:**
-- `Framework/Sources/Shared/Views/Extensions/PlatformSemanticLayer1.swift` - **ACTUAL** Layer 1 functions
+- `Framework/Sources/Shared/Views/Extensions/PlatformSemanticLayer1.swift` - Generic Layer 1 functions
+- `Framework/Sources/Shared/Models/ExtensibleHints.swift` - Extensible hints system
 - `Framework/Sources/Shared/Models/GenericTypes.swift` - Generic data types
 - `Framework/Sources/Shared/Models/PlatformTypes.swift` - Platform detection
-- `Framework/Sources/Shared/Views/Extensions/PerformanceOptimizationLayer5.swift` - Performance features
 
-### **What to Ignore:**
-- `Framework/docs/six-layer-architecture-implementation-plan.md` - **OUTDATED** documentation
-- `Framework/docs/README_UsageExamples.md` - **OUTDATED** examples
-- Any documentation mentioning business-specific functions
+### **What to Understand:**
+- The framework is **generic by design**
+- Business logic is **added through extensibility**
+- **CustomHint system** enables business-specific behavior
+- **customPreferences** provide business configuration
 
 ## 🎯 **Best Practices Summary**
 
-1. **Always check what actually exists** in the source code
-2. **Ignore outdated documentation** - it describes future plans
-3. **Use generic functions** with business logic on top
-4. **Build business functionality** using the generic framework
-5. **Extend generic types** for business needs
-6. **Acknowledge limitations** of the current implementation
+1. **Always use generic functions** with business-specific hints
+2. **Leverage the extensible hints system** for business logic
+3. **Use customPreferences** for business configuration
+4. **Create CustomHint extensions** for complex business behavior
+5. **Keep framework generic** while enabling business functionality
+6. **Build business logic on top** of the generic foundation
 
 ## 🤝 **Working with Developers**
 
 ### **When Developers Ask for Business Functions:**
 ```
 Developer: "I need platformPresentVehicleForm_L1"
-AI Agent: "That function doesn't exist yet. The framework is generic. 
-          Let's use platformPresentFormData_L1 with custom business logic instead."
+AI Agent: "That function doesn't exist, but you can achieve the same result using 
+          the generic platformPresentFormData_L1 with business-specific hints. 
+          Let me show you how to use the CustomHint system."
 ```
 
-### **When Developers Reference Documentation:**
+### **When Developers Want Business Types:**
 ```
-Developer: "The docs say I can use .vehicleCreation"
-AI Agent: "The documentation is outdated. The framework currently only supports 
-          generic types like .form. Let's work with what actually exists."
+Developer: "I need case vehicleCreation in DataTypeHint"
+AI Agent: "The framework keeps core types generic for reusability. Instead, 
+          create business-specific behavior through CustomHint with 
+          customData: ['businessType': 'vehicle']. This keeps the framework 
+          generic while enabling your business logic."
 ```
 
-### **When Developers Expect Advanced Features:**
+### **When Developers Expect Business Logic:**
 ```
-Developer: "Why isn't the intelligent form generation working?"
-AI Agent: "That feature isn't implemented yet. The current framework provides 
-          basic form presentation. We'll need to build the business logic ourselves."
+Developer: "How do I make this vehicle-specific?"
+AI Agent: "Use the extensible hints system! Create a CustomHint with 
+          hintType: 'vehicle.form' and customData for your business rules. 
+          Then combine it with the generic framework functions."
 ```
 
 ---
 
-**Remember**: The framework is a **generic foundation**, not a complete business solution. Help developers build on top of what exists rather than expecting features that don't exist yet.
+**Remember**: The SixLayer Framework is a **generic foundation** that becomes **business-specific** through the extensible hints system. Help developers understand this architecture and use it correctly.
