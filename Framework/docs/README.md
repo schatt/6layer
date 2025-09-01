@@ -9,6 +9,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[README_UsageExamples.md](README_UsageExamples.md)** - Practical usage examples and patterns
 - **[DeveloperExtensionGuide.md](DeveloperExtensionGuide.md)** - **NEW!** Complete guide for developers extending the framework
 - **[ExtensionQuickReference.md](ExtensionQuickReference.md)** - **NEW!** Quick reference card for common patterns
+- **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - **NEW!** Guide for AI agents working with the framework
 
 ### 🏗️ Architecture Details
 - **[README_Layer1_Semantic.md](README_Layer1_Semantic.md)** - Semantic intent layer
