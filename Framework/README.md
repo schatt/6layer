@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.6.4-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.6.4)
+[![Version](https://img.shields.io/badge/version-v1.6.6-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.6.6)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -32,10 +32,11 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
-## 🆕 What's New in v1.6.4
+## 🆕 What's New in v1.6.6
 
-- **Package Distribution Cleanup**: Development files no longer included in distributed packages
-- **Professional Packaging**: Users get clean, focused framework packages
+- **Documentation Reorganization**: All documentation now visible in user's IDE for better discoverability
+- **Professional Framework Structure**: Clean, organized framework distribution without development clutter
+- **Complete Documentation**: Comprehensive guides, examples, and API references included
 - **Performance & Accessibility**: Complete Phase 4 implementation with lazy loading, memory management, and accessibility features
 - **Public API Access**: All platform functions have `public` access for external project integration
 - **Updated Platform Support**: iOS 16.0+ and macOS 13.0+ with proper availability checks
@@ -52,7 +53,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.6.4")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.6.6")
 ]
 ```
 
