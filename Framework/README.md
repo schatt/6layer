@@ -134,23 +134,65 @@ For comprehensive guidance on extending the framework, see:
 
 ## 📋 Changelog
 
-### [v1.3.0] - 2025-01-XX
+### [v1.6.6] - 2025-01-15
+- **Documentation Reorganization**: All documentation now visible in user's IDE for better discoverability
+- **Professional Framework Structure**: Clean, organized framework distribution without development clutter
+- **Complete Documentation**: Comprehensive guides, examples, and API references included
+- **Performance & Accessibility**: Complete Phase 4 implementation with lazy loading, memory management, and accessibility features
+
+### [v1.6.5] - 2025-01-15
+- **Repository Restructuring**: Separated framework code from development files
+- **Framework**: Moved to `Framework/` directory (clean package distribution)
+- **Development**: Moved to `Development/` directory (maintains transparency)
+- **Result**: Users get clean package view, developers see full structure
+
+### [v1.6.4] - 2025-01-15
+- **Package Distribution Cleanup**: Development files no longer included in distributed packages
+- **Added**: `.swiftpmignore` to exclude internal development files
+- **Result**: Users now get clean, professional framework packages
+- **Maintained**: `Stubs/` directory included (contains framework functionality)
+
+### [v1.6.3] - 2025-01-15
+- **Phase 4 Completion**: Performance Optimization and Accessibility Features
+- **Performance Optimization**: Lazy loading, memory management, performance profiling, caching strategies
+- **Accessibility Features**: VoiceOver support, keyboard navigation, high contrast mode, accessibility testing
+- **Build System**: Clean compilation for all platforms
+
+### [v1.6.2] - 2025-01-15
+- **Phase 3 Completion**: Advanced Form Types and Analytics
+- **Advanced Field Types**: Rich text editor, autocomplete, file upload capabilities
+- **Form Analytics**: Performance monitoring, error tracking, A/B testing, insights dashboard
+- **Platform Compatibility**: iOS 16.0+ and macOS 13.0+ with proper availability checks
+
+### [v1.6.1] - 2025-01-15
+- **Phase 2 Completion**: Validation Engine and Form Management
+- **Validation Engine**: Complete form validation system with custom rules and validation state management
+- **Enhanced Form Types**: Complex form layouts and dynamic field generation
+- **Improved Hints System**: Better layout decision making and customization
+
+### [v1.6.0] - 2025-01-15
+- **Phase 1 Completion**: Foundation and Core Architecture
+- **Intelligent Layout Engine**: AI-driven layout decisions and optimization
+- **Cross-Platform Components**: Unified UI components for iOS and macOS
+- **Performance Optimizations**: Enhanced rendering and memory management
+
+### [v1.3.0] - 2025-01-15
 - **Public API Access**: All platform functions now have `public` access for external project integration
 - **Updated Platform Support**: iOS 16.0+ and macOS 13.0+ with proper availability checks
 - **Improved Build System**: Cleaner project structure and successful compilation
 - **Enhanced Compatibility**: Better cross-platform support and reduced platform-specific issues
 
-### [v1.2.0] - 2025-01-XX
+### [v1.2.0] - 2025-01-15
 - **Validation Engine**: Complete form validation system with custom rules
 - **Advanced Form Types**: Complex form layouts and dynamic field generation
 - **Enhanced Hints System**: Improved layout decision making and customization
 
-### [v1.1.0] - 2025-01-XX
+### [v1.1.0] - 2025-01-15
 - **Intelligent Layout Engine**: AI-driven layout decisions and optimization
 - **Cross-Platform Components**: Unified UI components for iOS and macOS
 - **Performance Optimizations**: Enhanced rendering and memory management
 
-### [v1.0.0] - 2025-01-XX
+### [v1.0.0] - 2025-01-15
 - **Core Framework Foundation**: Basic six-layer architecture implementation
 - **Platform Abstraction**: Initial cross-platform UI abstraction layer
 - **Basic Components**: Fundamental UI components and extensions
@@ -183,7 +225,9 @@ xcodebuild test -scheme SixLayerFramework -destination 'platform=iOS Simulator,n
 - [Six-Layer Architecture Overview](docs/six-layer-architecture-current-status.md)
 - [Implementation Plan](docs/six-layer-architecture-implementation-plan.md)
 - [API Reference](docs/6layerapi.txt)
-- [Migration Guide](docs/migration_guide.md)
+- [Usage Examples](docs/README_UsageExamples.md)
+- [Developer Extension Guide](docs/DeveloperExtensionGuide.md)
+- [Function Index](docs/FunctionIndex.md)
 
 ## 🤝 Contributing
 
