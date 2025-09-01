@@ -1,378 +1,323 @@
 # 🤖 AI Agent Guide for SixLayer Framework
 
-*This document is specifically designed for AI agents (like Claude, GPT, etc.) to understand how to work with the SixLayer Framework, create stubs, and provide accurate assistance to developers.*
+*This document is specifically designed for AI agents (like Claude, GPT, etc.) to understand how to work with the **ACTUAL** current SixLayer Framework, not outdated documentation.*
+
+## ⚠️ **CRITICAL WARNING**
+
+**The framework documentation is OUTDATED and describes features that don't exist.** This guide reflects the **ACTUAL** current framework structure as of version 1.6.6.
 
 ## 🎯 **Purpose of This Guide**
 
 AI agents need to understand:
-- **Framework Architecture**: How the six-layer system works
-- **Stub System**: How to create and use stubs correctly
-- **Usage Patterns**: Common patterns and best practices
+- **Actual Framework Architecture**: How the six-layer system **really** works
+- **Real Function Names**: The actual functions that exist, not documented ones
+- **Current Implementation**: What's actually implemented vs. what's planned
 - **Common Mistakes**: What to avoid when helping developers
 
-## 🏗️ **Framework Architecture Overview**
+## 🏗️ **Actual Framework Architecture (Current State)**
 
-### **Six-Layer System**
+### **Six-Layer System (What Actually Exists)**
 ```
 Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Selection → Layer 4: Component Implementation → Layer 5: Platform Optimization → Layer 6: Platform System
 ```
 
-### **Key Principles**
-1. **Semantic Intent First**: Always start with WHAT the developer wants to achieve
-2. **Progressive Delegation**: Each layer delegates to the next for implementation
-3. **Platform Independence**: Layer 4+ handles platform-specific details
-4. **Stub-First Development**: Use stubs to establish the architecture before implementation
+### **Key Reality Check**
+1. **Layer 1 Functions EXIST** but are generic, not business-specific
+2. **No Business Logic** - The framework is completely generic
+3. **Stub Views** - Most views are placeholder implementations
+4. **Documentation Lag** - Documentation describes future plans, not current reality
 
-## 📝 **Stub System Understanding**
+## 📝 **Actual Layer 1 Functions (What Really Exists)**
 
-### **What Are Stubs?**
-Stubs are placeholder implementations that establish the architectural structure without full implementation. They're located in `Framework/Stubs/` and serve as:
-- **Architecture Templates**: Show the intended structure
-- **Development Guides**: Provide patterns for implementation
-- **Testing Scaffolds**: Enable testing before full implementation
-
-### **Stub Creation Rules**
-
-#### **1. Naming Convention**
+### **Current Layer 1 Functions:**
 ```swift
-// ✅ CORRECT: Layer-numbered naming
-func platformPresentForm_L1(data: FormData, hints: PresentationHints) -> some View
-func determineOptimalLayout_L2(hints: PresentationHints) -> LayoutDecision
-func selectLayoutStrategy_L3(decision: LayoutDecision) -> LayoutStrategy
+// ✅ THESE ACTUALLY EXIST:
 
-// ❌ WRONG: Generic names without layer context
-func presentForm(data: FormData) -> some View
-func getLayout(hints: PresentationHints) -> LayoutDecision
-```
+// Generic collection presentation
+public func platformPresentItemCollection_L1<Item: Identifiable>(
+    items: [Item],
+    hints: PresentationHints
+) -> some View
 
-#### **2. Function Signatures**
-```swift
-// ✅ CORRECT: Full type information
-@MainActor
-public func platformPresentForm_L1(
-    data: FormData,
-    hints: PresentationHints,
+// Generic numeric data presentation  
+public func platformPresentNumericData_L1(
+    data: [GenericNumericData],
+    hints: PresentationHints
+) -> some View
+
+// Generic form presentation
+public func platformPresentFormData_L1(
+    fields: [GenericFormField],
+    hints: PresentationHints
+) -> some View
+
+// Generic modal form presentation
+public func platformPresentModalForm_L1(
+    formType: DataTypeHint,
     context: PresentationContext
-) -> some View {
-    // Stub implementation
-    return FormStubView(data: data, hints: hints, context: context)
-}
+) -> some View
 
-// ❌ WRONG: Missing types or access modifiers
-func platformPresentForm_L1(data, hints, context) {
-    // Missing types make it hard to understand
-}
+// Generic media presentation
+public func platformPresentMediaData_L1(
+    media: [GenericMediaItem],
+    hints: PresentationHints
+) -> some View
+
+// Generic hierarchical data presentation
+public func platformPresentHierarchicalData_L1(
+    items: [GenericHierarchicalItem],
+    hints: PresentationHints
+) -> some View
+
+// Generic temporal data presentation
+public func platformPresentTemporalData_L1(
+    items: [GenericTemporalItem],
+    hints: PresentationHints
+) -> some View
 ```
 
-#### **3. Stub Implementation Pattern**
+### **What These Functions Actually Do:**
+- **Return Stub Views**: Most return placeholder `Generic*View` structs
+- **Use Hints System**: Take `PresentationHints` for configuration
+- **Are Completely Generic**: No business logic, no CarManager-specific code
+- **Are Placeholders**: Return basic views with minimal functionality
+
+## 🚫 **What Does NOT Exist (Despite Documentation Claims)**
+
+### **❌ Business-Specific Functions (Documented but Missing):**
 ```swift
-// ✅ CORRECT: Clear stub with delegation
-@MainActor
-public func platformPresentForm_L1(
-    data: FormData,
-    hints: PresentationHints
-) -> some View {
-    // Layer 1: Semantic intent
-    let layout = determineOptimalFormLayout_L2(hints: hints)
-    let strategy = selectFormStrategy_L3(layout: layout)
-    return platformFormContainer_L4(strategy: strategy) {
-        FormContentStub(data: data)
+// These are documented but DON'T EXIST:
+platformPresentVehicleForm_L1()        // ❌ Missing
+platformPresentFuelForm_L1()           // ❌ Missing  
+platformPresentExpenseForm_L1()        // ❌ Missing
+platformPresentMaintenanceForm_L1()    // ❌ Missing
+```
+
+### **❌ Business-Specific Data Types (Documented but Missing):**
+```swift
+// These are documented but DON'T EXIST:
+case vehicleCreation                    // ❌ Missing
+case expenseEntry                      // ❌ Missing
+case fuelFillup                        // ❌ Missing
+case maintenanceRecord                 // ❌ Missing
+```
+
+### **❌ Advanced Form Generation (Documented but Missing):**
+```swift
+// This is documented but NOT IMPLEMENTED:
+IntelligentFormView.generateForm()     // ❌ Basic stub only
+```
+
+## 🔧 **How to Actually Use the Current Framework**
+
+### **1. Use Generic Functions with Hints**
+```swift
+// ✅ CORRECT: Use what actually exists
+let hints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create
+)
+
+let formView = platformPresentFormData_L1(
+    fields: genericFields,
+    hints: hints
+)
+```
+
+### **2. Create Custom Business Logic**
+```swift
+// ✅ CORRECT: Build business logic on top of generic framework
+struct VehicleFormView: View {
+    var body: some View {
+        // Use the generic framework
+        platformPresentFormData_L1(
+            fields: createVehicleFields(),
+            hints: createVehicleHints()
+        )
+    }
+    
+    private func createVehicleFields() -> [GenericFormField] {
+        // Convert business logic to generic fields
+        return [
+            GenericFormField(name: "Make", type: .text),
+            GenericFormField(name: "Model", type: .text),
+            GenericFormField(name: "Year", type: .number)
+        ]
+    }
+    
+    private func createVehicleHints() -> PresentationHints {
+        return PresentationHints(
+            dataType: .form,
+            presentationPreference: .form,
+            complexity: .moderate,
+            context: .create
+        )
     }
 }
+```
 
-// ❌ WRONG: Direct implementation without delegation
-@MainActor
-public func platformPresentForm_L1(
-    data: FormData,
-    hints: PresentationHints
-) -> some View {
-    // Don't implement directly in Layer 1
-    return Form {
-        // Direct implementation breaks the architecture
+### **3. Extend Generic Types**
+```swift
+// ✅ CORRECT: Extend generic types for business needs
+extension GenericFormField {
+    static func vehicleField(name: String, type: FieldType) -> GenericFormField {
+        return GenericFormField(
+            name: name,
+            type: type,
+            isRequired: true,
+            validationRules: []
+        )
     }
-}
-```
-
-## 🔧 **Common Usage Patterns**
-
-### **1. Form Presentation Pattern**
-```swift
-// ✅ CORRECT: Full semantic pattern
-platformPresentForm_L1(
-    data: formData,
-    hints: PresentationHints(
-        dataType: .form,
-        presentationPreference: .automatic,
-        complexity: .complex,
-        context: .modal
-    )
-)
-
-// ❌ WRONG: Missing hints or using wrong layer
-platformPresentForm_L4(data: formData) // Wrong layer
-platformPresentForm_L1(data: formData) // Missing hints
-```
-
-### **2. Collection Presentation Pattern**
-```swift
-// ✅ CORRECT: Collection with layout hints
-platformPresentCollection_L1(
-    items: dataItems,
-    hints: PresentationHints(
-        dataType: .collection,
-        presentationPreference: .cards,
-        complexity: .moderate,
-        context: .dashboard
-    )
-)
-
-// ❌ WRONG: Direct collection without semantic layer
-ForEach(items) { item in // Bypasses the framework
-    ItemView(item: item)
-}
-```
-
-### **3. Modal Presentation Pattern**
-```swift
-// ✅ CORRECT: Semantic modal presentation
-platformPresentModal_L1(
-    content: modalContent,
-    hints: PresentationHints(
-        dataType: .modal,
-        presentationPreference: .sheet,
-        complexity: .simple,
-        context: .overlay
-    )
-)
-
-// ❌ WRONG: Direct sheet presentation
-.sheet(isPresented: $showingModal) { // Bypasses the framework
-    ModalContent()
 }
 ```
 
 ## 🚫 **Common Mistakes to Avoid**
 
-### **1. Layer Violations**
+### **1. Assuming Business Functions Exist**
 ```swift
-// ❌ WRONG: Layer 1 calling Layer 6 directly
-func platformPresentForm_L1(data: FormData) -> some View {
-    return NavigationView { // Layer 6 component in Layer 1
-        Form {
-            // Direct implementation
-        }
-    }
-}
+// ❌ WRONG: This function doesn't exist
+let view = platformPresentVehicleForm_L1(data: vehicleData)
 
-// ✅ CORRECT: Proper delegation
-func platformPresentForm_L1(data: FormData) -> some View {
-    let layout = determineOptimalFormLayout_L2(hints: hints)
-    let strategy = selectFormStrategy_L3(layout: layout)
-    return platformFormContainer_L4(strategy: strategy) {
-        FormContentStub(data: data)
-    }
-}
-```
-
-### **2. Missing Hints**
-```swift
-// ❌ WRONG: No hints for intelligent decisions
-platformPresentForm_L1(data: formData)
-
-// ✅ CORRECT: Comprehensive hints
-platformPresentForm_L1(
-    data: formData,
-    hints: PresentationHints(
-        dataType: .form,
-        presentationPreference: .automatic,
-        complexity: .complex,
-        context: .modal,
-        customPreferences: [
-            "hasImagePicker": "true",
-            "hasDatePickers": "true",
-            "sectionCount": "4"
-        ]
-    )
+// ✅ CORRECT: Use generic function with business logic
+let view = platformPresentFormData_L1(
+    fields: convertVehicleToFields(vehicleData),
+    hints: createVehicleHints()
 )
 ```
 
-### **3. Incorrect Access Levels**
+### **2. Believing Documentation is Current**
 ```swift
-// ❌ WRONG: Internal access prevents external use
-func platformPresentForm_L1(data: FormData) -> some View
+// ❌ WRONG: Documentation says this exists
+case vehicleCreation
 
-// ✅ CORRECT: Public access for external consumption
-@MainActor
-public func platformPresentForm_L1(data: FormData) -> some View
+// ✅ CORRECT: Use what actually exists
+case form
 ```
 
-## 📚 **Stub Creation Workflow**
-
-### **Step 1: Identify the Need**
-- What semantic intent does the developer want to express?
-- What layer should this function belong to?
-- What hints are needed for intelligent decisions?
-
-### **Step 2: Create the Stub**
+### **3. Expecting Advanced Features**
 ```swift
-// Example: Creating a new form presentation stub
-@MainActor
-public func platformPresentAdvancedForm_L1(
-    data: AdvancedFormData,
-    hints: PresentationHints
-) -> some View {
-    // Layer 1: Semantic intent
-    let layout = determineAdvancedFormLayout_L2(hints: hints)
-    let strategy = selectAdvancedFormStrategy_L3(layout: layout)
-    return platformAdvancedFormContainer_L4(strategy: strategy) {
-        AdvancedFormStubView(data: data)
-    }
-}
+// ❌ WRONG: Expecting intelligent form generation
+let form = IntelligentFormView.generateForm(for: Vehicle.self, ...)
+
+// ✅ CORRECT: Use basic stub implementation
+let form = platformPresentFormData_L1(fields: fields, hints: hints)
 ```
 
-### **Step 3: Create Supporting Stubs**
+## 📚 **What the Framework Actually Provides**
+
+### **✅ What's Real and Working:**
+1. **Generic Data Types**: `GenericFormField`, `GenericMediaItem`, etc.
+2. **Hints System**: `PresentationHints`, `DataTypeHint`, `ContentComplexity`
+3. **Layer Structure**: Basic six-layer architecture with stub implementations
+4. **Platform Detection**: iOS/macOS platform detection and optimization
+5. **Basic Views**: Placeholder views for all major data types
+
+### **❌ What's Not Implemented:**
+1. **Business Logic**: No CarManager-specific functionality
+2. **Intelligent Forms**: Basic form generation only
+3. **Advanced UI**: Most views are simple placeholders
+4. **Data Binding**: No automatic data binding or validation
+5. **Performance Optimization**: Basic structure only
+
+## 🎯 **Working with Developers**
+
+### **Questions to Ask:**
+- "What business logic do you need to implement?"
+- "How can we use the generic framework functions for your use case?"
+- "What data types are you working with?"
+- "Do you need to extend the generic types?"
+
+### **Red Flags to Watch For:**
+- Developer expects business-specific functions to exist
+- Developer believes documentation is current
+- Developer wants to use "intelligent" features that aren't implemented
+- Developer assumes advanced form generation exists
+
+### **Correct Approach:**
+1. **Acknowledge Reality**: The framework is generic and basic
+2. **Use Generic Functions**: Leverage what actually exists
+3. **Build Business Logic**: Create business-specific implementations
+4. **Extend Framework**: Add business logic on top of generic foundation
+
+## 🔍 **Debugging Common Issues**
+
+### **Issue: "Function doesn't exist"**
 ```swift
-// Layer 2: Layout decision
-func determineAdvancedFormLayout_L2(hints: PresentationHints) -> AdvancedFormLayoutDecision {
-    // Stub: Will analyze hints and determine optimal layout
-    return AdvancedFormLayoutDecision.stub
-}
+// Problem: Developer tries to use documented function
+platformPresentVehicleForm_L1(data: vehicleData)
 
-// Layer 3: Strategy selection
-func selectAdvancedFormStrategy_L3(layout: AdvancedFormLayoutDecision) -> AdvancedFormStrategy {
-    // Stub: Will select optimal strategy based on layout
-    return AdvancedFormStrategy.stub
-}
-
-// Layer 4: Component implementation
-func platformAdvancedFormContainer_L4(strategy: AdvancedFormStrategy) -> some View {
-    // Stub: Will implement the actual form container
-    return AdvancedFormContainerStub(strategy: strategy)
-}
+// Solution: Use generic function with business logic
+platformPresentFormData_L1(
+    fields: convertVehicleToFields(vehicleData),
+    hints: createVehicleHints()
+)
 ```
 
-### **Step 4: Create Stub Views**
+### **Issue: "Expected business data types"**
 ```swift
-// Stub view for development and testing
-struct AdvancedFormStubView: View {
-    let data: AdvancedFormData
-    
-    var body: some View {
-        VStack {
-            Text("Advanced Form Stub")
-                .font(.headline)
-            Text("Data: \(data.description)")
-                .font(.caption)
-            Text("This is a placeholder for the actual form implementation")
-                .padding()
-        }
-        .padding()
-    }
-}
+// Problem: Developer expects business-specific enum cases
+case vehicleCreation
+
+// Solution: Use generic data types
+case form
 ```
 
-## 🧪 **Testing Stubs**
-
-### **Stub Validation**
+### **Issue: "Advanced features not working"**
 ```swift
-// Test that stubs compile and provide expected structure
-func testAdvancedFormStub() {
-    let data = AdvancedFormData.stub
-    let hints = PresentationHints.stub
-    
-    let view = platformPresentAdvancedForm_L1(data: data, hints: hints)
-    
-    // Verify the view compiles and has expected structure
-    XCTAssertNotNil(view)
-}
-```
+// Problem: Developer expects intelligent form generation
+let form = IntelligentFormView.generateForm(...)
 
-### **Integration Testing**
-```swift
-// Test that the delegation chain works
-func testAdvancedFormDelegationChain() {
-    let data = AdvancedFormData.stub
-    let hints = PresentationHints.stub
-    
-    // This should compile and show the stub view
-    let view = platformPresentAdvancedForm_L1(data: data, hints: hints)
-    
-    // In a real app, this would show the stub view
-    // allowing developers to see the intended structure
-}
-```
-
-## 🔍 **Debugging Stubs**
-
-### **Common Issues**
-1. **Compilation Errors**: Check function signatures and types
-2. **Missing Delegation**: Ensure Layer 1 calls Layer 2, not Layer 6
-3. **Access Level Issues**: Verify all functions are `public`
-4. **Missing Hints**: Ensure comprehensive hint objects
-
-### **Debugging Tools**
-```swift
-// Add debug logging to stubs
-func platformPresentForm_L1(data: FormData, hints: PresentationHints) -> some View {
-    print("🔍 Layer 1: Presenting form with hints: \(hints)")
-    
-    let layout = determineOptimalFormLayout_L2(hints: hints)
-    print("🔍 Layer 2: Layout decision: \(layout)")
-    
-    let strategy = selectFormStrategy_L3(layout: layout)
-    print("🔍 Layer 3: Strategy selection: \(strategy)")
-    
-    return platformFormContainer_L4(strategy: strategy) {
-        FormContentStub(data: data)
-    }
-}
+// Solution: Use basic form presentation
+let form = platformPresentFormData_L1(fields: fields, hints: hints)
 ```
 
 ## 📖 **Resources for AI Agents**
 
-### **Key Files to Reference**
-- `Framework/docs/README_6LayerArchitecture.md` - Complete architecture overview
-- `Framework/docs/README_UsageExamples.md` - Practical usage examples
-- `Framework/docs/FunctionIndex.md` - Complete function reference
-- `Framework/Stubs/` - Example stub implementations
+### **Key Files to Reference:**
+- `Framework/Sources/Shared/Views/Extensions/PlatformSemanticLayer1.swift` - **ACTUAL** Layer 1 functions
+- `Framework/Sources/Shared/Models/GenericTypes.swift` - Generic data types
+- `Framework/Sources/Shared/Models/PlatformTypes.swift` - Platform detection
+- `Framework/Sources/Shared/Views/Extensions/PerformanceOptimizationLayer5.swift` - Performance features
 
-### **When to Create Stubs**
-- **New Features**: Always start with stubs to establish architecture
-- **Missing Functions**: If a developer needs a function that doesn't exist
-- **Architecture Changes**: When modifying the layer structure
-- **Testing**: To validate architectural decisions before implementation
-
-### **When NOT to Create Stubs**
-- **Bug Fixes**: Fix the actual implementation, don't create stubs
-- **Performance Issues**: Optimize existing code, don't stub it
-- **Simple UI Changes**: Use existing functions, don't create new stubs
+### **What to Ignore:**
+- `Framework/docs/six-layer-architecture-implementation-plan.md` - **OUTDATED** documentation
+- `Framework/docs/README_UsageExamples.md` - **OUTDATED** examples
+- Any documentation mentioning business-specific functions
 
 ## 🎯 **Best Practices Summary**
 
-1. **Always use layer-numbered naming** (`_L1`, `_L2`, etc.)
-2. **Start with semantic intent** in Layer 1
-3. **Delegate to lower layers** - never skip layers
-4. **Provide comprehensive hints** for intelligent decisions
-5. **Use public access** for all external functions
-6. **Create stub views** for visual feedback during development
-7. **Test the delegation chain** before implementation
-8. **Document the intent** of each stub function
+1. **Always check what actually exists** in the source code
+2. **Ignore outdated documentation** - it describes future plans
+3. **Use generic functions** with business logic on top
+4. **Build business functionality** using the generic framework
+5. **Extend generic types** for business needs
+6. **Acknowledge limitations** of the current implementation
 
 ## 🤝 **Working with Developers**
 
-### **Questions to Ask**
-- "What are you trying to achieve semantically?"
-- "What layer should this function belong to?"
-- "What hints would help the framework make intelligent decisions?"
-- "Are you looking for a stub or a full implementation?"
+### **When Developers Ask for Business Functions:**
+```
+Developer: "I need platformPresentVehicleForm_L1"
+AI Agent: "That function doesn't exist yet. The framework is generic. 
+          Let's use platformPresentFormData_L1 with custom business logic instead."
+```
 
-### **Red Flags to Watch For**
-- Developer wants to bypass the framework layers
-- Direct platform-specific code in semantic layers
-- Missing or incomplete hint objects
-- Functions without layer numbering
-- Private or internal access levels
+### **When Developers Reference Documentation:**
+```
+Developer: "The docs say I can use .vehicleCreation"
+AI Agent: "The documentation is outdated. The framework currently only supports 
+          generic types like .form. Let's work with what actually exists."
+```
+
+### **When Developers Expect Advanced Features:**
+```
+Developer: "Why isn't the intelligent form generation working?"
+AI Agent: "That feature isn't implemented yet. The current framework provides 
+          basic form presentation. We'll need to build the business logic ourselves."
+```
 
 ---
 
-**Remember**: The goal is to help developers work WITH the framework architecture, not around it. Stubs are the bridge between intent and implementation, ensuring the six-layer system works as designed.
+**Remember**: The framework is a **generic foundation**, not a complete business solution. Help developers build on top of what exists rather than expecting features that don't exist yet.
