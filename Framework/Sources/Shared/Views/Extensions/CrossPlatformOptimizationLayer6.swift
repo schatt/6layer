@@ -127,19 +127,19 @@ public struct PlatformOptimizationSettings {
                 "windowManagement": true,
                 "menuBarIntegration": true
             ]
-        case .visionOS:
-            return [
-                "spatialOptimization": true,
-                "gestureRecognition": true,
-                "eyeTracking": true,
-                "spatialAudio": true
-            ]
         case .watchOS:
             return [
                 "hapticFeedback": true,
                 "digitalCrown": true,
                 "complications": true,
                 "workoutOptimization": true
+            ]
+        case .tvOS:
+            return [
+                "remoteControl": true,
+                "focusEngine": true,
+                "tvInterface": true,
+                "siriRemote": true
             ]
         }
     }
@@ -213,10 +213,10 @@ public enum DisplayOptimization: String, CaseIterable {
         switch platform {
         case .iOS, .macOS:
             self = .retina
-        case .visionOS:
-            self = .spatial
         case .watchOS:
             self = .highDPI
+        case .tvOS:
+            self = .standard
         }
     }
 }
@@ -233,10 +233,10 @@ public enum FrameRateOptimization: String, CaseIterable {
             self = .adaptive
         case .macOS:
             self = .fixed60
-        case .visionOS:
-            self = .fixed120
         case .watchOS:
             self = .adaptive
+        case .tvOS:
+            self = .fixed60
         }
     }
 }
@@ -322,7 +322,7 @@ public struct RenderingMetrics {
 public struct MemoryMetrics {
     public var usedMemory: Int64 = 0
     public var peakMemory: Int64 = 0
-    public var memoryPressure: MemoryPressure = .normal
+    public var memoryPressure: MemoryPressureLevel = .normal
     
     public mutating func record(_ measurement: PerformanceMeasurement) {
         switch measurement.metric {
@@ -331,7 +331,7 @@ public struct MemoryMetrics {
         case .peakMemory:
             peakMemory = Int64(measurement.value)
         case .memoryPressure:
-            memoryPressure = MemoryPressure(rawValue: Int(measurement.value)) ?? .normal
+            memoryPressure = MemoryPressureLevel(rawValue: Int(measurement.value)) ?? .normal
         default:
             break
         }
@@ -386,7 +386,7 @@ public enum PerformanceMetric: String, CaseIterable {
     case memoryPressure = "memoryPressure"
 }
 
-public enum MemoryPressure: Int, CaseIterable {
+public enum MemoryPressureLevel: Int, CaseIterable {
     case normal = 0
     case warning = 1
     case critical = 2
@@ -469,14 +469,14 @@ public struct NavigationPatterns {
             self.primaryNavigation = .sidebar
             self.secondaryNavigation = .navigationSplit
             self.modalPresentation = .window
-        case .visionOS:
-            self.primaryNavigation = .spatial
-            self.secondaryNavigation = .floating
-            self.modalPresentation = .immersive
         case .watchOS:
             self.primaryNavigation = .crown
             self.secondaryNavigation = .swipe
             self.modalPresentation = .sheet
+        case .tvOS:
+            self.primaryNavigation = .tabBar
+            self.secondaryNavigation = .focus
+            self.modalPresentation = .modal
         }
     }
 }
@@ -490,12 +490,14 @@ public enum NavigationType: String, CaseIterable {
     case floating = "floating"
     case crown = "crown"
     case swipe = "swipe"
+    case focus = "focus"
 }
 
 public enum ModalType: String, CaseIterable {
     case sheet = "sheet"
     case window = "window"
     case immersive = "immersive"
+    case modal = "modal"
 }
 
 public struct InteractionPatterns {
@@ -516,14 +518,14 @@ public struct InteractionPatterns {
             self.primaryInput = .mouse
             self.secondaryInput = .keyboard
             self.gestureSupport = [.click, .drag, .scroll, .rightClick]
-        case .visionOS:
-            self.primaryInput = .gesture
-            self.secondaryInput = .voice
-            self.gestureSupport = [.pinch, .rotate, .spatial, .eyeTracking]
         case .watchOS:
             self.primaryInput = .digitalCrown
             self.secondaryInput = .touch
             self.gestureSupport = [.tap, .swipe, .longPress]
+        case .tvOS:
+            self.primaryInput = .remote
+            self.secondaryInput = .voice
+            self.gestureSupport = [.click, .swipe, .longPress]
         }
     }
 }
@@ -535,6 +537,7 @@ public enum InputType: String, CaseIterable {
     case voice = "voice"
     case gesture = "gesture"
     case digitalCrown = "digitalCrown"
+    case remote = "remote"
 }
 
 public enum GestureType: String, CaseIterable {
@@ -569,14 +572,14 @@ public struct LayoutPatterns {
             self.primaryLayout = .grid
             self.secondaryLayout = .split
             self.responsiveBreakpoints = [800, 1024, 1280, 1440, 1920, 2560, 3840]
-        case .visionOS:
-            self.primaryLayout = .spatial
-            self.secondaryLayout = .floating
-            self.responsiveBreakpoints = [100, 200, 300, 400, 500]
         case .watchOS:
             self.primaryLayout = .compact
             self.secondaryLayout = .stack
             self.responsiveBreakpoints = [136, 162, 180, 198, 205, 224]
+        case .tvOS:
+            self.primaryLayout = .grid
+            self.secondaryLayout = .stack
+            self.responsiveBreakpoints = [1920, 2560, 3840, 4096]
         }
     }
 }
@@ -683,16 +686,6 @@ public class PlatformRecommendationEngine {
         settings: PlatformOptimizationSettings
     ) -> [PlatformRecommendation]? {
         switch platform {
-        case .visionOS:
-            return [
-                PlatformRecommendation(
-                    title: "Spatial Optimization",
-                    description: "Optimize for spatial computing with proper depth and scale.",
-                    category: .platformSpecific,
-                    priority: .high,
-                    platform: platform
-                )
-            ]
         case .watchOS:
             return [
                 PlatformRecommendation(
@@ -971,8 +964,8 @@ public struct CrossPlatformTesting {
         switch platform {
         case .iOS: return 0.95
         case .macOS: return 0.92
-        case .visionOS: return 0.85
         case .watchOS: return 0.88
+        case .tvOS: return 0.90
         }
     }
     
@@ -981,8 +974,8 @@ public struct CrossPlatformTesting {
         switch platform {
         case .iOS: return 0.88
         case .macOS: return 0.91
-        case .visionOS: return 0.82
         case .watchOS: return 0.85
+        case .tvOS: return 0.89
         }
     }
     
@@ -991,8 +984,8 @@ public struct CrossPlatformTesting {
         switch platform {
         case .iOS: return 0.90
         case .macOS: return 0.87
-        case .visionOS: return 0.83
         case .watchOS: return 0.86
+        case .tvOS: return 0.88
         }
     }
 }

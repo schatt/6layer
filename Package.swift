@@ -24,7 +24,7 @@ let package = Package(
         .target(
             name: "SixLayerFramework",
             dependencies: [],
-            path: "Sources",
+            path: "Framework/Sources",
             sources: [
                 "Shared/Models",
                 "Shared/Views",
@@ -38,7 +38,16 @@ let package = Package(
             ]
         ),
         
-        // Test targets moved to Development/Tests/
-        // Tests are now run from the root directory
+        // Test targets
+        .testTarget(
+            name: "SixLayerFrameworkTests",
+            dependencies: ["SixLayerFramework"],
+            path: "Development/Tests/SixLayerFrameworkTests"
+        ),
+        .testTarget(
+            name: "SixLayerMacOSTests",
+            dependencies: ["SixLayerFramework"],
+            path: "Development/Tests/SixLayerMacOSTests"
+        )
     ]
 )
