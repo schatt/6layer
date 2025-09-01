@@ -202,6 +202,170 @@ struct VehicleFormView: View {
 }
 ```
 
+## 🎨 **Custom View Extensibility**
+
+### **How Developers Can Create Custom Views**
+
+The framework provides **multiple extensibility points** for developers to create custom views:
+
+#### **1. Custom Field Views in Forms:**
+```swift
+// Dev A creates a custom vehicle image picker
+struct VehicleImagePicker: View {
+    let fieldName: String
+    let value: Any
+    let fieldType: FieldType
+    
+    var body: some View {
+        VStack {
+            Text("Vehicle Image")
+                .font(.headline)
+            
+            if let imageData = value as? Data {
+                Image(uiImage: UIImage(data: imageData) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 200)
+            }
+            
+            Button("Select Image") {
+                // Custom image picker logic
+            }
+            .buttonStyle(.bordered)
+        }
+    }
+}
+
+// Dev A uses it with the framework
+let customForm = IntelligentFormView.generateForm(
+    for: Vehicle.self,
+    initialData: sampleVehicle,
+    customFieldView: { fieldName, value, fieldType in
+        if fieldName == "image" {
+            VehicleImagePicker(fieldName: fieldName, value: value, fieldType: fieldType)
+        } else {
+            // Fall back to default field view
+            EmptyView() // Framework will use default
+        }
+    },
+    onSubmit: { vehicle in
+        // Handle submission
+    }
+)
+```
+
+#### **2. Custom Content Views in Navigation:**
+```swift
+// Dev A creates custom vehicle views
+struct CustomVehicleItemView: View {
+    let vehicle: Vehicle
+    
+    var body: some View {
+        HStack {
+            AsyncImage(url: vehicle.imageURL) { image in
+                image.resizable()
+            } placeholder: {
+                Color.gray
+            }
+            .frame(width: 50, height: 50)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            VStack(alignment: .leading) {
+                Text(vehicle.make + " " + vehicle.model)
+                    .font(.headline)
+                Text("\(vehicle.year)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+        }
+        .padding()
+    }
+}
+
+// Dev A uses them with the framework
+let navigationView = platformPresentItemCollection_L1(
+    items: vehicles,
+    hints: PresentationHints(
+        dataType: .collection,
+        presentationPreference: .list,
+        complexity: .moderate,
+        context: .browse
+    )
+)
+```
+
+#### **3. Custom Container Views:**
+```swift
+// Dev A creates a custom multi-step form container
+struct MultiStepFormContainer<Content: View>: View {
+    @State private var currentStep = 0
+    let totalSteps: Int
+    let content: Content
+    
+    var body: some View {
+        VStack {
+            // Custom step indicator
+            StepIndicator(currentStep: currentStep, totalSteps: totalSteps)
+            
+            // Custom content
+            content
+            
+            // Custom navigation
+            HStack {
+                if currentStep > 0 {
+                    Button("Previous") { currentStep -= 1 }
+                }
+                
+                Spacer()
+                
+                if currentStep < totalSteps - 1 {
+                    Button("Next") { currentStep += 1 }
+                } else {
+                    Button("Submit") { /* Handle submission */ }
+                }
+            }
+            .padding()
+        }
+    }
+}
+```
+
+#### **4. Custom Hints for View Behavior:**
+```swift
+// Dev A creates custom hints for specific behavior
+let vehicleFormHints = CustomHint(
+    hintType: "vehicle.form",
+    priority: .high,
+    customData: [
+        "showImagePicker": true,
+        "requiredFields": ["make", "model", "year"],
+        "layoutStyle": "sectioned",
+        "validationMode": "strict",
+        "customContainer": "multiStep",
+        "customFieldViews": ["image": "VehicleImagePicker"]
+    ]
+)
+
+// Dev A combines hints with framework
+let enhancedHints = EnhancedPresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .complex,
+    context: .create,
+    extensibleHints: [vehicleFormHints]
+)
+```
+
+### **Key Extensibility Points:**
+
+1. **`customFieldView`** - Custom form field views
+2. **`@ViewBuilder` parameters** - Custom content views in navigation
+3. **Custom containers** - Custom form containers and layouts
+4. **Custom hints** - Control view behavior through the hints system
+5. **Extensible hints** - Add business-specific logic through CustomHint
+
 ## 🚫 **Common Mistakes to Avoid**
 
 ### **1. Expecting Business-Specific Functions:**

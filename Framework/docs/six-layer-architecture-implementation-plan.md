@@ -45,6 +45,89 @@ The SixLayer Framework follows a **layered extensibility** approach:
 
 **Key Principle**: The framework remains generic and reusable across different business domains, while business-specific behavior is achieved through the extensible hints system.
 
+### **Custom View Extensibility**
+
+Developers can create custom views and integrate them seamlessly with the framework:
+
+#### **1. Custom Field Views in Forms:**
+```swift
+// Developer creates custom form field
+struct CustomImagePicker: View {
+    let fieldName: String
+    let value: Any
+    let fieldType: FieldType
+    
+    var body: some View {
+        // Custom image picker implementation
+        VStack {
+            Text("Select Image")
+            Button("Choose Image") { /* Image picker logic */ }
+        }
+    }
+}
+
+// Developer uses custom field with framework
+let form = IntelligentFormView.generateForm(
+    for: MyData.self,
+    initialData: sampleData,
+    customFieldView: { fieldName, value, fieldType in
+        if fieldName == "image" {
+            CustomImagePicker(fieldName: fieldName, value: value, fieldType: fieldType)
+        } else {
+            EmptyView() // Framework uses default
+        }
+    }
+)
+```
+
+#### **2. Custom Content Views:**
+```swift
+// Developer creates custom item view
+struct CustomItemView: View {
+    let item: MyItem
+    
+    var body: some View {
+        // Custom item presentation
+        HStack {
+            Text(item.title)
+            Text(item.description)
+        }
+    }
+}
+
+// Developer integrates with framework navigation
+let navigation = platformPresentItemCollection_L1(
+    items: myItems,
+    hints: PresentationHints(
+        dataType: .collection,
+        presentationPreference: .list,
+        context: .browse
+    )
+)
+```
+
+#### **3. Custom Container Views:**
+```swift
+// Developer creates custom form container
+struct MultiStepFormContainer<Content: View>: View {
+    @State private var currentStep = 0
+    let content: Content
+    
+    var body: some View {
+        VStack {
+            // Custom step indicator
+            StepIndicator(currentStep: currentStep)
+            
+            // Framework-generated content
+            content
+            
+            // Custom navigation
+            CustomStepNavigation(currentStep: currentStep)
+        }
+    }
+}
+```
+
 ## Layer Definitions
 
 ### Level 1: Semantic Intent (Semantic Layer)
