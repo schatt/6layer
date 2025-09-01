@@ -1,14 +1,21 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v1.6.4 Ready** ✅
+## 📍 **Current Status: v1.6.5 Ready** ✅
 
-**Last Release**: August 30, 2025  
+**Last Release**: September 1, 2025  
 **Current Phase**: Performance & Accessibility Complete  
 **Next Phase**: Cross-Platform Optimization (Week 13)
 
 ---
 
 ## 🚀 **Recent Updates**
+
+### **v1.6.5 - Repository Restructuring** ✅
+- **Restructured**: Separated framework code from development files
+- **Framework**: Moved to `Framework/` directory (clean package distribution)
+- **Development**: Moved to `Development/` directory (maintains transparency)
+- **Result**: Users get clean package view, developers see full structure
+- **Build**: Framework builds successfully from `Framework/` directory
 
 ### **v1.6.4 - Package Distribution Cleanup** ✅
 - **Fixed**: Development files no longer included in distributed packages
