@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides comprehensive guidelines for maintaining keyboard consistency across the CarManager application. All TextField instances must use appropriate keyboard types and autocapitalization settings to provide the best user experience on both iOS and macOS platforms.
+This document provides comprehensive guidelines for maintaining keyboard consistency across the Framework application. All TextField instances must use appropriate keyboard types and autocapitalization settings to provide the best user experience on both iOS and macOS platforms.
 
 ## Core Principles
 
@@ -37,7 +37,7 @@ This document provides comprehensive guidelines for maintaining keyboard consist
 
 ## Field Type Categorization and Recommendations
 
-### 1. Vehicle Information Fields
+### 1. Item Information Fields
 
 #### Text Fields (Names, Descriptions)
 - **Examples:** Make, Model, Color, Name, Title, Description
@@ -72,7 +72,7 @@ TextField("Year", text: $year)
 ```
 
 #### Decimal Fields
-- **Examples:** Fuel Tank Capacity, Purchase Price, Cost, Amount
+- **Examples:** Capacity, Purchase Price, Cost, Amount
 - **Keyboard Type:** `.decimalPadKeyboard()`
 - **Autocapitalization:** None
 - **Usage:**
@@ -139,7 +139,7 @@ For consistent form fields, use the `FormTextField` component which automaticall
 FormTextField(
     title: "Make",
     text: $make,
-    placeholder: "Enter vehicle make",
+            placeholder: "Enter item name",
     keyboardType: .default,
     autocapitalization: .words
 )
@@ -178,7 +178,7 @@ FormTextField(
 
 ### Common Patterns
 
-#### Vehicle Information
+#### Item Information
 ```swift
 // Text fields
 TextField("Make", text: $make).defaultKeyboard().wordsCapsText()

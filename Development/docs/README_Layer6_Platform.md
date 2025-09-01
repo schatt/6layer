@@ -58,7 +58,7 @@ Apply platform-specific optimizations and features that enhance the user experie
 ```swift
 #if os(iOS)
 .platformIOSNavigationBar(
-    title: "Vehicle Details",
+    title: "Item Details",
     displayMode: .large
 )
 #endif

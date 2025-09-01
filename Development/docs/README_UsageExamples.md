@@ -168,12 +168,12 @@ if deviceSupportsAdvancedFeatures {
 VStack {
     // iOS-specific navigation
     .platformIOSNavigationBar(
-        title: "Vehicle Details",
+        title: "Item Details",
         displayMode: .large
     )
     
     // Content with iOS optimizations
-    VehicleDetailView(vehicle: vehicle)
+    ItemDetailView(item: item)
         .platformIOSHapticFeedback(style: .medium)
         .platformIOSSwipeGestures(
             onSwipeLeft: { /* handle swipe */ },
@@ -189,12 +189,12 @@ VStack {
 VStack {
     // macOS-specific navigation
     .platformMacOSNavigation(
-        title: "Vehicle Details",
-        subtitle: vehicle.make + " " + vehicle.model
+        title: "Item Details",
+        subtitle: item.name + " " + item.description
     )
     
     // Content with macOS optimizations
-    VehicleDetailView(vehicle: vehicle)
+    ItemDetailView(item: item)
         .platformMacOSWindowResizing(resizable: true)
         .platformMacOSWindowSizing(
             minWidth: 800,
@@ -211,23 +211,23 @@ VStack {
 ### **Simple Form**
 ```swift
 .platformPresentForm(
-    type: .vehicleCreation,
+    type: .itemCreation,
     complexity: .simple,
     style: .standard
 ) {
     VStack(spacing: 16) {
         .platformFormSection(title: "Basic Information") {
-            .platformFormField(label: "Make") {
-                TextField("Make", text: $make)
+            .platformFormField(label: "Name") {
+                TextField("Name", text: $name)
             }
-            .platformFormField(label: "Model") {
-                TextField("Model", text: $model)
+            .platformFormField(label: "Description") {
+                TextField("Description", text: $description)
             }
         }
         
         .platformFormSection(title: "Details") {
-            .platformFormField(label: "Year") {
-                TextField("Year", text: $year)
+            .platformFormField(label: "Category") {
+                TextField("Category", text: $category)
             }
         }
     }

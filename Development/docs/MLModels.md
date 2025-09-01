@@ -28,7 +28,7 @@ Add the compiled `.mlmodelc` directories to `project.yml` under the app target `
 ```yaml
 # project.yml (excerpt)
 # targets:
-#   "CarManagerML iOS":
+#   "FrameworkML iOS":
 #     resources:
 #       - path: Build/CompiledMLModels
 #         optional: true

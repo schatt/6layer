@@ -40,7 +40,7 @@ Level 1: Semantic Intent → Level 2: Layout Decision → Level 3: Strategy Sele
 ```swift
 /// Data type hints that guide generic functions
 public enum DataTypeHint: String, CaseIterable {
-    case generic, vehicle, fuelRecord, expense, maintenance, achievement
+    case generic, item, record, expense, maintenance, achievement
     case location, notification, userProfile, settings, media, numeric
     case hierarchical, temporal
 }
@@ -81,7 +81,7 @@ platformFormContainer { ... }
 
 // Use:
 platformPresentForm(
-    type: .vehicleCreation,
+    type: .itemCreation,
     complexity: .complex,
     layout: .adaptive
 ) { ... }
@@ -114,7 +114,7 @@ func platformPresentItemCollection_L1<Item: Identifiable>(
 ```
 
 **Hint-Driven Decision Making**: The decision engine uses hints to:
-- **Data Type Analysis**: `DataTypeHint` informs layout patterns (cards for vehicles, lists for fuel records)
+- **Data Type Analysis**: `DataTypeHint` informs layout patterns (cards for items, lists for records)
 - **Complexity Assessment**: Automatically determines form complexity based on field count and types
 - **Context Awareness**: `PresentationContext` influences sizing and interaction patterns
 - **Preference Respect**: Honors developer preferences while optimizing for platform capabilities
@@ -300,10 +300,10 @@ func analyzeAccessibilityNeeds(_ metrics: AccessibilityMetrics) -> Accessibility
 
 ```swift
 enum FormType {
-    case vehicleCreation
-    case expenseEntry
-    case maintenanceRecord
-    case fuelPurchase
+    case itemCreation
+case expenseEntry
+case maintenanceRecord
+case dataEntry
     case userProfile
     case settings
 }
@@ -343,7 +343,7 @@ struct FormIntent {
 - Implement simple pass-through functions
 - Establish delegation chain
 
-### Step 3: Migrate AddVehicleView
+### Step 3: Migrate AddItemView
 - Replace `platformFormContainer` with `platformPresentForm`
 - Replace `platformAdaptiveFrame` with semantic sizing
 - Replace `platformSheet` with `platformPresentModal`
@@ -355,7 +355,7 @@ struct FormIntent {
 - Optimize based on real-world usage
 - Document lessons learned
 
-## AddVehicleView Migration Example
+## AddItemView Migration Example
 
 ### Current Implementation
 ```swift
@@ -383,24 +383,24 @@ var body: some View {
 ```swift
 var body: some View {
     platformPresentForm(
-        type: .vehicleCreation,
+        type: .itemCreation,
         complexity: .complex, // 15+ fields across 4 sections
         layout: .adaptive
     ) {
         Form {
             imageSection
             infoSection
-            purchaseSection
+            detailsSection
             notesSection
         }
     }
     .platformPresentNavigation(
-        style: .form(title: "Add Vehicle", displayMode: .inline)
+        style: .form(title: "Add Item", displayMode: .inline)
     )
     .platformPresentToolbar(
         actions: [
             .cancel { presentationMode.wrappedValue.dismiss() },
-            .save { saveVehicle() }
+            .save { saveItem() }
         ]
     )
     // ... semantic modal presentations
@@ -507,13 +507,13 @@ Existing Working Code → Wrapped in Six-Layer Architecture → Enhanced with In
 4. **Preserve Existing Behavior**: Ensure the six-layer architecture doesn't break current functionality
 5. **Gradually Enhance**: Add intelligence to each layer while maintaining compatibility
 
-#### **Piecemeal Migration Example (AddVehicleView)**
+#### **Piecemeal Migration Example (AddItemView)**
 
 ```swift
 // Layer 1: Semantic intent with hints
-func platformPresentVehicleForm_L1() -> some View {
+func platformPresentItemForm_L1() -> some View {
     let hints = PresentationHints(
-        dataType: .vehicle,
+        dataType: .item,
         presentationPreference: .form,
         complexity: .complex,
         context: .create,
@@ -526,17 +526,17 @@ func platformPresentVehicleForm_L1() -> some View {
     )
     
     // Delegate to Layer 2 for content analysis
-    let layout = determineOptimalFormLayout_VehicleForm_L2(hints: hints)
-    let strategy = selectFormStrategy_VehicleForm_L3_TEMP(layout: layout) // Temporary function
-    return platformFormContainer_VehicleForm_L4(strategy: strategy) {
+    let layout = determineOptimalFormLayout_ItemForm_L2(hints: hints)
+    let strategy = selectFormStrategy_ItemForm_L3_TEMP(layout: layout) // Temporary function
+    return platformFormContainer_ItemForm_L4(strategy: strategy) {
         self // Pass the content of the current view
     }
 }
 
 // Layer 3: Temporary function containing current working implementation
-func selectFormStrategy_VehicleForm_L3_TEMP(layout: VehicleFormLayoutDecision) -> VehicleFormStrategy {
+func selectFormStrategy_ItemForm_L3_TEMP(layout: ItemFormLayoutDecision) -> ItemFormStrategy {
     // MIGRATION: Using current working implementation (sheet presentation)
-    return VehicleFormStrategy(
+    return ItemFormStrategy(
         containerType: .sheet, // Current implementation uses sheet presentation
         fieldLayout: layout.fieldLayout,
         spacing: mapSpacingToStrategy(layout.spacing),
@@ -548,11 +548,11 @@ func selectFormStrategy_VehicleForm_L3_TEMP(layout: VehicleFormLayoutDecision) -
 
 // Layer 4: Handles .sheet case for current working implementation
 case .sheet:
-    // MIGRATION: Use our current working AddVehicleView implementation
+    // MIGRATION: Use our current working AddItemView implementation
     // This preserves the working sheet presentation logic during migration
     return AnyView(
         content()
-            .platformNavigationTitle("Add Vehicle")
+            .platformNavigationTitle("Add Item")
             .platformNavigationTitleDisplayMode(.inline)
             .platformFormToolbar(
                 onCancel: { /* Will be handled by parent view */ },
