@@ -1,0 +1,41 @@
+# Git attributes for SixLayer Framework
+# Mark development files as export-ignore so they don't get included in package exports
+
+# Development and planning files
+todo.md export-ignore
+PROJECT_STATUS.md export-ignore
+status.md export-ignore
+RELEASE_*.md export-ignore
+
+# Documentation (keep only essential user docs)
+docs/ export-ignore
+
+# Test files
+Tests/ export-ignore
+
+# Business logic examples
+carmanager-business-logic/ export-ignore
+
+# Data and configuration
+ShrimpData/ export-ignore
+
+# IDE and development files
+.cursor/ export-ignore
+.git/ export-ignore
+.gitignore export-ignore
+.swiftpm/ export-ignore
+
+# Build artifacts
+.build/ export-ignore
+DerivedData/ export-ignore
+build/ export-ignore
+
+# macOS system files
+.DS_Store export-ignore
+
+# IDE files
+*.xcodeproj/ export-ignore
+*.xcworkspace/ export-ignore
+xcuserdata/ export-ignore
+.vscode/ export-ignore
+.idea/ export-ignore
