@@ -228,6 +228,7 @@ xcodebuild test -scheme SixLayerFramework -destination 'platform=iOS Simulator,n
 - [Usage Examples](docs/README_UsageExamples.md)
 - [Developer Extension Guide](docs/DeveloperExtensionGuide.md)
 - [Function Index](docs/FunctionIndex.md)
+- [AI Agent Guide](docs/AI_AGENT_GUIDE.md) - For AI assistants working with the framework
 
 ## 🤝 Contributing
 
