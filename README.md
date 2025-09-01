@@ -27,13 +27,13 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.6.4")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.6.6")
 ]
 ```
 
 ### **For Developers (Contributing):**
 - **Framework Code**: `Framework/Sources/`
-- **Documentation**: `Development/docs/`
+- **Documentation**: `Framework/docs/`
 - **Project Status**: `Development/todo.md`
 - **Tests**: `Development/Tests/`
 
@@ -46,11 +46,11 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 - **[Framework README](Framework/README.md)** - Complete framework documentation
 - **[Project Status](Development/PROJECT_STATUS.md)** - Current development status
 - **[Roadmap](Development/todo.md)** - Development phases and progress
-- **[Documentation](Development/docs/)** - Technical implementation details
+- **[Documentation](Framework/docs/)** - Technical implementation details
 
 ## 📋 Current Status
 
-**Version**: v1.6.4  
+**Version**: v1.6.6  
 **Phase**: Performance & Accessibility Complete  
 **Next**: Cross-Platform Optimization (Week 13)
 
