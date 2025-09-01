@@ -22,11 +22,11 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[HintsSystemExtensibility.md](HintsSystemExtensibility.md)** - Custom hints and extensibility
 - **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
 - **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
-- **[migration_guide.md](migration_guide.md)** - Migration from other frameworks
+
 
 ### 📱 Platform-Specific
 - **[keyboard-consistency-guidelines.md](keyboard-consistency-guidelines.md)** - Cross-platform keyboard handling
-- **[keyboard-consistency-audit.md](keyboard-consistency-audit.md)** - Keyboard consistency analysis
+
 
 ## 🎯 Quick Navigation
 
