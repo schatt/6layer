@@ -7,7 +7,7 @@ import UIKit
 
 /// Platform-specific haptic feedback types that provide consistent tactile feedback
 /// across iOS devices while gracefully handling macOS (no-op)
-public enum PlatformHapticFeedback {
+public enum PlatformHapticFeedback: CaseIterable {
     /// Light impact feedback - subtle tactile response
     case light
     /// Medium impact feedback - moderate tactile response

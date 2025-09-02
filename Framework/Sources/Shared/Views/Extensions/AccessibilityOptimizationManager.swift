@@ -180,6 +180,185 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
 }
 
+// MARK: - Accessibility System Checker
+
+/// Centralized accessibility system state checker following DRY principles
+public struct AccessibilitySystemChecker {
+    
+    /// Current accessibility system state
+    public struct SystemState {
+        let isVoiceOverRunning: Bool
+        let isDarkerSystemColorsEnabled: Bool
+        let isReduceTransparencyEnabled: Bool
+        let isHighContrastEnabled: Bool
+        let isReducedMotionEnabled: Bool
+        let hasKeyboardSupport: Bool
+        let hasFullKeyboardAccess: Bool
+        let hasSwitchControl: Bool
+    }
+    
+    /// Get current system accessibility state
+    static func getCurrentSystemState() -> SystemState {
+        #if os(iOS)
+        return SystemState(
+            isVoiceOverRunning: UIAccessibility.isVoiceOverRunning,
+            isDarkerSystemColorsEnabled: UIAccessibility.isDarkerSystemColorsEnabled,
+            isReduceTransparencyEnabled: UIAccessibility.isReduceTransparencyEnabled,
+            isHighContrastEnabled: UIAccessibility.isDarkerSystemColorsEnabled,
+            isReducedMotionEnabled: UIAccessibility.isReduceMotionEnabled,
+            hasKeyboardSupport: true, // iOS supports external keyboards
+            hasFullKeyboardAccess: false, // iOS doesn't have full keyboard access API
+            hasSwitchControl: UIAccessibility.isSwitchControlRunning
+        )
+        #elseif os(macOS)
+        return SystemState(
+            isVoiceOverRunning: NSWorkspace.shared.isVoiceOverEnabled,
+            isDarkerSystemColorsEnabled: NSAppearance.current?.name.rawValue.contains("Dark") == true,
+            isReduceTransparencyEnabled: UserDefaults.standard.bool(forKey: "AppleReduceTransparency"),
+            isHighContrastEnabled: NSAppearance.current?.name.rawValue.contains("Dark") == true,
+            isReducedMotionEnabled: UserDefaults.standard.bool(forKey: "AppleReduceMotion"),
+            hasKeyboardSupport: true, // macOS always has keyboard navigation
+            hasFullKeyboardAccess: true, // macOS has full keyboard access by default
+            hasSwitchControl: false // macOS doesn't have Switch Control
+        )
+        #else
+        return SystemState(
+            isVoiceOverRunning: false,
+            isDarkerSystemColorsEnabled: false,
+            isReduceTransparencyEnabled: false,
+            isHighContrastEnabled: false,
+            isReducedMotionEnabled: false,
+            hasKeyboardSupport: false,
+            hasFullKeyboardAccess: false,
+            hasSwitchControl: false
+        )
+        #endif
+    }
+    
+    // MARK: - Compliance Calculation Methods
+    
+    /// Calculate VoiceOver compliance level from system state
+    public static func calculateVoiceOverCompliance(from state: SystemState) -> ComplianceLevel {
+        var voiceOverScore = 0
+        
+        if state.isVoiceOverRunning {
+            voiceOverScore += 4
+        }
+        
+        if state.isDarkerSystemColorsEnabled {
+            voiceOverScore += 2
+        }
+        
+        if state.isReduceTransparencyEnabled {
+            voiceOverScore += 2
+        }
+        
+        // Platform bonus
+        #if os(iOS)
+        voiceOverScore += 1
+        #elseif os(macOS)
+        voiceOverScore += 1
+        #endif
+        
+        switch voiceOverScore {
+        case 7...8: return .expert
+        case 5...6: return .advanced
+        case 3...4: return .intermediate
+        case 1...2: return .basic
+        default: return .basic
+        }
+    }
+    
+    /// Calculate keyboard compliance level from system state
+    public static func calculateKeyboardCompliance(from state: SystemState) -> ComplianceLevel {
+        var keyboardScore = 0
+        
+        if state.hasKeyboardSupport {
+            keyboardScore += 2
+        }
+        
+        if state.hasFullKeyboardAccess {
+            keyboardScore += 3
+        }
+        
+        if state.hasSwitchControl {
+            keyboardScore += 2
+        }
+        
+        // Platform bonus
+        #if os(iOS)
+        keyboardScore += 1
+        #elseif os(macOS)
+        keyboardScore += 2
+        #endif
+        
+        switch keyboardScore {
+        case 7...8: return .expert
+        case 5...6: return .advanced
+        case 3...4: return .intermediate
+        case 1...2: return .basic
+        default: return .basic
+        }
+    }
+    
+    /// Calculate contrast compliance level from system state
+    public static func calculateContrastCompliance(from state: SystemState) -> ComplianceLevel {
+        var contrastScore = 0
+        
+        if state.isHighContrastEnabled {
+            contrastScore += 3
+        }
+        
+        if state.isReduceTransparencyEnabled {
+            contrastScore += 2
+        }
+        
+        // Dark mode bonus
+        #if os(iOS)
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            contrastScore += 1
+        }
+        #elseif os(macOS)
+        contrastScore += 1 // Assume dark mode for better contrast
+        #endif
+        
+        switch contrastScore {
+        case 4...6: return .advanced
+        case 2...3: return .intermediate
+        case 1: return .basic
+        default: return .basic
+        }
+    }
+    
+    /// Calculate motion compliance level from system state
+    public static func calculateMotionCompliance(from state: SystemState) -> ComplianceLevel {
+        var motionScore = 0
+        
+        if state.isReducedMotionEnabled {
+            motionScore += 4
+        }
+        
+        if state.isReduceTransparencyEnabled {
+            motionScore += 2
+        }
+        
+        // Platform bonus
+        #if os(iOS)
+        motionScore += 1
+        #elseif os(macOS)
+        motionScore += 1
+        #endif
+        
+        switch motionScore {
+        case 6...7: return .expert
+        case 4...5: return .advanced
+        case 2...3: return .intermediate
+        case 1: return .basic
+        default: return .basic
+        }
+    }
+}
+
 // MARK: - Accessibility Compliance Checker
 
 /// Performs comprehensive accessibility compliance checking
@@ -332,9 +511,9 @@ private class AccessibilityComplianceChecker {
         let isReduceTransparencyEnabled = UIAccessibility.isReduceTransparencyEnabled
         #elseif os(macOS)
         let isVoiceOverRunning = NSWorkspace.shared.isVoiceOverEnabled
-        // macOS doesn't have direct APIs for these settings, so we check system appearance
-        let isDarkerSystemColorsEnabled = false // Would need to check NSAppearance in real implementation
-        let isReduceTransparencyEnabled = false // Would need to check system preferences
+        // macOS accessibility settings - check system appearance and preferences
+        let isDarkerSystemColorsEnabled = NSAppearance.current?.name.rawValue.contains("Dark") == true
+        let isReduceTransparencyEnabled = UserDefaults.standard.bool(forKey: "AppleReduceTransparency")
         #else
         let isVoiceOverRunning = false
         let isDarkerSystemColorsEnabled = false
@@ -398,7 +577,7 @@ private class AccessibilityComplianceChecker {
         #if os(iOS)
         // iOS has external keyboard support and focus management
         let hasKeyboardSupport = true // iOS supports external keyboards
-        let hasFullKeyboardAccess = UIAccessibility.isFullKeyboardAccessEnabled
+        let hasFullKeyboardAccess = false // iOS doesn't have full keyboard access API
         let hasSwitchControl = UIAccessibility.isSwitchControlRunning
         #elseif os(macOS)
         // macOS has built-in keyboard navigation and accessibility features
@@ -469,9 +648,9 @@ private class AccessibilityComplianceChecker {
         let isHighContrastEnabled = UIAccessibility.isDarkerSystemColorsEnabled
         let isReduceTransparencyEnabled = UIAccessibility.isReduceTransparencyEnabled
         #elseif os(macOS)
-        // macOS doesn't have direct APIs for these settings, so we check system appearance
-        let isHighContrastEnabled = false // Would need to check NSAppearance in real implementation
-        let isReduceTransparencyEnabled = false // Would need to check system preferences
+        // macOS accessibility settings - check system appearance and preferences
+        let isHighContrastEnabled = NSAppearance.current?.name.rawValue.contains("Dark") == true
+        let isReduceTransparencyEnabled = UserDefaults.standard.bool(forKey: "AppleReduceTransparency")
         #else
         let isHighContrastEnabled = false
         let isReduceTransparencyEnabled = false
@@ -521,9 +700,9 @@ private class AccessibilityComplianceChecker {
         let isReducedMotionEnabled = UIAccessibility.isReduceMotionEnabled
         let isReduceTransparencyEnabled = UIAccessibility.isReduceTransparencyEnabled
         #elseif os(macOS)
-        // macOS doesn't have direct APIs for these settings, so we check system appearance
-        let isReducedMotionEnabled = false // Would need to check system preferences in real implementation
-        let isReduceTransparencyEnabled = false // Would need to check system preferences
+        // macOS accessibility settings - check system preferences
+        let isReducedMotionEnabled = UserDefaults.standard.bool(forKey: "AppleReduceMotion")
+        let isReduceTransparencyEnabled = UserDefaults.standard.bool(forKey: "AppleReduceTransparency")
         #else
         let isReducedMotionEnabled = false
         let isReduceTransparencyEnabled = false
