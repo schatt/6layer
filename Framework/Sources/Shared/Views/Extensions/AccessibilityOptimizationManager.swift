@@ -213,9 +213,9 @@ public struct AccessibilitySystemChecker {
         #elseif os(macOS)
         return SystemState(
             isVoiceOverRunning: NSWorkspace.shared.isVoiceOverEnabled,
-            isDarkerSystemColorsEnabled: NSAppearance.current?.name.rawValue.contains("Dark") == true,
+            isDarkerSystemColorsEnabled: NSAppearance.currentDrawing().name.rawValue.contains("Dark"),
             isReduceTransparencyEnabled: UserDefaults.standard.bool(forKey: "AppleReduceTransparency"),
-            isHighContrastEnabled: NSAppearance.current?.name.rawValue.contains("Dark") == true,
+            isHighContrastEnabled: NSAppearance.currentDrawing().name.rawValue.contains("Dark"),
             isReducedMotionEnabled: UserDefaults.standard.bool(forKey: "AppleReduceMotion"),
             hasKeyboardSupport: true, // macOS always has keyboard navigation
             hasFullKeyboardAccess: true, // macOS has full keyboard access by default
@@ -502,254 +502,27 @@ private class AccessibilityComplianceChecker {
     // MARK: - Private Methods
     
     private func checkVoiceOverCompliance() -> ComplianceLevel {
-        // Check VoiceOver support features with actual system analysis
-        // This implementation provides real VoiceOver checking based on system state
-        
-        #if os(iOS)
-        let isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
-        let isDarkerSystemColorsEnabled = UIAccessibility.isDarkerSystemColorsEnabled
-        let isReduceTransparencyEnabled = UIAccessibility.isReduceTransparencyEnabled
-        #elseif os(macOS)
-        let isVoiceOverRunning = NSWorkspace.shared.isVoiceOverEnabled
-        // macOS accessibility settings - check system appearance and preferences
-        let isDarkerSystemColorsEnabled = NSAppearance.current?.name.rawValue.contains("Dark") == true
-        let isReduceTransparencyEnabled = UserDefaults.standard.bool(forKey: "AppleReduceTransparency")
-        #else
-        let isVoiceOverRunning = false
-        let isDarkerSystemColorsEnabled = false
-        let isReduceTransparencyEnabled = false
-        #endif
-        
-        // Analyze system VoiceOver capabilities and accessibility features
-        var voiceOverScore = 0
-        
-        // VoiceOver running provides excellent accessibility support
-        if isVoiceOverRunning {
-            voiceOverScore += 4 // Highest score for VoiceOver support
-        }
-        
-        // Darker system colors improve accessibility for VoiceOver users
-        if isDarkerSystemColorsEnabled {
-            voiceOverScore += 2 // Good indicator of accessibility awareness
-        }
-        
-        // Reduced transparency improves accessibility for VoiceOver users
-        if isReduceTransparencyEnabled {
-            voiceOverScore += 2 // Good indicator of accessibility awareness
-        }
-        
-        // Check for system-level accessibility preferences
-        // In a real implementation, this would also check:
-        // - Accessibility element structure
-        // - Accessibility labels and hints
-        // - Accessibility traits and actions
-        // - Custom accessibility actions
-        // - Accessibility element ordering
-        
-        // Additional VoiceOver accessibility considerations
-        #if os(iOS)
-        // iOS provides more granular VoiceOver control
-        voiceOverScore += 1 // iOS has better VoiceOver accessibility APIs
-        #elseif os(macOS)
-        // macOS has different VoiceOver paradigms
-        voiceOverScore += 1 // macOS generally has good VoiceOver support
-        #endif
-        
-        // Determine compliance level based on system VoiceOver capabilities
-        switch voiceOverScore {
-        case 7...8:
-            return .expert // Excellent VoiceOver accessibility support
-        case 5...6:
-            return .advanced // Good VoiceOver accessibility support
-        case 3...4:
-            return .intermediate // Basic VoiceOver accessibility support
-        case 1...2:
-            return .basic // Minimal VoiceOver accessibility support
-        default:
-            return .basic // Default to basic compliance
-        }
+        // Use the centralized AccessibilitySystemChecker
+        let systemState = AccessibilitySystemChecker.getCurrentSystemState()
+        return AccessibilitySystemChecker.calculateVoiceOverCompliance(from: systemState)
     }
     
     private func checkKeyboardCompliance() -> ComplianceLevel {
-        // Check keyboard navigation support with actual system analysis
-        // This implementation provides real keyboard checking based on system state
-        
-        #if os(iOS)
-        // iOS has external keyboard support and focus management
-        let hasKeyboardSupport = true // iOS supports external keyboards
-        let hasFullKeyboardAccess = false // iOS doesn't have full keyboard access API
-        let hasSwitchControl = UIAccessibility.isSwitchControlRunning
-        #elseif os(macOS)
-        // macOS has built-in keyboard navigation and accessibility features
-        let hasKeyboardSupport = true // macOS always has keyboard navigation
-        let hasFullKeyboardAccess = true // macOS has full keyboard access by default
-        let hasSwitchControl = false // macOS doesn't have Switch Control
-        #else
-        let hasKeyboardSupport = false
-        let hasFullKeyboardAccess = false
-        let hasSwitchControl = false
-        #endif
-        
-        // Analyze system keyboard capabilities and accessibility features
-        var keyboardScore = 0
-        
-        // Basic keyboard support provides foundation for accessibility
-        if hasKeyboardSupport {
-            keyboardScore += 2 // Good foundation for keyboard accessibility
-        }
-        
-        // Full keyboard access provides excellent keyboard navigation
-        if hasFullKeyboardAccess {
-            keyboardScore += 3 // Excellent keyboard accessibility support
-        }
-        
-        // Switch Control provides alternative input methods
-        if hasSwitchControl {
-            keyboardScore += 2 // Good alternative input support
-        }
-        
-        // Check for system-level keyboard preferences
-        // In a real implementation, this would also check:
-        // - Tab order and focus management
-        // - Keyboard shortcuts and actions
-        // - Focus indicators and visual feedback
-        // - Keyboard accessibility of interactive elements
-        // - Custom keyboard shortcuts
-        
-        // Additional keyboard accessibility considerations
-        #if os(iOS)
-        // iOS provides external keyboard support
-        keyboardScore += 1 // iOS has good external keyboard support
-        #elseif os(macOS)
-        // macOS has comprehensive keyboard navigation
-        keyboardScore += 2 // macOS has excellent keyboard navigation
-        #endif
-        
-        // Determine compliance level based on system keyboard capabilities
-        switch keyboardScore {
-        case 7...8:
-            return .expert // Excellent keyboard accessibility support
-        case 5...6:
-            return .advanced // Good keyboard accessibility support
-        case 3...4:
-            return .intermediate // Basic keyboard accessibility support
-        case 1...2:
-            return .basic // Minimal keyboard accessibility support
-        default:
-            return .basic // Default to basic compliance
-        }
+        // Use the centralized AccessibilitySystemChecker
+        let systemState = AccessibilitySystemChecker.getCurrentSystemState()
+        return AccessibilitySystemChecker.calculateKeyboardCompliance(from: systemState)
     }
     
     private func checkContrastCompliance() -> ComplianceLevel {
-        // Check contrast ratio compliance with actual system analysis
-        // This implementation provides real contrast checking based on system state
-        
-        #if os(iOS)
-        let isHighContrastEnabled = UIAccessibility.isDarkerSystemColorsEnabled
-        let isReduceTransparencyEnabled = UIAccessibility.isReduceTransparencyEnabled
-        #elseif os(macOS)
-        // macOS accessibility settings - check system appearance and preferences
-        let isHighContrastEnabled = NSAppearance.current?.name.rawValue.contains("Dark") == true
-        let isReduceTransparencyEnabled = UserDefaults.standard.bool(forKey: "AppleReduceTransparency")
-        #else
-        let isHighContrastEnabled = false
-        let isReduceTransparencyEnabled = false
-        #endif
-        
-        // Analyze system contrast capabilities
-        var contrastScore = 0
-        
-        // High contrast mode provides excellent contrast
-        if isHighContrastEnabled {
-            contrastScore += 3
-        }
-        
-        // Reduced transparency improves contrast
-        if isReduceTransparencyEnabled {
-            contrastScore += 2
-        }
-        
-        // Check if we're in a dark mode environment (better contrast ratios)
-        #if os(iOS)
-        if UITraitCollection.current.userInterfaceStyle == .dark {
-            contrastScore += 1
-        }
-        #elseif os(macOS)
-        // Would check NSAppearance.current?.name.contains("Dark") in real implementation
-        contrastScore += 1 // Assume dark mode for better contrast
-        #endif
-        
-        // Determine compliance level based on system capabilities
-        switch contrastScore {
-        case 4...6:
-            return .advanced // Excellent contrast support
-        case 2...3:
-            return .intermediate // Good contrast support
-        case 1:
-            return .basic // Basic contrast support
-        default:
-            return .basic // Default to basic compliance
-        }
+        // Use the centralized AccessibilitySystemChecker
+        let systemState = AccessibilitySystemChecker.getCurrentSystemState()
+        return AccessibilitySystemChecker.calculateContrastCompliance(from: systemState)
     }
     
     private func checkMotionCompliance() -> ComplianceLevel {
-        // Check motion and animation accessibility with actual system analysis
-        // This implementation provides real motion checking based on system state
-        
-        #if os(iOS)
-        let isReducedMotionEnabled = UIAccessibility.isReduceMotionEnabled
-        let isReduceTransparencyEnabled = UIAccessibility.isReduceTransparencyEnabled
-        #elseif os(macOS)
-        // macOS accessibility settings - check system preferences
-        let isReducedMotionEnabled = UserDefaults.standard.bool(forKey: "AppleReduceMotion")
-        let isReduceTransparencyEnabled = UserDefaults.standard.bool(forKey: "AppleReduceTransparency")
-        #else
-        let isReducedMotionEnabled = false
-        let isReduceTransparencyEnabled = false
-        #endif
-        
-        // Analyze system motion capabilities and accessibility features
-        var motionScore = 0
-        
-        // Reduced motion provides excellent accessibility for motion-sensitive users
-        if isReducedMotionEnabled {
-            motionScore += 4 // Highest score for reduced motion support
-        }
-        
-        // Reduced transparency often accompanies reduced motion preferences
-        if isReduceTransparencyEnabled {
-            motionScore += 2 // Good indicator of accessibility awareness
-        }
-        
-        // Check for system-level motion preferences
-        // In a real implementation, this would also check:
-        // - Animation duration settings
-        // - Transition preferences
-        // - Video autoplay settings
-        // - Parallax effect preferences
-        
-        // Additional motion accessibility considerations
-        #if os(iOS)
-        // iOS provides more granular motion control
-        motionScore += 1 // iOS has better motion accessibility APIs
-        #elseif os(macOS)
-        // macOS has different motion paradigms
-        motionScore += 1 // macOS generally has less motion by default
-        #endif
-        
-        // Determine compliance level based on system motion capabilities
-        switch motionScore {
-        case 6...7:
-            return .expert // Excellent motion accessibility support
-        case 4...5:
-            return .advanced // Good motion accessibility support
-        case 2...3:
-            return .intermediate // Basic motion accessibility support
-        case 1:
-            return .basic // Minimal motion accessibility support
-        default:
-            return .basic // Default to basic compliance
-        }
+        // Use the centralized AccessibilitySystemChecker
+        let systemState = AccessibilitySystemChecker.getCurrentSystemState()
+        return AccessibilitySystemChecker.calculateMotionCompliance(from: systemState)
     }
     
     private func calculateOverallScore(_ levels: [ComplianceLevel]) -> Double {
