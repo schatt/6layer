@@ -10,7 +10,7 @@ public struct IntelligentFormView {
     // MARK: - Public API
     
     /// Generate a form for creating new data
-    public static func generateForm<T>(
+        static func generateForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
@@ -71,7 +71,7 @@ public struct IntelligentFormView {
     }
     
     /// Generate a form for updating existing data
-    public static func generateForm<T>(
+        static func generateForm<T>(
         for data: T,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
@@ -561,7 +561,7 @@ private struct DefaultPlatformFieldView: View {
 public extension View {
     
     /// Apply intelligent form generation
-public func platformIntelligentForm<T>(
+    func platformIntelligentForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
@@ -578,7 +578,7 @@ public func platformIntelligentForm<T>(
     }
     
     /// Apply intelligent form generation for existing data
-public func platformIntelligentForm<T>(
+    func platformIntelligentForm<T>(
         for data: T,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },

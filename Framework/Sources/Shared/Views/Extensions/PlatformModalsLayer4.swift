@@ -9,7 +9,7 @@ public extension View {
     
     /// Platform-specific sheet presentation with consistent styling
     /// Provides standardized sheet appearance across platforms
-public func platformSheet<SheetContent: View>(
+    func platformSheet<SheetContent: View>(
         isPresented: Binding<Bool>,
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> SheetContent
@@ -32,7 +32,7 @@ public func platformSheet<SheetContent: View>(
     
     /// Platform-specific alert presentation with consistent styling
     /// Provides standardized alert appearance across platforms
-public func platformAlert(
+    func platformAlert(
         title: String,
         message: String? = nil,
         primaryButton: Alert.Button,
@@ -61,7 +61,7 @@ public func platformAlert(
     
     /// Platform-specific confirmation dialog with consistent styling
     /// Provides standardized confirmation dialog appearance across platforms
-public func platformConfirmationDialog<A: View, M: View>(
+    func platformConfirmationDialog<A: View, M: View>(
         title: String,
         titleVisibility: Visibility = .automatic,
         @ViewBuilder actions: @escaping () -> A,
@@ -96,7 +96,7 @@ public func platformConfirmationDialog<A: View, M: View>(
 
     /// Platform-specific settings dismissal for embedded navigation
     /// Handles dismissal when settings are presented as embedded views in navigation
-public func platformDismissEmbeddedSettings(
+    func platformDismissEmbeddedSettings(
         onClose: @escaping () -> Void
     ) -> some View {
         #if os(macOS)
@@ -112,7 +112,7 @@ public func platformDismissEmbeddedSettings(
 
     /// Platform-specific settings dismissal for sheet presentation
     /// Handles dismissal when settings are presented as sheets
-public func platformDismissSheetSettings(
+    func platformDismissSheetSettings(
         presentationMode: Binding<PresentationMode>
     ) -> some View {
         #if os(macOS)
@@ -130,7 +130,7 @@ public func platformDismissSheetSettings(
 
     /// Platform-specific settings dismissal for window presentation
     /// Handles dismissal when settings are presented in separate windows
-public func platformDismissWindowSettings() -> some View {
+    func platformDismissWindowSettings() -> some View {
         // Delegate to platform-specific implementations
         #if os(macOS)
         return self.platformDismissWindowSettingsMacOS()

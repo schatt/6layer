@@ -19,7 +19,7 @@ public extension View {
     ///     .platformAnimation(.spring)
     /// ```
     @ViewBuilder
-public func platformAnimation(_ animation: PlatformAnimation) -> some View {
+    func platformAnimation(_ animation: PlatformAnimation) -> some View {
         self.animation(animation.swiftUIAnimation, value: UUID())
     }
 
@@ -38,7 +38,7 @@ public func platformAnimation(_ animation: PlatformAnimation) -> some View {
     ///     .platformAnimation(.easeInOut, duration: 0.5)
     /// ```
     @ViewBuilder
-public func platformAnimation(
+    func platformAnimation(
         _ animation: PlatformAnimation,
         duration: Double
     ) -> some View {
@@ -62,7 +62,7 @@ public func platformAnimation(
     ///     .platformAnimation(.spring, response: 0.5, dampingFraction: 0.8)
     /// ```
     @ViewBuilder
-public func platformAnimation(
+    func platformAnimation(
         _ animation: PlatformAnimation,
         response: Double,
         dampingFraction: Double,

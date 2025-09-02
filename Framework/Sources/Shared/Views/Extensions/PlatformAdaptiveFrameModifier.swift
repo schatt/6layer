@@ -8,7 +8,7 @@ public struct AdaptiveFrameModifier: ViewModifier {
     @State private var calculatedWidth: CGFloat = 600
     @State private var calculatedHeight: CGFloat = 700
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .frame(minWidth: calculatedWidth, minHeight: calculatedHeight)
             .onPreferenceChange(FormContentKey.self) { metrics in

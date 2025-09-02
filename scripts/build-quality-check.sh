@@ -7,12 +7,12 @@ set -e
 
 echo "🔍 Running Build Quality Gate..."
 
-# Build the framework and capture output
+# Build the framework and capture output with verbose warnings
 echo "📦 Building Framework..."
-BUILD_OUTPUT=$(swift build --package-path Framework 2>&1)
+BUILD_OUTPUT=$(swift build --package-path Framework -v 2>&1)
 BUILD_EXIT_CODE=$?
 
-# Check for warnings in build output
+# Check for warnings in build output (including redundant public modifiers)
 WARNING_COUNT=$(echo "$BUILD_OUTPUT" | grep -c "warning:" || true)
 
 if [ $WARNING_COUNT -gt 0 ]; then
@@ -25,12 +25,12 @@ if [ $WARNING_COUNT -gt 0 ]; then
     exit 1
 fi
 
-# Run tests and capture output
+# Run tests and capture output with verbose warnings
 echo "🧪 Running Tests..."
-TEST_OUTPUT=$(swift test --package-path Framework 2>&1)
+TEST_OUTPUT=$(swift test --package-path Framework -v 2>&1)
 TEST_EXIT_CODE=$?
 
-# Check for warnings in test output
+# Check for warnings in test output (including redundant public modifiers)
 TEST_WARNING_COUNT=$(echo "$TEST_OUTPUT" | grep -c "warning:" || true)
 
 if [ $TEST_WARNING_COUNT -gt 0 ]; then

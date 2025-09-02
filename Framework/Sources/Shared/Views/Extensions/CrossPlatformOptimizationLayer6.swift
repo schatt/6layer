@@ -37,7 +37,7 @@ public class CrossPlatformOptimizationManager: ObservableObject {
     }
     
     /// Apply platform-specific optimizations to a view
-    public func optimizeView<Content: View>(_ content: Content) -> some View {
+        func optimizeView<Content: View>(_ content: Content) -> some View {
         return content
             .platformSpecificOptimizations(for: currentPlatform)
             .performanceOptimizations(using: optimizationSettings)
@@ -45,7 +45,7 @@ public class CrossPlatformOptimizationManager: ObservableObject {
     }
     
     /// Get platform-specific recommendations
-    public func getPlatformRecommendations() -> [PlatformRecommendation] {
+        func getPlatformRecommendations() -> [PlatformRecommendation] {
         return PlatformRecommendationEngine.generateRecommendations(
             for: currentPlatform,
             settings: optimizationSettings,
@@ -267,7 +267,7 @@ public class CrossPlatformPerformanceMetrics: ObservableObject {
     }
     
     /// Record a performance measurement
-    public func recordMeasurement(_ measurement: PerformanceMeasurement) {
+        func recordMeasurement(_ measurement: PerformanceMeasurement) {
         switch measurement.type {
         case .rendering:
             renderingMetrics.record(measurement)
@@ -281,7 +281,7 @@ public class CrossPlatformPerformanceMetrics: ObservableObject {
     }
     
     /// Get performance summary for current platform
-    public func getCurrentPlatformSummary() -> PerformanceSummary {
+        func getCurrentPlatformSummary() -> PerformanceSummary {
         let currentPlatform = Platform.current
         let platformMetrics = self.platformMetrics[currentPlatform] ?? PlatformSpecificMetrics(for: currentPlatform)
         
@@ -600,7 +600,7 @@ public enum LayoutType: String, CaseIterable {
 public class PlatformRecommendationEngine {
     
     /// Generate recommendations for a specific platform
-    public static func generateRecommendations(
+        static func generateRecommendations(
         for platform: Platform,
         settings: PlatformOptimizationSettings,
         metrics: CrossPlatformPerformanceMetrics
@@ -770,7 +770,7 @@ public struct PlatformOptimizationModifier: ViewModifier {
         self.platform = platform
     }
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .environment(\.platform, platform)
             .environment(\.supportsHapticFeedback, platform.supportsHapticFeedback)
@@ -787,7 +787,7 @@ public struct PerformanceOptimizationModifier: ViewModifier {
         self.settings = settings
     }
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .environment(\.performanceLevel, settings.performanceLevel)
             .environment(\.memoryStrategy, settings.memoryStrategy)
@@ -802,7 +802,7 @@ public struct UIPatternOptimizationModifier: ViewModifier {
         self.patterns = patterns
     }
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .environment(\.navigationPatterns, patterns.navigationPatterns)
             .environment(\.interactionPatterns, patterns.interactionPatterns)
@@ -914,7 +914,7 @@ public extension EnvironmentValues {
 public struct CrossPlatformTesting {
     
     /// Test view across all platforms
-    public static func testViewAcrossPlatforms<Content: View>(
+        static func testViewAcrossPlatforms<Content: View>(
         _ content: Content,
         testName: String
     ) -> CrossPlatformTestResults {
@@ -1030,7 +1030,7 @@ public struct TestResult {
 public struct PerformanceBenchmarking {
     
     /// Benchmark a view's performance across platforms
-    public static func benchmarkView<Content: View>(
+        static func benchmarkView<Content: View>(
         _ content: Content,
         benchmarkName: String,
         iterations: Int = 100

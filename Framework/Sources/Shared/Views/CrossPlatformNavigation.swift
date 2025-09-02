@@ -14,7 +14,7 @@ import SwiftUI
 public struct CrossPlatformNavigation {
     
     /// Generate a list with detail view based on data analysis
-    public static func platformListWithDetail<T: Identifiable & Hashable>(
+        static func platformListWithDetail<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -63,7 +63,7 @@ public struct CrossPlatformNavigation {
     }
     
     /// Generate a list with detail view using default navigation strategy
-    public static func platformListWithDetail<T: Identifiable & Hashable>(
+        static func platformListWithDetail<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -150,7 +150,7 @@ public extension CrossPlatformNavigation {
     }
     
     /// Generate a split view layout
-public static func platformSplitView<T: Identifiable & Hashable>(
+    static func platformSplitView<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -231,7 +231,7 @@ public static func platformSplitView<T: Identifiable & Hashable>(
     }
     
     /// Generate a navigation stack layout
-public static func platformNavigationStack<T: Identifiable & Hashable>(
+    static func platformNavigationStack<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -258,7 +258,7 @@ public static func platformNavigationStack<T: Identifiable & Hashable>(
     }
     
     /// Generate a modal navigation layout
-public static func platformModalNavigation<T: Identifiable & Hashable>(
+    static func platformModalNavigation<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -286,7 +286,7 @@ public static func platformModalNavigation<T: Identifiable & Hashable>(
     }
     
     /// Generate an adaptive navigation layout
-public static func platformAdaptiveNavigation<T: Identifiable & Hashable>(
+    static func platformAdaptiveNavigation<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -325,7 +325,7 @@ public static func platformAdaptiveNavigation<T: Identifiable & Hashable>(
     }
     
     /// Generate the list sidebar with intelligent layout
-public static func platformListSidebar<T: Identifiable & Hashable>(
+    static func platformListSidebar<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -353,7 +353,7 @@ public static func platformListSidebar<T: Identifiable & Hashable>(
     }
     
     /// Generate fallback split view for older macOS versions
-public static func platformFallbackSplitView<T: Identifiable & Hashable>(
+    static func platformFallbackSplitView<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -380,7 +380,7 @@ public static func platformFallbackSplitView<T: Identifiable & Hashable>(
     }
     
     /// Generate empty detail view
-public static func platformEmptyDetailView() -> some View {
+    static func platformEmptyDetailView() -> some View {
         VStack {
             Image(systemName: "doc.text")
                 .font(.system(size: 48))
@@ -400,7 +400,7 @@ public static func platformEmptyDetailView() -> some View {
     }
     
     /// Generate navigation title based on analysis
-public static func platformNavigationTitle(analysis: CollectionAnalysisResult) -> String {
+    static func platformNavigationTitle(analysis: CollectionAnalysisResult) -> String {
         switch analysis.collectionType {
         case .empty:
             return "No Items"
@@ -425,7 +425,7 @@ public static func platformNavigationTitle(analysis: CollectionAnalysisResult) -
 public extension View {
     
     /// Apply cross-platform list-detail navigation
-public func platformListDetailNavigation<T: Identifiable & Hashable>(
+    func platformListDetailNavigation<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,
@@ -442,7 +442,7 @@ public func platformListDetailNavigation<T: Identifiable & Hashable>(
     }
     
     /// Apply cross-platform list-detail navigation with default strategy
-public func platformListDetailNavigation<T: Identifiable & Hashable>(
+    func platformListDetailNavigation<T: Identifiable & Hashable>(
         items: [T],
         selectedItem: Binding<T?>,
         @ViewBuilder itemView: @escaping (T) -> some View,

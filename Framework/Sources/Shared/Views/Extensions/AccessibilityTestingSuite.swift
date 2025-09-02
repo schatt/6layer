@@ -83,7 +83,7 @@ public class AccessibilityTestingSuite: ObservableObject {
     // MARK: - Test Execution
     
     /// Run all accessibility tests
-    public func runAllTests() async {
+        func runAllTests() async {
         guard !isRunning else { return }
         
         isRunning = true
@@ -106,7 +106,7 @@ public class AccessibilityTestingSuite: ObservableObject {
     }
     
     /// Run a specific test category
-    public func runTests(for category: AccessibilityTestCategory) async {
+        func runTests(for category: AccessibilityTestCategory) async {
         let categoryTests = testQueue.filter { $0.category == category }
         await runTests(categoryTests)
     }

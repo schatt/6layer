@@ -22,7 +22,7 @@ public class FormAnalyticsManager: ObservableObject {
     // MARK: - Analytics Tracking
     
     /// Track form view event
-    public func trackFormView(formId: String, userId: String? = nil) {
+        func trackFormView(formId: String, userId: String? = nil) {
         analyticsQueue.async {
             let event = FormEvent(
                 formId: formId,
@@ -36,7 +36,7 @@ public class FormAnalyticsManager: ObservableObject {
     }
     
     /// Track form submission event
-    public func trackFormSubmission(formId: String, userId: String? = nil, success: Bool, validationErrors: [String] = []) {
+        func trackFormSubmission(formId: String, userId: String? = nil, success: Bool, validationErrors: [String] = []) {
         analyticsQueue.async {
             let event = FormEvent(
                 formId: formId,
@@ -54,7 +54,7 @@ public class FormAnalyticsManager: ObservableObject {
     }
     
     /// Track field interaction event
-    public func trackFieldInteraction(formId: String, fieldId: String, userId: String? = nil, interactionType: FieldInteractionType) {
+        func trackFieldInteraction(formId: String, fieldId: String, userId: String? = nil, interactionType: FieldInteractionType) {
         analyticsQueue.async {
             let event = FormEvent(
                 formId: formId,
@@ -71,7 +71,7 @@ public class FormAnalyticsManager: ObservableObject {
     }
     
     /// Track form performance metrics
-    public func trackPerformance(formId: String, metrics: FormPerformanceMetrics) {
+        func trackPerformance(formId: String, metrics: FormPerformanceMetrics) {
         analyticsQueue.async {
             self.performanceMetrics[formId] = metrics
             self.storage.savePerformanceMetrics(metrics, for: formId)
@@ -79,7 +79,7 @@ public class FormAnalyticsManager: ObservableObject {
     }
     
     /// Track form error
-    public func trackError(formId: String, error: FormError) {
+        func trackError(formId: String, error: FormError) {
         analyticsQueue.async {
             self.errorLogs.append(error)
             self.storage.saveError(error)
@@ -89,7 +89,7 @@ public class FormAnalyticsManager: ObservableObject {
     // MARK: - A/B Testing
     
     /// Start A/B test for a form
-    public func startABTest(formId: String, variantA: FormVariant, variantB: FormVariant) -> ABTest {
+        func startABTest(formId: String, variantA: FormVariant, variantB: FormVariant) -> ABTest {
         let test = ABTest(
             id: UUID().uuidString,
             formId: formId,
@@ -107,7 +107,7 @@ public class FormAnalyticsManager: ObservableObject {
     }
     
     /// Record A/B test result
-    public func recordABTestResult(testId: String, variant: String, result: ABTestMetric) {
+        func recordABTestResult(testId: String, variant: String, result: ABTestMetric) {
         let testResult = ABTestResult(
             testId: testId,
             variant: variant,
@@ -124,17 +124,17 @@ public class FormAnalyticsManager: ObservableObject {
     // MARK: - Analytics Retrieval
     
     /// Get analytics for a specific form
-    public func getAnalytics(for formId: String) -> FormAnalytics? {
+        func getAnalytics(for formId: String) -> FormAnalytics? {
         return analyticsData[formId]
     }
     
     /// Get performance metrics for a form
-    public func getPerformanceMetrics(for formId: String) -> FormPerformanceMetrics? {
+        func getPerformanceMetrics(for formId: String) -> FormPerformanceMetrics? {
         return performanceMetrics[formId]
     }
     
     /// Get form insights and recommendations
-    public func getFormInsights(formId: String) -> FormInsights {
+        func getFormInsights(formId: String) -> FormInsights {
         let analytics = analyticsData[formId]
         let performance = performanceMetrics[formId]
         let errors = errorLogs.filter { $0.formId == formId }
@@ -232,7 +232,7 @@ public struct FormAnalytics: Codable {
         }
     }
     
-    public func calculateCompletionRate() -> Double {
+        func calculateCompletionRate() -> Double {
         let submissions = events.filter { $0.eventType == .submission }
         let views = events.filter { $0.eventType == .view }
         
@@ -240,7 +240,7 @@ public struct FormAnalytics: Codable {
         return Double(submissions.count) / Double(views.count)
     }
     
-    public func calculateAverageCompletionTime() -> TimeInterval {
+        func calculateAverageCompletionTime() -> TimeInterval {
         let submissions = events.filter { $0.eventType == .submission }
         let views = events.filter { $0.eventType == .view }
         
@@ -288,7 +288,7 @@ public struct FormEvent: Codable {
         metadata = [:] // Simplified for now
     }
     
-    public func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(formId, forKey: .formId)
         try container.encode(eventType, forKey: .eventType)
@@ -436,7 +436,7 @@ public struct FormVariant: Codable {
         description = try container.decode(String.self, forKey: .description)
     }
     
-    public func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
         try container.encode(description, forKey: .description)

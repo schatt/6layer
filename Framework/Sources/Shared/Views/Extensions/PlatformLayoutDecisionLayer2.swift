@@ -16,7 +16,7 @@ import SwiftUI
 /// Determine optimal layout for any collection of items
 /// Analyzes content characteristics and makes layout decisions
 @MainActor
-public func determineOptimalLayout_L2<Item: Identifiable>(
+    func determineOptimalLayout_L2<Item: Identifiable>(
     items: [Item],
     hints: PresentationHints,
     screenWidth: CGFloat? = nil,
@@ -58,7 +58,7 @@ public func determineOptimalLayout_L2<Item: Identifiable>(
 
 /// Determine optimal form layout based on content analysis
 @MainActor
-public func determineOptimalFormLayout_L2(
+    func determineOptimalFormLayout_L2(
     hints: PresentationHints
 ) -> GenericFormLayoutDecision {
     
@@ -317,7 +317,7 @@ private func generateLayoutReasoning(approach: LayoutApproach, columns: Int, spa
 
 /// Determine optimal card layout for the given content and device
 /// Layer 2: Layout Decision
-public func determineOptimalCardLayout_L2(
+    func determineOptimalCardLayout_L2(
     contentCount: Int,
     screenWidth: CGFloat,
     deviceType: DeviceType,

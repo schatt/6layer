@@ -35,7 +35,7 @@ public extension View {
     ///         return true
     ///     }
     /// ```
-public func platformOnDrop(
+    func platformOnDrop(
         supportedTypes: [UTType],
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
@@ -75,7 +75,7 @@ public func platformOnDrop(
     ///         return true
     ///     }
     /// ```
-public func platformOnDropFiles(
+    func platformOnDropFiles(
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
     ) -> some View {
@@ -102,7 +102,7 @@ public func platformOnDropFiles(
     ///         return true
     ///     }
     /// ```
-public func platformOnDropImages(
+    func platformOnDropImages(
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
     ) -> some View {
@@ -129,7 +129,7 @@ public func platformOnDropImages(
     ///         return true
     ///     }
     /// ```
-public func platformOnDropText(
+    func platformOnDropText(
         isTargeted: Binding<Bool>? = nil,
         action: @escaping ([NSItemProvider]) -> Bool
     ) -> some View {

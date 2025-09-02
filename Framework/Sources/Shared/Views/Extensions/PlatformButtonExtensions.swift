@@ -8,7 +8,7 @@ public extension View {
 
     /// Cross-platform navigation button with platform-specific behavior
     /// iOS: Shows navigation sheet; macOS: Shows sidebar toggle
-public func platformNavigationSheetButton(
+    func platformNavigationSheetButton(
         action: @escaping () -> Void,
         sidebarVisibility: Binding<Bool>? = nil
     ) -> some View {

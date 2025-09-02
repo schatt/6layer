@@ -63,7 +63,7 @@ public class LazyLoadingState: ObservableObject {
         self.config = config
     }
     
-    public func loadMoreIfNeeded(currentIndex: Int) {
+        func loadMoreIfNeeded(currentIndex: Int) {
         guard !isLoading && hasMoreData else { return }
         
         let shouldLoad = currentIndex >= loadedItems.count - config.preloadDistance
@@ -135,7 +135,7 @@ public class MemoryManager: ObservableObject {
         setupMemoryPressureMonitoring()
     }
     
-    public func cache<T>(_ value: T, forKey key: String) {
+        func cache<T>(_ value: T, forKey key: String) {
         let size = MemoryLayout<T>.size
         
         // Check if we need to evict items
@@ -149,7 +149,7 @@ public class MemoryManager: ObservableObject {
         currentMemoryUsage += Int64(size)
     }
     
-    public func retrieve<T>(forKey key: String) -> T? {
+        func retrieve<T>(forKey key: String) -> T? {
         guard let value = cache[key] as? T else { return nil }
         
         // Update access tracking
@@ -225,11 +225,11 @@ public class PerformanceProfiler: ObservableObject {
     private var frameCount: Int = 0
     private var lastFrameTime: Date = Date()
     
-    public func startRender() {
+        func startRender() {
         renderStartTime = Date()
     }
     
-    public func endRender() {
+        func endRender() {
         guard let startTime = renderStartTime else { return }
         
         let renderTime = Date().timeIntervalSince(startTime)
@@ -243,7 +243,7 @@ public class PerformanceProfiler: ObservableObject {
         renderStartTime = nil
     }
     
-    public func recordFrame() {
+        func recordFrame() {
         frameCount += 1
         let now = Date()
         let timeSinceLastFrame = now.timeIntervalSince(lastFrameTime)

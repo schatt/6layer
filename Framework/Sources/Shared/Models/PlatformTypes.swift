@@ -81,7 +81,7 @@ public enum KeyboardType: String, CaseIterable {
     case webSearch = "webSearch"
     
     /// Platform-specific decimal keyboard type
-    public static func platformDecimalKeyboardType() -> KeyboardType {
+        static func platformDecimalKeyboardType() -> KeyboardType {
         #if os(iOS)
         return .decimalPad
         #else
@@ -127,7 +127,7 @@ public struct FormContentKey: PreferenceKey {
         hasComplexContent: false
     )
     
-    public static func reduce(value: inout FormContentMetrics, nextValue: () -> FormContentMetrics) {
+        public static func reduce(value: inout FormContentMetrics, nextValue: () -> FormContentMetrics) {
         value = nextValue()
     }
 }

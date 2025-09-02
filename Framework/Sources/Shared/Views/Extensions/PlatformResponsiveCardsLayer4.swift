@@ -7,7 +7,7 @@ import SwiftUI
 public extension View {
     /// Platform-adaptive card grid layout
     /// Layer 4: Component Implementation
-public func platformCardGrid(
+    func platformCardGrid(
         columns: Int,
         spacing: CGFloat,
         content: () -> some View
@@ -22,7 +22,7 @@ public func platformCardGrid(
     
     /// Platform-adaptive masonry layout for cards
     /// Layer 4: Component Implementation
-public func platformCardMasonry(
+    func platformCardMasonry(
         columns: Int,
         spacing: CGFloat,
         content: () -> some View
@@ -38,7 +38,7 @@ public func platformCardMasonry(
     
     /// Platform-adaptive list layout for cards
     /// Layer 4: Component Implementation
-public func platformCardList(
+    func platformCardList(
         spacing: CGFloat,
         content: () -> some View
     ) -> some View {
@@ -49,7 +49,7 @@ public func platformCardList(
     
     /// Platform-adaptive card with dynamic sizing
     /// Layer 4: Component Implementation
-public func platformCardAdaptive(
+    func platformCardAdaptive(
         minWidth: CGFloat,
         maxWidth: CGFloat,
         content: () -> some View
@@ -68,7 +68,7 @@ public func platformCardAdaptive(
 public extension View {
     /// Apply responsive card styling
     /// Layer 4: Component Implementation
-public func platformCardStyle(
+    func platformCardStyle(
         backgroundColor: Color = .clear,
         cornerRadius: CGFloat = 12,
         shadowRadius: CGFloat = 4
@@ -81,7 +81,7 @@ public func platformCardStyle(
     
     /// Apply adaptive padding based on device
     /// Layer 4: Component Implementation
-public func platformCardPadding() -> some View {
+    func platformCardPadding() -> some View {
         #if os(macOS)
         self.padding(16)
         #else

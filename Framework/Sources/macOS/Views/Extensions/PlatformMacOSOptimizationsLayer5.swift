@@ -43,13 +43,13 @@ public class MacOSOptimizationManager {
     
     /// Get current macOS performance strategy
     /// Returns standard strategy for now (placeholder)
-    public func getCurrentPerformanceStrategy() -> MacOSPerformanceStrategy {
+        func getCurrentPerformanceStrategy() -> MacOSPerformanceStrategy {
         return .standard
     }
     
     /// Apply macOS-specific optimizations
     /// Currently a no-op (placeholder)
-    public func applyMacOSOptimizations() {
+        func applyMacOSOptimizations() {
         // TODO: Implement macOS-specific optimizations
         // - Window management optimizations
         // - Menu bar performance improvements

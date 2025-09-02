@@ -21,7 +21,7 @@ public extension View {
     ///     }
     /// ```
     @ViewBuilder
-public func platformMenu<MenuItems: View>(
+    func platformMenu<MenuItems: View>(
         @ViewBuilder content: () -> MenuItems
     ) -> some View {
         #if os(macOS)
@@ -55,7 +55,7 @@ public func platformMenu<MenuItems: View>(
     ///     )
     /// ```
     @ViewBuilder
-public func platformMenu<Label: View, MenuItems: View>(
+    func platformMenu<Label: View, MenuItems: View>(
         label: Label,
         @ViewBuilder content: () -> MenuItems
     ) -> some View {
@@ -90,7 +90,7 @@ public func platformMenu<Label: View, MenuItems: View>(
     ///     )
     /// ```
     @ViewBuilder
-public func platformMenu<MenuItems: View>(
+    func platformMenu<MenuItems: View>(
         title: String,
         @ViewBuilder content: () -> MenuItems
     ) -> some View {

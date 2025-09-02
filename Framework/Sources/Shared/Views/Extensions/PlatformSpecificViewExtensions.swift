@@ -23,7 +23,7 @@ public extension View {
     // Navigation functions moved to PlatformNavigationLayer4.swift
 
     /// Hover effect wrapper (no-op on iOS)
-public func platformHoverEffect(_ onChange: @escaping (Bool) -> Void) -> some View {
+    func platformHoverEffect(_ onChange: @escaping (Bool) -> Void) -> some View {
         #if os(macOS)
         return self.onHover(perform: onChange)
         #else
@@ -32,7 +32,7 @@ public func platformHoverEffect(_ onChange: @escaping (Bool) -> Void) -> some Vi
     }
 
     /// Cross-platform file importer wrapper (uses SwiftUI .fileImporter on both platforms)
-public func platformFileImporter(
+    func platformFileImporter(
         isPresented: Binding<Bool>,
         allowedContentTypes: [UTType],
         allowsMultipleSelection: Bool = false,
@@ -63,7 +63,7 @@ public func platformFileImporter(
 
     /// Platform-specific frame constraints
     /// On macOS, applies minimum frame constraints. On iOS, returns the view unchanged.
-public func platformFrame() -> some View {
+    func platformFrame() -> some View {
         #if os(iOS)
         return self
         #elseif os(macOS)
@@ -82,7 +82,7 @@ public func platformFrame() -> some View {
     ///   - maxWidth: Maximum width constraint (macOS only)
     ///   - maxHeight: Maximum height constraint (macOS only)
     /// - Returns: A view with platform-specific frame constraints
-public func platformFrame(minWidth: CGFloat? = nil, minHeight: CGFloat? = nil, maxWidth: CGFloat? = nil, maxHeight: CGFloat? = nil) -> some View {
+    func platformFrame(minWidth: CGFloat? = nil, minHeight: CGFloat? = nil, maxWidth: CGFloat? = nil, maxHeight: CGFloat? = nil) -> some View {
         #if os(iOS)
         return AnyView(self)
         #elseif os(macOS)
@@ -115,7 +115,7 @@ public func platformFrame(minWidth: CGFloat? = nil, minHeight: CGFloat? = nil, m
     ///
     /// - Parameter topPadding: Custom top padding value
     /// - Returns: A view with platform-specific content spacing
-public func platformContentSpacing(topPadding: CGFloat) -> some View {
+    func platformContentSpacing(topPadding: CGFloat) -> some View {
         #if os(iOS)
         return AnyView(self.padding(.horizontal).padding(.top, topPadding))
         #elseif os(macOS)
@@ -134,7 +134,7 @@ public func platformContentSpacing(topPadding: CGFloat) -> some View {
     ///   - leading: Custom leading padding value (optional)
     ///   - trailing: Custom trailing padding value (optional)
     /// - Returns: A view with platform-specific content spacing
-public func platformContentSpacing(
+    func platformContentSpacing(
         top: CGFloat? = nil,
         bottom: CGFloat? = nil,
         leading: CGFloat? = nil,
@@ -168,7 +168,7 @@ public func platformContentSpacing(
     ///   - horizontal: Custom horizontal padding value (applied to leading and trailing)
     ///   - vertical: Custom vertical padding value (applied to top and bottom)
     /// - Returns: A view with platform-specific content spacing
-public func platformContentSpacing(
+    func platformContentSpacing(
         horizontal: CGFloat? = nil,
         vertical: CGFloat? = nil
     ) -> some View {
@@ -192,7 +192,7 @@ public func platformContentSpacing(
     ///
     /// - Parameter all: Custom padding value applied to all sides
     /// - Returns: A view with platform-specific content spacing
-public func platformContentSpacing(all: CGFloat? = nil) -> some View {
+    func platformContentSpacing(all: CGFloat? = nil) -> some View {
         #if os(iOS)
         if let all = all {
             return AnyView(self.padding(.horizontal, all).padding(.vertical, all))
@@ -220,7 +220,7 @@ public func platformContentSpacing(all: CGFloat? = nil) -> some View {
 
     /// Platform-specific help tooltip (macOS only)
     /// Adds help tooltip on macOS, no-op on other platforms
-public func platformHelp(_ text: String) -> some View {
+    func platformHelp(_ text: String) -> some View {
         #if os(macOS)
         return self.help(text)
         #else
@@ -230,7 +230,7 @@ public func platformHelp(_ text: String) -> some View {
 
     /// Platform-specific presentation detents (iOS only)
     /// Applies presentation detents on iOS, no-op on other platforms
-public func platformPresentationDetents(_ detents: [Any]) -> some View {
+    func platformPresentationDetents(_ detents: [Any]) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             if let presentationDetents = detents.compactMap({ $0 as? PresentationDetent }) as? [PresentationDetent] {
@@ -251,7 +251,7 @@ public func platformPresentationDetents(_ detents: [Any]) -> some View {
     ///
     /// - Parameter detents: Array of platform-specific presentation detents
     /// - Returns: A view with platform-specific presentation detents
-public func platformPresentationDetents(_ detents: [PlatformPresentationDetent]) -> some View {
+    func platformPresentationDetents(_ detents: [PlatformPresentationDetent]) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             // Map to native detents on iOS
@@ -277,7 +277,7 @@ public func platformPresentationDetents(_ detents: [PlatformPresentationDetent])
     ///   - saveButtonTitle: Title for the save button (default: "Save")
     ///   - cancelButtonTitle: Title for the cancel button (default: "Cancel")
     /// - Returns: A view with platform-specific toolbar
-public func platformFormToolbar(
+    func platformFormToolbar(
         onCancel: @escaping () -> Void,
         onSave: @escaping () -> Void,
         saveButtonTitle: String = "Save",
@@ -330,7 +330,7 @@ public func platformFormToolbar(
     ///   - onSave: Action to perform when save is tapped
     ///   - saveButtonTitle: Title for the save button (default: "Save")
     /// - Returns: A view with platform-specific toolbar
-public func platformDetailToolbar(
+    func platformDetailToolbar(
         onCancel: @escaping () -> Void,
         onSave: @escaping () -> Void,
         saveButtonTitle: String = "Save"
@@ -462,7 +462,7 @@ public func platformDetailToolbar(
     ///
     /// - Parameter content: The card content to be contained
     /// - Returns: A view with platform-specific card container
-public func platformCardContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    func platformCardContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         #if os(iOS)
         return VStack {
             content()
@@ -492,7 +492,7 @@ public func platformCardContainer<Content: View>(@ViewBuilder content: () -> Con
     ///
     /// - Parameter content: The section content to be contained
     /// - Returns: A view with platform-specific section container
-public func platformSectionContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    func platformSectionContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         #if os(iOS)
         return VStack {
             content()
@@ -541,7 +541,7 @@ public func platformSectionContainer<Content: View>(@ViewBuilder content: () -> 
     ///     .navigationTitle("Sheet Title")
     /// }
     /// ```
-public func platformSheet<SheetContent: View>(
+    func platformSheet<SheetContent: View>(
         isPresented: Binding<Bool>,
         detents: [PlatformPresentationDetent] = [.large],
         @ViewBuilder content: @escaping () -> SheetContent
@@ -627,7 +627,7 @@ public func platformSheet<SheetContent: View>(
     ///     .navigationTitle("Sheet Title")
     /// }
     /// ```
-public func platformAdaptiveSheet<SheetContent: View>(
+    func platformAdaptiveSheet<SheetContent: View>(
         isPresented: Binding<Bool>,
         detents: [PlatformPresentationDetent] = [.large],
         @ViewBuilder content: @escaping () -> SheetContent
@@ -676,7 +676,7 @@ public func platformAdaptiveSheet<SheetContent: View>(
     ///     Text("Are you sure you want to delete this item?")
     /// }
     /// ```
-public func platformAlert<A: View, M: View>(
+    func platformAlert<A: View, M: View>(
         _ title: Text,
         isPresented: Binding<Bool>,
         @ViewBuilder actions: () -> A,
@@ -700,7 +700,7 @@ public func platformAlert<A: View, M: View>(
     ///   - actions: The alert actions
     ///   - message: The alert message
     /// - Returns: A view with platform-specific alert presentation
-public func platformAlert<A: View, M: View>(
+    func platformAlert<A: View, M: View>(
         _ title: String,
         isPresented: Binding<Bool>,
         @ViewBuilder actions: () -> A,
@@ -717,7 +717,7 @@ public func platformAlert<A: View, M: View>(
     ///   - isPresented: Binding to control alert presentation
     ///   - actions: The alert actions (optional, defaults to OK button)
     /// - Returns: A view with platform-specific error alert presentation
-public func platformAlert<A: View>(
+    func platformAlert<A: View>(
         error: Error?,
         isPresented: Binding<Bool>,
         @ViewBuilder actions: @escaping () -> A
@@ -739,7 +739,7 @@ public func platformAlert<A: View>(
     ///   - error: The error to display
     ///   - isPresented: Binding to control alert presentation
     /// - Returns: A view with platform-specific error alert presentation
-public func platformAlert(
+    func platformAlert(
         error: Error?,
         isPresented: Binding<Bool>
     ) -> some View {
@@ -759,7 +759,7 @@ public func platformAlert(
 
     /// Platform-specific text field styling
     /// Provides consistent text field appearance across platforms
-public func platformTextFieldStyle() -> some View {
+    func platformTextFieldStyle() -> some View {
         #if os(iOS)
         return self.textFieldStyle(.roundedBorder)
         #elseif os(macOS)
@@ -771,7 +771,7 @@ public func platformTextFieldStyle() -> some View {
 
     /// Platform-specific picker styling
     /// Provides consistent picker appearance across platforms
-public func platformPickerStyle() -> some View {
+    func platformPickerStyle() -> some View {
         #if os(iOS)
         return self.pickerStyle(.menu)
         #elseif os(macOS)
@@ -783,7 +783,7 @@ public func platformPickerStyle() -> some View {
 
     /// Platform-specific date picker styling
     /// Provides consistent date picker appearance across platforms
-public func platformDatePickerStyle() -> some View {
+    func platformDatePickerStyle() -> some View {
         #if os(iOS)
         return self.datePickerStyle(.compact)
         #elseif os(macOS)
@@ -834,7 +834,7 @@ public func platformDatePickerStyle() -> some View {
     /// ```swift
     /// .platformNavigationBarBackButtonHidden(true)
     /// ```
-public func platformNavigationBarBackButtonHidden(_ hidden: Bool) -> some View {
+    func platformNavigationBarBackButtonHidden(_ hidden: Bool) -> some View {
         #if os(iOS)
         return self.navigationBarBackButtonHidden(hidden)
         #else
@@ -857,7 +857,7 @@ public func platformNavigationBarBackButtonHidden(_ hidden: Bool) -> some View {
     ///     trailing: Button("Save") { save() }
     /// )
     /// ```
-public func platformNavigationBarItems<L: View, T: View>(
+    func platformNavigationBarItems<L: View, T: View>(
         @ViewBuilder leading: @escaping () -> L,
         @ViewBuilder trailing: @escaping () -> T
     ) -> some View {
@@ -880,7 +880,7 @@ public func platformNavigationBarItems<L: View, T: View>(
     ///
     /// - Parameter leading: Leading navigation bar items
     /// - Returns: A view with platform-specific navigation bar items
-public func platformNavigationBarItems<L: View>(
+    func platformNavigationBarItems<L: View>(
         @ViewBuilder leading: @escaping () -> L
     ) -> some View {
         #if os(iOS)
@@ -899,7 +899,7 @@ public func platformNavigationBarItems<L: View>(
     ///
     /// - Parameter trailing: Trailing navigation bar items
     /// - Returns: A view with platform-specific navigation bar items
-public func platformNavigationBarItems<T: View>(
+    func platformNavigationBarItems<T: View>(
         @ViewBuilder trailing: @escaping () -> T
     ) -> some View {
         #if os(iOS)
@@ -929,7 +929,7 @@ public func platformNavigationBarItems<T: View>(
     ///     Text("Go to Detail")
     /// }
     /// ```
-public func platformNavigationLink<Destination: View, Label: View>(
+    func platformNavigationLink<Destination: View, Label: View>(
         @ViewBuilder destination: () -> Destination,
         @ViewBuilder label: () -> Label
     ) -> some View {
@@ -948,7 +948,7 @@ public func platformNavigationLink<Destination: View, Label: View>(
     ///   - destination: The destination view
     ///   - label: The navigation link label
     /// - Returns: A platform-specific navigation link with value
-public func platformNavigationLink<Value: Hashable, Destination: View, Label: View>(
+    func platformNavigationLink<Value: Hashable, Destination: View, Label: View>(
         value: Value,
         @ViewBuilder destination: () -> Destination,
         @ViewBuilder label: () -> Label
@@ -974,7 +974,7 @@ public func platformNavigationLink<Value: Hashable, Destination: View, Label: Vi
     ///   - destination: The destination view
     ///   - label: The navigation link label
     /// - Returns: A platform-specific navigation link with tag
-public func platformNavigationLink<Tag: Hashable, Destination: View, Label: View>(
+    func platformNavigationLink<Tag: Hashable, Destination: View, Label: View>(
         tag: Tag,
         selection: Binding<Tag?>,
         @ViewBuilder destination: @escaping () -> Destination,
@@ -1006,17 +1006,13 @@ public func platformNavigationLink<Tag: Hashable, Destination: View, Label: View
 
     /// Platform-specific navigation with path (iOS 16+ only)
     /// iOS: Uses NavigationStack with path; macOS: Returns content directly
-public func platformNavigationWithPath<Root: View>(
-        path: Binding<Any>,
+    func platformNavigationWithPath<Root: View>(
+        path: Binding<NavigationPath>,
         @ViewBuilder root: () -> Root
     ) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
-            if let navigationPath = path as? Binding<NavigationPath> {
-                return AnyView(NavigationStack(path: navigationPath, root: root))
-            } else {
-                return AnyView(root())
-            }
+            return AnyView(NavigationStack(path: path, root: root))
         } else {
             // iOS 15 fallback: ignore path, just return root
             return AnyView(root())
@@ -1029,7 +1025,7 @@ public func platformNavigationWithPath<Root: View>(
 
     /// Platform-specific navigation with typed path (iOS 16+ only)
     /// iOS: Uses NavigationStack with typed path; macOS: Returns content directly
-public func platformNavigationWithPath<Data: Hashable, Root: View>(
+    func platformNavigationWithPath<Data: Hashable, Root: View>(
         path: Binding<[Data]>,
         @ViewBuilder root: () -> Root
     ) -> some View {
@@ -1053,17 +1049,13 @@ public func platformNavigationWithPath<Data: Hashable, Root: View>(
     ///   - path: Binding to the navigation path
     ///   - root: The root view
     /// - Returns: A platform-specific navigation container with multiple typed state management
-public func platformNavigationWithPath<Data: Hashable, Root: View>(
-        path: Binding<Any>,
+    func platformNavigationWithPath<Data: Hashable, Root: View>(
+        path: Binding<NavigationPath>,
         @ViewBuilder root: () -> Root
     ) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
-            if let navigationPath = path as? Binding<NavigationPath> {
-                return AnyView(NavigationStack(path: navigationPath, root: root))
-            } else {
-                return AnyView(root())
-            }
+            return AnyView(NavigationStack(path: path, root: root))
         } else {
             // iOS 15 fallback: ignore path, just return root
             return AnyView(root())
@@ -1132,7 +1124,7 @@ public func platformNavigationWithPath<Data: Hashable, Root: View>(
 /// Platform-specific toolbar placement for secondary actions
 // Moved to PlatformToolbarHelpers.swift
 
-public func platformToolbarPlacement(_ placement: PlatformToolbarPlacement) -> ToolbarItemPlacement {
+    func platformToolbarPlacement(_ placement: PlatformToolbarPlacement) -> ToolbarItemPlacement {
         #if os(iOS)
         switch placement {
         case .leading: return .navigationBarLeading
@@ -1147,7 +1139,7 @@ public func platformToolbarPlacement(_ placement: PlatformToolbarPlacement) -> T
 // Merged into consolidated View extension above
     /// Comprehensive platform-specific toolbar modifier that supports all types of actions
     /// This is the main method that all convenience methods should call
-public func platformToolbar<Content: View>(
+    func platformToolbar<Content: View>(
         @ViewBuilder content: () -> Content,
         leadingActions: (() -> some View)? = nil,
         trailingActions: (() -> some View)? = nil
@@ -1202,7 +1194,7 @@ public func platformToolbar<Content: View>(
     }
 
     /// Convenience method for toolbar with trailing actions only
-public func platformToolbarWithTrailingActions<Content: View>(@ViewBuilder trailingActions: @escaping () -> Content) -> some View {
+    func platformToolbarWithTrailingActions<Content: View>(@ViewBuilder trailingActions: @escaping () -> Content) -> some View {
         #if os(iOS)
         return self.toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -1225,7 +1217,7 @@ public func platformToolbarWithTrailingActions<Content: View>(@ViewBuilder trail
     }
 
     /// Convenience method for toolbar with leading actions only
-public func platformToolbarWithLeadingActions<Content: View>(@ViewBuilder leadingActions: @escaping () -> Content) -> some View {
+    func platformToolbarWithLeadingActions<Content: View>(@ViewBuilder leadingActions: @escaping () -> Content) -> some View {
         #if os(iOS)
         return self.toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -1248,7 +1240,7 @@ public func platformToolbarWithLeadingActions<Content: View>(@ViewBuilder leadin
     }
 
     /// Convenience method for toolbar with confirmation action only
-public func platformToolbarWithConfirmationAction(
+    func platformToolbarWithConfirmationAction(
         confirmationAction: @escaping () -> Void,
         confirmationTitle: String = "Done"
     ) -> some View {
@@ -1258,7 +1250,7 @@ public func platformToolbarWithConfirmationAction(
     }
 
     /// Convenience method for toolbar with cancellation action only
-public func platformToolbarWithCancellationAction(
+    func platformToolbarWithCancellationAction(
         cancellationAction: @escaping () -> Void,
         cancellationTitle: String = "Cancel"
     ) -> some View {
@@ -1268,7 +1260,7 @@ public func platformToolbarWithCancellationAction(
     }
 
     /// Convenience method for toolbar with both confirmation and cancellation actions
-public func platformToolbarWithActions(
+    func platformToolbarWithActions(
         confirmationAction: @escaping () -> Void,
         confirmationTitle: String = "Done",
         cancellationAction: @escaping () -> Void,
@@ -1312,7 +1304,7 @@ public func platformToolbarWithActions(
     }
 
     /// Convenience method for toolbar with an "Add" action button
-public func platformToolbarWithAddAction(
+    func platformToolbarWithAddAction(
         addAction: @escaping () -> Void,
         addTitle: String = "Add"
     ) -> some View {
@@ -1322,7 +1314,7 @@ public func platformToolbarWithAddAction(
     }
 
     /// Convenience method for toolbar with a refresh action button
-public func platformToolbarWithRefreshAction(
+    func platformToolbarWithRefreshAction(
         refreshAction: @escaping () -> Void,
         refreshTitle: String = "Refresh"
     ) -> some View {
@@ -1334,7 +1326,7 @@ public func platformToolbarWithRefreshAction(
     }
 
     /// Convenience method for toolbar with an edit action button
-public func platformToolbarWithEditAction(
+    func platformToolbarWithEditAction(
         editAction: @escaping () -> Void,
         editTitle: String = "Edit"
     ) -> some View {
@@ -1344,7 +1336,7 @@ public func platformToolbarWithEditAction(
     }
 
     /// Convenience method for toolbar with a delete action button (with confirmation)
-public func platformToolbarWithDeleteAction(
+    func platformToolbarWithDeleteAction(
         deleteAction: @escaping () -> Void,
         deleteTitle: String = "Delete",
         confirmationMessage: String = "Are you sure you want to delete this item?"
@@ -1360,7 +1352,7 @@ public func platformToolbarWithDeleteAction(
     /// Platform-specific document browser sheet
     /// iOS: Shows document browser; macOS: no-op
     @ViewBuilder
-public func platformDocumentBrowserSheet<Content: View>(
+    func platformDocumentBrowserSheet<Content: View>(
         isPresented: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
@@ -1383,7 +1375,7 @@ public func platformDocumentBrowserSheet<Content: View>(
     ///
     /// - Parameter content: The form content
     /// - Returns: A platform-specific form container
-public func platformFormContainer<Content: View>(
+    func platformFormContainer<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         #if os(iOS)
@@ -1404,7 +1396,7 @@ public func platformFormContainer<Content: View>(
     ///   - footer: The section footer (optional)
     ///   - content: The section content
     /// - Returns: A platform-specific form section
-public func platformFormSection<Header: View, Footer: View, Content: View>(
+    func platformFormSection<Header: View, Footer: View, Content: View>(
         @ViewBuilder header: @escaping () -> Header,
         @ViewBuilder footer: @escaping () -> Footer,
         @ViewBuilder content: @escaping () -> Content
@@ -1432,7 +1424,7 @@ public func platformFormSection<Header: View, Footer: View, Content: View>(
     ///   - header: The section header
     ///   - content: The section content
     /// - Returns: A platform-specific form section
-public func platformFormSection<Header: View, Content: View>(
+    func platformFormSection<Header: View, Content: View>(
         @ViewBuilder header: @escaping () -> Header,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
@@ -1454,7 +1446,7 @@ public func platformFormSection<Header: View, Content: View>(
     ///
     /// - Parameter content: The section content
     /// - Returns: A platform-specific form section
-public func platformFormSection<Content: View>(
+    func platformFormSection<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         #if os(iOS)
@@ -1475,7 +1467,7 @@ public func platformFormSection<Content: View>(
     ///   - content: The disclosure group content
     ///   - label: The disclosure group label
     /// - Returns: A platform-specific disclosure group
-public func platformDisclosureGroup<Content: View, Label: View>(
+    func platformDisclosureGroup<Content: View, Label: View>(
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content,
         @ViewBuilder label: @escaping () -> Label
@@ -1495,7 +1487,7 @@ public func platformDisclosureGroup<Content: View, Label: View>(
     ///   - content: The picker content
     ///   - label: The picker label
     /// - Returns: A platform-specific picker
-public func platformPicker<SelectionValue: Hashable, Content: View, Label: View>(
+    func platformPicker<SelectionValue: Hashable, Content: View, Label: View>(
         selection: Binding<SelectionValue>,
         @ViewBuilder content: () -> Content,
         @ViewBuilder label: () -> Label
@@ -1515,7 +1507,7 @@ public func platformPicker<SelectionValue: Hashable, Content: View, Label: View>
     ///   - displayedComponents: The date components to display
     ///   - label: The date picker label
     /// - Returns: A platform-specific date picker
-public func platformDatePicker<Label: View>(
+    func platformDatePicker<Label: View>(
         selection: Binding<Date>,
         displayedComponents: DatePickerComponents = [.date],
         @ViewBuilder label: () -> Label
@@ -1534,7 +1526,7 @@ public func platformDatePicker<Label: View>(
     ///   - isOn: Binding to the toggle state
     ///   - label: The toggle label
     /// - Returns: A platform-specific toggle
-public func platformToggle<Label: View>(
+    func platformToggle<Label: View>(
         isOn: Binding<Bool>,
         @ViewBuilder label: () -> Label
     ) -> some View {
@@ -1553,7 +1545,7 @@ public func platformToggle<Label: View>(
     ///   - prompt: The placeholder text
     ///   - axis: The text field axis (iOS 16+)
     /// - Returns: A platform-specific text field
-public func platformTextField(
+    func platformTextField(
         text: Binding<String>,
         prompt: String? = nil,
         axis: Axis = .horizontal
@@ -1576,7 +1568,7 @@ public func platformTextField(
     ///   - text: Binding to the text value
     ///   - prompt: The placeholder text
     /// - Returns: A platform-specific secure text field
-public func platformSecureTextField(
+    func platformSecureTextField(
         text: Binding<String>,
         prompt: String? = nil
     ) -> some View {
@@ -1594,7 +1586,7 @@ public func platformSecureTextField(
     ///   - text: Binding to the text value
     ///   - prompt: The placeholder text
     /// - Returns: A platform-specific text editor
-public func platformTextEditor(
+    func platformTextEditor(
         text: Binding<String>,
         prompt: String? = nil
     ) -> some View {
@@ -1631,7 +1623,7 @@ public func platformTextEditor(
     /// Platform-specific notification receiver for iOS-only features
     /// iOS: Handles notification; macOS: no-op
     @ViewBuilder
-public func platformNotificationReceiver(
+    func platformNotificationReceiver(
         for name: Notification.Name,
         action: @escaping () -> Void
     ) -> some View {
@@ -1648,8 +1640,8 @@ public func platformNotificationReceiver(
     /// iOS: Returns content directly; macOS: Wraps in NavigationSplitView
     /// Layer 4: Component Implementation
     @ViewBuilder
-public func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
-        columnVisibility: Binding<Any>?,
+    func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>?,
         @ViewBuilder sidebar: @escaping () -> Sidebar,
         @ViewBuilder detail: @escaping () -> Detail
     ) -> some View {
@@ -1659,18 +1651,10 @@ public func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
         #else
         // macOS: Wrap in NavigationSplitView
         if #available(macOS 13.0, *) {
-            if let columnVisibility = columnVisibility as? Binding<NavigationSplitViewVisibility> {
-                NavigationSplitView(columnVisibility: columnVisibility) {
-                    sidebar()
-                } detail: {
-                    detail()
-                }
-            } else {
-                NavigationSplitView(columnVisibility: .constant(.all)) {
-                    sidebar()
-                } detail: {
-                    detail()
-                }
+            NavigationSplitView(columnVisibility: columnVisibility ?? .constant(.all)) {
+                sidebar()
+            } detail: {
+                detail()
             }
         } else {
             // Fallback for older macOS versions
@@ -1685,7 +1669,7 @@ public func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
     /// Platform-specific navigation split container (simplified version)
     /// Layer 4: Component Implementation - No column visibility control
     @ViewBuilder
-public func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
+    func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
         @ViewBuilder sidebar: @escaping () -> Sidebar,
         @ViewBuilder detail: @escaping () -> Detail
     ) -> some View {
@@ -1704,7 +1688,7 @@ public func platformNavigationSplitContainer_L4<Sidebar: View, Detail: View>(
 
     /// Platform-specific file save functionality
     /// iOS: No-op; macOS: Uses NSSavePanel
-public func platformSaveFile(data: Data, fileName: String) {
+    func platformSaveFile(data: Data, fileName: String) {
         #if os(macOS)
         let savePanel = NSSavePanel()
         savePanel.nameFieldStringValue = fileName
@@ -1727,7 +1711,7 @@ public func platformSaveFile(data: Data, fileName: String) {
 
     /// Express intent to dismiss settings
     /// Automatically determines the appropriate dismissal method
-public func platformDismissSettings(
+    func platformDismissSettings(
         type: SettingsDismissalType,
         onClose: (() -> Void)?,
         presentationMode: Binding<PresentationMode>? = nil
@@ -1767,7 +1751,7 @@ public func platformDismissSettings(
     /// Platform-specific export sheet
     /// iOS: Wraps in NavigationStack with detents; macOS: Returns content directly
     @ViewBuilder
-public func platformExportSheet<Content: View>(
+    func platformExportSheet<Content: View>(
         isPresented: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
@@ -1794,7 +1778,7 @@ public func platformExportSheet<Content: View>(
     /// Platform-specific help sheet
     /// iOS: Wraps in NavigationStack; macOS: Returns content directly
     @ViewBuilder
-public func platformHelpSheet<Content: View>(
+    func platformHelpSheet<Content: View>(
         isPresented: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
@@ -1821,7 +1805,7 @@ public func platformHelpSheet<Content: View>(
 
     /// Platform-specific frame sizing for detail views
     /// iOS: No frame constraints; macOS: Sets minimum width and height
-public func platformDetailViewFrame() -> some View {
+    func platformDetailViewFrame() -> some View {
         #if os(macOS)
         self.frame(minWidth: 800, minHeight: 600)
         #else
@@ -1834,7 +1818,7 @@ public func platformDetailViewFrame() -> some View {
     /// Platform-specific file picker
     /// iOS: Shows document picker sheet; macOS: Shows open panel
     @ViewBuilder
-public func platformFilePicker<Content: View>(
+    func platformFilePicker<Content: View>(
         isPresented: Binding<Bool>,
         allowedContentTypes: [UTType],
         onFileSelected: @escaping (URL) -> Void,
@@ -1901,7 +1885,7 @@ public func platformFilePicker<Content: View>(
 
     /// Platform-specific navigation view style
     /// iOS: Uses StackNavigationViewStyle; macOS: No-op
-public func platformNavigationViewStyle() -> some View {
+    func platformNavigationViewStyle() -> some View {
         #if os(iOS)
         self.navigationViewStyle(StackNavigationViewStyle())
         #else
@@ -1911,7 +1895,7 @@ public func platformNavigationViewStyle() -> some View {
 
     /// Platform-specific system colors
     /// iOS: Uses UIColor; macOS: Uses NSColor
-public static func platformSystemGray6() -> Color {
+    static func platformSystemGray6() -> Color {
         #if os(iOS)
         return Color.platformSecondaryBackground
         #else
@@ -1962,7 +1946,7 @@ public static func platformSystemGray6() -> Color {
 /// Temporary Layer 4 function for implementing modal container for forms
 /// This handles sheet presentation with proper sizing
 @MainActor
-public func platformModalContainer_Form_L4(
+    func platformModalContainer_Form_L4(
     strategy: ModalStrategy
 ) -> some View {
     // Hardcoded for now, will become intelligent later

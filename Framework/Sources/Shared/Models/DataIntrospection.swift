@@ -14,7 +14,7 @@ import SwiftUI
 public struct DataIntrospectionEngine {
     
     /// Analyze a data model and provide UI recommendations
-    public static func analyze<T>(_ data: T) -> DataAnalysisResult {
+        public static func analyze<T>(_ data: T) -> DataAnalysisResult {
         let mirror = Mirror(reflecting: data)
         let fields = extractFields(from: mirror)
         let complexity = calculateComplexity(fields: fields)
@@ -36,7 +36,7 @@ public struct DataIntrospectionEngine {
 
     
     /// Analyze a collection of data items
-    public static func analyzeCollection<T>(_ items: [T]) -> CollectionAnalysisResult {
+        public static func analyzeCollection<T>(_ items: [T]) -> CollectionAnalysisResult {
         guard let firstItem = items.first else {
             return CollectionAnalysisResult(
                 itemCount: 0,

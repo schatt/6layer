@@ -10,7 +10,7 @@ public extension View {
     
     /// Platform-specific memory optimization with consistent behavior
     /// Provides memory optimization strategies across platforms
-public func platformMemoryOptimization() -> some View {
+    func platformMemoryOptimization() -> some View {
         #if os(iOS)
         return self
             .drawingGroup() // Enable Metal rendering
@@ -24,7 +24,7 @@ public func platformMemoryOptimization() -> some View {
     
     /// Platform-specific lazy loading with consistent behavior
     /// Provides lazy loading strategies across platforms
-public func platformLazyLoading<Content: View>(
+    func platformLazyLoading<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         #if os(iOS)
@@ -44,7 +44,7 @@ public func platformLazyLoading<Content: View>(
     
     /// Platform-specific rendering optimization with consistent behavior
     /// Provides rendering optimization strategies across platforms
-public func platformRenderingOptimization() -> some View {
+    func platformRenderingOptimization() -> some View {
         #if os(iOS)
         return self
             .drawingGroup() // Enable Metal rendering
@@ -58,7 +58,7 @@ public func platformRenderingOptimization() -> some View {
     
     /// Platform-specific animation optimization with consistent behavior
     /// Provides animation optimization strategies across platforms
-public func platformAnimationOptimization() -> some View {
+    func platformAnimationOptimization() -> some View {
         #if os(iOS)
         return self
             .animation(.easeInOut(duration: 0.3), value: true)
@@ -72,7 +72,7 @@ public func platformAnimationOptimization() -> some View {
     
     /// Platform-specific caching optimization with consistent behavior
     /// Provides caching optimization strategies across platforms
-public func platformCachingOptimization() -> some View {
+    func platformCachingOptimization() -> some View {
         #if os(iOS)
         return self
             .id(UUID()) // Force view recreation for caching

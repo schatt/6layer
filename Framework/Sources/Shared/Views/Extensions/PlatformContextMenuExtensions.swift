@@ -8,7 +8,7 @@ public extension View {
     
     /// Cross-platform context menu with platform-specific behavior
     /// iOS: Full context menu support; macOS: Full context menu support
-public func platformContextMenu<MenuItems: View>(
+    func platformContextMenu<MenuItems: View>(
         @ViewBuilder menuItems: () -> MenuItems,
         preview: (() -> some View)? = nil
     ) -> some View {
@@ -23,7 +23,7 @@ public func platformContextMenu<MenuItems: View>(
     
     /// Cross-platform context menu with action-based menu items
     /// iOS: Full context menu support; macOS: Full context menu support
-public func platformContextMenu<MenuItems: View>(
+    func platformContextMenu<MenuItems: View>(
         @ViewBuilder menuItems: () -> MenuItems
     ) -> some View {
         #if os(iOS)

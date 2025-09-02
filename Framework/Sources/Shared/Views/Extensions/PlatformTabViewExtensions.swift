@@ -12,7 +12,7 @@ public extension View {
     /// iOS: Uses PageTabViewStyle; macOS: Uses DefaultTabViewStyle
     ///
     /// - Returns: A view with platform-specific tab view style
-public func platformTabViewStyle() -> some View {
+    func platformTabViewStyle() -> some View {
         #if os(iOS)
         self.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         #else

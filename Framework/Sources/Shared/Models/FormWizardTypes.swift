@@ -40,7 +40,7 @@ public class FormWizardState: ObservableObject {
     public init() {}
     
     /// Move to the next step if validation passes
-    public func nextStep() -> Bool {
+        func nextStep() -> Bool {
         guard canProceedToNextStep() else { return false }
         
         if currentStepIndex < steps.count - 1 {
@@ -53,14 +53,14 @@ public class FormWizardState: ObservableObject {
     }
     
     /// Move to the previous step
-    public func previousStep() -> Bool {
+        func previousStep() -> Bool {
         guard currentStepIndex > 0 else { return false }
         currentStepIndex -= 1
         return true
     }
     
     /// Check if we can proceed to the next step
-    public func canProceedToNextStep() -> Bool {
+        func canProceedToNextStep() -> Bool {
         guard let currentStep = getCurrentStep() else { return false }
         
         // Check if current step is complete
@@ -71,17 +71,17 @@ public class FormWizardState: ObservableObject {
     }
     
     /// Check if a specific step is complete
-    public func isStepComplete(_ stepId: String) -> Bool {
+        func isStepComplete(_ stepId: String) -> Bool {
         return completedSteps.contains(stepId)
     }
     
     /// Mark a step as complete
-    public func markStepComplete(_ stepId: String) {
+        func markStepComplete(_ stepId: String) {
         completedSteps.insert(stepId)
     }
     
     /// Get the current step
-    public func getCurrentStep() -> FormWizardStep? {
+        func getCurrentStep() -> FormWizardStep? {
         guard currentStepIndex < steps.count else { return nil }
         return steps[currentStepIndex]
     }
@@ -90,29 +90,29 @@ public class FormWizardState: ObservableObject {
     public var steps: [FormWizardStep] = []
     
     /// Set the steps for this wizard
-    public func setSteps(_ newSteps: [FormWizardStep]) {
+        func setSteps(_ newSteps: [FormWizardStep]) {
         steps = newSteps.sorted { $0.stepOrder < $1.stepOrder }
     }
     
     /// Get step data for a specific step
-    public func getStepData<T>(_ stepId: String, key: String) -> T? {
+        func getStepData<T>(_ stepId: String, key: String) -> T? {
         let stepKey = "\(stepId).\(key)"
         return stepData[stepKey] as? T
     }
     
     /// Set step data for a specific step
-    public func setStepData<T>(_ stepId: String, key: String, value: T) {
+        func setStepData<T>(_ stepId: String, key: String, value: T) {
         let stepKey = "\(stepId).\(key)"
         stepData[stepKey] = value
     }
     
     /// Clear validation errors for a step
-    public func clearValidationErrors(for stepId: String) {
+        func clearValidationErrors(for stepId: String) {
         validationErrors.removeValue(forKey: stepId)
     }
     
     /// Add validation error for a step
-    public func addValidationError(_ error: String, for stepId: String) {
+        func addValidationError(_ error: String, for stepId: String) {
         if validationErrors[stepId] == nil {
             validationErrors[stepId] = []
         }
@@ -154,7 +154,7 @@ public struct FormWizardBuilder {
     }
     
     /// Build the wizard configuration
-    public func build() -> [FormWizardStep] {
+        func build() -> [FormWizardStep] {
         return steps
     }
 }

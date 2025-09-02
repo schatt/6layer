@@ -46,7 +46,7 @@ public enum GridType {
 
 /// Select optimal card layout strategy
 /// Layer 3: Strategy Selection
-public func selectCardLayoutStrategy_L3(
+    func selectCardLayoutStrategy_L3(
     contentCount: Int,
     screenWidth: CGFloat,
     deviceType: DeviceType,
@@ -92,7 +92,7 @@ public func selectCardLayoutStrategy_L3(
 
 /// Choose optimal grid strategy
 /// Layer 3: Strategy Selection
-public func chooseGridStrategy(
+    func chooseGridStrategy(
     screenWidth: CGFloat,
     deviceType: DeviceType,
     contentCount: Int
@@ -138,7 +138,7 @@ public func chooseGridStrategy(
 
 /// Determine responsive behavior strategy
 /// Layer 3: Strategy Selection
-public func determineResponsiveBehavior(
+    func determineResponsiveBehavior(
     deviceType: DeviceType,
     contentComplexity: ContentComplexity
 ) -> ResponsiveBehavior {
@@ -343,7 +343,7 @@ public struct ModalStrategy {
 /// Temporary Layer 3 function for selecting form strategy for AddFuelView
 /// This provides immediate domain-specific strategy logic while building the intelligent system
 @MainActor
-public func selectFormStrategy_AddFuelView_L3(
+    func selectFormStrategy_AddFuelView_L3(
     layout: FormLayoutDecision
 ) -> FormStrategy {
     // Hardcoded for now, will become intelligent later
@@ -359,7 +359,7 @@ public func selectFormStrategy_AddFuelView_L3(
 /// Temporary Layer 3 function for selecting modal strategy for forms
 /// This handles sheet presentation strategy decisions
 @MainActor
-public func selectModalStrategy_Form_L3(
+    func selectModalStrategy_Form_L3(
     layout: ModalLayoutDecision
 ) -> ModalStrategy {
     // Hardcoded for now, will become intelligent later

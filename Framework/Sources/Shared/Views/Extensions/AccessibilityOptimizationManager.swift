@@ -56,7 +56,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
     
     /// Start continuous accessibility monitoring
-    public func startAccessibilityMonitoring(interval: TimeInterval = 5.0) {
+        func startAccessibilityMonitoring(interval: TimeInterval = 5.0) {
         stopAccessibilityMonitoring()
         
         auditTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
@@ -67,7 +67,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
     
     /// Stop accessibility monitoring
-    public func stopAccessibilityMonitoring() {
+        func stopAccessibilityMonitoring() {
         auditTimer?.invalidate()
         auditTimer = nil
     }
@@ -108,7 +108,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
     
     /// Apply automatic accessibility optimizations
-    public func applyAutomaticOptimizations() -> [AccessibilityOptimizationResult] {
+        func applyAutomaticOptimizations() -> [AccessibilityOptimizationResult] {
         return optimizationEngine.applyAutomaticOptimizations(
             to: complianceMetrics,
             level: accessibilityLevel
@@ -116,7 +116,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
     
     /// Set accessibility level
-    public func setAccessibilityLevel(_ level: AccessibilityLevel) {
+        func setAccessibilityLevel(_ level: AccessibilityLevel) {
         accessibilityLevel = level
         optimizationEngine.setAccessibilityLevel(level)
     }
@@ -124,12 +124,12 @@ public class AccessibilityOptimizationManager: ObservableObject {
     // MARK: - Accessibility Analysis
     
     /// Get accessibility trend analysis
-    public func getAccessibilityTrends() -> AccessibilityTrends {
+        func getAccessibilityTrends() -> AccessibilityTrends {
         return AccessibilityTrendsAnalyzer.analyze(auditHistory)
     }
     
     /// Get accessibility summary for a specific time period
-    public func getAccessibilitySummary(for period: TimeInterval) -> AccessibilitySummary {
+        func getAccessibilitySummary(for period: TimeInterval) -> AccessibilitySummary {
         // Filter audits by creation time since they don't have timestamp
         let relevantAudits = Array(auditHistory.suffix(10)) // Use recent audits
         
@@ -137,7 +137,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
     
     /// Check if accessibility meets target compliance levels
-    public func checkAccessibilityCompliance() -> AccessibilityComplianceReport {
+        func checkAccessibilityCompliance() -> AccessibilityComplianceReport {
         return complianceChecker.checkCompliance(
             current: complianceMetrics,
             targets: accessibilityLevel.targetCompliance
@@ -147,24 +147,24 @@ public class AccessibilityOptimizationManager: ObservableObject {
     // MARK: - View Optimization
     
     /// Optimize a view for better accessibility
-    public func optimizeView<Content: View>(_ content: Content) -> some View {
+        func optimizeView<Content: View>(_ content: Content) -> some View {
         return optimizationEngine.optimizeView(content, level: accessibilityLevel)
     }
     
     /// Get accessibility optimization suggestions for a specific view
-    public func getViewAccessibilitySuggestions<Content: View>(_ content: Content) -> [ViewAccessibilitySuggestion] {
+        func getViewAccessibilitySuggestions<Content: View>(_ content: Content) -> [ViewAccessibilitySuggestion] {
         return optimizationEngine.analyzeView(content)
     }
     
     /// Perform accessibility audit on a specific view
-    public func auditView<Content: View>(_ content: Content) -> AccessibilityAuditResult {
+        func auditView<Content: View>(_ content: Content) -> AccessibilityAuditResult {
         return complianceChecker.auditView(content)
     }
     
     // MARK: - WCAG Compliance
     
     /// Check WCAG 2.1 compliance level
-    public func checkWCAGCompliance(level: WCAGLevel = .AA) -> WCAGComplianceReport {
+        func checkWCAGCompliance(level: WCAGLevel = .AA) -> WCAGComplianceReport {
         return complianceChecker.checkWCAGCompliance(
             metrics: complianceMetrics,
             level: level
@@ -172,7 +172,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
     }
     
     /// Get WCAG compliance recommendations
-    public func getWCAGRecommendations(level: WCAGLevel = .AA) -> [WCAGRecommendation] {
+        func getWCAGRecommendations(level: WCAGLevel = .AA) -> [WCAGRecommendation] {
         return complianceChecker.getWCAGRecommendations(
             for: complianceMetrics,
             level: level
@@ -238,7 +238,7 @@ public struct AccessibilitySystemChecker {
     // MARK: - Compliance Calculation Methods
     
     /// Calculate VoiceOver compliance level from system state
-    public static func calculateVoiceOverCompliance(from state: SystemState) -> ComplianceLevel {
+        static func calculateVoiceOverCompliance(from state: SystemState) -> ComplianceLevel {
         var voiceOverScore = 0
         
         if state.isVoiceOverRunning {
@@ -270,7 +270,7 @@ public struct AccessibilitySystemChecker {
     }
     
     /// Calculate keyboard compliance level from system state
-    public static func calculateKeyboardCompliance(from state: SystemState) -> ComplianceLevel {
+        static func calculateKeyboardCompliance(from state: SystemState) -> ComplianceLevel {
         var keyboardScore = 0
         
         if state.hasKeyboardSupport {
@@ -302,7 +302,7 @@ public struct AccessibilitySystemChecker {
     }
     
     /// Calculate contrast compliance level from system state
-    public static func calculateContrastCompliance(from state: SystemState) -> ComplianceLevel {
+        static func calculateContrastCompliance(from state: SystemState) -> ComplianceLevel {
         var contrastScore = 0
         
         if state.isHighContrastEnabled {
@@ -331,7 +331,7 @@ public struct AccessibilitySystemChecker {
     }
     
     /// Calculate motion compliance level from system state
-    public static func calculateMotionCompliance(from state: SystemState) -> ComplianceLevel {
+        static func calculateMotionCompliance(from state: SystemState) -> ComplianceLevel {
         var motionScore = 0
         
         if state.isReducedMotionEnabled {

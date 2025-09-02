@@ -78,7 +78,7 @@ public class AdvancedCacheManager: ObservableObject {
         setupCacheCleanup()
     }
     
-    public func cache<T: Codable>(_ value: T, forKey key: String, strategy: CacheStrategy) {
+        func cache<T: Codable>(_ value: T, forKey key: String, strategy: CacheStrategy) {
         let entry = CacheEntry(
             value: value,
             timestamp: Date(),
@@ -106,7 +106,7 @@ public class AdvancedCacheManager: ObservableObject {
         updateStats()
     }
     
-    public func retrieve<T: Codable>(forKey key: String, strategy: CacheStrategy) -> T? {
+        func retrieve<T: Codable>(forKey key: String, strategy: CacheStrategy) -> T? {
         var entry: CacheEntry?
         
         switch strategy.type {
@@ -266,7 +266,7 @@ public class RenderingPipelineManager: ObservableObject {
         self.config = config
     }
     
-    public func queueRender<T: View>(_ view: T, priority: RenderPriority = .normal) -> RenderTask {
+        func queueRender<T: View>(_ view: T, priority: RenderPriority = .normal) -> RenderTask {
         let task = RenderTask(view: view, priority: priority)
         taskQueue.append(task)
         taskQueue.sort { $0.priority.rawValue > $1.priority.rawValue }
@@ -323,7 +323,7 @@ public class RenderTask: Identifiable, ObservableObject {
         self.priority = priority
     }
     
-    public func complete() {
+        func complete() {
         status = .completed
         progress = 1.0
     }

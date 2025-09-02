@@ -218,7 +218,7 @@ public extension Color {
 
     /// Platform-specific color encoding
     /// iOS: Uses UIColor; macOS: Uses NSColor
-public func platformColorEncode() -> Data? {
+    func platformColorEncode() -> Data? {
         #if os(macOS)
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         let nsColor = NSColor(self)

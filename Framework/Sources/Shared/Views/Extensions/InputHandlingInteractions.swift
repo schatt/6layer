@@ -46,7 +46,7 @@ public class InputHandlingManager: ObservableObject {
     }
     
     /// Get platform-appropriate interaction behavior
-    public func getInteractionBehavior(for gesture: GestureType) -> InteractionBehavior {
+        func getInteractionBehavior(for gesture: GestureType) -> InteractionBehavior {
         return InteractionBehavior(
             platform: currentPlatform,
             gesture: gesture,
@@ -102,7 +102,7 @@ public class KeyboardShortcutManager {
     }
     
     /// Create a platform-appropriate keyboard shortcut
-    public func createShortcut(
+        func createShortcut(
         key: KeyEquivalent,
         modifiers: EventModifiers = .command,
         action: @escaping () -> Void
@@ -128,7 +128,7 @@ public class KeyboardShortcutManager {
     }
     
     /// Get platform-appropriate shortcut description
-    public func getShortcutDescription(key: KeyEquivalent, modifiers: EventModifiers = .command) -> String {
+        func getShortcutDescription(key: KeyEquivalent, modifiers: EventModifiers = .command) -> String {
         switch platform {
         case .macOS:
             let modifierString = getModifierString(modifiers)
@@ -163,7 +163,7 @@ public class HapticFeedbackManager {
     }
     
     /// Trigger haptic feedback appropriate for the platform
-    public func triggerFeedback(_ feedback: PlatformHapticFeedback) {
+        func triggerFeedback(_ feedback: PlatformHapticFeedback) {
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -249,7 +249,7 @@ public class DragDropManager {
     }
     
     /// Get platform-appropriate drag behavior
-    public func getDragBehavior() -> DragBehavior {
+        func getDragBehavior() -> DragBehavior {
         switch platform {
         case .iOS:
             return DragBehavior(

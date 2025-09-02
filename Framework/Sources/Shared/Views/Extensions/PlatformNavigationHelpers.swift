@@ -9,7 +9,7 @@ public struct PlatformNavigationHelpers {
     
     /// Cross-platform app navigation with platform-specific behavior
     /// iOS: Uses NavigationSplitView or NavigationView; macOS: Uses NavigationSplitView
-    public static func platformAppNavigation<SidebarContent: View, DetailContent: View>(
+        static func platformAppNavigation<SidebarContent: View, DetailContent: View>(
         columnVisibility: Binding<Bool>,
         showingSidebar: Binding<Bool>,
         @ViewBuilder sidebar: () -> SidebarContent,
@@ -26,7 +26,7 @@ public struct PlatformNavigationHelpers {
     
     /// Cross-platform navigation action with platform-specific behavior
     /// iOS: Hides sidebar after navigation; macOS: Maintains sidebar state
-    public static func platformNavigationAction<T>(
+        static func platformNavigationAction<T>(
         to pane: T,
         selectedPane: Binding<T?>,
         columnVisibility: Binding<Bool>?,

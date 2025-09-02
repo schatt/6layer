@@ -217,61 +217,61 @@ public extension View {
 
     /// Apply platform secondary background color
     /// iOS: secondarySystemBackground; macOS: controlBackgroundColor
-public func platformSecondaryBackgroundColor() -> some View {
+    func platformSecondaryBackgroundColor() -> some View {
         self.background(Color.platformSecondaryBackground)
     }
 
     /// Apply platform grouped background color
     /// iOS: systemGroupedBackground; macOS: controlBackgroundColor
-public func platformGroupedBackgroundColor() -> some View {
+    func platformGroupedBackgroundColor() -> some View {
         self.background(Color.platformGroupedBackground)
     }
 
     /// Apply platform foreground color
     /// iOS: label; macOS: labelColor
-public func platformForegroundColor() -> some View {
+    func platformForegroundColor() -> some View {
         self.foregroundColor(Color.platformLabel)
     }
 
     /// Apply platform secondary foreground color
     /// iOS: secondaryLabel; macOS: secondaryLabelColor
-public func platformSecondaryForegroundColor() -> some View {
+    func platformSecondaryForegroundColor() -> some View {
         self.foregroundColor(Color.platformSecondaryLabel)
     }
 
     /// Apply platform tertiary foreground color
     /// iOS: tertiaryLabel; macOS: tertiaryLabelColor
-public func platformTertiaryForegroundColor() -> some View {
+    func platformTertiaryForegroundColor() -> some View {
         self.foregroundColor(Color.platformTertiaryLabel)
     }
 
     /// Apply platform tint color
     /// iOS: systemBlue; macOS: controlAccentColor
-public func platformTintColor() -> some View {
+    func platformTintColor() -> some View {
         self.foregroundColor(Color.platformTint)
     }
 
     /// Apply platform destructive color
     /// iOS: systemRed; macOS: systemRedColor
-public func platformDestructiveColor() -> some View {
+    func platformDestructiveColor() -> some View {
         self.foregroundColor(Color.platformDestructive)
     }
 
     /// Apply platform success color
     /// iOS: systemGreen; macOS: systemGreenColor
-public func platformSuccessColor() -> some View {
+    func platformSuccessColor() -> some View {
         self.foregroundColor(Color.platformSuccess)
     }
 
     /// Apply platform warning color
     /// iOS: systemOrange; macOS: systemOrangeColor
-public func platformWarningColor() -> some View {
+    func platformWarningColor() -> some View {
         self.foregroundColor(Color.platformWarning)
     }
 
     /// Apply platform info color
     /// iOS: systemBlue; macOS: systemBlueColor
-public func platformInfoColor() -> some View {
+    func platformInfoColor() -> some View {
         self.foregroundColor(Color.platformInfo)
     }
 }

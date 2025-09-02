@@ -24,7 +24,7 @@ public struct GenericVehicle: Identifiable, Hashable {
         self.type = type
     }
     
-    public func hash(into hasher: inout Hasher) {
+        public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
@@ -61,7 +61,7 @@ public struct GenericDataItem: Identifiable, Hashable {
         self.data = data
     }
     
-    public func hash(into hasher: inout Hasher) {
+        public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     

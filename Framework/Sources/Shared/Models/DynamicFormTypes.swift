@@ -182,12 +182,12 @@ public struct DynamicFormConfiguration: Identifiable, Hashable {
     }
     
     /// Get field by ID
-    public func getField(by id: String) -> DynamicFormField? {
+        func getField(by id: String) -> DynamicFormField? {
         return allFields.first { $0.id == id }
     }
     
     /// Get section by ID
-    public func getSection(by id: String) -> DynamicFormSection? {
+        func getSection(by id: String) -> DynamicFormSection? {
         return sections.first { $0.id == id }
     }
 }
@@ -210,29 +210,29 @@ public class DynamicFormState: ObservableObject {
     }
     
     /// Get value for a specific field
-    public func getValue<T>(for fieldId: String) -> T? {
+        func getValue<T>(for fieldId: String) -> T? {
         return fieldValues[fieldId] as? T
     }
     
     /// Set value for a specific field
-    public func setValue<T>(_ value: T, for fieldId: String) {
+        func setValue<T>(_ value: T, for fieldId: String) {
         fieldValues[fieldId] = value
         isDirty = true
         clearErrors(for: fieldId)
     }
     
     /// Check if field has errors
-    public func hasErrors(for fieldId: String) -> Bool {
+        func hasErrors(for fieldId: String) -> Bool {
         return !(fieldErrors[fieldId]?.isEmpty ?? true)
     }
     
     /// Get errors for a specific field
-    public func getErrors(for fieldId: String) -> [String] {
+        func getErrors(for fieldId: String) -> [String] {
         return fieldErrors[fieldId] ?? []
     }
     
     /// Add error for a specific field
-    public func addError(_ error: String, for fieldId: String) {
+        func addError(_ error: String, for fieldId: String) {
         if fieldErrors[fieldId] == nil {
             fieldErrors[fieldId] = []
         }
@@ -240,22 +240,22 @@ public class DynamicFormState: ObservableObject {
     }
     
     /// Clear errors for a specific field
-    public func clearErrors(for fieldId: String) {
+        func clearErrors(for fieldId: String) {
         fieldErrors.removeValue(forKey: fieldId)
     }
     
     /// Clear all errors
-    public func clearAllErrors() {
+        func clearAllErrors() {
         fieldErrors.removeAll()
     }
     
     /// Check if section is collapsed
-    public func isSectionCollapsed(_ sectionId: String) -> Bool {
+        func isSectionCollapsed(_ sectionId: String) -> Bool {
         return sectionStates[sectionId] ?? false
     }
     
     /// Toggle section collapsed state
-    public func toggleSection(_ sectionId: String) {
+        func toggleSection(_ sectionId: String) {
         sectionStates[sectionId] = !isSectionCollapsed(sectionId)
     }
     
@@ -265,7 +265,7 @@ public class DynamicFormState: ObservableObject {
     }
     
     /// Reset form to initial state
-    public func reset() {
+        func reset() {
         fieldValues.removeAll()
         fieldErrors.removeAll()
         sectionStates.removeAll()

@@ -42,11 +42,13 @@ public class VisualDesignSystem: ObservableObject {
            let window = windowScene.windows.first {
             return window.traitCollection.userInterfaceStyle == .dark ? .dark : .light
         }
+        return .light // Fallback for iOS when no window is available
         #elseif os(macOS)
         let appearance = NSApp.effectiveAppearance
         return appearance.name == .darkAqua ? .dark : .light
-        #endif
+        #else
         return .light
+        #endif
     }
     
     private static func detectPlatformStyle() -> PlatformStyle {

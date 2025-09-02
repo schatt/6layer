@@ -153,7 +153,7 @@ public struct EnhancedPresentationHints: Sendable {
     }
     
     /// Get hints of a specific type
-    public func hints<T: ExtensibleHint>(ofType type: T.Type) -> [T] {
+        func hints<T: ExtensibleHint>(ofType type: T.Type) -> [T] {
         return extensibleHints.compactMap { $0 as? T }
     }
     
@@ -194,7 +194,7 @@ public struct EnhancedPresentationHints: Sendable {
 public class HintProcessingEngine {
     
     /// Process hints to determine if they should override framework defaults
-    public static func shouldOverrideFramework(
+        static func shouldOverrideFramework(
         hints: EnhancedPresentationHints,
         for decisionType: String
     ) -> Bool {
@@ -202,7 +202,7 @@ public class HintProcessingEngine {
     }
     
     /// Extract layout preferences from hints
-    public static func extractLayoutPreferences(
+        static func extractLayoutPreferences(
         from hints: EnhancedPresentationHints
     ) -> [String: Any] {
         var preferences: [String: Any] = [:]
@@ -224,7 +224,7 @@ public class HintProcessingEngine {
     }
     
     /// Extract performance preferences from hints
-    public static func extractPerformancePreferences(
+        static func extractPerformancePreferences(
         from hints: EnhancedPresentationHints
     ) -> [String: Any] {
         var preferences: [String: Any] = [:]
@@ -245,7 +245,7 @@ public class HintProcessingEngine {
     }
     
     /// Extract accessibility preferences from hints
-    public static func extractAccessibilityPreferences(
+        static func extractAccessibilityPreferences(
         from hints: EnhancedPresentationHints
     ) -> [String: Any] {
         var preferences: [String: Any] = [:]

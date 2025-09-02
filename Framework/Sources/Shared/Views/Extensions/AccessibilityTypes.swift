@@ -120,7 +120,7 @@ public enum IssueSeverity: String, CaseIterable {
 /// Accessibility testing utilities
 public struct AccessibilityTesting {
     /// Audit view accessibility compliance
-    public static func auditViewAccessibility<Content: View>(_ content: Content) -> AccessibilityAuditResult {
+        static func auditViewAccessibility<Content: View>(_ content: Content) -> AccessibilityAuditResult {
         // This is a placeholder implementation
         // In a real implementation, this would analyze the view hierarchy
         // and check for accessibility compliance

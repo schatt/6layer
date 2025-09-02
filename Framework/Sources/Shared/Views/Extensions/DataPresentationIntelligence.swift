@@ -79,7 +79,7 @@ public class DataPresentationIntelligence: ObservableObject {
     private init() {}
     
     /// Analyze data and return presentation recommendations
-    public func analyzeData<T>(_ data: [T]) -> DataVisualizationAnalysis {
+        func analyzeData<T>(_ data: [T]) -> DataVisualizationAnalysis {
         let dataPoints = data.count
         let complexity = determineComplexity(dataPoints)
         
@@ -106,7 +106,7 @@ public class DataPresentationIntelligence: ObservableObject {
     }
     
     /// Analyze numerical data specifically
-    public func analyzeNumericalData(_ values: [Double]) -> DataVisualizationAnalysis {
+        func analyzeNumericalData(_ values: [Double]) -> DataVisualizationAnalysis {
         let dataPoints = values.count
         let complexity = determineComplexity(dataPoints)
         
@@ -147,7 +147,7 @@ public class DataPresentationIntelligence: ObservableObject {
     }
     
     /// Analyze categorical data specifically
-    public func analyzeCategoricalData(_ categories: [String: Int]) -> DataVisualizationAnalysis {
+        func analyzeCategoricalData(_ categories: [String: Int]) -> DataVisualizationAnalysis {
         let dataPoints = categories.values.reduce(0, +)
         let complexity = determineComplexity(categories.count)
         

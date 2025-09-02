@@ -14,7 +14,7 @@ import SwiftUI
 public struct IntelligentDetailView {
     
     /// Generate a detail view for a data model with automatic field detection
-    public static func platformDetailView<T>(
+        public static func platformDetailView<T>(
         for data: T,
         hints: PresentationHints? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() }
@@ -59,7 +59,7 @@ public struct IntelligentDetailView {
     }
     
     /// Generate a detail view using default layout strategy
-    public static func platformDetailView<T>(
+        public static func platformDetailView<T>(
         for data: T,
         @ViewBuilder customFieldView: @escaping (String, String, FieldType) -> some View = { _, _, _ in EmptyView() }
     ) -> some View {
@@ -127,7 +127,7 @@ public extension IntelligentDetailView {
     }
     
     /// Generate a compact detail view
-public static func platformCompactDetailView<T>(
+    static func platformCompactDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -145,7 +145,7 @@ public static func platformCompactDetailView<T>(
     }
     
     /// Generate a standard detail view with sections
-public static func platformStandardDetailView<T>(
+    static func platformStandardDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -179,7 +179,7 @@ public static func platformStandardDetailView<T>(
     }
     
     /// Generate a detailed view with full information
-public static func platformDetailedDetailView<T>(
+    static func platformDetailedDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -225,7 +225,7 @@ public static func platformDetailedDetailView<T>(
     }
     
     /// Generate a tabbed view for very complex data
-public static func platformTabbedDetailView<T>(
+    static func platformTabbedDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -330,7 +330,7 @@ public static func platformTabbedDetailView<T>(
     }
     
     /// Generate an adaptive detail view
-public static func platformAdaptiveDetailView<T>(
+    static func platformAdaptiveDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -362,7 +362,7 @@ public static func platformAdaptiveDetailView<T>(
     
     /// Generate a field view based on field type
     @ViewBuilder
-public static func platformFieldView(
+    static func platformFieldView(
         field: DataField,
         value: Any,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -387,7 +387,7 @@ public static func platformFieldView(
     
     /// Generate a detailed field view
     @ViewBuilder
-public static func platformDetailedFieldView(
+    static func platformDetailedFieldView(
         field: DataField,
         value: Any,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
@@ -436,7 +436,7 @@ public static func platformDetailedFieldView(
     
     /// Generate default field value display
     @ViewBuilder
-public static func platformDefaultFieldValue(field: DataField, value: Any) -> some View {
+    static func platformDefaultFieldValue(field: DataField, value: Any) -> some View {
         switch field.type {
         case .string:
             Text(String(describing: value))
@@ -488,7 +488,7 @@ public static func platformDefaultFieldValue(field: DataField, value: Any) -> so
     }
     
     /// Generate raw data view for debugging
-public static func platformRawDataView<T>(data: T, analysis: DataAnalysisResult) -> some View {
+    static func platformRawDataView<T>(data: T, analysis: DataAnalysisResult) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 Text("Raw Data Analysis")
@@ -601,7 +601,7 @@ public enum FieldPriority: String, CaseIterable {
 public extension View {
     
     /// Apply intelligent detail view generation
-public func platformIntelligentDetail<T>(
+    func platformIntelligentDetail<T>(
         for data: T,
         hints: PresentationHints? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() }
@@ -614,7 +614,7 @@ public func platformIntelligentDetail<T>(
     }
     
     /// Apply intelligent detail view generation with default strategy
-public func platformIntelligentDetail<T>(
+    func platformIntelligentDetail<T>(
         for data: T,
         @ViewBuilder customFieldView: @escaping (String, String, FieldType) -> some View = { _, _, _ in EmptyView() }
     ) -> some View {

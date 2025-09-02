@@ -163,7 +163,7 @@ public struct ExtensibleHintsExamples {
     
     /// Example: Present e-commerce products with custom hints
     @MainActor
-    public static func presentEcommerceProducts(
+        static func presentEcommerceProducts(
         products: [GenericItem],
         category: String = "electronics"
     ) -> some View {
@@ -192,7 +192,7 @@ public struct ExtensibleHintsExamples {
     
     /// Example: Present social media feed with custom hints
     @MainActor
-    public static func presentSocialFeed(
+        static func presentSocialFeed(
         posts: [GenericItem],
         contentType: String = "general"
     ) -> some View {
@@ -220,7 +220,7 @@ public struct ExtensibleHintsExamples {
     
     /// Example: Present financial dashboard with custom hints
     @MainActor
-    public static func presentFinancialDashboard(
+        static func presentFinancialDashboard(
         data: [GenericNumericData],
         timeRange: String = "daily"
     ) -> some View {
@@ -248,7 +248,7 @@ public struct ExtensibleHintsExamples {
     
     /// Example: Present blog posts with custom hints
     @MainActor
-    public static func presentBlogPosts(
+        static func presentBlogPosts(
         posts: [GenericItem],
         showExcerpts: Bool = true,
         showAuthor: Bool = true
@@ -277,7 +277,7 @@ public struct ExtensibleHintsExamples {
     
     /// Example: Present photo gallery with custom hints
     @MainActor
-    public static func presentPhotoGallery(
+        static func presentPhotoGallery(
         photos: [GenericMediaItem],
         showMetadata: Bool = true,
         allowFullscreen: Bool = true

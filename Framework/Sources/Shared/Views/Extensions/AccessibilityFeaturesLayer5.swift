@@ -41,7 +41,7 @@ public class VoiceOverManager: ObservableObject {
         checkVoiceOverStatus()
     }
     
-    public func announce(_ message: String, priority: VoiceOverPriority = .normal) {
+        func announce(_ message: String, priority: VoiceOverPriority = .normal) {
         lastAnnouncement = message
         
         #if os(iOS)
@@ -89,17 +89,17 @@ public class KeyboardNavigationManager: ObservableObject {
     
     public init() {}
     
-    public func addFocusableItem(_ identifier: String) {
+        func addFocusableItem(_ identifier: String) {
         if !focusableItems.contains(identifier) {
             focusableItems.append(identifier)
         }
     }
     
-    public func removeFocusableItem(_ identifier: String) {
+        func removeFocusableItem(_ identifier: String) {
         focusableItems.removeAll { $0 == identifier }
     }
     
-    public func moveFocus(direction: FocusDirection) {
+        func moveFocus(direction: FocusDirection) {
         switch direction {
         case .next:
             currentFocusIndex = (currentFocusIndex + 1) % max(focusableItems.count, 1)
@@ -112,7 +112,7 @@ public class KeyboardNavigationManager: ObservableObject {
         }
     }
     
-    public func focusItem(_ identifier: String) {
+        func focusItem(_ identifier: String) {
         if let index = focusableItems.firstIndex(of: identifier) {
             currentFocusIndex = index
         }
@@ -149,7 +149,7 @@ public class HighContrastManager: ObservableObject {
         #endif
     }
     
-    public func getHighContrastColor(_ baseColor: Color) -> Color {
+        func getHighContrastColor(_ baseColor: Color) -> Color {
         guard isHighContrastEnabled else { return baseColor }
         
         switch contrastLevel {
@@ -179,7 +179,7 @@ public class AccessibilityTestingManager: ObservableObject {
     
     public init() {}
     
-    public func runAccessibilityTests() {
+        func runAccessibilityTests() {
         isRunningTests = true
         
         // Simulate running accessibility tests

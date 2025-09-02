@@ -9,7 +9,7 @@ public extension View {
     
     /// Platform-specific form section with consistent styling
     /// Provides standardized form section appearance across platforms
-public func platformFormSection<Content: View>(
+    func platformFormSection<Content: View>(
         header: String? = nil,
         footer: String? = nil,
         @ViewBuilder content: () -> Content
@@ -53,7 +53,7 @@ public func platformFormSection<Content: View>(
     
     /// Platform-specific form field with consistent styling
     /// Provides standardized form field appearance across platforms
-public func platformFormField<Content: View>(
+    func platformFormField<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -64,7 +64,7 @@ public func platformFormField<Content: View>(
     
     /// Platform-specific form field group for related fields
     /// Groups related fields with visual separation
-public func platformFormFieldGroup<Content: View>(
+    func platformFormFieldGroup<Content: View>(
         title: String? = nil,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -88,7 +88,7 @@ public func platformFormFieldGroup<Content: View>(
     
     /// Platform-specific validation message with consistent styling
     /// Provides standardized validation message appearance across platforms
-public func platformValidationMessage(
+    func platformValidationMessage(
         _ message: String,
         type: ValidationType = .error
     ) -> some View {
@@ -109,7 +109,7 @@ public func platformValidationMessage(
     
     /// Platform-specific form divider with consistent styling
     /// Provides visual separation between form sections
-public func platformFormDivider() -> some View {
+    func platformFormDivider() -> some View {
         Rectangle()
             .fill(Color.platformSeparator)
             .frame(height: 1)
@@ -118,7 +118,7 @@ public func platformFormDivider() -> some View {
     
     /// Platform-specific form spacing with consistent sizing
     /// Provides standardized spacing between form elements
-public func platformFormSpacing(_ size: FormSpacing) -> some View {
+    func platformFormSpacing(_ size: FormSpacing) -> some View {
         Spacer()
             .frame(height: size.rawValue)
     }
@@ -164,7 +164,7 @@ public enum FormSpacing: CGFloat, CaseIterable {
 /// Generic Layer 4 function for form container implementation
 /// This implements the actual container based on the strategy from Layer 3
 @MainActor
-public func platformFormContainer_L4<Content: View>(
+    func platformFormContainer_L4<Content: View>(
     strategy: FormStrategy,
     @ViewBuilder content: @escaping () -> Content
 ) -> some View {

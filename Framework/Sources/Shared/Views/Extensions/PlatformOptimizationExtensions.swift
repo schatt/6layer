@@ -322,76 +322,76 @@ public enum PlatformFeature {
 public extension View {
     
     /// Apply platform-specific form styling
-public func platformFormOptimized() -> some View {
+    func platformFormOptimized() -> some View {
         platformFormStyling {
             self
         }
     }
     
     /// Apply platform-specific field styling
-public func platformFieldOptimized() -> some View {
+    func platformFieldOptimized() -> some View {
         platformFieldStyling {
             self
         }
     }
     
     /// Apply platform-specific navigation styling
-public func platformNavigationOptimized() -> some View {
+    func platformNavigationOptimized() -> some View {
         platformNavigationStyling {
             self
         }
     }
     
     /// Apply platform-specific toolbar styling
-public func platformToolbarOptimized() -> some View {
+    func platformToolbarOptimized() -> some View {
         platformToolbarStyling {
             self
         }
     }
     
     /// Apply platform-specific modal styling
-public func platformModalOptimized() -> some View {
+    func platformModalOptimized() -> some View {
         platformModalStyling {
             self
         }
     }
     
     /// Apply platform-specific list styling
-public func platformListOptimized() -> some View {
+    func platformListOptimized() -> some View {
         platformListStyling {
             self
         }
     }
     
     /// Apply platform-specific grid styling
-public func platformGridOptimized() -> some View {
+    func platformGridOptimized() -> some View {
         platformGridStyling {
             self
         }
     }
     
     /// Apply platform-specific performance optimizations
-public func platformPerformanceOptimized(for platform: Platform) -> some View {
+    func platformPerformanceOptimized(for platform: Platform) -> some View {
         applyPlatformPerformanceOptimizations(content: { self }, platform: platform)
     }
     
     /// Apply platform-specific memory optimizations
-public func platformMemoryOptimized(for platform: Platform) -> some View {
+    func platformMemoryOptimized(for platform: Platform) -> some View {
         applyPlatformMemoryOptimizations(content: { self }, platform: platform)
     }
     
     /// Apply platform-specific accessibility enhancements
-public func platformAccessibilityEnhanced(for platform: Platform) -> some View {
+    func platformAccessibilityEnhanced(for platform: Platform) -> some View {
         applyPlatformAccessibilityEnhancements(content: { self }, platform: platform)
     }
     
     /// Optimize for specific device
-public func platformDeviceOptimized(for device: DeviceType) -> some View {
+    func platformDeviceOptimized(for device: DeviceType) -> some View {
         optimizeForDevice(content: { self }, device: device)
     }
     
     /// Apply platform-specific features
-public func platformFeatures(_ features: [PlatformFeature]) -> some View {
+    func platformFeatures(_ features: [PlatformFeature]) -> some View {
         applyPlatformFeatures(content: { self }, features: features)
     }
 }

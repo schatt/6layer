@@ -25,7 +25,7 @@ public struct ThemedCardStyle: ViewModifier {
     @Environment(\.platformStyle) private var platform
     @Environment(\.accessibilitySettings) private var accessibility
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .background(colors.surface)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -92,7 +92,7 @@ public struct ThemedListStyle: ViewModifier {
     @Environment(\.colorSystem) private var colors
     @Environment(\.platformStyle) private var platform
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             #if os(iOS)
             .listStyle(.insetGrouped)
@@ -113,7 +113,7 @@ public struct ThemedNavigationStyle: ViewModifier {
     @Environment(\.colorSystem) private var colors
     @Environment(\.platformStyle) private var platform
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .navigationViewStyle(navigationViewStyle)
             .background(colors.background)
@@ -135,7 +135,7 @@ public struct ThemedFormStyle: ViewModifier {
     @Environment(\.colorSystem) private var colors
     @Environment(\.platformStyle) private var platform
     
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content
             .formStyle(formStyle)
             .background(colors.background)

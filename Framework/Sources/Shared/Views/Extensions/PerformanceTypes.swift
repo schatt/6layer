@@ -159,7 +159,7 @@ public struct CacheMetrics {
 // MARK: - Helper Functions
 
 /// Calculate performance score based on render time
-public func calculatePerformanceScore(_ renderTime: TimeInterval) -> Double {
+    func calculatePerformanceScore(_ renderTime: TimeInterval) -> Double {
     // Lower render time = higher score
     let baseScore = 100.0
     let timePenalty = renderTime * 1000 // Convert to milliseconds

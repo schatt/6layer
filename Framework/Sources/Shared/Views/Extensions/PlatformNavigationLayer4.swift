@@ -13,7 +13,7 @@ public extension View {
     /// Platform-specific navigation wrapper that provides consistent navigation patterns
     /// across iOS and macOS. On iOS, this wraps content in a NavigationView.
     /// On macOS, this returns the content directly.
-public func platformNavigation<Content: View>(
+    func platformNavigation<Content: View>(
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         #if os(iOS)
@@ -30,7 +30,7 @@ public func platformNavigation<Content: View>(
     /// Wraps nested navigation in a platform-appropriate container
     /// iOS: NavigationStack; macOS: identity
     @ViewBuilder
-public func platformNavigationContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    func platformNavigationContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             NavigationStack { content() }
@@ -45,7 +45,7 @@ public func platformNavigationContainer<Content: View>(@ViewBuilder content: () 
     /// Platform-conditional navigation destination hook
     /// iOS: forwards to .navigationDestination; macOS: no-op passthrough
     @ViewBuilder
-public func platformNavigationDestination<Item: Identifiable & Hashable, Destination: View>(
+    func platformNavigationDestination<Item: Identifiable & Hashable, Destination: View>(
         item: Binding<Item?>,
         @ViewBuilder destination: @escaping (Item) -> Destination
     ) -> some View {
@@ -69,7 +69,7 @@ public func platformNavigationDestination<Item: Identifiable & Hashable, Destina
     ///   - accessibilityHint: Accessibility hint for screen readers
     ///   - action: The action to perform when the button is tapped
     /// - Returns: A view with platform-specific navigation button styling
-public func platformNavigationButton(
+    func platformNavigationButton(
         title: String,
         systemImage: String,
         accessibilityLabel: String,
@@ -100,7 +100,7 @@ public func platformNavigationButton(
     }
 
     /// Platform-specific navigation title configuration
-public func platformNavigationTitle(_ title: String) -> some View {
+    func platformNavigationTitle(_ title: String) -> some View {
         #if os(iOS)
         return self.navigationTitle(title)
         #elseif os(macOS)
@@ -111,7 +111,7 @@ public func platformNavigationTitle(_ title: String) -> some View {
     }
 
     /// Platform-specific navigation title display mode
-public func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
+    func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
         #else
@@ -120,7 +120,7 @@ public func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDispl
     }
 
     /// Platform-specific navigation bar title display mode
-public func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
+    func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
         #else
@@ -133,7 +133,7 @@ public func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDi
 
     /// Platform-specific navigation bar items with leading and trailing content
     /// Layer 4: Component Implementation
-public func platformNavigationBarItems_L4<L: View, T: View>(
+    func platformNavigationBarItems_L4<L: View, T: View>(
         leading: L,
         trailing: T
     ) -> some View {
@@ -146,7 +146,7 @@ public func platformNavigationBarItems_L4<L: View, T: View>(
 
     /// Platform-specific navigation bar items with leading content only
     /// Layer 4: Component Implementation
-public func platformNavigationBarItems_L4<L: View>(
+    func platformNavigationBarItems_L4<L: View>(
         leading: L
     ) -> some View {
         #if os(iOS)
@@ -158,7 +158,7 @@ public func platformNavigationBarItems_L4<L: View>(
 
     /// Platform-specific navigation bar items with trailing content only
     /// Layer 4: Component Implementation
-public func platformNavigationBarItems_L4<T: View>(
+    func platformNavigationBarItems_L4<T: View>(
         trailing: T
     ) -> some View {
         #if os(iOS)
@@ -172,16 +172,31 @@ public func platformNavigationBarItems_L4<T: View>(
     /// iOS: NavigationLink; macOS: Button with navigation state
     /// Layer 4: Component Implementation
     @ViewBuilder
-public func platformNavigationLink_L4<Destination: View>(
+    func platformNavigationLink_L4<Destination: View>(
         title: String,
         systemImage: String,
         isActive: Binding<Bool>,
         @ViewBuilder destination: @escaping () -> Destination
     ) -> some View {
         #if os(iOS)
-        NavigationLink(destination: destination(), isActive: isActive) {
-            Label(title, systemImage: systemImage)
-                .foregroundColor(.primary)
+        if #available(iOS 16.0, *) {
+            Button(action: { isActive.wrappedValue = true }) {
+                Label(title, systemImage: systemImage)
+                    .foregroundColor(.primary)
+            }
+            .navigationDestination(isPresented: isActive) {
+                destination()
+            }
+        } else {
+            Button(action: { isActive.wrappedValue = true }) {
+                Label(title, systemImage: systemImage)
+                    .foregroundColor(.primary)
+            }
+            .background(
+                NavigationLink(destination: destination(), isActive: isActive) {
+                    EmptyView()
+                }
+            )
         }
         #elseif os(macOS)
         Button(action: { isActive.wrappedValue = true }) {
@@ -207,7 +222,7 @@ public func platformNavigationLink_L4<Destination: View>(
 
     /// Platform-specific navigation link with destination and label
     /// Layer 4: Component Implementation
-public func platformNavigationLink_L4<Destination: View, Label: View>(
+    func platformNavigationLink_L4<Destination: View, Label: View>(
         destination: Destination,
         @ViewBuilder label: () -> Label
     ) -> some View {
@@ -222,7 +237,7 @@ public func platformNavigationLink_L4<Destination: View, Label: View>(
 
     /// Platform-specific navigation link with value and destination
     /// Layer 4: Component Implementation
-public func platformNavigationLink_L4<Value: Hashable, Destination: View, Label: View>(
+    func platformNavigationLink_L4<Value: Hashable, Destination: View, Label: View>(
         value: Value?,
         @ViewBuilder destination: @escaping (Value) -> Destination,
         @ViewBuilder label: () -> Label
@@ -265,7 +280,7 @@ public func platformNavigationLink_L4<Value: Hashable, Destination: View, Label:
 
     /// Platform-specific navigation link with tag and destination
     /// Layer 4: Component Implementation
-public func platformNavigationLink_L4<Tag: Hashable, Destination: View, Label: View>(
+    func platformNavigationLink_L4<Tag: Hashable, Destination: View, Label: View>(
         tag: Tag,
         selection: Binding<Tag?>,
         @ViewBuilder destination: @escaping (Tag) -> Destination,

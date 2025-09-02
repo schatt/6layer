@@ -57,7 +57,7 @@ public struct RichTextEditor: UIViewRepresentable {
     @Binding var text: String
     @Binding var selectedText: NSRange?
     
-    public func makeUIView(context: Context) -> UITextView {
+        public func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.delegate = context.coordinator
         textView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -75,13 +75,13 @@ public struct RichTextEditor: UIViewRepresentable {
         return textView
     }
     
-    public func updateUIView(_ uiView: UITextView, context: Context) {
+        public func updateUIView(_ uiView: UITextView, context: Context) {
         if uiView.text != text {
             uiView.text = text
         }
     }
     
-    public func makeCoordinator() -> Coordinator {
+        public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
@@ -92,11 +92,11 @@ public struct RichTextEditor: UIViewRepresentable {
             self.parent = parent
         }
         
-        public func textViewDidChange(_ textView: UITextView) {
+            public func textViewDidChange(_ textView: UITextView) {
             parent.text = textView.text
         }
         
-        public func textViewDidChangeSelection(_ textView: UITextView) {
+            public func textViewDidChangeSelection(_ textView: UITextView) {
             parent.selectedText = textView.selectedRange
         }
     }
@@ -484,11 +484,11 @@ public class CustomFieldRegistry: ObservableObject {
     
     private init() {}
     
-    public func register<T: CustomFieldComponent>(_ fieldType: String, component: T.Type) {
+        func register<T: CustomFieldComponent>(_ fieldType: String, component: T.Type) {
         customFields[fieldType] = component
     }
     
-    public func getComponent(for fieldType: String) -> (any CustomFieldComponent.Type)? {
+        func getComponent(for fieldType: String) -> (any CustomFieldComponent.Type)? {
         return customFields[fieldType]
     }
 }

@@ -41,7 +41,7 @@ public extension View {
     /// Button("Tap me") { }
     ///     .platformHapticFeedback(.light)
     /// ```
-public func platformHapticFeedback(_ feedback: PlatformHapticFeedback) -> some View {
+    func platformHapticFeedback(_ feedback: PlatformHapticFeedback) -> some View {
         #if os(iOS)
         // Trigger haptic feedback on iOS
         switch feedback {
@@ -93,7 +93,7 @@ public func platformHapticFeedback(_ feedback: PlatformHapticFeedback) -> some V
     ///     print("Button tapped with haptic feedback")
     /// }
     /// ```
-public func platformHapticFeedback(
+    func platformHapticFeedback(
         _ feedback: PlatformHapticFeedback,
         action: @escaping () -> Void
     ) -> some View {

@@ -120,7 +120,7 @@ public struct ResponsiveStack<Content: View>: View {
 
 // MARK: - Responsive Padding
 public struct ResponsivePadding: ViewModifier {
-    public func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
         content.padding(paddingValue)
     }
 

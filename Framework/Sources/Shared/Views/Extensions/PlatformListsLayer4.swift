@@ -8,7 +8,7 @@ public extension View {
     
     /// Platform-specific list row with consistent styling
     /// Provides standardized list row appearance across platforms
-    public func platformListRow<Content: View>(
+        func platformListRow<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         HStack {
@@ -20,7 +20,7 @@ public extension View {
     
     /// Platform-specific list section header with consistent styling
     /// Provides standardized section header appearance across platforms
-    public func platformListSectionHeader(
+        func platformListSectionHeader(
         title: String,
         subtitle: String? = nil
     ) -> some View {
@@ -41,7 +41,7 @@ public extension View {
     
     /// Platform-specific list empty state with consistent styling
     /// Provides standardized empty state appearance across platforms
-public func platformListEmptyState(
+    func platformListEmptyState(
         systemImage: String,
         title: String,
         message: String
@@ -83,7 +83,7 @@ public func platformListEmptyState(
     
     /// Platform-specific list-detail container
     /// Implements the actual UI structure for list-detail patterns
-public func platformListDetailContainer<ListContent: View, DetailContent: View>(
+    func platformListDetailContainer<ListContent: View, DetailContent: View>(
         @ViewBuilder list: () -> ListContent,
         @ViewBuilder detail: () -> DetailContent
     ) -> some View {
@@ -115,7 +115,7 @@ public func platformListDetailContainer<ListContent: View, DetailContent: View>(
     
     /// Platform-specific selectable list row
     /// Implements selection behavior for list-detail patterns
-public func platformSelectableListRow<Content: View>(
+    func platformSelectableListRow<Content: View>(
         isSelected: Bool,
         onSelect: @escaping () -> Void,
         @ViewBuilder content: () -> Content
@@ -134,7 +134,7 @@ public func platformSelectableListRow<Content: View>(
     
     /// Platform-specific detail pane placeholder
     /// Shows when no item is selected in list-detail views
-public func platformDetailPlaceholder(
+    func platformDetailPlaceholder(
         systemImage: String,
         title: String,
         message: String
