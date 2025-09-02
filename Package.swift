@@ -25,6 +25,10 @@ let package = Package(
             name: "SixLayerFramework",
             dependencies: [],
             path: "Framework/Sources",
+            exclude: [
+                "Shared/ProjectHelpers/ExampleHelpers.swift",
+                "Shared/ProjectHelpers/ExtensibleHintsExample.swift"
+            ],
             sources: [
                 "Shared/Models",
                 "Shared/Views",
@@ -42,7 +46,10 @@ let package = Package(
         .testTarget(
             name: "SixLayerFrameworkTests",
             dependencies: ["SixLayerFramework"],
-            path: "Development/Tests/SixLayerFrameworkTests"
+            path: "Development/Tests/SixLayerFrameworkTests",
+            exclude: [
+                "ValidationEngineTests.swift.disabled"
+            ]
         ),
         .testTarget(
             name: "SixLayerMacOSTests",

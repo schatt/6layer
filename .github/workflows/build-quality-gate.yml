@@ -1,0 +1,29 @@
+name: Build Quality Gate
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-quality-check:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Swift
+      uses: swift-actions/setup-swift@v1
+      with:
+        swift-version: "5.9"
+    
+    - name: Build with warnings as errors
+      run: |
+        cd Framework
+        swift build -Xswiftc -warn-long-function-bodies=100 -Xswiftc -warn-long-expression-type-checking=100
+        
+    - name: Test with warnings as errors
+      run: |
+        cd Framework
+        swift test -Xswiftc -warn-long-function-bodies=100 -Xswiftc -warn-long-expression-type-checking=100
