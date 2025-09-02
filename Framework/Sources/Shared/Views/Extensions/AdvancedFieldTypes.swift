@@ -480,7 +480,7 @@ public protocol CustomFieldComponent: View {
 public class CustomFieldRegistry: ObservableObject {
     public static let shared = CustomFieldRegistry()
     
-    private var customFields: [String: CustomFieldComponent.Type] = [:]
+    private var customFields: [String: any CustomFieldComponent.Type] = [:]
     
     private init() {}
     
@@ -488,7 +488,7 @@ public class CustomFieldRegistry: ObservableObject {
         customFields[fieldType] = component
     }
     
-    public func getComponent(for fieldType: String) -> CustomFieldComponent.Type? {
+    public func getComponent(for fieldType: String) -> (any CustomFieldComponent.Type)? {
         return customFields[fieldType]
     }
 }

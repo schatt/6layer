@@ -362,7 +362,7 @@ public struct FormPerformanceMetrics: Codable {
 
 /// Form error information
 public struct FormError: Codable, Identifiable {
-    public let id = UUID()
+    public let id: UUID
     public let formId: String
     public let fieldId: String?
     public let type: FormErrorType
@@ -370,7 +370,8 @@ public struct FormError: Codable, Identifiable {
     public let timestamp: Date
     public let stackTrace: String?
     
-    public init(formId: String, fieldId: String? = nil, type: FormErrorType, message: String, stackTrace: String? = nil) {
+    public init(id: UUID = UUID(), formId: String, fieldId: String? = nil, type: FormErrorType, message: String, stackTrace: String? = nil) {
+        self.id = id
         self.formId = formId
         self.fieldId = fieldId
         self.type = type
@@ -453,13 +454,14 @@ public enum ABTestStatus: String, Codable, CaseIterable {
 
 /// A/B test result
 public struct ABTestResult: Codable, Identifiable {
-    public let id = UUID()
+    public let id: UUID
     public let testId: String
     public let variant: String
     public let metric: ABTestMetric
     public let timestamp: Date
     
-    public init(testId: String, variant: String, metric: ABTestMetric, timestamp: Date) {
+    public init(id: UUID = UUID(), testId: String, variant: String, metric: ABTestMetric, timestamp: Date) {
+        self.id = id
         self.testId = testId
         self.variant = variant
         self.metric = metric

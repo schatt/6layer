@@ -140,7 +140,7 @@ public class HighContrastManager: ObservableObject {
     
     private func checkHighContrastStatus() {
         #if os(iOS)
-        isHighContrastEnabled = UIAccessibility.isHighContrastEnabled
+        isHighContrastEnabled = UIAccessibility.isDarkerSystemColorsEnabled
         #endif
         
         #if os(macOS)
@@ -327,7 +327,7 @@ public struct KeyboardNavigableView<Content: View>: View {
     
     public var body: some View {
         Group {
-            if #available(macOS 14.0, *) {
+            if #available(iOS 17.0, macOS 14.0, *) {
                 content()
                     .environmentObject(keyboardManager)
                     .onKeyPress(.tab) {

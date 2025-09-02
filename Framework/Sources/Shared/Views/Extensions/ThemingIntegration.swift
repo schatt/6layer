@@ -1,0 +1,468 @@
+import Foundation
+import SwiftUI
+
+
+
+// MARK: - Theming Integration
+// Integration layer that applies theming to existing framework components
+
+/// Themed wrapper for the SixLayer Framework
+public struct ThemedFrameworkView<Content: View>: View {
+    let content: Content
+    @StateObject private var designSystem = VisualDesignSystem.shared
+    
+    public init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+    
+    public var body: some View {
+        content
+            .environmentObject(designSystem)
+            .environment(\.theme, designSystem.currentTheme)
+            .environment(\.platformStyle, designSystem.platformStyle)
+            .environment(\.colorSystem, ColorSystem(theme: designSystem.currentTheme, platform: designSystem.platformStyle))
+            .environment(\.typographySystem, TypographySystem(platform: designSystem.platformStyle, accessibility: designSystem.accessibilitySettings))
+            .environment(\.accessibilitySettings, designSystem.accessibilitySettings)
+            .preferredColorScheme(designSystem.currentTheme == .dark ? .dark : .light)
+    }
+}
+
+/// Themed version of IntelligentFormView
+public struct ThemedIntelligentFormView<DataType: Codable>: View {
+    let dataType: DataType.Type
+    let initialData: DataType?
+    let customFieldView: (String, Any, Binding<Any>) -> AnyView
+    let onSubmit: (DataType) -> Void
+    let onCancel: () -> Void
+    
+    @Environment(\.colorSystem) private var colors
+    @Environment(\.typographySystem) private var typography
+    @Environment(\.platformStyle) private var platform
+    
+    public init(
+        for dataType: DataType.Type,
+        initialData: DataType? = nil,
+        customFieldView: @escaping (String, Any, Binding<Any>) -> AnyView = { _, _, _ in AnyView(EmptyView()) },
+        onSubmit: @escaping (DataType) -> Void,
+        onCancel: @escaping () -> Void = {}
+    ) {
+        self.dataType = dataType
+        self.initialData = initialData
+        self.customFieldView = customFieldView
+        self.onSubmit = onSubmit
+        self.onCancel = onCancel
+    }
+    
+    public var body: some View {
+        VStack(spacing: 0) {
+            // Header
+            HStack {
+                Text("Form")
+                    .font(typography.title2)
+                    .foregroundColor(colors.text)
+                Spacer()
+                AdaptiveUIPatterns.AdaptiveButton(
+                    "Cancel",
+                    style: .ghost,
+                    size: .small,
+                    action: onCancel
+                )
+            }
+            .padding(.horizontal)
+            .padding(.top)
+            .background(colors.surface)
+            
+            // Form content
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Form fields would go here
+                    // This is a simplified version for demonstration
+                    Text("Form content will be generated here")
+                        .font(typography.body)
+                        .foregroundColor(colors.textSecondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                }
+                .padding()
+            }
+            .background(colors.background)
+            
+            // Footer
+            HStack {
+                AdaptiveUIPatterns.AdaptiveButton(
+                    "Cancel",
+                    style: .outline,
+                    size: .medium,
+                    action: onCancel
+                )
+                
+                Spacer()
+                
+                AdaptiveUIPatterns.AdaptiveButton(
+                    "Submit",
+                    style: .primary,
+                    size: .medium,
+                    action: { /* Submit logic */ }
+                )
+            }
+            .padding()
+            .background(colors.surface)
+        }
+        .themedCard()
+    }
+}
+
+/// Themed version of GenericFormView
+public struct ThemedGenericFormView: View {
+    let fields: [GenericFormField]
+    let onSubmit: ([String: Any]) -> Void
+    let onCancel: () -> Void
+    
+    @Environment(\.colorSystem) private var colors
+    @Environment(\.typographySystem) private var typography
+    @Environment(\.platformStyle) private var platform
+    @State private var formData: [String: Any] = [:]
+    
+    public init(
+        fields: [GenericFormField],
+        onSubmit: @escaping ([String: Any]) -> Void,
+        onCancel: @escaping () -> Void = {}
+    ) {
+        self.fields = fields
+        self.onSubmit = onSubmit
+        self.onCancel = onCancel
+    }
+    
+    public var body: some View {
+        VStack(spacing: 0) {
+            // Header
+            HStack {
+                Text("Form")
+                    .font(typography.title2)
+                    .foregroundColor(colors.text)
+                Spacer()
+                Text("\(fields.count) fields")
+                    .font(typography.caption1)
+                    .foregroundColor(colors.textSecondary)
+            }
+            .padding(.horizontal)
+            .padding(.top)
+            .background(colors.surface)
+            
+            // Form content
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(fields, id: \.id) { field in
+                        createFieldView(for: field)
+                    }
+                }
+                .padding()
+            }
+            .background(colors.background)
+            
+            // Footer
+            HStack {
+                AdaptiveUIPatterns.AdaptiveButton(
+                    "Cancel",
+                    style: .outline,
+                    size: .medium,
+                    action: onCancel
+                )
+                
+                Spacer()
+                
+                AdaptiveUIPatterns.AdaptiveButton(
+                    "Submit",
+                    style: .primary,
+                    size: .medium,
+                    action: { onSubmit(formData) }
+                )
+            }
+            .padding()
+            .background(colors.surface)
+        }
+        .themedCard()
+    }
+    
+    private func createFieldView(for field: GenericFormField) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(field.label)
+                .font(typography.subheadline)
+                .fontWeight(.medium)
+                .foregroundColor(colors.text)
+            
+            switch field.fieldType {
+            case .text:
+                TextField(field.placeholder ?? "Enter text", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+                
+            case .email:
+                TextField(field.placeholder ?? "Enter email", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+                
+            case .password:
+                SecureField(field.placeholder ?? "Enter password", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+                
+            case .number:
+                TextField(field.placeholder ?? "Enter number", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+                
+            case .date:
+                DatePicker(field.placeholder ?? "Select date", selection: Binding(
+                    get: { formData[field.id.uuidString] as? Date ?? Date() },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .datePickerStyle(.compact)
+                
+            case .select:
+                Text("Select field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+            case .textarea:
+                TextEditor(text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .frame(minHeight: 100)
+                .themedTextField()
+                
+            case .checkbox:
+                Toggle(field.label, isOn: Binding(
+                    get: { formData[field.id.uuidString] as? Bool ?? false },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                
+            case .radio:
+                Text("Radio field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+        }
+    }
+}
+
+/// Themed version of ResponsiveCardView
+public struct ThemedResponsiveCardView: View {
+    let title: String
+    let subtitle: String?
+    let content: AnyView
+    let action: (() -> Void)?
+    
+    @Environment(\.colorSystem) private var colors
+    @Environment(\.typographySystem) private var typography
+    @Environment(\.platformStyle) private var platform
+    
+    public init(
+        title: String,
+        subtitle: String? = nil,
+        content: AnyView,
+        action: (() -> Void)? = nil
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.content = content
+        self.action = action
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(typography.headline)
+                    .foregroundColor(colors.text)
+                
+                if let subtitle = subtitle {
+                    Text(subtitle)
+                        .font(typography.subheadline)
+                        .foregroundColor(colors.textSecondary)
+                }
+            }
+            
+            // Content
+            content
+            
+            // Action button
+            if let action = action {
+                AdaptiveUIPatterns.AdaptiveButton(
+                    "View Details",
+                    style: .outline,
+                    size: .small,
+                    action: action
+                )
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+        }
+        .padding()
+        .themedCard()
+    }
+}
+
+/// Themed version of GenericItemCollectionView
+public struct ThemedGenericItemCollectionView: View {
+    let items: [Any]
+    let title: String
+    let onItemTap: (Any) -> Void
+    
+    @Environment(\.colorSystem) private var colors
+    @Environment(\.typographySystem) private var typography
+    @Environment(\.platformStyle) private var platform
+    
+    public init(
+        items: [Any],
+        title: String,
+        onItemTap: @escaping (Any) -> Void
+    ) {
+        self.items = items
+        self.title = title
+        self.onItemTap = onItemTap
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header
+            HStack {
+                Text(title)
+                    .font(typography.headline)
+                    .foregroundColor(colors.text)
+                Spacer()
+                Text("\(items.count) items")
+                    .font(typography.caption1)
+                    .foregroundColor(colors.textSecondary)
+            }
+            
+            // Items grid
+            LazyVGrid(columns: gridColumns, spacing: 12) {
+                ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                    Button(action: { onItemTap(item) }) {
+                        VStack {
+                            Text("Item \(index + 1)")
+                                .font(typography.body)
+                                .foregroundColor(colors.text)
+                            Text("Tap to view")
+                                .font(typography.caption1)
+                                .foregroundColor(colors.textSecondary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(colors.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+        .padding()
+        .themedCard()
+    }
+    
+    private var gridColumns: [GridItem] {
+        switch platform {
+        case .ios:
+            return Array(repeating: GridItem(.flexible()), count: 2)
+        case .macOS:
+            return Array(repeating: GridItem(.flexible()), count: 3)
+        case .watchOS:
+            return Array(repeating: GridItem(.flexible()), count: 1)
+        case .tvOS:
+            return Array(repeating: GridItem(.flexible()), count: 4)
+        }
+    }
+}
+
+/// Themed version of GenericNumericDataView
+public struct ThemedGenericNumericDataView: View {
+    let data: [Double]
+    let title: String
+    let unit: String?
+    
+    @Environment(\.colorSystem) private var colors
+    @Environment(\.typographySystem) private var typography
+    @Environment(\.platformStyle) private var platform
+    
+    public init(
+        data: [Double],
+        title: String,
+        unit: String? = nil
+    ) {
+        self.data = data
+        self.title = title
+        self.unit = unit
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header
+            HStack {
+                Text(title)
+                    .font(typography.headline)
+                    .foregroundColor(colors.text)
+                Spacer()
+                if let unit = unit {
+                    Text(unit)
+                        .font(typography.caption1)
+                        .foregroundColor(colors.textSecondary)
+                }
+            }
+            
+            // Data visualization
+            VStack(spacing: 8) {
+                if let maxValue = data.max() {
+                    ForEach(Array(data.enumerated()), id: \.offset) { index, value in
+                        HStack {
+                            Text("\(index + 1)")
+                                .font(typography.caption1)
+                                .foregroundColor(colors.textSecondary)
+                                .frame(width: 20, alignment: .leading)
+                            
+                            ThemedProgressBar(
+                                progress: maxValue > 0 ? value / maxValue : 0,
+                                variant: .primary
+                            )
+                            
+                            Text(String(format: "%.1f", value))
+                                .font(typography.caption1)
+                                .foregroundColor(colors.text)
+                                .frame(width: 40, alignment: .trailing)
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
+        .themedCard()
+    }
+}
+
+// MARK: - View Extensions
+
+public extension View {
+    /// Wrap this view with the themed framework system
+    func withThemedFramework() -> some View {
+        ThemedFrameworkView {
+            self
+        }
+    }
+}

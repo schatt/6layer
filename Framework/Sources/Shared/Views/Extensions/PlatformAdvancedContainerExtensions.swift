@@ -34,7 +34,7 @@ public extension View {
     /// }
     /// .platformLazyVGridContainer()
     /// ```
-public func platformLazyVGridContainer() -> some View {
+    func platformLazyVGridContainer() -> some View {
         #if os(iOS)
         return self
             .background(Color.platformGroupedBackground)
@@ -63,7 +63,7 @@ public func platformLazyVGridContainer() -> some View {
     /// }
     /// .platformTabContainer()
     /// ```
-public func platformTabContainer() -> some View {
+    func platformTabContainer() -> some View {
         #if os(iOS)
         return self
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -94,7 +94,7 @@ public func platformTabContainer() -> some View {
     /// }
     /// .platformScrollContainer()
     /// ```
-public func platformScrollContainer(showsIndicators: Bool = true) -> some View {
+    func platformScrollContainer(showsIndicators: Bool = true) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             return self
@@ -128,7 +128,7 @@ public func platformScrollContainer(showsIndicators: Bool = true) -> some View {
     /// }
     /// .platformListContainer()
     /// ```
-public func platformListContainer() -> some View {
+    func platformListContainer() -> some View {
         #if os(iOS)
         return self
             .listStyle(.insetGrouped)
@@ -157,7 +157,7 @@ public func platformListContainer() -> some View {
     /// }
     /// .platformFormContainer()
     /// ```
-public func platformFormContainer() -> some View {
+    func platformFormContainer() -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             return self

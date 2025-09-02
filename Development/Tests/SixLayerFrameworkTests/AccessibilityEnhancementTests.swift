@@ -397,7 +397,7 @@ public struct AccessibilityTesting {
         return AccessibilityAuditResults(
             issues: [],
             recommendations: ["Consider adding more descriptive labels"],
-            complianceLevel: .good,
+            complianceLevel: .intermediate,
             timestamp: Date()
         )
     }
@@ -418,9 +418,4 @@ public struct AccessibilityAuditResults {
     public let timestamp: Date
 }
 
-/// Compliance level enumeration
-public enum ComplianceLevel: String, CaseIterable {
-    case basic = "basic"
-    case good = "good"
-    case excellent = "excellent"
-}
+

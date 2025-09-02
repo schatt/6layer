@@ -32,7 +32,7 @@ public extension View {
     /// }
     /// ```
     @ViewBuilder
-public func platformVStackContainer<Content: View>(
+    func platformVStackContainer<Content: View>(
         alignment: HorizontalAlignment = .center,
         spacing: CGFloat? = nil,
         @ViewBuilder content: () -> Content
@@ -60,7 +60,7 @@ public func platformVStackContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformHStackContainer<Content: View>(
+    func platformHStackContainer<Content: View>(
         alignment: VerticalAlignment = .center,
         spacing: CGFloat? = nil,
         @ViewBuilder content: () -> Content
@@ -86,7 +86,7 @@ public func platformHStackContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformZStackContainer<Content: View>(
+    func platformZStackContainer<Content: View>(
         alignment: Alignment = .center,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -114,7 +114,7 @@ public func platformZStackContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformLazyVStackContainer<Content: View>(
+    func platformLazyVStackContainer<Content: View>(
         alignment: HorizontalAlignment = .center,
         spacing: CGFloat? = nil,
         pinnedViews: PinnedScrollableViews = .init(),
@@ -144,7 +144,7 @@ public func platformLazyVStackContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformLazyHStackContainer<Content: View>(
+    func platformLazyHStackContainer<Content: View>(
         alignment: VerticalAlignment = .center,
         spacing: CGFloat? = nil,
         pinnedViews: PinnedScrollableViews = .init(),
@@ -176,7 +176,7 @@ public func platformLazyHStackContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformScrollViewContainer<Content: View>(
+    func platformScrollViewContainer<Content: View>(
         _ axes: Axis.Set = .vertical,
         showsIndicators: Bool = true,
         @ViewBuilder content: () -> Content
@@ -204,7 +204,7 @@ public func platformScrollViewContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformGroupBoxContainer<Content: View>(
+    func platformGroupBoxContainer<Content: View>(
         title: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -233,7 +233,7 @@ public func platformGroupBoxContainer<Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformSectionContainer<Header: View, Footer: View, Content: View>(
+    func platformSectionContainer<Header: View, Footer: View, Content: View>(
         header: Header,
         footer: Footer,
         @ViewBuilder content: () -> Content
@@ -259,7 +259,7 @@ public func platformSectionContainer<Header: View, Footer: View, Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformSectionContainer<Header: View, Content: View>(
+    func platformSectionContainer<Header: View, Content: View>(
         header: Header,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -284,7 +284,7 @@ public func platformSectionContainer<Header: View, Content: View>(
     /// }
     /// ```
     @ViewBuilder
-public func platformSectionContainer<Content: View>(
+    func platformSectionContainer<Content: View>(
         header: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
@@ -310,7 +310,7 @@ public func platformSectionContainer<Content: View>(
     /// ```
     @MainActor
     @ViewBuilder
-public func platformListContainer<Content: View>(
+    func platformListContainer<Content: View>(
         @ViewBuilder content: () -> Content
     ) -> some View {
         List {

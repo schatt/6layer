@@ -91,7 +91,7 @@ public enum NavigationStrategy: String, CaseIterable {
 
 // MARK: - Private Implementation
 
-private extension CrossPlatformNavigation {
+public extension CrossPlatformNavigation {
     
     /// Determine the best navigation strategy based on data analysis and hints
     static func determineNavigationStrategy(

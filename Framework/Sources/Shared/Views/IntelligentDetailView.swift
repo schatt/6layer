@@ -86,7 +86,7 @@ public enum DetailLayoutStrategy: String, CaseIterable {
 
 // MARK: - Private Implementation
 
-private extension IntelligentDetailView {
+public extension IntelligentDetailView {
     
     /// Determine the best layout strategy based on data analysis and hints
     static func determineLayoutStrategy(

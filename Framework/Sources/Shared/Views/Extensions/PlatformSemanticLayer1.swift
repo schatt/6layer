@@ -128,14 +128,8 @@ public func platformPresentFormData_L1(
     fields: [GenericFormField],
     hints: PresentationHints
 ) -> some View {
-    // Use our intelligent form generation system
-    return IntelligentFormView.generateForm(
-        for: String.self, // Use String as placeholder type
-        initialData: nil,
-        customFieldView: { _, _, _ in EmptyView() },
-        onSubmit: { _ in },
-        onCancel: { }
-    )
+    // Create a dynamic form from the provided fields
+    return SimpleFormView(fields: fields, hints: hints)
 }
 
 /// Generic function for presenting modal forms
@@ -153,9 +147,11 @@ public func platformPresentModalForm_L1(
         context: context
     )
     
-    // For now, return a basic modal form view
-    // This will be enhanced in future phases to use intelligent form generation
-    return ModalFormView(formType: formType, context: context, hints: hints)
+    // Create appropriate form fields based on the form type
+    let fields = createFieldsForFormType(formType, context: context)
+    
+    // Return a modal form with the generated fields
+    return ModalFormView(fields: fields, formType: formType, context: context, hints: hints)
 }
 
 /// Generic function for presenting media data
@@ -302,6 +298,7 @@ public struct GenericTemporalView: View {
 
 /// Modal form view for presenting forms in modal context
 public struct ModalFormView: View {
+    let fields: [GenericFormField]
     let formType: DataTypeHint
     let context: PresentationContext
     let hints: PresentationHints
@@ -310,7 +307,7 @@ public struct ModalFormView: View {
         VStack(spacing: 16) {
             // Modal header
             HStack {
-                Text("Form: \(formType.rawValue)")
+                Text("Form: \(formType.rawValue.capitalized)")
                     .font(.headline)
                     .foregroundColor(.primary)
                 Spacer()
@@ -322,29 +319,245 @@ public struct ModalFormView: View {
             .padding(.horizontal)
             .padding(.top)
             
-            // Form content placeholder
-            VStack(spacing: 12) {
-                Text("Context: \(context.rawValue)")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                
-                Text("This is a placeholder modal form view.")
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                
-                // TODO: Integrate with intelligent form generation system
-                Button("Generate Form") {
-                    // TODO: Implement form generation
+            // Form content
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(fields, id: \.id) { field in
+                        createFieldView(for: field)
+                    }
                 }
-                .buttonStyle(.borderedProminent)
+                .padding(.horizontal)
             }
-            .padding()
             
             Spacer()
         }
         .frame(minWidth: 400, minHeight: 300)
         .background(Color.platformBackground)
+    }
+    
+    @ViewBuilder
+    private func createFieldView(for field: GenericFormField) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(field.label)
+                .font(.subheadline)
+                .fontWeight(.medium)
+            
+            switch field.fieldType {
+            case .text:
+                TextField(field.placeholder ?? "Enter text", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .email:
+                TextField(field.placeholder ?? "Enter email", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+
+            case .password:
+                SecureField(field.placeholder ?? "Enter password", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .number:
+                TextField(field.placeholder ?? "Enter number", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+
+            case .date:
+                DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
+                    .datePickerStyle(.compact)
+            case .select:
+                Text("Select field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .textarea:
+                TextEditor(text: .constant(""))
+                    .frame(minHeight: 80)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+            case .checkbox:
+                Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
+            case .radio:
+                Text("Radio field: \(field.label)")
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+}
+
+/// Simple form view that creates forms from generic form fields
+public struct SimpleFormView: View {
+    let fields: [GenericFormField]
+    let hints: PresentationHints
+    
+    public var body: some View {
+        VStack(spacing: 16) {
+            // Form header
+            HStack {
+                Text("Dynamic Form")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Spacer()
+                Text("\(fields.count) fields")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.horizontal)
+            
+            // Form fields
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(fields, id: \.id) { field in
+                        createFieldView(for: field)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            
+            // Form actions
+            HStack {
+                Button("Reset") {
+                    // TODO: Implement reset functionality
+                }
+                .buttonStyle(.bordered)
+                
+                Spacer()
+                
+                Button("Submit") {
+                    // TODO: Implement submit functionality
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.horizontal)
+        }
+        .padding()
+        .background(Color.platformBackground)
+    }
+    
+    @ViewBuilder
+    private func createFieldView(for field: GenericFormField) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(field.label)
+                .font(.subheadline)
+                .fontWeight(.medium)
+            
+            switch field.fieldType {
+            case .text:
+                TextField(field.placeholder ?? "Enter text", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .email:
+                TextField(field.placeholder ?? "Enter email", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+
+            case .password:
+                SecureField(field.placeholder ?? "Enter password", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .number:
+                TextField(field.placeholder ?? "Enter number", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+
+            case .date:
+                DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
+                    .datePickerStyle(.compact)
+            case .select:
+                Text("Select field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .textarea:
+                TextEditor(text: .constant(""))
+                    .frame(minHeight: 80)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+            case .checkbox:
+                Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
+            case .radio:
+                Text("Radio field: \(field.label)")
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+}
+
+// MARK: - Helper Functions
+
+/// Create appropriate form fields based on the form type and context
+private func createFieldsForFormType(_ formType: DataTypeHint, context: PresentationContext) -> [GenericFormField] {
+    switch formType {
+    case .form:
+        return createGenericFormFields(context: context)
+    case .text:
+        return [
+            GenericFormField(label: "Text Content", placeholder: "Enter text content", fieldType: .text)
+        ]
+    case .number:
+        return [
+            GenericFormField(label: "Numeric Value", placeholder: "Enter number", fieldType: .number)
+        ]
+    case .date:
+        return [
+            GenericFormField(label: "Date", placeholder: "Select date", fieldType: .date)
+        ]
+    case .boolean:
+        return [
+            GenericFormField(label: "Boolean Value", placeholder: "Toggle value", fieldType: .checkbox)
+        ]
+    case .collection:
+        return [
+            GenericFormField(label: "Collection Name", placeholder: "Enter collection name", fieldType: .text),
+            GenericFormField(label: "Item Count", placeholder: "Enter item count", fieldType: .number)
+        ]
+    case .hierarchical:
+        return [
+            GenericFormField(label: "Root Name", placeholder: "Enter root name", fieldType: .text),
+            GenericFormField(label: "Level Count", placeholder: "Enter hierarchy levels", fieldType: .number)
+        ]
+    case .temporal:
+        return [
+            GenericFormField(label: "Start Date", placeholder: "Select start date", fieldType: .date),
+            GenericFormField(label: "End Date", placeholder: "Select end date", fieldType: .date)
+        ]
+    case .media:
+        return [
+            GenericFormField(label: "Media Title", placeholder: "Enter media title", fieldType: .text),
+            GenericFormField(label: "Media Type", placeholder: "Enter media type", fieldType: .text)
+        ]
+    default:
+        return createGenericFormFields(context: context)
+    }
+}
+
+/// Create generic form fields based on context
+private func createGenericFormFields(context: PresentationContext) -> [GenericFormField] {
+    switch context {
+    case .dashboard:
+        return [
+            GenericFormField(label: "Dashboard Name", placeholder: "Enter dashboard name", fieldType: .text),
+            GenericFormField(label: "Auto Refresh", placeholder: "Enable auto refresh", fieldType: .checkbox)
+        ]
+    case .detail:
+        return [
+            GenericFormField(label: "Title", placeholder: "Enter title", fieldType: .text),
+            GenericFormField(label: "Description", placeholder: "Enter description", fieldType: .textarea),
+            GenericFormField(label: "Created Date", placeholder: "Select creation date", fieldType: .date)
+        ]
+    case .form:
+        return [
+            GenericFormField(label: "Name", placeholder: "Enter name", fieldType: .text),
+            GenericFormField(label: "Email", placeholder: "Enter email", fieldType: .email),
+            GenericFormField(label: "Age", placeholder: "Enter age", fieldType: .number),
+            GenericFormField(label: "Subscribe", placeholder: "Subscribe to updates", fieldType: .checkbox)
+        ]
+    case .list:
+        return [
+            GenericFormField(label: "List Name", placeholder: "Enter list name", fieldType: .text),
+            GenericFormField(label: "Sort Order", placeholder: "Enter sort order", fieldType: .text)
+        ]
+    case .modal:
+        return [
+            GenericFormField(label: "Modal Title", placeholder: "Enter modal title", fieldType: .text),
+            GenericFormField(label: "Modal Content", placeholder: "Enter modal content", fieldType: .textarea)
+        ]
+    default:
+        return [
+            GenericFormField(label: "Title", placeholder: "Enter title", fieldType: .text),
+            GenericFormField(label: "Value", placeholder: "Enter value", fieldType: .text)
+        ]
     }
 }
 

@@ -163,7 +163,7 @@ public class MemoryManager: ObservableObject {
         let keysToEvict = selectKeysForEviction(neededSpace: neededSpace)
         
         for key in keysToEvict {
-            if let value = cache[key] {
+            if cache[key] != nil {
                 let size = MemoryLayout<Any>.size
                 cache.removeValue(forKey: key)
                 accessTimes.removeValue(forKey: key)

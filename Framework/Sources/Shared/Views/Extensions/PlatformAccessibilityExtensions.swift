@@ -18,7 +18,7 @@ public extension View {
     /// Image(systemName: "star.fill")
     ///     .platformAccessibilityLabel("Favorite item")
     /// ```
-public func platformAccessibilityLabel(_ label: String) -> some View {
+func platformAccessibilityLabel(_ label: String) -> some View {
         self.accessibilityLabel(label)
     }
 
@@ -34,7 +34,7 @@ public func platformAccessibilityLabel(_ label: String) -> some View {
     /// Button("Save") { saveData() }
     ///     .platformAccessibilityHint("Saves your current work")
     /// ```
-public func platformAccessibilityHint(_ hint: String) -> some View {
+func platformAccessibilityHint(_ hint: String) -> some View {
         self.accessibilityHint(hint)
     }
 
@@ -50,7 +50,7 @@ public func platformAccessibilityHint(_ hint: String) -> some View {
     /// Slider(value: $progress, in: 0...100)
     ///     .platformAccessibilityValue("\(Int(progress)) percent")
     /// ```
-public func platformAccessibilityValue(_ value: String) -> some View {
+func platformAccessibilityValue(_ value: String) -> some View {
         self.accessibilityValue(value)
     }
 
@@ -66,7 +66,7 @@ public func platformAccessibilityValue(_ value: String) -> some View {
     /// Text("Clickable text")
     ///     .platformAccessibilityAddTraits(.isButton)
     /// ```
-public func platformAccessibilityAddTraits(_ traits: AccessibilityTraits) -> some View {
+    func platformAccessibilityAddTraits(_ traits: AccessibilityTraits) -> some View {
         self.accessibilityAddTraits(traits)
     }
 
@@ -82,7 +82,7 @@ public func platformAccessibilityAddTraits(_ traits: AccessibilityTraits) -> som
     /// Text("Important notice")
     ///     .platformAccessibilityRemoveTraits(.isButton)
     /// ```
-public func platformAccessibilityRemoveTraits(_ traits: AccessibilityTraits) -> some View {
+    func platformAccessibilityRemoveTraits(_ traits: AccessibilityTraits) -> some View {
         self.accessibilityRemoveTraits(traits)
     }
 
@@ -98,7 +98,7 @@ public func platformAccessibilityRemoveTraits(_ traits: AccessibilityTraits) -> 
     /// Text("Primary action")
     ///     .platformAccessibilitySortPriority(1)
     /// ```
-public func platformAccessibilitySortPriority(_ priority: Double) -> some View {
+func platformAccessibilitySortPriority(_ priority: Double) -> some View {
         self.accessibilitySortPriority(priority)
     }
 
@@ -114,7 +114,7 @@ public func platformAccessibilitySortPriority(_ priority: Double) -> some View {
     /// Text("Decorative element")
     ///     .platformAccessibilityHidden(true)
     /// ```
-public func platformAccessibilityHidden(_ hidden: Bool) -> some View {
+func platformAccessibilityHidden(_ hidden: Bool) -> some View {
         self.accessibilityHidden(hidden)
     }
 
@@ -130,7 +130,7 @@ public func platformAccessibilityHidden(_ hidden: Bool) -> some View {
     /// Button("Save") { saveData() }
     ///     .platformAccessibilityIdentifier("save-button")
     /// ```
-public func platformAccessibilityIdentifier(_ identifier: String) -> some View {
+func platformAccessibilityIdentifier(_ identifier: String) -> some View {
         self.accessibilityIdentifier(identifier)
     }
 
@@ -150,7 +150,7 @@ public func platformAccessibilityIdentifier(_ identifier: String) -> some View {
     ///         editMode = true
     ///     }
     /// ```
-public func platformAccessibilityAction(named name: String, action: @escaping () -> Void) -> some View {
+    func platformAccessibilityAction(named name: String, action: @escaping () -> Void) -> some View {
         self.accessibilityAction(named: name) {
             action()
         }

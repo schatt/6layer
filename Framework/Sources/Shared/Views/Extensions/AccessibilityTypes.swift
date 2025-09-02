@@ -53,11 +53,11 @@ public struct AccessibilityComplianceMetrics {
 }
 
 /// Compliance level for accessibility standards
-public enum ComplianceLevel: String, CaseIterable {
-    case basic = "basic"
-    case intermediate = "intermediate"
-    case advanced = "advanced"
-    case expert = "expert"
+public enum ComplianceLevel: CaseIterable {
+    case basic
+    case intermediate
+    case advanced
+    case expert
     
     public var rawValue: Int {
         switch self {
@@ -77,12 +77,14 @@ public struct AccessibilityAuditResult {
     public let issues: [AccessibilityIssue]
     public let recommendations: [String]
     public let score: Double
+    public let complianceMetrics: AccessibilityComplianceMetrics
     
-    public init(complianceLevel: ComplianceLevel, issues: [AccessibilityIssue] = [], recommendations: [String] = [], score: Double = 0.0) {
+    public init(complianceLevel: ComplianceLevel, issues: [AccessibilityIssue] = [], recommendations: [String] = [], score: Double = 0.0, complianceMetrics: AccessibilityComplianceMetrics) {
         self.complianceLevel = complianceLevel
         self.issues = issues
         self.recommendations = recommendations
         self.score = score
+        self.complianceMetrics = complianceMetrics
     }
 }
 
@@ -123,11 +125,20 @@ public struct AccessibilityTesting {
         // In a real implementation, this would analyze the view hierarchy
         // and check for accessibility compliance
         
+        let complianceMetrics = AccessibilityComplianceMetrics(
+            voiceOverCompliance: .basic,
+            keyboardCompliance: .basic,
+            contrastCompliance: .basic,
+            motionCompliance: .basic,
+            overallComplianceScore: 75.0
+        )
+        
         return AccessibilityAuditResult(
             complianceLevel: .basic,
             issues: [],
             recommendations: ["Add accessibility labels", "Ensure keyboard navigation"],
-            score: 75.0
+            score: 75.0,
+            complianceMetrics: complianceMetrics
         )
     }
 }
