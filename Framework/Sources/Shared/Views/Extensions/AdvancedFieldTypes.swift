@@ -377,7 +377,7 @@ public struct FileUploadArea: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(isDragOver ? Color.accentColor : Color.separator, lineWidth: 2)
+                .stroke(isDragOver ? Color.accentColor : Color.platformSeparator, lineWidth: 2)
         )
         .onDrop(of: allowedTypes.map { $0.identifier }, isTargeted: $isDragOver) { providers in
             handleDrop(providers: providers)

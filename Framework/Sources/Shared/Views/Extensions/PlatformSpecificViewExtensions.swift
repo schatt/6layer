@@ -1407,11 +1407,11 @@ public extension View {
         return VStack(alignment: .leading, spacing: PlatformSpacing.medium) {
             header()
                 .font(.headline)
-                .foregroundColor(.secondaryLabel)
+                .foregroundColor(.platformSecondaryLabel)
             content()
             footer()
                 .font(.caption)
-                .foregroundColor(.tertiaryLabel)
+                .foregroundColor(.platformTertiaryLabel)
         }
         .padding(.vertical, PlatformSpacing.medium)
         #endif
@@ -1434,7 +1434,7 @@ public extension View {
         return VStack(alignment: .leading, spacing: PlatformSpacing.medium) {
             header()
                 .font(.headline)
-                .foregroundColor(.secondaryLabel)
+                .foregroundColor(.platformSecondaryLabel)
             content()
         }
         .padding(.vertical, PlatformSpacing.medium)
@@ -1596,7 +1596,7 @@ public extension View {
                 Group {
                     if text.wrappedValue.isEmpty {
                         Text(prompt ?? "")
-                            .foregroundColor(.tertiaryLabel)
+                            .foregroundColor(.platformTertiaryLabel)
                             .padding(.horizontal, 4)
                             .padding(.vertical, 8)
                             .allowsHitTesting(false)
@@ -1610,7 +1610,7 @@ public extension View {
                 Group {
                     if text.wrappedValue.isEmpty {
                         Text(prompt ?? "")
-                            .foregroundColor(.tertiaryLabel)
+                            .foregroundColor(.platformTertiaryLabel)
                             .padding(.horizontal, 4)
                             .padding(.vertical, 8)
                             .allowsHitTesting(false)

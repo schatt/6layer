@@ -209,6 +209,166 @@ public extension Color {
         return Color.blue
         #endif
     }
+    
+    /// Platform system background color
+    /// iOS: systemBackground; macOS: windowBackgroundColor
+    static var platformSystemBackground: Color {
+        #if os(iOS)
+        return Color(.systemBackground)
+        #elseif os(macOS)
+        return Color(.windowBackgroundColor)
+        #else
+        return Color.primary
+        #endif
+    }
+    
+    /// Platform system gray6 color
+    /// iOS: systemGray6; macOS: controlBackgroundColor
+    static var platformSystemGray6: Color {
+        #if os(iOS)
+        return Color(.systemGray6)
+        #elseif os(macOS)
+        return Color(.controlBackgroundColor)
+        #else
+        return Color.gray.opacity(0.1)
+        #endif
+    }
+    
+    /// Platform system gray5 color
+    /// iOS: systemGray5; macOS: controlColor
+    static var platformSystemGray5: Color {
+        #if os(iOS)
+        return Color(.systemGray5)
+        #elseif os(macOS)
+        return Color(.controlColor)
+        #else
+        return Color.gray.opacity(0.2)
+        #endif
+    }
+    
+    /// Platform system gray4 color
+    /// iOS: systemGray4; macOS: controlColor
+    static var platformSystemGray4: Color {
+        #if os(iOS)
+        return Color(.systemGray4)
+        #elseif os(macOS)
+        return Color(.controlColor)
+        #else
+        return Color.gray.opacity(0.3)
+        #endif
+    }
+    
+    /// Platform system gray3 color
+    /// iOS: systemGray3; macOS: controlColor
+    static var platformSystemGray3: Color {
+        #if os(iOS)
+        return Color(.systemGray3)
+        #elseif os(macOS)
+        return Color(.controlColor)
+        #else
+        return Color.gray.opacity(0.4)
+        #endif
+    }
+    
+    /// Platform system gray2 color
+    /// iOS: systemGray2; macOS: controlColor
+    static var platformSystemGray2: Color {
+        #if os(iOS)
+        return Color(.systemGray2)
+        #elseif os(macOS)
+        return Color(.controlColor)
+        #else
+        return Color.gray.opacity(0.5)
+        #endif
+    }
+    
+    /// Platform system gray color
+    /// iOS: systemGray; macOS: systemGray
+    static var platformSystemGray: Color {
+        #if os(iOS)
+        return Color(.systemGray)
+        #elseif os(macOS)
+        return Color(.systemGray)
+        #else
+        return Color.gray
+        #endif
+    }
+    
+    /// Platform secondary background color (alias for existing)
+    static var secondaryBackground: Color {
+        return platformSecondaryBackground
+    }
+    
+    /// Platform tertiary background color
+    static var tertiaryBackground: Color {
+        #if os(iOS)
+        return Color(.tertiarySystemBackground)
+        #elseif os(macOS)
+        return Color(.controlBackgroundColor).opacity(0.5)
+        #else
+        return Color.gray.opacity(0.1)
+        #endif
+    }
+    
+    /// Platform primary background color (alias for existing)
+    static var primaryBackground: Color {
+        return platformBackground
+    }
+    
+    /// Platform card background color
+    static var cardBackground: Color {
+        #if os(iOS)
+        return Color(.secondarySystemBackground)
+        #elseif os(macOS)
+        return Color(.controlBackgroundColor)
+        #else
+        return Color.gray.opacity(0.1)
+        #endif
+    }
+    
+    /// Platform grouped background color
+    static var groupedBackground: Color {
+        #if os(iOS)
+        return Color(.systemGroupedBackground)
+        #elseif os(macOS)
+        return Color(.controlBackgroundColor)
+        #else
+        return Color.gray.opacity(0.05)
+        #endif
+    }
+    
+    /// Platform separator color
+    static var separator: Color {
+        #if os(iOS)
+        return Color(.separator)
+        #elseif os(macOS)
+        return Color(.separatorColor)
+        #else
+        return Color.gray.opacity(0.3)
+        #endif
+    }
+    
+    /// Platform label color
+    static var label: Color {
+        #if os(iOS)
+        return Color(.label)
+        #elseif os(macOS)
+        return Color(.labelColor)
+        #else
+        return Color.primary
+        #endif
+    }
+    
+    /// Platform secondary label color
+    static var secondaryLabel: Color {
+        #if os(iOS)
+        return Color(.secondaryLabel)
+        #elseif os(macOS)
+        return Color(.secondaryLabelColor)
+        #else
+        return Color.secondary
+        #endif
+    }
 }
 
 // MARK: - View Extensions for Platform Colors
