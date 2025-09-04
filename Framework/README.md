@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.7.2-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.2)
+[![Version](https://img.shields.io/badge/version-v1.7.3-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.3)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -33,7 +33,15 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
-## 🆕 What's New in v1.7.2
+## 🆕 What's New in v1.7.3
+
+- **Layout Decision Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
+- **Reasoning Examples**: Comprehensive examples showing debugging, analytics, and transparency usage
+- **Reasoning Tests**: 11 tests verifying reasoning content and consistency
+- **Documentation**: Complete documentation with practical usage examples
+- **API Transparency**: Public reasoning properties for better developer experience
+
+## 📋 Previous Release (v1.7.2)
 
 - **Image Functionality**: Complete cross-platform image handling system
 - **Photo Components**: Camera interface, photo picker, display, and editing
@@ -68,7 +76,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.3")
 ]
 ```
 
@@ -183,6 +191,27 @@ For comprehensive guidance on extending the framework, see:
 ```
 
 ## 📋 Changelog
+
+### [v1.7.3] - 2025-09-04 (Layout Decision Reasoning)
+
+#### 🧠 Layout Decision Reasoning
+- **Transparent Decision-Making**: Detailed reasoning for all layout decisions
+- **Debugging Support**: Access reasoning properties for debugging and troubleshooting
+- **Analytics Integration**: Log reasoning for monitoring and optimization
+- **User Transparency**: Display reasoning to users for transparency
+- **Comprehensive Testing**: 11 tests verifying reasoning content and consistency
+
+#### 📚 Documentation & Examples
+- **Usage Examples**: Three comprehensive example views showing practical usage
+- **Code Examples**: Complete working examples for debugging, analytics, and transparency
+- **API Documentation**: Full documentation of reasoning properties and usage patterns
+- **Developer Guide**: Clear guidance on how to use reasoning in applications
+
+#### 🔧 Technical Improvements
+- **Public API**: Reasoning properties are now documented as intentional public API features
+- **Type Safety**: Full Swift type safety for reasoning properties
+- **Performance**: Optimized reasoning generation with minimal overhead
+- **Cross-Platform**: Reasoning works consistently across iOS and macOS
 
 ### [v1.7.2] - 2025-09-04 (Image Functionality & Input Handling)
 
