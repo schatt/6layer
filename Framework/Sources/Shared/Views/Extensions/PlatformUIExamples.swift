@@ -542,3 +542,325 @@ public struct PlatformUIExampleApp: View {
         .withThemedFramework()
     }
 }
+
+// MARK: - Layout Decision Reasoning Examples
+// Examples showing how to use reasoning properties for debugging, analytics, and transparency
+
+/// Example showing how to access and use layout decision reasoning
+public struct LayoutDecisionReasoningExample: View {
+    @State private var layoutDecision: GenericLayoutDecision?
+    @State private var formDecision: GenericFormLayoutDecision?
+    @State private var debugInfo: String = ""
+    
+    public init() {}
+    
+    public var body: some View {
+        VStack(spacing: 20) {
+            Text("Layout Decision Reasoning")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            // Example 1: Accessing reasoning properties
+            VStack(alignment: .leading, spacing: 8) {
+                Text("1. Accessing Reasoning Properties")
+                    .font(.headline)
+                
+                Button("Generate Layout Decision") {
+                    generateLayoutDecision()
+                }
+                .buttonStyle(.borderedProminent)
+                
+                if let decision = layoutDecision {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Approach: \(decision.approach.rawValue)")
+                        Text("Columns: \(decision.columns)")
+                        Text("Spacing: \(decision.spacing, specifier: "%.1f")pt")
+                        Text("Performance: \(decision.performance.rawValue)")
+                        Text("Reasoning: \(decision.reasoning)")
+                            .foregroundColor(.blue)
+                            .italic()
+                    }
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+                }
+            }
+            
+            // Example 2: Debugging with reasoning
+            VStack(alignment: .leading, spacing: 8) {
+                Text("2. Debugging Layout Decisions")
+                    .font(.headline)
+                
+                Button("Debug Layout Decision") {
+                    debugLayoutDecision()
+                }
+                .buttonStyle(.bordered)
+                
+                if !debugInfo.isEmpty {
+                    Text(debugInfo)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding()
+                        .background(Color.yellow.opacity(0.1))
+                        .cornerRadius(8)
+                }
+            }
+            
+            // Example 3: Form layout reasoning
+            VStack(alignment: .leading, spacing: 8) {
+                Text("3. Form Layout Reasoning")
+                    .font(.headline)
+                
+                Button("Generate Form Decision") {
+                    generateFormDecision()
+                }
+                .buttonStyle(.bordered)
+                
+                if let decision = formDecision {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Container: \(decision.preferredContainer.rawValue)")
+                        Text("Field Layout: \(decision.fieldLayout.rawValue)")
+                        Text("Spacing: \(decision.spacing.rawValue)")
+                        Text("Validation: \(decision.validation.rawValue)")
+                        Text("Complexity: \(decision.contentComplexity.rawValue)")
+                        Text("Reasoning: \(decision.reasoning)")
+                            .foregroundColor(.green)
+                            .italic()
+                    }
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+                }
+            }
+            
+            Spacer()
+        }
+        .padding()
+    }
+    
+    // MARK: - Example Methods
+    
+    private func generateLayoutDecision() {
+        // Simulate generating a layout decision
+        layoutDecision = GenericLayoutDecision(
+            approach: .grid,
+            columns: 3,
+            spacing: 16.0,
+            performance: .optimized,
+            reasoning: "Selected grid layout with 3 columns for optimal user experience on tablet devices"
+        )
+    }
+    
+    private func debugLayoutDecision() {
+        guard let decision = layoutDecision else { return }
+        
+        // Example of using reasoning for debugging
+        debugInfo = """
+        🔍 Layout Decision Debug Info:
+        
+        Decision: \(decision.approach.rawValue) layout
+        Reasoning: \(decision.reasoning)
+        
+        Analysis:
+        - Columns: \(decision.columns) (optimal for content density)
+        - Spacing: \(String(format: "%.1f", decision.spacing))pt (comfortable spacing)
+        - Performance: \(decision.performance.rawValue) (balanced performance)
+        
+        This reasoning helps understand why this specific layout was chosen.
+        """
+    }
+    
+    private func generateFormDecision() {
+        // Simulate generating a form layout decision
+        formDecision = GenericFormLayoutDecision(
+            preferredContainer: .adaptive,
+            fieldLayout: .standard,
+            spacing: .comfortable,
+            validation: .realTime,
+            contentComplexity: .moderate,
+            reasoning: "Form layout optimized based on field count and complexity for better user experience"
+        )
+    }
+}
+
+/// Example showing how to log reasoning for analytics
+public struct LayoutReasoningAnalyticsExample: View {
+    @State private var analyticsLog: [String] = []
+    
+    public init() {}
+    
+    public var body: some View {
+        VStack(spacing: 20) {
+            Text("Reasoning Analytics Example")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text("This example shows how to log layout decision reasoning for analytics and monitoring.")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Button("Simulate Layout Decisions") {
+                simulateLayoutDecisions()
+            }
+            .buttonStyle(.borderedProminent)
+            
+            if !analyticsLog.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Analytics Log:")
+                        .font(.headline)
+                    
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 4) {
+                            ForEach(Array(analyticsLog.enumerated()), id: \.offset) { index, logEntry in
+                                Text("\(index + 1). \(logEntry)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .frame(maxHeight: 200)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+                }
+            }
+            
+            Spacer()
+        }
+        .padding()
+    }
+    
+    private func simulateLayoutDecisions() {
+        analyticsLog.removeAll()
+        
+        // Simulate multiple layout decisions and log their reasoning
+        let decisions = [
+            GenericLayoutDecision(
+                approach: .grid,
+                columns: 2,
+                spacing: 16.0,
+                performance: .standard,
+                reasoning: "Grid layout selected for balanced content presentation"
+            ),
+            GenericLayoutDecision(
+                approach: .list,
+                columns: 1,
+                spacing: 8.0,
+                performance: .highPerformance,
+                reasoning: "List layout chosen for optimal performance with large datasets"
+            ),
+            GenericLayoutDecision(
+                approach: .adaptive,
+                columns: 3,
+                spacing: 24.0,
+                performance: .optimized,
+                reasoning: "Adaptive layout for responsive design across different screen sizes"
+            )
+        ]
+        
+        for decision in decisions {
+            let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .none, timeStyle: .medium)
+            let logEntry = "[\(timestamp)] Layout: \(decision.approach.rawValue) | Reasoning: \(decision.reasoning)"
+            analyticsLog.append(logEntry)
+        }
+    }
+}
+
+/// Example showing how to display reasoning in UI for transparency
+public struct LayoutReasoningTransparencyExample: View {
+    @State private var showReasoning = false
+    @State private var currentDecision: GenericLayoutDecision?
+    
+    public init() {}
+    
+    public var body: some View {
+        VStack(spacing: 20) {
+            Text("Layout Transparency Example")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text("This example shows how to display layout reasoning to users for transparency.")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Button("Generate Layout with Reasoning") {
+                generateLayoutWithReasoning()
+            }
+            .buttonStyle(.borderedProminent)
+            
+            if let decision = currentDecision {
+                VStack(spacing: 16) {
+                    // Display the layout decision
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Layout Decision")
+                            .font(.headline)
+                        
+                        HStack {
+                            Text("Approach:")
+                            Spacer()
+                            Text(decision.approach.rawValue.capitalized)
+                                .fontWeight(.medium)
+                        }
+                        
+                        HStack {
+                            Text("Columns:")
+                            Spacer()
+                            Text("\(decision.columns)")
+                                .fontWeight(.medium)
+                        }
+                        
+                        HStack {
+                            Text("Spacing:")
+                            Spacer()
+                            Text("\(decision.spacing, specifier: "%.1f")pt")
+                                .fontWeight(.medium)
+                        }
+                    }
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
+                    
+                    // Toggle reasoning display
+                    Button(showReasoning ? "Hide Reasoning" : "Show Reasoning") {
+                        showReasoning.toggle()
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    if showReasoning {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Why this layout was chosen:")
+                                .font(.headline)
+                                .foregroundColor(.green)
+                            
+                            Text(decision.reasoning)
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                                .italic()
+                        }
+                        .padding()
+                        .background(Color.green.opacity(0.1))
+                        .cornerRadius(8)
+                        .transition(.opacity)
+                    }
+                }
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .animation(.easeInOut, value: showReasoning)
+    }
+    
+    private func generateLayoutWithReasoning() {
+        currentDecision = GenericLayoutDecision(
+            approach: .adaptive,
+            columns: 2,
+            spacing: 20.0,
+            performance: .optimized,
+            reasoning: "Adaptive layout selected to provide optimal user experience across different device sizes, with 2 columns for balanced content density and 20pt spacing for comfortable reading."
+        )
+        showReasoning = false
+    }
+}

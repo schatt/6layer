@@ -27,6 +27,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 - **Cross-Platform**: Write once, run on iOS and macOS
 - **Intelligent Layout**: AI-driven layout decisions based on content and context
+- **Layout Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
 - **Performance Optimized**: Native performance with intelligent caching
 - **Accessibility First**: Built-in accessibility enhancements
 - **Type Safe**: Full Swift type safety with compile-time validation
@@ -111,6 +112,41 @@ platformPresentFormData_L1(
 )
 ```
 
+### Layout Decision Reasoning
+
+The framework provides transparent decision-making with detailed reasoning for debugging and analytics:
+
+```swift
+// Get layout decision with reasoning
+let decision = determineOptimalLayout_L2(
+    items: items,
+    hints: hints,
+    screenWidth: 768.0,
+    deviceType: .pad
+)
+
+// Access reasoning for debugging
+print("Layout reasoning: \(decision.reasoning)")
+// Output: "Layout optimized for current device and content: uniform approach with 1 columns, 8.0pt spacing, and standard performance"
+
+// Use reasoning for analytics
+analytics.track("layout_decision", properties: [
+    "approach": decision.approach.rawValue,
+    "reasoning": decision.reasoning
+])
+```
+
+### Reasoning Examples
+
+The framework includes comprehensive examples showing how to use reasoning properties:
+
+- **Debugging**: Access reasoning to understand why specific layouts were chosen
+- **Analytics**: Log reasoning for monitoring and optimization
+- **Transparency**: Display reasoning to users for transparency
+- **Testing**: Verify reasoning content in automated tests
+
+See `PlatformUIExamples.swift` for complete working examples.
+
 ## 🔧 Extending the Framework
 
 The SixLayer Framework is designed to be highly extensible. Developers can:
@@ -170,6 +206,9 @@ For comprehensive guidance on extending the framework, see:
 - **Comprehensive Testing**: 37 tests covering all input handling functionality
 
 #### 🔧 Technical Improvements
+- **Layout Decision Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
+- **Reasoning Examples**: Comprehensive examples showing debugging, analytics, and transparency usage
+- **Reasoning Tests**: 11 tests verifying reasoning content and consistency
 - **Cross-Platform Compatibility**: All new features work on iOS and macOS
 - **Type Safety**: Full Swift type safety with compile-time validation
 - **Performance**: Optimized for native performance
