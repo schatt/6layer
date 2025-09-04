@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.7.3-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.3)
+[![Version](https://img.shields.io/badge/version-v1.7.4-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.4)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -33,7 +33,16 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
-## 🆕 What's New in v1.7.3
+## 🆕 What's New in v1.7.4
+
+- **Cross-Platform Color Utilities**: Comprehensive color system that eliminates platform-specific color code
+- **Platform Color Extensions**: 20+ cross-platform color properties with intelligent fallbacks
+- **Color Examples**: Complete usage examples for forms, lists, cards, and system colors
+- **Comprehensive Testing**: 21 tests covering all color utilities and platform behaviors
+- **Accessibility Support**: Colors work correctly with accessibility features and dark mode
+- **Performance Optimized**: Fast color creation with consistent behavior across platforms
+
+## 📋 Previous Release (v1.7.3)
 
 - **Layout Decision Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
 - **Reasoning Examples**: Comprehensive examples showing debugging, analytics, and transparency usage
@@ -76,7 +85,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.3")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.4")
 ]
 ```
 
@@ -144,6 +153,64 @@ analytics.track("layout_decision", properties: [
 ])
 ```
 
+### Cross-Platform Color Utilities
+
+Eliminate platform-specific color code with intelligent cross-platform color utilities:
+
+```swift
+// ❌ Before: Platform-specific code
+#if os(iOS)
+.foregroundColor(.tertiaryLabel)
+#elseif os(macOS)
+.foregroundColor(.secondary)
+#endif
+
+// ✅ After: Cross-platform utilities
+.foregroundColor(.platformTertiaryLabel)
+```
+
+#### Available Color Utilities
+
+```swift
+// Label colors with intelligent fallbacks
+Text("Primary Text")
+    .foregroundColor(.platformPrimaryLabel)
+
+Text("Secondary Text")
+    .foregroundColor(.platformSecondaryLabel)
+
+Text("Tertiary Text")
+    .foregroundColor(.platformTertiaryLabel)
+
+Text("Quaternary Text")
+    .foregroundColor(.platformQuaternaryLabel)
+
+// Text input colors
+TextField("Placeholder", text: $text)
+    .foregroundColor(.platformPlaceholderText)
+
+// Separator colors
+Divider()
+    .background(Color.platformSeparator)
+
+Rectangle()
+    .fill(Color.platformOpaqueSeparator)
+    .frame(height: 1)
+
+// Background colors
+VStack {
+    // Content
+}
+.background(Color.platformBackground)
+
+// System colors (consistent across platforms)
+Text("Error")
+    .foregroundColor(.platformRed)
+
+Text("Success")
+    .foregroundColor(.platformGreen)
+```
+
 ### Reasoning Examples
 
 The framework includes comprehensive examples showing how to use reasoning properties:
@@ -191,6 +258,45 @@ For comprehensive guidance on extending the framework, see:
 ```
 
 ## 📋 Changelog
+
+### [v1.7.4] - 2025-09-04 (Cross-Platform Color Utilities)
+
+#### 🎨 Cross-Platform Color System
+- **Platform Color Extensions**: 20+ cross-platform color properties with intelligent fallbacks
+- **Eliminates Conditional Compilation**: No more `#if os(iOS)` / `#elseif os(macOS)` for colors
+- **Intelligent Fallbacks**: Automatic fallback colors for platform-specific color APIs
+- **Consistent API**: Same color names work across iOS and macOS
+- **Performance Optimized**: Fast color creation with consistent behavior
+
+#### 🎯 Key Color Utilities
+- **Label Colors**: `platformPrimaryLabel`, `platformSecondaryLabel`, `platformTertiaryLabel`, `platformQuaternaryLabel`
+- **Text Colors**: `platformPlaceholderText` with platform-appropriate fallbacks
+- **Separator Colors**: `platformSeparator`, `platformOpaqueSeparator` with intelligent mapping
+- **Background Colors**: `platformBackground`, `platformSecondaryBackground`, `platformGroupedBackground`
+- **System Colors**: All standard system colors with cross-platform consistency
+
+#### 📚 Usage Examples & Documentation
+- **Comprehensive Examples**: Complete usage examples for forms, lists, cards, and system colors
+- **Before/After Comparison**: Clear examples showing the improvement over platform-specific code
+- **Color Swatches**: Visual examples of all available colors
+- **Form Examples**: Real-world usage in forms and input fields
+- **List Examples**: Practical usage in list views and data display
+- **Card Examples**: Usage in card-based layouts and content presentation
+
+#### 🧪 Comprehensive Testing
+- **21 Test Cases**: Complete test coverage for all color utilities
+- **Platform Behavior Tests**: Verification of correct platform-specific behavior
+- **Accessibility Tests**: Colors work correctly with accessibility features
+- **Dark Mode Tests**: Proper behavior in both light and dark modes
+- **Performance Tests**: Fast color creation and consistent behavior
+- **Edge Case Tests**: Proper handling of different contexts and usage scenarios
+
+#### 🔧 Technical Improvements
+- **Type Safety**: Full Swift type safety for all color utilities
+- **Documentation**: Complete inline documentation with usage examples
+- **Error Handling**: Graceful error handling for all color operations
+- **Backward Compatibility**: Fully backward compatible with existing code
+- **Cross-Platform**: Consistent behavior across iOS and macOS platforms
 
 ### [v1.7.3] - 2025-09-04 (Layout Decision Reasoning)
 
