@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.7.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.1)
+[![Version](https://img.shields.io/badge/version-v1.7.2-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.2)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -32,7 +32,20 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
-## 🆕 What's New in v1.7.1
+## 🆕 What's New in v1.7.2
+
+- **Image Functionality**: Complete cross-platform image handling system
+- **Photo Components**: Camera interface, photo picker, display, and editing
+- **Input Handling & Interactions**: Platform-adaptive input behavior
+- **Touch vs Mouse**: Intelligent interaction patterns for different input methods
+- **Keyboard Shortcuts**: Platform-appropriate keyboard shortcut management
+- **Haptic Feedback**: Smart haptic and sound feedback system
+- **Drag & Drop**: Cross-platform drag and drop functionality
+- **Gesture Recognition**: Swipe, pinch, and rotate gesture support
+- **Comprehensive Testing**: 37 tests for Input Handling & Interactions
+- **Photo Test Suite**: Complete test coverage for image functionality
+
+## 📋 Previous Release (v1.7.1)
 
 - **Build Quality Gate**: Comprehensive system for treating warnings as errors
 - **Zero Warnings**: Fixed all redundant 'public' modifier warnings across codebase
@@ -134,6 +147,34 @@ For comprehensive guidance on extending the framework, see:
 ```
 
 ## 📋 Changelog
+
+### [v1.7.2] - 2025-09-04 (Image Functionality & Input Handling)
+
+#### 🖼️ Image Functionality
+- **PlatformImage Type**: Cross-platform image handling with extensions
+- **Image Manipulation**: Resizing, cropping, compression, thumbnail generation
+- **Photo Components**: Camera interface, photo picker, display, and editing
+- **Photo Strategy Selection**: Intelligent photo display strategy selection
+- **Photo Layout Decisions**: Smart layout decisions for photo components
+- **Photo Semantic Layer**: High-level photo operations and abstractions
+- **Comprehensive Testing**: Complete test suite for photo functionality
+
+#### 🎯 Input Handling & Interactions
+- **Platform-Adaptive Input**: Intelligent input behavior based on platform
+- **Touch vs Mouse**: Smart interaction patterns for different input methods
+- **Keyboard Shortcuts**: Platform-appropriate keyboard shortcut management
+- **Haptic Feedback**: Smart haptic and sound feedback system
+- **Drag & Drop**: Cross-platform drag and drop functionality
+- **Gesture Recognition**: Swipe, pinch, and rotate gesture support
+- **Interaction Patterns**: Platform-specific interaction behavior
+- **Comprehensive Testing**: 37 tests covering all input handling functionality
+
+#### 🔧 Technical Improvements
+- **Cross-Platform Compatibility**: All new features work on iOS and macOS
+- **Type Safety**: Full Swift type safety with compile-time validation
+- **Performance**: Optimized for native performance
+- **Accessibility**: Built-in accessibility enhancements
+- **Documentation**: Comprehensive documentation and examples
 
 ### [v1.7.1] - 2025-01-15 (Build Quality & Framework Enhancement)
 - **Build Quality Gate**: Comprehensive system for treating warnings as errors
