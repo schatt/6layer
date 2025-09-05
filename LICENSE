@@ -1,0 +1,128 @@
+SixLayer Framework License Agreement
+
+Copyright (c) 2025 SixLayer Framework
+
+This software and associated documentation files (the "Software") are licensed under the following terms:
+
+## LICENSE TIERS
+
+### 1. FREE TIER - Non-Commercial Use
+- **Eligibility**: Personal projects, open source projects, educational use, non-revenue generating applications
+- **Cost**: $0
+- **Restrictions**: 
+  - No commercial revenue generation
+  - No redistribution in commercial products
+  - Attribution required
+
+### 2. STARTUP TIER - Small Commercial Use
+- **Eligibility**: Applications with < 1,000 monthly active users (MAU)
+- **Cost**: $0 (free for small startups)
+- **Restrictions**: 
+  - Limited to 1,000 MAU
+  - Commercial use allowed
+  - Attribution required
+
+### 3. PROFESSIONAL TIER - Subscription Applications
+- **Eligibility**: Applications with recurring revenue (subscriptions, SaaS, etc.)
+- **Cost**: $0.10 per monthly active user per month
+- **Minimum**: $50/month
+- **Maximum**: $2,000/month (capped for large applications)
+- **Billing**: Monthly based on actual MAU
+
+### 4. ENTERPRISE TIER - Internal Commercial Use
+- **Eligibility**: Internal enterprise applications, internal tools, non-customer-facing applications
+- **Cost**: $2,500/year per application
+- **Includes**: 
+  - Unlimited internal users
+  - Priority support
+  - Custom modifications (if needed)
+
+### 5. ENTERPRISE PLUS TIER - High-Volume Commercial
+- **Eligibility**: Applications with > 20,000 MAU or high-revenue applications
+- **Cost**: Custom pricing (contact for quote)
+- **Includes**: 
+  - Unlimited users
+  - Priority support
+  - Custom modifications
+  - SLA guarantees
+
+## DEFINITIONS
+
+**Monthly Active User (MAU)**: A unique user who interacts with your application at least once in a calendar month.
+
+**Commercial Use**: Any use that generates revenue, directly or indirectly, including but not limited to:
+- Paid applications
+- Applications with in-app purchases
+- Applications with advertising revenue
+- Applications that support paid services
+- Internal applications that support revenue-generating operations
+
+**Internal Commercial Use**: Commercial use where the application is not customer-facing, including:
+- Internal dashboards
+- Employee tools
+- Administrative interfaces
+- Backend management systems
+
+## COMPLIANCE AND REPORTING
+
+### License Compliance
+- This framework uses an honor system for license compliance
+- You are responsible for accurately determining your license tier
+- We trust developers to comply with the terms in good faith
+
+### User Counting
+- You are responsible for tracking your monthly active users
+- Use your existing analytics to determine user counts
+- Contact us if you need help determining your appropriate tier
+
+## SUPPORT AND UPDATES
+
+### Free and Startup Tiers
+- Community support via GitHub Issues
+- Documentation and examples
+- Regular updates and bug fixes
+
+### Professional Tier
+- Email support (48-hour response)
+- Priority bug fixes
+- Regular updates and new features
+
+### Enterprise Tiers
+- Priority support (24-hour response)
+- Phone support available
+- Custom feature requests
+- Dedicated account manager
+
+## TERMINATION
+
+This license may be terminated if:
+- You fail to comply with the terms
+- You use the software beyond your licensed tier
+- You fail to pay required fees
+- You violate the terms in bad faith
+
+Upon termination, you must:
+- Stop using the software immediately
+- Remove all copies from your systems
+- Delete any derived works
+
+**Note**: We prefer to work with developers to resolve compliance issues rather than terminate licenses.
+
+## WARRANTY DISCLAIMER
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+## LIMITATION OF LIABILITY
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## CONTACT
+
+For licensing questions, custom pricing, or enterprise inquiries:
+- Email: licensing@sixlayerframework.com
+- Website: https://sixlayerframework.com/licensing
+- GitHub: https://github.com/schatt/6layer/discussions
+
+---
+
+This license is effective as of January 15, 2025, and applies to all versions of the SixLayer Framework.

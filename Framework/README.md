@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.7.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.7.1)
+[![Version](https://img.shields.io/badge/version-v1.8.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.8.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -32,15 +32,15 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
-## 🆕 What's New in v1.7.1
+## 🆕 What's New in v1.8.0
 
-- **Build Quality Gate**: Comprehensive system for treating warnings as errors
-- **Zero Warnings**: Fixed all redundant 'public' modifier warnings across codebase
-- **Protocol Compliance**: Fixed all required protocol implementation methods
-- **Modern APIs**: Updated deprecated NavigationLink usage to iOS 16+ standards
-- **UI Consistency**: Ensured consistent behavior across iOS versions
-- **CI/CD Integration**: GitHub Actions workflow for automated quality checks
-- **Local Development**: Build quality check script and Makefile integration
+- **Licensing System**: Comprehensive tiered licensing model with honor system approach
+- **Free Tier**: Personal projects, open source, educational use
+- **Startup Tier**: Free for applications with < 1,000 users
+- **Professional Tier**: $0.10/user/month for subscription applications
+- **Enterprise Tier**: $2,500/year for internal commercial use
+- **Honor System**: Trust-based compliance with clear documentation
+- **Legal Framework**: Complete license terms and compliance guidelines
 
 ## 📱 Supported Platforms
 
@@ -134,6 +134,17 @@ For comprehensive guidance on extending the framework, see:
 ```
 
 ## 📋 Changelog
+
+### [v1.8.0] - 2025-01-15 (Licensing System & Legal Framework)
+- **Licensing System**: Comprehensive tiered licensing model with honor system approach
+- **Free Tier**: Personal projects, open source, educational use
+- **Startup Tier**: Free for applications with < 1,000 users  
+- **Professional Tier**: $0.10/user/month for subscription applications
+- **Enterprise Tier**: $2,500/year for internal commercial use
+- **Honor System**: Trust-based compliance with clear documentation
+- **Legal Framework**: Complete license terms and compliance guidelines
+- **Documentation**: Comprehensive licensing guide and implementation details
+- **Transparency**: Clear pricing and usage guidelines for all tiers
 
 ### [v1.7.1] - 2025-01-15 (Build Quality & Framework Enhancement)
 - **Build Quality Gate**: Comprehensive system for treating warnings as errors
@@ -259,7 +270,20 @@ xcodebuild test -scheme SixLayerFramework -destination 'platform=iOS Simulator,n
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The SixLayer Framework uses a **tiered licensing model** based on usage and commercial nature:
+
+- **Free Tier**: Personal projects, open source, educational use
+- **Startup Tier**: Free for applications with < 1,000 users
+- **Professional Tier**: $0.10/user/month for subscription applications
+- **Enterprise Tier**: $2,500/year for internal commercial use
+- **Enterprise Plus**: Custom pricing for high-volume applications
+
+**Honor System**: No technical enforcement - we trust developers to comply with license terms.
+
+For detailed licensing information, see:
+- **[Complete License Terms](../LICENSE)** - Full license agreement
+- **[Licensing Guide](docs/Licensing.md)** - Implementation and usage guide
+- **[Contact Licensing](mailto:licensing@sixlayerframework.com)** - Questions and custom pricing
 
 ## 🙏 Acknowledgments
 
