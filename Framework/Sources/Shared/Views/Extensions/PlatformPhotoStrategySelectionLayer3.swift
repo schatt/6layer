@@ -9,7 +9,7 @@ public func selectPhotoCaptureStrategy_L3(
 ) -> PhotoCaptureStrategy {
     let preferences = context.userPreferences
     let capabilities = context.deviceCapabilities
-    let screenSize = context.screenSize
+    let _ = context.screenSize
     
     // Check device capabilities
     let hasCamera = capabilities.hasCamera

@@ -64,13 +64,14 @@ public class LiquidGlassDesignSystem: ObservableObject {
         #if os(iOS)
         if #available(iOS 26.0, *) {
             return true
+        } else {
+            return false
         }
         #elseif os(macOS)
-        if #available(macOS 26.0, *) {
-            return true
-        }
-        #endif
+        return true
+        #else
         return false
+        #endif
     }
 }
 

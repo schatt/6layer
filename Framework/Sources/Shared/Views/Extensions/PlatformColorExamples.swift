@@ -124,15 +124,15 @@ public struct PlatformColorExamples: View {
                         .foregroundColor(.platformPrimaryLabel)
                     
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 8) {
-                        ColorSwatch(color: .platformRed, name: "Red")
-                        ColorSwatch(color: .platformBlue, name: "Blue")
-                        ColorSwatch(color: .platformGreen, name: "Green")
-                        ColorSwatch(color: .platformOrange, name: "Orange")
-                        ColorSwatch(color: .platformYellow, name: "Yellow")
-                        ColorSwatch(color: .platformPurple, name: "Purple")
-                        ColorSwatch(color: .platformPink, name: "Pink")
-                        ColorSwatch(color: .platformIndigo, name: "Indigo")
-                        ColorSwatch(color: .platformTeal, name: "Teal")
+                        ColorSwatch(color: .platformDestructive, name: "Destructive")
+                        ColorSwatch(color: .platformTint, name: "Tint")
+                        ColorSwatch(color: .platformSuccess, name: "Success")
+                        ColorSwatch(color: .platformWarning, name: "Warning")
+                        ColorSwatch(color: .platformInfo, name: "Info")
+                        ColorSwatch(color: .platformSystemGray, name: "Gray")
+                        ColorSwatch(color: .platformSystemGray2, name: "Gray2")
+                        ColorSwatch(color: .platformSystemGray3, name: "Gray3")
+                        ColorSwatch(color: .platformSystemGray4, name: "Gray4")
                     }
                     .padding()
                     .background(Color.platformSecondaryBackground)
@@ -160,7 +160,7 @@ public struct PlatformColorExamples: View {
                         .font(.system(.caption, design: .monospaced))
                         .foregroundColor(.platformSecondaryLabel)
                         .padding()
-                        .background(Color.platformTertiaryBackground)
+                        .background(Color.platformSystemGray6)
                         .cornerRadius(4)
                         
                         Text("✅ After (Cross-platform)")
@@ -171,7 +171,7 @@ public struct PlatformColorExamples: View {
                             .font(.system(.caption, design: .monospaced))
                             .foregroundColor(.platformSecondaryLabel)
                             .padding()
-                            .background(Color.platformTertiaryBackground)
+                            .background(Color.platformSystemGray6)
                             .cornerRadius(4)
                     }
                     .padding()
@@ -235,7 +235,9 @@ public struct PlatformColorFormExamples: View {
             Section {
                 TextField("Enter your email", text: $email)
                     .foregroundColor(.platformPrimaryLabel)
+                    #if os(iOS)
                     .keyboardType(.emailAddress)
+                    #endif
                 
                 SecureField("Enter your password", text: $password)
                     .foregroundColor(.platformPrimaryLabel)

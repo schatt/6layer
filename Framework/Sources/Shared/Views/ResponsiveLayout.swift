@@ -11,35 +11,7 @@ import AppKit
 // Import shared types and platform extensions
 @_exported import struct SwiftUI.Color
 
-// Device type detection - using shared type from PlatformTypes.swift
-@_exported import struct SwiftUI.Color
-
-// Screen size classes
-public enum ScreenSizeClass {
-    case compact, regular, large
-
-    static func horizontal(width: CGFloat) -> ScreenSizeClass {
-        switch width {
-        case 0..<600:
-            return .compact
-        case 600..<1000:
-            return .regular
-        default:
-            return .large
-        }
-    }
-
-    static func vertical(height: CGFloat) -> ScreenSizeClass {
-        switch height {
-        case 0..<500:
-            return .compact
-        case 500..<800:
-            return .regular
-        default:
-            return .large
-        }
-    }
-}
+// Screen size classes - now defined in EnhancedDeviceDetection.swift
 
 // MARK: - Responsive Container
 

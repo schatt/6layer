@@ -59,7 +59,7 @@ public func platformPhotoDisplay_L1(
     image: PlatformImage?
 ) -> some View {
     // Determine optimal display strategy
-    let displayStrategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
+    let _ = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
     
     // Determine optimal layout
     let layout = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
