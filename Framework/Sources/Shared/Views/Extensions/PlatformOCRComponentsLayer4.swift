@@ -190,7 +190,7 @@ struct iOSOCRView: View {
     
     private func performOCRProcessing() async throws -> OCRResult {
         return try await withCheckedThrowingContinuation { continuation in
-            guard let cgImage = image.cgImage else {
+            guard let cgImage = getCGImage(from: image) else {
                 continuation.resume(throwing: OCRError.invalidImage)
                 return
             }
@@ -406,7 +406,7 @@ struct MacOSOCRView: View {
     
     private func performOCRProcessing() async throws -> OCRResult {
         return try await withCheckedThrowingContinuation { continuation in
-            guard let cgImage = image.cgImage else {
+            guard let cgImage = getCGImage(from: image) else {
                 continuation.resume(throwing: OCRError.invalidImage)
                 return
             }
