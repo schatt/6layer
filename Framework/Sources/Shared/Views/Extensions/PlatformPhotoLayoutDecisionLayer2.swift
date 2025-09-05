@@ -9,7 +9,7 @@ public func determineOptimalPhotoLayout_L2(
 ) -> CGSize {
     let availableSpace = context.availableSpace
     let screenSize = context.screenSize
-    let capabilities = context.deviceCapabilities
+    let _ = context.deviceCapabilities
     
     // Base layout calculations
     let baseWidth = min(availableSpace.width, screenSize.width * 0.8)

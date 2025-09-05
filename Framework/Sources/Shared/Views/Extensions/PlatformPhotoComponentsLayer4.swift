@@ -371,7 +371,7 @@ private extension PhotoDisplayStyle {
 // MARK: - AnyShape Helper
 
 struct AnyShape: Shape {
-    private let _path: (CGRect) -> Path
+    private let _path: @Sendable (CGRect) -> Path
     
     init<S: Shape>(_ shape: S) {
         _path = shape.path(in:)

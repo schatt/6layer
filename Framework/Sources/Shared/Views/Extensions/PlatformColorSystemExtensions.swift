@@ -369,6 +369,37 @@ public extension Color {
         return Color.secondary
         #endif
     }
+    
+    // MARK: - Additional Cross-Platform Colors (Feature Request)
+    
+    /// Cross-platform primary label color (alias for existing platformLabel)
+    static var platformPrimaryLabel: Color {
+        return platformLabel
+    }
+    
+    /// Cross-platform placeholder text color
+    /// iOS: placeholderText; macOS: placeholderTextColor
+    static var platformPlaceholderText: Color {
+        #if os(iOS)
+        return Color(.placeholderText)
+        #elseif os(macOS)
+        return Color(.placeholderTextColor)
+        #else
+        return Color.secondary.opacity(0.6)
+        #endif
+    }
+    
+    /// Cross-platform opaque separator color
+    /// iOS: opaqueSeparator; macOS: separatorColor
+    static var platformOpaqueSeparator: Color {
+        #if os(iOS)
+        return Color(.opaqueSeparator)
+        #elseif os(macOS)
+        return Color(.separatorColor)
+        #else
+        return Color.gray.opacity(0.5)
+        #endif
+    }
 }
 
 // MARK: - View Extensions for Platform Colors

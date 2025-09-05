@@ -62,6 +62,40 @@ public enum DeviceType: String, CaseIterable {
         return .phone // Default fallback
         #endif
     }
+    
+    /// Detect device type from screen size
+    public static func from(screenSize: CGSize) -> DeviceType {
+        let width = screenSize.width
+        let height = screenSize.height
+        let minDimension = min(width, height)
+        let maxDimension = max(width, height)
+        
+        #if os(iOS)
+        // iOS device detection based on screen dimensions
+        if minDimension >= 768 {
+            return .pad
+        } else {
+            return .phone
+        }
+        #elseif os(macOS)
+        return .mac
+        #elseif os(watchOS)
+        return .watch
+        #elseif os(tvOS)
+        return .tv
+        #else
+        // Fallback based on screen size
+        if minDimension >= 768 {
+            return .pad
+        } else if minDimension >= 162 && maxDimension >= 197 {
+            return .watch
+        } else if minDimension >= 1920 {
+            return .tv
+        } else {
+            return .phone
+        }
+        #endif
+    }
 }
 
 // MARK: - Keyboard Type Enumeration

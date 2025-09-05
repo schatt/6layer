@@ -276,7 +276,7 @@ struct CustomVehicleItemView: View {
                     .font(.headline)
                 Text("\(vehicle.year)")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.platformSecondaryLabel)
             }
             
             Spacer()
@@ -675,6 +675,88 @@ AI Agent: "Use the extensible hints system! Create a CustomHint with
           hintType: 'vehicle.form' and customData for your business rules. 
           Then combine it with the generic framework functions."
 ```
+
+## 🎨 **Cross-Platform Color Utilities**
+
+### **Problem Solved**
+When building cross-platform iOS/macOS apps, developers encounter platform-specific color APIs that don't exist on all platforms:
+- `Color.tertiaryLabel` exists on iOS but not on macOS
+- `Color.quaternaryLabel` exists on iOS but not on macOS
+- This forces developers to use conditional compilation or fallback colors
+
+### **Framework Solution**
+The SixLayer Framework provides cross-platform color utilities that eliminate the need for platform-specific code:
+
+```swift
+// ❌ AVOID: Platform-specific color code
+#if os(iOS)
+.foregroundColor(.tertiaryLabel)
+#elseif os(macOS)
+.foregroundColor(.secondary)
+#endif
+
+// ✅ USE: Cross-platform color utilities
+.foregroundColor(.platformTertiaryLabel)
+```
+
+### **Available Cross-Platform Colors**
+```swift
+// Label Colors
+.platformPrimaryLabel      // iOS: .primary, macOS: .primary
+.platformSecondaryLabel    // iOS: .secondary, macOS: .secondary
+.platformTertiaryLabel     // iOS: .tertiaryLabel, macOS: .secondary
+.platformQuaternaryLabel   // iOS: .quaternaryLabel, macOS: .secondary
+
+// Text Colors
+.platformPlaceholderText   // iOS: .placeholderText, macOS: .secondary
+
+// Separator Colors
+.platformSeparator         // iOS: .separator, macOS: .separatorColor
+.platformOpaqueSeparator   // iOS: .opaqueSeparator, macOS: .separatorColor
+
+// Background Colors
+.platformBackground        // iOS: .systemBackground, macOS: .windowBackgroundColor
+.platformSecondaryBackground // iOS: .secondarySystemBackground, macOS: .controlBackgroundColor
+.platformGroupedBackground // iOS: .systemGroupedBackground, macOS: .controlBackgroundColor
+
+// System Colors
+.platformTint              // iOS: .systemBlue, macOS: .controlAccentColor
+.platformDestructive       // iOS: .systemRed, macOS: .systemRedColor
+.platformSuccess           // iOS: .systemGreen, macOS: .systemGreenColor
+.platformWarning           // iOS: .systemOrange, macOS: .systemOrangeColor
+.platformInfo              // iOS: .systemBlue, macOS: .systemBlueColor
+```
+
+### **Usage Examples**
+```swift
+// Form Labels
+Text("Email Address")
+    .foregroundColor(.platformPrimaryLabel)
+
+Text("Optional field")
+    .foregroundColor(.platformTertiaryLabel)
+
+// Placeholder Text
+TextField("Enter your name", text: $name)
+    .foregroundColor(.platformPlaceholderText)
+
+// Separators
+Divider()
+    .background(Color.platformSeparator)
+
+// Backgrounds
+VStack {
+    // Content
+}
+.background(Color.platformBackground)
+```
+
+### **Benefits for AI Agents**
+1. **Eliminates Conditional Compilation**: No more `#if os(iOS)` / `#elseif os(macOS)` for colors
+2. **Prevents Runtime Crashes**: No more "unavailable on macOS" errors
+3. **Improves Code Readability**: Clear, semantic color names
+4. **Reduces Maintenance**: Centralized color mapping logic
+5. **Better Accessibility**: Consistent color behavior across platforms
 
 ---
 

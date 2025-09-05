@@ -27,12 +27,53 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 - **Cross-Platform**: Write once, run on iOS and macOS
 - **Intelligent Layout**: AI-driven layout decisions based on content and context
+- **Layout Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
 - **Performance Optimized**: Native performance with intelligent caching
 - **Accessibility First**: Built-in accessibility enhancements
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
 ## 🆕 What's New in v1.8.0
+
+- **Licensing System**: Comprehensive tiered licensing model with honor system approach
+- **Free Tier**: Personal projects, open source, educational use
+- **Startup Tier**: Free for applications with < 1,000 users
+- **Professional Tier**: $0.10/user/month for subscription applications
+- **Enterprise Tier**: $2,500/year for internal commercial use
+- **Honor System**: Trust-based compliance with clear documentation
+- **Legal Framework**: Complete license terms and compliance guidelines
+
+## 📋 Previous Release (v1.7.4)
+
+- **Cross-Platform Color Utilities**: Comprehensive color system that eliminates platform-specific color code
+- **Platform Color Extensions**: 20+ cross-platform color properties with intelligent fallbacks
+- **Color Examples**: Complete usage examples for forms, lists, cards, and system colors
+- **Comprehensive Testing**: 21 tests covering all color utilities and platform behaviors
+- **Accessibility Support**: Colors work correctly with accessibility features and dark mode
+- **Performance Optimized**: Fast color creation with consistent behavior across platforms
+
+## 📋 Previous Release (v1.7.3)
+
+- **Layout Decision Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
+- **Reasoning Examples**: Comprehensive examples showing debugging, analytics, and transparency usage
+- **Reasoning Tests**: 11 tests verifying reasoning content and consistency
+- **Documentation**: Complete documentation with practical usage examples
+- **API Transparency**: Public reasoning properties for better developer experience
+
+## 📋 Previous Release (v1.7.2)
+
+- **Image Functionality**: Complete cross-platform image handling system
+- **Photo Components**: Camera interface, photo picker, display, and editing
+- **Input Handling & Interactions**: Platform-adaptive input behavior
+- **Touch vs Mouse**: Intelligent interaction patterns for different input methods
+- **Keyboard Shortcuts**: Platform-appropriate keyboard shortcut management
+- **Haptic Feedback**: Smart haptic and sound feedback system
+- **Drag & Drop**: Cross-platform drag and drop functionality
+- **Gesture Recognition**: Swipe, pinch, and rotate gesture support
+- **Comprehensive Testing**: 37 tests for Input Handling & Interactions
+- **Photo Test Suite**: Complete test coverage for image functionality
+
+## 📋 Previous Release (v1.7.1)
 
 - **Licensing System**: Comprehensive tiered licensing model with honor system approach
 - **Free Tier**: Personal projects, open source, educational use
@@ -54,7 +95,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.4")
 ]
 ```
 
@@ -97,6 +138,99 @@ platformPresentFormData_L1(
     )
 )
 ```
+
+### Layout Decision Reasoning
+
+The framework provides transparent decision-making with detailed reasoning for debugging and analytics:
+
+```swift
+// Get layout decision with reasoning
+let decision = determineOptimalLayout_L2(
+    items: items,
+    hints: hints,
+    screenWidth: 768.0,
+    deviceType: .pad
+)
+
+// Access reasoning for debugging
+print("Layout reasoning: \(decision.reasoning)")
+// Output: "Layout optimized for current device and content: uniform approach with 1 columns, 8.0pt spacing, and standard performance"
+
+// Use reasoning for analytics
+analytics.track("layout_decision", properties: [
+    "approach": decision.approach.rawValue,
+    "reasoning": decision.reasoning
+])
+```
+
+### Cross-Platform Color Utilities
+
+Eliminate platform-specific color code with intelligent cross-platform color utilities:
+
+```swift
+// ❌ Before: Platform-specific code
+#if os(iOS)
+.foregroundColor(.tertiaryLabel)
+#elseif os(macOS)
+.foregroundColor(.secondary)
+#endif
+
+// ✅ After: Cross-platform utilities
+.foregroundColor(.platformTertiaryLabel)
+```
+
+#### Available Color Utilities
+
+```swift
+// Label colors with intelligent fallbacks
+Text("Primary Text")
+    .foregroundColor(.platformPrimaryLabel)
+
+Text("Secondary Text")
+    .foregroundColor(.platformSecondaryLabel)
+
+Text("Tertiary Text")
+    .foregroundColor(.platformTertiaryLabel)
+
+Text("Quaternary Text")
+    .foregroundColor(.platformQuaternaryLabel)
+
+// Text input colors
+TextField("Placeholder", text: $text)
+    .foregroundColor(.platformPlaceholderText)
+
+// Separator colors
+Divider()
+    .background(Color.platformSeparator)
+
+Rectangle()
+    .fill(Color.platformOpaqueSeparator)
+    .frame(height: 1)
+
+// Background colors
+VStack {
+    // Content
+}
+.background(Color.platformBackground)
+
+// System colors (consistent across platforms)
+Text("Error")
+    .foregroundColor(.platformRed)
+
+Text("Success")
+    .foregroundColor(.platformGreen)
+```
+
+### Reasoning Examples
+
+The framework includes comprehensive examples showing how to use reasoning properties:
+
+- **Debugging**: Access reasoning to understand why specific layouts were chosen
+- **Analytics**: Log reasoning for monitoring and optimization
+- **Transparency**: Display reasoning to users for transparency
+- **Testing**: Verify reasoning content in automated tests
+
+See `PlatformUIExamples.swift` for complete working examples.
 
 ## 🔧 Extending the Framework
 
@@ -145,6 +279,97 @@ For comprehensive guidance on extending the framework, see:
 - **Legal Framework**: Complete license terms and compliance guidelines
 - **Documentation**: Comprehensive licensing guide and implementation details
 - **Transparency**: Clear pricing and usage guidelines for all tiers
+
+### [v1.7.4] - 2025-09-04 (Cross-Platform Color Utilities)
+
+#### 🎨 Cross-Platform Color System
+- **Platform Color Extensions**: 20+ cross-platform color properties with intelligent fallbacks
+- **Eliminates Conditional Compilation**: No more `#if os(iOS)` / `#elseif os(macOS)` for colors
+- **Intelligent Fallbacks**: Automatic fallback colors for platform-specific color APIs
+- **Consistent API**: Same color names work across iOS and macOS
+- **Performance Optimized**: Fast color creation with consistent behavior
+
+#### 🎯 Key Color Utilities
+- **Label Colors**: `platformPrimaryLabel`, `platformSecondaryLabel`, `platformTertiaryLabel`, `platformQuaternaryLabel`
+- **Text Colors**: `platformPlaceholderText` with platform-appropriate fallbacks
+- **Separator Colors**: `platformSeparator`, `platformOpaqueSeparator` with intelligent mapping
+- **Background Colors**: `platformBackground`, `platformSecondaryBackground`, `platformGroupedBackground`
+- **System Colors**: All standard system colors with cross-platform consistency
+
+#### 📚 Usage Examples & Documentation
+- **Comprehensive Examples**: Complete usage examples for forms, lists, cards, and system colors
+- **Before/After Comparison**: Clear examples showing the improvement over platform-specific code
+- **Color Swatches**: Visual examples of all available colors
+- **Form Examples**: Real-world usage in forms and input fields
+- **List Examples**: Practical usage in list views and data display
+- **Card Examples**: Usage in card-based layouts and content presentation
+
+#### 🧪 Comprehensive Testing
+- **21 Test Cases**: Complete test coverage for all color utilities
+- **Platform Behavior Tests**: Verification of correct platform-specific behavior
+- **Accessibility Tests**: Colors work correctly with accessibility features
+- **Dark Mode Tests**: Proper behavior in both light and dark modes
+- **Performance Tests**: Fast color creation and consistent behavior
+- **Edge Case Tests**: Proper handling of different contexts and usage scenarios
+
+#### 🔧 Technical Improvements
+- **Type Safety**: Full Swift type safety for all color utilities
+- **Documentation**: Complete inline documentation with usage examples
+- **Error Handling**: Graceful error handling for all color operations
+- **Backward Compatibility**: Fully backward compatible with existing code
+- **Cross-Platform**: Consistent behavior across iOS and macOS platforms
+
+### [v1.7.3] - 2025-09-04 (Layout Decision Reasoning)
+
+#### 🧠 Layout Decision Reasoning
+- **Transparent Decision-Making**: Detailed reasoning for all layout decisions
+- **Debugging Support**: Access reasoning properties for debugging and troubleshooting
+- **Analytics Integration**: Log reasoning for monitoring and optimization
+- **User Transparency**: Display reasoning to users for transparency
+- **Comprehensive Testing**: 11 tests verifying reasoning content and consistency
+
+#### 📚 Documentation & Examples
+- **Usage Examples**: Three comprehensive example views showing practical usage
+- **Code Examples**: Complete working examples for debugging, analytics, and transparency
+- **API Documentation**: Full documentation of reasoning properties and usage patterns
+- **Developer Guide**: Clear guidance on how to use reasoning in applications
+
+#### 🔧 Technical Improvements
+- **Public API**: Reasoning properties are now documented as intentional public API features
+- **Type Safety**: Full Swift type safety for reasoning properties
+- **Performance**: Optimized reasoning generation with minimal overhead
+- **Cross-Platform**: Reasoning works consistently across iOS and macOS
+
+### [v1.7.2] - 2025-09-04 (Image Functionality & Input Handling)
+
+#### 🖼️ Image Functionality
+- **PlatformImage Type**: Cross-platform image handling with extensions
+- **Image Manipulation**: Resizing, cropping, compression, thumbnail generation
+- **Photo Components**: Camera interface, photo picker, display, and editing
+- **Photo Strategy Selection**: Intelligent photo display strategy selection
+- **Photo Layout Decisions**: Smart layout decisions for photo components
+- **Photo Semantic Layer**: High-level photo operations and abstractions
+- **Comprehensive Testing**: Complete test suite for photo functionality
+
+#### 🎯 Input Handling & Interactions
+- **Platform-Adaptive Input**: Intelligent input behavior based on platform
+- **Touch vs Mouse**: Smart interaction patterns for different input methods
+- **Keyboard Shortcuts**: Platform-appropriate keyboard shortcut management
+- **Haptic Feedback**: Smart haptic and sound feedback system
+- **Drag & Drop**: Cross-platform drag and drop functionality
+- **Gesture Recognition**: Swipe, pinch, and rotate gesture support
+- **Interaction Patterns**: Platform-specific interaction behavior
+- **Comprehensive Testing**: 37 tests covering all input handling functionality
+
+#### 🔧 Technical Improvements
+- **Layout Decision Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
+- **Reasoning Examples**: Comprehensive examples showing debugging, analytics, and transparency usage
+- **Reasoning Tests**: 11 tests verifying reasoning content and consistency
+- **Cross-Platform Compatibility**: All new features work on iOS and macOS
+- **Type Safety**: Full Swift type safety with compile-time validation
+- **Performance**: Optimized for native performance
+- **Accessibility**: Built-in accessibility enhancements
+- **Documentation**: Comprehensive documentation and examples
 
 ### [v1.7.1] - 2025-01-15 (Build Quality & Framework Enhancement)
 - **Build Quality Gate**: Comprehensive system for treating warnings as errors
