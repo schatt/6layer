@@ -408,3 +408,8 @@ public struct OCRStrategy {
         self.estimatedProcessingTime = estimatedProcessingTime
     }
 }
+
+
+
+
+

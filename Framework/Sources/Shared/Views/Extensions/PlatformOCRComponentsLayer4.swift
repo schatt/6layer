@@ -28,21 +28,21 @@ public func platformOCRImplementation_L4(
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
     #if os(iOS)
-    return iOSOCRView(
+    iOSOCRView(
         image: image,
         context: context,
         strategy: strategy,
         onResult: onResult
     )
     #elseif os(macOS)
-    return MacOSOCRView(
+    MacOSOCRView(
         image: image,
         context: context,
         strategy: strategy,
         onResult: onResult
     )
     #else
-    return Text("OCR not available on this platform")
+    Text("OCR not available on this platform")
         .foregroundColor(.secondary)
     #endif
 }
@@ -57,7 +57,7 @@ public func platformTextExtraction_L4(
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
     #if os(iOS)
-    return iOSTextExtractionView(
+    iOSTextExtractionView(
         image: image,
         context: context,
         layout: layout,
@@ -65,7 +65,7 @@ public func platformTextExtraction_L4(
         onResult: onResult
     )
     #elseif os(macOS)
-    return MacOSTextExtractionView(
+    MacOSTextExtractionView(
         image: image,
         context: context,
         layout: layout,
@@ -73,7 +73,7 @@ public func platformTextExtraction_L4(
         onResult: onResult
     )
     #else
-    return Text("Text extraction not available on this platform")
+    Text("Text extraction not available on this platform")
         .foregroundColor(.secondary)
     #endif
 }
@@ -89,7 +89,7 @@ public func platformDocumentAnalysis_L4(
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
     #if os(iOS)
-    return iOSDocumentAnalysisView(
+    iOSDocumentAnalysisView(
         image: image,
         documentType: documentType,
         context: context,
@@ -98,7 +98,7 @@ public func platformDocumentAnalysis_L4(
         onResult: onResult
     )
     #elseif os(macOS)
-    return MacOSDocumentAnalysisView(
+    MacOSDocumentAnalysisView(
         image: image,
         documentType: documentType,
         context: context,
@@ -107,7 +107,7 @@ public func platformDocumentAnalysis_L4(
         onResult: onResult
     )
     #else
-    return Text("Document analysis not available on this platform")
+    Text("Document analysis not available on this platform")
         .foregroundColor(.secondary)
     #endif
 }
@@ -120,19 +120,19 @@ public func platformTextRecognition_L4(
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
     #if os(iOS)
-    return iOSTextRecognitionView(
+    iOSTextRecognitionView(
         image: image,
         options: options,
         onResult: onResult
     )
     #elseif os(macOS)
-    return MacOSTextRecognitionView(
+    MacOSTextRecognitionView(
         image: image,
         options: options,
         onResult: onResult
     )
     #else
-    return Text("Text recognition not available on this platform")
+    Text("Text recognition not available on this platform")
         .foregroundColor(.secondary)
     #endif
 }
@@ -622,7 +622,13 @@ struct OCRImageView: View {
     
     var body: some View {
         VStack {
-            Image(platformImage: image)
+            #if os(iOS)
+            Image(uiImage: image)
+            #elseif os(macOS)
+            Image(nsImage: image as NSImage)
+            #else
+            Image(systemName: "photo")
+            #endif
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxHeight: 300)
@@ -662,6 +668,19 @@ private func isPhone(_ text: String) -> Bool {
 private func isNumber(_ text: String) -> Bool {
     let numberPattern = #"\d+"#
     return text.range(of: numberPattern, options: .regularExpression) != nil
+}
+
+// MARK: - Helper Functions
+
+/// Get CGImage from PlatformImage
+private func getCGImage(from image: PlatformImage) -> CGImage? {
+    #if os(iOS)
+    return image.cgImage
+    #elseif os(macOS)
+    return image.cgImage(forProposedRect: nil, context: nil, hints: nil)
+    #else
+    return nil
+    #endif
 }
 
 // MARK: - OCR Errors

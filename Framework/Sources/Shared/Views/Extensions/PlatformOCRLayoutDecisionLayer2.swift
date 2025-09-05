@@ -362,3 +362,8 @@ private struct DocumentRequirements {
     let preferredImageSize: CGSize
     let processingMode: OCRProcessingMode
 }
+
+
+
+
+

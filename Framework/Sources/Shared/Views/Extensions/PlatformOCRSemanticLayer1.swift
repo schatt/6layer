@@ -272,7 +272,7 @@ private func determineOptimalOCRLayout_L2(context: OCRContext) -> OCRLayout {
     let recommendedSize = determineRecommendedImageSize(for: context.textTypes)
     
     // Determine processing mode based on context
-    let processingMode = context.confidenceThreshold > 0.9 ? .accurate : .standard
+    let processingMode = context.confidenceThreshold > 0.9 ? OCRProcessingMode.accurate : OCRProcessingMode.standard
     
     // Create UI configuration
     let uiConfiguration = OCRUIConfiguration(
@@ -313,3 +313,4 @@ private func determineRecommendedImageSize(for textTypes: [TextType]) -> CGSize 
     
     return CGSize(width: width, height: height)
 }
+

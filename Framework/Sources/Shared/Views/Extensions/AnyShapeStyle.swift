@@ -7,12 +7,11 @@ import SwiftUI
 /// This is the key component that allows us to support all ShapeStyle types
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct AnyShapeStyle: ShapeStyle {
-    private let _resolve: (inout EnvironmentValues) -> Void
+    private let _resolve: @Sendable (inout EnvironmentValues) -> Void
     
     public init<S: ShapeStyle>(_ shapeStyle: S) {
         _resolve = { environment in
-            var resolved = S.Resolved()
-            resolved = shapeStyle.resolve(in: environment)
+            shapeStyle.resolve(in: &environment)
         }
     }
     
