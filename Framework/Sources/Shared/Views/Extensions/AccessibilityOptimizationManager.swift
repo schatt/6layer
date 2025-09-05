@@ -151,6 +151,18 @@ public class AccessibilityOptimizationManager: ObservableObject {
         return optimizationEngine.optimizeView(content, level: accessibilityLevel)
     }
     
+    /// Apply automatic Apple HIG compliance to a view
+        func applyAppleHIGCompliance<Content: View>(_ content: Content) -> some View {
+        let higManager = AppleHIGComplianceManager()
+        return higManager.applyHIGCompliance(to: content)
+    }
+    
+    /// Apply automatic accessibility features based on system state
+        func applyAutomaticAccessibility<Content: View>(_ content: Content) -> some View {
+        let higManager = AppleHIGComplianceManager()
+        return higManager.applyAutomaticAccessibility(to: content)
+    }
+    
     /// Get accessibility optimization suggestions for a specific view
         func getViewAccessibilitySuggestions<Content: View>(_ content: Content) -> [ViewAccessibilitySuggestion] {
         return optimizationEngine.analyzeView(content)

@@ -61,6 +61,35 @@ All documentation follows these principles:
 - **Practical guidance** for real-world usage
 - **Best practices** and common patterns
 
+## 🎯 **Framework Design Philosophy**
+
+### **Apple HIG Compliance by Default**
+The SixLayer Framework is designed to automatically follow Apple's Human Interface Guidelines (HIG) and accessibility best practices, ensuring that applications built with the framework provide excellent user experiences out of the box.
+
+**Core Principle**: *Make it impossible to build a bad UI with the framework, while making it easy to build a great one.*
+
+#### **What This Means:**
+- **Automatic Accessibility**: VoiceOver support, keyboard navigation, high contrast, and dynamic type are applied automatically when needed
+- **Platform-Specific Patterns**: iOS uses navigation stacks and haptic feedback, macOS uses window-based navigation and keyboard shortcuts
+- **Visual Design Consistency**: SF Symbols on iOS, system colors that adapt to light/dark mode, proper spacing following Apple's 8pt grid
+- **Interaction Patterns**: Appropriate touch targets, hover states, gesture recognition, and feedback for each platform
+- **Apple Quality Standards**: Every UI element follows Apple's design guidelines without developer configuration
+
+#### **Developer Experience:**
+```swift
+// Developer writes this:
+Button("Save") { saveData() }
+
+// Framework automatically provides Apple HIG compliance:
+// - Proper accessibility labels and hints
+// - Platform-appropriate styling and interactions
+// - VoiceOver support when enabled
+// - Keyboard navigation support
+// - High contrast support when needed
+// - Proper touch targets and spacing
+// - Platform-specific feedback (haptic/sound)
+```
+
 ## 🤝 Contributing to Documentation
 
 When updating documentation:

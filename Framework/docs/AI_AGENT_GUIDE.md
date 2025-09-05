@@ -9,6 +9,7 @@ AI agents need to understand:
 - **How to Use Generic Functions**: Layer 1 functions with business-specific hints
 - **Extensible Hints System**: CustomHint and EnhancedPresentationHints
 - **Best Practices**: Combining generic framework with business needs
+- **Apple HIG Compliance**: Automatic adherence to Apple's Human Interface Guidelines
 
 ## 🏗️ **Framework Architecture (Correct Understanding)**
 
@@ -545,6 +546,99 @@ let hints = EnhancedPresentationHints(
 - **CustomHint system** enables business-specific behavior
 - **customPreferences** provide business configuration
 
+## 🍎 **Apple HIG Compliance by Default**
+
+### **Core Design Philosophy**
+The SixLayer Framework automatically follows Apple's Human Interface Guidelines (HIG) and accessibility best practices, ensuring excellent user experiences without developer configuration.
+
+**Principle**: *Make it impossible to build a bad UI with the framework, while making it easy to build a great one.*
+
+### **What the Framework Automatically Provides**
+
+#### **1. Automatic Accessibility**
+```swift
+// Developer writes:
+Button("Save") { saveData() }
+
+// Framework automatically adds:
+// - VoiceOver support when enabled
+// - Keyboard navigation support
+// - High contrast support when needed
+// - Dynamic type support
+// - Proper accessibility labels and hints
+```
+
+#### **2. Platform-Specific Patterns**
+```swift
+// iOS automatically gets:
+// - Navigation stacks and sheets
+// - Haptic feedback
+// - Touch-optimized interactions
+// - SF Symbols and iOS design language
+
+// macOS automatically gets:
+// - Window-based navigation
+// - Keyboard shortcuts
+// - Mouse-optimized interactions
+// - System colors and macOS design language
+```
+
+#### **3. Visual Design Consistency**
+```swift
+// Framework automatically applies:
+// - Apple's 8pt grid system for spacing
+// - System colors that adapt to light/dark mode
+// - Platform-appropriate typography
+// - Proper touch targets (44pt minimum on iOS)
+// - Consistent corner radius and styling
+```
+
+#### **4. Interaction Patterns**
+```swift
+// Framework automatically provides:
+// - Appropriate hover states on macOS
+// - Touch feedback on iOS
+// - Gesture recognition for each platform
+// - Keyboard navigation support
+// - VoiceOver announcements
+```
+
+### **How AI Agents Should Approach This**
+
+#### **When Developers Ask About UI Quality:**
+```
+Developer: "How do I make this button accessible?"
+AI Agent: "The framework automatically handles accessibility! When you use 
+          Button("Save") { saveData() }, the framework automatically adds 
+          VoiceOver support, keyboard navigation, and proper accessibility 
+          labels. You don't need to configure anything - it just works."
+```
+
+#### **When Developers Want Platform-Specific Behavior:**
+```
+Developer: "How do I make this work differently on iOS vs macOS?"
+AI Agent: "The framework automatically adapts! It detects the platform and 
+          applies the appropriate Apple HIG patterns. iOS gets navigation 
+          stacks and haptic feedback, macOS gets window-based navigation 
+          and keyboard shortcuts. No configuration needed."
+```
+
+#### **When Developers Ask About Styling:**
+```
+Developer: "How do I make this look like a native Apple app?"
+AI Agent: "It already does! The framework automatically follows Apple's 
+          design guidelines - proper spacing, system colors, SF Symbols, 
+          and platform-appropriate styling. Your app will look and feel 
+          native without any extra work."
+```
+
+### **Key Benefits for Developers**
+1. **Zero Configuration**: Apple-quality UI out of the box
+2. **Automatic Accessibility**: No need to manually add accessibility features
+3. **Platform Adaptation**: Automatically uses the right patterns for each platform
+4. **Consistent Design**: Follows Apple's design guidelines automatically
+5. **Future-Proof**: Updates with new Apple guidelines automatically
+
 ## 🎯 **Best Practices Summary**
 
 1. **Always use generic functions** with business-specific hints
@@ -553,6 +647,7 @@ let hints = EnhancedPresentationHints(
 4. **Create CustomHint extensions** for complex business behavior
 5. **Keep framework generic** while enabling business functionality
 6. **Build business logic on top** of the generic foundation
+7. **Trust the framework's Apple HIG compliance** - it handles UI quality automatically
 
 ## 🤝 **Working with Developers**
 
