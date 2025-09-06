@@ -50,7 +50,7 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 📋 Current Status
 
-**Version**: v2.0.9 (iOS 17.0+ Availability Fixes - All Tests Passing)  
+**Version**: v2.1.0 (Layer 1 Function Accessibility Fix - All Tests Passing)  
 **Phase**: Licensing Implementation Complete  
 **Next**: Medium-Impact Areas (Priority 2)
 

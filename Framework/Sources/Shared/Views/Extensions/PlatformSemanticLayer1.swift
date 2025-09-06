@@ -95,7 +95,7 @@ public struct PresentationHints: Sendable {
 /// Generic function for presenting any collection of identifiable items
 /// Uses hints to determine optimal presentation strategy
 @MainActor
-    func platformPresentItemCollection_L1<Item: Identifiable>(
+public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
     hints: PresentationHints
 ) -> some View {
@@ -106,7 +106,7 @@ public struct PresentationHints: Sendable {
 
 /// Generic function for presenting numeric data
 @MainActor
-    func platformPresentNumericData_L1(
+public func platformPresentNumericData_L1(
     data: [GenericNumericData],
     hints: PresentationHints
 ) -> some View {
@@ -115,7 +115,7 @@ public struct PresentationHints: Sendable {
 
 /// Generic function for presenting responsive cards
 @MainActor
-    func platformResponsiveCard_L1<Content: View>(
+public func platformResponsiveCard_L1<Content: View>(
     @ViewBuilder content: () -> Content,
     hints: PresentationHints
 ) -> some View {
@@ -131,7 +131,7 @@ public struct PresentationHints: Sendable {
 
 /// Generic function for presenting form data using our intelligent form system
 @MainActor
-    func platformPresentFormData_L1(
+public func platformPresentFormData_L1(
     fields: [GenericFormField],
     hints: PresentationHints
 ) -> some View {
@@ -142,7 +142,7 @@ public struct PresentationHints: Sendable {
 /// Generic function for presenting modal forms
 /// Uses hints to determine optimal modal presentation strategy
 @MainActor
-    func platformPresentModalForm_L1(
+public func platformPresentModalForm_L1(
     formType: DataTypeHint,
     context: PresentationContext
 ) -> some View {
@@ -163,7 +163,7 @@ public struct PresentationHints: Sendable {
 
 /// Generic function for presenting media data
 @MainActor
-    func platformPresentMediaData_L1(
+public func platformPresentMediaData_L1(
     media: [GenericMediaItem],
     hints: PresentationHints
 ) -> some View {
@@ -172,7 +172,7 @@ public struct PresentationHints: Sendable {
 
 /// Generic function for presenting hierarchical data
 @MainActor
-    func platformPresentHierarchicalData_L1(
+public func platformPresentHierarchicalData_L1(
     items: [GenericHierarchicalItem],
     hints: PresentationHints
 ) -> some View {
@@ -181,7 +181,7 @@ public struct PresentationHints: Sendable {
 
 /// Generic function for presenting temporal data
 @MainActor
-    func platformPresentTemporalData_L1(
+public func platformPresentTemporalData_L1(
     items: [GenericTemporalItem],
     hints: PresentationHints
 ) -> some View {

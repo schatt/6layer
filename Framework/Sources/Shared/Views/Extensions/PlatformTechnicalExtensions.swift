@@ -136,7 +136,7 @@ func platformListImplementation<Content: View>(
     }
     #if os(iOS)
     .listStyle(.insetGrouped)
-    .scrollContentBackground(.hidden) // Optimize scrolling performance
+    .modifier(ScrollContentBackgroundModifier()) // Optimize scrolling performance
     #else
     .listStyle(.sidebar)
     #endif
