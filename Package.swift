@@ -31,6 +31,7 @@ let package = Package(
             ],
             sources: [
                 "Shared/Models",
+                "Shared/Services",
                 "Shared/Views",
                 "Shared/Views/Extensions",
                 "iOS/Views",
