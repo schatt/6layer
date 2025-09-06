@@ -400,6 +400,179 @@ public extension Color {
         return Color.gray.opacity(0.5)
         #endif
     }
+    
+    // MARK: - Business Logic Color Aliases
+    
+    /// Background color alias for business logic
+    /// Maps to platform background color
+    static var backgroundColor: Color {
+        return platformBackground
+    }
+    
+    /// Secondary background color alias for business logic
+    /// Maps to platform secondary background color
+    static var secondaryBackgroundColor: Color {
+        return platformSecondaryBackground
+    }
+    
+    /// Tertiary background color alias for business logic
+    /// Maps to platform tertiary background color
+    static var tertiaryBackgroundColor: Color {
+        #if os(iOS)
+        return Color(.tertiarySystemBackground)
+        #elseif os(macOS)
+        return Color(.textBackgroundColor)
+        #else
+        return Color.gray
+        #endif
+    }
+    
+    /// Grouped background color alias for business logic
+    /// Maps to platform grouped background color
+    static var groupedBackgroundColor: Color {
+        return platformGroupedBackground
+    }
+    
+    /// Secondary grouped background color alias for business logic
+    /// Maps to platform secondary grouped background color
+    static var secondaryGroupedBackgroundColor: Color {
+        #if os(iOS)
+        return Color(.secondarySystemGroupedBackground)
+        #elseif os(macOS)
+        return Color(.textBackgroundColor)
+        #else
+        return Color.gray
+        #endif
+    }
+    
+    /// Tertiary grouped background color alias for business logic
+    /// Maps to platform tertiary grouped background color
+    static var tertiaryGroupedBackgroundColor: Color {
+        #if os(iOS)
+        return Color(.tertiarySystemGroupedBackground)
+        #elseif os(macOS)
+        return Color(.windowBackgroundColor)
+        #else
+        return Color.gray
+        #endif
+    }
+    
+    /// Foreground color alias for business logic
+    /// Maps to platform label color
+    static var foregroundColor: Color {
+        return platformLabel
+    }
+    
+    /// Secondary foreground color alias for business logic
+    /// Maps to platform secondary label color
+    static var secondaryForegroundColor: Color {
+        return platformSecondaryLabel
+    }
+    
+    /// Tertiary foreground color alias for business logic
+    /// Maps to platform tertiary label color
+    static var tertiaryForegroundColor: Color {
+        return platformTertiaryLabel
+    }
+    
+    /// Quaternary foreground color alias for business logic
+    /// Maps to platform quaternary label color
+    static var quaternaryForegroundColor: Color {
+        return platformQuaternaryLabel
+    }
+    
+    /// Placeholder foreground color alias for business logic
+    /// Maps to platform placeholder text color
+    static var placeholderForegroundColor: Color {
+        return platformPlaceholderText
+    }
+    
+    /// Separator color alias for business logic
+    /// Maps to platform separator color
+    static var separatorColor: Color {
+        return platformSeparator
+    }
+    
+    /// Link color alias for business logic
+    /// Maps to platform link color
+    static var linkColor: Color {
+        #if os(iOS)
+        return Color(.link)
+        #elseif os(macOS)
+        return Color(.linkColor)
+        #else
+        return Color.blue
+        #endif
+    }
+    
+    // MARK: - Custom Color Resolution
+    
+    /// Resolves a color by name for business logic
+    /// Supports both system colors and custom color names
+    static func named(_ colorName: String?) -> Color? {
+        guard let colorName = colorName, !colorName.isEmpty else { return nil }
+        
+        // Map business logic color names to platform colors
+        switch colorName {
+        case "backgroundColor":
+            return backgroundColor
+        case "secondaryBackgroundColor":
+            return secondaryBackgroundColor
+        case "tertiaryBackgroundColor":
+            return tertiaryBackgroundColor
+        case "groupedBackgroundColor":
+            return groupedBackgroundColor
+        case "secondaryGroupedBackgroundColor":
+            return secondaryGroupedBackgroundColor
+        case "tertiaryGroupedBackgroundColor":
+            return tertiaryGroupedBackgroundColor
+        case "foregroundColor":
+            return foregroundColor
+        case "secondaryForegroundColor":
+            return secondaryForegroundColor
+        case "tertiaryForegroundColor":
+            return tertiaryForegroundColor
+        case "quaternaryForegroundColor":
+            return quaternaryForegroundColor
+        case "placeholderForegroundColor":
+            return placeholderForegroundColor
+        case "separatorColor":
+            return separatorColor
+        case "linkColor":
+            return linkColor
+        // System colors
+        case "blue":
+            return Color.blue
+        case "red":
+            return Color.red
+        case "green":
+            return Color.green
+        case "orange":
+            return Color.orange
+        case "yellow":
+            return Color.yellow
+        case "purple":
+            return Color.purple
+        case "pink":
+            return Color.pink
+        case "gray":
+            return Color.gray
+        case "black":
+            return Color.black
+        case "white":
+            return Color.white
+        case "clear":
+            return Color.clear
+        case "primary":
+            return Color.primary
+        case "secondary":
+            return Color.secondary
+        case "accentColor":
+            return Color.accentColor
+        default:
+            return nil
+        }
+    }
 }
 
 // MARK: - View Extensions for Platform Colors

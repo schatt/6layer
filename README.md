@@ -50,8 +50,8 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 📋 Current Status
 
-**Version**: v2.1.0 (Layer 1 Function Accessibility Fix - All Tests Passing)  
-**Phase**: Licensing Implementation Complete  
+**Version**: v2.1.1 (Cross-Platform Color Aliases - All Tests Passing)  
+**Phase**: Color System Enhancement Complete  
 **Next**: Medium-Impact Areas (Priority 2)
 
 ## 🤝 Contributing

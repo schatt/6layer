@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.1.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.1.0)
+[![Version](https://img.shields.io/badge/version-v2.1.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.1.1)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -32,6 +32,22 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility First**: Built-in accessibility enhancements
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
+
+## 🆕 What's New in v2.1.1
+
+### **🎨 Cross-Platform Color Aliases**
+- **Simplified Color API**: Business logic can use simple names like `Color.backgroundColor` instead of `Color.platformBackground`
+- **Cross-Platform Mapping**: All aliases automatically map to appropriate platform-specific colors
+- **Business Logic Integration**: `Color.named()` method for resolving both system and custom color names
+- **Comprehensive Coverage**: 13 new color aliases covering backgrounds, foregrounds, and UI elements
+- **Test-Driven Implementation**: 25 new tests ensuring reliability and cross-platform consistency
+
+### **🔧 Color System Enhancements**
+- **Background Colors**: `backgroundColor`, `secondaryBackgroundColor`, `tertiaryBackgroundColor`, `groupedBackgroundColor`
+- **Foreground Colors**: `foregroundColor`, `secondaryForegroundColor`, `tertiaryForegroundColor`, `quaternaryForegroundColor`
+- **UI Elements**: `separatorColor`, `linkColor`, `placeholderForegroundColor`
+- **Custom Resolution**: `Color.named()` supports both system colors and business logic color names
+- **Zero Breaking Changes**: Pure feature addition that enhances existing API
 
 ## 🆕 What's New in v2.0.0
 
