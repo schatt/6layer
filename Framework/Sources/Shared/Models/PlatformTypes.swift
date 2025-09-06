@@ -498,6 +498,16 @@ public struct PlatformImage {
     }
     
     #if os(iOS)
+    public init(uiImage: UIImage) {
+        self._uiImage = uiImage
+    }
+    #elseif os(macOS)
+    public init(nsImage: NSImage) {
+        self._nsImage = nsImage
+    }
+    #endif
+    
+    #if os(iOS)
     public var uiImage: UIImage { return _uiImage }
     #elseif os(macOS)
     public var nsImage: NSImage { return _nsImage }

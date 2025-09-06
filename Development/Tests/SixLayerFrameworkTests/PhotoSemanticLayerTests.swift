@@ -166,7 +166,7 @@ final class PhotoSemanticLayerTests: XCTestCase {
             UIColor.red.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
-        return PlatformImage(uiImage: uiImage)!
+        return PlatformImage(uiImage: uiImage)
         #elseif os(macOS)
         let size = NSSize(width: 100, height: 100)
         let nsImage = NSImage(size: size)
