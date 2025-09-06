@@ -282,21 +282,24 @@ final class OCRViewTests: XCTestCase {
         XCTAssertNotNil(legacyView, "Legacy OCR view should be created")
     }
     
-    // MARK: - Migration Utility Tests
+    // MARK: - OCR Service Factory Tests
     
-    func testOCRMigrationUtility() {
-        // Given: Migration utility
-        // When: Checking availability
-        let isAvailable = OCRMigrationUtility.isOCRAvailable()
+    func testOCRServiceFactory() {
+        // Given: OCR service factory
+        // When: Creating service
+        let service = OCRServiceFactory.create()
         
-        // Then: Should return availability status
-        XCTAssertNotNil(isAvailable, "Availability should not be nil")
+        // Then: Should return service
+        XCTAssertNotNil(service, "Service should not be nil")
+        XCTAssertTrue(service is OCRService, "Should return OCRService")
     }
     
-    func testOCRMigrationUtilityCapabilities() {
-        // Given: Migration utility
+    func testOCRServiceFactoryCapabilities() {
+        // Given: OCR service factory
+        let service = OCRServiceFactory.create()
+        
         // When: Getting capabilities
-        let capabilities = OCRMigrationUtility.getOCRCapabilities()
+        let capabilities = service.capabilities
         
         // Then: Should return capabilities
         XCTAssertNotNil(capabilities, "Capabilities should not be nil")
@@ -304,14 +307,15 @@ final class OCRViewTests: XCTestCase {
         XCTAssertNotNil(capabilities.supportedTextTypes, "Supported text types should not be nil")
     }
     
-    func testOCRMigrationUtilityLegacyService() {
-        // Given: Migration utility
-        // When: Creating legacy service
-        let service = OCRMigrationUtility.createLegacyService()
+    func testOCRServiceFactoryAvailability() {
+        // Given: OCR service factory
+        let service = OCRServiceFactory.create()
         
-        // Then: Should return service
-        XCTAssertNotNil(service, "Legacy service should not be nil")
-        XCTAssertTrue(service is OCRService, "Should return OCRService")
+        // When: Checking availability
+        let isAvailable = service.isAvailable
+        
+        // Then: Should return availability status
+        XCTAssertNotNil(isAvailable, "Availability should not be nil")
     }
     
     // MARK: - Integration Tests

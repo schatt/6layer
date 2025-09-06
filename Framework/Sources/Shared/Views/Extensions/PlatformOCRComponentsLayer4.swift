@@ -75,6 +75,31 @@ public func platformTextExtraction_L4(
         }
 }
 
+/// Cross-platform text recognition implementation
+/// 
+/// **DEPRECATED**: Use `OCRService.processImage()` instead
+@available(*, deprecated, message: "Use OCRService.processImage() instead")
+@ViewBuilder
+public func platformTextRecognition_L4(
+    image: PlatformImage,
+    options: TextRecognitionOptions,
+    onResult: @escaping (OCRResult) -> Void
+) -> some View {
+    // Return empty view and call result asynchronously
+    EmptyView()
+        .onAppear {
+            let fallbackResult = OCRResult(
+                extractedText: "Text recognition failed: Use OCRService.processImage() instead",
+                confidence: 0.0,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 0.0,
+                language: .english
+            )
+            onResult(fallbackResult)
+        }
+}
+
 // MARK: - Migration Notice
 
 /// This file has been deprecated in favor of the new OCR service architecture.
