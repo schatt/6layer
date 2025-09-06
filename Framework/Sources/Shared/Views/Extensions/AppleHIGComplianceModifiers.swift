@@ -158,8 +158,12 @@ public struct KeyboardNavigationModifier: ViewModifier {
                     .focusable()
             }
             #else
-            content
-                .focusable()
+            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                content
+                    .focusable()
+            } else {
+                content
+            }
             #endif
         } else {
             content

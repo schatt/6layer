@@ -94,13 +94,18 @@ final class AccessibilityEnhancementTests: XCTestCase {
     func testKeyboardNavigationSupport() {
         // Test that keyboard navigation is supported where appropriate
         if Platform.current.supportsKeyboardNavigation {
-            let keyboardView = testView
-                .onKeyPress(.return) {
-                    // Handle return key
-                    return .handled
-                }
-            
-            XCTAssertNotNil(keyboardView)
+            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                let keyboardView = testView
+                    .onKeyPress(.return) {
+                        // Handle return key
+                        return .handled
+                    }
+                
+                XCTAssertNotNil(keyboardView)
+            } else {
+                // Fallback for older versions
+                XCTAssertNotNil(testView)
+            }
         }
     }
     

@@ -219,13 +219,13 @@ public struct EnhancedDeviceCapabilities {
             // Device type detection
             if UIDevice.current.userInterfaceIdiom == .pad {
                 self.deviceType = .pad
-                self.iPadSizeCategory = iPadSizeCategory.from(screenSize: screenSize)
+                self.iPadSizeCategory = SixLayerFramework.iPadSizeCategory.from(screenSize: screenSize)
                 self.iPhoneSizeCategory = nil
                 self.supportsSplitView = true
                 self.supportsStageManager = true
             } else {
                 self.deviceType = .phone
-                self.iPhoneSizeCategory = iPhoneSizeCategory.from(screenSize: screenSize)
+                self.iPhoneSizeCategory = SixLayerFramework.iPhoneSizeCategory.from(screenSize: screenSize)
                 self.iPadSizeCategory = nil
                 self.supportsSplitView = false
                 self.supportsStageManager = false

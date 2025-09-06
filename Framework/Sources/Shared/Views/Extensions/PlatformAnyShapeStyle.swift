@@ -7,6 +7,7 @@ import SwiftUI
 /// This is the key component that allows us to support all ShapeStyle types
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct PlatformAnyShapeStyle: ShapeStyle {
+    public typealias Resolved = Color
     private let _color: Color
     
     public init<S: ShapeStyle>(_ shapeStyle: S) {
@@ -15,7 +16,11 @@ public struct PlatformAnyShapeStyle: ShapeStyle {
         self._color = Color.blue
     }
     
-    public func resolve(in environment: inout EnvironmentValues) -> Color {
+    public init(_ color: Color) {
+        self._color = color
+    }
+    
+    public func resolve(in environment: EnvironmentValues) -> Color {
         return _color
     }
 }
@@ -25,6 +30,7 @@ public struct PlatformAnyShapeStyle: ShapeStyle {
 /// ShapeStyle that adapts to accessibility settings
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct AccessibilityAwareShapeStyle: ShapeStyle {
+    public typealias Resolved = Color
     private let normalStyle: PlatformAnyShapeStyle
     private let highContrastStyle: PlatformAnyShapeStyle
     private let reducedMotionStyle: PlatformAnyShapeStyle
@@ -39,18 +45,18 @@ public struct AccessibilityAwareShapeStyle: ShapeStyle {
         self.reducedMotionStyle = reducedMotion ?? normal
     }
     
-    public func resolve(in environment: inout EnvironmentValues) -> Color {
+    public func resolve(in environment: EnvironmentValues) -> Color {
         // Check accessibility settings and apply appropriate style
         #if canImport(UIKit)
         if UIAccessibility.isDarkerSystemColorsEnabled {
-            return highContrastStyle.resolve(in: &environment)
+            return highContrastStyle.resolve(in: environment)
         } else if UIAccessibility.isReduceMotionEnabled {
-            return reducedMotionStyle.resolve(in: &environment)
+            return reducedMotionStyle.resolve(in: environment)
         } else {
-            return normalStyle.resolve(in: &environment)
+            return normalStyle.resolve(in: environment)
         }
         #else
-        return normalStyle.resolve(in: &environment)
+        return normalStyle.resolve(in: environment)
         #endif
     }
 }

@@ -102,7 +102,9 @@ public struct PlatformUIIntegration {
             case .watchOS:
                 return .inline
             case .tvOS:
-                return .large
+                return .inline
+            case .visionOS:
+                return .inline
             }
         }
         #endif
