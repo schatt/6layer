@@ -59,7 +59,7 @@ final class CoreArchitectureTests: XCTestCase {
         let dataTypes = DataTypeHint.allCases
         
         // Then
-        XCTAssertEqual(dataTypes.count, 16)
+        XCTAssertEqual(dataTypes.count, 23)
         XCTAssertTrue(dataTypes.contains(.text))
         XCTAssertTrue(dataTypes.contains(.number))
         XCTAssertTrue(dataTypes.contains(.date))

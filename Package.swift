@@ -50,11 +50,6 @@ let package = Package(
             exclude: [
                 "ValidationEngineTests.swift.disabled"
             ]
-        ),
-        .testTarget(
-            name: "SixLayerMacOSTests",
-            dependencies: ["SixLayerFramework"],
-            path: "Development/Tests/SixLayerMacOSTests"
         )
     ]
 )

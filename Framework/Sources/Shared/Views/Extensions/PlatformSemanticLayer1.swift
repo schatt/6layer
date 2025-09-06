@@ -23,6 +23,13 @@ public enum DataTypeHint: String, CaseIterable, Sendable {
     case list             // List-based data
     case grid             // Grid-based data
     case chart            // Chart/graph data
+    case navigation       // Navigation items (menus, links)
+    case action           // Interactive elements (buttons, controls)
+    case product          // Product information
+    case user             // User profiles, accounts
+    case transaction      // Financial transactions
+    case communication    // Messages, notifications
+    case location         // Geographic data
     case custom           // Custom data type
 }
 
@@ -183,20 +190,109 @@ public struct PresentationHints: Sendable {
 
 // MARK: - Generic View Structures
 
-/// Generic item collection view
+/// Generic item collection view with intelligent presentation decisions
 public struct GenericItemCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     
     public var body: some View {
-        VStack {
-            Text("Generic Collection")
-                .font(.headline)
-            Text("Items: \(items.count)")
-                .font(.caption)
+        // Layer 1: Intelligent presentation decision based on hints and platform
+        let presentationStrategy = determinePresentationStrategy()
+        
+        switch presentationStrategy {
+        case .expandableCards:
+            ExpandableCardCollectionView(items: items, hints: hints)
+        case .coverFlow:
+            CoverFlowCollectionView(items: items, hints: hints)
+        case .grid:
+            GridCollectionView(items: items, hints: hints)
+        case .list:
+            ListCollectionView(items: items, hints: hints)
+        case .masonry:
+            MasonryCollectionView(items: items, hints: hints)
+        case .adaptive:
+            AdaptiveCollectionView(items: items, hints: hints)
         }
-        .padding()
     }
+    
+    /// Determine the optimal presentation strategy based on hints and platform
+    private func determinePresentationStrategy() -> PresentationStrategy {
+        let itemType = hints.customPreferences["itemType"] ?? "generic"
+        let interactionStyle = hints.customPreferences["interactionStyle"] ?? "static"
+        let layoutPreference = hints.customPreferences["layoutPreference"] ?? "automatic"
+        
+        // Platform-aware decision making
+        let platform = Platform.current
+        let deviceType = DeviceType.current
+        
+        // Feature cards with expandable interaction
+        if itemType == "featureCards" && interactionStyle == "expandable" {
+            switch platform {
+            case .visionOS:
+                return .coverFlow // Spatial interface prefers coverflow
+            case .macOS:
+                return .expandableCards // Desktop prefers hover-expandable cards
+            case .iOS:
+                return deviceType == .pad ? .expandableCards : .adaptive
+            case .watchOS, .tvOS:
+                return .list // Constrained interfaces prefer lists
+            }
+        }
+        
+        // Media content
+        if hints.dataType == .media {
+            switch platform {
+            case .visionOS:
+                return .coverFlow
+            case .macOS, .iOS:
+                return .masonry
+            default:
+                return .grid
+            }
+        }
+        
+        // Navigation items
+        if hints.dataType == .navigation {
+            switch deviceType {
+            case .phone:
+                return .list
+            case .pad:
+                return .grid
+            case .mac:
+                return .list
+            default:
+                return .list
+            }
+        }
+        
+        // Default based on presentation preference
+        switch hints.presentationPreference {
+        case .cards, .cards:
+            return .expandableCards
+        case .list:
+            return .list
+        case .grid:
+            return .grid
+        case .masonry:
+            return .masonry
+        case .coverFlow:
+            return .coverFlow
+        case .automatic:
+            return .adaptive
+        default:
+            return .adaptive
+        }
+    }
+}
+
+/// Presentation strategies that Layer 1 can choose from
+private enum PresentationStrategy {
+    case expandableCards
+    case coverFlow
+    case grid
+    case list
+    case masonry
+    case adaptive
 }
 
 /// Generic numeric data view
