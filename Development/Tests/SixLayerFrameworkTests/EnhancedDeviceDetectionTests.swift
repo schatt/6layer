@@ -269,31 +269,16 @@ final class EnhancedDeviceDetectionTests: XCTestCase {
     // MARK: - Platform-Specific Tests
     
     func testPlatformSpecificCapabilities() {
-        // Given
-        let capabilities = EnhancedDeviceCapabilities(
-            deviceType: .phone,
-            screenSize: CGSize(width: 375, height: 667),
-            orientation: .portrait,
-            memoryAvailable: 1024 * 1024 * 1024,
-            iPhoneSizeCategory: .standard,
-            iPadSizeCategory: nil,
-            screenSizeClass: .compact,
-            supportsHapticFeedback: true,
-            supportsKeyboardShortcuts: false,
-            supportsContextMenus: true,
-            supportsSplitView: false,
-            supportsStageManager: false,
-            pixelDensity: 2.0,
-            safeAreaInsets: EdgeInsets(top: 44, leading: 0, bottom: 34, trailing: 0)
-        )
+        // Given - Create capabilities using the actual platform detection
+        let capabilities = EnhancedDeviceCapabilities()
         
-        // When & Then
+        // When & Then - Test the actual platform-specific behavior
         #if os(iOS)
-        XCTAssertTrue(capabilities.supportsHapticFeedback)
-        XCTAssertFalse(capabilities.supportsKeyboardShortcuts)
+        XCTAssertTrue(capabilities.supportsHapticFeedback, "iOS should support haptic feedback")
+        XCTAssertFalse(capabilities.supportsKeyboardShortcuts, "iOS should not support keyboard shortcuts")
         #elseif os(macOS)
-        XCTAssertFalse(capabilities.supportsHapticFeedback)
-        XCTAssertTrue(capabilities.supportsKeyboardShortcuts)
+        XCTAssertFalse(capabilities.supportsHapticFeedback, "macOS should not support haptic feedback")
+        XCTAssertTrue(capabilities.supportsKeyboardShortcuts, "macOS should support keyboard shortcuts")
         #endif
     }
     
