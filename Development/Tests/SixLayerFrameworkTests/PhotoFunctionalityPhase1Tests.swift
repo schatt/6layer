@@ -353,7 +353,22 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     }
     
     private func createTestPlatformImage() -> PlatformImage {
-        let sampleData = createSampleImageData()
-        return PlatformImage(data: sampleData) ?? PlatformImage(data: Data())!
+        #if os(iOS)
+        let size = CGSize(width: 200, height: 200)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let uiImage = renderer.image { context in
+            UIColor.red.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        return PlatformImage(uiImage: uiImage)
+        #elseif os(macOS)
+        let size = NSSize(width: 200, height: 200)
+        let nsImage = NSImage(size: size)
+        nsImage.lockFocus()
+        NSColor.red.setFill()
+        NSRect(origin: .zero, size: size).fill()
+        nsImage.unlockFocus()
+        return PlatformImage(nsImage: nsImage)
+        #endif
     }
 }

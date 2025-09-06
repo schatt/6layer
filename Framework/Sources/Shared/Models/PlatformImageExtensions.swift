@@ -25,13 +25,13 @@ public extension PlatformImage {
         let resizedImage = renderer.image { _ in
             self.uiImage.draw(in: CGRect(origin: .zero, size: targetSize))
         }
-        return PlatformImage(data: resizedImage.pngData()!)!
+        return PlatformImage(uiImage: resizedImage)
         #elseif os(macOS)
         let resizedImage = NSImage(size: targetSize)
         resizedImage.lockFocus()
         self.nsImage.draw(in: NSRect(origin: .zero, size: targetSize))
         resizedImage.unlockFocus()
-        return PlatformImage(data: resizedImage.tiffRepresentation!)!
+        return PlatformImage(nsImage: resizedImage)
         #endif
     }
     
@@ -42,13 +42,13 @@ public extension PlatformImage {
             return self
         }
         let croppedImage = UIImage(cgImage: cgImage)
-        return PlatformImage(data: croppedImage.pngData()!)!
+        return PlatformImage(uiImage: croppedImage)
         #elseif os(macOS)
         let croppedImage = NSImage(size: rect.size)
         croppedImage.lockFocus()
         self.nsImage.draw(at: .zero, from: rect, operation: .copy, fraction: 1.0)
         croppedImage.unlockFocus()
-        return PlatformImage(data: croppedImage.tiffRepresentation!)!
+        return PlatformImage(nsImage: croppedImage)
         #endif
     }
     
