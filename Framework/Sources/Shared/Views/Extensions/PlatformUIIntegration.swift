@@ -61,6 +61,7 @@ public struct PlatformUIIntegration {
             case .macOS: return true
             case .watchOS: return false
             case .tvOS: return true
+            case .visionOS: return true
             }
         }
         
@@ -234,6 +235,7 @@ public struct PlatformUIIntegration {
             case .macOS: return true
             case .watchOS: return false
             case .tvOS: return true
+            case .visionOS: return true
             }
         }
         
@@ -468,6 +470,7 @@ public struct PlatformUIIntegration {
             case .macOS: return 8
             case .watchOS: return 16
             case .tvOS: return 12
+            case .visionOS: return 14
             }
         }
         
@@ -477,6 +480,7 @@ public struct PlatformUIIntegration {
             case .macOS: return 2
             case .watchOS: return 0
             case .tvOS: return 4
+            case .visionOS: return 5
             }
         }
         
@@ -486,6 +490,7 @@ public struct PlatformUIIntegration {
             case .macOS: return 1
             case .watchOS: return 0
             case .tvOS: return 2
+            case .visionOS: return 3
             }
         }
     }

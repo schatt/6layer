@@ -388,6 +388,8 @@ public struct ThemedGenericItemCollectionView: View {
             return Array(repeating: GridItem(.flexible()), count: 1)
         case .tvOS:
             return Array(repeating: GridItem(.flexible()), count: 4)
+        case .visionOS:
+            return Array(repeating: GridItem(.flexible()), count: 3)
         }
     }
 }

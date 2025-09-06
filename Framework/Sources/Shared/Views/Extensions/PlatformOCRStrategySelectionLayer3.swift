@@ -155,6 +155,8 @@ private func determineProcessingModeForPlatform(
         return .fast // Limited processing power on watchOS
     case .tvOS:
         return .standard // Standard processing for tvOS
+    case .visionOS:
+        return .neural // visionOS can handle neural processing for spatial UI
     }
 }
 
@@ -190,6 +192,8 @@ private func getSupportedLanguagesForPlatform(_ platform: Platform) -> [OCRLangu
         return [.english, .spanish, .french, .german]
     case .tvOS:
         return [.english, .spanish, .french, .german]
+    case .visionOS:
+        return [.english, .spanish, .french, .german, .italian, .portuguese, .chinese, .japanese, .korean, .arabic, .russian]
     }
 }
 
@@ -272,6 +276,8 @@ private func getPlatformProcessingMultiplier(_ platform: Platform) -> Double {
         return 2.0 // Slower on watchOS
     case .tvOS:
         return 1.2 // Slightly slower on tvOS
+    case .visionOS:
+        return 0.9 // Good performance on visionOS
     }
 }
 
@@ -327,7 +333,7 @@ public func platformBatchOCRStrategy_L3(
     platform: Platform = .current
 ) -> OCRStrategy {
     // Start with base strategy
-    var strategy = platformOCRStrategy_L3(textTypes: textTypes, platform: platform)
+    let strategy = platformOCRStrategy_L3(textTypes: textTypes, platform: platform)
     
     // Adjust for batch processing
     let batchMultiplier = min(2.0, 1.0 + (Double(batchSize) * 0.1))

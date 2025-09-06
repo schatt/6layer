@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v1.8.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v1.8.0)
+[![Version](https://img.shields.io/badge/version-v2.0.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.0.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -33,15 +33,29 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 
-## 🆕 What's New in v1.8.0
+## 🆕 What's New in v2.0.0
 
-- **Licensing System**: Comprehensive tiered licensing model with honor system approach
-- **Free Tier**: Personal projects, open source, educational use
-- **Startup Tier**: Free for applications with < 1,000 users
-- **Professional Tier**: $0.10/user/month for subscription applications
-- **Enterprise Tier**: $2,500/year for internal commercial use
-- **Honor System**: Trust-based compliance with clear documentation
-- **Legal Framework**: Complete license terms and compliance guidelines
+### **🔍 OCR (Optical Character Recognition) System**
+- **Cross-Platform OCR**: Native iOS/macOS OCR using Apple's Vision framework
+- **Intelligent Text Recognition**: Smart text type detection (prices, dates, numbers)
+- **Multi-Language Support**: Support for multiple languages with automatic detection
+- **Document Analysis**: Intelligent document type detection (receipts, invoices, forms)
+- **6-Layer OCR Architecture**: Complete OCR implementation following framework architecture
+
+### **♿ Advanced Accessibility System**
+- **VoiceOver Support**: Complete VoiceOver integration with announcement management
+- **Keyboard Navigation**: Full keyboard navigation with focus management
+- **High Contrast Mode**: Automatic high contrast support and theme adaptation
+- **Dynamic Type**: Support for all accessibility text sizes
+- **Accessibility Testing**: Comprehensive accessibility compliance validation
+- **WCAG Compliance**: Web Content Accessibility Guidelines compliance
+
+### **🚀 Framework Enhancements**
+- **Unified OCR API**: Single API for all OCR operations across platforms
+- **Accessibility Modifiers**: Easy-to-use accessibility enhancement modifiers
+- **Performance Optimization**: Optimized OCR and accessibility performance
+- **Comprehensive Testing**: OCR and accessibility test suites
+- **Enhanced Documentation**: Complete guides for OCR and accessibility features
 
 ## 📋 Previous Release (v1.7.4)
 

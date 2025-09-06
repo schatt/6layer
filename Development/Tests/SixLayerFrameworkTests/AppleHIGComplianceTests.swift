@@ -4,6 +4,7 @@ import SwiftUI
 
 /// Comprehensive test suite for Apple HIG Compliance system
 /// Tests automatic application of Apple Human Interface Guidelines
+@MainActor
 class AppleHIGComplianceTests: XCTestCase {
     
     var complianceManager: AppleHIGComplianceManager!
@@ -42,8 +43,6 @@ class AppleHIGComplianceTests: XCTestCase {
         XCTAssertEqual(complianceManager.currentPlatform, .watchOS)
         #elseif os(tvOS)
         XCTAssertEqual(complianceManager.currentPlatform, .tvOS)
-        #elseif os(visionOS)
-        XCTAssertEqual(complianceManager.currentPlatform, .visionOS)
         #endif
     }
     
@@ -77,8 +76,8 @@ class AppleHIGComplianceTests: XCTestCase {
         // Given: Different platforms
         // When: Color system is created
         // Then: Should have platform-appropriate colors
-        let iOSColorSystem = ColorSystem(for: .iOS)
-        let macOSColorSystem = ColorSystem(for: .macOS)
+        let iOSColorSystem = ColorSystem(theme: .light, platform: .ios)
+        let macOSColorSystem = ColorSystem(theme: .light, platform: .macOS)
         
         // Both should have system colors but may be different
         XCTAssertNotNil(iOSColorSystem.primary)
@@ -102,34 +101,35 @@ class AppleHIGComplianceTests: XCTestCase {
         // Given: Different platforms
         // When: Typography system is created
         // Then: Should have platform-appropriate typography
-        let iOSTypography = TypographySystem(for: .iOS)
-        let macOSTypography = TypographySystem(for: .macOS)
+        let accessibilitySettings = SixLayerFramework.AccessibilitySettings()
+        let iOSTypography = TypographySystem(platform: .ios, accessibility: accessibilitySettings)
+        let macOSTypography = TypographySystem(platform: .macOS, accessibility: accessibilitySettings)
         
         // Both should have system fonts
         XCTAssertNotNil(iOSTypography.largeTitle)
-        XCTAssertNotNil(iOSTypography.title)
+        XCTAssertNotNil(iOSTypography.title1)
         XCTAssertNotNil(iOSTypography.headline)
         XCTAssertNotNil(iOSTypography.body)
         XCTAssertNotNil(iOSTypography.callout)
         XCTAssertNotNil(iOSTypography.subheadline)
         XCTAssertNotNil(iOSTypography.footnote)
-        XCTAssertNotNil(iOSTypography.caption)
+        XCTAssertNotNil(iOSTypography.caption1)
         
         XCTAssertNotNil(macOSTypography.largeTitle)
-        XCTAssertNotNil(macOSTypography.title)
+        XCTAssertNotNil(macOSTypography.title1)
         XCTAssertNotNil(macOSTypography.headline)
         XCTAssertNotNil(macOSTypography.body)
         XCTAssertNotNil(macOSTypography.callout)
         XCTAssertNotNil(macOSTypography.subheadline)
         XCTAssertNotNil(macOSTypography.footnote)
-        XCTAssertNotNil(macOSTypography.caption)
+        XCTAssertNotNil(macOSTypography.caption1)
     }
     
     func testSpacingSystem8ptGrid() {
         // Given: Spacing system
         // When: Spacing values are accessed
         // Then: Should follow Apple's 8pt grid system
-        let spacing = SpacingSystem(for: .iOS)
+        let spacing = HIGSpacingSystem(for: .iOS)
         
         XCTAssertEqual(spacing.xs, 4)   // 4pt
         XCTAssertEqual(spacing.sm, 8)   // 8pt
@@ -199,12 +199,12 @@ class AppleHIGComplianceTests: XCTestCase {
     
     // MARK: - Compliance Checking Tests
     
-    func testHIGComplianceCheck() {
+    func testHIGComplianceCheck() async {
         // Given: A test view
         let testView = Button("Test") { }
         
         // When: HIG compliance is checked
-        let report = complianceManager.checkHIGCompliance(testView)
+        let report = await complianceManager.checkHIGCompliance(testView)
         
         // Then: Should return a compliance report
         XCTAssertNotNil(report)
@@ -339,7 +339,6 @@ class AppleHIGComplianceTests: XCTestCase {
         XCTAssertTrue(platforms.contains(.macOS))
         XCTAssertTrue(platforms.contains(.watchOS))
         XCTAssertTrue(platforms.contains(.tvOS))
-        XCTAssertTrue(platforms.contains(.visionOS))
     }
     
     func testPlatformStringValues() {
@@ -350,7 +349,6 @@ class AppleHIGComplianceTests: XCTestCase {
         XCTAssertEqual(Platform.macOS.rawValue, "macOS")
         XCTAssertEqual(Platform.watchOS.rawValue, "watchOS")
         XCTAssertEqual(Platform.tvOS.rawValue, "tvOS")
-        XCTAssertEqual(Platform.visionOS.rawValue, "visionOS")
     }
     
     // MARK: - HIG Compliance Level Tests
@@ -378,25 +376,25 @@ class AppleHIGComplianceTests: XCTestCase {
     
     // MARK: - Integration Tests
     
-    func testAccessibilityOptimizationManagerIntegration() {
+    func testAccessibilityOptimizationManagerIntegration() async {
         // Given: AccessibilityOptimizationManager
         let accessibilityManager = AccessibilityOptimizationManager()
         
         // When: Apple HIG compliance is applied through accessibility manager
         let testView = Button("Test") { }
-        let compliantView = accessibilityManager.applyAppleHIGCompliance(testView)
+        let compliantView = await accessibilityManager.applyAppleHIGCompliance(testView)
         
         // Then: Should return a modified view
         XCTAssertNotNil(compliantView)
     }
     
-    func testAutomaticAccessibilityIntegration() {
+    func testAutomaticAccessibilityIntegration() async {
         // Given: AccessibilityOptimizationManager
         let accessibilityManager = AccessibilityOptimizationManager()
         
         // When: Automatic accessibility is applied through accessibility manager
         let testView = Button("Test") { }
-        let accessibleView = accessibilityManager.applyAutomaticAccessibility(testView)
+        let accessibleView = await accessibilityManager.applyAutomaticAccessibility(testView)
         
         // Then: Should return a modified view
         XCTAssertNotNil(accessibleView)

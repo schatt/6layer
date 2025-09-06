@@ -170,6 +170,8 @@ func applyPlatformPerformanceOptimizations<Content: View>(
         return content()
     case .tvOS:
         return content()
+    case .visionOS:
+        return content()
     }
 }
 
@@ -190,6 +192,8 @@ func applyPlatformMemoryOptimizations<Content: View>(
     case .watchOS:
         return content()
     case .tvOS:
+        return content()
+    case .visionOS:
         return content()
     }
 }
@@ -213,6 +217,8 @@ func applyPlatformAccessibilityEnhancements<Content: View>(
     case .watchOS:
         return content()
     case .tvOS:
+        return content()
+    case .visionOS:
         return content()
     }
 }

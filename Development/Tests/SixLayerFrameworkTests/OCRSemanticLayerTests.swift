@@ -122,8 +122,17 @@ final class OCRSemanticLayerTests: XCTestCase {
         )
         
         // When: Creating OCR component
-        let component = platformOCRComponent_L4(
-            configuration: configuration
+        let testImage = createTestImage()
+        let context = OCRContext()
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let component = platformOCRImplementation_L4(
+            image: testImage,
+            context: context,
+            strategy: strategy
         ) { result in
             // Then: OCR result should be processed
             XCTAssertNotNil(result)
@@ -158,13 +167,8 @@ final class OCRSemanticLayerTests: XCTestCase {
     // MARK: - Helper Methods
     
     private func createTestImage() -> PlatformImage {
-        #if os(iOS)
-        return PlatformImage(systemName: "doc.text") ?? PlatformImage()
-        #elseif os(macOS)
-        return PlatformImage(systemSymbolName: "doc.text") ?? PlatformImage()
-        #else
+        // Create a simple test image
         return PlatformImage()
-        #endif
     }
 }
 

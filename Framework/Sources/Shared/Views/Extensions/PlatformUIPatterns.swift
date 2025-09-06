@@ -61,6 +61,8 @@ public struct AdaptiveUIPatterns {
                 stackNavigation
             case .tvOS:
                 stackNavigation
+            case .visionOS:
+                stackNavigation
             }
         }
         
@@ -189,6 +191,10 @@ public struct AdaptiveUIPatterns {
                 content
             case .tvOS:
                 content
+            case .visionOS:
+                content
+                    .frame(minWidth: 500, minHeight: 400)
+                    .frame(maxWidth: 800, maxHeight: 600)
             }
         }
         
@@ -274,6 +280,8 @@ public struct AdaptiveUIPatterns {
                 plainList
             case .tvOS:
                 carouselList
+            case .visionOS:
+                groupedList
             }
         }
         
@@ -429,6 +437,7 @@ public struct AdaptiveUIPatterns {
             case .macOS: return 6
             case .watchOS: return 12
             case .tvOS: return 8
+            case .visionOS: return 10
             }
         }
         
@@ -479,6 +488,7 @@ public struct AdaptiveUIPatterns {
             case .macOS: return colors.text
             case .watchOS: return colors.primary
             case .tvOS: return colors.primary
+            case .visionOS: return colors.primary
             }
         }
         
@@ -488,6 +498,7 @@ public struct AdaptiveUIPatterns {
             case .macOS: return colors.surface
             case .watchOS: return colors.primary
             case .tvOS: return colors.surface
+            case .visionOS: return colors.surface
             }
         }
         
@@ -497,6 +508,7 @@ public struct AdaptiveUIPatterns {
             case .macOS: return colors.border
             case .watchOS: return Color.clear
             case .tvOS: return colors.border
+            case .visionOS: return colors.border
             }
         }
         
@@ -506,6 +518,7 @@ public struct AdaptiveUIPatterns {
             case .macOS: return 1
             case .watchOS: return 0
             case .tvOS: return 1
+            case .visionOS: return 1
             }
         }
     }

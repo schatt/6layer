@@ -461,8 +461,8 @@ class ShapeStyleSystemTests: XCTestCase {
         
         // When: Applying accessibility aware background
         let modifiedView = testView.accessibilityAwareBackground(
-            normal: normalStyle,
-            highContrast: highContrastStyle
+            normal: PlatformAnyShapeStyle(normalStyle),
+            highContrast: PlatformAnyShapeStyle(highContrastStyle)
         )
         
         // Then: Should return modified view
@@ -477,8 +477,8 @@ class ShapeStyleSystemTests: XCTestCase {
         
         // When: Applying accessibility aware foreground
         let modifiedView = testView.accessibilityAwareForeground(
-            normal: normalStyle,
-            reducedMotion: reducedMotionStyle
+            normal: PlatformAnyShapeStyle(normalStyle),
+            reducedMotion: PlatformAnyShapeStyle(reducedMotionStyle)
         )
         
         // Then: Should return modified view

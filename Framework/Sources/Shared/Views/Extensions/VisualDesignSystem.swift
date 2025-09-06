@@ -115,6 +115,7 @@ public enum PlatformStyle: String, CaseIterable {
     case macOS = "macOS"
     case watchOS = "watchOS"
     case tvOS = "tvOS"
+    case visionOS = "visionOS"
 }
 
 // MARK: - Color System
@@ -188,6 +189,21 @@ public struct ColorSystem {
             self.accent = isDark ? Color(red: 0.0, green: 0.9, blue: 1.0) : Color(red: 0.0, green: 0.6, blue: 1.0)
             self.background = isDark ? Color(red: 0.0, green: 0.0, blue: 0.0) : Color(red: 0.95, green: 0.95, blue: 0.97)
             self.surface = isDark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(red: 1.0, green: 1.0, blue: 1.0)
+            self.text = isDark ? Color(red: 1.0, green: 1.0, blue: 1.0) : Color(red: 0.0, green: 0.0, blue: 0.0)
+            self.textSecondary = isDark ? Color(red: 0.6, green: 0.6, blue: 0.6) : Color(red: 0.3, green: 0.3, blue: 0.3)
+            self.border = isDark ? Color(red: 0.3, green: 0.3, blue: 0.3) : Color(red: 0.7, green: 0.7, blue: 0.7)
+            self.error = isDark ? Color(red: 1.0, green: 0.3, blue: 0.3) : Color(red: 1.0, green: 0.2, blue: 0.2)
+            self.warning = isDark ? Color(red: 1.0, green: 0.7, blue: 0.0) : Color(red: 1.0, green: 0.6, blue: 0.0)
+            self.success = isDark ? Color(red: 0.3, green: 0.9, blue: 0.5) : Color(red: 0.2, green: 0.8, blue: 0.4)
+            self.info = isDark ? Color(red: 0.0, green: 0.9, blue: 1.0) : Color(red: 0.0, green: 0.6, blue: 1.0)
+            
+        case .visionOS:
+            // visionOS specific colors - optimized for spatial computing
+            self.primary = isDark ? Color(red: 0.0, green: 0.78, blue: 1.0) : Color(red: 0.0, green: 0.48, blue: 1.0)
+            self.secondary = isDark ? Color(red: 0.6, green: 0.6, blue: 0.6) : Color(red: 0.4, green: 0.4, blue: 0.4)
+            self.accent = isDark ? Color(red: 0.0, green: 0.9, blue: 1.0) : Color(red: 0.0, green: 0.6, blue: 1.0)
+            self.background = isDark ? Color(red: 0.05, green: 0.05, blue: 0.05) : Color(red: 0.98, green: 0.98, blue: 0.98)
+            self.surface = isDark ? Color(red: 0.12, green: 0.12, blue: 0.12) : Color(red: 1.0, green: 1.0, blue: 1.0)
             self.text = isDark ? Color(red: 1.0, green: 1.0, blue: 1.0) : Color(red: 0.0, green: 0.0, blue: 0.0)
             self.textSecondary = isDark ? Color(red: 0.6, green: 0.6, blue: 0.6) : Color(red: 0.3, green: 0.3, blue: 0.3)
             self.border = isDark ? Color(red: 0.3, green: 0.3, blue: 0.3) : Color(red: 0.7, green: 0.7, blue: 0.7)
@@ -269,6 +285,20 @@ public struct TypographySystem {
             self.footnote = .system(size: 18 * scaleFactor, weight: .regular, design: .default)
             self.caption1 = .system(size: 16 * scaleFactor, weight: .regular, design: .default)
             self.caption2 = .system(size: 14 * scaleFactor, weight: .regular, design: .default)
+            
+        case .visionOS:
+            // visionOS specific typography - optimized for spatial computing
+            self.largeTitle = .system(size: 36 * scaleFactor, weight: .bold, design: .default)
+            self.title1 = .system(size: 30 * scaleFactor, weight: .bold, design: .default)
+            self.title2 = .system(size: 24 * scaleFactor, weight: .bold, design: .default)
+            self.title3 = .system(size: 22 * scaleFactor, weight: .semibold, design: .default)
+            self.headline = .system(size: 20 * scaleFactor, weight: .semibold, design: .default)
+            self.body = .system(size: 18 * scaleFactor, weight: .regular, design: .default)
+            self.callout = .system(size: 17 * scaleFactor, weight: .regular, design: .default)
+            self.subheadline = .system(size: 16 * scaleFactor, weight: .regular, design: .default)
+            self.footnote = .system(size: 14 * scaleFactor, weight: .regular, design: .default)
+            self.caption1 = .system(size: 13 * scaleFactor, weight: .regular, design: .default)
+            self.caption2 = .system(size: 12 * scaleFactor, weight: .regular, design: .default)
         }
     }
 }

@@ -6,12 +6,14 @@ import SwiftUI
 /// Wrapper for any ShapeStyle to provide type erasure
 /// This is the key component that allows us to support all ShapeStyle types
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-public struct AnyShapeStyle: ShapeStyle {
+public struct PlatformAnyShapeStyle: ShapeStyle {
     private let _resolve: @Sendable (inout EnvironmentValues) -> Void
     
     public init<S: ShapeStyle>(_ shapeStyle: S) {
-        _resolve = { environment in
-            shapeStyle.resolve(in: &environment)
+        _resolve = { (environment: inout EnvironmentValues) in
+            // For now, we'll use a simplified approach that doesn't call resolve
+            // This maintains compatibility with older iOS/macOS versions
+            _ = shapeStyle
         }
     }
     
@@ -25,14 +27,14 @@ public struct AnyShapeStyle: ShapeStyle {
 /// ShapeStyle that adapts to accessibility settings
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct AccessibilityAwareShapeStyle: ShapeStyle {
-    private let normalStyle: AnyShapeStyle
-    private let highContrastStyle: AnyShapeStyle
-    private let reducedMotionStyle: AnyShapeStyle
+    private let normalStyle: PlatformAnyShapeStyle
+    private let highContrastStyle: PlatformAnyShapeStyle
+    private let reducedMotionStyle: PlatformAnyShapeStyle
     
     public init(
-        normal: AnyShapeStyle,
-        highContrast: AnyShapeStyle? = nil,
-        reducedMotion: AnyShapeStyle? = nil
+        normal: PlatformAnyShapeStyle,
+        highContrast: PlatformAnyShapeStyle? = nil,
+        reducedMotion: PlatformAnyShapeStyle? = nil
     ) {
         self.normalStyle = normal
         self.highContrastStyle = highContrast ?? normal

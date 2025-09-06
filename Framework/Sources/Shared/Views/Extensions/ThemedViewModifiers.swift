@@ -47,6 +47,7 @@ public struct ThemedCardStyle: ViewModifier {
         case .macOS: return 8
         case .watchOS: return 16
         case .tvOS: return 12
+        case .visionOS: return 14
         }
     }
     
@@ -56,6 +57,7 @@ public struct ThemedCardStyle: ViewModifier {
         case .macOS: return 1
         case .watchOS: return 0
         case .tvOS: return 0.5
+        case .visionOS: return 0.75
         }
     }
     
@@ -65,6 +67,7 @@ public struct ThemedCardStyle: ViewModifier {
         case .macOS: return Color.black.opacity(0.05)
         case .watchOS: return Color.clear
         case .tvOS: return Color.black.opacity(0.2)
+        case .visionOS: return Color.black.opacity(0.15)
         }
     }
     
@@ -74,6 +77,7 @@ public struct ThemedCardStyle: ViewModifier {
         case .macOS: return 4
         case .watchOS: return 0
         case .tvOS: return 12
+        case .visionOS: return 10
         }
     }
     
@@ -83,6 +87,7 @@ public struct ThemedCardStyle: ViewModifier {
         case .macOS: return CGSize(width: 0, height: 1)
         case .watchOS: return CGSize.zero
         case .tvOS: return CGSize(width: 0, height: 4)
+        case .visionOS: return CGSize(width: 0, height: 3)
         }
     }
 }
@@ -147,6 +152,7 @@ public struct ThemedFormStyle: ViewModifier {
         case .macOS: return .grouped
         case .watchOS: return .grouped
         case .tvOS: return .grouped
+        case .visionOS: return .grouped
         }
     }
 }
@@ -174,6 +180,7 @@ public struct ThemedTextFieldStyle: TextFieldStyle {
         case .macOS: return EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
         case .watchOS: return EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
         case .tvOS: return EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20)
+        case .visionOS: return EdgeInsets(top: 14, leading: 18, bottom: 14, trailing: 18)
         }
     }
     
@@ -183,6 +190,7 @@ public struct ThemedTextFieldStyle: TextFieldStyle {
         case .macOS: return 6
         case .watchOS: return 12
         case .tvOS: return 8
+        case .visionOS: return 10
         }
     }
     
@@ -192,6 +200,7 @@ public struct ThemedTextFieldStyle: TextFieldStyle {
         case .macOS: return 1
         case .watchOS: return 0
         case .tvOS: return 1
+        case .visionOS: return 1
         }
     }
 }
@@ -265,6 +274,7 @@ public struct ThemedProgressBar: View {
         case .macOS: return 6
         case .watchOS: return 3
         case .tvOS: return 6
+        case .visionOS: return 5
         }
     }
     

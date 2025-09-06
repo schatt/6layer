@@ -242,6 +242,9 @@ final class AccessibilityEnhancementTests: XCTestCase {
         case .watchOS:
             // watchOS should support Digital Crown accessibility
             XCTAssertTrue(platform.supportsTouchGestures)
+        case .visionOS:
+            // visionOS should support spatial accessibility
+            XCTAssertTrue(platform.supportsTouchGestures)
         }
     }
     

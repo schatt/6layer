@@ -124,6 +124,9 @@ public class KeyboardShortcutManager {
         case .watchOS, .tvOS:
             // These platforms don't support keyboard shortcuts
             return []
+        case .visionOS:
+            // visionOS supports spatial input but limited keyboard shortcuts
+            return []
         }
     }
     
@@ -139,6 +142,8 @@ public class KeyboardShortcutManager {
             return "Digital Crown or tap"
         case .tvOS:
             return "Remote button"
+        case .visionOS:
+            return "Hand gesture or voice"
         }
     }
     
@@ -178,6 +183,9 @@ public class HapticFeedbackManager {
         case .tvOS:
             // tvOS doesn't support haptic feedback
             break
+        case .visionOS:
+            // visionOS supports spatial haptics
+            triggerVisionOSFeedback(feedback)
         }
     }
     
@@ -236,6 +244,11 @@ public class HapticFeedbackManager {
         // watchOS has limited haptic feedback capabilities
         // This would need to be implemented with WatchKit
     }
+    
+    private func triggerVisionOSFeedback(_ feedback: PlatformHapticFeedback) {
+        // visionOS supports spatial haptic feedback
+        // This would need to be implemented with visionOS APIs
+    }
 }
 
 // MARK: - Drag and Drop Manager
@@ -279,6 +292,13 @@ public class DragDropManager {
                 dragPreview: .none,
                 dropIndicator: .none
             )
+        case .visionOS:
+            return DragBehavior(
+                supportsDrag: true,
+                supportsDrop: true,
+                dragPreview: .spatial,
+                dropIndicator: .spatial
+            )
         }
     }
 }
@@ -295,12 +315,14 @@ public enum DragPreviewStyle {
     case none
     case platform
     case custom
+    case spatial
 }
 
 public enum DropIndicatorStyle {
     case none
     case platform
     case custom
+    case spatial
 }
 
 // MARK: - View Extensions for Input Handling

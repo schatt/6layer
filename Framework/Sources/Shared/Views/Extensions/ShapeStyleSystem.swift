@@ -456,9 +456,9 @@ public extension View {
     
     /// Apply an accessibility-aware background style
     func accessibilityAwareBackground(
-        normal: AnyShapeStyle,
-        highContrast: AnyShapeStyle? = nil,
-        reducedMotion: AnyShapeStyle? = nil
+        normal: PlatformAnyShapeStyle,
+        highContrast: PlatformAnyShapeStyle? = nil,
+        reducedMotion: PlatformAnyShapeStyle? = nil
     ) -> some View {
         self.background(
             AccessibilityAwareShapeStyle(
@@ -471,9 +471,9 @@ public extension View {
     
     /// Apply an accessibility-aware foreground style
     func accessibilityAwareForeground(
-        normal: AnyShapeStyle,
-        highContrast: AnyShapeStyle? = nil,
-        reducedMotion: AnyShapeStyle? = nil
+        normal: PlatformAnyShapeStyle,
+        highContrast: PlatformAnyShapeStyle? = nil,
+        reducedMotion: PlatformAnyShapeStyle? = nil
     ) -> some View {
         self.foregroundStyle(
             AccessibilityAwareShapeStyle(

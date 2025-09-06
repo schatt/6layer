@@ -622,19 +622,25 @@ struct OCRImageView: View {
     
     var body: some View {
         VStack {
-            #if os(iOS)
-            Image(uiImage: image)
-            #elseif os(macOS)
-            Image(nsImage: image as NSImage)
-            #else
-            Image(systemName: "photo")
-            #endif
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: 300)
-                .onTapGesture {
-                    onTap()
-                }
+            Group {
+                #if os(iOS)
+                Image(uiImage: image.uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                #elseif os(macOS)
+                Image(nsImage: image.nsImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                #else
+                Image(systemName: "photo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                #endif
+            }
+            .frame(maxHeight: 300)
+            .onTapGesture {
+                onTap()
+            }
             
             Text("Tap to process")
                 .font(.caption)
@@ -675,9 +681,9 @@ private func isNumber(_ text: String) -> Bool {
 /// Get CGImage from PlatformImage
 private func getCGImage(from image: PlatformImage) -> CGImage? {
     #if os(iOS)
-    return image.cgImage
+    return image.uiImage.cgImage
     #elseif os(macOS)
-    return image.cgImage(forProposedRect: nil, context: nil, hints: nil)
+    return image.nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
     #else
     return nil
     #endif

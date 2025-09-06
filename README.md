@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.8.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "2.0.0")
 ]
 ```
 
@@ -50,7 +50,7 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 📋 Current Status
 
-**Version**: v1.8.0 (Licensing System & Legal Framework)  
+**Version**: v2.0.0 (OCR & Accessibility Revolution)  
 **Phase**: Licensing Implementation Complete  
 **Next**: Medium-Impact Areas (Priority 2)
 

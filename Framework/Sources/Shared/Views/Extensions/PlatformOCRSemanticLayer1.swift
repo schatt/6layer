@@ -115,7 +115,7 @@ public func platformReceiptAnalysis_L1(
     let textTypes: [TextType] = [.price, .number, .date, .general]
     
     // Receipt-specific context
-    let context = OCRContext(
+    let _ = OCRContext(
         textTypes: textTypes,
         language: .english,
         confidenceThreshold: 0.85,
@@ -141,7 +141,7 @@ public func platformBusinessCardAnalysis_L1(
     let textTypes: [TextType] = [.email, .phone, .address, .general]
     
     // Business card-specific context
-    let context = OCRContext(
+    let _ = OCRContext(
         textTypes: textTypes,
         language: .english,
         confidenceThreshold: 0.8,

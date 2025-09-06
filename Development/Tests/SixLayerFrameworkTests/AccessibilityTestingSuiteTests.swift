@@ -46,13 +46,13 @@ final class AccessibilityTestingSuiteTests: XCTestCase {
         let suite2 = AccessibilityTestingSuite()
         
         // When
-        let results1 = await suite1.runAllTests()
-        let results2 = await suite2.runAllTests()
+        await suite1.runAllTests()
+        await suite2.runAllTests()
         
         // Then
         // Both suites should have similar test results (deterministic behavior)
-        XCTAssertNotNil(results1, "Suite 1 should have test results")
-        XCTAssertNotNil(results2, "Suite 2 should have test results")
+        XCTAssertNotNil(suite1.testResults, "Suite 1 should have test results")
+        XCTAssertNotNil(suite2.testResults, "Suite 2 should have test results")
     }
     
     @MainActor
@@ -63,13 +63,13 @@ final class AccessibilityTestingSuiteTests: XCTestCase {
         let category = AccessibilityTestCategory.voiceOver
         
         // When
-        let results1 = await suite1.runTests(for: category)
-        let results2 = await suite2.runTests(for: category)
+        await suite1.runTests(for: category)
+        await suite2.runTests(for: category)
         
         // Then
         // Both suites should have similar test results (deterministic behavior)
-        XCTAssertNotNil(results1, "Suite 1 should have category test results")
-        XCTAssertNotNil(results2, "Suite 2 should have category test results")
+        XCTAssertNotNil(suite1.testResults, "Suite 1 should have category test results")
+        XCTAssertNotNil(suite2.testResults, "Suite 2 should have category test results")
     }
     
     // MARK: - Helper Methods

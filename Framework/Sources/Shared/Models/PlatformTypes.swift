@@ -16,6 +16,7 @@ public enum Platform: String, CaseIterable {
     case macOS = "macOS"
     case watchOS = "watchOS"
     case tvOS = "tvOS"
+    case visionOS = "visionOS"
     
     /// Current platform detection
     public static var current: Platform {
@@ -27,6 +28,8 @@ public enum Platform: String, CaseIterable {
         return .watchOS
         #elseif os(tvOS)
         return .tvOS
+        #elseif os(visionOS)
+        return .visionOS
         #else
         return .iOS // Default fallback
         #endif
@@ -483,6 +486,14 @@ public struct PlatformImage {
         #elseif os(macOS)
         guard let nsImage = NSImage(data: data) else { return nil }
         self._nsImage = nsImage
+        #endif
+    }
+    
+    public init() {
+        #if os(iOS)
+        self._uiImage = UIImage()
+        #elseif os(macOS)
+        self._nsImage = NSImage()
         #endif
     }
     

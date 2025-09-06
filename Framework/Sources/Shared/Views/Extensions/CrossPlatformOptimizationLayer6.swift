@@ -63,14 +63,14 @@ public extension Platform {
         switch self {
         case .iOS, .watchOS:
             return true
-        case .macOS, .tvOS:
+        case .macOS, .tvOS, .visionOS:
             return false
         }
     }
     
     var supportsTouchGestures: Bool {
         switch self {
-        case .iOS, .watchOS:
+        case .iOS, .watchOS, .visionOS:
             return true
         case .macOS, .tvOS:
             return false
@@ -81,7 +81,7 @@ public extension Platform {
         switch self {
         case .macOS, .tvOS:
             return true
-        case .iOS, .watchOS:
+        case .iOS, .watchOS, .visionOS:
             return false
         }
     }
@@ -140,6 +140,13 @@ public struct PlatformOptimizationSettings {
                 "focusEngine": true,
                 "tvInterface": true,
                 "siriRemote": true
+            ]
+        case .visionOS:
+            return [
+                "spatialUI": true,
+                "handTracking": true,
+                "eyeTracking": true,
+                "immersiveExperience": true
             ]
         }
     }
@@ -217,6 +224,8 @@ public enum DisplayOptimization: String, CaseIterable {
             self = .highDPI
         case .tvOS:
             self = .standard
+        case .visionOS:
+            self = .spatial
         }
     }
 }
@@ -237,6 +246,8 @@ public enum FrameRateOptimization: String, CaseIterable {
             self = .adaptive
         case .tvOS:
             self = .fixed60
+        case .visionOS:
+            self = .variable
         }
     }
 }
@@ -477,6 +488,10 @@ public struct NavigationPatterns {
             self.primaryNavigation = .tabBar
             self.secondaryNavigation = .focus
             self.modalPresentation = .modal
+        case .visionOS:
+            self.primaryNavigation = .spatial
+            self.secondaryNavigation = .handTracking
+            self.modalPresentation = .immersive
         }
     }
 }
@@ -491,6 +506,7 @@ public enum NavigationType: String, CaseIterable {
     case crown = "crown"
     case swipe = "swipe"
     case focus = "focus"
+    case handTracking = "handTracking"
 }
 
 public enum ModalType: String, CaseIterable {
@@ -526,6 +542,10 @@ public struct InteractionPatterns {
             self.primaryInput = .remote
             self.secondaryInput = .voice
             self.gestureSupport = [.click, .swipe, .longPress]
+        case .visionOS:
+            self.primaryInput = .handTracking
+            self.secondaryInput = .voice
+            self.gestureSupport = [.tap, .pinch, .rotate, .longPress]
         }
     }
 }
@@ -538,6 +558,7 @@ public enum InputType: String, CaseIterable {
     case gesture = "gesture"
     case digitalCrown = "digitalCrown"
     case remote = "remote"
+    case handTracking = "handTracking"
 }
 
 public enum GestureType: String, CaseIterable {
@@ -580,6 +601,10 @@ public struct LayoutPatterns {
             self.primaryLayout = .grid
             self.secondaryLayout = .stack
             self.responsiveBreakpoints = [1920, 2560, 3840, 4096]
+        case .visionOS:
+            self.primaryLayout = .spatial
+            self.secondaryLayout = .immersive
+            self.responsiveBreakpoints = [1000, 1500, 2000, 3000]
         }
     }
 }
@@ -592,6 +617,7 @@ public enum LayoutType: String, CaseIterable {
     case spatial = "spatial"
     case floating = "floating"
     case compact = "compact"
+    case immersive = "immersive"
 }
 
 // MARK: - Platform Recommendation Engine
@@ -966,6 +992,7 @@ public struct CrossPlatformTesting {
         case .macOS: return 0.92
         case .watchOS: return 0.88
         case .tvOS: return 0.90
+        case .visionOS: return 0.85
         }
     }
     
@@ -976,6 +1003,7 @@ public struct CrossPlatformTesting {
         case .macOS: return 0.91
         case .watchOS: return 0.85
         case .tvOS: return 0.89
+        case .visionOS: return 0.87
         }
     }
     
@@ -986,6 +1014,7 @@ public struct CrossPlatformTesting {
         case .macOS: return 0.87
         case .watchOS: return 0.86
         case .tvOS: return 0.88
+        case .visionOS: return 0.89
         }
     }
 }
@@ -1081,6 +1110,9 @@ public struct PerformanceBenchmarking {
         case .tvOS:
             baseRenderTime = 2.5 // TV has moderate performance
             baseMemoryUsage = 60_000_000 // 60MB baseline
+        case .visionOS:
+            baseRenderTime = 2.2 // visionOS has good performance for spatial computing
+            baseMemoryUsage = 80_000_000 // 80MB baseline for immersive experiences
         }
         
         // Generate consistent render times based on platform

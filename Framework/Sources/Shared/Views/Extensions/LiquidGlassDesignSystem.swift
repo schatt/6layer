@@ -149,6 +149,8 @@ public struct LiquidGlassMaterial: Equatable {
             return true
         case .watchOS, .tvOS:
             return false
+        case .visionOS:
+            return true
         }
     }
     
@@ -284,6 +286,8 @@ public struct FloatingControl: Equatable {
             return true
         case .watchOS, .tvOS:
             return false
+        case .visionOS:
+            return true
         }
     }
     
