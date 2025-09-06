@@ -180,11 +180,20 @@ public struct EnhancedDeviceCapabilities {
             self.screenSize = screen.bounds.size
             self.orientation = DeviceOrientation.fromUIDeviceOrientation(UIDevice.current.orientation)
             self.pixelDensity = screen.scale
+            // Get safe area insets from the key window
+            let safeAreaInsets: UIEdgeInsets
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                safeAreaInsets = window.safeAreaInsets
+            } else {
+                safeAreaInsets = UIEdgeInsets.zero
+            }
+            
             self.safeAreaInsets = EdgeInsets(
-                top: screen.safeAreaInsets.top,
-                leading: screen.safeAreaInsets.left,
-                bottom: screen.safeAreaInsets.bottom,
-                trailing: screen.safeAreaInsets.right
+                top: safeAreaInsets.top,
+                leading: safeAreaInsets.left,
+                bottom: safeAreaInsets.bottom,
+                trailing: safeAreaInsets.right
             )
             
             // Device type detection
