@@ -439,6 +439,8 @@ private func calculateOptimalCardColumns(
         deviceLimit = 4
     case .watch:
         deviceLimit = 1
+    case .car:
+        deviceLimit = 2
     }
     
     let adjustedColumns = max(1, baseColumns + complexityAdjustment)

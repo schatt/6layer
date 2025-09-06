@@ -219,7 +219,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
     private func determinePresentationStrategy() -> PresentationStrategy {
         let itemType = hints.customPreferences["itemType"] ?? "generic"
         let interactionStyle = hints.customPreferences["interactionStyle"] ?? "static"
-        let layoutPreference = hints.customPreferences["layoutPreference"] ?? "automatic"
+        let _ = hints.customPreferences["layoutPreference"] ?? "automatic"
         
         // Platform-aware decision making
         let platform = Platform.current
@@ -267,7 +267,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
         
         // Default based on presentation preference
         switch hints.presentationPreference {
-        case .cards, .cards:
+        case .cards:
             return .expandableCards
         case .list:
             return .list

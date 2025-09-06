@@ -9,12 +9,14 @@
 import Foundation
 import SwiftUI
 
+#if canImport(Vision)
+import Vision
+#endif
+
 #if os(iOS)
 import UIKit
-import Vision
 #elseif os(macOS)
 import AppKit
-import Vision
 #endif
 
 // MARK: - Layer 4: OCR Component Implementation
@@ -27,24 +29,24 @@ public func platformOCRImplementation_L4(
     strategy: OCRStrategy,
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
-    #if os(iOS)
-    iOSOCRView(
+    safePlatformOCRImplementation_L4(
         image: image,
         context: context,
         strategy: strategy,
-        onResult: onResult
+        onResult: onResult,
+        onError: { error in
+            // Handle error by creating a fallback result
+            let fallbackResult = OCRResult(
+                extractedText: "OCR processing failed: \(error.localizedDescription)",
+                confidence: 0.0,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 0.0,
+                language: context.language
+            )
+            onResult(fallbackResult)
+        }
     )
-    #elseif os(macOS)
-    MacOSOCRView(
-        image: image,
-        context: context,
-        strategy: strategy,
-        onResult: onResult
-    )
-    #else
-    Text("OCR not available on this platform")
-        .foregroundColor(.secondary)
-    #endif
 }
 
 /// Cross-platform text extraction implementation
@@ -56,26 +58,24 @@ public func platformTextExtraction_L4(
     strategy: OCRStrategy,
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
-    #if os(iOS)
-    iOSTextExtractionView(
+    safePlatformOCRImplementation_L4(
         image: image,
         context: context,
-        layout: layout,
         strategy: strategy,
-        onResult: onResult
+        onResult: onResult,
+        onError: { error in
+            // Handle error by creating a fallback result
+            let fallbackResult = OCRResult(
+                extractedText: "Text extraction failed: \(error.localizedDescription)",
+                confidence: 0.0,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 0.0,
+                language: context.language
+            )
+            onResult(fallbackResult)
+        }
     )
-    #elseif os(macOS)
-    MacOSTextExtractionView(
-        image: image,
-        context: context,
-        layout: layout,
-        strategy: strategy,
-        onResult: onResult
-    )
-    #else
-    Text("Text extraction not available on this platform")
-        .foregroundColor(.secondary)
-    #endif
 }
 
 /// Cross-platform document analysis implementation
@@ -88,28 +88,24 @@ public func platformDocumentAnalysis_L4(
     strategy: OCRStrategy,
     onResult: @escaping (OCRResult) -> Void
 ) -> some View {
-    #if os(iOS)
-    iOSDocumentAnalysisView(
+    safePlatformOCRImplementation_L4(
         image: image,
-        documentType: documentType,
         context: context,
-        layout: layout,
         strategy: strategy,
-        onResult: onResult
+        onResult: onResult,
+        onError: { error in
+            // Handle error by creating a fallback result
+            let fallbackResult = OCRResult(
+                extractedText: "Document analysis failed: \(error.localizedDescription)",
+                confidence: 0.0,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 0.0,
+                language: context.language
+            )
+            onResult(fallbackResult)
+        }
     )
-    #elseif os(macOS)
-    MacOSDocumentAnalysisView(
-        image: image,
-        documentType: documentType,
-        context: context,
-        layout: layout,
-        strategy: strategy,
-        onResult: onResult
-    )
-    #else
-    Text("Document analysis not available on this platform")
-        .foregroundColor(.secondary)
-    #endif
 }
 
 /// Cross-platform text recognition component

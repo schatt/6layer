@@ -121,6 +121,10 @@ private func calculateOptimalColumns(
     case .tv:
         // Apple TV: 2-3 columns
         return min(3, max(2, contentCount / 3))
+        
+    case .car:
+        // CarPlay: 1-2 columns for safety
+        return min(2, max(1, contentCount / 2))
     }
 }
 
@@ -139,6 +143,8 @@ private func calculateOptimalSpacing(deviceType: DeviceType, contentComplexity: 
         baseSpacing = 8
     case .tv:
         baseSpacing = 24
+    case .car:
+        baseSpacing = 16
     }
     
     // Adjust based on content complexity
@@ -187,6 +193,8 @@ private func calculateExpansionScale(deviceType: DeviceType, contentComplexity: 
         baseScale = 1.05 // Minimal expansion on watch
     case .tv:
         baseScale = 1.25 // Large expansion for TV viewing
+    case .car:
+        baseScale = 1.1 // Conservative expansion for CarPlay safety
     }
     
     // Adjust based on content complexity
@@ -213,5 +221,7 @@ private func calculateAnimationDuration(deviceType: DeviceType) -> TimeInterval 
         return 0.15 // Very fast for watch
     case .tv:
         return 0.4 // Slower for TV viewing
+    case .car:
+        return 0.2 // Fast for CarPlay safety
     }
 }

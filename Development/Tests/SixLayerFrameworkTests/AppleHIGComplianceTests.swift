@@ -204,7 +204,7 @@ class AppleHIGComplianceTests: XCTestCase {
         let testView = Button("Test") { }
         
         // When: HIG compliance is checked
-        let report = await complianceManager.checkHIGCompliance(testView)
+        let report = complianceManager.checkHIGCompliance(testView)
         
         // Then: Should return a compliance report
         XCTAssertNotNil(report)
@@ -382,7 +382,7 @@ class AppleHIGComplianceTests: XCTestCase {
         
         // When: Apple HIG compliance is applied through accessibility manager
         let testView = Button("Test") { }
-        let compliantView = await accessibilityManager.applyAppleHIGCompliance(testView)
+        let compliantView = accessibilityManager.applyAppleHIGCompliance(testView)
         
         // Then: Should return a modified view
         XCTAssertNotNil(compliantView)
@@ -394,7 +394,7 @@ class AppleHIGComplianceTests: XCTestCase {
         
         // When: Automatic accessibility is applied through accessibility manager
         let testView = Button("Test") { }
-        let accessibleView = await accessibilityManager.applyAutomaticAccessibility(testView)
+        let accessibleView = accessibilityManager.applyAutomaticAccessibility(testView)
         
         // Then: Should return a modified view
         XCTAssertNotNil(accessibleView)

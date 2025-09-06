@@ -108,6 +108,8 @@ public struct ResponsivePadding: ViewModifier {
             return 24
         case .watch:
             return 12
+        case .car:
+            return 20
         }
     }
 }

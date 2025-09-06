@@ -245,6 +245,8 @@ func optimizeForDevice<Content: View>(
         return content()
     case .watch:
         return content()
+    case .car:
+        return content()
     }
 }
 

@@ -45,11 +45,17 @@ public enum DeviceType: String, CaseIterable {
     case mac = "mac"
     case tv = "tv"
     case watch = "watch"
+    case car = "car"
     
     /// Current device type detection
     @MainActor
     public static var current: DeviceType {
         #if os(iOS)
+        // Check for CarPlay first
+        if CarPlayCapabilityDetection.isCarPlayActive {
+            return .car
+        }
+        
         if UIDevice.current.userInterfaceIdiom == .pad {
             return .pad
         } else {
@@ -99,6 +105,163 @@ public enum DeviceType: String, CaseIterable {
         }
         #endif
     }
+}
+
+// MARK: - Device Context Enumeration
+
+/// Represents the context in which the app is running for specialized optimizations
+public enum DeviceContext: String, CaseIterable {
+    case standard = "standard"
+    case carPlay = "carPlay"
+    case externalDisplay = "externalDisplay"
+    case splitView = "splitView"
+    case stageManager = "stageManager"
+    
+    /// Current device context detection
+    @MainActor
+    public static var current: DeviceContext {
+        #if os(iOS)
+        // Check for CarPlay
+        if CarPlayCapabilityDetection.isCarPlayActive {
+            return .carPlay
+        }
+        
+        // Check for external display
+        if UIScreen.screens.count > 1 {
+            return .externalDisplay
+        }
+        
+        // Check for split view (iPad only)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                if windowScene.traitCollection.horizontalSizeClass == .regular &&
+                   windowScene.traitCollection.verticalSizeClass == .regular {
+                    return .splitView
+                }
+            }
+        }
+        
+        return .standard
+        #else
+        return .standard
+        #endif
+    }
+}
+
+// MARK: - CarPlay Capability Detection
+
+/// CarPlay-specific capability detection and optimization
+public struct CarPlayCapabilityDetection {
+    
+    /// Whether CarPlay is currently active
+    @MainActor
+    public static var isCarPlayActive: Bool {
+        #if os(iOS)
+        if #available(iOS 14.0, *) {
+            // Check if we're in a CarPlay context
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                return windowScene.traitCollection.userInterfaceIdiom == .car
+            }
+        }
+        return false
+        #else
+        return false
+        #endif
+    }
+    
+    /// Whether the app supports CarPlay
+    public static var supportsCarPlay: Bool {
+        #if os(iOS)
+        if #available(iOS 14.0, *) {
+            return true
+        }
+        return false
+        #else
+        return false
+        #endif
+    }
+    
+    /// Get CarPlay-specific device type
+    @MainActor
+    public static var carPlayDeviceType: DeviceType {
+        return .car
+    }
+    
+    /// Get CarPlay-optimized layout preferences
+    public static var carPlayLayoutPreferences: CarPlayLayoutPreferences {
+        return CarPlayLayoutPreferences(
+            prefersLargeText: true,
+            prefersHighContrast: true,
+            prefersMinimalUI: true,
+            supportsVoiceControl: true,
+            supportsTouch: true,
+            supportsKnobControl: true
+        )
+    }
+    
+    /// Check if specific CarPlay features are available
+    @MainActor
+    public static func isFeatureAvailable(_ feature: CarPlayFeature) -> Bool {
+        guard isCarPlayActive else { return false }
+        
+        switch feature {
+        case .navigation:
+            return true
+        case .music:
+            return true
+        case .phone:
+            return true
+        case .messages:
+            return true
+        case .voiceControl:
+            return true
+        case .knobControl:
+            return true
+        case .touchControl:
+            return true
+        }
+    }
+}
+
+// MARK: - CarPlay Layout Preferences
+
+/// CarPlay-specific layout and interaction preferences
+public struct CarPlayLayoutPreferences {
+    public let prefersLargeText: Bool
+    public let prefersHighContrast: Bool
+    public let prefersMinimalUI: Bool
+    public let supportsVoiceControl: Bool
+    public let supportsTouch: Bool
+    public let supportsKnobControl: Bool
+    
+    public init(
+        prefersLargeText: Bool = true,
+        prefersHighContrast: Bool = true,
+        prefersMinimalUI: Bool = true,
+        supportsVoiceControl: Bool = true,
+        supportsTouch: Bool = true,
+        supportsKnobControl: Bool = true
+    ) {
+        self.prefersLargeText = prefersLargeText
+        self.prefersHighContrast = prefersHighContrast
+        self.prefersMinimalUI = prefersMinimalUI
+        self.supportsVoiceControl = supportsVoiceControl
+        self.supportsTouch = supportsTouch
+        self.supportsKnobControl = supportsKnobControl
+    }
+}
+
+// MARK: - CarPlay Features
+
+/// Available CarPlay features for capability detection
+public enum CarPlayFeature: String, CaseIterable {
+    case navigation = "navigation"
+    case music = "music"
+    case phone = "phone"
+    case messages = "messages"
+    case voiceControl = "voiceControl"
+    case knobControl = "knobControl"
+    case touchControl = "touchControl"
 }
 
 // MARK: - Keyboard Type Enumeration
@@ -226,6 +389,23 @@ public struct PlatformDeviceCapabilities {
         #else
         return false
         #endif
+    }
+    
+    /// Whether the device supports CarPlay
+    public static var supportsCarPlay: Bool {
+        return CarPlayCapabilityDetection.supportsCarPlay
+    }
+    
+    /// Whether CarPlay is currently active
+    @MainActor
+    public static var isCarPlayActive: Bool {
+        return CarPlayCapabilityDetection.isCarPlayActive
+    }
+    
+    /// Current device context
+    @MainActor
+    public static var deviceContext: DeviceContext {
+        return DeviceContext.current
     }
 }
 

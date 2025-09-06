@@ -158,7 +158,7 @@ final class OCRDisambiguationTests: XCTestCase {
         // When: Accessing id
         // Then: Should have unique identifier
         XCTAssertNotNil(candidate.id)
-        XCTAssertFalse(candidate.id.isEmpty)
+        XCTAssertNotEqual(candidate.id, UUID())
     }
     
     // MARK: - OCRDisambiguationResult Tests
@@ -373,7 +373,7 @@ final class OCRDisambiguationTests: XCTestCase {
         }
         
         XCTAssertNotNil(view)
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 1.0)
     }
     
     func testOCRDisambiguationIntegrationWithBusinessCard() {
@@ -397,7 +397,7 @@ final class OCRDisambiguationTests: XCTestCase {
         }
         
         XCTAssertNotNil(view)
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 1.0)
     }
     
     // MARK: - Edge Case Tests

@@ -221,11 +221,11 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
         var traits: AccessibilityTraits = []
         
         if isExpanded {
-            traits.insert(.isSelected)
+            _ = traits.insert(.isSelected)
         }
         
         if expansionStrategy != .none {
-            traits.insert(.isButton)
+            _ = traits.insert(.isButton)
         }
         
         return traits

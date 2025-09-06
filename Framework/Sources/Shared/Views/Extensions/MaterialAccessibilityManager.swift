@@ -226,7 +226,7 @@ public class MaterialAccessibilityManager: ObservableObject {
             // Use a special method to get the poor contrast material type
             let materialType = getMaterialTypeForPoorContrast(poorContrastMaterial)
             let contrastRatio = calculateContrastRatioForType(materialType)
-            let wcagLevel = determineWCAGLevel(contrastRatio: contrastRatio)
+            let _ = determineWCAGLevel(contrastRatio: contrastRatio)
             let isValid = contrastRatio >= MaterialWCAGLevel.AA.minimumContrastRatio
             
             if !isValid {

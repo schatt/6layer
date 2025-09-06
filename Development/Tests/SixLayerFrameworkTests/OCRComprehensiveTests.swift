@@ -7,7 +7,7 @@
 
 import XCTest
 import SwiftUI
-@testable import SixLayerFramework
+@preconcurrency @testable import SixLayerFramework
 
 /// Comprehensive tests for OCR functionality
 /// Tests all layers with edge cases, error handling, performance, and integration scenarios
@@ -890,9 +890,14 @@ final class OCRComprehensiveTests: XCTestCase {
         )
         
         for _ in 0..<5 {
+            let testImage = self.testImage
+            let context = context
+            let strategy = strategy
+            let expectation = expectation
+            
             DispatchQueue.global().async {
                 let component = platformOCRImplementation_L4(
-                    image: self.testImage,
+                    image: testImage,
                     context: context,
                     strategy: strategy,
                     onResult: { result in
@@ -905,7 +910,7 @@ final class OCRComprehensiveTests: XCTestCase {
             }
         }
         
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 2.0)
     }
     
     // MARK: - Memory Tests

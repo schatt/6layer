@@ -218,10 +218,8 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     
     func testPlatformCameraInterfaceL4() {
         // Given: Image capture callback
-        var capturedImage: PlatformImage?
-        let onImageCaptured: (PlatformImage) -> Void = { image in
-            capturedImage = image
-        }
+        var _: PlatformImage?
+        let onImageCaptured: (PlatformImage) -> Void = { _ in }
         
         // When: Creating camera interface
         let cameraInterface = platformCameraInterface_L4(onImageCaptured: onImageCaptured)
@@ -232,10 +230,8 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     
     func testPlatformPhotoPickerL4() {
         // Given: Image selection callback
-        var selectedImage: PlatformImage?
-        let onImageSelected: (PlatformImage) -> Void = { image in
-            selectedImage = image
-        }
+        var _: PlatformImage?
+        let onImageSelected: (PlatformImage) -> Void = { _ in }
         
         // When: Creating photo picker
         let photoPicker = platformPhotoPicker_L4(onImageSelected: onImageSelected)
@@ -259,10 +255,8 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     func testPlatformPhotoEditorL4() {
         // Given: A PlatformImage and edit callback
         let testImage = createTestPlatformImage()
-        var editedImage: PlatformImage?
-        let onImageEdited: (PlatformImage) -> Void = { image in
-            editedImage = image
-        }
+        var _: PlatformImage?
+        let onImageEdited: (PlatformImage) -> Void = { _ in }
         
         // When: Creating photo editor
         let photoEditor = platformPhotoEditor_L4(image: testImage, onImageEdited: onImageEdited)

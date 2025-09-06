@@ -231,7 +231,7 @@ final class SwitchControlTests: XCTestCase {
         
         // When: Measuring performance
         measure {
-            for i in 0..<1000 {
+            for _ in 0..<1000 {
                 let gesture = SwitchControlGesture(type: .singleTap, intensity: .light)
                 _ = manager.processGesture(gesture)
             }

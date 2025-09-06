@@ -114,7 +114,7 @@ final class OCRSemanticLayerTests: XCTestCase {
     
     func testPlatformOCRComponent_L4() {
         // Given: OCR configuration
-        let configuration = OCRConfiguration(
+        let _ = OCRConfiguration(
             textTypes: [.price, .number],
             language: .english,
             confidenceThreshold: 0.8,

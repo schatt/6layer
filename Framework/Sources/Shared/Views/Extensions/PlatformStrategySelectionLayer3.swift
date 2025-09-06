@@ -176,6 +176,10 @@ public enum GridType {
         type = .fixed
         breakpoints = [136, 180, 198]
         adaptive = false
+    case (.car, _):
+        type = .fixed
+        breakpoints = [800, 1200]
+        adaptive = false
     }
     
     return ResponsiveBehavior(
@@ -265,6 +269,9 @@ private func calculateAdaptiveWidths(
     case .watch:
         minWidth = 120
         maxWidth = width * 0.95
+    case .car:
+        minWidth = 200
+        maxWidth = width * 0.8
     }
     
     return (minWidth, maxWidth)

@@ -346,6 +346,8 @@ public struct EnhancedDeviceCapabilities {
                 return baseMemory * 4 // 4GB
             case .watch:
                 return baseMemory / 4 // 256MB
+            case .car:
+                return baseMemory * 2 // 2GB
             }
         }
     }
@@ -441,6 +443,8 @@ extension DeviceType {
             return "Apple TV"
         case .watch:
             return "Apple Watch"
+        case .car:
+            return "CarPlay"
         }
     }
     

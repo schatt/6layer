@@ -13,7 +13,7 @@ import SwiftUI
 
 /// Represents a single piece of data found by OCR that may need disambiguation
 public struct OCRDataCandidate: Identifiable, Equatable, Hashable {
-    public let id = UUID()
+    public let id: UUID
     public let text: String
     public let boundingBox: CGRect
     public let confidence: Float
@@ -27,11 +27,21 @@ public struct OCRDataCandidate: Identifiable, Equatable, Hashable {
         suggestedType: TextType,
         alternativeTypes: [TextType]
     ) {
+        self.id = UUID()
         self.text = text
         self.boundingBox = boundingBox
         self.confidence = confidence
         self.suggestedType = suggestedType
         self.alternativeTypes = alternativeTypes
+    }
+    
+    // Custom equality that ignores UUID for testing
+    public static func == (lhs: OCRDataCandidate, rhs: OCRDataCandidate) -> Bool {
+        return lhs.text == rhs.text &&
+               lhs.boundingBox == rhs.boundingBox &&
+               lhs.confidence == rhs.confidence &&
+               lhs.suggestedType == rhs.suggestedType &&
+               lhs.alternativeTypes == rhs.alternativeTypes
     }
 }
 
@@ -119,7 +129,7 @@ public func shouldRequireDisambiguation(candidates: [OCRDataCandidate]) -> Bool 
             // 1. Average confidence is below threshold, OR
             // 2. Confidence range is small (similar confidence), OR
             // 3. Any candidate has very low confidence
-            if avgConfidence < 0.7 || confidenceRange < 0.2 || confidences.contains { $0 < 0.5 } {
+            if avgConfidence < 0.7 || confidenceRange < 0.2 || confidences.contains(where: { $0 < 0.5 }) {
                 return true
             }
         }
@@ -134,6 +144,17 @@ public func shouldRequireDisambiguation(candidates: [OCRDataCandidate]) -> Bool 
                 return true
             }
         }
+    }
+    
+    // Check for mixed confidence levels (high confidence difference)
+    let confidences = candidates.map { $0.confidence }
+    let maxConfidence = confidences.max() ?? 0
+    let minConfidence = confidences.min() ?? 0
+    let confidenceRange = maxConfidence - minConfidence
+    
+    // Require disambiguation if confidence range is large (mixed confidence)
+    if confidenceRange > 0.3 {
+        return true
     }
     
     return false

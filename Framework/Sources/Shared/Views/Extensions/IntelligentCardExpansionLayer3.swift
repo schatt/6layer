@@ -187,6 +187,12 @@ private func selectPrimaryStrategy(
         if supportedStrategies.contains(.focusMode) {
             return .focusMode
         }
+        
+    case .car:
+        // CarPlay: prefer focus mode for safety
+        if supportedStrategies.contains(.focusMode) {
+            return .focusMode
+        }
     }
     
     // Fallback to first supported strategy
@@ -228,6 +234,8 @@ private func calculateExpansionScale(
         deviceMultiplier = 0.8 // Less expansion on watch
     case .tv:
         deviceMultiplier = 1.2 // More expansion for TV viewing
+    case .car:
+        deviceMultiplier = 0.9 // Conservative expansion for CarPlay safety
     }
     
     // Adjust based on content density
@@ -275,6 +283,8 @@ private func calculateAnimationDuration(
         return baseDuration * 0.6 // Very fast on watch
     case .tv:
         return baseDuration * 1.2 // Slower on TV
+    case .car:
+        return baseDuration * 0.7 // Fast for CarPlay safety
     }
 }
 
