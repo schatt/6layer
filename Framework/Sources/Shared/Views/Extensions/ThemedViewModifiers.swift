@@ -106,7 +106,7 @@ public struct ThemedListStyle: ViewModifier {
             #else
             .listStyle(.plain)
             #endif
-            .scrollContentBackground(.hidden)
+            .modifier(ScrollContentBackgroundModifier())
             .background(colors.background)
     }
     
@@ -330,6 +330,19 @@ public extension View {
     /// Apply themed text field styling
     func themedTextField() -> some View {
         self.textFieldStyle(ThemedTextFieldStyle())
+    }
+}
+
+// MARK: - ScrollContentBackground Modifier
+
+/// Platform-aware scrollContentBackground modifier that handles iOS 17.0+ availability
+struct ScrollContentBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            content.scrollContentBackground(.hidden)
+        } else {
+            content
+        }
     }
 }
 

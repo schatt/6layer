@@ -304,7 +304,7 @@ public struct visionOSExpandableCardView<Item: Identifiable>: View {
             performanceConfig: getCardExpansionPerformanceConfig(),
             accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
-        .focusable()
+        .modifier(FocusableModifier())
     }
 }
 
@@ -332,6 +332,19 @@ public struct PlatformAwareExpandableCardView<Item: Identifiable>: View {
                 performanceConfig: getCardExpansionPerformanceConfig(),
                 accessibilityConfig: getCardExpansionAccessibilityConfig()
             )
+        }
+    }
+}
+
+// MARK: - Focusable Modifier
+
+/// Platform-aware focusable modifier that handles iOS 17.0+ availability
+struct FocusableModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            content.focusable()
+        } else {
+            content
         }
     }
 }

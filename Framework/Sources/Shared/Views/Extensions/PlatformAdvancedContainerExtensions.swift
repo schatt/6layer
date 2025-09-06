@@ -96,7 +96,7 @@ public extension View {
     /// ```
     func platformScrollContainer(showsIndicators: Bool = true) -> some View {
         #if os(iOS)
-        if #available(iOS 16.0, *) {
+        if #available(iOS 17.0, *) {
             return self
                 .scrollIndicators(showsIndicators ? .visible : .hidden)
                 .background(Color.platformGroupedBackground)
@@ -159,7 +159,7 @@ public extension View {
     /// ```
     func platformFormContainer() -> some View {
         #if os(iOS)
-        if #available(iOS 16.0, *) {
+        if #available(iOS 17.0, *) {
             return self
                 .background(Color.platformGroupedBackground)
                 .scrollContentBackground(.hidden)

@@ -30,7 +30,7 @@ func platformFormImplementation<Content: View>(
         content()
     }
     .formStyle(.grouped) // Apply consistent form styling
-    .scrollContentBackground(.hidden) // Optimize scrolling performance
+    .modifier(ScrollContentBackgroundModifier()) // Optimize scrolling performance
     .accessibilityElement(children: .contain) // Improve accessibility
 }
 
@@ -359,3 +359,4 @@ public extension View {
         }
     }
 }
+

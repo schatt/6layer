@@ -1,14 +1,24 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v2.0.8 - All Tests Passing** 🚀
+## 📍 **Current Status: v2.0.9 - All Tests Passing** 🚀
 
-**Last Release**: v2.0.8 - Intelligent Card Expansion System  
+**Last Release**: v2.0.9 - iOS 17.0+ Availability Fixes  
 **Current Phase**: Stable Release - All 540 Tests Passing  
 **Next Phase**: Framework Enhancement Areas - Medium-Impact Areas (Priority 2)
 
 ---
 
 ## 🚀 **Recent Updates**
+
+### **v2.0.9 - iOS 17.0+ Availability Fixes** ✅
+- **iOS 17.0+ API Compatibility**: Fixed all iOS 17.0+ API usage without proper availability checks
+- **focusable() Modifier**: Added proper iOS 17.0+ availability checks with `FocusableModifier`
+- **scrollContentBackground() Modifier**: Added proper iOS 17.0+ availability checks with `ScrollContentBackgroundModifier`
+- **scrollIndicators() Modifier**: Fixed availability check from iOS 16.0+ to iOS 17.0+
+- **Cross-Platform Compatibility**: Maintained iOS 16.0+ support while enabling iOS 17.0+ features when available
+- **Build Stability**: All compilation errors resolved, framework builds successfully on iOS 16.0+
+- **Test Coverage**: All 540 tests passing with no regressions
+- **Backward Compatibility**: Full backward compatibility maintained for older iOS versions
 
 ### **v2.0.8 - Intelligent Card Expansion System** ✅
 - **Intelligent Card System**: Complete 6-layer implementation for expandable card collections
