@@ -84,16 +84,17 @@ public extension PlatformTextFieldStyle {
     
     #if os(iOS)
     /// Convert to UIKit text field style
+    @ViewBuilder
     var uiTextFieldStyle: some TextFieldStyle {
         switch self {
         case .defaultStyle:
-            return DefaultTextFieldStyle()
+            DefaultTextFieldStyle()
         case .roundedBorder:
-            return RoundedBorderTextFieldStyle()
+            RoundedBorderTextFieldStyle()
         case .plain:
-            return PlainTextFieldStyle()
+            PlainTextFieldStyle()
         case .secure:
-            return DefaultTextFieldStyle() // Secure is handled by SecureField
+            DefaultTextFieldStyle() // Secure is handled by SecureField
         }
     }
     #endif

@@ -374,7 +374,9 @@ struct AnyShape: Shape {
     private let _path: @Sendable (CGRect) -> Path
     
     init<S: Shape>(_ shape: S) {
-        _path = shape.path(in:)
+        _path = { rect in
+            shape.path(in: rect)
+        }
     }
     
     func path(in rect: CGRect) -> Path {

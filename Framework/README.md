@@ -229,10 +229,10 @@ VStack {
 
 // System colors (consistent across platforms)
 Text("Error")
-    .foregroundColor(.platformRed)
+    .foregroundColor(.platformDestructive)
 
 Text("Success")
-    .foregroundColor(.platformGreen)
+    .foregroundColor(.platformSuccess)
 ```
 
 ### Reasoning Examples
