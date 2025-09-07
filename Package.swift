@@ -34,12 +34,15 @@ let package = Package(
                 "Shared/Services",
                 "Shared/Views",
                 "Shared/Views/Extensions",
+                "Shared/WindowDetection",
                 "iOS/Views",
                 "iOS/Views/Extensions", 
                 "iOS/ProjectHelpers",
+                "iOS/WindowDetection",
                 "macOS/Views",
                 "macOS/Views/Extensions",
-                "macOS/ProjectHelpers"
+                "macOS/ProjectHelpers",
+                "macOS/WindowDetection"
             ]
         ),
         
