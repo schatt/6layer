@@ -263,7 +263,7 @@ final class EnhancedDeviceDetectionTests: XCTestCase {
         // Given & When & Then
         XCTAssertEqual(iPhoneSizeCategory.from(screenSize: CGSize(width: 2000, height: 2000)), .unknown)
         XCTAssertEqual(iPadSizeCategory.from(screenSize: CGSize(width: 2000, height: 2000)), .unknown)
-        XCTAssertEqual(ScreenSizeClass.from(screenSize: CGSize(width: 2000, height: 2000)), .regular)
+        XCTAssertEqual(ScreenSizeClass.from(screenSize: CGSize(width: 2000, height: 2000)), .large)
     }
     
     // MARK: - Platform-Specific Tests
