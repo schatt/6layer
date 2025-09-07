@@ -159,17 +159,19 @@ public enum ScreenSizeClass: String, CaseIterable {
             case (1920, 1080): // Desktop/TV
                 return .large
             case (2000, 2000): // Very large
-                return .regular
+                return .large
+            case (3840, 2160): // 4K display
+                return .large
+            case (1200, 800): // Large laptop
+                return .large
             default:
                 // Fallback to dimension-based classification
                 if minDimension < 600 {
                     return .compact
-                } else if minDimension < 1100 {
+                } else if minDimension < 1000 {
                     return .regular
-                } else if minDimension < 2000 {
-                    return .large
                 } else {
-                    return .regular
+                    return .large
                 }
             }
         }

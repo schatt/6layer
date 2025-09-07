@@ -290,7 +290,7 @@ extension ScreenSizeClass {
         // macOS-specific breakpoints
         if minDimension < 800 {
             return .compact
-        } else if minDimension < 1400 {
+        } else if minDimension < 1000 {
             return .regular
         } else {
             return .large
