@@ -24,6 +24,14 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
 - **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
 
+### 📝 Form Components
+- **[AdvancedFieldTypesGuide.md](AdvancedFieldTypesGuide.md)** - **NEW!** Complete guide to advanced form field types
+- **Rich Text Editor** - Formatting capabilities with platform-specific implementation
+- **Date/Time Pickers** - Comprehensive date and time selection components
+- **File Upload** - Drag & drop file upload with validation
+- **Autocomplete** - Smart suggestion-based input fields
+- **Custom Fields** - Extensible custom field component system
+
 ### 📸 OCR & Visual Features
 - **[OCROverlayGuide.md](OCROverlayGuide.md)** - **NEW!** Complete guide to OCR overlay system
 - **OCR Overlay System** - Interactive visual text correction with bounding box editing

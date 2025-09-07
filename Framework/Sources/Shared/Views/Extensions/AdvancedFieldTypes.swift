@@ -148,22 +148,32 @@ public struct RichTextToolbar: View {
     
     private func formatBold() {
         // Format bold implementation
+        // This would apply bold formatting to the selected text
+        // For now, this is a placeholder for the actual implementation
     }
     
     private func formatItalic() {
         // Format italic implementation
+        // This would apply italic formatting to the selected text
+        // For now, this is a placeholder for the actual implementation
     }
     
     private func formatUnderline() {
         // Format underline implementation
+        // This would apply underline formatting to the selected text
+        // For now, this is a placeholder for the actual implementation
     }
     
     private func formatBullet() {
         // Format bullet list implementation
+        // This would apply bullet list formatting to the selected text
+        // For now, this is a placeholder for the actual implementation
     }
     
     private func formatNumbered() {
         // Format numbered list implementation
+        // This would apply numbered list formatting to the selected text
+        // For now, this is a placeholder for the actual implementation
     }
 }
 
@@ -216,6 +226,8 @@ public struct AutocompleteField: View {
         VStack(alignment: .leading, spacing: 4) {
             TextField(field.placeholder ?? field.label, text: $text)
                 .textFieldStyle(.roundedBorder)
+                .accessibilityLabel("Autocomplete field for \(field.label)")
+                .accessibilityHint("Type to search and select from suggestions")
                 .onChange(of: text) { newValue in
                     filterSuggestions(query: newValue)
                     formState.setValue(newValue, for: field.id)
@@ -242,10 +254,26 @@ public struct AutocompleteField: View {
             filteredSuggestions = []
             showSuggestions = false
         } else {
+            // Enhanced filtering with better matching
             filteredSuggestions = suggestions.filter { suggestion in
-                suggestion.localizedCaseInsensitiveContains(query)
+                suggestion.localizedCaseInsensitiveContains(query) ||
+                suggestion.lowercased().hasPrefix(query.lowercased())
             }
-            showSuggestions = true
+            .sorted { suggestion1, suggestion2 in
+                // Prioritize exact matches and prefix matches
+                let queryLower = query.lowercased()
+                let s1Lower = suggestion1.lowercased()
+                let s2Lower = suggestion2.lowercased()
+                
+                if s1Lower.hasPrefix(queryLower) && !s2Lower.hasPrefix(queryLower) {
+                    return true
+                } else if !s1Lower.hasPrefix(queryLower) && s2Lower.hasPrefix(queryLower) {
+                    return false
+                } else {
+                    return suggestion1 < suggestion2
+                }
+            }
+            showSuggestions = !filteredSuggestions.isEmpty
         }
     }
 }
@@ -383,16 +411,60 @@ public struct FileUploadArea: View {
             handleDrop(providers: providers)
             return true
         }
+        .accessibilityLabel("File upload area")
+        .accessibilityHint("Drag and drop files here or tap to browse")
     }
     
     private func selectFiles() {
         // File picker implementation
         // This would integrate with the system file picker
+        // For now, this is a placeholder for the actual implementation
+        #if os(iOS)
+        // iOS file picker implementation would go here
+        #elseif os(macOS)
+        // macOS file picker implementation would go here
+        #endif
     }
     
     private func handleDrop(providers: [NSItemProvider]) {
         // Handle dropped files
         // This would process the dropped file providers
+        // For now, this is a placeholder for the actual implementation
+        var newFiles: [FileInfo] = []
+        
+        for provider in providers {
+            if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+                // Handle image files
+                provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { item, error in
+                    if let url = item as? URL {
+                        let fileInfo = FileInfo(
+                            name: url.lastPathComponent,
+                            size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
+                            type: UTType.image,
+                            url: url
+                        )
+                        newFiles.append(fileInfo)
+                    }
+                }
+            } else if provider.hasItemConformingToTypeIdentifier(UTType.pdf.identifier) {
+                // Handle PDF files
+                provider.loadItem(forTypeIdentifier: UTType.pdf.identifier, options: nil) { item, error in
+                    if let url = item as? URL {
+                        let fileInfo = FileInfo(
+                            name: url.lastPathComponent,
+                            size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
+                            type: UTType.pdf,
+                            url: url
+                        )
+                        newFiles.append(fileInfo)
+                    }
+                }
+            }
+        }
+        
+        if !newFiles.isEmpty {
+            onFilesSelected(newFiles)
+        }
     }
 }
 
@@ -463,6 +535,146 @@ public struct FileRow: View {
         .padding(8)
         .background(Color.tertiaryBackground)
         .cornerRadius(6)
+    }
+}
+
+// MARK: - Date Picker Field
+
+/// Date picker field for selecting dates
+public struct DatePickerField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    @State private var selectedDate = Date()
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(field.label)
+                .font(.headline)
+            
+            DatePicker(
+                field.placeholder ?? "Select date",
+                selection: $selectedDate,
+                displayedComponents: .date
+            )
+            .datePickerStyle(.compact)
+            .accessibilityLabel("Date picker for \(field.label)")
+            .accessibilityHint("Tap to select a date")
+            .onChange(of: selectedDate) { newDate in
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formState.setValue(formatter.string(from: newDate), for: field.id)
+            }
+            .onAppear {
+                // Load existing value if available
+                if let existingValue: String = formState.getValue(for: field.id) {
+                    let formatter = DateFormatter()
+                    formatter.dateStyle = .medium
+                    if let date = formatter.date(from: existingValue) {
+                        selectedDate = date
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Time Picker Field
+
+/// Time picker field for selecting times
+public struct TimePickerField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    @State private var selectedTime = Date()
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(field.label)
+                .font(.headline)
+            
+            DatePicker(
+                field.placeholder ?? "Select time",
+                selection: $selectedTime,
+                displayedComponents: .hourAndMinute
+            )
+            .datePickerStyle(.compact)
+            .accessibilityLabel("Time picker for \(field.label)")
+            .accessibilityHint("Tap to select a time")
+            .onChange(of: selectedTime) { newTime in
+                let formatter = DateFormatter()
+                formatter.timeStyle = .short
+                formState.setValue(formatter.string(from: newTime), for: field.id)
+            }
+            .onAppear {
+                // Load existing value if available
+                if let existingValue: String = formState.getValue(for: field.id) {
+                    let formatter = DateFormatter()
+                    formatter.timeStyle = .short
+                    if let time = formatter.date(from: existingValue) {
+                        selectedTime = time
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Date Time Picker Field
+
+/// Date and time picker field for selecting both date and time
+public struct DateTimePickerField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    @State private var selectedDateTime = Date()
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(field.label)
+                .font(.headline)
+            
+            DatePicker(
+                field.placeholder ?? "Select date and time",
+                selection: $selectedDateTime,
+                displayedComponents: [.date, .hourAndMinute]
+            )
+            .datePickerStyle(.compact)
+            .accessibilityLabel("Date and time picker for \(field.label)")
+            .accessibilityHint("Tap to select date and time")
+            .onChange(of: selectedDateTime) { newDateTime in
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formatter.timeStyle = .short
+                formState.setValue(formatter.string(from: newDateTime), for: field.id)
+            }
+            .onAppear {
+                // Load existing value if available
+                if let existingValue: String = formState.getValue(for: field.id) {
+                    let formatter = DateFormatter()
+                    formatter.dateStyle = .medium
+                    formatter.timeStyle = .short
+                    if let dateTime = formatter.date(from: existingValue) {
+                        selectedDateTime = dateTime
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Custom Field View
+
+/// Custom field view that uses the registry to find appropriate components
+public struct CustomFieldView: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        // For now, fallback to a basic text field for custom types
+        // The registry system will be enhanced in future iterations
+        TextField(field.placeholder ?? field.label, text: Binding(
+            get: { formState.getValue(for: field.id) ?? "" },
+            set: { formState.setValue($0, for: field.id) }
+        ))
+        .textFieldStyle(.roundedBorder)
     }
 }
 

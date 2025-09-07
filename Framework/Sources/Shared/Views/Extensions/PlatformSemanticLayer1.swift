@@ -188,6 +188,157 @@ public func platformPresentTemporalData_L1(
     return GenericTemporalView(items: items, hints: hints)
 }
 
+// MARK: - Enhanced Presentation Hints Overloads
+
+/// Generic function for presenting any collection of identifiable items with enhanced hints
+/// Uses enhanced hints to determine optimal presentation strategy and process extensible hints
+@MainActor
+public func platformPresentItemCollection_L1<Item: Identifiable>(
+    items: [Item],
+    hints: EnhancedPresentationHints
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return GenericItemCollectionView(items: items, hints: processedHints)
+        .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting numeric data with enhanced hints
+@MainActor
+public func platformPresentNumericData_L1(
+    data: [GenericNumericData],
+    hints: EnhancedPresentationHints
+) -> some View {
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return GenericNumericDataView(data: data, hints: processedHints)
+        .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting responsive cards with enhanced hints
+@MainActor
+public func platformResponsiveCard_L1<Content: View>(
+    @ViewBuilder content: () -> Content,
+    hints: EnhancedPresentationHints
+) -> some View {
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return ResponsiveCardView(data: ResponsiveCardData(
+        title: "Generic Card",
+        subtitle: "Generated from Layer 1",
+        icon: "doc.text",
+        color: .blue,
+        complexity: processedHints.complexity
+    ))
+    .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting form data with enhanced hints
+@MainActor
+public func platformPresentFormData_L1(
+    fields: [GenericFormField],
+    hints: EnhancedPresentationHints
+) -> some View {
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return SimpleFormView(fields: fields, hints: processedHints)
+        .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting media data with enhanced hints
+@MainActor
+public func platformPresentMediaData_L1(
+    media: [GenericMediaItem],
+    hints: EnhancedPresentationHints
+) -> some View {
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return GenericMediaView(media: media, hints: processedHints)
+        .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting hierarchical data with enhanced hints
+@MainActor
+public func platformPresentHierarchicalData_L1(
+    items: [GenericHierarchicalItem],
+    hints: EnhancedPresentationHints
+) -> some View {
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return GenericHierarchicalView(items: items, hints: processedHints)
+        .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting temporal data with enhanced hints
+@MainActor
+public func platformPresentTemporalData_L1(
+    items: [GenericTemporalItem],
+    hints: EnhancedPresentationHints
+) -> some View {
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return GenericTemporalView(items: items, hints: processedHints)
+        .environment(\.extensibleHints, hints.extensibleHints)
+}
+
 // MARK: - Generic View Structures
 
 /// Generic item collection view with intelligent presentation decisions
@@ -471,6 +622,41 @@ public struct ModalFormView: View {
             case .radio:
                 Text("Radio field: \(field.label)")
                     .foregroundColor(.secondary)
+            case .phone:
+                TextField(field.placeholder ?? "Enter phone", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .time:
+                DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
+                    .datePickerStyle(.compact)
+            case .datetime:
+                DatePicker(field.placeholder ?? "Select date and time", selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute])
+                    .datePickerStyle(.compact)
+            case .multiselect:
+                Text("Multi-select field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .file:
+                Text("File upload field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .url:
+                TextField(field.placeholder ?? "Enter URL", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .color:
+                Text("Color picker field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .range:
+                Text("Range field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .toggle:
+                Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
+            case .richtext:
+                Text("Rich text field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .autocomplete:
+                Text("Autocomplete field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .custom:
+                Text("Custom field: \(field.label)")
+                    .foregroundColor(.secondary)
             }
         }
     }
@@ -565,6 +751,41 @@ public struct SimpleFormView: View {
             case .radio:
                 Text("Radio field: \(field.label)")
                     .foregroundColor(.secondary)
+            case .phone:
+                TextField(field.placeholder ?? "Enter phone", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .time:
+                DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
+                    .datePickerStyle(.compact)
+            case .datetime:
+                DatePicker(field.placeholder ?? "Select date and time", selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute])
+                    .datePickerStyle(.compact)
+            case .multiselect:
+                Text("Multi-select field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .file:
+                Text("File upload field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .url:
+                TextField(field.placeholder ?? "Enter URL", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .color:
+                Text("Color picker field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .range:
+                Text("Range field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .toggle:
+                Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
+            case .richtext:
+                Text("Rich text field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .autocomplete:
+                Text("Autocomplete field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .custom:
+                Text("Custom field: \(field.label)")
+                    .foregroundColor(.secondary)
             }
         }
     }
@@ -606,11 +827,14 @@ private func createFieldsForFormType(_ formType: DataTypeHint, context: Presenta
     case .temporal:
         return [
             GenericFormField(label: "Start Date", placeholder: "Select start date", fieldType: .date),
-            GenericFormField(label: "End Date", placeholder: "Select end date", fieldType: .date)
+            GenericFormField(label: "Start Time", placeholder: "Select start time", fieldType: .time),
+            GenericFormField(label: "End Date", placeholder: "Select end date", fieldType: .date),
+            GenericFormField(label: "End Time", placeholder: "Select end time", fieldType: .time)
         ]
     case .media:
         return [
             GenericFormField(label: "Media Title", placeholder: "Enter media title", fieldType: .text),
+            GenericFormField(label: "Media File", placeholder: "Upload media file", fieldType: .file),
             GenericFormField(label: "Media Type", placeholder: "Enter media type", fieldType: .text)
         ]
     default:
@@ -629,14 +853,20 @@ private func createGenericFormFields(context: PresentationContext) -> [GenericFo
     case .detail:
         return [
             GenericFormField(label: "Title", placeholder: "Enter title", fieldType: .text),
-            GenericFormField(label: "Description", placeholder: "Enter description", fieldType: .textarea),
-            GenericFormField(label: "Created Date", placeholder: "Select creation date", fieldType: .date)
+            GenericFormField(label: "Description", placeholder: "Enter description", fieldType: .richtext),
+            GenericFormField(label: "Created Date", placeholder: "Select creation date", fieldType: .date),
+            GenericFormField(label: "Created Time", placeholder: "Select creation time", fieldType: .time),
+            GenericFormField(label: "Attachments", placeholder: "Upload attachments", fieldType: .file)
         ]
     case .form:
         return [
             GenericFormField(label: "Name", placeholder: "Enter name", fieldType: .text),
             GenericFormField(label: "Email", placeholder: "Enter email", fieldType: .email),
             GenericFormField(label: "Age", placeholder: "Enter age", fieldType: .number),
+            GenericFormField(label: "Birth Date", placeholder: "Select birth date", fieldType: .date),
+            GenericFormField(label: "Country", placeholder: "Select country", fieldType: .autocomplete),
+            GenericFormField(label: "Bio", placeholder: "Enter bio", fieldType: .richtext),
+            GenericFormField(label: "Profile Photo", placeholder: "Upload profile photo", fieldType: .file),
             GenericFormField(label: "Subscribe", placeholder: "Subscribe to updates", fieldType: .checkbox)
         ]
     case .list:
@@ -664,4 +894,57 @@ private func createGenericFormFields(context: PresentationContext) -> [GenericFo
 private func selectPlatformStrategy(for hints: PresentationHints) -> String {
     // This is a placeholder that will be implemented in Layer 3
     return "platform_strategy_selected"
+}
+
+// MARK: - Enhanced Hints Processing
+
+/// Process extensible hints and merge their custom data into basic hints
+private func processExtensibleHints(
+    _ enhancedHints: EnhancedPresentationHints,
+    into basicHints: PresentationHints
+) -> PresentationHints {
+    // Merge custom data from extensible hints into custom preferences
+    var mergedPreferences = basicHints.customPreferences
+    
+    // Add custom data from all extensible hints (higher priority hints override lower ones)
+    let sortedHints = enhancedHints.extensibleHints.sorted { $0.priority > $1.priority }
+    for hint in sortedHints {
+        for (key, value) in hint.customData {
+            // Convert Any to String for customPreferences
+            if let stringValue = value as? String {
+                mergedPreferences[key] = stringValue
+            } else if let boolValue = value as? Bool {
+                mergedPreferences[key] = String(boolValue)
+            } else if let intValue = value as? Int {
+                mergedPreferences[key] = String(intValue)
+            } else if let doubleValue = value as? Double {
+                mergedPreferences[key] = String(doubleValue)
+            } else {
+                mergedPreferences[key] = String(describing: value)
+            }
+        }
+    }
+    
+    // Create new hints with merged preferences
+    return PresentationHints(
+        dataType: basicHints.dataType,
+        presentationPreference: basicHints.presentationPreference,
+        complexity: basicHints.complexity,
+        context: basicHints.context,
+        customPreferences: mergedPreferences
+    )
+}
+
+// MARK: - Environment Keys
+
+/// Environment key for passing extensible hints to child views
+public struct ExtensibleHintsKey: EnvironmentKey {
+    public static let defaultValue: [ExtensibleHint] = []
+}
+
+public extension EnvironmentValues {
+    var extensibleHints: [ExtensibleHint] {
+        get { self[ExtensibleHintsKey.self] }
+        set { self[ExtensibleHintsKey.self] = newValue }
+    }
 }

@@ -240,17 +240,17 @@ public struct DynamicFormFieldView: View {
                 formState: formState
             )
         case .date:
-            DynamicDateField(
+            DatePickerField(
                 field: field,
                 formState: formState
             )
         case .time:
-            DynamicTimeField(
+            TimePickerField(
                 field: field,
                 formState: formState
             )
         case .datetime:
-            DynamicDateTimeField(
+            DateTimePickerField(
                 field: field,
                 formState: formState
             )
@@ -276,6 +276,11 @@ public struct DynamicFormFieldView: View {
                 field: field,
                 formState: formState,
                 suggestions: field.options ?? []
+            )
+        case .custom:
+            CustomFieldView(
+                field: field,
+                formState: formState
             )
         }
     }

@@ -79,14 +79,14 @@ public struct GenericFormField: Identifiable {
     public let placeholder: String?
     public let value: String
     public let isRequired: Bool
-    public let fieldType: FormFieldType
+    public let fieldType: DynamicFieldType
     
     public init(
         label: String,
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
-        fieldType: FormFieldType = .text
+        fieldType: DynamicFieldType = .text
     ) {
         self.label = label
         self.placeholder = placeholder
@@ -96,20 +96,6 @@ public struct GenericFormField: Identifiable {
     }
 }
 
-// MARK: - Form Field Type
-
-/// Types of form fields
-public enum FormFieldType: String, CaseIterable {
-    case text = "text"
-    case email = "email"
-    case password = "password"
-    case number = "number"
-    case date = "date"
-    case select = "select"
-    case textarea = "textarea"
-    case checkbox = "checkbox"
-    case radio = "radio"
-}
 
 // MARK: - Generic Media Item
 

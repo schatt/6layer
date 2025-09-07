@@ -34,220 +34,286 @@ final class OCRComprehensiveTests: XCTestCase {
     
     // MARK: - Layer 1 Tests: Semantic OCR Functions
     
-    func testPlatformOCRIntentL1BasicFunctionality() {
-        // Test basic OCR intent creation
-        let textTypes: [TextType] = [.price, .number, .date]
-        
-        let ocrIntent = platformOCRIntent_L1(
-            image: testImage,
-            textTypes: textTypes
-        ) { result in
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(ocrIntent)
-    }
-    
-    func testPlatformOCRIntentL1WithEmptyTextTypes() {
-        // Test with empty text types array
-        let emptyTextTypes: [TextType] = []
-        
-        let ocrIntent = platformOCRIntent_L1(
-            image: testImage,
-            textTypes: emptyTextTypes
-        ) { result in
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(ocrIntent)
-    }
-    
-    func testPlatformOCRIntentL1WithAllTextTypes() {
-        // Test with all available text types
-        let allTextTypes: [TextType] = [.general, .price, .number, .date, .email, .url, .phone, .address]
-        
-        let ocrIntent = platformOCRIntent_L1(
-            image: testImage,
-            textTypes: allTextTypes
-        ) { result in
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(ocrIntent)
-    }
-    
-    func testPlatformOCRIntentL1WithCorruptedImage() {
-        // Test with corrupted image
-        let textTypes: [TextType] = [.price, .number]
-        
-        let ocrIntent = platformOCRIntent_L1(
-            image: corruptedImage,
-            textTypes: textTypes
-        ) { result in
-            // Should handle corrupted image gracefully
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(ocrIntent)
-    }
-    
-    func testPlatformOCRIntentL1WithEmptyImage() {
-        // Test with empty image
-        let textTypes: [TextType] = [.price, .number]
-        
-        let ocrIntent = platformOCRIntent_L1(
-            image: emptyImage,
-            textTypes: textTypes
-        ) { result in
-            // Should handle empty image gracefully
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(ocrIntent)
-    }
-    
-    func testPlatformTextExtractionL1BasicFunctionality() {
-        // Test basic text extraction
+    func testPlatformOCRWithVisualCorrectionL1BasicFunctionality() {
+        // Test basic OCR with visual correction
         let context = OCRContext(
-            textTypes: [.price, .number],
+            textTypes: [.price, .number, .date],
             language: .english,
-            confidenceThreshold: 0.8
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
-        let extractionIntent = platformTextExtraction_L1(
+        let ocrView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(extractionIntent)
+        XCTAssertNotNil(ocrView)
     }
     
-    func testPlatformTextExtractionL1WithDifferentLanguages() {
+    func testPlatformOCRWithVisualCorrectionL1WithEmptyTextTypes() {
+        // Test with empty text types array
+        let context = OCRContext(
+            textTypes: [],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let ocrView = platformOCRWithVisualCorrection_L1(
+            image: testImage,
+            context: context
+        ) { result in
+            XCTAssertNotNil(result)
+        }
+        
+        XCTAssertNotNil(ocrView)
+    }
+    
+    func testPlatformOCRWithVisualCorrectionL1WithAllTextTypes() {
+        // Test with all available text types
+        let context = OCRContext(
+            textTypes: [.general, .price, .number, .date, .email, .url, .phone, .address],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let ocrView = platformOCRWithVisualCorrection_L1(
+            image: testImage,
+            context: context
+        ) { result in
+            XCTAssertNotNil(result)
+        }
+        
+        XCTAssertNotNil(ocrView)
+    }
+    
+    func testPlatformOCRWithVisualCorrectionL1WithCorruptedImage() {
+        // Test with corrupted image
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let ocrView = platformOCRWithVisualCorrection_L1(
+            image: corruptedImage,
+            context: context
+        ) { result in
+            // Should handle corrupted image gracefully
+            XCTAssertNotNil(result)
+        }
+        
+        XCTAssertNotNil(ocrView)
+    }
+    
+    func testPlatformOCRWithVisualCorrectionL1WithEmptyImage() {
+        // Test with empty image
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let ocrView = platformOCRWithVisualCorrection_L1(
+            image: emptyImage,
+            context: context
+        ) { result in
+            // Should handle empty image gracefully
+            XCTAssertNotNil(result)
+        }
+        
+        XCTAssertNotNil(ocrView)
+    }
+    
+    func testPlatformOCRWithVisualCorrectionL1BasicTextExtraction() {
+        // Test basic text extraction
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let extractionView = platformOCRWithVisualCorrection_L1(
+            image: testImage,
+            context: context
+        ) { result in
+            XCTAssertNotNil(result)
+        }
+        
+        XCTAssertNotNil(extractionView)
+    }
+    
+    func testPlatformOCRWithVisualCorrectionL1WithDifferentLanguages() {
         // Test with different languages
         let englishContext = OCRContext(
             textTypes: [.general],
             language: .english,
-            confidenceThreshold: 0.8
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let spanishContext = OCRContext(
             textTypes: [.general],
             language: .spanish,
-            confidenceThreshold: 0.8
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let frenchContext = OCRContext(
             textTypes: [.general],
             language: .french,
-            confidenceThreshold: 0.8
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
-        let englishIntent = platformTextExtraction_L1(
+        let englishView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: englishContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        let spanishIntent = platformTextExtraction_L1(
+        let spanishView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: spanishContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        let frenchIntent = platformTextExtraction_L1(
+        let frenchView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: frenchContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(englishIntent)
-        XCTAssertNotNil(spanishIntent)
-        XCTAssertNotNil(frenchIntent)
+        XCTAssertNotNil(englishView)
+        XCTAssertNotNil(spanishView)
+        XCTAssertNotNil(frenchView)
     }
     
-    func testPlatformTextExtractionL1WithDifferentConfidenceThresholds() {
+    func testPlatformOCRWithVisualCorrectionL1WithDifferentConfidenceThresholds() {
         // Test with different confidence thresholds
         let lowConfidenceContext = OCRContext(
             textTypes: [.general],
             language: .english,
-            confidenceThreshold: 0.1
+            confidenceThreshold: 0.1,
+            allowsEditing: true
         )
         
         let highConfidenceContext = OCRContext(
             textTypes: [.general],
             language: .english,
-            confidenceThreshold: 0.9
+            confidenceThreshold: 0.9,
+            allowsEditing: true
         )
         
-        let lowConfidenceIntent = platformTextExtraction_L1(
+        let lowConfidenceView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: lowConfidenceContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        let highConfidenceIntent = platformTextExtraction_L1(
+        let highConfidenceView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: highConfidenceContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(lowConfidenceIntent)
-        XCTAssertNotNil(highConfidenceIntent)
+        XCTAssertNotNil(lowConfidenceView)
+        XCTAssertNotNil(highConfidenceView)
     }
     
-    func testPlatformDocumentAnalysisL1BasicFunctionality() {
+    func testPlatformOCRWithVisualCorrectionL1BasicDocumentAnalysis() {
         // Test basic document analysis
-        let analysisIntent = platformDocumentAnalysis_L1(
+        let context = OCRContext(
+            textTypes: [.price, .number, .date],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let analysisView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            documentType: .receipt
+            context: context
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(analysisIntent)
+        XCTAssertNotNil(analysisView)
     }
     
-    func testPlatformDocumentAnalysisL1WithDifferentDocumentTypes() {
+    func testPlatformOCRWithVisualCorrectionL1WithDifferentDocumentTypes() {
         // Test with different document types
-        let receiptIntent = platformDocumentAnalysis_L1(
+        let receiptContext = OCRContext(
+            textTypes: [.price, .number, .date],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let invoiceContext = OCRContext(
+            textTypes: [.price, .number, .date, .email],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let businessCardContext = OCRContext(
+            textTypes: [.email, .phone, .address],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let formContext = OCRContext(
+            textTypes: [.general, .email, .phone],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let receiptView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            documentType: .receipt
+            context: receiptContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        let invoiceIntent = platformDocumentAnalysis_L1(
+        let invoiceView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            documentType: .invoice
+            context: invoiceContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        let businessCardIntent = platformDocumentAnalysis_L1(
+        let businessCardView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            documentType: .businessCard
+            context: businessCardContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        let formIntent = platformDocumentAnalysis_L1(
+        let formView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            documentType: .form
+            context: formContext
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(receiptIntent)
-        XCTAssertNotNil(invoiceIntent)
-        XCTAssertNotNil(businessCardIntent)
-        XCTAssertNotNil(formIntent)
+        XCTAssertNotNil(receiptView)
+        XCTAssertNotNil(invoiceView)
+        XCTAssertNotNil(businessCardView)
+        XCTAssertNotNil(formView)
     }
     
     // MARK: - Layer 2 Tests: Layout Decision Engine
@@ -512,18 +578,19 @@ final class OCRComprehensiveTests: XCTestCase {
         let context = OCRContext(
             textTypes: textTypes,
             language: .english,
-            confidenceThreshold: 0.8
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         // Layer 1
-        let ocrIntent = platformOCRIntent_L1(
+        let ocrView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            textTypes: textTypes
+            context: context
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(ocrIntent)
+        XCTAssertNotNil(ocrView)
         
         // Layer 2
         let layout = platformOCRLayout_L2(context: context)
@@ -762,44 +829,61 @@ final class OCRComprehensiveTests: XCTestCase {
     func testEdgeCaseWithVerySmallImage() {
         // Test with very small image
         let smallImage = createSmallTestImage()
-        let textTypes: [TextType] = [.general]
+        let context = OCRContext(
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
         
-        let ocrIntent = platformOCRIntent_L1(
+        let ocrView = platformOCRWithVisualCorrection_L1(
             image: smallImage,
-            textTypes: textTypes
+            context: context
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(ocrIntent)
+        XCTAssertNotNil(ocrView)
     }
     
     func testEdgeCaseWithVeryLargeImage() {
         // Test with very large image
-        let textTypes: [TextType] = [.general]
+        let context = OCRContext(
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
         
-        let ocrIntent = platformOCRIntent_L1(
+        let ocrView = platformOCRWithVisualCorrection_L1(
             image: largeImage,
-            textTypes: textTypes
+            context: context
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(ocrIntent)
+        XCTAssertNotNil(ocrView)
     }
     
     func testEdgeCaseWithAllTextTypes() {
         // Test with all available text types
         let allTextTypes: [TextType] = [.general, .price, .number, .date, .email, .url, .phone, .address]
         
-        let ocrIntent = platformOCRIntent_L1(
+        let context = OCRContext(
+            textTypes: allTextTypes,
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
+        )
+        
+        let ocrView = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            textTypes: allTextTypes
+            context: context
         ) { result in
             XCTAssertNotNil(result)
         }
         
-        XCTAssertNotNil(ocrIntent)
+        XCTAssertNotNil(ocrView)
     }
     
     func testEdgeCaseWithAllLanguages() {
@@ -813,7 +897,7 @@ final class OCRComprehensiveTests: XCTestCase {
                 confidenceThreshold: 0.8
             )
             
-            let extractionIntent = platformTextExtraction_L1(
+            let extractionIntent = platformOCRWithVisualCorrection_L1(
                 image: testImage,
                 context: context
             ) { result in
@@ -829,14 +913,39 @@ final class OCRComprehensiveTests: XCTestCase {
         let allDocumentTypes: [DocumentType] = [.receipt, .invoice, .businessCard, .form, .license, .passport, .general]
         
         for documentType in allDocumentTypes {
-            let analysisIntent = platformDocumentAnalysis_L1(
+            // Create appropriate context based on document type
+            let textTypes: [TextType] = {
+                switch documentType {
+                case .receipt:
+                    return [.price, .number, .date]
+                case .invoice:
+                    return [.price, .number, .date, .email]
+                case .businessCard:
+                    return [.email, .phone, .address]
+                case .form:
+                    return [.general, .email, .phone]
+                case .license, .passport:
+                    return [.general, .date]
+                case .general:
+                    return [.general]
+                }
+            }()
+            
+            let context = OCRContext(
+                textTypes: textTypes,
+                language: .english,
+                confidenceThreshold: 0.8,
+                allowsEditing: true
+            )
+            
+            let analysisView = platformOCRWithVisualCorrection_L1(
                 image: testImage,
-                documentType: documentType
+                context: context
             ) { result in
                 XCTAssertNotNil(result)
             }
             
-            XCTAssertNotNil(analysisIntent)
+            XCTAssertNotNil(analysisView)
         }
     }
     

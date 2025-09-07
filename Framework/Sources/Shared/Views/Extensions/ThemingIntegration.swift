@@ -258,6 +258,89 @@ public struct ThemedGenericFormView: View {
                     .padding()
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .phone:
+                TextField(field.placeholder ?? "Enter phone", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+            case .time:
+                DatePicker(field.placeholder ?? "Select time", selection: Binding(
+                    get: { formData[field.id.uuidString] as? Date ?? Date() },
+                    set: { formData[field.id.uuidString] = $0 }
+                ), displayedComponents: .hourAndMinute)
+            case .datetime:
+                DatePicker(field.placeholder ?? "Select date and time", selection: Binding(
+                    get: { formData[field.id.uuidString] as? Date ?? Date() },
+                    set: { formData[field.id.uuidString] = $0 }
+                ), displayedComponents: [.date, .hourAndMinute])
+            case .multiselect:
+                Text("Multi-select field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .file:
+                Text("File upload field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .url:
+                TextField(field.placeholder ?? "Enter URL", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+            case .color:
+                Text("Color picker field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .range:
+                Text("Range field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .toggle:
+                Toggle(field.placeholder ?? "Toggle", isOn: Binding(
+                    get: { formData[field.id.uuidString] as? Bool ?? false },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+            case .richtext:
+                Text("Rich text field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .autocomplete:
+                Text("Autocomplete field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .custom:
+                Text("Custom field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
             }
         }
     }

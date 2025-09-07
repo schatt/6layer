@@ -1,4 +1,5 @@
 import XCTest
+import SwiftUI
 @testable import SixLayerFramework
 
 final class ExtensibleHintsTests: XCTestCase {
@@ -320,5 +321,246 @@ final class ExtensibleHintsTests: XCTestCase {
         XCTAssertEqual(accessibilityPrefs["showInteractions"] as? Bool, true)
         XCTAssertEqual(accessibilityPrefs["drillDownEnabled"] as? Bool, false)
         // Note: accessibilityMode is not extracted by the engine, only showInteractions and drillDownEnabled are
+    }
+    
+    // MARK: - L1 Function Integration Tests
+    
+    @MainActor
+    func testPlatformPresentItemCollection_L1WithEnhancedHints() throws {
+        // Given
+        let customHint = CustomHint(
+            hintType: "test.collection",
+            priority: .high,
+            overridesDefault: false,
+            customData: [
+                "layoutStyle": "grid",
+                "recommendedColumns": 3,
+                "spacing": "compact"
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .collection,
+            presentationPreference: .grid,
+            complexity: .moderate,
+            context: .browse,
+            extensibleHints: [customHint]
+        )
+        let testItems = Array(0..<10).map { MockItem(id: $0) }
+        
+        // When
+        let view = platformPresentItemCollection_L1(
+            items: testItems,
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
+    }
+    
+    @MainActor
+    func testPlatformPresentNumericData_L1WithEnhancedHints() throws {
+        // Given
+        let performanceHint = CustomHint(
+            hintType: "performance",
+            priority: .normal,
+            overridesDefault: false,
+            customData: [
+                "refreshRate": 30,
+                "realTimeUpdates": true
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .numeric,
+            presentationPreference: .chart,
+            complexity: .complex,
+            context: .dashboard,
+            extensibleHints: [performanceHint]
+        )
+        let testData = [
+            GenericNumericData(label: "Test 1", value: 100),
+            GenericNumericData(label: "Test 2", value: 200)
+        ]
+        
+        // When
+        let view = platformPresentNumericData_L1(
+            data: testData,
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
+    }
+    
+    @MainActor
+    func testPlatformPresentFormData_L1WithEnhancedHints() throws {
+        // Given
+        let formHint = CustomHint(
+            hintType: "form.custom",
+            priority: .high,
+            overridesDefault: true,
+            customData: [
+                "validationMode": "realTime",
+                "fieldSpacing": "compact",
+                "showProgress": true
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .form,
+            presentationPreference: .form,
+            complexity: .moderate,
+            context: .create,
+            extensibleHints: [formHint]
+        )
+        let testFields = [
+            GenericFormField(label: "Name", fieldType: .text),
+            GenericFormField(label: "Email", fieldType: .email)
+        ]
+        
+        // When
+        let view = platformPresentFormData_L1(
+            fields: testFields,
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
+    }
+    
+    @MainActor
+    func testPlatformPresentMediaData_L1WithEnhancedHints() throws {
+        // Given
+        let mediaHint = CustomHint(
+            hintType: "media.gallery",
+            priority: .normal,
+            overridesDefault: false,
+            customData: [
+                "lazyLoading": true,
+                "zoomEnabled": true,
+                "shareEnabled": true
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .media,
+            presentationPreference: .masonry,
+            complexity: .moderate,
+            context: .browse,
+            extensibleHints: [mediaHint]
+        )
+        let testMedia = [
+            GenericMediaItem(title: "Test 1", mediaType: .image),
+            GenericMediaItem(title: "Test 2", mediaType: .image)
+        ]
+        
+        // When
+        let view = platformPresentMediaData_L1(
+            media: testMedia,
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
+    }
+    
+    @MainActor
+    func testPlatformPresentHierarchicalData_L1WithEnhancedHints() throws {
+        // Given
+        let hierarchyHint = CustomHint(
+            hintType: "hierarchy.tree",
+            priority: .normal,
+            overridesDefault: false,
+            customData: [
+                "expandable": true,
+                "showLevels": true,
+                "indentation": "standard"
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .hierarchical,
+            presentationPreference: .list,
+            complexity: .moderate,
+            context: .browse,
+            extensibleHints: [hierarchyHint]
+        )
+        let testItems = [
+            GenericHierarchicalItem(title: "Root 1"),
+            GenericHierarchicalItem(title: "Child 1")
+        ]
+        
+        // When
+        let view = platformPresentHierarchicalData_L1(
+            items: testItems,
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
+    }
+    
+    @MainActor
+    func testPlatformPresentTemporalData_L1WithEnhancedHints() throws {
+        // Given
+        let temporalHint = CustomHint(
+            hintType: "temporal.schedule",
+            priority: .normal,
+            overridesDefault: false,
+            customData: [
+                "showTimeline": true,
+                "groupByDay": true,
+                "highlightToday": true
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .temporal,
+            presentationPreference: .list,
+            complexity: .moderate,
+            context: .dashboard,
+            extensibleHints: [temporalHint]
+        )
+        let testItems = [
+            GenericTemporalItem(title: "Event 1", date: Date()),
+            GenericTemporalItem(title: "Event 2", date: Date())
+        ]
+        
+        // When
+        let view = platformPresentTemporalData_L1(
+            items: testItems,
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
+    }
+    
+    @MainActor
+    func testPlatformResponsiveCard_L1WithEnhancedHints() throws {
+        // Given
+        let cardHint = CustomHint(
+            hintType: "card.responsive",
+            priority: .high,
+            overridesDefault: false,
+            customData: [
+                "cardStyle": "elevated",
+                "cornerRadius": 12,
+                "shadowDepth": 2
+            ]
+        )
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .collection,
+            presentationPreference: .cards,
+            complexity: .moderate,
+            context: .dashboard,
+            extensibleHints: [cardHint]
+        )
+        
+        // When
+        let view = platformResponsiveCard_L1(
+            content: { 
+                Text("Test Card")
+            },
+            hints: enhancedHints
+        )
+        
+        // Then
+        XCTAssertNotNil(view, "Should create view with enhanced hints")
     }
 }
