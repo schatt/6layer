@@ -1,0 +1,767 @@
+# Function Index
+
+- **Directory**: ./Framework/Sources/Shared/Models
+- **Generated**: 2025-09-06 16:55:19 -0700
+- **Script**: Scripts/generate_function_index.sh
+
+This index lists function declarations and other Swift declarations found in this directory's Swift files.
+
+Functions are categorized by access level and type for better organization.
+
+Documentation comments are extracted when available.
+
+Extension context is shown for functions that are part of extensions.
+
+---
+
+## ./Framework/Sources/Shared/Models/FormWizardTypes.swift
+### Public Interface
+- **L179:** ` public var isComplete: Bool`
+  - *function*
+  - *Check if wizard is complete\n*
+- **L184:** ` public var isFirstStep: Bool`
+  - *function*
+  - *Check if wizard is on first step\n*
+- **L189:** ` public var isLastStep: Bool`
+  - *function*
+  - *Check if wizard is on last step\n*
+- **L15:** ` public init(`
+  - *function*
+- **L40:** ` public init() {}`
+  - *function*
+- **L135:** ` public init() {}`
+  - *function*
+- **L171:** ` public init(currentStep: Int, totalSteps: Int, completedSteps: Int)`
+  - *function*
+
+### Internal Methods
+- **L43:** ` func nextStep() -> Bool`
+  - *function*
+  - *Move to the next step if validation passes\n*
+- **L56:** ` func previousStep() -> Bool`
+  - *function*
+  - *Move to the previous step\n*
+- **L63:** ` func canProceedToNextStep() -> Bool`
+  - *function*
+  - *Check if we can proceed to the next step\n*
+- **L74:** ` func isStepComplete(_ stepId: String) -> Bool`
+  - *function*
+  - *Check if a specific step is complete\n*
+- **L79:** ` func markStepComplete(_ stepId: String)`
+  - *function*
+  - *Mark a step as complete\n*
+- **L84:** ` func getCurrentStep() -> FormWizardStep?`
+  - *function*
+  - *Get the current step\n*
+- **L93:** ` func setSteps(_ newSteps: [FormWizardStep])`
+  - *function*
+  - *Set the steps for this wizard\n*
+- **L110:** ` func clearValidationErrors(for stepId: String)`
+  - *function*
+  - *Clear validation errors for a step\n*
+- **L115:** ` func addValidationError(_ error: String, for stepId: String)`
+  - *function*
+  - *Add validation error for a step\n*
+- **L157:** ` func build() -> [FormWizardStep]`
+  - *function*
+  - *Build the wizard configuration\n*
+
+## ./Framework/Sources/Shared/Models/DataBinding.swift
+### Internal Methods
+- **L48:** ` func unbind(_ fieldName: String)`
+  - *function*
+  - *Unbind a form field\n- Parameter fieldName: The name of the field to unbind\n*
+- **L58:** ` func updateField(_ fieldName: String, value: Any)`
+  - *function*
+  - *Update a bound field's value\n- Parameters:\n- fieldName: The name of the field to update\n- value: The new value\n*
+- **L77:** ` func getBoundValue(_ fieldName: String) -> Any?`
+  - *function*
+  - *Get the current value of a bound field\n- Parameter fieldName: The name of the field\n- Returns: The current value, or nil if not bound\n*
+- **L85:** ` func hasBinding(for fieldName: String) -> Bool`
+  - *function*
+  - *Check if a field is bound\n- Parameter fieldName: The name of the field\n- Returns: True if the field is bound, false otherwise\n*
+- **L96:** ` func sync() -> T`
+  - *function*
+  - *Synchronize all changes and return the updated model\n- Returns: The updated model with all changes applied\n*
+- **L118:** ` func getChangeDetails(for fieldName: String) -> ChangeDetails?`
+  - *function*
+  - *Get change details for a specific field\n- Parameter fieldName: The name of the field\n- Returns: Change details if the field has changes, nil otherwise\n*
+- **L125:** ` func revertField(_ fieldName: String) -> Any?`
+  - *function*
+  - *Revert a field to its original value\n- Parameter fieldName: The name of the field to revert\n- Returns: The original value, or nil if the field has no changes\n*
+- **L139:** ` func clearChanges()`
+  - *function*
+  - *Clear all unsaved changes\n*
+- **L164:** ` func getValue(from model: T) -> Any`
+  - *function*
+- **L168:** ` func setValue(_ value: Any, on model: inout T)`
+  - *function*
+- **L213:** ` func initializeField(_ fieldName: String, value: Any)`
+  - *function*
+  - *Initialize tracking for a field\n- Parameters:\n- fieldName: The name of the field\n- value: The initial value\n*
+- **L223:** ` func trackChange(_ fieldName: String, oldValue: Any, newValue: Any)`
+  - *function*
+  - *Track a change to a field\n- Parameters:\n- fieldName: The name of the field\n- oldValue: The previous value\n- newValue: The new value\n*
+- **L231:** ` func getChangeDetails(for fieldName: String) -> ChangeDetails?`
+  - *function*
+  - *Get change details for a specific field\n- Parameter fieldName: The name of the field\n- Returns: Change details if the field has changes, nil otherwise\n*
+- **L237:** ` func removeField(_ fieldName: String)`
+  - *function*
+  - *Remove tracking for a field\n- Parameter fieldName: The name of the field\n*
+- **L245:** ` func revertField(_ fieldName: String) -> Any?`
+  - *function*
+  - *Revert a field's changes\n- Parameter fieldName: The name of the field\n- Returns: The original value, or nil if no changes\n*
+- **L256:** ` func clearChanges()`
+  - *function*
+  - *Clear all change tracking\n*
+- **L292:** ` func markFieldDirty(_ fieldName: String)`
+  - *function*
+  - *Mark a field as dirty (has unsaved changes)\n- Parameter fieldName: The name of the field\n*
+- **L298:** ` func markFieldClean(_ fieldName: String)`
+  - *function*
+  - *Mark a field as clean (no unsaved changes)\n- Parameter fieldName: The name of the field\n*
+- **L305:** ` func isFieldDirty(_ fieldName: String) -> Bool`
+  - *function*
+  - *Check if a specific field is dirty\n- Parameter fieldName: The name of the field\n- Returns: True if the field is dirty, false otherwise\n*
+- **L310:** ` func clearAll()`
+  - *function*
+  - *Clear all dirty fields\n*
+- **L316:** ` func getDirtyValues() -> [String]`
+  - *function*
+  - *Get dirty values for all dirty fields\n- Returns: Array of dirty field names\n*
+- **L90:** ` var bindingCount: Int`
+  - *function*
+  - *Get the number of active bindings\n*
+- **L101:** ` var underlyingModel: T`
+  - *function*
+  - *Get the underlying model\n*
+- **L106:** ` var hasUnsavedChanges: Bool`
+  - *function*
+  - *Check if any fields have unsaved changes\n*
+- **L111:** ` var dirtyFields: [String]`
+  - *function*
+  - *Get all fields with unsaved changes\n*
+- **L190:** ` var hasChanges: Bool`
+  - *function*
+  - *Check if any fields have changes\n*
+- **L195:** ` var changedFieldsCount: Int`
+  - *function*
+  - *Get the count of fields with changes\n*
+- **L200:** ` var totalChanges: Int`
+  - *function*
+  - *Get the total number of changes tracked\n*
+- **L205:** ` var changedFieldNames: [String]`
+  - *function*
+  - *Get all field names that have changes\n*
+- **L276:** ` var isDirty: Bool`
+  - *function*
+  - *Check if any fields are dirty\n*
+- **L281:** ` var dirtyFieldsCount: Int`
+  - *function*
+  - *Get the count of dirty fields\n*
+- **L286:** ` var dirtyFieldNames: [String]`
+  - *function*
+  - *Get all dirty field names\n*
+- **L27:** ` init(_ model: T)`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/ExtensibleHints.swift
+### Public Interface
+- **L161:** ` public var highestPriorityHint: ExtensibleHint?`
+  - *function*
+  - *Get the highest priority hint\n*
+- **L166:** ` public var hasOverridingHints: Bool`
+  - *function*
+  - *Check if any hints override default behavior\n*
+- **L171:** ` public var allCustomData: [String: Any]`
+  - *function*
+  - *Get custom data from all hints\n*
+- **L49:** ` public init(`
+  - *function*
+- **L139:** ` public init(`
+  - *function*
+
+### Internal Methods
+- **L65:** ` static func forEcommerceProduct(`
+  - *static function*
+  - *Create a hint for e-commerce product display\n*
+- **L87:** ` static func forSocialFeed(`
+  - *static function*
+  - *Create a hint for social media feed\n*
+- **L107:** ` static func forFinancialDashboard(`
+  - *static function*
+  - *Create a hint for financial dashboard\n*
+- **L197:** ` static func shouldOverrideFramework(`
+  - *static function*
+  - *Process hints to determine if they should override framework defaults\n*
+- **L205:** ` static func extractLayoutPreferences(`
+  - *static function*
+  - *Extract layout preferences from hints\n*
+- **L227:** ` static func extractPerformancePreferences(`
+  - *static function*
+  - *Extract performance preferences from hints\n*
+- **L248:** ` static func extractAccessibilityPreferences(`
+  - *static function*
+  - *Extract accessibility preferences from hints\n*
+- **L272:** ` static func forBlogPosts(`
+  - *static function*
+  - *Create hints for a blog post list\n*
+- **L302:** ` static func forPhotoGallery(`
+  - *static function*
+  - *Create hints for a photo gallery\n*
+- **L16:** ` var hintType: String { get }`
+  - *function*
+  - *Unique identifier for the hint type\n*
+- **L19:** ` var priority: HintPriority { get }`
+  - *function*
+  - *Priority level for this hint (higher = more important)\n*
+- **L22:** ` var overridesDefault: Bool { get }`
+  - *function*
+  - *Whether this hint should override default framework behavior\n*
+- **L25:** ` var customData: [String: Any] { get }`
+  - *function*
+  - *Custom data associated with this hint\n*
+
+## ./Framework/Sources/Shared/Models/FormStateManagement.swift
+### Internal Methods
+- **L153:** ` func addField(_ name: String, initialValue: Any)`
+  - *function*
+  - *Add a new field to the form\n- Parameters:\n- name: The name/identifier of the field\n- initialValue: The initial value for the field\n*
+- **L162:** ` func updateField(_ name: String, value: Any)`
+  - *function*
+  - *Update the value of an existing field\n- Parameters:\n- name: The name of the field to update\n- value: The new value for the field\n*
+- **L175:** ` func setFieldError(_ name: String, error: ValidationError)`
+  - *function*
+  - *Set validation errors for a field\n- Parameters:\n- name: The name of the field\n- error: The validation error to add\n*
+- **L186:** ` func clearFieldErrors(_ name: String)`
+  - *function*
+  - *Clear all validation errors for a field\n- Parameter name: The name of the field\n*
+- **L196:** ` func reset()`
+  - *function*
+  - *Reset the form to its initial state\n*
+- **L210:** ` func getFieldValue(_ name: String) -> Any?`
+  - *function*
+  - *Get the current value of a field\n- Parameter name: The name of the field\n- Returns: The current value, or nil if the field doesn't exist\n*
+- **L217:** ` func hasField(_ name: String) -> Bool`
+  - *function*
+  - *Check if a field exists\n- Parameter name: The name of the field\n- Returns: True if the field exists, false otherwise\n*
+- **L223:** ` func removeField(_ name: String)`
+  - *function*
+  - *Remove a field from the form\n- Parameter name: The name of the field to remove\n*
+- **L11:** ` var fields: [String: FieldState] { get }`
+  - *function*
+  - *Dictionary of field states keyed by field name\n*
+- **L14:** ` var isValid: Bool { get }`
+  - *function*
+  - *Whether all fields in the form are valid\n*
+- **L17:** ` var isDirty: Bool { get }`
+  - *function*
+  - *Whether any fields in the form have been modified\n*
+- **L135:** ` var isValid: Bool`
+  - *function*
+- **L139:** ` var isDirty: Bool`
+  - *function*
+- **L272:** ` var fieldNames: [String]`
+  - *function|extension FormStateManager*
+  - *Get all field names\n*
+- **L277:** ` var fieldsWithErrors: [String]`
+  - *function|extension FormStateManager*
+  - *Get all fields that have errors\n*
+- **L284:** ` var dirtyFields: [String]`
+  - *function|extension FormStateManager*
+  - *Get all dirty fields\n*
+- **L291:** ` var totalErrorCount: Int`
+  - *function|extension FormStateManager*
+  - *Get the total number of validation errors across all fields\n*
+- **L37:** ` init(value: Any, isValid: Bool = true, errors: [ValidationError] = [], isDirty: Bool = false)`
+  - *function*
+- **L109:** ` init(field: String, message: String, severity: ValidationSeverity = .error)`
+  - *function*
+- **L145:** ` init() {}`
+  - *function*
+
+### Private Implementation
+- **L57:** ` private static func isEqualValues(_ lhs: Any, _ rhs: Any) -> Bool`
+  - *static function|extension FieldState: Equatable*
+- **L230:** ` private func isEqual(_ lhs: Any, _ rhs: Any) -> Bool`
+  - *function*
+  - *Compare two values for equality, handling different types\n*
+
+## ./Framework/Sources/Shared/Models/FormAnalytics.swift
+### Public Interface
+- **L291:** ` public func encode(to encoder: Encoder) throws`
+  - *function*
+- **L439:** ` public func encode(to encoder: Encoder) throws`
+  - *function*
+- **L219:** ` public init(formId: String)`
+  - *function*
+- **L269:** ` public init(formId: String, eventType: FormEventType, userId: String?, timestamp: Date, metadata: [String: Any])`
+  - *function*
+- **L282:** ` public init(from decoder: Decoder) throws`
+  - *function*
+- **L325:** ` public init(fieldId: String)`
+  - *function*
+- **L351:** ` public init(formId: String, averageRenderTime: TimeInterval, averageValidationTime: TimeInterval, memoryUsage: Int64, cpuUsage: Double)`
+  - *function*
+- **L373:** ` public init(id: UUID = UUID(), formId: String, fieldId: String? = nil, type: FormErrorType, message: String, stackTrace: String? = nil)`
+  - *function*
+- **L405:** ` public init(id: String, formId: String, variantA: FormVariant, variantB: FormVariant, startDate: Date, status: ABTestStatus)`
+  - *function*
+- **L421:** ` public init(name: String, configuration: [String: Any], description: String)`
+  - *function*
+- **L432:** ` public init(from decoder: Decoder) throws`
+  - *function*
+- **L463:** ` public init(id: UUID = UUID(), testId: String, variant: String, metric: ABTestMetric, timestamp: Date)`
+  - *function*
+- **L478:** ` public init(name: String, value: Double, unit: String)`
+  - *function*
+- **L495:** ` public init(formId: String, analytics: FormAnalytics?, performance: FormPerformanceMetrics?, errors: [FormError], recommendations: [FormRecommendation])`
+  - *function*
+- **L512:** ` public init(type: FormRecommendationType, title: String, description: String, priority: FormRecommendationPriority)`
+  - *function*
+
+### Internal Methods
+- **L25:** ` func trackFormView(formId: String, userId: String? = nil)`
+  - *function*
+  - *Track form view event\n*
+- **L39:** ` func trackFormSubmission(formId: String, userId: String? = nil, success: Bool, validationErrors: [String] = [])`
+  - *function*
+  - *Track form submission event\n*
+- **L57:** ` func trackFieldInteraction(formId: String, fieldId: String, userId: String? = nil, interactionType: FieldInteractionType)`
+  - *function*
+  - *Track field interaction event\n*
+- **L74:** ` func trackPerformance(formId: String, metrics: FormPerformanceMetrics)`
+  - *function*
+  - *Track form performance metrics\n*
+- **L82:** ` func trackError(formId: String, error: FormError)`
+  - *function*
+  - *Track form error\n*
+- **L92:** ` func startABTest(formId: String, variantA: FormVariant, variantB: FormVariant) -> ABTest`
+  - *function*
+  - *Start A/B test for a form\n*
+- **L110:** ` func recordABTestResult(testId: String, variant: String, result: ABTestMetric)`
+  - *function*
+  - *Record A/B test result\n*
+- **L127:** ` func getAnalytics(for formId: String) -> FormAnalytics?`
+  - *function*
+  - *Get analytics for a specific form\n*
+- **L132:** ` func getPerformanceMetrics(for formId: String) -> FormPerformanceMetrics?`
+  - *function*
+  - *Get performance metrics for a form\n*
+- **L137:** ` func getFormInsights(formId: String) -> FormInsights`
+  - *function*
+  - *Get form insights and recommendations\n*
+- **L235:** ` func calculateCompletionRate() -> Double`
+  - *function*
+- **L243:** ` func calculateAverageCompletionTime() -> TimeInterval`
+  - *function*
+- **L548:** ` func saveAnalytics(_ analytics: FormAnalytics, for formId: String)`
+  - *function*
+- **L554:** ` func loadAllAnalytics() -> [String: FormAnalytics]`
+  - *function*
+- **L558:** ` func savePerformanceMetrics(_ metrics: FormPerformanceMetrics, for formId: String)`
+  - *function*
+- **L564:** ` func loadAllPerformanceMetrics() -> [String: FormPerformanceMetrics]`
+  - *function*
+- **L568:** ` func saveError(_ error: FormError)`
+  - *function*
+- **L574:** ` func loadAllErrors() -> [FormError]`
+  - *function*
+- **L578:** ` func saveABTest(_ test: ABTest)`
+  - *function*
+- **L584:** ` func loadAllABTests() -> [String: ABTest]`
+  - *function*
+- **L588:** ` func saveABTestResult(_ result: ABTestResult)`
+  - *function*
+- **L594:** ` func loadAllABTestResults() -> [ABTestResult]`
+  - *function*
+
+### Private Implementation
+- **L153:** ` private func recordEvent(_ event: FormEvent)`
+  - *function*
+- **L162:** ` private func loadAnalyticsData()`
+  - *function*
+- **L170:** ` private func generateRecommendations(analytics: FormAnalytics?, performance: FormPerformanceMetrics?, errors: [FormError]) -> [FormRecommendation]`
+  - *function*
+- **L18:** ` private init()`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/GenericTypes.swift
+### Public Interface
+- **L27:** ` public func hash(into hasher: inout Hasher)`
+  - *function*
+- **L64:** ` public func hash(into hasher: inout Hasher)`
+  - *function*
+- **L21:** ` public init(name: String, description: String, type: VehicleType = .generic)`
+  - *function*
+- **L58:** ` public init(title: String, subtitle: String? = nil, data: [String: Any] = [:])`
+  - *function*
+- **L84:** ` public init(`
+  - *function*
+- **L124:** ` public init(`
+  - *function*
+- **L158:** ` public init(`
+  - *function*
+- **L180:** ` public init(`
+  - *function*
+- **L201:** ` public init(`
+  - *function*
+- **L223:** ` public init(`
+  - *function*
+- **L244:** ` public init(`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/PlatformPhotoTypes.swift
+### Public Interface
+- **L34:** ` public init(`
+  - *function*
+- **L56:** ` public init(`
+  - *function*
+- **L107:** ` public init(`
+  - *function*
+- **L130:** ` public init(`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/PlatformOCRTypes.swift
+### Public Interface
+- **L154:** ` public func filtered(by threshold: Float) -> OCRResult`
+  - *function*
+  - *Filter the result by confidence threshold\n*
+- **L170:** ` public func text(for type: TextType) -> String?`
+  - *function*
+  - *Get text for a specific type\n*
+- **L24:** ` public var displayName: String`
+  - *function*
+- **L50:** ` public var displayName: String`
+  - *function*
+- **L104:** ` public var displayName: String`
+  - *function*
+- **L149:** ` public var isValid: Bool`
+  - *function*
+  - *Whether the OCR result is valid based on confidence threshold\n*
+- **L175:** ` public var recognizedTextTypes: [TextType]`
+  - *function*
+  - *Get all recognized text types\n*
+- **L292:** ` public var displayName: String`
+  - *function*
+- **L333:** ` public var displayName: String`
+  - *function*
+- **L377:** ` public var displayName: String`
+  - *function*
+- **L73:** ` public init(`
+  - *function*
+- **L132:** ` public init(`
+  - *function*
+- **L191:** ` public init(`
+  - *function*
+- **L218:** ` public init(`
+  - *function*
+- **L243:** ` public init(`
+  - *function*
+- **L268:** ` public init(`
+  - *function*
+- **L311:** ` public init(`
+  - *function*
+- **L353:** ` public init(`
+  - *function*
+- **L397:** ` public init(`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/PlatformTypes.swift
+### Public Interface
+- **L76:** ` public static func from(screenSize: CGSize) -> DeviceType`
+  - *static function*
+  - *Detect device type from screen size\n*
+- **L204:** ` public static func isFeatureAvailable(_ feature: CarPlayFeature) -> Bool`
+  - *static function*
+- **L330:** ` public static func reduce(value: inout FormContentMetrics, nextValue: () -> FormContentMetrics)`
+  - *static function*
+- **L22:** ` public static var current: Platform`
+  - *static function*
+  - *Current platform detection\n*
+- **L52:** ` public static var current: DeviceType`
+  - *static function*
+- **L122:** ` public static var current: DeviceContext`
+  - *static function*
+- **L158:** ` public static var isCarPlayActive: Bool`
+  - *static function*
+- **L173:** ` public static var supportsCarPlay: Bool`
+  - *static function*
+  - *Whether the app supports CarPlay\n*
+- **L186:** ` public static var carPlayDeviceType: DeviceType`
+  - *static function*
+- **L191:** ` public static var carPlayLayoutPreferences: CarPlayLayoutPreferences`
+  - *static function*
+  - *Get CarPlay-optimized layout preferences\n*
+- **L363:** ` public static var deviceType: DeviceType`
+  - *static function*
+- **L368:** ` public static var supportsHapticFeedback: Bool`
+  - *static function*
+  - *Whether the device supports haptic feedback\n*
+- **L377:** ` public static var supportsKeyboardShortcuts: Bool`
+  - *static function*
+  - *Whether the device supports keyboard shortcuts\n*
+- **L386:** ` public static var supportsContextMenus: Bool`
+  - *static function*
+  - *Whether the device supports context menus\n*
+- **L395:** ` public static var supportsCarPlay: Bool`
+  - *static function*
+  - *Whether the device supports CarPlay\n*
+- **L401:** ` public static var isCarPlayActive: Bool`
+  - *static function*
+- **L407:** ` public static var deviceContext: DeviceContext`
+  - *static function*
+- **L548:** ` public static var allCases: [SheetDetent]`
+  - *static function*
+- **L691:** ` public var uiImage: UIImage { return _uiImage }`
+  - *function*
+- **L693:** ` public var nsImage: NSImage { return _nsImage }`
+  - *function*
+- **L237:** ` public init(`
+  - *function*
+- **L303:** ` public init(`
+  - *function*
+- **L442:** ` public init(`
+  - *function*
+- **L469:** ` public init(`
+  - *function*
+- **L528:** ` public init(`
+  - *function*
+- **L560:** ` public init(`
+  - *function*
+- **L584:** ` public init(`
+  - *function*
+- **L632:** ` public init(`
+  - *function*
+- **L672:** ` public init()`
+  - *function*
+- **L681:** ` public init(uiImage: UIImage)`
+  - *function*
+- **L685:** ` public init(nsImage: NSImage)`
+  - *function*
+- **L705:** ` public init(`
+  - *function*
+
+### Internal Methods
+- **L284:** ` static func platformDecimalKeyboardType() -> KeyboardType`
+  - *static function*
+  - *Platform-specific decimal keyboard type\n*
+
+## ./Framework/Sources/Shared/Models/OCRDisambiguationTypes.swift
+### Public Interface
+- **L114:** `public func shouldRequireDisambiguation(candidates: [OCRDataCandidate]) -> Bool`
+  - *function*
+  - *Determine if disambiguation is required based on candidates\n*
+- **L166:** `public func createDisambiguationResult(`
+  - *function*
+  - *Create disambiguation result from OCR candidates\n*
+- **L187:** `public func filterCandidatesByConfidence(`
+  - *function*
+  - *Filter candidates by confidence threshold\n*
+- **L195:** `public func sortCandidatesByConfidence(`
+  - *function*
+  - *Sort candidates by confidence (highest first)\n*
+- **L202:** `public func groupCandidatesByType(`
+  - *function*
+  - *Group candidates by type\n*
+- **L209:** `public func findIdenticalTextCandidates(`
+  - *function*
+  - *Find candidates with identical text\n*
+- **L23:** ` public init(`
+  - *function*
+- **L56:** ` public init(`
+  - *function*
+- **L75:** ` public init(`
+  - *function*
+- **L96:** ` public init(`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/EnhancedDeviceDetection.swift
+### Public Interface
+- **L359:** `public func getCurrentDeviceCapabilities() -> EnhancedDeviceCapabilities`
+  - *function*
+- **L364:** `public func getDeviceCapabilitiesForScreenSize(`
+  - *function*
+  - *Get device capabilities for a specific screen size (useful for testing)\n*
+- **L396:** ` public var description: String`
+  - *function|extension ScreenSizeClass*
+  - *Get detailed size class information\n*
+- **L408:** ` public var supportsMultiColumn: Bool`
+  - *function|extension ScreenSizeClass*
+  - *Check if size class supports specific features\n*
+- **L418:** ` public var recommendedColumns: Int`
+  - *function|extension ScreenSizeClass*
+  - *Get recommended column count for this size class\n*
+- **L434:** ` public var detailedDescription: String`
+  - *function|extension DeviceType*
+  - *Get detailed device information\n*
+- **L452:** ` public var supportsHapticFeedback: Bool`
+  - *function|extension DeviceType*
+  - *Check if device supports specific features\n*
+- **L456:** ` public var supportsKeyboardShortcuts: Bool`
+  - *function|extension DeviceType*
+- **L460:** ` public var supportsContextMenus: Bool`
+  - *function|extension DeviceType*
+- **L464:** ` public var supportsSplitView: Bool`
+  - *function|extension DeviceType*
+- **L468:** ` public var supportsStageManager: Bool`
+  - *function|extension DeviceType*
+- **L197:** ` public init()`
+  - *function*
+- **L273:** ` public init(`
+  - *function*
+  - *Custom initializer for testing and specific configurations\n*
+
+### Internal Methods
+- **L27:** ` static func from(screenSize: CGSize) -> iPhoneSizeCategory`
+  - *static function*
+  - *Detect iPhone size category from screen dimensions\n*
+- **L82:** ` static func from(screenSize: CGSize) -> iPadSizeCategory`
+  - *static function*
+  - *Detect iPad size category from screen dimensions\n*
+- **L130:** ` static func from(screenSize: CGSize) -> ScreenSizeClass`
+  - *static function*
+  - *Detect screen size class from screen dimensions\n*
+
+### Private Implementation
+- **L306:** ` private static func estimateMemoryAvailable(`
+  - *static function*
+  - *Estimate available memory based on device characteristics\n*
+
+## ./Framework/Sources/Shared/Models/DynamicFormTypes.swift
+### Public Interface
+- **L65:** ` public var supportsOptions: Bool`
+  - *function*
+  - *Check if field type supports options\n*
+- **L75:** ` public var supportsMultipleValues: Bool`
+  - *function*
+  - *Check if field type supports multiple values\n*
+- **L86:** ` public var keyboardType: UIKeyboardType`
+  - *function*
+- **L101:** ` public var keyboardType: String`
+  - *function*
+- **L180:** ` public var allFields: [DynamicFormField]`
+  - *function*
+  - *Get all fields from all sections\n*
+- **L263:** ` public var isValid: Bool`
+  - *function*
+  - *Check if form is valid\n*
+- **L277:** ` public var formData: [String: Any]`
+  - *function*
+  - *Get form data as dictionary\n*
+- **L18:** ` public init(`
+  - *function*
+- **L130:** ` public init(`
+  - *function*
+- **L161:** ` public init(`
+  - *function*
+- **L207:** ` public init(configuration: DynamicFormConfiguration)`
+  - *function*
+- **L305:** ` public init() {}`
+  - *function*
+
+### Internal Methods
+- **L185:** ` func getField(by id: String) -> DynamicFormField?`
+  - *function*
+  - *Get field by ID\n*
+- **L190:** ` func getSection(by id: String) -> DynamicFormSection?`
+  - *function*
+  - *Get section by ID\n*
+- **L225:** ` func hasErrors(for fieldId: String) -> Bool`
+  - *function*
+  - *Check if field has errors\n*
+- **L230:** ` func getErrors(for fieldId: String) -> [String]`
+  - *function*
+  - *Get errors for a specific field\n*
+- **L235:** ` func addError(_ error: String, for fieldId: String)`
+  - *function*
+  - *Add error for a specific field\n*
+- **L243:** ` func clearErrors(for fieldId: String)`
+  - *function*
+  - *Clear errors for a specific field\n*
+- **L248:** ` func clearAllErrors()`
+  - *function*
+  - *Clear all errors\n*
+- **L253:** ` func isSectionCollapsed(_ sectionId: String) -> Bool`
+  - *function*
+  - *Check if section is collapsed\n*
+- **L258:** ` func toggleSection(_ sectionId: String)`
+  - *function*
+  - *Toggle section collapsed state\n*
+- **L268:** ` func reset()`
+  - *function*
+  - *Reset form to initial state\n*
+
+### Private Implementation
+- **L283:** ` private func setupInitialState()`
+  - *function*
+
+## ./Framework/Sources/Shared/Models/DataIntrospection.swift
+### Public Interface
+- **L77:** ` public init(`
+  - *function*
+- **L126:** ` public init(`
+  - *function*
+- **L166:** ` public init(`
+  - *function*
+- **L186:** ` public init(`
+  - *function*
+- **L208:** ` public init(`
+  - *function*
+
+### Internal Methods
+- **L282:** ` static func extractFields(from mirror: Mirror) -> [DataField]`
+  - *static function*
+  - *Extract field information from a Mirror\n*
+- **L304:** ` static func determineFieldType(_ value: Any) -> FieldType`
+  - *static function*
+  - *Determine the type of a field\n*
+- **L354:** ` static func isOptional(_ value: Any) -> Bool`
+  - *static function*
+  - *Check if a value is optional\n*
+- **L360:** ` static func isArray(_ value: Any) -> Bool`
+  - *static function*
+  - *Check if a value is an array\n*
+- **L366:** ` static func isIdentifiable(_ value: Any) -> Bool`
+  - *static function*
+  - *Check if a value conforms to Identifiable\n*
+- **L373:** ` static func hasDefaultValue(_ value: Any) -> Bool`
+  - *static function*
+  - *Check if a value has a default value\n*
+- **L380:** ` static func calculateComplexity(fields: [DataField]) -> ContentComplexity`
+  - *static function*
+  - *Calculate complexity based on fields\n*
+- **L407:** ` static func detectPatterns(fields: [DataField]) -> DataPatterns`
+  - *static function*
+  - *Detect patterns in the data\n*
+- **L426:** ` static func generateRecommendations(`
+  - *static function*
+  - *Generate UI recommendations\n*
+
+## ./Framework/Sources/Shared/Models/PlatformImageExtensions.swift
+### Internal Methods
+- **L22:** ` func resized(to targetSize: CGSize) -> PlatformImage`
+  - *function*
+  - *Resize image to target size while maintaining aspect ratio\n*
+- **L39:** ` func cropped(to rect: CGRect) -> PlatformImage`
+  - *function*
+  - *Crop image to specified rectangle\n*
+- **L56:** ` func compressed(for purpose: PhotoPurpose, quality: Double = 0.8) -> Data?`
+  - *function*
+  - *Apply compression for specific use case\n*
+- **L70:** ` func thumbnail(size: CGSize) -> PlatformImage`
+  - *function*
+  - *Create thumbnail version\n*
+- **L75:** ` func optimizedForOCR() -> PlatformImage`
+  - *function*
+  - *Apply basic image processing for OCR\n*
+- **L107:** ` func meetsRequirements(for purpose: PhotoPurpose) -> Bool`
+  - *function*
+  - *Check if image meets minimum requirements for purpose\n*
+- **L82:** ` var metadata: ImageMetadata`
+  - *function*
+  - *Get image metadata\n*
+- **L127:** ` var size: CGSize`
+  - *function*
+  - *Get the size of the image\n*
+

@@ -1,0 +1,2170 @@
+# Function Index
+
+- **Directory**: ./Development/Tests/SixLayerFrameworkTests
+- **Generated**: 2025-09-06 16:41:56 -0700
+- **Script**: Scripts/generate_function_index.sh
+
+This index lists function declarations and other Swift declarations found in this directory's Swift files.
+
+Functions are categorized by access level and type for better organization.
+
+Documentation comments are extracted when available.
+
+Extension context is shown for functions that are part of extensions.
+
+---
+
+## ./Development/Tests/SixLayerFrameworkTests/OCRComprehensiveTests.swift
+### Internal Methods
+- **L37:** ` func testPlatformOCRIntentL1BasicFunctionality()`
+  - *function*
+- **L51:** ` func testPlatformOCRIntentL1WithEmptyTextTypes()`
+  - *function*
+- **L65:** ` func testPlatformOCRIntentL1WithAllTextTypes()`
+  - *function*
+- **L79:** ` func testPlatformOCRIntentL1WithCorruptedImage()`
+  - *function*
+- **L94:** ` func testPlatformOCRIntentL1WithEmptyImage()`
+  - *function*
+- **L109:** ` func testPlatformTextExtractionL1BasicFunctionality()`
+  - *function*
+- **L127:** ` func testPlatformTextExtractionL1WithDifferentLanguages()`
+  - *function*
+- **L173:** ` func testPlatformTextExtractionL1WithDifferentConfidenceThresholds()`
+  - *function*
+- **L205:** ` func testPlatformDocumentAnalysisL1BasicFunctionality()`
+  - *function*
+- **L217:** ` func testPlatformDocumentAnalysisL1WithDifferentDocumentTypes()`
+  - *function*
+- **L255:** ` func testPlatformOCRLayoutL2BasicFunctionality()`
+  - *function*
+- **L270:** ` func testPlatformOCRLayoutL2WithDifferentTextTypes()`
+  - *function*
+- **L291:** ` func testPlatformOCRLayoutL2WithDifferentLanguages()`
+  - *function*
+- **L322:** ` func testPlatformOCRStrategyL3BasicFunctionality()`
+  - *function*
+- **L333:** ` func testPlatformOCRStrategyL3WithDifferentTextTypes()`
+  - *function*
+- **L342:** ` func testPlatformOCRStrategyL3WithLanguage()`
+  - *function*
+- **L355:** ` func testPlatformOCRImplementationL4BasicFunctionality()`
+  - *function*
+- **L381:** ` func testPlatformOCRImplementationL4WithDifferentProcessingModes()`
+  - *function*
+- **L439:** ` func testPlatformTextRecognitionL4BasicFunctionality()`
+  - *function*
+- **L458:** ` func testPlatformTextRecognitionL4WithDifferentLanguages()`
+  - *function*
+- **L509:** ` func testEndToEndOCRWorkflow()`
+  - *function*
+- **L551:** ` func testCrossLayerDataFlow()`
+  - *function*
+- **L585:** ` func testOCRPerformanceWithLargeImage()`
+  - *function*
+- **L614:** ` func testOCRPerformanceWithMultipleTextTypes()`
+  - *function*
+- **L643:** ` func testOCRPerformanceWithDifferentLanguages()`
+  - *function*
+- **L677:** ` func testErrorHandlingWithCorruptedImage()`
+  - *function*
+- **L705:** ` func testErrorHandlingWithEmptyImage()`
+  - *function*
+- **L733:** ` func testErrorHandlingWithInvalidConfidenceThreshold()`
+  - *function*
+- **L762:** ` func testEdgeCaseWithVerySmallImage()`
+  - *function*
+- **L777:** ` func testEdgeCaseWithVeryLargeImage()`
+  - *function*
+- **L791:** ` func testEdgeCaseWithAllTextTypes()`
+  - *function*
+- **L805:** ` func testEdgeCaseWithAllLanguages()`
+  - *function*
+- **L827:** ` func testEdgeCaseWithAllDocumentTypes()`
+  - *function*
+- **L845:** ` func testAccessibilitySupport()`
+  - *function*
+- **L874:** ` func testConcurrentOCRProcessing()`
+  - *function*
+- **L918:** ` func testMemoryUsageWithLargeImage()`
+  - *function*
+
+### Private Implementation
+- **L950:** ` private func createTestPlatformImage() -> PlatformImage`
+  - *function*
+- **L989:** ` private func createLargeTestImage() -> PlatformImage`
+  - *function*
+- **L1028:** ` private func createCorruptedTestImage() -> PlatformImage`
+  - *function*
+- **L1051:** ` private func createEmptyTestImage() -> PlatformImage`
+  - *function*
+- **L1074:** ` private func createSmallTestImage() -> PlatformImage`
+  - *function*
+- **L19:** ` private var testImage: PlatformImage`
+  - *function*
+- **L23:** ` private var largeImage: PlatformImage`
+  - *function*
+- **L27:** ` private var corruptedImage: PlatformImage`
+  - *function*
+- **L31:** ` private var emptyImage: PlatformImage`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/LayoutDecisionReasoningTests.swift
+### Internal Methods
+- **L15:** ` func testGenericLayoutDecisionReasoningContainsApproach()`
+  - *function*
+- **L30:** ` func testGenericLayoutDecisionReasoningContainsPerformance()`
+  - *function*
+- **L45:** ` func testGenericLayoutDecisionReasoningContainsSpacing()`
+  - *function*
+- **L62:** ` func testGenericFormLayoutDecisionReasoningContainsContainer()`
+  - *function*
+- **L78:** ` func testGenericFormLayoutDecisionReasoningContainsComplexity()`
+  - *function*
+- **L96:** ` func testReasoningIsNotEmpty()`
+  - *function*
+- **L111:** ` func testReasoningIsDescriptive()`
+  - *function*
+- **L129:** ` func testReasoningConsistencyAcrossSimilarDecisions()`
+  - *function*
+- **L151:** ` func testReasoningReflectsDifferentApproaches()`
+  - *function*
+- **L178:** ` func testRealLayoutDecisionReasoningGeneration()`
+  - *function*
+- **L205:** ` func testRealFormLayoutDecisionReasoningGeneration()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilityTestingSuiteTests.swift
+### Internal Methods
+- **L34:** ` func testTestingSuiteInitialization()`
+  - *function*
+- **L43:** ` func testRunAllTestsIsDeterministic() async`
+  - *function*
+- **L59:** ` func testRunTestsForCategoryIsDeterministic() async`
+  - *function*
+
+### Private Implementation
+- **L77:** ` private func createTestView() -> some View`
+  - *function*
+- **L84:** ` private func createComplexTestView() -> some View`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/ShapeStyleSystemTests.swift
+### Internal Methods
+- **L11:** ` func testStandardColorsExist()`
+  - *function*
+- **L29:** ` func testPlatformSpecificColors()`
+  - *function*
+- **L51:** ` func testGradientCreation()`
+  - *function*
+- **L64:** ` func testGradientTypes()`
+  - *function*
+- **L80:** ` func testMaterialTypes()`
+  - *function*
+- **L92:** ` func testMaterialTypesCorrect()`
+  - *function*
+- **L106:** ` func testHierarchicalStyles()`
+  - *function*
+- **L117:** ` func testHierarchicalStylesTypes()`
+  - *function*
+- **L129:** ` func testFactoryBackgroundCreation()`
+  - *function*
+- **L138:** ` func testFactorySurfaceCreation()`
+  - *function*
+- **L147:** ` func testFactoryTextCreation()`
+  - *function*
+- **L156:** ` func testFactoryBorderCreation()`
+  - *function*
+- **L165:** ` func testFactoryGradientCreation()`
+  - *function*
+- **L175:** ` func testFactoryMaterialCreation()`
+  - *function*
+- **L185:** ` func testFactoryHierarchicalCreation()`
+  - *function*
+- **L196:** ` func testBackgroundVariantEnum()`
+  - *function*
+- **L207:** ` func testSurfaceVariantEnum()`
+  - *function*
+- **L218:** ` func testTextVariantEnum()`
+  - *function*
+- **L229:** ` func testBorderVariantEnum()`
+  - *function*
+- **L240:** ` func testGradientVariantEnum()`
+  - *function*
+- **L255:** ` func testMaterialVariantEnum()`
+  - *function*
+- **L268:** ` func testHierarchicalVariantEnum()`
+  - *function*
+- **L282:** ` func testAnyShapeStyleCreation()`
+  - *function*
+- **L292:** ` func testAnyShapeStyleWithGradient()`
+  - *function*
+- **L302:** ` func testAnyShapeStyleWithMaterial()`
+  - *function*
+- **L312:** ` func testAnyShapeStyleWithHierarchical()`
+  - *function*
+- **L323:** ` func testPlatformBackgroundModifier()`
+  - *function*
+- **L334:** ` func testPlatformSurfaceModifier()`
+  - *function*
+- **L345:** ` func testPlatformTextModifier()`
+  - *function*
+- **L356:** ` func testPlatformBorderModifier()`
+  - *function*
+- **L367:** ` func testPlatformGradientModifier()`
+  - *function*
+- **L379:** ` func testPlatformMaterialModifier()`
+  - *function*
+- **L391:** ` func testPlatformHierarchicalModifier()`
+  - *function*
+- **L405:** ` func testMaterialBackgroundModifier()`
+  - *function*
+- **L417:** ` func testHierarchicalMaterialBackgroundModifier()`
+  - *function*
+- **L430:** ` func testGradientBackgroundModifier()`
+  - *function*
+- **L442:** ` func testRadialGradientBackgroundModifier()`
+  - *function*
+- **L456:** ` func testAccessibilityAwareBackgroundModifier()`
+  - *function*
+- **L472:** ` func testAccessibilityAwareForegroundModifier()`
+  - *function*
+- **L490:** ` func testShapeStyleSystemIntegration()`
+  - *function*
+- **L509:** ` func testAppleHIGComplianceIntegration()`
+  - *function*
+- **L522:** ` func testShapeStyleCreationPerformance()`
+  - *function*
+- **L535:** ` func testViewModifierPerformance()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformColorEncodeTests.swift
+### Internal Methods
+- **L16:** ` func testPlatformColorEncodeWithSystemColors()`
+  - *function*
+- **L53:** ` func testPlatformColorEncodeWithCustomColors()`
+  - *function*
+- **L79:** ` func testPlatformColorEncodeWithAlphaValues()`
+  - *function*
+- **L106:** ` func testPlatformColorEncodeCrossPlatformCompatibility()`
+  - *function*
+- **L132:** ` func testPlatformColorEncodeWithInvalidColor()`
+  - *function*
+- **L159:** ` func testPlatformColorEncodeDataIntegrity()`
+  - *function*
+- **L179:** ` func testPlatformColorEncodeConsistency()`
+  - *function*
+- **L211:** ` func testPlatformColorEncodePerformance()`
+  - *function*
+- **L229:** ` func testPlatformColorEncodeMemoryUsage()`
+  - *function*
+
+### Private Implementation
+- **L260:** `private func testPlatformColorDecode(_ data: Data) throws -> Color?`
+  - *function*
+  - *Decode a color from encoded data (for testing purposes)\n*
+
+## ./Development/Tests/SixLayerFrameworkTests/OCRViewTests.swift
+### Internal Methods
+- **L28:** ` func testOCRViewInitialization()`
+  - *function*
+- **L65:** ` func testOCRViewWithMockService()`
+  - *function*
+- **L114:** ` func testOCRProgressView()`
+  - *function*
+- **L125:** ` func testOCRProgressViewWithDifferentValues()`
+  - *function*
+- **L140:** ` func testOCRResultView()`
+  - *function*
+- **L158:** ` func testOCRResultViewWithEmptyResult()`
+  - *function*
+- **L176:** ` func testOCRResultViewWithDifferentTextTypes()`
+  - *function*
+- **L202:** ` func testOCRErrorView()`
+  - *function*
+- **L213:** ` func testOCRErrorViewWithDifferentErrors()`
+  - *function*
+- **L233:** ` func testOCRImageView()`
+  - *function*
+- **L249:** ` func testLegacyOCRView()`
+  - *function*
+- **L287:** ` func testOCRServiceFactory()`
+  - *function*
+- **L297:** ` func testOCRServiceFactoryCapabilities()`
+  - *function*
+- **L310:** ` func testOCRServiceFactoryAvailability()`
+  - *function*
+- **L323:** ` func testOCRViewIntegration() async`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CapabilityMatrixTests.swift
+### Internal Methods
+- **L220:** ` func testAllCapabilities()`
+  - *function*
+- **L244:** ` func testTouchCapability()`
+  - *function*
+- **L249:** ` func testHoverCapability()`
+  - *function*
+- **L254:** ` func testHapticFeedbackCapability()`
+  - *function*
+- **L259:** ` func testAssistiveTouchCapability()`
+  - *function*
+- **L264:** ` func testVisionFrameworkCapability()`
+  - *function*
+- **L269:** ` func testOCRCapability()`
+  - *function*
+- **L274:** ` func testColorEncodingCapability()`
+  - *function*
+- **L281:** ` func testPlatformCapabilityConsistency()`
+  - *function*
+- **L330:** ` func testCapabilityMatrix()`
+  - *function*
+
+### Private Implementation
+- **L226:** ` private func testCapability(_ capabilityTest: CapabilityTest)`
+  - *function*
+- **L356:** ` private func validateCapabilityMatrix(_ capabilities: [String: Bool]) -> Bool`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/SwitchControlTests.swift
+### Internal Methods
+- **L10:** ` func testSwitchControlManagerInitialization()`
+  - *function*
+- **L29:** ` func testSwitchControlNavigationSupport()`
+  - *function*
+- **L41:** ` func testSwitchControlCustomActions()`
+  - *function*
+- **L67:** ` func testSwitchControlFocusManagement()`
+  - *function*
+- **L80:** ` func testSwitchControlGestureSupport()`
+  - *function*
+- **L96:** ` func testSwitchControlConfiguration()`
+  - *function*
+- **L118:** ` func testSwitchControlActionCreation()`
+  - *function*
+- **L132:** ` func testSwitchControlGestureTypes()`
+  - *function*
+- **L148:** ` func testSwitchControlFocusDirection()`
+  - *function*
+- **L162:** ` func testSwitchControlFocusManagementMode()`
+  - *function*
+- **L176:** ` func testSwitchControlViewModifier()`
+  - *function*
+- **L185:** ` func testSwitchControlViewModifierWithConfiguration()`
+  - *function*
+- **L197:** ` func testSwitchControlCompliance()`
+  - *function*
+- **L213:** ` func testSwitchControlComplianceWithIssues()`
+  - *function*
+- **L227:** ` func testSwitchControlPerformance()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PhotoFunctionalityPhase1Tests.swift
+### Internal Methods
+- **L22:** ` func testPlatformImageInitialization()`
+  - *function*
+- **L33:** ` func testPlatformImageInitializationWithInvalidData()`
+  - *function*
+- **L44:** ` func testPlatformImageResize()`
+  - *function*
+- **L56:** ` func testPlatformImageCrop()`
+  - *function*
+- **L68:** ` func testPlatformImageCompression()`
+  - *function*
+- **L81:** ` func testPlatformImageThumbnail()`
+  - *function*
+- **L93:** ` func testPlatformImageOCROptimization()`
+  - *function*
+- **L104:** ` func testPlatformImageMetadata()`
+  - *function*
+- **L118:** ` func testPlatformImageMeetsRequirements()`
+  - *function*
+- **L132:** ` func testPhotoPurposeEnum()`
+  - *function*
+- **L149:** ` func testPhotoContextInitialization()`
+  - *function*
+- **L171:** ` func testPhotoPreferencesInitialization()`
+  - *function*
+- **L195:** ` func testDeviceCapabilitiesInitialization()`
+  - *function*
+- **L219:** ` func testPlatformCameraInterfaceL4()`
+  - *function*
+- **L231:** ` func testPlatformPhotoPickerL4()`
+  - *function*
+- **L243:** ` func testPlatformPhotoDisplayL4()`
+  - *function*
+- **L255:** ` func testPlatformPhotoEditorL4()`
+  - *function*
+- **L270:** ` func testPlatformSystemColors()`
+  - *function*
+- **L287:** ` func testPlatformKeyboardTypeModifier()`
+  - *function*
+- **L299:** ` func testPlatformTextFieldStyleModifier()`
+  - *function*
+- **L313:** ` func testPlatformLocationAuthorizationStatus()`
+  - *function*
+
+### Private Implementation
+- **L326:** ` private func createSampleImageData() -> Data`
+  - *function*
+- **L349:** ` private func createTestPlatformImage() -> PlatformImage`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/EyeTrackingTests.swift
+### Internal Methods
+- **L41:** ` func testEyeTrackingConfigInitialization()`
+  - *function*
+- **L51:** ` func testEyeTrackingConfigCustomValues()`
+  - *function*
+- **L65:** ` func testEyeTrackingSensitivityThresholds()`
+  - *function*
+- **L72:** ` func testEyeTrackingCalibrationInitialization()`
+  - *function*
+- **L83:** ` func testEyeTrackingManagerInitialization()`
+  - *function*
+- **L93:** ` func testEyeTrackingManagerEnable()`
+  - *function*
+- **L103:** ` func testEyeTrackingManagerDisable()`
+  - *function*
+- **L113:** ` func testEyeTrackingManagerConfigUpdate()`
+  - *function*
+- **L130:** ` func testGazeEventInitialization()`
+  - *function*
+- **L149:** ` func testGazeEventDefaultTimestamp()`
+  - *function*
+- **L160:** ` func testProcessGazeEvent()`
+  - *function*
+- **L177:** ` func testDwellEventInitialization()`
+  - *function*
+- **L195:** ` func testDwellEventDefaultTimestamp()`
+  - *function*
+- **L208:** ` func testStartCalibration()`
+  - *function*
+- **L222:** ` func testCompleteCalibration()`
+  - *function*
+- **L232:** ` func testEyeTrackingModifierInitialization()`
+  - *function*
+- **L239:** ` func testEyeTrackingModifierWithConfig()`
+  - *function*
+- **L246:** ` func testEyeTrackingModifierWithCallbacks()`
+  - *function*
+- **L261:** ` func testEyeTrackingEnabledViewModifier()`
+  - *function*
+- **L269:** ` func testEyeTrackingEnabledWithConfig()`
+  - *function*
+- **L277:** ` func testEyeTrackingEnabledWithCallbacks()`
+  - *function*
+- **L289:** ` func testEyeTrackingPerformance()`
+  - *function*
+- **L301:** ` func testGazeEventCreationPerformance()`
+  - *function*
+- **L314:** ` func testEyeTrackingIntegration()`
+  - *function*
+- **L347:** ` func testEyeTrackingWithDifferentSensitivities()`
+  - *function*
+- **L359:** ` func testEyeTrackingWithDifferentDwellTimes()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformBehaviorTests.swift
+### Internal Methods
+- **L39:** ` func testPlatformDetectionBehavior()`
+  - *function*
+- **L150:** ` func testCardExpansionBehavior()`
+  - *function*
+- **L222:** ` func testOCRBehavior()`
+  - *function*
+- **L291:** ` func testColorEncodingBehavior()`
+  - *function*
+- **L308:** ` func testAccessibilityBehavior()`
+  - *function*
+- **L324:** ` func testPlatformSystemBehavior()`
+  - *function*
+- **L371:** ` func testHighContrastBehavior()`
+  - *function*
+- **L385:** ` func testReduceMotionBehavior()`
+  - *function*
+- **L399:** ` func testAllPlatformBehaviors()`
+  - *function*
+- **L415:** ` func testPlatformSpecificInputOutput()`
+  - *function*
+
+### Private Implementation
+- **L12:** ` private func createTestView() -> some View`
+  - *function*
+- **L17:** ` private func createTestImage() -> PlatformImage`
+  - *function*
+- **L21:** ` private func createTestOCRContext() -> OCRContext`
+  - *function*
+- **L29:** ` private func createTestOCRStrategy() -> OCRStrategy`
+  - *function*
+- **L62:** ` private func testIOSPlatformBehavior()`
+  - *function*
+- **L84:** ` private func testMacOSPlatformBehavior()`
+  - *function*
+- **L102:** ` private func testWatchOSPlatformBehavior()`
+  - *function*
+- **L116:** ` private func testTVOSPlatformBehavior()`
+  - *function*
+- **L132:** ` private func testVisionOSPlatformBehavior()`
+  - *function*
+- **L161:** ` private func testCardExpansionTouchBehavior(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L185:** ` private func testCardExpansionHoverBehavior(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L197:** ` private func testCardExpansionAccessibilityBehavior(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L205:** ` private func testCardExpansionPerformanceBehavior(config: CardExpansionPlatformConfig, performanceConfig: CardExpansionPerformanceConfig)`
+  - *function*
+- **L234:** ` private func testOCREnabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy)`
+  - *function*
+- **L261:** ` private func testOCRDisabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy)`
+  - *function*
+- **L333:** ` private func testPlatformSystemTouchBehavior(testView: some View)`
+  - *function*
+- **L347:** ` private func testPlatformSystemHoverBehavior(testView: some View)`
+  - *function*
+- **L361:** ` private func testPlatformSystemAccessibilityBehavior(testView: some View)`
+  - *function*
+- **L425:** ` private func testPlatformSpecificInputOutput(platform: Platform, input: String)`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/InputHandlingInteractionsTests.swift
+### Internal Methods
+- **L31:** ` func testInputHandlingManagerInitialization()`
+  - *function*
+- **L46:** ` func testInputHandlingManagerDefaultPlatform()`
+  - *function*
+- **L56:** ` func testInteractionBehaviorForSupportedGesture()`
+  - *function*
+- **L72:** ` func testInteractionBehaviorForUnsupportedGesture()`
+  - *function*
+- **L88:** ` func testInteractionBehaviorForMacOS()`
+  - *function*
+- **L106:** ` func testKeyboardShortcutManagerInitialization()`
+  - *function*
+- **L117:** ` func testCreateKeyboardShortcutForMacOS()`
+  - *function*
+- **L133:** ` func testCreateKeyboardShortcutForIOS()`
+  - *function*
+- **L149:** ` func testGetShortcutDescriptionForMacOS()`
+  - *function*
+- **L162:** ` func testGetShortcutDescriptionForIOS()`
+  - *function*
+- **L175:** ` func testGetShortcutDescriptionForWatchOS()`
+  - *function*
+- **L188:** ` func testGetShortcutDescriptionForTVOS()`
+  - *function*
+- **L203:** ` func testHapticFeedbackManagerInitialization()`
+  - *function*
+- **L214:** ` func testTriggerFeedbackForIOS()`
+  - *function*
+- **L224:** ` func testTriggerFeedbackForMacOS()`
+  - *function*
+- **L234:** ` func testTriggerFeedbackForWatchOS()`
+  - *function*
+- **L244:** ` func testTriggerFeedbackForTVOS()`
+  - *function*
+- **L256:** ` func testDragDropManagerInitialization()`
+  - *function*
+- **L267:** ` func testGetDragBehaviorForIOS()`
+  - *function*
+- **L281:** ` func testGetDragBehaviorForMacOS()`
+  - *function*
+- **L295:** ` func testGetDragBehaviorForWatchOS()`
+  - *function*
+- **L309:** ` func testGetDragBehaviorForTVOS()`
+  - *function*
+- **L325:** ` func testSwipeDirectionFromDragLeft()`
+  - *function*
+- **L337:** ` func testSwipeDirectionFromDragRight()`
+  - *function*
+- **L349:** ` func testSwipeDirectionFromDragUp()`
+  - *function*
+- **L361:** ` func testSwipeDirectionFromDragDown()`
+  - *function*
+- **L373:** ` func testSwipeDirectionFromDragDiagonal()`
+  - *function*
+- **L387:** ` func testPlatformInteractionButtonInitialization()`
+  - *function*
+- **L402:** ` func testPlatformInteractionButtonWithDifferentStyles()`
+  - *function*
+- **L417:** ` func testInputHandlingIntegration()`
+  - *function*
+- **L435:** ` func testCrossPlatformConsistency()`
+  - *function*
+- **L454:** ` func testInputHandlingManagerPerformance()`
+  - *function*
+- **L468:** ` func testSwipeDirectionPerformance()`
+  - *function*
+- **L485:** ` func testInteractionBehaviorWithAllGestureTypes()`
+  - *function*
+- **L498:** ` func testKeyboardShortcutWithAllModifiers()`
+  - *function*
+- **L523:** ` func testHapticFeedbackWithAllTypes()`
+  - *function*
+- **L534:** ` func testDragBehaviorWithAllPlatforms()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/ExtensibleHintsTests.swift
+### Internal Methods
+- **L8:** ` func testCustomHintCreation() throws`
+  - *function*
+- **L32:** ` func testHintPriorityComparison() throws`
+  - *function*
+- **L47:** ` func testHintPriorityAllCases() throws`
+  - *function*
+- **L61:** ` func testEnhancedPresentationHintsWithCustomHints() throws`
+  - *function*
+- **L86:** ` func testEnhancedPresentationHintsHintsMethod() throws`
+  - *function*
+- **L110:** ` func testEnhancedPresentationHintsHighestPriorityHint() throws`
+  - *function*
+- **L141:** ` func testEnhancedPresentationHintsHasOverridingHints() throws`
+  - *function*
+- **L177:** ` func testEnhancedPresentationHintsAllCustomData() throws`
+  - *function*
+- **L212:** ` func testHintProcessingEngineShouldOverrideFramework() throws`
+  - *function*
+- **L238:** ` func testHintProcessingEngineExtractLayoutPreferences() throws`
+  - *function*
+- **L267:** ` func testHintProcessingEngineExtractPerformancePreferences() throws`
+  - *function*
+- **L296:** ` func testHintProcessingEngineExtractAccessibilityPreferences() throws`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilitySystemCheckerTests.swift
+### Internal Methods
+- **L18:** ` func testSystemStateInitialization()`
+  - *function*
+- **L36:** ` func testSystemStateProperties()`
+  - *function*
+- **L57:** ` func testIOSSystemState()`
+  - *function*
+- **L68:** ` func testMacOSSystemState()`
+  - *function*
+- **L82:** ` func testVoiceOverComplianceCalculation()`
+  - *function*
+- **L93:** ` func testKeyboardComplianceCalculation()`
+  - *function*
+- **L104:** ` func testContrastComplianceCalculation()`
+  - *function*
+- **L115:** ` func testMotionComplianceCalculation()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/FormWizardTests.swift
+### Internal Methods
+- **L9:** ` func testFormWizardStepCreation()`
+  - *function*
+- **L27:** ` func testFormWizardStepEquality()`
+  - *function*
+- **L50:** ` func testFormWizardStepHashable()`
+  - *function*
+- **L64:** ` func testFormWizardBuilderCreatesSteps()`
+  - *function*
+- **L79:** ` func testFormWizardBuilderWithDescription()`
+  - *function*
+- **L92:** ` func testFormWizardBuilderWithValidation()`
+  - *function*
+- **L108:** ` func testFormWizardBuilderWithRequiredFlag()`
+  - *function*
+- **L123:** ` func testFormWizardStateInitialization()`
+  - *function*
+- **L133:** ` func testFormWizardStateStepManagement()`
+  - *function*
+- **L148:** ` func testFormWizardStateNavigation()`
+  - *function*
+- **L195:** ` func testFormWizardStateStepCompletion()`
+  - *function*
+- **L214:** ` func testFormWizardStateValidation()`
+  - *function*
+- **L230:** ` func testFormWizardStateDataManagement()`
+  - *function*
+- **L242:** ` func testFormWizardStateValidationErrors()`
+  - *function*
+- **L262:** ` func testFormWizardProgressCreation()`
+  - *function*
+- **L275:** ` func testFormWizardProgressHelpers()`
+  - *function*
+- **L297:** ` func testFormWizardProgressEdgeCases()`
+  - *function*
+- **L317:** ` func testFormWizardCompleteWorkflow()`
+  - *function*
+- **L354:** ` func testFormWizardWithValidationRules()`
+  - *function*
+- **L375:** ` func testFormWizardLargeNumberOfSteps()`
+  - *function*
+- **L406:** ` func testFormWizardStatePersistence()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/DataBindingTests.swift
+### Internal Methods
+- **L10:** ` func testDataBinderInitialization()`
+  - *function*
+- **L20:** ` func testDataBinderBindField()`
+  - *function*
+- **L32:** ` func testDataBinderUpdateField()`
+  - *function*
+- **L49:** ` func testDataBinderSyncToModel()`
+  - *function*
+- **L68:** ` func testDataBinderMultipleBindings()`
+  - *function*
+- **L84:** ` func testDataBinderUnbindField()`
+  - *function*
+- **L102:** ` func testChangeTrackerInitialization()`
+  - *function*
+- **L111:** ` func testChangeTrackerTrackChange()`
+  - *function*
+- **L124:** ` func testChangeTrackerTrackMultipleChanges()`
+  - *function*
+- **L139:** ` func testChangeTrackerGetChangeDetails()`
+  - *function*
+- **L152:** ` func testChangeTrackerClearChanges()`
+  - *function*
+- **L168:** ` func testChangeTrackerRevertField()`
+  - *function*
+- **L185:** ` func testDirtyStateManagerInitialization()`
+  - *function*
+- **L193:** ` func testDirtyStateManagerMarkFieldDirty()`
+  - *function*
+- **L205:** ` func testDirtyStateManagerMarkFieldClean()`
+  - *function*
+- **L220:** ` func testDirtyStateManagerMultipleFields()`
+  - *function*
+- **L243:** ` func testDirtyStateManagerClearAll()`
+  - *function*
+- **L259:** ` func testDirtyStateManagerGetDirtyValues()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CapabilityAwareFunctionTests.swift
+### Internal Methods
+- **L12:** ` func testTouchDependentFunctions()`
+  - *function*
+- **L65:** ` func testHoverDependentFunctions()`
+  - *function*
+- **L106:** ` func testVisionFrameworkDependentFunctions()`
+  - *function*
+- **L188:** ` func testAccessibilityDependentFunctions()`
+  - *function*
+- **L204:** ` func testColorEncodingDependentFunctions()`
+  - *function*
+- **L226:** ` func testAllCapabilityDependentFunctions()`
+  - *function*
+- **L237:** ` func testCapabilityStateConsistency()`
+  - *function*
+
+### Private Implementation
+- **L25:** ` private func testTouchFunctionsEnabled()`
+  - *function*
+- **L42:** ` private func testTouchFunctionsDisabled()`
+  - *function*
+- **L76:** ` private func testHoverFunctionsEnabled()`
+  - *function*
+- **L92:** ` private func testHoverFunctionsDisabled()`
+  - *function*
+- **L116:** ` private func testVisionFunctionsEnabled()`
+  - *function*
+- **L148:** ` private func testVisionFunctionsDisabled()`
+  - *function*
+- **L209:** ` private func testColorEncodingFunctionsEnabled()`
+  - *function*
+- **L263:** ` private func validateCapabilityStateConsistency(_ capabilities: [String: Bool]) -> Bool`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/OCRSemanticLayerTests.swift
+### Internal Methods
+- **L9:** ` func testPlatformOCRIntent_L1()`
+  - *function*
+- **L27:** ` func testPlatformTextExtraction_L1()`
+  - *function*
+- **L49:** ` func testPlatformDocumentAnalysis_L1()`
+  - *function*
+- **L69:** ` func testPlatformOCRLayout_L2()`
+  - *function*
+- **L96:** ` func testPlatformOCRStrategy_L3()`
+  - *function*
+- **L115:** ` func testPlatformOCRComponent_L4()`
+  - *function*
+- **L145:** ` func testPlatformTextRecognition_L4()`
+  - *function*
+- **L179:** ` func testOCRResultValidation()`
+  - *function|extension OCRSemanticLayerTests*
+- **L207:** ` func testOCRResultFiltering()`
+  - *function|extension OCRSemanticLayerTests*
+
+### Private Implementation
+- **L169:** ` private func createTestImage() -> PlatformImage`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilityStateSimulationTests.swift
+### Internal Methods
+- **L139:** ` func testAccessibilityStateBehaviors()`
+  - *function*
+- **L313:** ` func testPlatformSpecificAccessibilityStates()`
+  - *function*
+- **L422:** ` func testAllAccessibilityStates()`
+  - *function*
+- **L20:** ` var description: String`
+  - *function*
+
+### Private Implementation
+- **L145:** ` private func testAccessibilityStateBehavior(_ state: AccessibilityState)`
+  - *function*
+- **L160:** ` private func testReduceMotionBehavior(state: AccessibilityState)`
+  - *function*
+- **L178:** ` private func testHighContrastBehavior(state: AccessibilityState)`
+  - *function*
+- **L206:** ` private func testVoiceOverBehavior(state: AccessibilityState)`
+  - *function*
+- **L222:** ` private func testSwitchControlBehavior(state: AccessibilityState)`
+  - *function*
+- **L236:** ` private func testDynamicTypeBehavior(state: AccessibilityState)`
+  - *function*
+- **L250:** ` private func testAssistiveTouchBehavior(state: AccessibilityState)`
+  - *function*
+- **L270:** ` private func testAccessibilityStateCombination(_ state: AccessibilityState)`
+  - *function*
+- **L330:** ` private func testIOSAccessibilityStates()`
+  - *function*
+- **L346:** ` private func testMacOSAccessibilityStates()`
+  - *function*
+- **L363:** ` private func testWatchOSAccessibilityStates()`
+  - *function*
+- **L382:** ` private func testTVOSAccessibilityStates()`
+  - *function*
+- **L401:** ` private func testVisionOSAccessibilityStates()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformSimulationTests.swift
+### Internal Methods
+- **L159:** ` func testAllPlatformCombinations()`
+  - *function*
+- **L187:** ` func testPhoneSpecificFeatures()`
+  - *function*
+- **L202:** ` func testPadSpecificFeatures()`
+  - *function*
+- **L217:** ` func testMacSpecificFeatures()`
+  - *function*
+- **L232:** ` func testWatchSpecificFeatures()`
+  - *function*
+- **L249:** ` func testTVSpecificFeatures()`
+  - *function*
+- **L266:** ` func testVisionSpecificFeatures()`
+  - *function*
+- **L287:** ` func testScreenSizeAppropriateness()`
+  - *function*
+- **L331:** ` func isInternallyConsistent() -> Bool`
+  - *function|extension PlatformSimulationTests.PlatformCapabilities*
+- **L354:** ` func satisfiesPlatformConstraints(_ platform: Platform) -> Bool`
+  - *function|extension PlatformSimulationTests.PlatformCapabilities*
+
+### Private Implementation
+- **L165:** ` private func testPlatformConfiguration(_ platform: SimulatedPlatform)`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AppleHIGComplianceTests.swift
+### Internal Methods
+- **L24:** ` func testComplianceManagerInitialization()`
+  - *function*
+- **L34:** ` func testPlatformDetection()`
+  - *function*
+- **L49:** ` func testAccessibilityStateMonitoring()`
+  - *function*
+- **L63:** ` func testDesignSystemInitialization()`
+  - *function*
+- **L75:** ` func testColorSystemPlatformSpecific()`
+  - *function*
+- **L100:** ` func testTypographySystemPlatformSpecific()`
+  - *function*
+- **L128:** ` func testSpacingSystem8ptGrid()`
+  - *function*
+- **L145:** ` func testAppleHIGCompliantModifier()`
+  - *function*
+- **L156:** ` func testAutomaticAccessibilityModifier()`
+  - *function*
+- **L167:** ` func testPlatformPatternsModifier()`
+  - *function*
+- **L178:** ` func testVisualConsistencyModifier()`
+  - *function*
+- **L189:** ` func testInteractionPatternsModifier()`
+  - *function*
+- **L202:** ` func testHIGComplianceCheck() async`
+  - *function*
+- **L224:** ` func testComplianceReportStructure()`
+  - *function*
+- **L247:** ` func testAccessibilitySystemStateInitialization()`
+  - *function*
+- **L263:** ` func testAccessibilitySystemStateFromSystemChecker()`
+  - *function*
+- **L292:** ` func testHIGRecommendationCreation()`
+  - *function*
+- **L309:** ` func testHIGCategoryEnum()`
+  - *function*
+- **L320:** ` func testHIGPriorityEnum()`
+  - *function*
+- **L333:** ` func testPlatformEnum()`
+  - *function*
+- **L344:** ` func testPlatformStringValues()`
+  - *function*
+- **L356:** ` func testHIGComplianceLevelEnum()`
+  - *function*
+- **L367:** ` func testHIGComplianceLevelStringValues()`
+  - *function*
+- **L379:** ` func testAccessibilityOptimizationManagerIntegration() async`
+  - *function*
+- **L391:** ` func testAutomaticAccessibilityIntegration() async`
+  - *function*
+- **L405:** ` func testAppleHIGComplianceBusinessPurpose()`
+  - *function*
+- **L429:** ` func testPlatformAdaptationBusinessPurpose()`
+  - *function*
+- **L441:** ` func testAccessibilityInclusionBusinessPurpose()`
+  - *function*
+- **L453:** ` func testDesignConsistencyBusinessPurpose()`
+  - *function*
+- **L468:** ` func testDeveloperProductivityBusinessPurpose()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/TestUtilities.swift
+### Internal Methods
+- **L14:** ` func hash(into hasher: inout Hasher)`
+  - *function*
+- **L31:** `func createTestHints(`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/VisionSafetyTests.swift
+### Internal Methods
+- **L16:** ` func testVisionFrameworkAvailability()`
+  - *function*
+- **L30:** ` func testOCRAvailabilityCheck()`
+  - *function*
+- **L50:** ` func testOCRFallbackBehavior()`
+  - *function*
+- **L94:** ` func testVisionFrameworkVersionCheck()`
+  - *function*
+- **L121:** ` func testOCRErrorHandling()`
+  - *function*
+- **L163:** ` func testPlatformSpecificVisionAvailability()`
+  - *function*
+
+### Private Implementation
+- **L186:** `private func isVisionOCRAvailable() -> Bool`
+  - *function*
+  - *Check if Vision OCR is available\n*
+- **L209:** `private func isVisionFrameworkCompatible() -> Bool`
+  - *function*
+  - *Check if Vision framework is compatible with current platform\n*
+- **L232:** `private func getVisionAvailabilityInfo() -> (platform: String, isAvailable: Bool, minVersion: String)`
+  - *function*
+  - *Get Vision availability information\n*
+
+## ./Development/Tests/SixLayerFrameworkTests/SixLayerFrameworkTests.swift
+### Internal Methods
+- **L14:** ` func testExample() throws`
+  - *function*
+- **L22:** ` func testPerformanceExample() throws`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/OCRServiceTests.swift
+### Internal Methods
+- **L30:** ` func testOCRServiceAvailability()`
+  - *function*
+- **L55:** ` func testOCRCapabilities()`
+  - *function*
+- **L71:** ` func testMockOCRServiceAvailability()`
+  - *function*
+- **L80:** ` func testMockOCRCapabilities()`
+  - *function*
+- **L93:** ` func testMockOCRProcessing() async throws`
+  - *function*
+- **L132:** ` func testOCRServiceWithUnavailableVision() async`
+  - *function*
+- **L163:** ` func testOCRServiceFactory()`
+  - *function*
+- **L172:** ` func testMockOCRServiceFactory()`
+  - *function*
+- **L181:** ` func testMockOCRServiceFactoryWithResult()`
+  - *function*
+- **L201:** ` func testOCRServicePerformance()`
+  - *function*
+- **L236:** ` func testOCRServiceWithDifferentTextTypes() async throws`
+  - *function*
+- **L266:** ` func testOCRServiceWithDifferentLanguages() async throws`
+  - *function*
+- **L296:** ` func testOCRServiceWithDifferentProcessingModes() async throws`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/FormStateManagementTests.swift
+### Internal Methods
+- **L10:** ` func testFormStateProtocolRequirements()`
+  - *function*
+- **L23:** ` func testFormStateInitialization()`
+  - *function*
+- **L32:** ` func testFormStateWithFields()`
+  - *function*
+- **L50:** ` func testFieldStateInitialization()`
+  - *function*
+- **L60:** ` func testFieldStateWithErrors()`
+  - *function*
+- **L71:** ` func testFieldStateValueTypes()`
+  - *function*
+- **L84:** ` func testFormStateManagerInitialization()`
+  - *function*
+- **L93:** ` func testFormStateManagerAddField()`
+  - *function*
+- **L105:** ` func testFormStateManagerUpdateField()`
+  - *function*
+- **L118:** ` func testFormStateManagerValidation()`
+  - *function*
+- **L132:** ` func testFormStateManagerDirtyState()`
+  - *function*
+- **L148:** ` func testFormStateManagerReset()`
+  - *function*
+- **L166:** ` func testValidationErrorInitialization()`
+  - *function*
+- **L174:** ` func testValidationErrorSeverityLevels()`
+  - *function*
+- **L191:** ` var isValid: Bool`
+  - *function*
+- **L195:** ` var isDirty: Bool`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformColorsTests.swift
+### Internal Methods
+- **L24:** ` func testPlatformPrimaryLabelColor()`
+  - *function*
+- **L34:** ` func testPlatformSecondaryLabelColor()`
+  - *function*
+- **L44:** ` func testPlatformTertiaryLabelColor()`
+  - *function*
+- **L52:** ` func testPlatformQuaternaryLabelColor()`
+  - *function*
+- **L60:** ` func testPlatformPlaceholderTextColor()`
+  - *function*
+- **L68:** ` func testPlatformSeparatorColor()`
+  - *function*
+- **L76:** ` func testPlatformOpaqueSeparatorColor()`
+  - *function*
+- **L86:** ` func testPlatformTertiaryLabelPlatformBehavior()`
+  - *function*
+- **L102:** ` func testPlatformQuaternaryLabelPlatformBehavior()`
+  - *function*
+- **L118:** ` func testPlatformPlaceholderTextPlatformBehavior()`
+  - *function*
+- **L134:** ` func testPlatformOpaqueSeparatorPlatformBehavior()`
+  - *function*
+- **L152:** ` func testColorConsistency()`
+  - *function*
+- **L165:** ` func testAllPlatformColorsAreAvailable()`
+  - *function*
+- **L185:** ` func testColorsWorkWithAccessibility()`
+  - *function*
+- **L206:** ` func testColorsWorkInDarkMode()`
+  - *function*
+- **L227:** ` func testColorCreationPerformance()`
+  - *function*
+- **L251:** ` func testColorsInDifferentContexts()`
+  - *function*
+- **L275:** ` func testColorsWithSwiftUIViews()`
+  - *function*
+- **L304:** ` func testColorUsageExamples()`
+  - *function*
+- **L336:** ` func testBackwardCompatibility()`
+  - *function*
+- **L357:** ` func testColorErrorHandling()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformLayoutDecisionLayer2Tests.swift
+### Internal Methods
+- **L11:** ` func testLayoutEngineOptimizesForMobilePerformance()`
+  - *function*
+  - *Test: Does the layout engine actually make intelligent decisions that improve UX?\n*
+- **L31:** ` func testLayoutEngineAdaptsToContentComplexity()`
+  - *function*
+- **L49:** ` func testLayoutEngineConsidersDeviceCapabilities()`
+  - *function*
+- **L69:** ` func testFormLayoutOptimizesForUserExperience()`
+  - *function*
+- **L91:** ` func testFormLayoutAdaptsToFieldCount()`
+  - *function*
+- **L114:** ` func testCardLayoutOptimizesForScreenRealEstate()`
+  - *function*
+- **L148:** ` func testCardLayoutConsidersContentComplexity()`
+  - *function*
+- **L172:** ` func testContentAnalysisDrivesLayoutDecisions()`
+  - *function*
+- **L202:** ` func testPerformanceStrategyOptimizesForUserExperience()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CapabilityCombinationTests.swift
+### Internal Methods
+- **L368:** ` func testAllCapabilityCombinations()`
+  - *function*
+- **L455:** ` func testTouchHapticCombination()`
+  - *function*
+- **L469:** ` func testTouchAssistiveTouchCombination()`
+  - *function*
+- **L483:** ` func testVisionOCRCombination()`
+  - *function*
+- **L492:** ` func testHoverTouchMutualExclusivity()`
+  - *function*
+- **L514:** ` func testEdgeCaseCombinations()`
+  - *function*
+- **L571:** ` func testPerformanceWithCombinations()`
+  - *function*
+
+### Private Implementation
+- **L118:** ` private func simulatePlatformCapabilities(`
+  - *function*
+- **L144:** ` private func testTouchHapticAssistiveTouchCombination()`
+  - *function*
+- **L168:** ` private func testTouchHapticAssistiveTouchLogic(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L187:** ` private func testTouchHoverHapticAssistiveTouchCombination()`
+  - *function*
+- **L215:** ` private func testHoverVisionOCRCombination()`
+  - *function*
+- **L263:** ` private func testWatchOSCombination()`
+  - *function*
+- **L298:** ` private func testTVOSCombination()`
+  - *function*
+- **L334:** ` private func testVisionOSCombination()`
+  - *function*
+- **L374:** ` private func testCapabilityCombination(_ combination: CapabilityCombination)`
+  - *function*
+- **L392:** ` private func testCombinationBehavior(_ combination: CapabilityCombination)`
+  - *function*
+- **L411:** ` private func testCombinationMatchesPlatform(_ combination: CapabilityCombination)`
+  - *function*
+- **L422:** ` private func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination)`
+  - *function*
+- **L439:** ` private func getActualCapabilityValue(_ capability: String, config: CardExpansionPlatformConfig) -> Bool`
+  - *function*
+- **L521:** ` private func testImpossibleCombinations()`
+  - *function*
+- **L538:** ` private func testConflictingCombinations()`
+  - *function*
+- **L551:** ` private func testMissingDependencies()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AssistiveTouchTests.swift
+### Internal Methods
+- **L10:** ` func testAssistiveTouchManagerInitialization()`
+  - *function*
+- **L29:** ` func testAssistiveTouchIntegrationSupport()`
+  - *function*
+- **L41:** ` func testAssistiveTouchCustomActions()`
+  - *function*
+- **L67:** ` func testAssistiveTouchMenuSupport()`
+  - *function*
+- **L80:** ` func testAssistiveTouchGestureRecognition()`
+  - *function*
+- **L96:** ` func testAssistiveTouchConfiguration()`
+  - *function*
+- **L118:** ` func testAssistiveTouchActionCreation()`
+  - *function*
+- **L132:** ` func testAssistiveTouchGestureTypes()`
+  - *function*
+- **L148:** ` func testAssistiveTouchMenuAction()`
+  - *function*
+- **L160:** ` func testAssistiveTouchMenuStyle()`
+  - *function*
+- **L174:** ` func testAssistiveTouchViewModifier()`
+  - *function*
+- **L183:** ` func testAssistiveTouchViewModifierWithConfiguration()`
+  - *function*
+- **L195:** ` func testAssistiveTouchCompliance()`
+  - *function*
+- **L211:** ` func testAssistiveTouchComplianceWithIssues()`
+  - *function*
+- **L225:** ` func testAssistiveTouchPerformance()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilityPreferenceTests.swift
+### Internal Methods
+- **L23:** ` func testReduceMotionBehavior()`
+  - *function*
+- **L83:** ` func testHighContrastBehavior()`
+  - *function*
+- **L135:** ` func testVoiceOverBehavior()`
+  - *function*
+- **L187:** ` func testSwitchControlBehavior()`
+  - *function*
+- **L234:** ` func testDynamicTypeBehavior()`
+  - *function*
+- **L280:** ` func testAssistiveTouchBehavior()`
+  - *function*
+- **L332:** ` func testAllAccessibilityPreferences()`
+  - *function*
+- **L346:** ` func testAccessibilityPreferenceCombinations()`
+  - *function*
+- **L411:** ` func testAccessibilityPreferenceEdgeCases()`
+  - *function*
+
+### Private Implementation
+- **L12:** ` private func createTestView() -> some View`
+  - *function*
+- **L17:** ` private func createTestImage() -> PlatformImage`
+  - *function*
+- **L31:** ` private func testReduceMotionCardExpansion()`
+  - *function*
+- **L50:** ` private func testReduceMotionAnimations()`
+  - *function*
+- **L62:** ` private func testReduceMotionTransitions()`
+  - *function*
+- **L71:** ` private func testReduceMotionHoverEffects()`
+  - *function*
+- **L91:** ` private func testHighContrastColors()`
+  - *function*
+- **L106:** ` private func testHighContrastText()`
+  - *function*
+- **L115:** ` private func testHighContrastBorders()`
+  - *function*
+- **L124:** ` private func testHighContrastFocusIndicators()`
+  - *function*
+- **L143:** ` private func testVoiceOverAccessibility()`
+  - *function*
+- **L156:** ` private func testVoiceOverNavigation()`
+  - *function*
+- **L167:** ` private func testVoiceOverAnnouncements()`
+  - *function*
+- **L176:** ` private func testVoiceOverFocusManagement()`
+  - *function*
+- **L195:** ` private func testSwitchControlAccessibility()`
+  - *function*
+- **L205:** ` private func testSwitchControlNavigation()`
+  - *function*
+- **L214:** ` private func testSwitchControlTiming()`
+  - *function*
+- **L223:** ` private func testSwitchControlFocusManagement()`
+  - *function*
+- **L242:** ` private func testDynamicTypeTextScaling()`
+  - *function*
+- **L251:** ` private func testDynamicTypeLayout()`
+  - *function*
+- **L260:** ` private func testDynamicTypeSpacing()`
+  - *function*
+- **L269:** ` private func testDynamicTypeAccessibility()`
+  - *function*
+- **L288:** ` private func testAssistiveTouchAccessibility()`
+  - *function*
+- **L301:** ` private func testAssistiveTouchNavigation()`
+  - *function*
+- **L310:** ` private func testAssistiveTouchTiming()`
+  - *function*
+- **L321:** ` private func testAssistiveTouchFocusManagement()`
+  - *function*
+- **L354:** ` private func testReduceMotionAndHighContrast()`
+  - *function*
+- **L372:** ` private func testVoiceOverAndSwitchControl()`
+  - *function*
+- **L381:** ` private func testDynamicTypeAndHighContrast()`
+  - *function*
+- **L398:** ` private func testAssistiveTouchAndVoiceOver()`
+  - *function*
+- **L418:** ` private func testAllPreferencesEnabled()`
+  - *function*
+- **L430:** ` private func testAllPreferencesDisabled()`
+  - *function*
+- **L442:** ` private func testConflictingPreferences()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/OCRDisambiguationTests.swift
+### Internal Methods
+- **L77:** ` func testOCRDataCandidateInitialization()`
+  - *function*
+- **L102:** ` func testOCRDataCandidateEquality()`
+  - *function*
+- **L125:** ` func testOCRDataCandidateInequality()`
+  - *function*
+- **L148:** ` func testOCRDataCandidateIdentifiable()`
+  - *function*
+- **L166:** ` func testOCRDisambiguationResultInitialization()`
+  - *function*
+- **L185:** ` func testOCRDisambiguationResultWithHighConfidence()`
+  - *function*
+- **L203:** ` func testOCRDisambiguationResultWithLowConfidence()`
+  - *function*
+- **L221:** ` func testOCRDisambiguationResultEmptyCandidates()`
+  - *function*
+- **L241:** ` func testShouldRequireDisambiguationWithMultipleSameType()`
+  - *function*
+- **L252:** ` func testShouldNotRequireDisambiguationWithSingleCandidate()`
+  - *function*
+- **L263:** ` func testShouldNotRequireDisambiguationWithDifferentTypes()`
+  - *function*
+- **L289:** ` func testShouldRequireDisambiguationWithLowConfidence()`
+  - *function*
+- **L317:** ` func testOCRDisambiguationViewInitialization()`
+  - *function*
+- **L335:** ` func testOCRDisambiguationViewWithEmptyCandidates()`
+  - *function*
+- **L355:** ` func testOCRDisambiguationIntegrationWithReceipt()`
+  - *function*
+- **L379:** ` func testOCRDisambiguationIntegrationWithBusinessCard()`
+  - *function*
+- **L405:** ` func testDisambiguationWithIdenticalCandidates()`
+  - *function*
+- **L431:** ` func testDisambiguationWithVeryLowConfidence()`
+  - *function*
+- **L457:** ` func testDisambiguationWithMixedConfidence()`
+  - *function*
+- **L485:** ` func testDisambiguationPerformanceWithManyCandidates()`
+  - *function*
+
+### Private Implementation
+- **L505:** ` private func createTestPlatformImage() -> PlatformImage`
+  - *function*
+- **L19:** ` private var testImage: PlatformImage`
+  - *function*
+- **L23:** ` private var mockReceiptCandidates: [OCRDataCandidate]`
+  - *function*
+- **L49:** ` private var mockBusinessCardCandidates: [OCRDataCandidate]`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/DataIntrospectionTests.swift
+### Internal Methods
+- **L90:** ` func testSimpleModelAnalysis()`
+  - *function*
+- **L108:** ` func testModerateModelAnalysis()`
+  - *function*
+- **L128:** ` func testComplexModelAnalysis()`
+  - *function*
+- **L155:** ` func testEmptyCollectionAnalysis()`
+  - *function*
+- **L164:** ` func testSmallCollectionAnalysis()`
+  - *function*
+- **L178:** ` func testLargeCollectionAnalysis()`
+  - *function*
+- **L195:** ` func testFieldTypeDetection()`
+  - *function*
+- **L227:** ` func testGetAnalysisSummary()`
+  - *function*
+- **L236:** ` func testGetFieldNames()`
+  - *function*
+- **L246:** ` func testHasFieldType()`
+  - *function*
+- **L263:** ` func testGetFieldsOfType()`
+  - *function*
+- **L286:** ` func testRecommendationsForSimpleModel()`
+  - *function*
+- **L300:** ` func testRecommendationsForComplexModel()`
+  - *function*
+- **L327:** ` func testEmptyStruct()`
+  - *function*
+- **L336:** ` func testOptionalFields()`
+  - *function*
+- **L350:** ` func testIdentifiableDetection()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilityOptimizationManagerTests.swift
+### Internal Methods
+- **L34:** ` func testManagerInitialization()`
+  - *function*
+- **L43:** ` func testManagerStartsMonitoring()`
+  - *function*
+- **L62:** ` func testManagerComplianceCheckIsDeterministic()`
+  - *function*
+- **L78:** ` func testManagerWCAGComplianceIsDeterministic()`
+  - *function*
+- **L94:** ` func testManagerRecommendationsAreDeterministic()`
+  - *function*
+- **L108:** ` func testManagerOptimizationsAreDeterministic()`
+  - *function*
+- **L122:** ` func testManagerTrendsAreDeterministic()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/IntelligentCardExpansionTests.swift
+### Internal Methods
+- **L42:** ` func testPlatformPresentItemCollectionL1WithExpandableHints()`
+  - *function*
+- **L53:** ` func testExpandableHintsStructure()`
+  - *function*
+- **L68:** ` func testIntelligentCardSizing()`
+  - *function*
+- **L83:** ` func testDeviceAdaptation()`
+  - *function*
+- **L103:** ` func testScreenSpaceOptimization()`
+  - *function*
+- **L125:** ` func testExpansionStrategySelection()`
+  - *function*
+- **L139:** ` func testHoverExpandStrategy()`
+  - *function*
+- **L154:** ` func testContentRevealStrategy()`
+  - *function*
+- **L167:** ` func testGridReorganizeStrategy()`
+  - *function*
+- **L180:** ` func testFocusModeStrategy()`
+  - *function*
+- **L195:** ` func testSmartGridContainer()`
+  - *function*
+- **L205:** ` func testExpandableCardComponent()`
+  - *function*
+- **L217:** ` func testResponsiveBreakpoints()`
+  - *function*
+- **L227:** ` func testTouchOptimizedExpansion()`
+  - *function*
+- **L235:** ` func testHoverBasedExpansion()`
+  - *function*
+- **L243:** ` func testAccessibilitySupport()`
+  - *function*
+- **L254:** ` func testNativeSwiftUIComponents()`
+  - *function*
+- **L264:** ` func testPlatformSpecificOptimizations()`
+  - *function*
+- **L277:** ` func testEndToEndCardExpansion()`
+  - *function*
+- **L306:** ` func testPerformanceRequirements()`
+  - *function*
+- **L315:** ` func testBackwardCompatibility()`
+  - *function*
+- **L377:** ` init(items: [MenuItem], hints: PresentationHints)`
+  - *function*
+- **L388:** ` init(item: MenuItem, expansionStrategy: ExpansionStrategy, isExpanded: Bool)`
+  - *function*
+- **L421:** ` init(item: MenuItem, expansionStrategy: ExpansionStrategy)`
+  - *function*
+
+### Private Implementation
+- **L12:** ` private var sampleMenuItems: [MenuItem]`
+  - *function*
+- **L25:** ` private var expandableHints: PresentationHints`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/IntelligentCardExpansionComprehensiveTests.swift
+### Internal Methods
+- **L49:** ` func testPlatformPresentItemCollectionL1BasicFunctionality()`
+  - *function*
+- **L59:** ` func testPlatformPresentItemCollectionL1WithEmptyItems()`
+  - *function*
+- **L77:** ` func testPlatformPresentItemCollectionL1WithDifferentDataTypes()`
+  - *function*
+- **L96:** ` func testDetermineIntelligentCardLayoutL2BasicFunctionality()`
+  - *function*
+- **L111:** ` func testDetermineIntelligentCardLayoutL2WithDifferentScreenSizes()`
+  - *function*
+- **L139:** ` func testDetermineIntelligentCardLayoutL2WithDifferentContentCounts()`
+  - *function*
+- **L167:** ` func testDetermineIntelligentCardLayoutL2WithDifferentComplexityLevels()`
+  - *function*
+- **L188:** ` func testDetermineIntelligentCardLayoutL2EdgeCases()`
+  - *function*
+- **L210:** ` func testSelectCardExpansionStrategyL3BasicFunctionality()`
+  - *function*
+- **L224:** ` func testSelectCardExpansionStrategyL3WithDifferentDeviceTypes()`
+  - *function*
+- **L255:** ` func testSelectCardExpansionStrategyL3WithDifferentInteractionStyles()`
+  - *function*
+- **L277:** ` func testSelectCardExpansionStrategyL3WithDifferentContentDensities()`
+  - *function*
+- **L301:** ` func testExpandableCardComponentBasicFunctionality()`
+  - *function*
+- **L332:** ` func testExpandableCardComponentWithDifferentStrategies()`
+  - *function*
+- **L384:** ` func testGetCardExpansionPlatformConfig()`
+  - *function*
+- **L428:** ` func testGetCardExpansionPerformanceConfig()`
+  - *function*
+- **L435:** ` func testPlatformFeatureMatrix()`
+  - *function*
+- **L469:** ` func testNativeExpandableCardViewBasicFunctionality()`
+  - *function*
+- **L486:** ` func testNativeExpandableCardViewWithDifferentStrategies()`
+  - *function*
+- **L532:** ` func testEndToEndCardExpansionWorkflow()`
+  - *function*
+- **L582:** ` func testCrossLayerDataFlow()`
+  - *function*
+- **L610:** ` func testCardExpansionPerformance()`
+  - *function*
+- **L631:** ` func testLayoutDecisionPerformance()`
+  - *function*
+- **L647:** ` func testStrategySelectionPerformance()`
+  - *function*
+- **L666:** ` func testErrorHandlingWithInvalidData()`
+  - *function*
+- **L683:** ` func testErrorHandlingWithExtremeValues()`
+  - *function*
+- **L697:** ` func testAccessibilitySupport()`
+  - *function*
+- **L721:** ` func testEdgeCaseEmptyItems()`
+  - *function*
+- **L732:** ` func testEdgeCaseSingleItem()`
+  - *function*
+- **L743:** ` func testEdgeCaseVeryLargeDataset()`
+  - *function*
+- **L762:** ` func testEdgeCaseVerySmallScreen()`
+  - *function*
+- **L774:** ` func testEdgeCaseVeryLargeScreen()`
+  - *function*
+- **L788:** ` func testExpansionStrategyEnum()`
+  - *function*
+- **L801:** ` func testInteractionStyleEnum()`
+  - *function*
+- **L812:** ` func testContentDensityEnum()`
+  - *function*
+
+### Private Implementation
+- **L19:** ` private var sampleMenuItems: [MenuItem]`
+  - *function*
+- **L32:** ` private var expandableHints: PresentationHints`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PhotoSemanticLayerTests.swift
+### Internal Methods
+- **L9:** ` func testPlatformPhotoCapture_L1()`
+  - *function*
+- **L26:** ` func testPlatformPhotoSelection_L1()`
+  - *function*
+- **L43:** ` func testPlatformPhotoDisplay_L1()`
+  - *function*
+- **L63:** ` func testDetermineOptimalPhotoLayout_L2()`
+  - *function*
+- **L82:** ` func testDeterminePhotoCaptureStrategy_L2()`
+  - *function*
+- **L101:** ` func testSelectPhotoCaptureStrategy_L3()`
+  - *function*
+- **L118:** ` func testSelectPhotoDisplayStrategy_L3()`
+  - *function*
+- **L137:** ` func testSemanticPhotoWorkflow()`
+  - *function*
+
+### Private Implementation
+- **L161:** ` private func createTestPlatformImage() -> PlatformImage`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilityEnhancementTests.swift
+### Public Interface
+- **L333:** ` public init()`
+  - *function*
+- **L368:** ` public init()`
+  - *function*
+- **L381:** ` public init()`
+  - *function*
+
+### Internal Methods
+- **L44:** ` func testAccessibilityManagerInitialization()`
+  - *function*
+- **L52:** ` func testAccessibilitySettingsConfiguration()`
+  - *function*
+- **L66:** ` func testVoiceOverSupport()`
+  - *function*
+- **L76:** ` func testVoiceOverNavigation()`
+  - *function*
+- **L94:** ` func testKeyboardNavigationSupport()`
+  - *function*
+- **L112:** ` func testKeyboardNavigationOrder()`
+  - *function*
+- **L127:** ` func testHighContrastModeSupport()`
+  - *function*
+- **L136:** ` func testHighContrastColorAdaptation()`
+  - *function*
+- **L153:** ` func testDynamicTypeSupport()`
+  - *function*
+- **L161:** ` func testDynamicTypeScaling()`
+  - *function*
+- **L179:** ` func testReducedMotionSupport()`
+  - *function*
+- **L187:** ` func testReducedMotionAnimations()`
+  - *function*
+- **L198:** ` func testWCAGCompliance()`
+  - *function*
+- **L209:** ` func testAccessibilityComplianceMetrics()`
+  - *function*
+- **L221:** ` func testCrossPlatformAccessibilityConsistency()`
+  - *function*
+- **L233:** ` func testPlatformSpecificAccessibilityFeatures()`
+  - *function*
+- **L258:** ` func testAccessibilityTestingUtilities()`
+  - *function*
+- **L271:** ` func testAccessibilityAudit()`
+  - *function*
+- **L283:** ` func testAccessibilityEnhancementsImproveUserExperience()`
+  - *function*
+- **L296:** ` func testAccessibilityEnhancementsEnableInclusiveDesign()`
+  - *function*
+- **L309:** ` func testAccessibilityEnhancementsSupportComplianceStandards()`
+  - *function*
+- **L19:** ` var testView: some View`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CoreArchitectureTests.swift
+### Internal Methods
+- **L8:** ` func testDataTypeHintCreation() throws`
+  - *function*
+- **L31:** ` func testContentComplexityEnumeration() throws`
+  - *function*
+- **L43:** ` func testPresentationContextEnumeration() throws`
+  - *function*
+- **L57:** ` func testDataTypeHintEnumeration() throws`
+  - *function*
+- **L73:** ` func testPresentationPreferenceEnumeration() throws`
+  - *function*
+- **L89:** ` func testFormContentMetricsCreation() throws`
+  - *function*
+- **L113:** ` func testFormContentMetricsDefaultValues() throws`
+  - *function*
+- **L124:** ` func testFormContentMetricsEquatable() throws`
+  - *function*
+- **L155:** ` func testFormStrategyCreation() throws`
+  - *function*
+- **L174:** ` func testFormStrategyDefaultValues() throws`
+  - *function*
+- **L190:** ` func testGenericFormFieldCreation() throws`
+  - *function*
+- **L209:** ` func testGenericMediaItemCreation() throws`
+  - *function*
+- **L233:** ` func testDeviceTypeCases() throws`
+  - *function*
+- **L245:** ` func testPlatformCases() throws`
+  - *function*
+- **L258:** ` func testResponsiveBehaviorCreation() throws`
+  - *function*
+- **L274:** ` func testResponsiveBehaviorDefaultValues() throws`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/EnhancedDeviceDetectionTests.swift
+### Internal Methods
+- **L17:** ` func testiPhoneSizeCategoryDetection()`
+  - *function*
+- **L30:** ` func testiPhoneSizeCategoryAllCases()`
+  - *function*
+- **L44:** ` func testiPhoneSizeCategoryRawValues()`
+  - *function*
+- **L56:** ` func testiPadSizeCategoryDetection()`
+  - *function*
+- **L65:** ` func testiPadSizeCategoryAllCases()`
+  - *function*
+- **L80:** ` func testScreenSizeClassDetection()`
+  - *function*
+- **L96:** ` func testScreenSizeClassAllCases()`
+  - *function*
+- **L109:** ` func testDeviceTypeDetection()`
+  - *function*
+- **L123:** ` func testDeviceTypeAllCases()`
+  - *function*
+- **L137:** ` func testDeviceCapabilitiesInitialization()`
+  - *function*
+- **L156:** ` func testPlatformDeviceCapabilitiesStaticProperties()`
+  - *function*
+- **L176:** ` func testEnhancedDeviceCapabilitiesInitialization()`
+  - *function*
+- **L230:** ` func testDeviceDetectionPerformance()`
+  - *function*
+- **L254:** ` func testEdgeCaseScreenSizes()`
+  - *function*
+- **L262:** ` func testVeryLargeScreenSizes()`
+  - *function*
+- **L271:** ` func testPlatformSpecificCapabilities()`
+  - *function*
+- **L287:** ` func testMemoryThresholdDetection()`
+  - *function*
+- **L312:** ` func testOrientationDetection()`
+  - *function*
+- **L319:** ` func testOrientationAllCases()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/DynamicFormTests.swift
+### Internal Methods
+- **L9:** ` func testDynamicFormFieldCreation()`
+  - *function*
+- **L33:** ` func testDynamicFieldTypeProperties()`
+  - *function*
+- **L66:** ` func testDynamicFormSectionCreation()`
+  - *function*
+- **L91:** ` func testDynamicFormSectionHelpers()`
+  - *function*
+- **L111:** ` func testDynamicFormConfigurationCreation()`
+  - *function*
+- **L141:** ` func testDynamicFormConfigurationHelpers()`
+  - *function*
+- **L186:** ` func testDynamicFormStateCreation()`
+  - *function*
+- **L203:** ` func testDynamicFormStateFieldValues()`
+  - *function*
+- **L223:** ` func testDynamicFormStateValidation()`
+  - *function*
+- **L252:** ` func testDynamicFormStateSections()`
+  - *function*
+- **L278:** ` func testDynamicFormStateReset()`
+  - *function*
+- **L308:** ` func testDynamicFormBuilderBasicFlow()`
+  - *function*
+- **L331:** ` func testDynamicFormBuilderWithValidation()`
+  - *function*
+- **L361:** ` func testDynamicFormBuilderWithOptions()`
+  - *function*
+- **L399:** ` func testDynamicFormBuilderWithMetadata()`
+  - *function*
+- **L429:** ` func testDynamicFormCompleteWorkflow()`
+  - *function*
+- **L470:** ` func testDynamicFormBuilderPerformance()`
+  - *function*
+- **L488:** ` func testDynamicFormStatePerformance()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformMatrixTests.swift
+### Internal Methods
+- **L12:** ` func testPlatformDetectionMatrix()`
+  - *function*
+- **L43:** ` func testTouchCapabilityMatrix()`
+  - *function*
+- **L63:** ` func testHoverCapabilityMatrix()`
+  - *function*
+- **L79:** ` func testAccessibilityCapabilityMatrix()`
+  - *function*
+- **L101:** ` func testScreenSizeCapabilityMatrix()`
+  - *function*
+- **L121:** ` func testVisionFrameworkAvailabilityMatrix()`
+  - *function*
+- **L145:** ` func testPerformanceConfigurationMatrix()`
+  - *function*
+- **L175:** ` func testColorEncodingCapabilityMatrix()`
+  - *function*
+- **L192:** ` func testOCRCapabilityMatrix()`
+  - *function*
+- **L203:** ` func testCarPlayCapabilityMatrix()`
+  - *function*
+- **L232:** ` func testCarPlayFeatureAvailabilityMatrix()`
+  - *function*
+- **L247:** ` func testDeviceContextDetectionMatrix()`
+  - *function*
+- **L267:** ` func testCarPlayDeviceTypeDetectionMatrix()`
+  - *function*
+- **L282:** ` func testCarPlayPlatformCapabilitiesMatrix()`
+  - *function*
+- **L301:** ` func testComprehensivePlatformFeatureMatrix()`
+  - *function*
+- **L355:** ` func isInternallyConsistent() -> Bool`
+  - *function*
+- **L399:** ` func satisfiesPlatformConstraints() -> Bool`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CrossPlatformNavigationTests.swift
+### Internal Methods
+- **L17:** ` func testNavigationStrategyEnumIsAvailable()`
+  - *function*
+- **L25:** ` func testNavigationStrategyFromString()`
+  - *function*
+- **L36:** ` func testNavigationStrategyToString()`
+  - *function*
+- **L44:** ` func testCrossPlatformNavigationFactory()`
+  - *function*
+- **L52:** ` func testNavigationSystemEnablesCrossPlatformDevelopment()`
+  - *function*
+- **L75:** ` func testNavigationStrategySupportsBusinessRequirements()`
+  - *function*
+- **L96:** ` func testNavigationSystemHandlesEdgeCases()`
+  - *function*
+- **L114:** ` static func recommended(for context: PresentationContext) -> NavigationStrategy`
+  - *static function|extension NavigationStrategy*
+  - *Recommended navigation strategy for different presentation contexts\n*
+
+## ./Development/Tests/SixLayerFrameworkTests/IntelligentDetailViewTests.swift
+### Internal Methods
+- **L110:** ` func testPlatformDetailViewBasic()`
+  - *function*
+- **L124:** ` func testPlatformDetailViewWithHints()`
+  - *function*
+- **L148:** ` func testLayoutStrategyDetermination()`
+  - *function*
+- **L204:** ` func testCustomFieldView()`
+  - *function*
+- **L227:** ` func testViewExtensionMethods()`
+  - *function*
+- **L242:** ` func testFieldPriorityDetermination()`
+  - *function*
+- **L280:** ` func testEmptyStruct()`
+  - *function*
+- **L288:** ` func testOptionalFields()`
+  - *function*
+- **L308:** ` func testLargeDataPerformance()`
+  - *function*
+- **L348:** ` func testHintsOverrideDefaultStrategy()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/MaterialAccessibilityTests.swift
+### Internal Methods
+- **L12:** ` func testMaterialContrastValidation()`
+  - *function*
+- **L32:** ` func testHighContrastMaterialAlternatives()`
+  - *function*
+- **L47:** ` func testVoiceOverMaterialDescriptions()`
+  - *function*
+- **L67:** ` func testAccessibilityAwareMaterialSelection()`
+  - *function*
+- **L98:** ` func testMaterialAccessibilityCompliance()`
+  - *function*
+- **L112:** ` func testMaterialAccessibilityIssues()`
+  - *function*
+- **L127:** ` func testMaterialAccessibilityViewModifier()`
+  - *function*
+- **L142:** ` func testMaterialAccessibilityConfiguration()`
+  - *function*
+- **L163:** ` func testMaterialAccessibilityPerformance()`
+  - *function*
+- **L182:** ` func testMaterialAccessibilityWithVoiceOver()`
+  - *function*
+- **L196:** ` func testMaterialAccessibilityWithHighContrast()`
+  - *function*
+- **L213:** ` func testMaterialAccessibilityWithReducedMotion()`
+  - *function*
+
+### Private Implementation
+- **L234:** ` private func createTestMaterial() -> Material`
+  - *function|extension MaterialAccessibilityTests*
+- **L238:** ` private func createTestView() -> some View`
+  - *function|extension MaterialAccessibilityTests*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformSemanticLayer1Tests.swift
+### Internal Methods
+- **L11:** ` func testSemanticHintsGuideLayoutDecisions()`
+  - *function*
+  - *Test: Does the semantic layer actually guide intelligent UI decisions?\n*
+- **L45:** ` func testSemanticLayerProvidesPlatformAgnosticIntent()`
+  - *function*
+- **L66:** ` func testDataTypeHintsGuidePresentationStrategy()`
+  - *function*
+- **L109:** ` func testContextHintsInfluenceLayoutDecisions()`
+  - *function*
+- **L154:** ` func testComplexityHintsDrivePerformanceDecisions()`
+  - *function*
+- **L187:** ` func testCustomPreferencesOverrideDefaultBehavior()`
+  - *function*
+- **L210:** ` func testSemanticLayerWorksAcrossAllPlatforms()`
+  - *function*
+- **L233:** ` func testSemanticHintsReflectUserIntent()`
+  - *function*
+- **L254:** ` func testSemanticLayerPreservesIntentThroughLayers()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/PlatformTechnicalExtensionsTests.swift
+### Internal Methods
+- **L19:** ` func testPlatformFormImplementationCreatesVStackWithAlignment()`
+  - *function*
+- **L35:** ` func testPlatformFormImplementationAppliesFormStyle()`
+  - *function*
+- **L50:** ` func testPlatformFormImplementationOptimizesScrolling()`
+  - *function*
+- **L65:** ` func testPlatformFormImplementationImprovesAccessibility()`
+  - *function*
+- **L82:** ` func testPlatformFieldImplementationCreatesLabeledField()`
+  - *function*
+- **L98:** ` func testPlatformFieldImplementationHasProperAccessibility()`
+  - *function*
+- **L116:** ` func testPlatformNavigationImplementationCreatesNavigationView()`
+  - *function*
+- **L132:** ` func testPlatformNavigationImplementationSetsTitle()`
+  - *function*
+- **L148:** ` func testPlatformNavigationImplementationOptimizesPerformance()`
+  - *function*
+- **L166:** ` func testOptimizeLayoutPerformanceAppliesDrawingGroupForComplexContent()`
+  - *function*
+- **L185:** ` func testOptimizeLayoutPerformanceAppliesCompositingGroupForLowFrameRate()`
+  - *function*
+- **L204:** ` func testOptimizeLayoutPerformanceAppliesMemoryOptimizationForHighMemoryUsage()`
+  - *function*
+- **L225:** ` func testHandleLayoutErrorsReturnsPrimaryContentWhenNoError()`
+  - *function*
+- **L245:** ` func testOptimizeMemoryUsageAppliesOptimizations()`
+  - *function*
+- **L261:** ` func testOptimizeRenderingAppliesOptimizations()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/LiquidGlassCapabilityDetectionTests.swift
+### Internal Methods
+- **L23:** ` func testLiquidGlassSupportDetection()`
+  - *function*
+- **L32:** ` func testSupportLevelDetection()`
+  - *function*
+- **L41:** ` func testHardwareRequirementsSupport()`
+  - *function*
+- **L52:** ` func testFeatureAvailabilityForUnsupportedPlatform()`
+  - *function*
+- **L63:** ` func testAllFeaturesHaveFallbackBehaviors()`
+  - *function*
+- **L74:** ` func testFallbackBehaviorsAreAppropriate()`
+  - *function*
+- **L92:** ` func testCapabilityInfoCreation()`
+  - *function*
+- **L103:** ` func testCapabilityInfoFallbackBehaviors()`
+  - *function*
+- **L116:** ` func testPlatformCapabilities()`
+  - *function*
+- **L125:** ` func testRecommendedFallbackApproach()`
+  - *function*
+- **L136:** ` func testSupportLevelCases()`
+  - *function*
+- **L147:** ` func testSupportLevelRawValues()`
+  - *function*
+- **L161:** ` func testFeatureCases()`
+  - *function*
+- **L174:** ` func testFeatureRawValues()`
+  - *function*
+- **L192:** ` func testFallbackBehaviorCases()`
+  - *function*
+- **L205:** ` func testFallbackBehaviorRawValues()`
+  - *function*
+- **L223:** ` func testCapabilityDetectionConsistency()`
+  - *function*
+- **L235:** ` func testFeatureAvailabilityConsistency()`
+  - *function*
+- **L247:** ` func testFallbackBehaviorConsistency()`
+  - *function*
+- **L261:** ` func testCapabilityDetectionPerformance()`
+  - *function*
+- **L278:** ` func testFeatureAvailabilityPerformance()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CapabilityCombinationValidationTests.swift
+### Internal Methods
+- **L12:** ` func testCurrentPlatformCombination()`
+  - *function*
+- **L92:** ` func testCapabilityDependencies()`
+  - *function*
+- **L153:** ` func testCapabilityInteractions()`
+  - *function*
+- **L201:** ` func testPerformanceWithCapabilities()`
+  - *function*
+- **L225:** ` func testEdgeCases()`
+  - *function*
+- **L260:** ` func testAllCapabilityCombinations()`
+  - *function*
+
+### Private Implementation
+- **L32:** ` private func validateCurrentPlatformCombination(_ platform: Platform, config: CardExpansionPlatformConfig) -> Bool`
+  - *function*
+- **L102:** ` private func testTouchDependencies(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L122:** ` private func testHoverDependencies(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L134:** ` private func testVisionDependencies(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L143:** ` private func testAccessibilityDependencies(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L163:** ` private func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: Platform)`
+  - *function*
+- **L183:** ` private func testTouchHapticInteraction(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L191:** ` private func testVisionOCRInteraction()`
+  - *function*
+- **L233:** ` private func testImpossibleCombinations(config: CardExpansionPlatformConfig)`
+  - *function*
+- **L247:** ` private func testConflictingCombinations(config: CardExpansionPlatformConfig)`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/IntelligentFormViewTests.swift
+### Internal Methods
+- **L64:** ` func testSimpleFormGeneration()`
+  - *function*
+- **L78:** ` func testComplexFormGeneration()`
+  - *function*
+- **L92:** ` func testFormGenerationWithExistingData()`
+  - *function*
+- **L105:** ` func testFormStrategyDetermination()`
+  - *function*
+- **L127:** ` func testFieldGrouping()`
+  - *function*
+- **L146:** ` func testFieldTypeTitles()`
+  - *function*
+- **L161:** ` func testFieldDescriptionGeneration()`
+  - *function*
+- **L177:** ` func testDefaultValueGeneration()`
+  - *function*
+- **L215:** ` func testValueExtraction()`
+  - *function*
+- **L38:** ` init()`
+  - *function*
+
+### Private Implementation
+- **L229:** ` private func determineFormStrategy(analysis: DataAnalysisResult) -> FormStrategy`
+  - *function*
+- **L269:** ` private func groupFieldsByType(_ fields: [DataField]) -> [FieldType: [DataField]]`
+  - *function*
+- **L282:** ` private func getFieldTypeTitle(_ fieldType: FieldType) -> String`
+  - *function*
+- **L298:** ` private func getFieldDescription(for field: DataField) -> String?`
+  - *function*
+- **L316:** ` private func getDefaultValue(for field: DataField) -> Any`
+  - *function*
+- **L337:** ` private func extractFieldValue(from object: Any, fieldName: String) -> Any`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/AccessibilityFeaturesLayer5Tests.swift
+### Internal Methods
+- **L39:** ` func testAccessibilityConfigInitialization()`
+  - *function*
+- **L49:** ` func testAccessibilityConfigCustomInitialization()`
+  - *function*
+- **L67:** ` func testVoiceOverManagerInitialization()`
+  - *function*
+- **L74:** ` func testVoiceOverManagerAnnounceSuccess()`
+  - *function*
+- **L92:** ` func testVoiceOverManagerAnnounceWithPriority()`
+  - *function*
+- **L100:** ` func testVoiceOverManagerAnnounceEmptyMessage()`
+  - *function*
+- **L108:** ` func testVoiceOverManagerAnnounceLongMessage()`
+  - *function*
+- **L118:** ` func testKeyboardNavigationManagerInitialization()`
+  - *function*
+- **L125:** ` func testAddFocusableItemSuccess()`
+  - *function*
+- **L134:** ` func testAddFocusableItemDuplicate()`
+  - *function*
+- **L145:** ` func testAddFocusableItemEmptyString()`
+  - *function*
+- **L153:** ` func testRemoveFocusableItemSuccess()`
+  - *function*
+- **L164:** ` func testRemoveFocusableItemNotExists()`
+  - *function*
+- **L172:** ` func testMoveFocusNext()`
+  - *function*
+- **L188:** ` func testMoveFocusPrevious()`
+  - *function*
+- **L201:** ` func testMoveFocusFirst()`
+  - *function*
+- **L212:** ` func testMoveFocusLast()`
+  - *function*
+- **L222:** ` func testMoveFocusEmptyList()`
+  - *function*
+- **L228:** ` func testFocusItemSuccess()`
+  - *function*
+- **L238:** ` func testFocusItemNotExists()`
+  - *function*
+- **L250:** ` func testHighContrastManagerInitialization()`
+  - *function*
+- **L257:** ` func testGetHighContrastColorNormalContrast()`
+  - *function*
+- **L266:** ` func testGetHighContrastColorHighContrast()`
+  - *function*
+- **L276:** ` func testGetHighContrastColorExtremeContrast()`
+  - *function*
+- **L286:** ` func testGetHighContrastColorDifferentLevels()`
+  - *function*
+- **L302:** ` func testAccessibilityTestingManagerInitialization()`
+  - *function*
+- **L309:** ` func testRunAccessibilityTestsSuccess()`
+  - *function*
+- **L331:** ` func testRunAccessibilityTestsResults()`
+  - *function*
+- **L348:** ` func testRunAccessibilityTestsMultipleTimes()`
+  - *function*
+- **L376:** ` func testAccessibilityEnhancedViewModifier()`
+  - *function*
+- **L385:** ` func testAccessibilityEnhancedViewModifierDefaultConfig()`
+  - *function*
+- **L393:** ` func testVoiceOverEnabledViewModifier()`
+  - *function*
+- **L401:** ` func testKeyboardNavigableViewModifier()`
+  - *function*
+- **L409:** ` func testHighContrastEnabledViewModifier()`
+  - *function*
+- **L419:** ` func testAccessibilityComponentsIntegration()`
+  - *function*
+- **L447:** ` func testAccessibilityViewModifiersIntegration()`
+  - *function*
+- **L462:** ` func testVoiceOverManagerErrorHandling()`
+  - *function*
+- **L471:** ` func testKeyboardNavigationManagerErrorHandling()`
+  - *function*
+- **L480:** ` func testHighContrastManagerErrorHandling()`
+  - *function*
+- **L487:** ` func testAccessibilityTestingManagerErrorHandling()`
+  - *function*
+- **L496:** ` func testVoiceOverManagerPerformance()`
+  - *function*
+- **L508:** ` func testKeyboardNavigationManagerPerformance()`
+  - *function*
+- **L521:** ` func testHighContrastManagerPerformance()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/CrossPlatformColorTests.swift
+### Internal Methods
+- **L9:** ` func testCrossPlatformColorsAreAvailable()`
+  - *function*
+- **L20:** ` func testCardBackgroundColorIsCrossPlatform()`
+  - *function*
+- **L30:** ` func testSecondaryBackgroundColorIsCrossPlatform()`
+  - *function*
+- **L40:** ` func testPrimaryBackgroundColorIsCrossPlatform()`
+  - *function*
+- **L50:** ` func testGroupedBackgroundColorIsCrossPlatform()`
+  - *function*
+- **L60:** ` func testSeparatorColorIsCrossPlatform()`
+  - *function*
+- **L70:** ` func testLabelColorsAreCrossPlatform()`
+  - *function*
+- **L85:** ` func testCrossPlatformColorsEnableConsistentUI()`
+  - *function*
+- **L104:** ` func testCrossPlatformColorsSupportFrameworkGoals()`
+  - *function*
+
+## ./Development/Tests/SixLayerFrameworkTests/DataPresentationIntelligenceTests.swift
+### Internal Methods
+- **L20:** ` func testDataPresentationIntelligenceExists()`
+  - *function*
+- **L28:** ` func testAnalyzeDataWithEmptyArray()`
+  - *function*
+- **L40:** ` func testAnalyzeDataWithSimpleData()`
+  - *function*
+- **L53:** ` func testAnalyzeDataWithModerateData()`
+  - *function*
+- **L65:** ` func testAnalyzeDataWithComplexData()`
+  - *function*
+- **L77:** ` func testAnalyzeDataWithVeryComplexData()`
+  - *function*
+- **L91:** ` func testAnalyzeNumericalDataWithSimpleValues()`
+  - *function*
+- **L104:** ` func testAnalyzeNumericalDataWithTimeSeriesPattern()`
+  - *function*
+- **L118:** ` func testAnalyzeNumericalDataWithCategoricalPattern()`
+  - *function*
+- **L133:** ` func testAnalyzeCategoricalDataWithSimpleCategories()`
+  - *function*
+- **L148:** ` func testAnalyzeCategoricalDataWithManyCategories()`
+  - *function*
+- **L162:** ` func testAnalyzeCategoricalDataWithComplexCategories()`
+  - *function*
+- **L176:** ` func testChartTypeRecommendationForSimpleNumericalData()`
+  - *function*
+- **L187:** ` func testChartTypeRecommendationForTimeSeriesData()`
+  - *function*
+- **L198:** ` func testChartTypeRecommendationForSimpleCategoricalData()`
+  - *function*
+- **L209:** ` func testChartTypeRecommendationForComplexCategoricalData()`
+  - *function*
+- **L222:** ` func testConfidenceCalculationForSimpleData()`
+  - *function*
+- **L233:** ` func testConfidenceCalculationForModerateData()`
+  - *function*
+- **L244:** ` func testConfidenceCalculationForComplexData()`
+  - *function*
+- **L255:** ` func testConfidenceCalculationForVeryComplexData()`
+  - *function*
+- **L268:** ` func testVisualizationTypeDetectionForNumericalData()`
+  - *function*
+- **L279:** ` func testVisualizationTypeDetectionForTemporalData()`
+  - *function*
+- **L290:** ` func testVisualizationTypeDetectionForCategoricalData()`
+  - *function*
+- **L303:** ` func testDataAnalysisPerformance()`
+  - *function*
+- **L313:** ` func testNumericalDataAnalysisPerformance()`
+  - *function*
+- **L323:** ` func testCategoricalDataAnalysisPerformance()`
+  - *function*
+- **L335:** ` func testAnalysisWithSingleDataPoint()`
+  - *function*
+- **L347:** ` func testAnalysisWithIdenticalValues()`
+  - *function*
+- **L360:** ` func testAnalysisWithZeroValues()`
+  - *function*
+- **L373:** ` func testAnalysisWithNegativeValues()`
+  - *function*
+- **L385:** ` func testAnalysisWithVeryLargeValues()`
+  - *function*
+- **L399:** ` func testAnalysisConsistencyForSameData()`
+  - *function*
+- **L414:** ` func testAnalysisConsistencyForSimilarData()`
+  - *function*
+

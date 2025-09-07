@@ -50,9 +50,9 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 📋 Current Status
 
-**Version**: v2.2.0 (Comprehensive Testing Implementation - 790+ Tests)  
-**Phase**: Testing Infrastructure Complete  
-**Next**: OCR Architecture Refactor (Priority 1)
+**Version**: v2.3.2 (CarPlay Detection Fix)  
+**Phase**: Bug Fixes and Stability  
+**Next**: Continue with comprehensive testing and feature development
 
 ## 🤝 Contributing
 

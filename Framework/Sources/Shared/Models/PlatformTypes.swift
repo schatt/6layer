@@ -160,7 +160,7 @@ public struct CarPlayCapabilityDetection {
         if #available(iOS 14.0, *) {
             // Check if we're in a CarPlay context
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                return windowScene.traitCollection.userInterfaceIdiom == .car
+                return windowScene.traitCollection.userInterfaceIdiom == .carPlay
             }
         }
         return false

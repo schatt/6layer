@@ -38,6 +38,9 @@ WITH_EXTENSIONS=1
 # Default roots if --all is provided
 DEFAULT_DIRS=("Framework/Sources/Shared" "Framework/Sources/iOS" "Framework/Sources/macOS")
 
+# Output directory for generated files (outside of source tree)
+OUTPUT_BASE_DIR="Development/FunctionIndexes"
+
 # Enhanced regex patterns for different Swift declarations
 FUNC_REGEX='^[[:space:]]*(public|internal|private|fileprivate|open)?[[:space:]]*(static|class)?[[:space:]]*func[[:space:]]+[A-Za-z_][A-Za-z0-9_]*[[:space:]]*\('
 PROPERTY_REGEX='^[[:space:]]*(public|internal|private|fileprivate|open)?[[:space:]]*(static|class)?[[:space:]]*var[[:space:]]+[A-Za-z_][A-Za-z0-9_]*[[:space:]]*:[[:space:]]*[^{]*\{'
@@ -266,12 +269,17 @@ generate_index_for_dir() {
   local dir_name=$(basename "$dir")
   local parent_dir=$(dirname "$dir" | xargs basename 2>/dev/null || echo "")
   
+  # Create output directory structure in Development/FunctionIndexes
+  local rel_dir="${dir#${BASE_DIR}/}"
+  local output_dir="${BASE_DIR}/${OUTPUT_BASE_DIR}/${rel_dir}"
+  mkdir -p "$output_dir"
+  
   # Create unique filename to prevent build conflicts
   local output_file
   if [[ -n "$parent_dir" ]]; then
-    output_file="$dir/FunctionIndex_${parent_dir}_${dir_name}.md"
+    output_file="$output_dir/FunctionIndex_${parent_dir}_${dir_name}.md"
   else
-    output_file="$dir/FunctionIndex_${dir_name}.md"
+    output_file="$output_dir/FunctionIndex_${dir_name}.md"
   fi
   
   # Validate directory path and output file path length
@@ -553,7 +561,9 @@ generate_index_for_dir() {
 
 # Generate master index linking all FunctionIndex.md files
 generate_master_index() {
-  local output_file="MASTER_FunctionIndex.md"
+  # Ensure output directory exists
+  mkdir -p "${BASE_DIR}/${OUTPUT_BASE_DIR}"
+  local output_file="${BASE_DIR}/${OUTPUT_BASE_DIR}/MASTER_FunctionIndex.md"
   
   {
     echo "# Master Function Index"
@@ -569,7 +579,7 @@ generate_master_index() {
   
   local index_count=0
   
-  # Find all FunctionIndex.md files
+  # Find all FunctionIndex.md files in the output directory
   while IFS= read -r -d '' index_file; do
     local rel_path="${index_file#${BASE_DIR}/}"
     local dir_path=$(dirname "$rel_path")
@@ -580,7 +590,7 @@ generate_master_index() {
     echo >> "$output_file"
     
     index_count=$((index_count + 1))
-  done < <(find "$BASE_DIR" -name "FunctionIndex.md" -print0)
+  done < <(find "${BASE_DIR}/${OUTPUT_BASE_DIR}" -name "FunctionIndex_*.md" -print0)
   
   echo "---" >> "$output_file"
   echo "**Total Index Files**: $index_count" >> "$output_file"
