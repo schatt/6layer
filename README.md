@@ -47,6 +47,7 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 - **[Project Status](Development/PROJECT_STATUS.md)** - Current development status
 - **[Roadmap](Development/todo.md)** - Development phases and progress
 - **[Documentation](Framework/docs/)** - Technical implementation details
+- **[OCR Overlay Guide](Framework/docs/OCROverlayGuide.md)** - **NEW!** Interactive visual text correction
 
 ## 📋 Current Status
 

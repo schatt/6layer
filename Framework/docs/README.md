@@ -24,6 +24,12 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
 - **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
 
+### 📸 OCR & Visual Features
+- **[OCROverlayGuide.md](OCROverlayGuide.md)** - **NEW!** Complete guide to OCR overlay system
+- **OCR Overlay System** - Interactive visual text correction with bounding box editing
+- **OCR Disambiguation** - Smart text recognition with user selection capabilities
+- **Visual Text Correction** - Tap-to-edit functionality for OCR results
+
 
 ### 📱 Platform-Specific
 - **[keyboard-consistency-guidelines.md](keyboard-consistency-guidelines.md)** - Cross-platform keyboard handling
