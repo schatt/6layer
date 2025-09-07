@@ -200,14 +200,25 @@ public struct EnhancedDeviceCapabilities {
             self.screenSize = screen.bounds.size
             self.orientation = DeviceOrientation.fromUIDeviceOrientation(UIDevice.current.orientation)
             self.pixelDensity = screen.scale
-            // Get safe area insets from the key window
+            
+            // Get actual window size instead of device screen size
+            // This handles multiple windows, Stage Manager, Split View, and Slide Over
+            let actualWindowSize: CGSize
             let safeAreaInsets: UIEdgeInsets
+            
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
+                // Use actual window size for responsive layouts
+                actualWindowSize = window.bounds.size
                 safeAreaInsets = window.safeAreaInsets
             } else {
+                // Fallback to screen size if no window available
+                actualWindowSize = screen.bounds.size
                 safeAreaInsets = UIEdgeInsets.zero
             }
+            
+            // Update screenSize to reflect actual window size
+            self.screenSize = actualWindowSize
             
             self.safeAreaInsets = EdgeInsets(
                 top: safeAreaInsets.top,
@@ -219,18 +230,20 @@ public struct EnhancedDeviceCapabilities {
             // Device type detection
             if UIDevice.current.userInterfaceIdiom == .pad {
                 self.deviceType = .pad
-                self.iPadSizeCategory = SixLayerFramework.iPadSizeCategory.from(screenSize: screenSize)
+                self.iPadSizeCategory = SixLayerFramework.iPadSizeCategory.from(screenSize: actualWindowSize)
                 self.iPhoneSizeCategory = nil
                 self.supportsSplitView = true
                 self.supportsStageManager = true
             } else {
                 self.deviceType = .phone
-                self.iPhoneSizeCategory = SixLayerFramework.iPhoneSizeCategory.from(screenSize: screenSize)
+                self.iPhoneSizeCategory = SixLayerFramework.iPhoneSizeCategory.from(screenSize: actualWindowSize)
                 self.iPadSizeCategory = nil
                 self.supportsSplitView = false
                 self.supportsStageManager = false
             }
             #elseif os(macOS)
+            // macOS: Use actual window size detection
+            // This will be updated by macOSWindowDetection when available
             self.screenSize = CGSize(width: 1024, height: 768) // Default macOS size
             self.orientation = .landscape
             self.deviceType = .mac
