@@ -50,7 +50,7 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 📋 Current Status
 
-**Version**: v2.3.2 (CarPlay Detection Fix)  
+**Version**: v2.3.3 (Consumer Compatibility Fix)  
 **Phase**: Bug Fixes and Stability  
 **Next**: Continue with comprehensive testing and feature development
 

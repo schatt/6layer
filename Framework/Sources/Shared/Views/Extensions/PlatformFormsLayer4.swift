@@ -7,56 +7,22 @@ import SwiftUI
 
 public extension View {
     
-    /// Platform-specific form section with consistent styling
-    /// Provides standardized form section appearance across platforms
-    func platformFormSection<Content: View>(
-        header: String? = nil,
-        footer: String? = nil,
-        @ViewBuilder content: () -> Content
-    ) -> some View {
-        Group {
-            if let header = header, let footer = footer {
-                Section {
-                    content()
-                } header: {
-                    Text(header)
-                        .font(.headline)
-                        .foregroundColor(Color.platformLabel)
-                } footer: {
-                    Text(footer)
-                        .font(.caption)
-                        .foregroundColor(Color.platformSecondaryLabel)
-                }
-            } else if let header = header {
-                Section {
-                    content()
-                } header: {
-                    Text(header)
-                        .font(.headline)
-                        .foregroundColor(Color.platformLabel)
-                }
-            } else if let footer = footer {
-                Section {
-                    content()
-                } footer: {
-                    Text(footer)
-                        .font(.caption)
-                        .foregroundColor(Color.platformSecondaryLabel)
-                }
-            } else {
-                Section {
-                    content()
-                }
-            }
-        }
-    }
+    // MARK: - Form Section
+    // Note: platformFormSection functions are now defined in PlatformSpecificViewExtensions.swift
+    // to avoid ambiguity with multiple overloads. Use those instead.
     
     /// Platform-specific form field with consistent styling
     /// Provides standardized form field appearance across platforms
     func platformFormField<Content: View>(
+        label: String? = nil,
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
+            if let label = label {
+                Text(label)
+                    .font(.subheadline)
+                    .foregroundColor(.platformLabel)
+            }
             content()
         }
         .padding(.vertical, 4)
