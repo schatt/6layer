@@ -100,6 +100,12 @@ public func platformPresentModalForm_L1(
     formType: DataTypeHint,
     context: PresentationContext
 ) -> some View
+
+// Generic content presentation (for runtime-unknown content types)
+public func platformPresentContent_L1(
+    content: Any,
+    hints: PresentationHints
+) -> some View
 ```
 
 ### **2. Generic Data Types (What Actually Exists):**
@@ -1442,6 +1448,120 @@ let ocrView = platformOCRWithVisualCorrection_L1(
     // Handle result
 }
 ```
+
+---
+
+## 🎯 **Generic Content Presentation (Runtime-Unknown Content)**
+
+### **When to Use `platformPresentContent_L1`**
+
+**⚠️ IMPORTANT**: This function is reserved for **rare cases** where content type is unknown at compile time. For known content types, use the specific functions:
+
+- `platformPresentItemCollection_L1` for collections
+- `platformPresentFormData_L1` for forms  
+- `platformPresentMediaData_L1` for media
+- etc.
+
+### **Use Cases for `platformPresentContent_L1`**
+
+#### **1. Dynamic API Responses**
+```swift
+// When API returns unknown content structure
+let apiResponse: Any = [
+    "type": "unknown",
+    "data": [
+        ["name": "Item 1", "value": 100],
+        ["name": "Item 2", "value": 200]
+    ]
+]
+
+let view = platformPresentContent_L1(
+    content: apiResponse,
+    hints: PresentationHints(
+        dataType: .generic,
+        presentationPreference: .automatic,
+        complexity: .moderate,
+        context: .dashboard
+    )
+)
+```
+
+#### **2. User-Generated Content**
+```swift
+// When users upload content of unknown type
+let userContent: Any = [
+    "title": "User Post",
+    "content": "Some user content",
+    "attachments": ["image1.jpg", "document.pdf"],
+    "metadata": ["created": Date(), "likes": 42]
+]
+
+let view = platformPresentContent_L1(
+    content: userContent,
+    hints: PresentationHints(
+        dataType: .generic,
+        presentationPreference: .automatic,
+        complexity: .moderate,
+        context: .feed
+    )
+)
+```
+
+#### **3. Mixed Content Types**
+```swift
+// When content contains multiple unknown types
+let mixedContent: Any = [
+    "text": "Some text content",
+    "image": "test-image",
+    "data": ["key": "value"]
+]
+
+let view = platformPresentContent_L1(
+    content: mixedContent,
+    hints: PresentationHints(
+        dataType: .generic,
+        presentationPreference: .automatic,
+        complexity: .moderate,
+        context: .modal
+    )
+)
+```
+
+### **How It Works**
+
+The function analyzes content type at runtime and delegates to appropriate specific functions:
+
+1. **Known Types**: Delegates to specific functions (forms, collections, media, etc.)
+2. **Unknown Types**: Uses fallback presentation with generic UI
+3. **Mixed Content**: Attempts to convert to known types or uses fallback
+
+### **Best Practices**
+
+#### **✅ DO: Use for truly unknown content**
+```swift
+// Dynamic API responses
+let view = platformPresentContent_L1(content: apiResponse, hints: hints)
+
+// User-generated content
+let view = platformPresentContent_L1(content: userContent, hints: hints)
+```
+
+#### **❌ DON'T: Use for known content types**
+```swift
+// ❌ WRONG: Use specific function for known types
+let vehicles: [GenericVehicle] = getVehicles()
+let view = platformPresentContent_L1(content: vehicles, hints: hints)
+
+// ✅ CORRECT: Use specific function
+let view = platformPresentItemCollection_L1(items: vehicles, hints: hints)
+```
+
+### **Performance Considerations**
+
+- **Runtime Analysis**: Content type analysis happens at runtime
+- **Delegation Overhead**: Slight overhead for type checking and delegation
+- **Fallback UI**: Generic fallback UI for unknown content types
+- **Use Sparingly**: Only use when content type is truly unknown at compile time
 
 ---
 

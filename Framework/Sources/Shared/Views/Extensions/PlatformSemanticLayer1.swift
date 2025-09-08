@@ -188,6 +188,26 @@ public func platformPresentTemporalData_L1(
     return GenericTemporalView(items: items, hints: hints)
 }
 
+/// Generic function for presenting unknown content at runtime
+/// 
+/// **IMPORTANT**: This function is reserved for rare cases where the content type
+/// is unknown at compile time (e.g., dynamic API responses, user-generated content,
+/// or mixed content types). For known content types, use the specific functions:
+/// - `platformPresentItemCollection_L1` for collections
+/// - `platformPresentFormData_L1` for forms
+/// - `platformPresentMediaData_L1` for media
+/// - etc.
+///
+/// This function analyzes content type at runtime and delegates to appropriate
+/// specific functions, with a fallback for truly unknown content types.
+@MainActor
+public func platformPresentContent_L1(
+    content: Any,
+    hints: PresentationHints
+) -> some View {
+    return GenericContentView(content: content, hints: hints)
+}
+
 // MARK: - Enhanced Presentation Hints Overloads
 
 /// Generic function for presenting any collection of identifiable items with enhanced hints
@@ -946,5 +966,136 @@ public extension EnvironmentValues {
     var extensibleHints: [ExtensibleHint] {
         get { self[ExtensibleHintsKey.self] }
         set { self[ExtensibleHintsKey.self] = newValue }
+    }
+}
+
+// MARK: - Generic Content View
+
+/// Generic content view for runtime-unknown content types
+/// 
+/// **Use Case**: Only for cases where content type is unknown at compile time.
+/// This view analyzes content type at runtime and delegates to appropriate
+/// specific functions, with a fallback for truly unknown content types.
+public struct GenericContentView: View {
+    let content: Any
+    let hints: PresentationHints
+    
+    public var body: some View {
+        // Analyze content type and delegate to appropriate function
+        if let formFields = content as? [GenericFormField] {
+            // Delegate to form function
+            return AnyView(platformPresentFormData_L1(fields: formFields, hints: hints))
+        } else if let mediaItems = content as? [GenericMediaItem] {
+            // Delegate to media function
+            return AnyView(platformPresentMediaData_L1(media: mediaItems, hints: hints))
+        } else if let numericData = content as? [GenericNumericData] {
+            // Delegate to numeric function
+            return AnyView(platformPresentNumericData_L1(data: numericData, hints: hints))
+        } else if let hierarchicalItems = content as? [GenericHierarchicalItem] {
+            // Delegate to hierarchical function
+            return AnyView(platformPresentHierarchicalData_L1(items: hierarchicalItems, hints: hints))
+        } else if let temporalItems = content as? [GenericTemporalItem] {
+            // Delegate to temporal function
+            return AnyView(platformPresentTemporalData_L1(items: temporalItems, hints: hints))
+        } else if isIdentifiableArray(content) {
+            // Handle any identifiable array by converting to GenericDataItem
+            let items = convertToGenericDataItems(content)
+            return AnyView(platformPresentItemCollection_L1(items: items, hints: hints))
+        } else {
+            // Fallback to generic presentation
+            return AnyView(GenericFallbackView(content: content, hints: hints))
+        }
+    }
+    
+    /// Check if content is an array of identifiable items
+    private func isIdentifiableArray(_ content: Any) -> Bool {
+        // Check if it's an array and if the first element conforms to Identifiable
+        if let array = content as? [Any], !array.isEmpty {
+            return array.first is any Identifiable
+        }
+        return false
+    }
+    
+    /// Convert any identifiable array to GenericDataItem array
+    private func convertToGenericDataItems(_ content: Any) -> [GenericDataItem] {
+        guard let array = content as? [Any] else { return [] }
+        
+        return array.compactMap { item in
+            if let identifiable = item as? any Identifiable {
+                // Try to extract title and subtitle from common properties
+                let mirror = Mirror(reflecting: identifiable)
+                var title = "Item"
+                var subtitle: String? = nil
+                var data: [String: Any] = [:]
+                
+                for child in mirror.children {
+                    if let label = child.label {
+                        data[label] = child.value
+                        
+                        // Common property mappings
+                        if label == "name" || label == "title" {
+                            if let stringValue = child.value as? String {
+                                title = stringValue
+                            }
+                        } else if label == "description" || label == "subtitle" {
+                            if let stringValue = child.value as? String {
+                                subtitle = stringValue
+                            }
+                        }
+                    }
+                }
+                
+                return GenericDataItem(title: title, subtitle: subtitle, data: data)
+            }
+            return nil
+        }
+    }
+}
+
+/// Fallback view for unknown content types
+private struct GenericFallbackView: View {
+    let content: Any
+    let hints: PresentationHints
+    
+    var body: some View {
+        VStack {
+            Image(systemName: "doc.text")
+                .font(.largeTitle)
+                .foregroundColor(.secondary)
+            
+            Text("Content")
+                .font(.headline)
+            
+            Text("Type: \(type(of: content))")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            if let stringContent = content as? String {
+                Text(stringContent)
+                    .padding()
+                    .background(Color.secondary.opacity(0.1))
+                    .cornerRadius(8)
+            } else if let dictContent = content as? [String: Any] {
+                VStack(alignment: .leading) {
+                    ForEach(Array(dictContent.keys.sorted()), id: \.self) { key in
+                        HStack {
+                            Text("\(key):")
+                                .fontWeight(.medium)
+                            Text("\(dictContent[key] ?? "nil")")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                .padding()
+                .background(Color.secondary.opacity(0.1))
+                .cornerRadius(8)
+            } else {
+                Text("Unknown content type")
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding()
+        .background(Color.primary.opacity(0.05))
+        .cornerRadius(12)
     }
 }
