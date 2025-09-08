@@ -56,8 +56,8 @@ final class AccessibilityEnhancementTests: XCTestCase {
         XCTAssertNotNil(settings.voiceOverSupport)
         XCTAssertNotNil(settings.keyboardNavigation)
         XCTAssertNotNil(settings.highContrastMode)
-        XCTAssertNotNil(settings.dynamicTypeSupport)
-        XCTAssertNotNil(settings.reducedMotionSupport)
+        XCTAssertNotNil(settings.dynamicType)
+        XCTAssertNotNil(settings.reducedMotion)
     }
     
     // MARK: - VoiceOver Support Tests
@@ -211,9 +211,9 @@ final class AccessibilityEnhancementTests: XCTestCase {
         let metrics = accessibilityManager.complianceMetrics
         
         XCTAssertNotNil(metrics.voiceOverCompliance)
-        XCTAssertNotNil(metrics.keyboardNavigationCompliance)
-        XCTAssertNotNil(metrics.colorContrastCompliance)
-        XCTAssertNotNil(metrics.dynamicTypeCompliance)
+        XCTAssertNotNil(metrics.keyboardCompliance)
+        XCTAssertNotNil(metrics.contrastCompliance)
+        XCTAssertNotNil(metrics.motionCompliance)
     }
     
     // MARK: - Cross-Platform Accessibility Tests
@@ -325,7 +325,7 @@ final class AccessibilityEnhancementTests: XCTestCase {
 class AccessibilityManager: ObservableObject {
     
     /// Accessibility settings configuration
-    @Published public var accessibilitySettings: AccessibilitySettings
+    @Published public var accessibilitySettings: SixLayerFramework.AccessibilitySettings
     
     /// Accessibility compliance metrics
     @Published public var complianceMetrics: AccessibilityComplianceMetrics
@@ -358,30 +358,7 @@ class AccessibilityManager: ObservableObject {
 // MARK: - Accessibility Types
 
 /// Accessibility settings configuration
-public struct AccessibilitySettings {
-    public var voiceOverSupport: Bool = true
-    public var keyboardNavigation: Bool = true
-    public var highContrastMode: Bool = true
-    public var dynamicTypeSupport: Bool = true
-    public var reducedMotionSupport: Bool = true
-    
-    public init() {
-        // Initialize with default accessibility settings
-    }
-}
 
-/// Accessibility compliance metrics
-public struct AccessibilityComplianceMetrics {
-    public var voiceOverCompliance: Double = 0.0
-    public var keyboardNavigationCompliance: Double = 0.0
-    public var colorContrastCompliance: Double = 0.0
-    public var dynamicTypeCompliance: Double = 0.0
-    public var overallComplianceScore: Double = 0.0
-    
-    public init() {
-        // Initialize with default compliance metrics
-    }
-}
 
 /// Accessibility testing utilities
 public struct AccessibilityTesting {
