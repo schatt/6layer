@@ -895,6 +895,554 @@ VStack {
 4. **Reduces Maintenance**: Centralized color mapping logic
 5. **Better Accessibility**: Consistent color behavior across platforms
 
+## 🔍 **OCR Functionality Usage Guide**
+
+### **OCR System Overview**
+The SixLayer Framework includes a comprehensive OCR (Optical Character Recognition) system that follows the 6-layer architecture. OCR functionality is available through Layer 1 semantic functions that express intent rather than implementation details.
+
+### **Core OCR Philosophy**
+Just like other framework features, OCR follows the **Layer 1 Semantic Intent** principle:
+- **Apps express WHAT they want to extract, not HOW to implement it**
+- **Framework handles all Vision framework complexity internally**
+- **Business logic goes through the hints system**
+
+### **Available OCR Functions**
+
+#### **1. Basic OCR with Visual Correction (Primary Function)**
+```swift
+// ✅ CORRECT: Express intent, let framework handle implementation
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date, .generalText],
+    language: .english,
+    confidenceThreshold: 0.8
+) { result in
+    // Handle OCR result
+    if result.isValid {
+        print("Extracted text: \(result.extractedText)")
+    }
+}
+```
+
+#### **2. OCR with Disambiguation (Advanced Function)**
+```swift
+// ✅ CORRECT: Use disambiguation for complex text
+let ocrView = platformOCRWithDisambiguation_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english,
+    confidenceThreshold: 0.7
+) { result in
+    // Handle disambiguated result
+    if result.needsDisambiguation {
+        // Show disambiguation options
+        showDisambiguationOptions(result.candidates)
+    }
+}
+```
+
+#### **3. OCR with Context (Recommended for Complex Scenarios)**
+```swift
+// ✅ CORRECT: Use OCRContext for complex scenarios
+let context = OCRContext(
+    textTypes: [.price, .date, .number],
+    language: .english,
+    confidenceThreshold: 0.8,
+    allowsEditing: true,
+    documentType: .receipt
+)
+
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    context: context
+) { result in
+    // Handle contextual OCR result
+    processOCRResult(result)
+}
+```
+
+### **OCR Text Types**
+The framework supports intelligent text type detection:
+
+```swift
+public enum OCRTextType: String, CaseIterable {
+    case generalText = "general"
+    case price = "price"
+    case date = "date"
+    case number = "number"
+    case email = "email"
+    case phone = "phone"
+    case url = "url"
+    case address = "address"
+    case name = "name"
+    case custom = "custom"
+}
+```
+
+### **OCR Languages**
+```swift
+public enum OCRLanguage: String, CaseIterable {
+    case english = "en"
+    case spanish = "es"
+    case french = "fr"
+    case german = "de"
+    case italian = "it"
+    case portuguese = "pt"
+    case chinese = "zh"
+    case japanese = "ja"
+    case korean = "ko"
+    case arabic = "ar"
+    case russian = "ru"
+    case custom = "custom"
+}
+```
+
+### **OCR Document Types**
+```swift
+public enum OCRDocumentType: String, CaseIterable {
+    case receipt = "receipt"
+    case invoice = "invoice"
+    case businessCard = "businessCard"
+    case form = "form"
+    case document = "document"
+    case label = "label"
+    case menu = "menu"
+    case sign = "sign"
+    case custom = "custom"
+}
+```
+
+### **OCR Result Handling**
+
+#### **Basic Result Processing**
+```swift
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english
+) { result in
+    // Check if OCR was successful
+    if result.isValid {
+        // Access extracted text
+        let extractedText = result.extractedText
+        
+        // Access confidence score
+        let confidence = result.confidence
+        
+        // Access specific text types
+        if let price = result.extractedTextByType[.price] {
+            print("Price found: \(price)")
+        }
+        
+        if let date = result.extractedTextByType[.date] {
+            print("Date found: \(date)")
+        }
+    } else {
+        // Handle OCR failure
+        print("OCR failed: \(result.error?.localizedDescription ?? "Unknown error")")
+    }
+}
+```
+
+#### **Advanced Result Processing**
+```swift
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    context: context
+) { result in
+    switch result.status {
+    case .success:
+        // Process successful OCR
+        processSuccessfulOCR(result)
+        
+    case .partialSuccess:
+        // Handle partial success
+        processPartialOCR(result)
+        
+    case .needsDisambiguation:
+        // Show disambiguation options
+        showDisambiguationUI(result.candidates)
+        
+    case .failure:
+        // Handle failure
+        showOCRError(result.error)
+    }
+}
+```
+
+### **OCR Integration with Forms**
+
+#### **OCR Input Fields**
+```swift
+// ✅ CORRECT: Use OCR as input method in forms
+let formFields = [
+    GenericFormField(
+        name: "receiptAmount",
+        type: .text,
+        inputMethod: .ocr,
+        ocrTextTypes: [.price],
+        ocrLanguage: .english
+    ),
+    GenericFormField(
+        name: "receiptDate",
+        type: .date,
+        inputMethod: .ocr,
+        ocrTextTypes: [.date],
+        ocrLanguage: .english
+    )
+]
+
+let formView = platformPresentFormData_L1(
+    fields: formFields,
+    hints: createReceiptFormHints()
+)
+```
+
+#### **OCR with Business Hints**
+```swift
+// ✅ CORRECT: Use business-specific OCR hints
+let receiptHints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    customPreferences: [
+        "businessType": "expense",
+        "ocrEnabled": "true",
+        "ocrTextTypes": "price,date",
+        "ocrLanguage": "english",
+        "ocrConfidenceThreshold": "0.8"
+    ]
+)
+```
+
+### **OCR Error Handling**
+
+#### **Common OCR Errors**
+```swift
+public enum OCRError: Error {
+    case imageProcessingFailed
+    case textRecognitionFailed
+    case confidenceTooLow
+    case unsupportedImageFormat
+    case noTextFound
+    case languageNotSupported
+    case custom(String)
+}
+```
+
+#### **Error Handling Best Practices**
+```swift
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english
+) { result in
+    if let error = result.error {
+        switch error {
+        case .imageProcessingFailed:
+            showError("Unable to process image. Please try a different image.")
+            
+        case .textRecognitionFailed:
+            showError("Unable to recognize text. Please ensure the image is clear.")
+            
+        case .confidenceTooLow:
+            showError("Text recognition confidence is low. Please try a clearer image.")
+            
+        case .noTextFound:
+            showError("No text found in image. Please ensure the image contains text.")
+            
+        case .unsupportedImageFormat:
+            showError("Unsupported image format. Please use JPEG or PNG.")
+            
+        case .languageNotSupported:
+            showError("Language not supported. Please try a different language.")
+            
+        case .custom(let message):
+            showError("OCR Error: \(message)")
+        }
+    }
+}
+```
+
+### **OCR Performance Optimization**
+
+#### **Image Preprocessing**
+```swift
+// ✅ CORRECT: Let framework handle image optimization
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english,
+    confidenceThreshold: 0.8
+) { result in
+    // Framework automatically optimizes image for OCR
+    processOCRResult(result)
+}
+```
+
+#### **Batch OCR Processing**
+```swift
+// ✅ CORRECT: Process multiple images
+let images = [image1, image2, image3]
+let ocrResults: [OCRResult] = []
+
+for image in images {
+    let ocrView = platformOCRWithVisualCorrection_L1(
+        image: image,
+        textTypes: [.price, .date],
+        language: .english
+    ) { result in
+        ocrResults.append(result)
+    }
+}
+```
+
+### **OCR Accessibility Integration**
+
+#### **VoiceOver Support**
+```swift
+// ✅ CORRECT: OCR automatically includes accessibility
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english
+) { result in
+    // Framework automatically provides:
+    // - VoiceOver announcements for OCR results
+    // - Keyboard navigation support
+    // - High contrast support
+    // - Dynamic type support
+    processOCRResult(result)
+}
+```
+
+#### **Accessibility Hints**
+```swift
+// ✅ CORRECT: Use accessibility hints for OCR
+let accessibilityHints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    customPreferences: [
+        "accessibilityEnabled": "true",
+        "voiceOverAnnouncements": "true",
+        "keyboardNavigation": "true",
+        "highContrastSupport": "true"
+    ]
+)
+```
+
+### **OCR Testing**
+
+#### **Unit Testing OCR Functions**
+```swift
+func testOCRWithVisualCorrection() {
+    // Given
+    let testImage = createTestImage()
+    let expectation = XCTestExpectation(description: "OCR completion")
+    
+    // When
+    let ocrView = platformOCRWithVisualCorrection_L1(
+        image: testImage,
+        textTypes: [.price, .date],
+        language: .english
+    ) { result in
+        // Then
+        XCTAssertTrue(result.isValid)
+        XCTAssertGreaterThan(result.confidence, 0.8)
+        expectation.fulfill()
+    }
+    
+    wait(for: [expectation], timeout: 5.0)
+}
+```
+
+#### **Integration Testing**
+```swift
+func testOCRIntegrationWithForm() {
+    // Given
+    let formFields = createOCRFormFields()
+    let hints = createOCRFormHints()
+    
+    // When
+    let formView = platformPresentFormData_L1(
+        fields: formFields,
+        hints: hints
+    )
+    
+    // Then
+    XCTAssertNotNil(formView)
+    // Test OCR integration with form
+}
+```
+
+### **Common OCR Mistakes to Avoid**
+
+#### **❌ WRONG: Direct Vision Framework Usage**
+```swift
+// ❌ WRONG: Don't use Vision framework directly
+import Vision
+
+let request = VNRecognizeTextRequest { request, error in
+    // Direct Vision framework usage
+}
+
+// ✅ CORRECT: Use framework's OCR functions
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english
+) { result in
+    // Handle result
+}
+```
+
+#### **❌ WRONG: Hardcoded OCR Logic**
+```swift
+// ❌ WRONG: Don't hardcode OCR logic
+if imageType == "receipt" {
+    // Hardcoded receipt OCR logic
+}
+
+// ✅ CORRECT: Use hints system
+let hints = PresentationHints(
+    customPreferences: [
+        "businessType": "receipt",
+        "ocrTextTypes": "price,date"
+    ]
+)
+```
+
+#### **❌ WRONG: Manual Image Processing**
+```swift
+// ❌ WRONG: Don't manually process images
+let processedImage = processImageForOCR(image)
+
+// ✅ CORRECT: Let framework handle image processing
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: image,  // Framework handles processing
+    textTypes: [.price, .date],
+    language: .english
+) { result in
+    // Handle result
+}
+```
+
+### **OCR Best Practices**
+
+#### **1. Use Appropriate Text Types**
+```swift
+// ✅ CORRECT: Specify relevant text types
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: receiptImage,
+    textTypes: [.price, .date],  // Only what you need
+    language: .english
+) { result in
+    // Handle result
+}
+```
+
+#### **2. Set Appropriate Confidence Thresholds**
+```swift
+// ✅ CORRECT: Use appropriate confidence levels
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price, .date],
+    language: .english,
+    confidenceThreshold: 0.8  // Adjust based on use case
+) { result in
+    // Handle result
+}
+```
+
+#### **3. Use Context for Complex Scenarios**
+```swift
+// ✅ CORRECT: Use OCRContext for complex scenarios
+let context = OCRContext(
+    textTypes: [.price, .date, .number],
+    language: .english,
+    confidenceThreshold: 0.8,
+    allowsEditing: true,
+    documentType: .receipt
+)
+
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    context: context
+) { result in
+    // Handle contextual result
+}
+```
+
+#### **4. Integrate with Business Logic Through Hints**
+```swift
+// ✅ CORRECT: Use hints for business-specific OCR behavior
+let businessHints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    complexity: .moderate,
+    context: .create,
+    customPreferences: [
+        "businessType": "expense",
+        "ocrEnabled": "true",
+        "ocrTextTypes": "price,date",
+        "ocrLanguage": "english",
+        "ocrConfidenceThreshold": "0.8",
+        "ocrDocumentType": "receipt"
+    ]
+)
+```
+
+### **OCR Troubleshooting**
+
+#### **Issue: "OCR not working"**
+```swift
+// Problem: OCR function not recognizing text
+// Solution: Check image quality and text types
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: clearImage,  // Ensure image is clear
+    textTypes: [.generalText],  // Start with general text
+    language: .english,
+    confidenceThreshold: 0.5  // Lower threshold for testing
+) { result in
+    if result.isValid {
+        print("OCR working: \(result.extractedText)")
+    } else {
+        print("OCR failed: \(result.error?.localizedDescription ?? "Unknown error")")
+    }
+}
+```
+
+#### **Issue: "Low confidence results"**
+```swift
+// Problem: OCR results have low confidence
+// Solution: Adjust confidence threshold and image quality
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: highQualityImage,  // Use high-quality image
+    textTypes: [.price, .date],
+    language: .english,
+    confidenceThreshold: 0.6  // Lower threshold
+) { result in
+    // Handle result
+}
+```
+
+#### **Issue: "Wrong text types detected"**
+```swift
+// Problem: OCR detecting wrong text types
+// Solution: Use more specific text types
+let ocrView = platformOCRWithVisualCorrection_L1(
+    image: myImage,
+    textTypes: [.price],  // More specific text type
+    language: .english,
+    confidenceThreshold: 0.8
+) { result in
+    // Handle result
+}
+```
+
 ---
 
 **Remember**: The SixLayer Framework is a **generic foundation** that becomes **business-specific** through the extensible hints system. Help developers understand this architecture and use it correctly.
