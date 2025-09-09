@@ -336,6 +336,34 @@ private func getDocumentRequirements(_ documentType: DocumentType) -> DocumentRe
             preferredImageSize: CGSize(width: 1000, height: 1000),
             processingMode: .standard
         )
+    case .fuelReceipt:
+        return DocumentRequirements(
+            minConfidence: 0.85,
+            requiresBoundingBoxes: true,
+            preferredImageSize: CGSize(width: 1200, height: 800),
+            processingMode: .accurate
+        )
+    case .idDocument:
+        return DocumentRequirements(
+            minConfidence: 0.9,
+            requiresBoundingBoxes: true,
+            preferredImageSize: CGSize(width: 800, height: 500),
+            processingMode: .accurate
+        )
+    case .medicalRecord:
+        return DocumentRequirements(
+            minConfidence: 0.9,
+            requiresBoundingBoxes: true,
+            preferredImageSize: CGSize(width: 1200, height: 1600),
+            processingMode: .accurate
+        )
+    case .legalDocument:
+        return DocumentRequirements(
+            minConfidence: 0.9,
+            requiresBoundingBoxes: true,
+            preferredImageSize: CGSize(width: 1200, height: 1600),
+            processingMode: .accurate
+        )
     }
 }
 

@@ -302,12 +302,12 @@ public class InternationalizationService: ObservableObject {
     /// Get current locale information
     /// - Returns: Locale information
     public func getLocaleInfo() -> LocaleInfo {
-        let languageCode = locale.languageCode ?? "en"
-        let regionCode = locale.regionCode ?? "US"
-        let currencyCode = locale.currencyCode ?? "USD"
-        let isRTL = locale.languageCode?.hasPrefix("ar") == true || 
-                   locale.languageCode?.hasPrefix("he") == true ||
-                   locale.languageCode?.hasPrefix("fa") == true
+        let languageCode = locale.language.languageCode?.identifier ?? "en"
+        let regionCode = locale.region?.identifier ?? "US"
+        let currencyCode = locale.currency?.identifier ?? "USD"
+        let isRTL = locale.language.languageCode?.identifier.hasPrefix("ar") == true || 
+                   locale.language.languageCode?.identifier.hasPrefix("he") == true ||
+                   locale.language.languageCode?.identifier.hasPrefix("fa") == true
         
         let numberFormat = NumberFormat(
             decimalSeparator: locale.decimalSeparator ?? ".",
@@ -371,7 +371,7 @@ public class InternationalizationService: ObservableObject {
     public static func isLocaleSupported(_ locale: Locale) -> Bool {
         let supportedLanguages = ["en", "es", "fr", "de", "it", "pt", "zh", "ja", "ko", "ar", "ru", "hi", "th", "vi", "tr", "pl", "nl", "sv", "da", "no", "fi", "cs", "hu", "ro", "bg", "hr", "sk", "sl", "et", "lv", "lt", "el", "he", "fa", "ur", "bn", "ta", "te", "ml", "kn", "gu", "pa", "or", "as", "ne", "si", "my", "km", "lo", "ka", "hy", "az", "kk", "ky", "uz", "tg", "mn", "bo", "dz", "ti", "am", "om", "so", "sw", "zu", "af", "sq", "eu", "be", "bs", "ca", "cy", "eo", "fo", "gl", "is", "mk", "mt", "rm", "sq", "sr", "uk", "wa"]
         
-        guard let languageCode = locale.languageCode else { return false }
+        guard let languageCode = locale.language.languageCode?.identifier else { return false }
         return supportedLanguages.contains(languageCode)
     }
 }

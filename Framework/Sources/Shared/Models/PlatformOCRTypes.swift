@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - Text Types
 
 /// Types of text that can be recognized by OCR
-public enum TextType: String, CaseIterable {
+public enum TextType: String, CaseIterable, Sendable {
     case price = "price"
     case number = "number"
     case date = "date"
@@ -20,6 +20,21 @@ public enum TextType: String, CaseIterable {
     case phone = "phone"
     case url = "url"
     case general = "general"
+    
+    // New structured text types for enhanced extraction
+    case name = "name"
+    case idNumber = "id_number"
+    case stationName = "station_name"
+    case total = "total"
+    case vendor = "vendor"
+    case expiryDate = "expiry_date"
+    case quantity = "quantity"
+    case unit = "unit"
+    case currency = "currency"
+    case percentage = "percentage"
+    case postalCode = "postal_code"
+    case state = "state"
+    case country = "country"
     
     public var displayName: String {
         switch self {
@@ -31,6 +46,19 @@ public enum TextType: String, CaseIterable {
         case .phone: return "Phone"
         case .url: return "URL"
         case .general: return "General Text"
+        case .name: return "Name"
+        case .idNumber: return "ID Number"
+        case .stationName: return "Station Name"
+        case .total: return "Total"
+        case .vendor: return "Vendor"
+        case .expiryDate: return "Expiry Date"
+        case .quantity: return "Quantity"
+        case .unit: return "Unit"
+        case .currency: return "Currency"
+        case .percentage: return "Percentage"
+        case .postalCode: return "Postal Code"
+        case .state: return "State"
+        case .country: return "Country"
         }
     }
 }
@@ -38,7 +66,7 @@ public enum TextType: String, CaseIterable {
 // MARK: - Document Types
 
 /// Types of documents that can be analyzed
-public enum DocumentType: String, CaseIterable {
+public enum DocumentType: String, CaseIterable, Sendable {
     case receipt = "receipt"
     case invoice = "invoice"
     case businessCard = "business_card"
@@ -46,6 +74,12 @@ public enum DocumentType: String, CaseIterable {
     case license = "license"
     case passport = "passport"
     case general = "general"
+    
+    // New document types for structured extraction
+    case fuelReceipt = "fuel_receipt"
+    case idDocument = "id_document"
+    case medicalRecord = "medical_record"
+    case legalDocument = "legal_document"
     
     public var displayName: String {
         switch self {
@@ -56,6 +90,27 @@ public enum DocumentType: String, CaseIterable {
         case .license: return "License"
         case .passport: return "Passport"
         case .general: return "General Document"
+        case .fuelReceipt: return "Fuel Receipt"
+        case .idDocument: return "ID Document"
+        case .medicalRecord: return "Medical Record"
+        case .legalDocument: return "Legal Document"
+        }
+    }
+}
+
+// MARK: - Extraction Mode
+
+/// Modes for structured data extraction
+public enum ExtractionMode: String, CaseIterable, Sendable {
+    case automatic = "automatic"    // Use built-in patterns
+    case custom = "custom"         // Use provided hints
+    case hybrid = "hybrid"         // Combine automatic + custom
+    
+    public var displayName: String {
+        switch self {
+        case .automatic: return "Automatic"
+        case .custom: return "Custom"
+        case .hybrid: return "Hybrid"
         }
     }
 }
@@ -70,25 +125,39 @@ public struct OCRContext {
     public let allowsEditing: Bool
     public let maxImageSize: CGSize?
     
+    // New structured extraction properties
+    public let extractionHints: [String: String] // field name -> regex pattern
+    public let requiredFields: [String]
+    public let documentType: DocumentType
+    public let extractionMode: ExtractionMode
+    
     public init(
         textTypes: [TextType] = [.general],
         language: OCRLanguage = .english,
         confidenceThreshold: Float = 0.8,
         allowsEditing: Bool = true,
-        maxImageSize: CGSize? = nil
+        maxImageSize: CGSize? = nil,
+        extractionHints: [String: String] = [:],
+        requiredFields: [String] = [],
+        documentType: DocumentType = .general,
+        extractionMode: ExtractionMode = .automatic
     ) {
         self.textTypes = textTypes
         self.language = language
         self.confidenceThreshold = confidenceThreshold
         self.allowsEditing = allowsEditing
         self.maxImageSize = maxImageSize
+        self.extractionHints = extractionHints
+        self.requiredFields = requiredFields
+        self.documentType = documentType
+        self.extractionMode = extractionMode
     }
 }
 
 // MARK: - OCR Language
 
 /// Supported languages for OCR
-public enum OCRLanguage: String, CaseIterable {
+public enum OCRLanguage: String, CaseIterable, Sendable {
     case english = "en"
     case spanish = "es"
     case french = "fr"
@@ -121,7 +190,7 @@ public enum OCRLanguage: String, CaseIterable {
 // MARK: - OCR Result
 
 /// Result of OCR text recognition
-public struct OCRResult {
+public struct OCRResult: Sendable {
     public let extractedText: String
     public let confidence: Float
     public let boundingBoxes: [CGRect]
@@ -129,13 +198,23 @@ public struct OCRResult {
     public let processingTime: TimeInterval
     public let language: OCRLanguage?
     
+    // New structured extraction properties
+    public let structuredData: [String: String]
+    public let extractionConfidence: Float
+    public let missingRequiredFields: [String]
+    public let documentType: DocumentType?
+    
     public init(
         extractedText: String,
         confidence: Float,
         boundingBoxes: [CGRect] = [],
         textTypes: [TextType: String] = [:],
         processingTime: TimeInterval = 0.0,
-        language: OCRLanguage? = nil
+        language: OCRLanguage? = nil,
+        structuredData: [String: String] = [:],
+        extractionConfidence: Float = 0.0,
+        missingRequiredFields: [String] = [],
+        documentType: DocumentType? = nil
     ) {
         self.extractedText = extractedText
         self.confidence = confidence
@@ -143,6 +222,10 @@ public struct OCRResult {
         self.textTypes = textTypes
         self.processingTime = processingTime
         self.language = language
+        self.structuredData = structuredData
+        self.extractionConfidence = extractionConfidence
+        self.missingRequiredFields = missingRequiredFields
+        self.documentType = documentType
     }
     
     /// Whether the OCR result is valid based on confidence threshold
@@ -174,6 +257,16 @@ public struct OCRResult {
     /// Get all recognized text types
     public var recognizedTextTypes: [TextType] {
         return Array(textTypes.keys)
+    }
+    
+    /// Whether the structured extraction is complete (no missing required fields)
+    public var isStructuredExtractionComplete: Bool {
+        return missingRequiredFields.isEmpty
+    }
+    
+    /// Get the structured extraction confidence
+    public var structuredExtractionConfidence: Float {
+        return extractionConfidence
     }
 }
 
@@ -409,7 +502,31 @@ public struct OCRStrategy {
     }
 }
 
+// MARK: - Built-in Patterns
 
-
-
+/// Library of built-in regex patterns for common document types
+public struct BuiltInPatterns {
+    public static let patterns: [DocumentType: [String: String]] = [
+        .fuelReceipt: [
+            "price": #"\$(\d+\.\d{2})"#,
+            "gallons": #"(\d+\.\d{2})\s*gal"#,
+            "station": #"Station:\s*([A-Za-z\s]+)"#
+        ],
+        .invoice: [
+            "total": #"Total:\s*\$(\d+\.\d{2})"#,
+            "date": #"Date:\s*(\d{2}/\d{2}/\d{4})"#,
+            "vendor": #"From:\s*([A-Za-z\s]+)"#
+        ],
+        .businessCard: [
+            "name": #"Name:\s*([A-Za-z\s]+)"#,
+            "phone": #"(\d{3}-\d{3}-\d{4})"#,
+            "email": #"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"#
+        ],
+        .idDocument: [
+            "name": #"Name:\s*([A-Za-z\s]+)"#,
+            "idNumber": #"ID#:\s*([A-Z0-9]+)"#,
+            "expiry": #"Exp:\s*(\d{2}/\d{2}/\d{4})"#
+        ]
+    ]
+}
 

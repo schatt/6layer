@@ -910,7 +910,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testEdgeCaseWithAllDocumentTypes() {
         // Test with all available document types
-        let allDocumentTypes: [DocumentType] = [.receipt, .invoice, .businessCard, .form, .license, .passport, .general]
+        let allDocumentTypes: [DocumentType] = [.receipt, .invoice, .businessCard, .form, .license, .passport, .general, .fuelReceipt, .idDocument, .medicalRecord, .legalDocument]
         
         for documentType in allDocumentTypes {
             // Create appropriate context based on document type
@@ -928,6 +928,14 @@ final class OCRComprehensiveTests: XCTestCase {
                     return [.general, .date]
                 case .general:
                     return [.general]
+                case .fuelReceipt:
+                    return [.price, .number, .date, .stationName, .quantity, .unit]
+                case .idDocument:
+                    return [.name, .idNumber, .date, .address]
+                case .medicalRecord:
+                    return [.name, .date, .number]
+                case .legalDocument:
+                    return [.name, .date, .address]
                 }
             }()
             

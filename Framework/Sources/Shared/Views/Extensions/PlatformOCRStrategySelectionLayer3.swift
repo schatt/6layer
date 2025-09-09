@@ -130,6 +130,14 @@ private func requiresNeuralEngineForDocumentType(_ documentType: DocumentType) -
         return true // Complex document layouts benefit from neural engine
     case .businessCard, .general:
         return false // Simple text recognition doesn't need neural engine
+    case .fuelReceipt:
+        return true // Price and date recognition benefit from neural engine
+    case .idDocument:
+        return true // Complex document layouts benefit from neural engine
+    case .medicalRecord:
+        return true // Complex document layouts benefit from neural engine
+    case .legalDocument:
+        return true // Complex document layouts benefit from neural engine
     }
 }
 
@@ -178,6 +186,14 @@ private func determineProcessingModeForDocumentType(
         return baseMode == .neural ? .neural : .accurate
     case .businessCard, .general:
         return baseMode
+    case .fuelReceipt:
+        return baseMode == .neural ? .neural : .accurate
+    case .idDocument:
+        return baseMode == .neural ? .neural : .accurate
+    case .medicalRecord:
+        return baseMode == .neural ? .neural : .accurate
+    case .legalDocument:
+        return baseMode == .neural ? .neural : .accurate
     }
 }
 
@@ -214,6 +230,14 @@ private func getTextTypesForDocumentType(_ documentType: DocumentType) -> [TextT
         return [.number, .date, .general]
     case .general:
         return [.general]
+    case .fuelReceipt:
+        return [.price, .number, .date, .stationName, .quantity, .unit, .general]
+    case .idDocument:
+        return [.name, .idNumber, .date, .address, .general]
+    case .medicalRecord:
+        return [.name, .date, .number, .general]
+    case .legalDocument:
+        return [.name, .date, .address, .general]
     }
 }
 

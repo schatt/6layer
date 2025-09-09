@@ -199,6 +199,32 @@ public struct OCRDisambiguationView: View {
             return "location"
         case .url:
             return "link"
+        case .name:
+            return "person"
+        case .idNumber:
+            return "creditcard"
+        case .stationName:
+            return "building.2"
+        case .total:
+            return "sum"
+        case .vendor:
+            return "storefront"
+        case .expiryDate:
+            return "calendar.badge.clock"
+        case .quantity:
+            return "number.circle"
+        case .unit:
+            return "ruler"
+        case .currency:
+            return "dollarsign.circle.fill"
+        case .percentage:
+            return "percent"
+        case .postalCode:
+            return "location.circle"
+        case .state:
+            return "map"
+        case .country:
+            return "globe"
         }
     }
     
@@ -220,6 +246,32 @@ public struct OCRDisambiguationView: View {
             return "Address"
         case .url:
             return "URL"
+        case .name:
+            return "Name"
+        case .idNumber:
+            return "ID Number"
+        case .stationName:
+            return "Station Name"
+        case .total:
+            return "Total"
+        case .vendor:
+            return "Vendor"
+        case .expiryDate:
+            return "Expiry Date"
+        case .quantity:
+            return "Quantity"
+        case .unit:
+            return "Unit"
+        case .currency:
+            return "Currency"
+        case .percentage:
+            return "Percentage"
+        case .postalCode:
+            return "Postal Code"
+        case .state:
+            return "State"
+        case .country:
+            return "Country"
         }
     }
     

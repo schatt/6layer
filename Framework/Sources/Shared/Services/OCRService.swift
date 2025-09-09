@@ -131,6 +131,148 @@ public class OCRService: OCRServiceProtocol {
         )
     }
     
+    /// Process an image for structured data extraction
+    public func processStructuredExtraction(
+        _ image: PlatformImage,
+        context: OCRContext
+    ) async throws -> OCRResult {
+        // Use existing OCR processing
+        let baseResult = try await processImage(
+            image,
+            context: context,
+            strategy: OCRStrategy(
+                supportedTextTypes: context.textTypes,
+                supportedLanguages: [context.language],
+                processingMode: .accurate
+            )
+        )
+        
+        // Perform structured extraction
+        let structuredData = extractStructuredData(from: baseResult, context: context)
+        let extractionConfidence = calculateExtractionConfidence(structuredData, context: context)
+        let missingFields = findMissingRequiredFields(structuredData, context: context)
+        
+        return OCRResult(
+            extractedText: baseResult.extractedText,
+            confidence: baseResult.confidence,
+            boundingBoxes: baseResult.boundingBoxes,
+            textTypes: baseResult.textTypes,
+            processingTime: baseResult.processingTime,
+            language: baseResult.language,
+            structuredData: structuredData,
+            extractionConfidence: extractionConfidence,
+            missingRequiredFields: missingFields,
+            documentType: context.documentType
+        )
+    }
+    
+    // MARK: - Structured Extraction Helper Methods
+    
+    private func extractStructuredData(from result: OCRResult, context: OCRContext) -> [String: String] {
+        var structuredData: [String: String] = [:]
+        
+        // Get patterns for the document type
+        let patterns = getPatterns(for: context.documentType, context: context)
+        
+        // Extract data using patterns
+        for (field, pattern) in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+                let range = NSRange(location: 0, length: result.extractedText.utf16.count)
+                if let match = regex.firstMatch(in: result.extractedText, options: [], range: range) {
+                    if let range = Range(match.range, in: result.extractedText) {
+                        structuredData[field] = String(result.extractedText[range])
+                    }
+                }
+            }
+        }
+        
+        // Also use text types from the base result
+        for (textType, value) in result.textTypes {
+            let fieldName = getFieldName(for: textType)
+            if !fieldName.isEmpty {
+                structuredData[fieldName] = value
+            }
+        }
+        
+        return structuredData
+    }
+    
+    private func getPatterns(for documentType: DocumentType?, context: OCRContext) -> [String: String] {
+        var patterns: [String: String] = [:]
+        
+        // Use built-in patterns for known document types
+        if let documentType = documentType {
+            patterns = BuiltInPatterns.patterns[documentType] ?? [:]
+        }
+        
+        // Override with custom hints if provided
+        for (key, value) in context.extractionHints {
+            patterns[key] = value
+        }
+        
+        return patterns
+    }
+    
+    private func calculateExtractionConfidence(_ structuredData: [String: String], context: OCRContext) -> Float {
+        guard !context.requiredFields.isEmpty else {
+            return structuredData.isEmpty ? 0.0 : 1.0
+        }
+        
+        let foundFields = context.requiredFields.filter { structuredData.keys.contains($0) }
+        return Float(foundFields.count) / Float(context.requiredFields.count)
+    }
+    
+    private func findMissingRequiredFields(_ structuredData: [String: String], context: OCRContext) -> [String] {
+        return context.requiredFields.filter { !structuredData.keys.contains($0) }
+    }
+    
+    private func getFieldName(for textType: TextType) -> String {
+        switch textType {
+        case .price:
+            return "price"
+        case .date:
+            return "date"
+        case .number:
+            return "number"
+        case .name:
+            return "name"
+        case .idNumber:
+            return "idNumber"
+        case .stationName:
+            return "stationName"
+        case .total:
+            return "total"
+        case .vendor:
+            return "vendor"
+        case .expiryDate:
+            return "expiryDate"
+        case .quantity:
+            return "quantity"
+        case .unit:
+            return "unit"
+        case .currency:
+            return "currency"
+        case .percentage:
+            return "percentage"
+        case .postalCode:
+            return "postalCode"
+        case .state:
+            return "state"
+        case .country:
+            return "country"
+        case .general:
+            return "general"
+        case .address:
+            return "address"
+        case .email:
+            return "email"
+        case .phone:
+            return "phone"
+        case .url:
+            return "url"
+        }
+    }
+    
     // MARK: - Private Methods
     
     private func performVisionOCR(
@@ -360,6 +502,72 @@ public class MockOCRService: OCRServiceProtocol {
         )
         
         return result
+    }
+    
+    // MARK: - Structured Extraction Helper Methods
+    
+    private func extractStructuredData(from result: OCRResult, context: OCRContext) -> [String: String] {
+        var structuredData: [String: String] = [:]
+        let text = result.extractedText
+        
+        // Get patterns based on extraction mode
+        let patterns = getPatterns(for: context)
+        
+        // Apply patterns to extract structured data
+        for (fieldName, pattern) in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+                let range = NSRange(text.startIndex..., in: text)
+                if let match = regex.firstMatch(in: text, options: [], range: range) {
+                    if let matchRange = Range(match.range(at: 1), in: text) {
+                        let extractedValue = String(text[matchRange])
+                        structuredData[fieldName] = extractedValue
+                    }
+                }
+            }
+        }
+        
+        return structuredData
+    }
+    
+    private func getPatterns(for context: OCRContext) -> [String: String] {
+        var patterns: [String: String] = [:]
+        
+        switch context.extractionMode {
+        case .automatic:
+            // Use built-in patterns for document type
+            if let builtInPatterns = BuiltInPatterns.patterns[context.documentType] {
+                patterns = builtInPatterns
+            }
+        case .custom:
+            // Use custom extraction hints
+            patterns = context.extractionHints
+        case .hybrid:
+            // Combine built-in and custom patterns
+            if let builtInPatterns = BuiltInPatterns.patterns[context.documentType] {
+                patterns = builtInPatterns
+            }
+            // Custom patterns override built-in ones
+            for (key, value) in context.extractionHints {
+                patterns[key] = value
+            }
+        }
+        
+        return patterns
+    }
+    
+    private func calculateExtractionConfidence(_ structuredData: [String: String], context: OCRContext) -> Float {
+        let totalFields = context.requiredFields.count
+        let extractedFields = context.requiredFields.filter { structuredData[$0] != nil }.count
+        
+        if totalFields == 0 {
+            return 1.0 // No required fields, perfect confidence
+        }
+        
+        return Float(extractedFields) / Float(totalFields)
+    }
+    
+    private func findMissingRequiredFields(_ structuredData: [String: String], context: OCRContext) -> [String] {
+        return context.requiredFields.filter { structuredData[$0] == nil }
     }
 }
 

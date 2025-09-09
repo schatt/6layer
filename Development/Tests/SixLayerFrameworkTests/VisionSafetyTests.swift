@@ -58,8 +58,8 @@ final class VisionSafetyTests: XCTestCase {
         
         // When: Attempting OCR processing
         let expectation = XCTestExpectation(description: "OCR processing")
-        var result: OCRResult?
-        var error: Error?
+        var _: OCRResult?
+        var _: Error?
         
         // Test OCR availability instead of async processing
         // The OCR functions are SwiftUI views that need to be rendered to work
@@ -128,7 +128,7 @@ final class VisionSafetyTests: XCTestCase {
         
         // When: Attempting OCR with invalid image
         let expectation = XCTestExpectation(description: "OCR error handling")
-        var error: Error?
+        var _: Error?
         
         // Test OCR availability instead of async processing
         // The OCR functions are SwiftUI views that need to be rendered to work

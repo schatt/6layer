@@ -14,9 +14,9 @@ The SixLayer Framework uses a tiered licensing model that scales with your appli
 
 ### 🚀 Startup Tier
 - **Cost**: $0 (free for small startups)
-- **Eligibility**: Applications with < 1,000 monthly active users
+- **Eligibility**: Applications with < 500 monthly active users
 - **Features**: Full commercial use, basic support
-- **Upgrade**: Required when exceeding 1,000 users
+- **Upgrade**: Required when exceeding 500 users
 
 ### 💼 Professional Tier
 - **Cost**: $0.10 per monthly active user per month
@@ -55,14 +55,14 @@ The SixLayer Framework uses an **honor system** for license compliance. This mea
 
 **Step 2: Determine Your Tier**
 - **Free**: Personal projects, open source, educational use
-- **Startup**: < 1,000 MAU, any commercial use
-- **Professional**: 1,000+ MAU with recurring revenue
+- **Startup**: < 500 MAU, any commercial use
+- **Professional**: 500+ MAU with recurring revenue
 - **Enterprise**: Internal commercial applications
 - **Enterprise Plus**: High-volume applications (>20,000 MAU)
 
 **Step 3: Purchase License (if needed)**
 - Contact us for Professional, Enterprise, or Enterprise Plus licenses
-- No license key required for Free or Startup tiers
+- No license key required for any tier - honor system based
 - We'll provide billing and support information
 
 ### Using the Framework
@@ -91,7 +91,7 @@ platformPresentItemCollection_L1(
 ### When to Upgrade
 
 **Upgrade to Professional Tier when:**
-- Your app has 1,000+ monthly active users
+- Your app has 500+ monthly active users
 - You're generating recurring revenue (subscriptions, SaaS, etc.)
 - You want priority support and advanced features
 
@@ -153,14 +153,14 @@ We prefer to work with developers to resolve compliance issues:
 
 ### Free Tier
 - No license key required
-- Automatic detection of non-commercial use
+- Honor system based on usage
 - Full framework functionality
 
 ### Paid Tiers
 1. **Contact**: licensing@sixlayerframework.com
 2. **Provide**: Application details and expected user count
-3. **Receive**: License key and billing information
-4. **Implement**: Add license key to your application
+3. **Receive**: Billing information and payment setup
+4. **Implement**: No technical implementation required - honor system
 
 ## FAQ
 
@@ -183,7 +183,7 @@ A: Contact us and we'll work together to find the right solution. We prefer coll
 A: Yes, you can downgrade at any time, but you must ensure your usage fits within the new tier limits.
 
 ### Q: Is there any technical enforcement?
-A: No, this is an honor system. We trust developers to comply with license terms in good faith.
+A: No, this is an honor system. We trust developers to comply with license terms in good faith. No license keys are required or provided.
 
 ### Q: What if I'm not sure which tier I need?
 A: Contact us at licensing@sixlayerframework.com and we'll help you determine the right tier for your use case.

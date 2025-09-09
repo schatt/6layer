@@ -34,9 +34,11 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 
 ### 📸 OCR & Visual Features
 - **[OCROverlayGuide.md](OCROverlayGuide.md)** - **NEW!** Complete guide to OCR overlay system
+- **[StructuredOCRExtractionGuide.md](StructuredOCRExtractionGuide.md)** - **NEW!** Complete guide to structured OCR data extraction
 - **OCR Overlay System** - Interactive visual text correction with bounding box editing
 - **OCR Disambiguation** - Smart text recognition with user selection capabilities
 - **Visual Text Correction** - Tap-to-edit functionality for OCR results
+- **Structured Data Extraction** - **NEW!** Extract structured data from documents using regex patterns and hints
 
 
 ### 📱 Platform-Specific

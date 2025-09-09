@@ -297,6 +297,123 @@ private struct OCRDisambiguationWrapper: View {
                     suggestedType: .url,
                     alternativeTypes: [.url, .general]
                 ))
+                
+            case .name:
+                candidates.append(OCRDataCandidate(
+                    text: "John Doe",
+                    boundingBox: CGRect(x: 50, y: 400, width: 80, height: 20),
+                    confidence: 0.92,
+                    suggestedType: .name,
+                    alternativeTypes: [.name, .general]
+                ))
+                
+            case .idNumber:
+                candidates.append(OCRDataCandidate(
+                    text: "123-45-6789",
+                    boundingBox: CGRect(x: 50, y: 430, width: 100, height: 20),
+                    confidence: 0.88,
+                    suggestedType: .idNumber,
+                    alternativeTypes: [.idNumber, .number]
+                ))
+                
+            case .stationName:
+                candidates.append(OCRDataCandidate(
+                    text: "Shell Station",
+                    boundingBox: CGRect(x: 50, y: 460, width: 100, height: 20),
+                    confidence: 0.90,
+                    suggestedType: .stationName,
+                    alternativeTypes: [.stationName, .general]
+                ))
+                
+            case .total:
+                candidates.append(OCRDataCandidate(
+                    text: "Total: $25.99",
+                    boundingBox: CGRect(x: 50, y: 490, width: 100, height: 20),
+                    confidence: 0.95,
+                    suggestedType: .total,
+                    alternativeTypes: [.total, .price]
+                ))
+                
+            case .vendor:
+                candidates.append(OCRDataCandidate(
+                    text: "Acme Corp",
+                    boundingBox: CGRect(x: 50, y: 520, width: 80, height: 20),
+                    confidence: 0.87,
+                    suggestedType: .vendor,
+                    alternativeTypes: [.vendor, .general]
+                ))
+                
+            case .expiryDate:
+                candidates.append(OCRDataCandidate(
+                    text: "12/25",
+                    boundingBox: CGRect(x: 50, y: 550, width: 50, height: 20),
+                    confidence: 0.89,
+                    suggestedType: .expiryDate,
+                    alternativeTypes: [.expiryDate, .date]
+                ))
+                
+            case .quantity:
+                candidates.append(OCRDataCandidate(
+                    text: "5",
+                    boundingBox: CGRect(x: 50, y: 580, width: 20, height: 20),
+                    confidence: 0.85,
+                    suggestedType: .quantity,
+                    alternativeTypes: [.quantity, .number]
+                ))
+                
+            case .unit:
+                candidates.append(OCRDataCandidate(
+                    text: "gallons",
+                    boundingBox: CGRect(x: 80, y: 580, width: 60, height: 20),
+                    confidence: 0.83,
+                    suggestedType: .unit,
+                    alternativeTypes: [.unit, .general]
+                ))
+                
+            case .currency:
+                candidates.append(OCRDataCandidate(
+                    text: "USD",
+                    boundingBox: CGRect(x: 50, y: 610, width: 30, height: 20),
+                    confidence: 0.91,
+                    suggestedType: .currency,
+                    alternativeTypes: [.currency, .general]
+                ))
+                
+            case .percentage:
+                candidates.append(OCRDataCandidate(
+                    text: "15%",
+                    boundingBox: CGRect(x: 50, y: 640, width: 30, height: 20),
+                    confidence: 0.88,
+                    suggestedType: .percentage,
+                    alternativeTypes: [.percentage, .number]
+                ))
+                
+            case .postalCode:
+                candidates.append(OCRDataCandidate(
+                    text: "12345",
+                    boundingBox: CGRect(x: 50, y: 670, width: 50, height: 20),
+                    confidence: 0.86,
+                    suggestedType: .postalCode,
+                    alternativeTypes: [.postalCode, .number]
+                ))
+                
+            case .state:
+                candidates.append(OCRDataCandidate(
+                    text: "CA",
+                    boundingBox: CGRect(x: 50, y: 700, width: 20, height: 20),
+                    confidence: 0.89,
+                    suggestedType: .state,
+                    alternativeTypes: [.state, .general]
+                ))
+                
+            case .country:
+                candidates.append(OCRDataCandidate(
+                    text: "USA",
+                    boundingBox: CGRect(x: 50, y: 730, width: 30, height: 20),
+                    confidence: 0.92,
+                    suggestedType: .country,
+                    alternativeTypes: [.country, .general]
+                ))
             }
         }
         

@@ -146,9 +146,7 @@ public struct OCROverlayView: View {
         self.onTextEdit = onTextEdit
         self.onTextDelete = onTextDelete
         
-        // Initialize text regions immediately
-        self._state = StateObject(wrappedValue: OCROverlayState())
-        self.state.updateTextRegions(from: result)
+        // State will be initialized in onAppear
     }
     
     // MARK: - Body
@@ -166,9 +164,18 @@ public struct OCROverlayView: View {
                         region: region,
                         configuration: configuration,
                         isEditing: state.isEditingText && state.editingBoundingBox == region.boundingBox,
-                        onTap: { handleTextRegionTap(region) },
-                        onEdit: { handleTextEdit(region) },
-                        onDelete: { handleTextDelete(region) }
+                        onTap: { 
+                            guard configuration.allowsEditing else { return }
+                            state.startEditing(region: region)
+                        },
+                        onEdit: { 
+                            guard configuration.allowsEditing else { return }
+                            state.startEditing(region: region)
+                        },
+                        onDelete: { 
+                            guard configuration.allowsDeletion else { return }
+                            onTextDelete(region.boundingBox)
+                        }
                     )
                 }
                 
@@ -177,8 +184,13 @@ public struct OCROverlayView: View {
                     OCRTextEditingView(
                         text: $state.editingText,
                         boundingBox: boundingBox,
-                        onComplete: completeTextEditing,
-                        onCancel: cancelTextEditing
+                        onComplete: {
+                            onTextEdit(state.editingText, boundingBox)
+                            state.completeEditing()
+                        },
+                        onCancel: {
+                            state.cancelEditing()
+                        }
                     )
                 }
             }
@@ -213,40 +225,30 @@ public struct OCROverlayView: View {
     }
     
     /// Start text editing for a specific bounding box
+    /// Note: This method should be called from within the View context
     public func startTextEditing(for boundingBox: CGRect) {
-        // Create text regions directly from the result
-        let textLines = result.extractedText.components(separatedBy: .newlines)
-        let textRegions = zip(textLines, result.boundingBoxes).enumerated().map { index, element in
-            let (text, boundingBox) = element
-            let textType = result.textTypes.first { $0.value == text }?.key
-            return OCRTextRegion(
-                text: text,
-                boundingBox: boundingBox,
-                confidence: result.confidence,
-                textType: textType
-            )
-        }
-        
-        if let region = textRegions.first(where: { $0.boundingBox == boundingBox }) {
-            // Store the editing state directly for testing purposes
-            state.editingBoundingBox = region.boundingBox
-            state.editingText = region.text
-            state.isEditingText = true
+        // For testing purposes, we need to actually update the state
+        // In production, this would be handled within the View's body
+        if let region = state.textRegions.first(where: { $0.boundingBox == boundingBox }) {
+            state.startEditing(region: region)
         }
     }
     
     /// Complete text editing
+    /// Note: This method should be called from within the View context
     public func completeTextEditing() {
+        // For testing purposes, we need to actually update the state
+        // In production, this would be handled within the View's body
         guard let boundingBox = state.editingBoundingBox else { return }
-        
         onTextEdit(state.editingText, boundingBox)
         state.completeEditing()
     }
     
     /// Complete text editing with specific text
+    /// Note: This method should be called from within the View context
     public func completeTextEditing(with text: String) {
-        // For testing purposes, if state isn't properly initialized, 
-        // use the first bounding box as a fallback
+        // For testing purposes, we need to actually update the state
+        // In production, this would be handled within the View's body
         let boundingBox: CGRect
         if let editingBox = state.editingBoundingBox {
             boundingBox = editingBox
@@ -260,7 +262,10 @@ public struct OCROverlayView: View {
     }
     
     /// Cancel text editing
+    /// Note: This method should be called from within the View context
     public func cancelTextEditing() {
+        // For testing purposes, we need to actually update the state
+        // In production, this would be handled within the View's body
         state.cancelEditing()
     }
     
@@ -329,20 +334,7 @@ public struct OCROverlayView: View {
     
     // MARK: - Private Methods
     
-    private func handleTextRegionTap(_ region: OCRTextRegion) {
-        guard configuration.allowsEditing else { return }
-        state.startEditing(region: region)
-    }
     
-    private func handleTextEdit(_ region: OCRTextRegion) {
-        guard configuration.allowsEditing else { return }
-        state.startEditing(region: region)
-    }
-    
-    private func handleTextDelete(_ region: OCRTextRegion) {
-        guard configuration.allowsDeletion else { return }
-        deleteTextRegion(at: region.boundingBox)
-    }
 }
 
 // MARK: - Layer 5: Performance - OCR Text Region View

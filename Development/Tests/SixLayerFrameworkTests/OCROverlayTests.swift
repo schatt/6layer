@@ -134,12 +134,12 @@ final class OCROverlayTests: XCTestCase {
     
     func testTextRegionTapDetection() {
         // Given: OCR overlay with text regions
-        var tappedRegion: (String, CGRect)?
+        var _: (String, CGRect)?
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
-            onTextEdit: { text, rect in
-                tappedRegion = (text, rect)
+            onTextEdit: { _, _ in
+                // Text edit handler
             },
             onTextDelete: { _ in }
         )

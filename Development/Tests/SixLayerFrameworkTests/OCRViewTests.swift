@@ -41,8 +41,8 @@ final class OCRViewTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        var resultReceived: OCRResult?
-        var errorReceived: Error?
+        var _: OCRResult?
+        var _: Error?
         
         // When: Creating OCR view
         let ocrView = OCRView(
@@ -50,11 +50,11 @@ final class OCRViewTests: XCTestCase {
             image: image,
             context: context,
             strategy: strategy,
-            onResult: { result in
-                resultReceived = result
+            onResult: { _ in
+                // Result handler
             },
-            onError: { error in
-                errorReceived = error
+            onError: { _ in
+                // Error handler
             }
         )
         
@@ -88,8 +88,8 @@ final class OCRViewTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        var resultReceived: OCRResult?
-        var errorReceived: Error?
+        var _: OCRResult?
+        var _: Error?
         
         // When: Creating OCR view with mock service
         let ocrView = OCRView(
@@ -97,11 +97,11 @@ final class OCRViewTests: XCTestCase {
             image: image,
             context: context,
             strategy: strategy,
-            onResult: { result in
-                resultReceived = result
+            onResult: { _ in
+                // Result handler
             },
-            onError: { error in
-                errorReceived = error
+            onError: { _ in
+                // Error handler
             }
         )
         
@@ -233,11 +233,11 @@ final class OCRViewTests: XCTestCase {
     func testOCRImageView() {
         // Given: Platform image and tap handler
         let image = PlatformImage()
-        var tapCalled = false
+        var _ = false
         
         // When: Creating image view
         let imageView = OCRImageView(image: image) {
-            tapCalled = true
+            // Tap handler
         }
         
         // Then: Should create view successfully
@@ -262,19 +262,19 @@ final class OCRViewTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        var resultReceived: OCRResult?
-        var errorReceived: Error?
+        var _: OCRResult?
+        var _: Error?
         
         // When: Creating legacy OCR view
         let legacyView = LegacyOCRView(
             image: image,
             context: context,
             strategy: strategy,
-            onResult: { result in
-                resultReceived = result
+            onResult: { _ in
+                // Result handler
             },
-            onError: { error in
-                errorReceived = error
+            onError: { _ in
+                // Error handler
             }
         )
         
@@ -346,8 +346,8 @@ final class OCRViewTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        var resultReceived: OCRResult?
-        var errorReceived: Error?
+        var _: OCRResult?
+        var _: Error?
         
         // When: Creating OCR view
         let ocrView = OCRView(
@@ -355,11 +355,11 @@ final class OCRViewTests: XCTestCase {
             image: image,
             context: context,
             strategy: strategy,
-            onResult: { result in
-                resultReceived = result
+            onResult: { _ in
+                // Result handler
             },
-            onError: { error in
-                errorReceived = error
+            onError: { _ in
+                // Error handler
             }
         )
         

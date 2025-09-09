@@ -42,6 +42,21 @@ public func platformOCRWithVisualCorrection_L1(
     )
 }
 
+/// Cross-platform semantic structured data extraction interface
+/// Provides intelligent structured data extraction with pattern matching
+@ViewBuilder
+public func platformExtractStructuredData_L1(
+    image: PlatformImage,
+    context: OCRContext,
+    onResult: @escaping (OCRResult) -> Void
+) -> some View {
+    StructuredDataExtractionWrapper(
+        image: image,
+        context: context,
+        onResult: onResult
+    )
+}
+
 // MARK: - Test Helper Functions
 
 /// Direct OCR processing function for testing (bypasses SwiftUI view lifecycle)
@@ -306,6 +321,84 @@ private struct OCRWithVisualCorrectionWrapper: View {
             // Update the result and notify
             self.ocrResult = updatedResult
             self.onResult(updatedResult)
+        }
+    }
+}
+
+// MARK: - Structured Data Extraction Wrapper
+
+/// Internal wrapper view that handles structured data extraction
+private struct StructuredDataExtractionWrapper: View {
+    let image: PlatformImage
+    let context: OCRContext
+    let onResult: (OCRResult) -> Void
+    
+    @State private var isProcessing = false
+    @State private var progress: Double = 0.0
+    @State private var error: Error?
+    @State private var result: OCRResult?
+    
+    var body: some View {
+        VStack {
+            if isProcessing {
+                ProgressView(value: progress)
+                    .progressViewStyle(LinearProgressViewStyle())
+                Text("Extracting structured data...")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } else if let error = error {
+                Text("Error: \(error.localizedDescription)")
+                    .foregroundColor(.red)
+            } else if result != nil {
+                Text("Extraction complete")
+                    .foregroundColor(.green)
+            } else {
+                Text("Ready to extract")
+                    .foregroundColor(.secondary)
+            }
+        }
+        .onAppear {
+            startStructuredExtraction()
+        }
+    }
+    
+    private func startStructuredExtraction() {
+        guard !isProcessing else { return }
+        
+        isProcessing = true
+        progress = 0.0
+        error = nil
+        result = nil
+        
+        Task {
+            do {
+                let service = OCRService()
+                let _ = try await service.processImage(
+                    image,
+                    context: context,
+                    strategy: OCRStrategy(
+                        supportedTextTypes: context.textTypes,
+                        supportedLanguages: [context.language],
+                        processingMode: .accurate
+                    )
+                )
+                
+                // Perform structured extraction
+                let structuredResult = try await service.processStructuredExtraction(image, context: context)
+                
+                await MainActor.run {
+                    self.result = structuredResult
+                    self.isProcessing = false
+                    self.progress = 1.0
+                    onResult(structuredResult)
+                }
+            } catch {
+                await MainActor.run {
+                    self.error = error
+                    self.isProcessing = false
+                    self.progress = 0.0
+                }
+            }
         }
     }
 }

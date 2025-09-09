@@ -399,6 +399,32 @@ struct FallbackOCRView: View {
                 text += "123 Main St, City, State 12345\n"
             case .url:
                 text += "https://example.com\n"
+            case .name:
+                text += "John Doe\n"
+            case .idNumber:
+                text += "ID#: ABC123456\n"
+            case .stationName:
+                text += "Station: Shell Gas\n"
+            case .total:
+                text += "Total: $45.67\n"
+            case .vendor:
+                text += "From: Acme Corp\n"
+            case .expiryDate:
+                text += "Exp: 12/31/2025\n"
+            case .quantity:
+                text += "Qty: 5\n"
+            case .unit:
+                text += "gal\n"
+            case .currency:
+                text += "USD\n"
+            case .percentage:
+                text += "15%\n"
+            case .postalCode:
+                text += "12345\n"
+            case .state:
+                text += "CA\n"
+            case .country:
+                text += "USA\n"
             }
         }
         
@@ -440,6 +466,32 @@ struct FallbackOCRView: View {
                 textTypes[.address] = "123 Main St, City, State 12345"
             case .url:
                 textTypes[.url] = "https://example.com"
+            case .name:
+                textTypes[.name] = "John Doe"
+            case .idNumber:
+                textTypes[.idNumber] = "ABC123456"
+            case .stationName:
+                textTypes[.stationName] = "Shell Gas"
+            case .total:
+                textTypes[.total] = "$45.67"
+            case .vendor:
+                textTypes[.vendor] = "Acme Corp"
+            case .expiryDate:
+                textTypes[.expiryDate] = "12/31/2025"
+            case .quantity:
+                textTypes[.quantity] = "5"
+            case .unit:
+                textTypes[.unit] = "gal"
+            case .currency:
+                textTypes[.currency] = "USD"
+            case .percentage:
+                textTypes[.percentage] = "15%"
+            case .postalCode:
+                textTypes[.postalCode] = "12345"
+            case .state:
+                textTypes[.state] = "CA"
+            case .country:
+                textTypes[.country] = "USA"
             }
         }
         
