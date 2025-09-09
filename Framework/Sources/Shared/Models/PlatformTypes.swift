@@ -692,6 +692,24 @@ public struct PlatformImage {
     #elseif os(macOS)
     public var nsImage: NSImage { return _nsImage }
     #endif
+    
+    /// Check if the image is empty
+    public var isEmpty: Bool {
+        #if os(iOS)
+        return uiImage.size == .zero
+        #elseif os(macOS)
+        return nsImage.size == .zero
+        #endif
+    }
+    
+    /// Get the size of the image
+    public var size: CGSize {
+        #if os(iOS)
+        return uiImage.size
+        #elseif os(macOS)
+        return nsImage.size
+        #endif
+    }
 }
 
 // MARK: - Content Analysis Types

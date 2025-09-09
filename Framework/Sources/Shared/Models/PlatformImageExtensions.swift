@@ -123,12 +123,5 @@ public extension PlatformImage {
         }
     }
     
-    /// Get the size of the image
-    var size: CGSize {
-        #if os(iOS)
-        return self.uiImage.size
-        #elseif os(macOS)
-        return self.nsImage.size
-        #endif
-    }
+    // size property is now defined in PlatformTypes.swift
 }
