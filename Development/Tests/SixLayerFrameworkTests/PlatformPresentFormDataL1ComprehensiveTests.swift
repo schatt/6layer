@@ -309,7 +309,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         #else
         // On macOS, keyboard types are not applicable
         for field in keyboardTestFields {
-            XCTAssertEqual(field.fieldType.keyboardType, "default",
+            XCTAssertEqual(field.fieldType.keyboardType, PlatformKeyboardType.default.rawValue,
                           "Field type \(field.fieldType) should default to 'default' on non-iOS platforms")
         }
         #endif

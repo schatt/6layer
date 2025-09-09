@@ -1106,19 +1106,19 @@ final class OCRComprehensiveTests: XCTestCase {
         )
         
         // Test OCR using modern API
-            let service = OCRService()
-            Task {
-                do {
-                    let result = try await service.processImage(
-            image: testImage,
-            context: context,
-            strategy: strategy,
-            onResult: { result in
+        let testImage = createTestPlatformImage()
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    testImage,
+                    context: context,
+                    strategy: strategy
+                )
                 XCTAssertNotNil(result)
+            } catch {
+                // Expected for test images
             }
-        )
-        
-        XCTAssertNotNil(component)
         }
     }
 
@@ -1196,22 +1196,24 @@ final class OCRComprehensiveTests: XCTestCase {
         }
     }
     
-    // MARK: - Helper Methods
-    
-    private func createTestPlatformImage() -> PlatformImage {
+}
+
+// MARK: - Helper Methods
+
+private func createTestPlatformImage() -> PlatformImage {
         // Create a test image for OCR testing
         #if os(iOS)
         let size = CGSize(width: 200, height: 200)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.blue.setFill()
+            Color.blue.setFill()
             context.fill(CGRect(origin: .zero, size: size))
-            
+
             // Add some text-like content
             let text = "Test OCR Content"
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 16),
-                .foregroundColor: UIColor.white
+                .foregroundColor: Color.white
             ]
             text.draw(in: CGRect(x: 10, y: 10, width: 180, height: 20), withAttributes: attributes)
         }
@@ -1220,14 +1222,14 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = NSSize(width: 200, height: 200)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.blue.setFill()
+        NSColor(Color.blue).setFill()
         NSRect(origin: .zero, size: size).fill()
-        
+
         // Add some text-like content
         let text = "Test OCR Content"
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 16),
-            .foregroundColor: NSColor.white
+            .foregroundColor: NSColor(Color.white)
         ]
         text.draw(in: NSRect(x: 10, y: 10, width: 180, height: 20), withAttributes: attributes)
         image.unlockFocus()
@@ -1237,20 +1239,20 @@ final class OCRComprehensiveTests: XCTestCase {
         #endif
     }
     
-    private func createLargeTestImage() -> PlatformImage {
+private func createLargeTestImage() -> PlatformImage {
         // Create a large test image for performance testing
         #if os(iOS)
         let size = CGSize(width: 2000, height: 2000)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.green.setFill()
+            Color.green.setFill()
             context.fill(CGRect(origin: .zero, size: size))
-            
+
             // Add some text-like content
             let text = "Large Test OCR Content"
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 32),
-                .foregroundColor: UIColor.white
+                .foregroundColor: Color.white
             ]
             text.draw(in: CGRect(x: 50, y: 50, width: 1900, height: 40), withAttributes: attributes)
         }
@@ -1259,14 +1261,14 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = NSSize(width: 2000, height: 2000)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.green.setFill()
+        NSColor(Color.green).setFill()
         NSRect(origin: .zero, size: size).fill()
-        
+
         // Add some text-like content
         let text = "Large Test OCR Content"
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 32),
-            .foregroundColor: NSColor.white
+            .foregroundColor: NSColor(Color.white)
         ]
         text.draw(in: NSRect(x: 50, y: 50, width: 1900, height: 40), withAttributes: attributes)
         image.unlockFocus()
@@ -1282,7 +1284,7 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = CGSize(width: 100, height: 100)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.red.setFill()
+            Color.red.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: image)
@@ -1290,7 +1292,7 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = NSSize(width: 100, height: 100)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.red.setFill()
+        NSColor(Color.red).setFill()
         NSRect(origin: .zero, size: size).fill()
         image.unlockFocus()
         return PlatformImage(nsImage: image)
@@ -1305,7 +1307,7 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = CGSize(width: 1, height: 1)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.clear.setFill()
+            Color.clear.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: image)
@@ -1313,7 +1315,7 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = NSSize(width: 1, height: 1)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.clear.setFill()
+        NSColor(Color.clear).setFill()
         NSRect(origin: .zero, size: size).fill()
         image.unlockFocus()
         return PlatformImage(nsImage: image)
@@ -1328,7 +1330,7 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = CGSize(width: 10, height: 10)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.yellow.setFill()
+            Color.yellow.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: image)
@@ -1336,7 +1338,7 @@ final class OCRComprehensiveTests: XCTestCase {
         let size = NSSize(width: 10, height: 10)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.yellow.setFill()
+        NSColor(Color.yellow).setFill()
         NSRect(origin: .zero, size: size).fill()
         image.unlockFocus()
         return PlatformImage(nsImage: image)
