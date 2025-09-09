@@ -652,7 +652,7 @@ public enum ResponsiveType: String, CaseIterable {
 // MARK: - Cross-Platform Image Types
 
 /// Cross-platform image type for consistent image handling
-public struct PlatformImage {
+public struct PlatformImage: @unchecked Sendable {
     #if os(iOS)
     private let _uiImage: UIImage
     #elseif os(macOS)

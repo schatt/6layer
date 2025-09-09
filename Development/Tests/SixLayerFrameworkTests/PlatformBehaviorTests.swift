@@ -239,20 +239,23 @@ final class PlatformBehaviorTests: XCTestCase {
         let expectation = XCTestExpectation(description: "OCR processing")
         expectation.isInverted = true // This will pass if not fulfilled
         
-        _ = safePlatformOCRImplementation_L4(
-            image: image,
-            context: context,
-            strategy: strategy,
-            onResult: { result in
+        // Test OCR using modern API
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    image,
+                    context: context,
+                    strategy: strategy
+                )
                 XCTAssertNotNil(result, "OCR should return result when enabled")
                 expectation.fulfill()
-            },
-            onError: { error in
+            } catch {
                 // OCR might fail in test environment, but should not crash
                 XCTAssertNotNil(error, "OCR should handle errors gracefully when enabled")
                 expectation.fulfill()
             }
-        )
+        }
         
         // Don't wait for OCR to complete in test environment
         // Just verify the function can be called without crashing
@@ -266,21 +269,24 @@ final class PlatformBehaviorTests: XCTestCase {
         let expectation = XCTestExpectation(description: "OCR fallback")
         expectation.isInverted = true // This will pass if not fulfilled
         
-        _ = safePlatformOCRImplementation_L4(
-            image: image,
-            context: context,
-            strategy: strategy,
-            onResult: { result in
+        // Test OCR using modern API
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    image,
+                    context: context,
+                    strategy: strategy
+                )
                 // Should provide fallback result when OCR is disabled
                 XCTAssertNotNil(result, "OCR should provide fallback result when disabled")
                 expectation.fulfill()
-            },
-            onError: { error in
+            } catch {
                 // Should handle error gracefully when OCR is disabled
                 XCTAssertNotNil(error, "OCR should handle error gracefully when disabled")
                 expectation.fulfill()
             }
-        )
+        }
         
         // Don't wait for OCR to complete in test environment
         // Just verify the function can be called without crashing

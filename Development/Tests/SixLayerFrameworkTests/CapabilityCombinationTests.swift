@@ -251,13 +251,18 @@ final class CapabilityCombinationTests: XCTestCase {
         )
         
         // Test that OCR functions can be called
-        _ = safePlatformOCRImplementation_L4(
-            image: testImage,
-            context: context,
-            strategy: strategy,
-            onResult: { _ in },
-            onError: { _ in }
-        )
+        let service = OCRService()
+        Task {
+            do {
+                let _ = try await service.processImage(
+                    testImage,
+                    context: context,
+                    strategy: strategy
+                )
+            } catch {
+                // Expected for test images
+            }
+        }
     }
     
     private func testWatchOSCombination() {

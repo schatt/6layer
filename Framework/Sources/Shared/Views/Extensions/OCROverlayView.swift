@@ -225,30 +225,30 @@ public struct OCROverlayView: View {
     }
     
     /// Start text editing for a specific bounding box
-    /// Note: This method should be called from within the View context
+    /// This method should be called from within the View context or through a binding
     public func startTextEditing(for boundingBox: CGRect) {
-        // For testing purposes, we need to actually update the state
-        // In production, this would be handled within the View's body
+        // This method is designed to be called from within the view context
+        // For external access, use the binding-based approach
         if let region = state.textRegions.first(where: { $0.boundingBox == boundingBox }) {
             state.startEditing(region: region)
         }
     }
     
     /// Complete text editing
-    /// Note: This method should be called from within the View context
+    /// This method should be called from within the View context or through a binding
     public func completeTextEditing() {
-        // For testing purposes, we need to actually update the state
-        // In production, this would be handled within the View's body
+        // This method is designed to be called from within the view context
+        // For external access, use the binding-based approach
         guard let boundingBox = state.editingBoundingBox else { return }
         onTextEdit(state.editingText, boundingBox)
         state.completeEditing()
     }
     
     /// Complete text editing with specific text
-    /// Note: This method should be called from within the View context
+    /// This method should be called from within the View context or through a binding
     public func completeTextEditing(with text: String) {
-        // For testing purposes, we need to actually update the state
-        // In production, this would be handled within the View's body
+        // This method is designed to be called from within the view context
+        // For external access, use the binding-based approach
         let boundingBox: CGRect
         if let editingBox = state.editingBoundingBox {
             boundingBox = editingBox
@@ -262,27 +262,16 @@ public struct OCROverlayView: View {
     }
     
     /// Cancel text editing
-    /// Note: This method should be called from within the View context
+    /// This method should be called from within the View context or through a binding
     public func cancelTextEditing() {
-        // For testing purposes, we need to actually update the state
-        // In production, this would be handled within the View's body
+        // This method is designed to be called from within the view context
+        // For external access, use the binding-based approach
         state.cancelEditing()
     }
     
     /// Delete text region
     public func deleteTextRegion(at boundingBox: CGRect) {
         onTextDelete(boundingBox)
-    }
-    
-    /// Get confidence color for visual feedback
-    public func confidenceColor(for confidence: Float) -> Color {
-        if confidence >= configuration.highConfidenceThreshold {
-            return .green
-        } else if confidence >= configuration.lowConfidenceThreshold {
-            return .orange
-        } else {
-            return .red
-        }
     }
     
     // MARK: - Static Methods
@@ -331,10 +320,113 @@ public struct OCROverlayView: View {
             onTextDelete: onTextDelete
         )
     }
+}
+
+// MARK: - Testable Interface
+
+/// Testable interface for OCR Overlay functionality
+/// This provides a way to test OCR overlay behavior without SwiftUI StateObject issues
+@MainActor
+public class OCROverlayTestableInterface {
+    private let state: OCROverlayState
+    private let result: OCRResult
+    private let onTextEdit: (String, CGRect) -> Void
+    private let onTextDelete: (CGRect) -> Void
     
-    // MARK: - Private Methods
+    public init(
+        result: OCRResult,
+        onTextEdit: @escaping (String, CGRect) -> Void,
+        onTextDelete: @escaping (CGRect) -> Void
+    ) {
+        self.state = OCROverlayState()
+        self.result = result
+        self.onTextEdit = onTextEdit
+        self.onTextDelete = onTextDelete
+        
+        // Initialize text regions
+        state.updateTextRegions(from: result)
+    }
     
+    /// Start text editing for a specific bounding box
+    public func startTextEditing(for boundingBox: CGRect) {
+        if let region = state.textRegions.first(where: { $0.boundingBox == boundingBox }) {
+            state.startEditing(region: region)
+        }
+    }
     
+    /// Complete text editing
+    public func completeTextEditing() {
+        guard let boundingBox = state.editingBoundingBox else { return }
+        onTextEdit(state.editingText, boundingBox)
+        state.completeEditing()
+    }
+    
+    /// Complete text editing with specific text
+    public func completeTextEditing(with text: String) {
+        let boundingBox: CGRect
+        if let editingBox = state.editingBoundingBox {
+            boundingBox = editingBox
+        } else {
+            // Fallback - use first bounding box
+            boundingBox = result.boundingBoxes.first ?? CGRect.zero
+        }
+        
+        onTextEdit(text, boundingBox)
+        state.completeEditing()
+    }
+    
+    /// Cancel text editing
+    public func cancelTextEditing() {
+        state.cancelEditing()
+    }
+    
+    /// Delete text region
+    public func deleteTextRegion(at boundingBox: CGRect) {
+        onTextDelete(boundingBox)
+    }
+    
+    /// Detect which text region was tapped
+    public func detectTappedTextRegion(at point: CGPoint) -> OCRTextRegion? {
+        return state.textRegions.first { region in
+            region.boundingBox.contains(point)
+        }
+    }
+    
+    /// Get current editing state
+    public var isEditingText: Bool {
+        return state.isEditingText
+    }
+    
+    /// Get current editing bounding box
+    public var editingBoundingBox: CGRect? {
+        return state.editingBoundingBox
+    }
+    
+    /// Get current editing text
+    public var editingText: String {
+        return state.editingText
+    }
+    
+    /// Get all text regions
+    public var textRegions: [OCRTextRegion] {
+        return state.textRegions
+    }
+    
+    /// Get selected region
+    public var selectedRegion: OCRTextRegion? {
+        return state.selectedRegion
+    }
+    
+    /// Get confidence color for visual feedback
+    public func confidenceColor(for confidence: Float, configuration: OCROverlayConfiguration) -> Color {
+        if confidence >= configuration.highConfidenceThreshold {
+            return .green
+        } else if confidence >= configuration.lowConfidenceThreshold {
+            return .orange
+        } else {
+            return .red
+        }
+    }
 }
 
 // MARK: - Layer 5: Performance - OCR Text Region View

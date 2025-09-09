@@ -77,7 +77,7 @@ final class ImageMetadataIntelligenceTests: XCTestCase {
         let intelligence = ImageMetadataIntelligence()
         
         // When
-        let locationData = try await intelligence.extractLocationData(from: image)
+        let _ = try await intelligence.extractLocationData(from: image)
         
         // Then
         // Note: Test image may not have location data, so this could be nil

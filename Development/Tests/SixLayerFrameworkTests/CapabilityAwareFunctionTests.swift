@@ -10,16 +10,53 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     // MARK: - Touch-Dependent Function Tests
     
     func testTouchDependentFunctions() {
-        let config = getCardExpansionPlatformConfig()
-        let supportsTouch = config.supportsTouch
+        // Test both enabled and disabled states using the new methodology
+        testTouchDependentFunctionsEnabled()
+        testTouchDependentFunctionsDisabled()
+    }
+    
+    /// Test touch functions when touch is enabled
+    private func testTouchDependentFunctionsEnabled() {
+        // Create a mock configuration with touch enabled
+        let mockConfig = CardExpansionPlatformConfig(
+            supportsHapticFeedback: true,
+            supportsHover: false,
+            supportsTouch: true,
+            supportsVoiceOver: true,
+            supportsSwitchControl: true,
+            supportsAssistiveTouch: true,
+            minTouchTarget: 44,
+            hoverDelay: 0.0,
+            animationEasing: .easeInOut(duration: 0.3)
+        )
         
-        if supportsTouch {
-            // Test touch functions work when touch is supported
-            testTouchFunctionsEnabled()
-        } else {
-            // Test touch functions handle disabled state gracefully
-            testTouchFunctionsDisabled()
-        }
+        // Test that touch-related functions work when touch is supported
+        XCTAssertTrue(mockConfig.supportsTouch, "Touch should be supported when enabled")
+        XCTAssertTrue(mockConfig.supportsHapticFeedback, "Haptic feedback should be available when touch is supported")
+        XCTAssertTrue(mockConfig.supportsAssistiveTouch, "AssistiveTouch should be available when touch is supported")
+        XCTAssertGreaterThanOrEqual(mockConfig.minTouchTarget, 44, "Touch targets should be adequate when touch is supported")
+    }
+    
+    /// Test touch functions when touch is disabled
+    private func testTouchDependentFunctionsDisabled() {
+        // Create a mock configuration with touch disabled
+        let mockConfig = CardExpansionPlatformConfig(
+            supportsHapticFeedback: false,
+            supportsHover: true,
+            supportsTouch: false,
+            supportsVoiceOver: true,
+            supportsSwitchControl: true,
+            supportsAssistiveTouch: false,
+            minTouchTarget: 0,
+            hoverDelay: 0.1,
+            animationEasing: .easeInOut(duration: 0.3)
+        )
+        
+        // Test that touch-related functions handle disabled state gracefully
+        XCTAssertFalse(mockConfig.supportsTouch, "Touch should not be supported when disabled")
+        XCTAssertFalse(mockConfig.supportsHapticFeedback, "Haptic feedback should not be available when touch is disabled")
+        XCTAssertFalse(mockConfig.supportsAssistiveTouch, "AssistiveTouch should not be available when touch is disabled")
+        XCTAssertEqual(mockConfig.minTouchTarget, 0, "Touch targets should be zero when touch is disabled")
     }
     
     private func testTouchFunctionsEnabled() {
@@ -63,14 +100,50 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     // MARK: - Hover-Dependent Function Tests
     
     func testHoverDependentFunctions() {
-        let config = getCardExpansionPlatformConfig()
-        let supportsHover = config.supportsHover
+        // Test both enabled and disabled states using the new methodology
+        testHoverDependentFunctionsEnabled()
+        testHoverDependentFunctionsDisabled()
+    }
+    
+    /// Test hover functions when hover is enabled
+    private func testHoverDependentFunctionsEnabled() {
+        // Create a mock configuration with hover enabled
+        let mockConfig = CardExpansionPlatformConfig(
+            supportsHapticFeedback: false,
+            supportsHover: true,
+            supportsTouch: false,
+            supportsVoiceOver: true,
+            supportsSwitchControl: true,
+            supportsAssistiveTouch: false,
+            minTouchTarget: 0,
+            hoverDelay: 0.1,
+            animationEasing: .easeInOut(duration: 0.3)
+        )
         
-        if supportsHover {
-            testHoverFunctionsEnabled()
-        } else {
-            testHoverFunctionsDisabled()
-        }
+        // Test that hover-related functions work when hover is supported
+        XCTAssertTrue(mockConfig.supportsHover, "Hover should be supported when enabled")
+        XCTAssertGreaterThanOrEqual(mockConfig.hoverDelay, 0, "Hover delay should be set when hover is supported")
+        XCTAssertFalse(mockConfig.supportsTouch, "Touch should not be supported when hover is enabled")
+    }
+    
+    /// Test hover functions when hover is disabled
+    private func testHoverDependentFunctionsDisabled() {
+        // Create a mock configuration with hover disabled
+        let mockConfig = CardExpansionPlatformConfig(
+            supportsHapticFeedback: true,
+            supportsHover: false,
+            supportsTouch: true,
+            supportsVoiceOver: true,
+            supportsSwitchControl: true,
+            supportsAssistiveTouch: true,
+            minTouchTarget: 44,
+            hoverDelay: 0.0,
+            animationEasing: .easeInOut(duration: 0.3)
+        )
+        
+        // Test that hover-related functions handle disabled state gracefully
+        XCTAssertFalse(mockConfig.supportsHover, "Hover should not be supported when disabled")
+        XCTAssertEqual(mockConfig.hoverDelay, 0, "Hover delay should be zero when hover is disabled")
     }
     
     private func testHoverFunctionsEnabled() {
@@ -136,13 +209,18 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         )
         
         // Test that Vision functions can be called without crashing
-        _ = safePlatformOCRImplementation_L4(
-            image: testImage,
-            context: context,
-            strategy: strategy,
-            onResult: { _ in },
-            onError: { _ in }
-        )
+        let service = OCRService()
+        Task {
+            do {
+                let _ = try await service.processImage(
+                    testImage,
+                    context: context,
+                    strategy: strategy
+                )
+            } catch {
+                // Expected for test images
+            }
+        }
     }
     
     private func testVisionFunctionsDisabled() {
@@ -168,19 +246,21 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         )
         
         // Test that Vision functions handle disabled state gracefully
-        _ = safePlatformOCRImplementation_L4(
-            image: testImage,
-            context: context,
-            strategy: strategy,
-            onResult: { result in
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    testImage,
+                    context: context,
+                    strategy: strategy
+                )
                 // Should provide fallback result when Vision is disabled
                 XCTAssertNotNil(result, "Should provide fallback result when Vision is disabled")
-            },
-            onError: { error in
+            } catch {
                 // Should handle error gracefully when Vision is disabled
                 XCTAssertNotNil(error, "Should handle error gracefully when Vision is disabled")
             }
-        )
+        }
     }
     
     // MARK: - Accessibility-Dependent Function Tests

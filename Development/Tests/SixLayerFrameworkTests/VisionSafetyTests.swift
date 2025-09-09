@@ -68,19 +68,24 @@ final class VisionSafetyTests: XCTestCase {
         
         if isOCRAvailable {
             // If OCR is available, test that the function can be called without crashing
-            _ = safePlatformOCRImplementation_L4(
-                image: image,
-                context: context,
-                strategy: OCRStrategy(
-                    supportedTextTypes: [.general],
-                    supportedLanguages: [.english],
-                    processingMode: .standard,
-                    requiresNeuralEngine: false,
-                    estimatedProcessingTime: 1.0
-                ),
-                onResult: { _ in },
-                onError: { _ in }
-            )
+            let service = OCRService()
+            Task {
+                do {
+                    let _ = try await service.processImage(
+                        image,
+                        context: context,
+                        strategy: OCRStrategy(
+                            supportedTextTypes: [.general],
+                            supportedLanguages: [.english],
+                            processingMode: .standard,
+                            requiresNeuralEngine: false,
+                            estimatedProcessingTime: 1.0
+                        )
+                    )
+                } catch {
+                    // Expected for test images
+                }
+            }
             XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
         } else {
             // If OCR is not available, test that the fallback behavior is handled
@@ -137,19 +142,24 @@ final class VisionSafetyTests: XCTestCase {
         
         if isOCRAvailable {
             // If OCR is available, test that the function can be called without crashing
-            _ = safePlatformOCRImplementation_L4(
-                image: PlatformImage(), // Invalid image
-                context: context,
-                strategy: OCRStrategy(
-                    supportedTextTypes: [.general],
-                    supportedLanguages: [.english],
-                    processingMode: .standard,
-                    requiresNeuralEngine: false,
-                    estimatedProcessingTime: 1.0
-                ),
-                onResult: { _ in },
-                onError: { _ in }
-            )
+            let service = OCRService()
+            Task {
+                do {
+                    let _ = try await service.processImage(
+                        PlatformImage(), // Invalid image
+                        context: context,
+                        strategy: OCRStrategy(
+                            supportedTextTypes: [.general],
+                            supportedLanguages: [.english],
+                            processingMode: .standard,
+                            requiresNeuralEngine: false,
+                            estimatedProcessingTime: 1.0
+                        )
+                    )
+                } catch {
+                    // Expected for invalid images
+                }
+            }
             XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
         } else {
             // If OCR is not available, test that the fallback behavior is handled

@@ -174,13 +174,18 @@ final class CapabilityMatrixTests: XCTestCase {
                     )
                     
                     // Test that OCR functions can be called without crashing
-                    _ = safePlatformOCRImplementation_L4(
-                        image: testImage,
-                        context: context,
-                        strategy: strategy,
-                        onResult: { _ in },
-                        onError: { _ in }
-                    )
+                    let service = OCRService()
+                    Task {
+                        do {
+                            let _ = try await service.processImage(
+                                testImage,
+                                context: context,
+                                strategy: strategy
+                            )
+                        } catch {
+                            // Expected for test images
+                        }
+                    }
                 }
             },
             expectedPlatforms: [.iOS, .macOS, .visionOS]
