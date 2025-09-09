@@ -4,6 +4,7 @@
 
 **Release Date**: September 8, 2024  
 **Status**: ✅ **COMPLETE**  
+**Previous Release**: v2.5.2 - Missing Accessibility Types Implementation  
 **Next Release**: TBD
 
 ---
@@ -13,6 +14,7 @@
 **Release Date**: September 8, 2024  
 **Type**: Bug Fix Release  
 **Priority**: Critical  
+**Note**: v2.5.3 was removed due to critical compilation errors  
 
 ### **🐛 Critical Issues Fixed**
 
@@ -60,11 +62,35 @@
 
 ---
 
-## 📍 **Previous Release: v2.5.3 - Generic Content Presentation Implementation** 🚀
+## ⚠️ **v2.5.3 - Generic Content Presentation Implementation** ❌ **REMOVED**
+
+**Release Date**: September 8, 2024  
+**Status**: ❌ **REMOVED** - Critical compilation errors  
+**Reason**: iOS window detection and other critical errors prevented builds  
+**Next Release**: v2.5.4 (Bug fixes)
+
+### **🔍 Generic Content Presentation Features (Removed)**
+- **Runtime-Unknown Content Support**: Handles content types unknown at compile time
+- **Smart Type Analysis**: Uses reflection to analyze content types at runtime
+- **Intelligent Delegation**: Delegates to appropriate specific functions when possible
+- **Fallback UI**: Generic presentation for truly unknown content types
+
+### **❌ Issues That Caused Removal**
+- iOS window detection main actor isolation errors
+- iOS notification name errors
+- Immutable value initialization errors
+- Empty option set warnings
+- Package.swift unhandled files warnings
+
+**Note**: These features will be re-implemented in a future release after proper testing.
+
+---
+
+## 📍 **Previous Release: v2.5.2 - Missing Accessibility Types Implementation** 🚀
 
 **Release Date**: September 8, 2024  
 **Status**: ✅ **COMPLETE**  
-**Next Release**: TBD
+**Next Release**: v2.5.3 (Removed) → v2.5.4
 
 ---
 

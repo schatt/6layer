@@ -2,9 +2,10 @@
 
 ## 📍 **Current Status: v2.5.4 - Critical Bug Fixes** 🚀
 
-**Last Release**: v2.5.3 - Generic Content Presentation Implementation  
+**Last Release**: v2.5.2 - Missing Accessibility Types Implementation  
 **Current Phase**: Critical Bug Fixes - Complete  
 **Next Phase**: Framework Enhancement Areas - Medium-Impact Areas (Priority 2)
+**Note**: v2.5.3 was removed due to critical compilation errors
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
@@ -35,34 +36,41 @@ This helps track which release included specific features and fixes.
 - **iOS Compatibility**: Proper Swift concurrency handling
 - **Production Ready**: Framework safe for production use
 
-### 🔍 **Generic Content Presentation Implementation** ✅ **COMPLETED (v2.5.3)**
+### 🔍 **Generic Content Presentation Implementation** ⚠️ **REMOVED (v2.5.3)**
 
-**Generic Content Presentation Features:**
+**Generic Content Presentation Features (Removed):**
 - **Runtime-Unknown Content Support**: Handles content types unknown at compile time
 - **Smart Type Analysis**: Uses reflection to analyze content types at runtime
 - **Intelligent Delegation**: Delegates to appropriate specific functions when possible
 - **Fallback UI**: Generic presentation for truly unknown content types
-- **Performance Optimized**: Efficient type checking and delegation
-- **Comprehensive Testing**: 18 tests covering all scenarios
 
-**Key Components:**
+**Key Components (Removed):**
 - `platformPresentContent_L1` - Generic content presentation function
 - `GenericContentView` - Content analysis and delegation view
 - `GenericFallbackView` - Fallback UI for unknown content types
 - `PlatformPresentContentL1Tests` - Comprehensive test suite (18 tests)
 
-**Use Cases:**
+**Use Cases (Removed):**
 - Dynamic API responses with unknown structure
 - User-generated content of unknown type
 - Mixed content types requiring generic presentation
 - Runtime content type discovery and presentation
 
-**Testing Coverage:**
+**Testing Coverage (Removed):**
 - Runtime-unknown content testing
 - Known content type delegation testing
 - Edge cases (empty arrays, nil content)
 - Performance testing with large collections
 - Hint-based delegation testing
+
+**❌ Issues That Caused Removal:**
+- iOS window detection main actor isolation errors
+- iOS notification name errors
+- Immutable value initialization errors
+- Empty option set warnings
+- Package.swift unhandled files warnings
+
+**Note**: These features will be re-implemented in a future release after proper testing.
 
 ### 🔍 **Missing Accessibility Types Implementation**
 
