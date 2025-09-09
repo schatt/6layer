@@ -433,7 +433,7 @@ Your framework has **excellent platform and capability testing** (the most criti
 ## 🏷️ **Version Management Strategy**
 
 ### **Tag Movement Rules:**
-- **✅ Bug Fixes**: Move tags to include fixes (ensures no broken releases)
+- **✅ Bug Fixes**: Remove tags when fixes are made (ensures no broken releases)
 - **❌ Features**: Never move existing tags, create new ones instead
 
 ### **Current Version Status:**

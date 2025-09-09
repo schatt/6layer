@@ -1867,6 +1867,234 @@ Solution: Check data format and patterns
          Use customAnalysisOptions for specific type hints
 ```
 
+---
+
+## 🖼️ **Image Processing Pipeline and Metadata Intelligence**
+
+### **Image Processing System Overview**
+The SixLayer Framework now includes comprehensive image processing capabilities with intelligent enhancement, optimization, and metadata analysis. This follows the Layer 1 Semantic Intent philosophy where apps express WHAT they want to process, not HOW to implement it.
+
+### **Core Image Processing Philosophy**
+Just like other framework features, image processing follows the **Layer 1 Semantic Intent** principle:
+- **Apps express WHAT they want to process, not HOW to implement it**
+- **Framework handles all image processing complexity internally**
+- **Business logic goes through the hints system**
+- **Automatic optimization and enhancement based on purpose**
+
+### **Available Image Processing Functions**
+
+#### **1. Image Processing Pipeline (Primary Function)**
+```swift
+// ✅ CORRECT: Express intent, let framework handle processing
+let processedImage = try await ImageProcessingPipeline().process(
+    image: myImage,
+    purpose: .ocr,
+    options: ProcessingOptions(
+        quality: .high,
+        enableEnhancement: true,
+        enableOptimization: true,
+        targetFormat: .jpeg
+    )
+)
+```
+
+#### **2. Image Metadata Intelligence**
+```swift
+// ✅ CORRECT: Extract comprehensive metadata with AI categorization
+let intelligence = ImageMetadataIntelligence()
+let metadata = try await intelligence.extractMetadata(from: myImage)
+let categorization = try await intelligence.categorizeByContent(myImage)
+let recommendations = try await intelligence.generateOptimizationRecommendations(for: myImage)
+```
+
+#### **3. Image Enhancement and Analysis**
+```swift
+// ✅ CORRECT: Enhance images for specific purposes
+let enhancedImage = try await ImageProcessor().enhance(
+    myImage,
+    with: EnhancementOptions(
+        brightness: 0.1,
+        contrast: 0.2,
+        saturation: 0.1,
+        sharpness: 0.3
+    )
+)
+
+let analysis = try await ImageProcessor().analyze(myImage)
+```
+
+### **Image Processing Hints and Configuration**
+
+#### **Processing Options**
+```swift
+let options = ProcessingOptions(
+    quality: .high,                    // .low, .medium, .high, .maximum
+    enableEnhancement: true,           // Apply intelligent enhancement
+    enableOptimization: true,          // Optimize for target format
+    targetFormat: .jpeg,              // .jpeg, .png, .heic, .unsupported
+    customPreferences: [:]            // Additional processing hints
+)
+```
+
+#### **Image Purpose Categories**
+```swift
+enum ImagePurpose {
+    case ocr              // OCR text recognition
+    case fuelReceipt      // Fuel receipt processing
+    case document         // Document scanning
+    case photo            // General photography
+    case thumbnail        // Thumbnail generation
+    case preview          // Preview display
+}
+```
+
+### **Metadata Intelligence Features**
+
+#### **Comprehensive Metadata Extraction**
+- **EXIF Data**: Camera settings, exposure, ISO, focal length
+- **Location Data**: GPS coordinates, altitude, accuracy
+- **Color Profile**: Color space, gamut, bit depth
+- **Technical Data**: Resolution, compression, orientation
+
+#### **AI-Powered Categorization**
+- **Content Categorization**: Automatic content type detection
+- **Purpose Categorization**: Recommended usage based on analysis
+- **Quality Categorization**: Quality assessment and recommendations
+
+#### **Smart Recommendations**
+- **Optimization**: Compression, format, and size recommendations
+- **Accessibility**: Alt text suggestions and contrast recommendations
+- **Usage**: Performance and storage recommendations
+
+### **Integration with SixLayer Architecture**
+
+#### **Layer 1 Integration**
+```swift
+// Image processing integrates with Layer 1 semantic functions
+let imageView = platformPresentMediaData_L1(
+    media: processedImage,
+    hints: MediaPresentationHints(
+        purpose: .ocr,
+        optimizationLevel: .high,
+        accessibilityLevel: .enhanced
+    )
+)
+```
+
+#### **Layer 2 Integration**
+```swift
+// Layout decisions consider image processing results
+let layoutDecision = determineOptimalPhotoLayout_L2(
+    image: processedImage,
+    context: photoContext,
+    deviceType: .phone,
+    screenWidth: 375
+)
+```
+
+### **Best Practices for Image Processing**
+
+#### **1. Choose Appropriate Purpose**
+```swift
+// ✅ CORRECT: Match purpose to use case
+let ocrImage = try await pipeline.process(image, purpose: .ocr, options: ocrOptions)
+let thumbnail = try await pipeline.process(image, purpose: .thumbnail, options: thumbOptions)
+```
+
+#### **2. Use Metadata Intelligence**
+```swift
+// ✅ CORRECT: Leverage AI categorization
+let intelligence = ImageMetadataIntelligence()
+let categorization = try await intelligence.categorizeByContent(image)
+let recommendations = try await intelligence.generateOptimizationRecommendations(for: image)
+```
+
+#### **3. Handle Errors Gracefully**
+```swift
+// ✅ CORRECT: Proper error handling
+do {
+    let processedImage = try await pipeline.process(image, purpose: .ocr, options: options)
+    // Use processed image
+} catch ImageProcessingError.invalidImage {
+    // Handle invalid image
+} catch ImageProcessingError.corruptedImage {
+    // Handle corrupted image
+} catch {
+    // Handle other errors
+}
+```
+
+### **Performance Considerations**
+
+#### **Memory Management**
+- Images are processed asynchronously to avoid blocking UI
+- Automatic memory cleanup after processing
+- Efficient caching for repeated operations
+
+#### **Concurrent Processing**
+- Multiple images can be processed simultaneously
+- Batch processing for collections
+- Background processing for large images
+
+### **Common Mistakes to Avoid**
+
+#### **1. Processing Images Synchronously**
+```swift
+// ❌ WRONG: Blocking UI thread
+let processedImage = pipeline.process(image, purpose: .ocr, options: options) // Missing await
+
+// ✅ CORRECT: Asynchronous processing
+let processedImage = try await pipeline.process(image, purpose: .ocr, options: options)
+```
+
+#### **2. Ignoring Error Handling**
+```swift
+// ❌ WRONG: No error handling
+let processedImage = try! await pipeline.process(image, purpose: .ocr, options: options)
+
+// ✅ CORRECT: Proper error handling
+do {
+    let processedImage = try await pipeline.process(image, purpose: .ocr, options: options)
+} catch {
+    // Handle error appropriately
+}
+```
+
+#### **3. Not Using Appropriate Purpose**
+```swift
+// ❌ WRONG: Wrong purpose for use case
+let thumbnail = try await pipeline.process(largeImage, purpose: .ocr, options: ocrOptions)
+
+// ✅ CORRECT: Match purpose to use case
+let thumbnail = try await pipeline.process(largeImage, purpose: .thumbnail, options: thumbOptions)
+```
+
+### **Troubleshooting Image Processing**
+
+#### **1. Processing Failures**
+```
+Problem: Image processing fails
+Solution: Check image validity and format
+         Verify processing options are appropriate
+         Ensure sufficient memory available
+```
+
+#### **2. Poor Quality Results**
+```
+Problem: Enhanced images look poor
+Solution: Adjust enhancement options
+         Check original image quality
+         Try different processing purposes
+```
+
+#### **3. Slow Processing**
+```
+Problem: Image processing is slow
+Solution: Use appropriate quality settings
+         Process images in background
+         Consider image size optimization
+```
+
 ## 🎯 **Generic Content Presentation (Runtime-Unknown Content)**
 
 ### **When to Use `platformPresentContent_L1`**
