@@ -1451,6 +1451,422 @@ let ocrView = platformOCRWithVisualCorrection_L1(
 
 ---
 
+## 📊 **DataFrame Analysis and Intelligence**
+
+### **DataFrame System Overview**
+The SixLayer Framework now includes comprehensive DataFrame analysis capabilities built on Apple's `TabularData` framework. This provides intelligent data analysis, pattern detection, and visualization recommendations following the Layer 1 Semantic Intent philosophy.
+
+### **Core DataFrame Philosophy**
+Just like other framework features, DataFrame analysis follows the **Layer 1 Semantic Intent** principle:
+- **Apps express WHAT they want to analyze, not HOW to implement it**
+- **Framework handles all TabularData complexity internally**
+- **Business logic goes through the hints system**
+- **Automatic visualization recommendations based on data patterns**
+
+### **Available DataFrame Functions**
+
+#### **1. Basic DataFrame Analysis (Primary Function)**
+```swift
+// ✅ CORRECT: Express intent, let framework handle analysis
+let analysisView = platformAnalyzeDataFrame_L1(
+    dataFrame: myDataFrame,
+    hints: DataFrameAnalysisHints(
+        focusArea: .comprehensive,
+        analysisDepth: .detailed,
+        includeVisualizations: true
+    )
+)
+```
+
+#### **2. Data Quality Assessment**
+```swift
+// ✅ CORRECT: Assess data quality with intelligent analysis
+let qualityView = platformAssessDataQuality_L1(
+    dataFrame: myDataFrame,
+    hints: DataFrameAnalysisHints(
+        focusArea: .dataQuality,
+        analysisDepth: .standard
+    )
+)
+```
+
+#### **3. DataFrame Comparison**
+```swift
+// ✅ CORRECT: Compare multiple DataFrames
+let comparisonView = platformCompareDataFrames_L1(
+    dataFrames: [dataFrame1, dataFrame2, dataFrame3],
+    hints: DataFrameAnalysisHints(
+        focusArea: .comparative,
+        analysisDepth: .detailed
+    )
+)
+```
+
+### **DataFrame Analysis Hints**
+The framework provides intelligent hints for DataFrame analysis:
+
+```swift
+public struct DataFrameAnalysisHints {
+    public let focusArea: DataFrameFocusArea
+    public let analysisDepth: DataFrameAnalysisDepth
+    public let includeVisualizations: Bool
+    public let customAnalysisOptions: [String: Any]
+}
+
+public enum DataFrameFocusArea {
+    case comprehensive      // Full analysis
+    case dataQuality       // Focus on data quality issues
+    case patterns          // Focus on pattern detection
+    case statistical       // Focus on statistical analysis
+    case comparative       // Focus on DataFrame comparison
+    case visualization     // Focus on visualization recommendations
+}
+
+public enum DataFrameAnalysisDepth {
+    case basic            // Quick analysis
+    case standard         // Balanced analysis
+    case detailed         // Comprehensive analysis
+    case exhaustive       // Deep analysis with all features
+}
+```
+
+### **DataFrame Analysis Capabilities**
+
+#### **1. Automatic Column Type Detection**
+```swift
+// Framework automatically detects:
+// - Numeric columns (Int, Double, Float)
+// - Categorical columns (String with limited unique values)
+// - Date/Time columns (Date, String with date patterns)
+// - Boolean columns (Bool)
+// - ID columns (String with ID patterns)
+// - URL columns (String with URL patterns)
+```
+
+#### **2. Pattern Detection**
+```swift
+// Framework automatically detects:
+// - Time series patterns
+// - Categorical data patterns
+// - Missing data patterns
+// - Outlier patterns
+// - Correlation patterns
+```
+
+#### **3. Statistical Analysis**
+```swift
+// Framework provides:
+// - Descriptive statistics (mean, median, mode, std dev)
+// - Distribution analysis
+// - Correlation analysis
+// - Trend analysis
+// - Outlier detection
+```
+
+#### **4. Data Quality Assessment**
+```swift
+// Framework assesses:
+// - Missing data percentage
+// - Data completeness
+// - Data consistency
+// - Data accuracy indicators
+// - Data freshness
+```
+
+#### **5. Visualization Recommendations**
+```swift
+// Framework recommends:
+// - Line charts for time series data
+// - Bar charts for categorical data
+// - Scatter plots for correlation analysis
+// - Tables for detailed data views
+// - Custom visualizations based on data patterns
+```
+
+### **DataFrame Integration with Data Intelligence**
+
+#### **1. DataIntrospection Integration**
+```swift
+// DataFrame analysis integrates with existing DataIntrospectionEngine
+let introspection = DataIntrospectionEngine()
+let analysis = DataFrameAnalysisEngine()
+
+// Combined analysis provides:
+// - Data structure understanding
+// - Data quality assessment
+// - Pattern recognition
+// - Visualization recommendations
+```
+
+#### **2. DataPresentationIntelligence Integration**
+```swift
+// DataFrame analysis enhances DataPresentationIntelligence
+let presentation = DataPresentationIntelligence()
+
+// Enhanced capabilities:
+// - Advanced statistical analysis
+// - Pattern-based visualization recommendations
+// - Data-driven presentation strategies
+// - Intelligent chart selection
+```
+
+### **DataFrame Analysis Examples**
+
+#### **1. Sales Data Analysis**
+```swift
+// Given: Sales DataFrame with columns: date, product, quantity, price, region
+let salesHints = DataFrameAnalysisHints(
+    focusArea: .comprehensive,
+    analysisDepth: .detailed,
+    includeVisualizations: true
+)
+
+let salesAnalysis = platformAnalyzeDataFrame_L1(
+    dataFrame: salesDataFrame,
+    hints: salesHints
+)
+
+// Framework automatically:
+// - Detects time series pattern (date column)
+// - Identifies categorical data (product, region)
+// - Calculates sales trends and statistics
+// - Recommends line charts for trends, bar charts for categories
+```
+
+#### **2. Customer Data Quality Assessment**
+```swift
+// Given: Customer DataFrame with potential data quality issues
+let qualityHints = DataFrameAnalysisHints(
+    focusArea: .dataQuality,
+    analysisDepth: .standard
+)
+
+let qualityAssessment = platformAssessDataQuality_L1(
+    dataFrame: customerDataFrame,
+    hints: qualityHints
+)
+
+// Framework automatically:
+// - Identifies missing data patterns
+// - Detects data inconsistencies
+// - Assesses data completeness
+// - Provides quality improvement recommendations
+```
+
+#### **3. Multi-DataFrame Comparison**
+```swift
+// Given: Multiple DataFrames for comparison
+let comparisonHints = DataFrameAnalysisHints(
+    focusArea: .comparative,
+    analysisDepth: .detailed
+)
+
+let comparison = platformCompareDataFrames_L1(
+    dataFrames: [q1Data, q2Data, q3Data, q4Data],
+    hints: comparisonHints
+)
+
+// Framework automatically:
+// - Compares data structures
+// - Identifies differences and similarities
+// - Provides comparative statistics
+// - Recommends comparative visualizations
+```
+
+### **DataFrame Analysis Best Practices**
+
+#### **1. Use Appropriate Focus Areas**
+```swift
+// ✅ CORRECT: Choose focus area based on your needs
+let hints = DataFrameAnalysisHints(
+    focusArea: .dataQuality,  // For data cleaning tasks
+    analysisDepth: .standard
+)
+
+// ✅ CORRECT: Use comprehensive for general analysis
+let hints = DataFrameAnalysisHints(
+    focusArea: .comprehensive,  // For general exploration
+    analysisDepth: .detailed
+)
+```
+
+#### **2. Leverage Custom Analysis Options**
+```swift
+// ✅ CORRECT: Use custom options for specific needs
+let hints = DataFrameAnalysisHints(
+    focusArea: .patterns,
+    analysisDepth: .detailed,
+    customAnalysisOptions: [
+        "outlierThreshold": 2.0,
+        "correlationThreshold": 0.7,
+        "timeSeriesGranularity": "daily"
+    ]
+)
+```
+
+#### **3. Combine with Business Logic**
+```swift
+// ✅ CORRECT: Integrate with business-specific hints
+let businessHints = CustomHint(
+    hintType: "sales.analysis",
+    customData: [
+        "seasonalPatterns": true,
+        "regionalAnalysis": true,
+        "productCategories": ["electronics", "clothing", "books"]
+    ]
+)
+
+let analysisHints = DataFrameAnalysisHints(
+    focusArea: .comprehensive,
+    analysisDepth: .detailed,
+    customAnalysisOptions: businessHints.customData
+)
+```
+
+### **DataFrame Analysis Performance**
+
+#### **1. Large Dataset Handling**
+```swift
+// Framework automatically handles:
+// - Large DataFrames (10,000+ rows)
+// - Memory-efficient processing
+// - Progressive analysis loading
+// - Performance optimization
+```
+
+#### **2. Real-time Analysis**
+```swift
+// Framework provides:
+// - Fast analysis for real-time updates
+// - Incremental analysis for streaming data
+// - Cached results for repeated analysis
+// - Background processing for large datasets
+```
+
+### **DataFrame Analysis Accessibility**
+
+#### **1. Automatic Accessibility**
+```swift
+// Framework automatically provides:
+// - VoiceOver support for analysis results
+// - Keyboard navigation for interactive elements
+// - High contrast support for visualizations
+// - Screen reader descriptions for charts
+```
+
+#### **2. Customizable Accessibility**
+```swift
+// Framework allows:
+// - Custom accessibility labels
+// - Alternative text for visualizations
+// - VoiceOver descriptions for complex data
+// - Accessibility hints for interactive elements
+```
+
+### **DataFrame Analysis Testing**
+
+#### **1. Unit Testing**
+```swift
+// Test DataFrame analysis functions
+func testDataFrameAnalysis() {
+    let dataFrame = createTestDataFrame()
+    let hints = DataFrameAnalysisHints(
+        focusArea: .comprehensive,
+        analysisDepth: .standard
+    )
+    
+    let view = platformAnalyzeDataFrame_L1(
+        dataFrame: dataFrame,
+        hints: hints
+    )
+    
+    XCTAssertNotNil(view)
+}
+```
+
+#### **2. Integration Testing**
+```swift
+// Test DataFrame analysis integration
+func testDataFrameIntegration() {
+    let dataFrame = createSalesDataFrame()
+    let hints = createSalesAnalysisHints()
+    
+    let analysis = DataFrameAnalysisEngine()
+    let result = analysis.analyzeDataFrame(dataFrame, hints: hints)
+    
+    XCTAssertTrue(result.patterns.isTimeSeries)
+    XCTAssertEqual(result.columnTypes.count, 5)
+    XCTAssertFalse(result.visualizationRecommendations.isEmpty)
+}
+```
+
+### **Common DataFrame Analysis Mistakes to Avoid**
+
+#### **1. Using Raw TabularData Instead of Framework Functions**
+```swift
+// ❌ WRONG: Direct TabularData usage
+let column = dataFrame.columns[0]
+let values = column.compactMap { $0 }
+
+// ✅ CORRECT: Use framework functions
+let analysis = platformAnalyzeDataFrame_L1(
+    dataFrame: dataFrame,
+    hints: hints
+)
+```
+
+#### **2. Ignoring Analysis Hints**
+```swift
+// ❌ WRONG: Not using hints for customization
+let analysis = platformAnalyzeDataFrame_L1(
+    dataFrame: dataFrame,
+    hints: DataFrameAnalysisHints()  // Default hints only
+)
+
+// ✅ CORRECT: Use appropriate hints
+let analysis = platformAnalyzeDataFrame_L1(
+    dataFrame: dataFrame,
+    hints: DataFrameAnalysisHints(
+        focusArea: .dataQuality,
+        analysisDepth: .detailed
+    )
+)
+```
+
+#### **3. Not Leveraging Integration Capabilities**
+```swift
+// ❌ WRONG: Using DataFrame analysis in isolation
+let analysis = platformAnalyzeDataFrame_L1(dataFrame: df, hints: hints)
+
+// ✅ CORRECT: Integrate with existing data intelligence
+let introspection = DataIntrospectionEngine()
+let analysis = platformAnalyzeDataFrame_L1(dataFrame: df, hints: hints)
+// Framework automatically integrates with DataIntrospection
+```
+
+### **DataFrame Analysis Troubleshooting**
+
+#### **1. Performance Issues**
+```
+Problem: DataFrame analysis is slow
+Solution: Use appropriate analysisDepth (.basic for quick analysis)
+         Consider using .dataQuality focus for large datasets
+```
+
+#### **2. Missing Visualizations**
+```
+Problem: No visualization recommendations
+Solution: Set includeVisualizations: true in hints
+         Ensure data has recognizable patterns
+```
+
+#### **3. Incorrect Column Type Detection**
+```
+Problem: Column types not detected correctly
+Solution: Check data format and patterns
+         Use customAnalysisOptions for specific type hints
+```
+
 ## 🎯 **Generic Content Presentation (Runtime-Unknown Content)**
 
 ### **When to Use `platformPresentContent_L1`**

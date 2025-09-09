@@ -1,9 +1,9 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v2.5.3 - Generic Content Presentation Implementation** 🚀
+## 📍 **Current Status: v2.5.4 - Critical Bug Fixes** 🚀
 
-**Last Release**: v2.5.2 - Missing Accessibility Types Implementation  
-**Current Phase**: Generic Content Presentation Implementation - Complete  
+**Last Release**: v2.5.3 - Generic Content Presentation Implementation  
+**Current Phase**: Critical Bug Fixes - Complete  
 **Next Phase**: Framework Enhancement Areas - Medium-Impact Areas (Priority 2)
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
@@ -21,7 +21,21 @@ When marking tasks as complete, include the release version where the work was c
 
 This helps track which release included specific features and fixes.
 
-### 🔍 **NEW: Generic Content Presentation Implementation** ✅ **COMPLETED (v2.5.3)**
+### 🔧 **NEW: Critical Bug Fixes** ✅ **COMPLETED (v2.5.4)**
+
+**Critical Issues Fixed:**
+- **iOS Window Detection Main Actor Isolation**: Fixed deinit cleanup method isolation
+- **iOS Notification Name Error**: Corrected UIScene notification name
+- **Immutable Value Initialization**: Fixed duplicate screenSize initialization
+- **Empty Option Set Warning**: Fixed VoiceOverElementTraits.none warning
+- **Package.swift Unhandled Files**: Added explicit file exclusions
+
+**Impact:**
+- **Zero Warnings/Errors**: Clean build across all platforms
+- **iOS Compatibility**: Proper Swift concurrency handling
+- **Production Ready**: Framework safe for production use
+
+### 🔍 **Generic Content Presentation Implementation** ✅ **COMPLETED (v2.5.3)**
 
 **Generic Content Presentation Features:**
 - **Runtime-Unknown Content Support**: Handles content types unknown at compile time

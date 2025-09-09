@@ -199,7 +199,6 @@ public struct EnhancedDeviceCapabilities {
         public init() {
             #if os(iOS)
             let screen = UIScreen.main
-            self.screenSize = screen.bounds.size
             self.orientation = DeviceOrientation.fromUIDeviceOrientation(UIDevice.current.orientation)
             self.pixelDensity = screen.scale
             
@@ -219,7 +218,7 @@ public struct EnhancedDeviceCapabilities {
                 safeAreaInsets = UIEdgeInsets.zero
             }
             
-            // Update screenSize to reflect actual window size
+            // Set screenSize to reflect actual window size
             self.screenSize = actualWindowSize
             
             self.safeAreaInsets = EdgeInsets(

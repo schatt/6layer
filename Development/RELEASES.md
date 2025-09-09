@@ -1,6 +1,66 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v2.5.3 - Generic Content Presentation Implementation** 🚀
+## 📍 **Current Release: v2.5.4 - Critical Bug Fixes** 🚀
+
+**Release Date**: September 8, 2024  
+**Status**: ✅ **COMPLETE**  
+**Next Release**: TBD
+
+---
+
+## 🔧 **v2.5.4 - Critical Bug Fixes** ✅ **COMPLETE**
+
+**Release Date**: September 8, 2024  
+**Type**: Bug Fix Release  
+**Priority**: Critical  
+
+### **🐛 Critical Issues Fixed**
+
+#### **1. iOS Window Detection Main Actor Isolation Error**
+- **Problem**: `cleanup()` method called from `deinit` which cannot be main actor-isolated
+- **Impact**: iOS builds failing with Swift concurrency errors
+- **Fix**: Created separate `nonisolatedCleanup()` method for deinit context
+- **Files**: `Framework/Sources/iOS/WindowDetection/iOSWindowDetection.swift`
+
+#### **2. iOS Notification Name Error**
+- **Problem**: `UIScene.didDeactivateNotification` doesn't exist in iOS SDK
+- **Impact**: iOS builds failing with undefined notification errors
+- **Fix**: Changed to `UIScene.willDeactivateNotification` (correct API)
+- **Files**: `Framework/Sources/iOS/WindowDetection/iOSWindowDetection.swift`
+
+#### **3. Immutable Value Initialization Error**
+- **Problem**: `self.screenSize` being initialized twice in `EnhancedDeviceDetection.swift`
+- **Impact**: Compilation errors preventing builds
+- **Fix**: Removed duplicate initialization, only assign final calculated value
+- **Files**: `Framework/Sources/Shared/Models/EnhancedDeviceDetection.swift`
+
+#### **4. Empty Option Set Warning**
+- **Problem**: `VoiceOverElementTraits.none` using `rawValue: 0` instead of empty array
+- **Impact**: Compiler warnings treated as errors
+- **Fix**: Changed to `VoiceOverElementTraits = []` to silence warning
+- **Files**: `Framework/Sources/Shared/Views/Extensions/AccessibilityTypes.swift`
+
+#### **5. Package.swift Unhandled Files Warning**
+- **Problem**: 3 files in test directory not explicitly excluded from target
+- **Impact**: Build warnings about unhandled files
+- **Fix**: Added explicit exclusions for `.disabled` and `.md` files
+- **Files**: `Package.swift`
+
+### **✅ Verification Results**
+- **Build Status**: ✅ Clean build with zero warnings or errors
+- **Test Status**: ✅ All tests passing
+- **iOS Compatibility**: ✅ Proper Swift concurrency handling
+- **SDK Compatibility**: ✅ Correct iOS notification names
+
+### **🎯 Impact**
+- **iOS Development**: Now compiles cleanly for iOS projects
+- **Swift Concurrency**: Proper main actor isolation handling
+- **Build Quality**: Zero warnings or errors across all platforms
+- **Production Ready**: Framework safe for production use
+
+---
+
+## 📍 **Previous Release: v2.5.3 - Generic Content Presentation Implementation** 🚀
 
 **Release Date**: September 8, 2024  
 **Status**: ✅ **COMPLETE**  

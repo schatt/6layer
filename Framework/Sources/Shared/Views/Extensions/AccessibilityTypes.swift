@@ -221,7 +221,7 @@ public struct VoiceOverElementTraits: OptionSet {
     public static let causesPageTurn = VoiceOverElementTraits(rawValue: 1 << 15)
     public static let tabBar = VoiceOverElementTraits(rawValue: 1 << 16)
     public static let textEntry = VoiceOverElementTraits(rawValue: 1 << 17)
-    public static let none = VoiceOverElementTraits(rawValue: 0)
+    public static let none: VoiceOverElementTraits = []
     public static let all = VoiceOverElementTraits(rawValue: UInt64.max)
 }
 

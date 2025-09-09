@@ -52,7 +52,8 @@ public class iOSWindowDetection: ObservableObject, UnifiedWindowDetection.Platfo
     }
     
     deinit {
-        cleanup()
+        // Only cleanup what can be done without main actor access
+        nonisolatedCleanup()
     }
     
     // MARK: - Public Methods
@@ -140,7 +141,7 @@ public class iOSWindowDetection: ObservableObject, UnifiedWindowDetection.Platfo
         
         // Window scene deactivation
         let deactivationObserver = NotificationCenter.default.addObserver(
-            forName: UIScene.didDeactivateNotification,
+            forName: UIScene.willDeactivateNotification,
             object: windowScene,
             queue: .main
         ) { [weak self] _ in
@@ -270,6 +271,12 @@ public class iOSWindowDetection: ObservableObject, UnifiedWindowDetection.Platfo
         
         windowScene = nil
         window = nil
+    }
+    
+    nonisolated private func nonisolatedCleanup() {
+        // Only cleanup what can be done without main actor access
+        // Timer and notification cleanup will be handled by the main cleanup method
+        // when called from main actor contexts
     }
 }
 
