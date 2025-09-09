@@ -246,8 +246,8 @@ final class OCRViewTests: XCTestCase {
     
     // MARK: - Legacy OCR View Tests
     
-    func testLegacyOCRView() {
-        // Given: Legacy OCR view parameters
+    func testOCRView() {
+        // Given: OCR view parameters
         let image = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -261,27 +261,28 @@ final class OCRViewTests: XCTestCase {
             requiresNeuralEngine: false,
             estimatedProcessingTime: 1.0
         )
-        
-        var _: OCRResult?
-        var _: Error?
-        
-        // When: Creating legacy OCR view
-        let legacyView = LegacyOCRView(
+
+        // When: Creating OCR view with OCRService
+        let ocrView = OCRView(
+            service: OCRServiceFactory.create(),
             image: image,
             context: context,
             strategy: strategy,
             onResult: { _ in
-                // Result handler
+                // OCR result callback - intentionally unused in this creation test
             },
             onError: { _ in
-                // Error handler
+                // OCR error callback - intentionally unused in this creation test
             }
         )
-        
+
         // Then: Should create view successfully
-        XCTAssertNotNil(legacyView, "Legacy OCR view should be created")
+        XCTAssertNotNil(ocrView, "OCR view should be created")
+
+        // Note: OCR processing is asynchronous, so result/error callbacks may not be called immediately
+        // The test verifies that the view can be created with the callback handlers
     }
-    
+
     // MARK: - OCR Service Factory Tests
     
     func testOCRServiceFactory() {
@@ -320,7 +321,7 @@ final class OCRViewTests: XCTestCase {
     
     // MARK: - Integration Tests
     
-    func testOCRViewIntegration() async {
+    func testOCRViewIntegration() {
         // Given: OCR view with mock service
         let expectedResult = OCRResult(
             extractedText: "Integration Test Result",
@@ -365,8 +366,7 @@ final class OCRViewTests: XCTestCase {
         
         // Then: Should create view successfully
         XCTAssertNotNil(ocrView, "OCR view should be created")
-        
-        // Wait a bit for async processing
-        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+
+        // Note: OCR processing happens asynchronously, so we don't wait for results in this basic creation test
     }
 }

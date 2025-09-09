@@ -20,12 +20,12 @@ final class OCROverlayTestableInterfaceTests: XCTestCase {
         // Create mock OCR result
         mockOCRResult = OCRResult(
             extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.95,
             boundingBoxes: [
                 CGRect(x: 0.1, y: 0.1, width: 0.3, height: 0.1),
                 CGRect(x: 0.1, y: 0.3, width: 0.4, height: 0.1),
                 CGRect(x: 0.1, y: 0.5, width: 0.5, height: 0.1)
             ],
-            confidence: 0.95,
             textTypes: [
                 .general: "Hello World",
                 .price: "Test Text",
@@ -318,8 +318,8 @@ final class OCROverlayTestableInterfaceTests: XCTestCase {
         
         let largeOCRResult = OCRResult(
             extractedText: largeText,
-            boundingBoxes: largeBoundingBoxes,
             confidence: 0.95,
+            boundingBoxes: largeBoundingBoxes,
             textTypes: [:],
             processingTime: 1.0,
             language: .english

@@ -309,8 +309,8 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         #else
         // On macOS, keyboard types are not applicable
         for field in keyboardTestFields {
-            XCTAssertEqual(field.fieldType.keyboardType, .default,
-                          "Field type \(field.fieldType) should default to .default on non-iOS platforms")
+            XCTAssertEqual(field.fieldType.keyboardType, "default",
+                          "Field type \(field.fieldType) should default to 'default' on non-iOS platforms")
         }
         #endif
     }
@@ -372,25 +372,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         let validationFields = [
             GenericFormField(
                 label: "Required Text",
-                fieldType: .text,
-                isRequired: true,
-                value: ""
+                value: "", isRequired: true, fieldType: .text
             ),
             GenericFormField(
                 label: "Required Email",
-                fieldType: .email,
-                isRequired: true,
-                value: ""
+                value: "", isRequired: true, fieldType: .email
             ),
             GenericFormField(
                 label: "Optional Number",
-                value: "123", fieldType: .number,
-                isRequired: false
+                value: "123", isRequired: false, fieldType: .number
             ),
             GenericFormField(
                 label: "Invalid Email",
-                fieldType: .email,
-                value: "invalid-email"
+                value: "invalid-email", fieldType: .email
             )
         ]
 

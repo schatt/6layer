@@ -65,11 +65,15 @@ final class OCRL1VisualCorrectionTests: XCTestCase {
         
         // Then: Should create a valid SwiftUI view
         XCTAssertNotNil(view)
-        
+
         // Verify the view is of the expected type (OCRWithVisualCorrectionWrapper)
         // This tests that the L1 function creates the correct view structure
         let mirror = Mirror(reflecting: view)
         XCTAssertNotNil(mirror)
+
+        // Verify that OCR result was received
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertNotNil(receivedResult, "OCR result should be received in callback")
     }
     
     func testPlatformOCRWithVisualCorrection_L1_WithConfiguration() {
@@ -89,10 +93,14 @@ final class OCRL1VisualCorrectionTests: XCTestCase {
         
         // Then: Should create a valid SwiftUI view
         XCTAssertNotNil(view)
-        
+
         // Verify the view structure is correct
         let mirror = Mirror(reflecting: view)
         XCTAssertNotNil(mirror)
+
+        // Verify that OCR result was received
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertNotNil(receivedResult, "OCR result should be received in callback")
     }
     
     func testPlatformOCRWithVisualCorrection_L1_DifferentContexts() {
@@ -120,6 +128,10 @@ final class OCRL1VisualCorrectionTests: XCTestCase {
             XCTAssertNotNil(view)
             let mirror = Mirror(reflecting: view)
             XCTAssertNotNil(mirror)
+
+            // Verify that OCR result was received for this context
+            wait(for: [expectation], timeout: 5.0)
+            XCTAssertNotNil(receivedResult, "OCR result should be received in callback for context \(context)")
         }
     }
     

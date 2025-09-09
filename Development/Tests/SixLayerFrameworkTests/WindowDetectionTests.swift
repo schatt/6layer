@@ -381,9 +381,10 @@ final class WindowDetectionTests: XCTestCase {
         expectation.expectedFulfillmentCount = 10
         
         for _ in 0..<10 {
+            let detector = windowDetection
             DispatchQueue.global().async {
                 Task { @MainActor in
-                    self.windowDetection.updateWindowInfo()
+                    detector?.updateWindowInfo()
                     expectation.fulfill()
                 }
             }

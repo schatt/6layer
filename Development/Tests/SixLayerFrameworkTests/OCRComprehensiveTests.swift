@@ -797,10 +797,10 @@ final class OCRComprehensiveTests: XCTestCase {
             Task {
                 do {
                     let result = try await service.processImage(
-                image: testImage,
-                context: context,
-                strategy: strategy,
-                )
+                        testImage,
+                        context: context,
+                        strategy: strategy
+                    )
                 XCTAssertNotNil(result)
             } catch {
                 // Expected for test images
@@ -811,41 +811,43 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testOCRPerformanceWithDifferentLanguages() {
         // Test performance with different languages
-        measure {
-            let languages: [OCRLanguage] = [.english, .spanish, .french, .german, .italian]
-            
-				for language in languages {
-					let context = OCRContext(
-						textTypes: [.general],
-						language: language,
-						confidenceThreshold: 0.8
-					)
-					
-					let strategy = OCRStrategy(
-						supportedTextTypes: [.general],
-						supportedLanguages: [language],
-						processingMode: .standard
-					)
-					
-					// Test OCR using modern API
-				let service = OCRService()
-				Task {
-					do {
-						let result = try await service.processImage(
-						image: testImage,
-						context: context,
-						strategy: strategy,
-						onResult: { result in
-							XCTAssertNotNil(result)
-						}
-					)
-					
-					// Component tested above using modern API
-					}
-				}
-			}
-		}
-   } 
+        let testImage = createTestPlatformImage()
+        let languages: [OCRLanguage] = [.english, .spanish, .french, .german, .italian]
+
+        for language in languages {
+            let context = OCRContext(
+                textTypes: [.general],
+                language: language,
+                confidenceThreshold: 0.8
+            )
+
+            let strategy = OCRStrategy(
+                supportedTextTypes: [.general],
+                supportedLanguages: [language],
+                processingMode: .standard
+            )
+
+            // Test OCR using modern API
+            let service = OCRService()
+            let expectation = XCTestExpectation(description: "OCR processing for \(language)")
+
+            Task {
+                do {
+                    let result = try await service.processImage(
+                        testImage,
+                        context: context,
+                        strategy: strategy
+                    )
+                    XCTAssertNotNil(result)
+                } catch {
+                    // Expected for test images
+                }
+                expectation.fulfill()
+            }
+
+            wait(for: [expectation], timeout: 5.0)
+        }
+    }
     // MARK: - Error Handling Tests
     
     func testErrorHandlingWithCorruptedImage() {
@@ -864,21 +866,21 @@ final class OCRComprehensiveTests: XCTestCase {
         )
         
         // Test OCR using modern API
-            let service = OCRService()
-            Task {
-                do {
-                    let result = try await service.processImage(
-            image: corruptedImage,
-            context: context,
-            strategy: strategy,
-            onResult: { result in
+        let corruptedImage = createCorruptedTestImage()
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    corruptedImage,
+                    context: context,
+                    strategy: strategy
+                )
                 // Should handle corrupted image gracefully
                 XCTAssertNotNil(result)
+            } catch {
+                // Expected for test images
             }
-        )
-}
-        
-        XCTAssertNotNil(component)
+        }
     }
 }
     
@@ -898,22 +900,21 @@ final class OCRComprehensiveTests: XCTestCase {
         )
         
         // Test OCR using modern API
-            let service = OCRService()
-            Task {
-                do {
-                    let result = try await service.processImage(
-            image: emptyImage,
-            context: context,
-            strategy: strategy,
-            onResult: { result in
+        let emptyImage = createEmptyTestImage()
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    emptyImage,
+                    context: context,
+                    strategy: strategy
+                )
                 // Should handle empty image gracefully
                 XCTAssertNotNil(result)
+            } catch {
+                // Expected for test images
             }
-        )
-        
-        XCTAssertNotNil(component)
-    }
-    }
+        }
     }
     
     func testErrorHandlingWithInvalidConfidenceThreshold() {
@@ -931,22 +932,21 @@ final class OCRComprehensiveTests: XCTestCase {
         )
         
         // Test OCR using modern API
-            let service = OCRService()
-            Task {
-                do {
-                    let result = try await service.processImage(
-            image: testImage,
-            context: invalidContext,
-            strategy: strategy,
-            onResult: { result in
+        let testImage = createTestPlatformImage()
+        let service = OCRService()
+        Task {
+            do {
+                let result = try await service.processImage(
+                    testImage,
+                    context: invalidContext,
+                    strategy: strategy
+                )
                 // Should handle invalid threshold gracefully
                 XCTAssertNotNil(result)
+            } catch {
+                // Expected for test images
             }
-        )
-        
-        XCTAssertNotNil(component)
-    }
-    }
+        }
     }
     
     // MARK: - Edge Case Tests
@@ -979,7 +979,8 @@ final class OCRComprehensiveTests: XCTestCase {
             confidenceThreshold: 0.8,
             allowsEditing: true
         )
-        
+
+        let largeImage = createLargeTestImage()
         let ocrView = platformOCRWithVisualCorrection_L1(
             image: largeImage,
             context: context
@@ -993,14 +994,15 @@ final class OCRComprehensiveTests: XCTestCase {
     func testEdgeCaseWithAllTextTypes() {
         // Test with all available text types
         let allTextTypes: [TextType] = [.general, .price, .number, .date, .email, .url, .phone, .address]
-        
+
         let context = OCRContext(
             textTypes: allTextTypes,
             language: .english,
             confidenceThreshold: 0.8,
             allowsEditing: true
         )
-        
+
+        let testImage = createTestPlatformImage()
         let ocrView = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context
@@ -1014,14 +1016,16 @@ final class OCRComprehensiveTests: XCTestCase {
     func testEdgeCaseWithAllLanguages() {
         // Test with all available languages
         let allLanguages: [OCRLanguage] = [.english, .spanish, .french, .german, .italian, .portuguese, .chinese, .japanese, .korean, .arabic, .russian]
-        
+
+        let testImage = createTestPlatformImage()
+
         for language in allLanguages {
             let context = OCRContext(
                 textTypes: [.general],
                 language: language,
                 confidenceThreshold: 0.8
             )
-            
+
             let extractionIntent = platformOCRWithVisualCorrection_L1(
                 image: testImage,
                 context: context
@@ -1036,7 +1040,9 @@ final class OCRComprehensiveTests: XCTestCase {
     func testEdgeCaseWithAllDocumentTypes() {
         // Test with all available document types
         let allDocumentTypes: [DocumentType] = [.receipt, .invoice, .businessCard, .form, .license, .passport, .general, .fuelReceipt, .idDocument, .medicalRecord, .legalDocument]
-        
+
+        let testImage = createTestPlatformImage()
+
         for documentType in allDocumentTypes {
             // Create appropriate context based on document type
             let textTypes: [TextType] = {
@@ -1113,9 +1119,9 @@ final class OCRComprehensiveTests: XCTestCase {
         )
         
         XCTAssertNotNil(component)
+        }
     }
-}
-}    
+
     // MARK: - Concurrency Tests
     
     func testConcurrentOCRProcessing() async {
@@ -1127,19 +1133,21 @@ final class OCRComprehensiveTests: XCTestCase {
             language: .english,
             confidenceThreshold: 0.8
         )
-        
+
         let strategy = OCRStrategy(
             supportedTextTypes: textTypes,
             supportedLanguages: [.english],
             processingMode: .standard
         )
-        
+
+        let testImage = createTestPlatformImage()
+
         // Process multiple images concurrently using async/await
         await withTaskGroup(of: Void.self) { group in
             for _ in 0..<5 {
                 group.addTask {
                     do {
-                        let result = try await service.processImage(self.testImage, context: context, strategy: strategy)
+                        let result = try await service.processImage(testImage, context: context, strategy: strategy)
                         XCTAssertNotNil(result)
                     } catch {
                         // OCR might not be available in test environment
@@ -1160,13 +1168,15 @@ final class OCRComprehensiveTests: XCTestCase {
             language: .english,
             confidenceThreshold: 0.8
         )
-        
+
         let strategy = OCRStrategy(
             supportedTextTypes: textTypes,
             supportedLanguages: [.english],
             processingMode: .standard
         )
-        
+
+        let largeImage = createLargeTestImage()
+
         // Process large image multiple times to test memory management
         for _ in 0..<10 {
             // Test OCR using modern API
@@ -1334,4 +1344,3 @@ final class OCRComprehensiveTests: XCTestCase {
         return PlatformImage()
         #endif
     }
-}
