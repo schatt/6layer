@@ -1,63 +1,49 @@
-SixLayer Framework Six-Layer UI Abstraction Architecture - Implementation Plan
+SixLayer Framework API Reference
 
-## Layer-Numbered Naming Convention
+## Current API Functions (v2.6.0+)
 
-### Benefits
-- **Clear Architectural Intent**: `platformResponsiveCard_L1` immediately shows this is a Layer 1 semantic function
-- **Avoids Naming Conflicts**: No more confusion between different layer implementations
-- **Self-Documenting**: Developers can instantly understand the architectural layer
-- **Easier Refactoring**: Clear which functions belong to which architectural layers
-- **Better Separation of Concerns**: Prevents accidental mixing of layers
+### Layer 1 Semantic Functions (PlatformSemanticLayer1.swift)
+- `platformPresentItemCollection_L1<Item: Identifiable>(items: [Item], hints: PresentationHints) -> some View`
+- `platformPresentFormData_L1(fields: [GenericFormField], hints: PresentationHints) -> some View`
+- `platformPresentNumericData_L1(data: [GenericNumericData], hints: PresentationHints) -> some View`
+- `platformResponsiveCard_L1<Content: View>(@ViewBuilder content: () -> Content, hints: PresentationHints) -> some View`
+- `platformPresentMediaData_L1(media: [GenericMediaItem], hints: PresentationHints) -> some View`
+- `platformPresentHierarchicalData_L1(items: [GenericHierarchicalItem], hints: PresentationHints) -> some View`
+- `platformPresentTemporalData_L1(items: [GenericTemporalItem], hints: PresentationHints) -> some View`
+- `platformPresentContent_L1(content: Any, hints: PresentationHints) -> some View`
 
-### Naming Pattern
-- **Layer 1 (Semantic)**: `platformResponsiveCard_L1`, `platformPresentItemCollection_L1`
-- **Layer 2 (Layout Decision)**: `determineOptimalCardLayout_L2`
-- **Layer 3 (Strategy Selection)**: `selectCardLayoutStrategy_L3`
-- **Layer 4 (Component Implementation)**: `platformNavigationSplitContainer_L4`, `platformCardGrid_L4`
-- **Layer 5 (Optimization)**: `platformIOSOptimizations_L5`, `platformIOSSwipeGestures_L5`
-- **Layer 6 (Platform System)**: Native SwiftUI/UIKit components
+### Enhanced Hints Overloads
+- `platformPresentItemCollection_L1<Item: Identifiable>(items: [Item], hints: EnhancedPresentationHints) -> some View`
+- `platformPresentFormData_L1(fields: [GenericFormField], hints: EnhancedPresentationHints) -> some View`
+- `platformPresentNumericData_L1(data: [GenericNumericData], hints: EnhancedPresentationHints) -> some View`
+- `platformResponsiveCard_L1<Content: View>(@ViewBuilder content: () -> Content, hints: EnhancedPresentationHints) -> some View`
+- `platformPresentMediaData_L1(media: [GenericMediaItem], hints: EnhancedPresentationHints) -> some View`
+- `platformPresentHierarchicalData_L1(items: [GenericHierarchicalItem], hints: EnhancedPresentationHints) -> some View`
+- `platformPresentTemporalData_L1(items: [GenericTemporalItem], hints: EnhancedPresentationHints) -> some View`
 
-Project Overview
-Goal: Implement a six-layer UI abstraction architecture that enables true platform-independent presentation with intelligent, content-aware layout decisions while maintaining 100% backward compatibility.
-Priority: Medium (after current project stability is ensured)
-Timeline: Phased implementation over several months
-Impact: Foundation for intelligent, adaptive UI system
-Six-Layer Architecture Design
-Pinned Architectural Insight: Six-Layer UI Abstraction
-Level 1: Data Presentation Intent → Level 2
-Level 2: Layout Strategy Decision → Level 3
-Level 3: Strategy Selection → Level 4
-Level 4: Component Implementation → Level 5
-Level 5: Platform-Specific Optimization → Level 6
-Level 6: Platform System
-Layer Responsibilities
-Level 1: Semantic Intent
-Views describe WHAT they want, not HOW to implement it
-Examples: platformVerticalStack(), platformGridStack(), platformFormStack()
-Future: Unified platformPresent(data:, hints:, context:) function
-Level 2: Layout Decision Engine
-Analyzes content, context, and hints to choose optimal layout strategy
-Examples: determineOptimalVerticalLayout(), determineOptimalGridLayout()
-Future: Intelligent content analysis and performance optimization
-Level 3: Strategy Selection
-Selects optimal layout strategies based on content analysis and device capabilities
-Examples: selectCardLayoutStrategy_L3(), chooseGridStrategy_L3()
-Current Status: Implemented with layer-numbered naming convention
+### Cross-Platform Optimization Layer 6 (CrossPlatformOptimizationLayer6.swift)
+- `CrossPlatformOptimizationManager` class
+- `PerformanceBenchmarking.benchmarkView<Content: View>(_ content: Content, benchmarkName: String, iterations: Int = 100) -> PerformanceBenchmark`
+- `CrossPlatformTesting.testViewAcrossPlatforms<Content: View>(_ content: Content, testName: String) -> CrossPlatformTestResults`
+- `PlatformUIPatterns` struct with navigationPatterns, interactionPatterns, layoutPatterns
 
-Level 4: Component Implementation
-Implements specific layout types using platform-specific components
-Examples: platformNavigationSplitContainer_L4(), platformNavigationBarItems_L4()
-Current Status: Implemented with layer-numbered naming convention
+### Data Types and Structures
+- `PresentationHints` - Basic hints for guiding generic functions
+- `EnhancedPresentationHints` - Extended hints with extensible business logic
+- `DataTypeHint` - Enum for different data types (form, collection, media, etc.)
+- `PresentationPreference` - Enum for presentation preferences (automatic, modal, etc.)
+- `PresentationContext` - Enum for presentation context (dashboard, detail, etc.)
+- `ContentComplexity` - Enum for content complexity levels
+- `CustomHint` - Protocol for extensible business-specific hints
+- `Platform` - Enum for supported platforms (iOS, macOS, watchOS, tvOS, visionOS)
 
-Level 5: Platform Optimization
-Platform-specific styling, performance, and behavior optimizations
-Examples: platformIOSOptimizations_L5(), platformIOSSwipeGestures_L5()
-Current Status: Implemented with layer-numbered naming convention
-
-Level 6: Platform System
-Direct platform system calls and native implementations
-Examples: NavigationSplitView, UINavigationController
-Current Status: Native SwiftUI and UIKit components
+### Performance and Testing Types
+- `PerformanceBenchmark` - Results of performance benchmarking
+- `CrossPlatformTestResults` - Results of cross-platform testing
+- `PlatformBenchmarkResult` - Platform-specific benchmark results
+- `TestResult` - Individual platform test results
+- `PerformanceMetrics` - Performance measurement data
+- `MemoryMetrics` - Memory usage metrics
 Implementation Strategy
 Phase 1: Foundation (COMPLETED ✅)
 Implemented Level 1, 2, 3, 4, 5, and 6 with layer-numbered naming convention

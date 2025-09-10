@@ -512,6 +512,13 @@ platformPresentFormData_L1(
 4. **Business Configuration**: `customPreferences`, `extensibleHints`
 5. **Hint Processing**: `HintProcessingEngine` for intelligent decision making
 
+### **📖 API Documentation Links:**
+- **Core Layer 1 Functions**: See `Framework/Sources/Shared/Views/Extensions/PlatformSemanticLayer1.swift`
+- **Cross-Platform Optimization**: See `Framework/Sources/Shared/Views/Extensions/CrossPlatformOptimizationLayer6.swift`
+- **Platform UI Patterns**: See `Framework/Sources/Shared/Views/Extensions/PlatformUIPatterns.swift`
+- **Performance Benchmarking**: See `Framework/Sources/Shared/Views/Extensions/CrossPlatformOptimizationLayer6.swift` (PerformanceBenchmarking struct)
+- **Complete Function Index**: See `Framework/docs/FunctionIndex.md`
+
 ### **✅ What's Extensible:**
 1. **Business-Specific Behavior**: Through `CustomHint` system
 2. **Business Configuration**: Through `customPreferences`
@@ -527,7 +534,8 @@ The framework now includes a complete **Cross-Platform Optimization Layer 6** th
 ```swift
 // ✅ NEW: Centralized optimization management
 let optimizationManager = CrossPlatformOptimizationManager()
-let optimizedView = optimizationManager.optimizeView(myView)
+// Note: optimizeView() method is not available in current implementation
+// Use platform-specific optimizations through environment values instead
 ```
 
 #### **2. Performance Benchmarking:**
@@ -538,22 +546,27 @@ let benchmark = PerformanceBenchmarking.benchmarkView(
     benchmarkName: "Form Rendering",
     iterations: 100
 )
+// Returns PerformanceBenchmark with platform-specific results
 ```
 
 #### **3. Platform-Specific UI Patterns:**
 ```swift
 // ✅ NEW: Intelligent UI pattern selection
 let patterns = PlatformUIPatterns(for: .iOS)
-let navigationType = patterns.navigationPatterns.primaryNavigation // .tabBar
-let interactionType = patterns.interactionPatterns.primaryInput // .touch
+// Access navigation patterns through the patterns property
+let navigationPatterns = patterns.navigationPatterns
+let interactionPatterns = patterns.interactionPatterns
+let layoutPatterns = patterns.layoutPatterns
 ```
 
 #### **4. Memory Management:**
 ```swift
 // ✅ NEW: Advanced memory strategies
 let settings = PlatformOptimizationSettings(for: .iOS)
-settings.memoryStrategy = .adaptive
-settings.performanceLevel = .high
+// Note: These properties are read-only in current implementation
+// Use CrossPlatformOptimizationManager to access settings
+let manager = CrossPlatformOptimizationManager(platform: .iOS)
+let currentSettings = manager.optimizationSettings
 ```
 
 #### **5. Cross-Platform Testing:**
@@ -563,6 +576,7 @@ let testResults = CrossPlatformTesting.testViewAcrossPlatforms(
     myView,
     testName: "Accessibility Compliance"
 )
+// Returns CrossPlatformTestResults with platform-specific test results
 ```
 
 ### **Key Benefits of Layer 6:**
