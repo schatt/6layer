@@ -108,6 +108,19 @@ public func platformPresentContent_L1(
 ) -> some View
 ```
 
+### **⚠️ Important: Generic Types Clarification**
+```swift
+// ❌ WRONG: These are NOT types you create instances of:
+// GenericItemCollection  // This is a VIEW, not a type
+// GenericFormField       // This is a STRUCT, but for framework use only
+
+// ✅ CORRECT: These are the actual generic types you work with:
+[GenericFormField]        // Array of form field structs
+[Item: Identifiable]      // Any identifiable array (your business types)
+PresentationHints         // Hints struct for configuration
+DataTypeHint              // Enum for data type classification
+```
+
 ### **2. Generic Data Types (What Actually Exists):**
 ```swift
 // ✅ Core enums remain generic and business-agnostic:
@@ -511,6 +524,35 @@ platformPresentFormData_L1(
 3. **Extensible Hints System**: `CustomHint`, `EnhancedPresentationHints`
 4. **Business Configuration**: `customPreferences`, `extensibleHints`
 5. **Hint Processing**: `HintProcessingEngine` for intelligent decision making
+
+### **⚠️ Important Clarification About Generic Types:**
+- **`GenericItemCollection`**: This is a **VIEW**, not a type you instantiate
+- **`GenericFormField`**: This is a **STRUCT** for creating form field arrays, not a business type
+- **`GenericItemCollectionView`**: This is an **INTERNAL VIEW** used by the framework
+- **Your Business Types**: Use your own `Identifiable` types with the generic functions
+
+### **✅ Correct Usage Examples:**
+```swift
+// ✅ CORRECT: Use your business types with generic functions
+struct Vehicle: Identifiable {
+    let id = UUID()
+    let make: String
+    let model: String
+}
+
+let vehicles: [Vehicle] = getVehicles()  // Your business type
+let hints = PresentationHints(...)        // Framework hints
+
+// Use generic function with your business type
+platformPresentItemCollection_L1(items: vehicles, hints: hints)
+
+// ✅ CORRECT: Create form fields for generic form function
+let fields = [
+    GenericFormField(name: "Make", type: .text),
+    GenericFormField(name: "Model", type: .text)
+]
+platformPresentFormData_L1(fields: fields, hints: hints)
+```
 
 ### **📖 API Documentation Links:**
 - **Core Layer 1 Functions**: See `Framework/Sources/Shared/Views/Extensions/PlatformSemanticLayer1.swift`
