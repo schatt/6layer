@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.8.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.8.0)
+[![Version](https://img.shields.io/badge/version-v2.8.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.8.1)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -56,6 +56,15 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v2.8.1
+
+### **Complex Forms Best Practices Documentation**
+- **Comprehensive Guide**: New detailed guide for AI agents on handling complex forms
+- **5 Better Approaches**: Composition, Protocol-Based Fields, View Modifiers, Focused Extensions, Pure SwiftUI
+- **Platform Independence**: Guidelines for using 6-layer platform utilities in custom SwiftUI code
+- **Anti-Patterns**: Clear guidance on what to avoid when building complex forms
+- **Decision Matrix**: Help developers choose the right approach for their use case
 
 ## 🆕 What's New in v2.8.0
 

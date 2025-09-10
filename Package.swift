@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v2.8.0 - Comprehensive Callback Integrations
+// SixLayerFramework v2.8.1 - Complex Forms Best Practices Documentation
 
 import PackageDescription
 

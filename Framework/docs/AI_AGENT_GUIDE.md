@@ -560,6 +560,7 @@ platformPresentFormData_L1(fields: fields, hints: hints)
 - **Platform UI Patterns**: See `Framework/Sources/Shared/Views/Extensions/PlatformUIPatterns.swift`
 - **Performance Benchmarking**: See `Framework/Sources/Shared/Views/Extensions/CrossPlatformOptimizationLayer6.swift` (PerformanceBenchmarking struct)
 - **Complete Function Index**: See `Framework/docs/FunctionIndex.md`
+- **Complex Forms Best Practices**: See `Framework/docs/ComplexFormsBestPractices.md`
 
 ### **✅ What's Extensible:**
 1. **Business-Specific Behavior**: Through `CustomHint` system
