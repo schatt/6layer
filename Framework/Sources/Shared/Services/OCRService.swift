@@ -488,16 +488,14 @@ public class MockOCRService: OCRServiceProtocol {
         context: OCRContext,
         strategy: OCRStrategy
     ) async throws -> OCRResult {
-        // Simulate processing time
-        try await Task.sleep(nanoseconds: UInt64(mockResult.processingTime * 1_000_000_000))
-        
+        // Return immediately for testing - no sleep needed
         // Create a new result with the language from the context
         let result = OCRResult(
             extractedText: mockResult.extractedText,
             confidence: mockResult.confidence,
             boundingBoxes: mockResult.boundingBoxes,
             textTypes: mockResult.textTypes,
-            processingTime: mockResult.processingTime,
+            processingTime: 0.0, // No processing time for tests
             language: context.language
         )
         
