@@ -354,7 +354,7 @@ final class OCRDisambiguationTests: XCTestCase {
     
     func testOCRDisambiguationIntegrationWithReceipt() async {
         // Given: Receipt image with multiple prices
-        let service = OCRServiceFactory.create()
+        let service = OCRService()
         let context = OCRContext(
             textTypes: [.price, .date],
             language: .english,
@@ -369,40 +369,43 @@ final class OCRDisambiguationTests: XCTestCase {
         
         // When: Processing with OCR service
         do {
-            let result = try await service.processImage(testImage, context: context, strategy: strategy)
+            let result = try await service.processImage(self.testImage, context: context, strategy: strategy)
             // Then: Should handle result
             XCTAssertNotNil(result)
         } catch {
             // OCR might not be available in test environment
             // This is expected behavior for tests
+            print("Receipt test completed with: \(error.localizedDescription)")
         }
     }
     
     func testOCRDisambiguationIntegrationWithBusinessCard() async {
         // Given: Business card image with multiple phone numbers
-        let service = OCRServiceFactory.create()
+        let service = OCRService()
         let context = OCRContext(
             textTypes: [.phone, .email],
             language: .english,
             confidenceThreshold: 0.8
         )
-        
+
         let strategy = OCRStrategy(
             supportedTextTypes: [.phone, .email],
             supportedLanguages: [.english],
             processingMode: .standard
         )
-        
+
         // When: Processing with OCR service
         do {
-            let result = try await service.processImage(testImage, context: context, strategy: strategy)
+            let result = try await service.processImage(self.testImage, context: context, strategy: strategy)
             // Then: Should handle result
             XCTAssertNotNil(result)
         } catch {
             // OCR might not be available in test environment
             // This is expected behavior for tests
+            print("Business card test completed with: \(error.localizedDescription)")
         }
     }
+
     
     // MARK: - Edge Case Tests
     
@@ -511,14 +514,14 @@ final class OCRDisambiguationTests: XCTestCase {
         let size = CGSize(width: 300, height: 400)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.white.setFill()
+            Color.white.setFill()
             context.fill(CGRect(origin: .zero, size: size))
-            
+
             // Add some text-like content for testing
             let text = "Receipt\nTotal: $12.50\nTax: $15.99\nDate: 2024-01-15"
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 16),
-                .foregroundColor: UIColor.black
+                .foregroundColor: UIColor(Color.primary)
             ]
             text.draw(in: CGRect(x: 20, y: 20, width: 260, height: 360), withAttributes: attributes)
         }
@@ -527,14 +530,13 @@ final class OCRDisambiguationTests: XCTestCase {
         let size = NSSize(width: 300, height: 400)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.white.setFill()
-        NSRect(origin: .zero, size: size).fill()
-        
+        Color.white.fillRect(size: size)
+
         // Add some text-like content for testing
         let text = "Receipt\nTotal: $12.50\nTax: $15.99\nDate: 2024-01-15"
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 16),
-            .foregroundColor: NSColor.black
+            .foregroundColor: Color.primary.platformColor
         ]
         text.draw(in: NSRect(x: 20, y: 20, width: 260, height: 360), withAttributes: attributes)
         image.unlockFocus()

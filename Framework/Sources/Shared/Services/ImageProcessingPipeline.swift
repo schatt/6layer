@@ -168,7 +168,7 @@ public class ImageProcessor: ObservableObject {
         return ImageAnalysis(
             qualityScore: 0.85, // Placeholder
             dimensions: image.size,
-            colorPalette: nil,
+            colorPalette: [Color.black, Color.white, Color.gray], // Placeholder color palette
             detectedObjects: nil,
             textRegions: nil
         )

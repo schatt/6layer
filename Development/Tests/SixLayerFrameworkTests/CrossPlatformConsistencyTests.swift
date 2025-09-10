@@ -487,11 +487,11 @@ final class CrossPlatformConsistencyTests: XCTestCase {
             XCTAssertFalse(config.capabilityState.supportsHover,
                           "tvOS should not support hover for \(config.name)")
         case .visionOS:
-            // visionOS should not support touch or hover
+            // visionOS should not support touch but should support hover (spatial computing)
             XCTAssertFalse(config.capabilityState.supportsTouch,
                           "visionOS should not support touch for \(config.name)")
-            XCTAssertFalse(config.capabilityState.supportsHover,
-                          "visionOS should not support hover for \(config.name)")
+            XCTAssertTrue(config.capabilityState.supportsHover,
+                         "visionOS should support hover for \(config.name)")
         }
     }
     

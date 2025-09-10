@@ -22,16 +22,14 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let size = CGSize(width: 100, height: 100)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
+            Color.blue.fillRect(size: size, in: context)
         }
         return PlatformImage(uiImage: image)
         #elseif os(macOS)
         let size = NSSize(width: 100, height: 100)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.blue.setFill()
-        NSRect(origin: .zero, size: size).fill()
+        Color.blue.fillRect(size: size)
         image.unlockFocus()
         return PlatformImage(nsImage: image)
         #endif

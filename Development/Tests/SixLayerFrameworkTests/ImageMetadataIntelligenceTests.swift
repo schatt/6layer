@@ -21,7 +21,7 @@ final class ImageMetadataIntelligenceTests: XCTestCase {
         let size = CGSize(width: 100, height: 100)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.blue.setFill()
+            Color.blue.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: image)
@@ -29,8 +29,7 @@ final class ImageMetadataIntelligenceTests: XCTestCase {
         let size = NSSize(width: 100, height: 100)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.blue.setFill()
-        NSRect(origin: .zero, size: size).fill()
+        Color.blue.fillRect(size: size)
         image.unlockFocus()
         return PlatformImage(nsImage: image)
         #endif

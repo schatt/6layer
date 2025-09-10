@@ -573,7 +573,324 @@ public extension Color {
             return nil
         }
     }
+
+    /// Cross-platform setFill method for graphics contexts
+    /// - Parameter context: The graphics context to set fill color on
+    func setFill(on context: CGContext) {
+        #if os(iOS)
+        let uiColor = UIColor(self)
+        context.setFillColor(uiColor.cgColor)
+        #elseif os(macOS)
+        let nsColor = NSColor(self)
+        context.setFillColor(nsColor.cgColor)
+        #endif
+    }
+
+    /// Cross-platform setFill method that works on any graphics context
+    /// Automatically handles platform differences internally
+    func setFill() {
+        #if os(iOS)
+        let uiColor = UIColor(self)
+        uiColor.setFill()
+        #elseif os(macOS)
+        let nsColor = NSColor(self)
+        nsColor.setFill()
+        #endif
+    }
+
+    /// Cross-platform setStroke method for outlines
+    func setStroke() {
+        #if os(iOS)
+        let uiColor = UIColor(self)
+        uiColor.setStroke()
+        #elseif os(macOS)
+        let nsColor = NSColor(self)
+        nsColor.setStroke()
+        #endif
+    }
+
+    // MARK: - Platform-Specific Color Access
+
+    /// Platform-specific color accessor
+    /// Returns UIColor on iOS, NSColor on macOS
+    var platformColor: Any {
+        #if os(iOS)
+        return UIColor(self)
+        #elseif os(macOS)
+        return NSColor(self)
+        #else
+        return self
+        #endif
+    }
+
+    // MARK: - Alpha and Opacity Methods
+
+    /// Create a color with modified opacity
+    /// - Parameter opacity: The opacity value (0.0 to 1.0)
+    /// - Returns: A new color with the specified opacity
+    func withOpacity(_ opacity: Double) -> Color {
+        self.opacity(opacity)
+    }
+
+    /// Create a color with modified alpha
+    /// - Parameter alpha: The alpha value (0.0 to 1.0)
+    /// - Returns: A new color with the specified alpha
+    func withAlpha(_ alpha: Double) -> Color {
+        self.opacity(alpha)
+    }
+
+    // MARK: - Graphics Context Operations
+
+    /// Set this color as fill and fill a rectangle
+    /// - Parameters:
+    ///   - rect: The rectangle to fill
+    ///   - context: The graphics context to draw in
+    func fill(_ rect: CGRect, in context: CGContext) {
+        context.saveGState()
+        setFill(on: context)
+        context.fill(rect)
+        context.restoreGState()
+    }
+
+    /// Set this color as stroke and stroke a rectangle
+    /// - Parameters:
+    ///   - rect: The rectangle to stroke
+    ///   - context: The graphics context to draw in
+    ///   - lineWidth: The stroke width (optional, uses current context width if not specified)
+    func stroke(_ rect: CGRect, in context: CGContext, lineWidth: CGFloat? = nil) {
+        context.saveGState()
+        if let lineWidth = lineWidth {
+            context.setLineWidth(lineWidth)
+        }
+        setStroke()
+        context.stroke(rect)
+        context.restoreGState()
+    }
+
+    /// Set this color as stroke and stroke a path
+    /// - Parameters:
+    ///   - context: The graphics context to draw in
+    ///   - lineWidth: The stroke width (optional)
+    func stroke(in context: CGContext, lineWidth: CGFloat? = nil) {
+        context.saveGState()
+        if let lineWidth = lineWidth {
+            context.setLineWidth(lineWidth)
+        }
+        setStroke()
+        context.strokePath()
+        context.restoreGState()
+    }
+
+    // MARK: - Color Manipulation
+
+    /// Create a lighter version of this color
+    /// - Parameter amount: How much to lighten (0.0 = no change, 1.0 = white)
+    /// - Returns: A lighter version of this color
+    func lighter(by amount: Double = 0.2) -> Color {
+        #if os(iOS)
+        let uiColor = UIColor(self)
+        var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
+        uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        return Color(hue: hue, saturation: saturation, brightness: min(brightness + amount, 1.0), opacity: alpha)
+        #elseif os(macOS)
+        let nsColor = NSColor(self)
+        var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
+        nsColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        return Color(hue: hue, saturation: saturation, brightness: min(brightness + amount, 1.0), opacity: alpha)
+        #else
+        return self
+        #endif
+    }
+
+    /// Create a darker version of this color
+    /// - Parameter amount: How much to darken (0.0 = no change, 1.0 = black)
+    /// - Returns: A darker version of this color
+    func darker(by amount: Double = 0.2) -> Color {
+        #if os(iOS)
+        let uiColor = UIColor(self)
+        var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
+        uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        return Color(hue: hue, saturation: saturation, brightness: max(brightness - amount, 0.0), opacity: alpha)
+        #elseif os(macOS)
+        let nsColor = NSColor(self)
+        var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
+        nsColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        return Color(hue: hue, saturation: saturation, brightness: max(brightness - amount, 0.0), opacity: alpha)
+        #else
+        return self
+        #endif
+    }
+
+    // MARK: - Cross-Platform Rectangle Filling
+
+    /// Fill a rectangle with this color using cross-platform approach
+    /// - Parameter rect: The rectangle to fill (can be CGRect or NSRect)
+    func fillRect(_ rect: Any) {
+        #if os(iOS)
+        if let cgRect = rect as? CGRect {
+            setFill()
+            // CGRect doesn't have fill() - we need to use CGContext
+            if let context = UIGraphicsGetCurrentContext() {
+                context.fill(cgRect)
+            }
+        }
+        #elseif os(macOS)
+        if let nsRect = rect as? NSRect {
+            setFill()
+            nsRect.fill()
+        } else if let cgRect = rect as? CGRect {
+            // Convert CGRect to NSRect for macOS
+            let nsRect = NSRectFromCGRect(cgRect)
+            setFill()
+            nsRect.fill()
+        }
+        #endif
+    }
+
+    /// Fill a rectangle with this color using CGContext approach (unified)
+    /// - Parameters:
+    ///   - rect: The rectangle to fill
+    ///   - context: The graphics context (optional, uses current if not provided)
+    func fillRectangle(_ rect: Any, in context: CGContext? = nil) {
+        #if os(iOS)
+        if let cgRect = rect as? CGRect {
+            if let context = context {
+                fill(cgRect, in: context)
+            } else {
+                setFill()
+                if let currentContext = UIGraphicsGetCurrentContext() {
+                    currentContext.fill(cgRect)
+                }
+            }
+        }
+        #elseif os(macOS)
+        if let cgRect = rect as? CGRect {
+            if let context = context {
+                fill(cgRect, in: context)
+            } else {
+                setFill()
+                if let currentContext = NSGraphicsContext.current?.cgContext {
+                    currentContext.fill(cgRect)
+                }
+            }
+        } else if let nsRect = rect as? NSRect {
+            let cgRect = NSRectToCGRect(nsRect)
+            if let context = context {
+                fill(cgRect, in: context)
+            } else {
+                setFill()
+                if let currentContext = NSGraphicsContext.current?.cgContext {
+                    currentContext.fill(cgRect)
+                }
+            }
+        }
+        #endif
+    }
+
+    // MARK: - Platform-Agnostic Rectangle Filling
+
+
+    /// Fill a rectangle with this color using size only (origin defaults to .zero)
+    /// - Parameters:
+    ///   - size: The size of the rectangle to fill
+    ///   - context: The graphics context (optional, uses current if not provided)
+    func fillRect(size: CGSize, in context: Any? = nil) {
+        #if os(iOS)
+        let rect = CGRect(origin: .zero, size: size)
+        if let rendererContext = context as? UIGraphicsImageRendererContext {
+            fill(rect, in: rendererContext.cgContext)
+        } else {
+            setFill()
+            if let currentContext = UIGraphicsGetCurrentContext() {
+                currentContext.fill(rect)
+            }
+        }
+        #elseif os(macOS)
+        let rect = CGRect(origin: .zero, size: size)
+        if let context = context {
+            fill(rect, in: context as! CGContext)
+        } else {
+            setFill()
+            if let currentContext = NSGraphicsContext.current?.cgContext {
+                currentContext.fill(rect)
+            }
+        }
+        #endif
+    }
+
+    /// Fill the entire current graphics context bounds with this color
+    /// - Parameter context: The graphics context (optional, uses current if not provided)
+    func fillBounds(in context: CGContext? = nil) {
+        #if os(iOS)
+        if let context = context {
+            let bounds = context.boundingBoxOfClipPath
+            fill(bounds, in: context)
+        } else if let currentContext = UIGraphicsGetCurrentContext() {
+            let bounds = currentContext.boundingBoxOfClipPath
+            fill(bounds, in: currentContext)
+        }
+        #elseif os(macOS)
+        if let context = context {
+            let bounds = context.boundingBoxOfClipPath
+            fill(bounds, in: context)
+        } else if let currentContext = NSGraphicsContext.current?.cgContext {
+            let bounds = currentContext.boundingBoxOfClipPath
+            fill(bounds, in: currentContext)
+        }
+        #endif
+    }
 }
+
+// MARK: - Cross-Platform Rectangle Extensions
+
+/// Cross-platform rectangle type that works with both NSRect and CGRect
+public struct PlatformRect {
+    #if os(iOS)
+    public let cgRect: CGRect
+    #elseif os(macOS)
+    public let nsRect: NSRect
+    #endif
+
+    public var origin: CGPoint {
+        #if os(iOS)
+        return cgRect.origin
+        #elseif os(macOS)
+        return CGPoint(x: nsRect.origin.x, y: nsRect.origin.y)
+        #endif
+    }
+
+    public var size: CGSize {
+        #if os(iOS)
+        return cgRect.size
+        #elseif os(macOS)
+        return CGSize(width: nsRect.size.width, height: nsRect.size.height)
+        #endif
+    }
+
+    public init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
+        #if os(iOS)
+        self.cgRect = CGRect(x: x, y: y, width: width, height: height)
+        #elseif os(macOS)
+        self.nsRect = NSRect(x: x, y: y, width: width, height: height)
+        #endif
+    }
+
+    public init(origin: CGPoint, size: CGSize) {
+        #if os(iOS)
+        self.cgRect = CGRect(origin: origin, size: size)
+        #elseif os(macOS)
+        self.nsRect = NSRect(origin: origin, size: size)
+        #endif
+    }
+
+    /// Fill this rectangle with a color
+    public func fill(with color: Color) {
+        color.fillRectangle(self)
+    }
+}
+
+// MARK: - Convenience Extensions for Native Rectangle Types
+
 
 // MARK: - View Extensions for Platform Colors
 

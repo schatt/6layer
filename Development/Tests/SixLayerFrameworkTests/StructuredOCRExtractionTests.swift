@@ -20,7 +20,7 @@ final class StructuredOCRExtractionTests: XCTestCase {
         let size = CGSize(width: 100, height: 100)
         let renderer = UIGraphicsImageRenderer(size: size)
         let uiImage = renderer.image { context in
-            UIColor.white.setFill()
+            Color.white.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: uiImage)
@@ -28,8 +28,7 @@ final class StructuredOCRExtractionTests: XCTestCase {
         let size = NSSize(width: 100, height: 100)
         let nsImage = NSImage(size: size)
         nsImage.lockFocus()
-        NSColor.white.setFill()
-        NSRect(origin: .zero, size: size).fill()
+        Color.white.fillRect(size: size)
         nsImage.unlockFocus()
         return PlatformImage(nsImage: nsImage)
         #endif

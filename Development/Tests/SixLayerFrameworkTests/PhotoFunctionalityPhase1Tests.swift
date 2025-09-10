@@ -329,7 +329,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let size = CGSize(width: 1, height: 1)
         let renderer = UIGraphicsImageRenderer(size: size)
         let image = renderer.image { context in
-            UIColor.red.setFill()
+            Color.red.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return image.pngData() ?? Data()
@@ -337,8 +337,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let size = NSSize(width: 1, height: 1)
         let image = NSImage(size: size)
         image.lockFocus()
-        NSColor.red.setFill()
-        NSRect(origin: .zero, size: size).fill()
+        Color.red.fillRect(size: size)
         image.unlockFocus()
         return image.tiffRepresentation ?? Data()
         #else
@@ -351,7 +350,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let size = CGSize(width: 200, height: 200)
         let renderer = UIGraphicsImageRenderer(size: size)
         let uiImage = renderer.image { context in
-            UIColor.red.setFill()
+            Color.red.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: uiImage)
@@ -359,8 +358,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let size = NSSize(width: 200, height: 200)
         let nsImage = NSImage(size: size)
         nsImage.lockFocus()
-        NSColor.red.setFill()
-        NSRect(origin: .zero, size: size).fill()
+        Color.red.fillRect(size: size)
         nsImage.unlockFocus()
         return PlatformImage(nsImage: nsImage)
         #endif
