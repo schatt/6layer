@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.7.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.7.0)
+[![Version](https://img.shields.io/badge/version-v2.7.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.7.1)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -56,6 +56,14 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v2.7.1
+
+### **Generic Types Clarification**
+- **Fixed AI documentation confusion**: Clarified that GenericItemCollection is a VIEW, not a type
+- **Added correct usage examples**: Shows how to use business types with generic functions
+- **Added warning sections**: Prevents common mistakes in type usage
+- **Enhanced AI agent guidance**: Better understanding of framework architecture
 
 ## 🆕 What's New in v2.7.0
 
