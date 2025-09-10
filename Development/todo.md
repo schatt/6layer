@@ -1260,6 +1260,14 @@ func testOCRAndAccessibilityIntegration() {
 - [ ] **Accessibility Tests**: Accessibility compliance
 - [ ] **Cross-Platform Tests**: iOS/macOS compatibility
 
+### **OCR Test Recreation Tasks** (Removed due to hanging issues):
+- [ ] **Recreate OCRServiceTests.swift**: Comprehensive OCR service testing
+- [ ] **Recreate StructuredOCRExtractionTests.swift**: Structured OCR data extraction testing
+- [ ] **Recreate OCRDisambiguationTests.swift**: OCR disambiguation logic testing
+- [ ] **Recreate OCRDisambiguationViewTests.swift**: OCR disambiguation UI testing
+- [ ] **Recreate OCRDisambiguationUITests.swift**: OCR disambiguation UI integration testing
+- [ ] **Recreate OCRDisambiguationLogicTests.swift**: OCR disambiguation algorithm testing
+
 ---
 
 ## 🎉 **Achievement Summary**
