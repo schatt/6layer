@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.7.2-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.7.2)
+[![Version](https://img.shields.io/badge/version-v2.8.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.8.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -56,6 +56,16 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v2.8.0
+
+### **Comprehensive Callback Integrations**
+- **Validation Error Display Integration**: FormStateManager errors now automatically display in UI
+- **Window Detection → Layout Updates**: Automatic layout recalculation on window size changes
+- **Analytics Integration**: FormAnalyticsManager now tracks all form interactions
+- **Accessibility State Updates**: UI automatically updates when accessibility settings change
+- **Theme Change Updates**: UI automatically updates when system theme changes
+- **Input Handling Integration**: InputHandlingManager provides haptic feedback and input optimization
 
 ## 🆕 What's New in v2.7.2
 
