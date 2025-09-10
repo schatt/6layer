@@ -15,6 +15,8 @@ public struct IntelligentFormView {
         initialData: T? = nil,
         dataBinder: DataBinder<T>? = nil,
         formStateManager: FormStateManager? = nil,
+        analyticsManager: FormAnalyticsManager? = nil,
+        inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onSubmit: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -77,6 +79,8 @@ public struct IntelligentFormView {
         for data: T,
         dataBinder: DataBinder<T>? = nil,
         formStateManager: FormStateManager? = nil,
+        analyticsManager: FormAnalyticsManager? = nil,
+        inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -396,7 +400,26 @@ public struct IntelligentFormView {
                         if let formStateManager = formStateManager {
                             formStateManager.updateField(field.name, value: newValue)
                         }
-                    }
+                        
+                        // Track field interaction in analytics
+                        if let analyticsManager = analyticsManager {
+                            analyticsManager.trackFieldInteraction(
+                                formId: "intelligent_form",
+                                fieldId: field.name,
+                                interactionType: .change,
+                                userId: nil
+                            )
+                        }
+                        
+                        // Provide input handling feedback
+                        if let inputHandlingManager = inputHandlingManager {
+                            let behavior = inputHandlingManager.getInteractionBehavior(for: .tap)
+                            if behavior.shouldProvideHapticFeedback {
+                                inputHandlingManager.hapticManager.triggerFeedback(.light)
+                            }
+                        }
+                    },
+                    formStateManager: formStateManager
                 )
             } else {
                 // Use custom field view
@@ -508,8 +531,32 @@ private struct DefaultPlatformFieldView: View {
     let field: DataField
     let value: Any
     let onValueChange: (Any) -> Void
+    let formStateManager: FormStateManager?
+    
+    // Computed property to get field errors
+    private var fieldErrors: [ValidationError] {
+        formStateManager?.fields[field.name]?.errors ?? []
+    }
+    
+    // Computed property to check if field is valid
+    private var isValid: Bool {
+        formStateManager?.fields[field.name]?.isValid ?? true
+    }
     
     public var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            // Main field input
+            fieldInputView
+            
+            // Error display
+            if !fieldErrors.isEmpty {
+                errorDisplayView
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var fieldInputView: some View {
         switch field.type {
         case .string:
             TextField("Enter \(field.name)", text: Binding(
@@ -517,7 +564,11 @@ private struct DefaultPlatformFieldView: View {
                 set: { onValueChange($0) }
             ))
             .textFieldStyle(.roundedBorder)
-            .background(Color.platformSecondaryBackground)
+            .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
+            )
 
         case .number:
             HStack {
@@ -529,7 +580,11 @@ private struct DefaultPlatformFieldView: View {
                 #if os(iOS)
                 .keyboardType(.decimalPad)
                 #endif
-                .background(Color.platformSecondaryBackground)
+                .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
+                )
 
                 Stepper("", value: Binding(
                     get: { value as? Double ?? 0.0 },
@@ -563,7 +618,11 @@ private struct DefaultPlatformFieldView: View {
             .keyboardType(.URL)
             .autocapitalization(.none)
             #endif
-            .background(Color.platformSecondaryBackground)
+            .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
+            )
 
         case .uuid:
             TextField("Enter UUID", text: Binding(
@@ -574,7 +633,11 @@ private struct DefaultPlatformFieldView: View {
             #if os(iOS)
             .autocapitalization(.none)
             #endif
-            .background(Color.platformSecondaryBackground)
+            .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
+            )
 
         case .image, .document:
             Button("Select \(field.type.rawValue)") {
@@ -589,7 +652,46 @@ private struct DefaultPlatformFieldView: View {
                 set: { onValueChange($0) }
             ))
             .textFieldStyle(.roundedBorder)
-            .background(Color.platformSecondaryBackground)
+            .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private var errorDisplayView: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            ForEach(fieldErrors, id: \.id) { error in
+                HStack(alignment: .top, spacing: 4) {
+                    Image(systemName: errorIcon(for: error.severity))
+                        .foregroundColor(errorColor(for: error.severity))
+                        .font(.caption)
+                    
+                    Text(error.message)
+                        .font(.caption)
+                        .foregroundColor(errorColor(for: error.severity))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .padding(.horizontal, 4)
+    }
+    
+    private func errorIcon(for severity: ValidationSeverity) -> String {
+        switch severity {
+        case .info: return "info.circle"
+        case .warning: return "exclamationmark.triangle"
+        case .error: return "xmark.circle"
+        }
+    }
+    
+    private func errorColor(for severity: ValidationSeverity) -> Color {
+        switch severity {
+        case .info: return .blue
+        case .warning: return .orange
+        case .error: return .red
         }
     }
 }
@@ -604,6 +706,8 @@ public extension View {
         initialData: T? = nil,
         dataBinder: DataBinder<T>? = nil,
         formStateManager: FormStateManager? = nil,
+        analyticsManager: FormAnalyticsManager? = nil,
+        inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onSubmit: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -613,6 +717,8 @@ public extension View {
             initialData: initialData,
             dataBinder: dataBinder,
             formStateManager: formStateManager,
+            analyticsManager: analyticsManager,
+            inputHandlingManager: inputHandlingManager,
             customFieldView: customFieldView,
             onSubmit: onSubmit,
             onCancel: onCancel
@@ -624,6 +730,8 @@ public extension View {
         for data: T,
         dataBinder: DataBinder<T>? = nil,
         formStateManager: FormStateManager? = nil,
+        analyticsManager: FormAnalyticsManager? = nil,
+        inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -632,6 +740,8 @@ public extension View {
             for: data,
             dataBinder: dataBinder,
             formStateManager: formStateManager,
+            analyticsManager: analyticsManager,
+            inputHandlingManager: inputHandlingManager,
             customFieldView: customFieldView,
             onUpdate: onUpdate,
             onCancel: onCancel

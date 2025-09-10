@@ -38,6 +38,18 @@ public class UnifiedWindowDetection: ObservableObject {
     /// Platform-specific window detection
     @Published public var platformDetection: (any PlatformWindowDetection)?
     
+    /// Layout change callback - called when window properties change
+    public var onLayoutChange: (() -> Void)?
+    
+    /// Previous window size for change detection
+    private var previousWindowSize: CGSize = CGSize(width: 375, height: 667)
+    
+    /// Previous screen size class for change detection
+    private var previousScreenSizeClass: ScreenSizeClass = .compact
+    
+    /// Previous orientation for change detection
+    private var previousOrientation: DeviceOrientation = .portrait
+    
     // MARK: - Window State Enum
     
     public enum WindowState: String, CaseIterable {
@@ -132,16 +144,39 @@ public class UnifiedWindowDetection: ObservableObject {
     private func syncFromPlatformDetection() {
         guard let platformDetection = platformDetection else { return }
         
+        // Check for significant changes that should trigger layout updates
+        let newWindowSize = platformDetection.windowSize
+        let newScreenSizeClass = platformDetection.screenSizeClass
+        let newOrientation = platformDetection.orientation
+        
+        // Detect if any significant layout-affecting properties have changed
+        let windowSizeChanged = abs(newWindowSize.width - previousWindowSize.width) > 1 || 
+                               abs(newWindowSize.height - previousWindowSize.height) > 1
+        let screenSizeClassChanged = newScreenSizeClass != previousScreenSizeClass
+        let orientationChanged = newOrientation != previousOrientation
+        
+        let layoutAffectingChange = windowSizeChanged || screenSizeClassChanged || orientationChanged
+        
         // Sync all properties from platform-specific detection
-        self.windowSize = platformDetection.windowSize
+        self.windowSize = newWindowSize
         self.screenSize = platformDetection.screenSize
         self.windowFrame = platformDetection.windowFrame
-        self.screenSizeClass = platformDetection.screenSizeClass
+        self.screenSizeClass = newScreenSizeClass
         self.windowState = platformDetection.windowState
         self.deviceContext = platformDetection.deviceContext
         self.isResizing = platformDetection.isResizing
         self.safeAreaInsets = platformDetection.safeAreaInsets
-        self.orientation = platformDetection.orientation
+        self.orientation = newOrientation
+        
+        // Update previous values
+        self.previousWindowSize = newWindowSize
+        self.previousScreenSizeClass = newScreenSizeClass
+        self.previousOrientation = newOrientation
+        
+        // Trigger layout change callback if significant changes occurred
+        if layoutAffectingChange {
+            onLayoutChange?()
+        }
     }
 }
 

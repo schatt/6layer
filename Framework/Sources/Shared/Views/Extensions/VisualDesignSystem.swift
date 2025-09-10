@@ -13,10 +13,17 @@ public class VisualDesignSystem: ObservableObject {
     @Published public var platformStyle: PlatformStyle
     @Published public var accessibilitySettings: AccessibilitySettings
     
+    /// Theme change callback - called when theme changes
+    public var onThemeChange: (() -> Void)?
+    
+    /// Previous theme for change detection
+    private var previousTheme: Theme = .light
+    
     private init() {
         self.currentTheme = Self.detectSystemTheme()
         self.platformStyle = Self.detectPlatformStyle()
         self.accessibilitySettings = Self.detectAccessibilitySettings()
+        self.previousTheme = self.currentTheme
         
         // Listen for system theme changes
         NotificationCenter.default.addObserver(
@@ -28,6 +35,19 @@ public class VisualDesignSystem: ObservableObject {
                 self?.updateTheme()
             }
         }
+        
+        // Listen for iOS theme changes
+        #if os(iOS)
+        NotificationCenter.default.addObserver(
+            forName: UIScreen.modeDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.updateTheme()
+            }
+        }
+        #endif
     }
     
     deinit {
@@ -90,8 +110,19 @@ public class VisualDesignSystem: ObservableObject {
     }
     
     private func updateTheme() {
-        currentTheme = Self.detectSystemTheme()
+        let newTheme = Self.detectSystemTheme()
+        let themeChanged = newTheme != previousTheme
+        
+        currentTheme = newTheme
         accessibilitySettings = Self.detectAccessibilitySettings()
+        
+        // Update previous theme
+        previousTheme = newTheme
+        
+        // Trigger theme change callback if theme actually changed
+        if themeChanged {
+            onThemeChange?()
+        }
     }
 }
 

@@ -30,6 +30,12 @@ public class AccessibilityOptimizationManager: ObservableObject {
     /// Current accessibility level
     @Published public var accessibilityLevel: AccessibilityLevel = .standard
     
+    /// Accessibility state change callback - called when accessibility settings change
+    public var onAccessibilityStateChange: (() -> Void)?
+    
+    /// Previous accessibility state for change detection
+    private var previousAccessibilityState: AccessibilitySystemChecker.SystemState?
+    
     // MARK: - Private Properties
     
     private var auditTimer: Timer?
@@ -74,6 +80,9 @@ public class AccessibilityOptimizationManager: ObservableObject {
     
     /// Perform accessibility audit
     private func performAccessibilityAudit() {
+        let currentState = AccessibilitySystemChecker.getCurrentSystemState()
+        let stateChanged = previousAccessibilityState != currentState
+        
         let audit = complianceChecker.performComprehensiveAudit()
         // Update compliance metrics from the audit
         complianceMetrics = audit.complianceMetrics
@@ -86,6 +95,14 @@ public class AccessibilityOptimizationManager: ObservableObject {
         
         // Generate new recommendations
         updateRecommendations()
+        
+        // Update previous state
+        previousAccessibilityState = currentState
+        
+        // Trigger accessibility state change callback if state changed
+        if stateChanged {
+            onAccessibilityStateChange?()
+        }
     }
     
     // MARK: - Optimization Engine
