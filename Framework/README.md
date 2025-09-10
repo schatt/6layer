@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.7.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.7.1)
+[![Version](https://img.shields.io/badge/version-v2.7.2-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.7.2)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -56,6 +56,16 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v2.7.2
+
+### **Form Field Callback Integration**
+- **Connected onValueChange callbacks**: Implemented callback connection in DefaultPlatformFieldView
+- **Integrated with DataBinder**: Field changes now trigger data binding system updates
+- **Added FormStateManager integration**: Field updates trigger form state changes
+- **Implemented real-time validation**: Validation triggers on field value changes
+- **Added change tracking**: Connected to existing change tracking infrastructure
+- **Enhanced form functionality**: Forms now properly update underlying data models
 
 ## 🆕 What's New in v2.7.1
 

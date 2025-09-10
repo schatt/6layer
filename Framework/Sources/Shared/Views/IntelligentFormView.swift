@@ -9,10 +9,12 @@ public struct IntelligentFormView {
     
     // MARK: - Public API
     
-    /// Generate a form for creating new data
+    /// Generate a form for creating new data with data binding integration
         static func generateForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
+        dataBinder: DataBinder<T>? = nil,
+        formStateManager: FormStateManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onSubmit: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -70,9 +72,11 @@ public struct IntelligentFormView {
         }
     }
     
-    /// Generate a form for updating existing data
+    /// Generate a form for updating existing data with data binding integration
         static func generateForm<T>(
         for data: T,
+        dataBinder: DataBinder<T>? = nil,
+        formStateManager: FormStateManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -149,6 +153,8 @@ public struct IntelligentFormView {
     private static func generateFormContent<T>(
         analysis: DataAnalysisResult,
         initialData: T?,
+        dataBinder: DataBinder<T>?,
+        formStateManager: FormStateManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         formStrategy: FormStrategy
     ) -> some View {
@@ -197,6 +203,8 @@ public struct IntelligentFormView {
     private static func generateVerticalLayout<T>(
         analysis: DataAnalysisResult,
         initialData: T?,
+        dataBinder: DataBinder<T>?,
+        formStateManager: FormStateManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         VStack(spacing: 16) {
@@ -218,6 +226,8 @@ public struct IntelligentFormView {
                                     generateFieldView(
                                         field: field,
                                         initialData: initialData,
+                                        dataBinder: dataBinder,
+                                        formStateManager: formStateManager,
                                         customFieldView: customFieldView
                                     )
                                 }
@@ -231,6 +241,8 @@ public struct IntelligentFormView {
                         generateFieldView(
                             field: fields[0],
                             initialData: initialData,
+                            dataBinder: dataBinder,
+                            formStateManager: formStateManager,
                             customFieldView: customFieldView
                         )
                     }
@@ -243,6 +255,8 @@ public struct IntelligentFormView {
     private static func generateHorizontalLayout<T>(
         analysis: DataAnalysisResult,
         initialData: T?,
+        dataBinder: DataBinder<T>?,
+        formStateManager: FormStateManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         LazyVGrid(columns: [
@@ -253,6 +267,8 @@ public struct IntelligentFormView {
                 generateFieldView(
                     field: field,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
                     customFieldView: customFieldView
                 )
             }
@@ -263,6 +279,8 @@ public struct IntelligentFormView {
     private static func generateGridLayout<T>(
         analysis: DataAnalysisResult,
         initialData: T?,
+        dataBinder: DataBinder<T>?,
+        formStateManager: FormStateManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         let columns = min(3, max(1, Int(sqrt(Double(analysis.fields.count)))))
@@ -272,6 +290,8 @@ public struct IntelligentFormView {
                 generateFieldView(
                     field: field,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
                     customFieldView: customFieldView
                 )
             }
@@ -282,6 +302,8 @@ public struct IntelligentFormView {
     private static func generateAdaptiveLayout<T>(
         analysis: DataAnalysisResult,
         initialData: T?,
+        dataBinder: DataBinder<T>?,
+        formStateManager: FormStateManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         formStrategy: FormStrategy
     ) -> some View {
@@ -289,18 +311,24 @@ public struct IntelligentFormView {
             AnyView(generateVerticalLayout(
                 analysis: analysis,
                 initialData: initialData,
+                dataBinder: dataBinder,
+                formStateManager: formStateManager,
                 customFieldView: customFieldView
             ))
         } else if analysis.fields.count <= 8 {
             AnyView(generateHorizontalLayout(
                 analysis: analysis,
                 initialData: initialData,
+                dataBinder: dataBinder,
+                formStateManager: formStateManager,
                 customFieldView: customFieldView
             ))
         } else {
             AnyView(generateGridLayout(
                 analysis: analysis,
                 initialData: initialData,
+                dataBinder: dataBinder,
+                formStateManager: formStateManager,
                 customFieldView: customFieldView
             ))
         }
@@ -341,6 +369,8 @@ public struct IntelligentFormView {
     private static func generateFieldView<T>(
         field: DataField,
         initialData: T?,
+        dataBinder: DataBinder<T>?,
+        formStateManager: FormStateManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -357,7 +387,15 @@ public struct IntelligentFormView {
                     field: field,
                     value: initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field),
                     onValueChange: { newValue in
-                        // Handle value change
+                        // Connect to data binding system
+                        if let dataBinder = dataBinder {
+                            dataBinder.updateField(field.name, value: newValue)
+                        }
+                        
+                        // Connect to form state management
+                        if let formStateManager = formStateManager {
+                            formStateManager.updateField(field.name, value: newValue)
+                        }
                     }
                 )
             } else {
@@ -564,6 +602,8 @@ public extension View {
     func platformIntelligentForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
+        dataBinder: DataBinder<T>? = nil,
+        formStateManager: FormStateManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onSubmit: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
@@ -571,6 +611,8 @@ public extension View {
         IntelligentFormView.generateForm(
             for: dataType,
             initialData: initialData,
+            dataBinder: dataBinder,
+            formStateManager: formStateManager,
             customFieldView: customFieldView,
             onSubmit: onSubmit,
             onCancel: onCancel
@@ -580,12 +622,16 @@ public extension View {
     /// Apply intelligent form generation for existing data
     func platformIntelligentForm<T>(
         for data: T,
+        dataBinder: DataBinder<T>? = nil,
+        formStateManager: FormStateManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
     ) -> some View {
         IntelligentFormView.generateForm(
             for: data,
+            dataBinder: dataBinder,
+            formStateManager: formStateManager,
             customFieldView: customFieldView,
             onUpdate: onUpdate,
             onCancel: onCancel
