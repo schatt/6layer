@@ -5,6 +5,22 @@
 DerivedData/
 build/
 
+# Compiled objects and binaries
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Swift build artifacts
+*.swiftmodule
+*.swiftdoc
+*.dSYM/
+*.app
+*.ipa
+*.dmg
+
 # Swift Package Manager
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
 # Packages/
