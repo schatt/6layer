@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.2.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.2.0)
+[![Version](https://img.shields.io/badge/version-v2.7.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.7.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -56,6 +56,25 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v2.7.0
+
+### **AI Documentation Overhaul**
+- **Fixed AI_AGENT_GUIDE.md**: Corrected all incorrect API references and method signatures
+- **Updated 6layerapi.txt**: Replaced outdated implementation plan with current API functions
+- **Added proper API links**: Direct links to actual source files for AI agents
+- **Corrected method signatures**: Fixed PerformanceBenchmarking and CrossPlatformTesting usage examples
+
+### **Test Suite Optimization**
+- **Eliminated hanging test issues**: Removed problematic OCR test files causing timeouts
+- **Cleaned up test artifacts**: Removed compiled object files from git tracking
+- **Improved .gitignore**: Added comprehensive build artifact patterns
+- **Created test recreation tasks**: Added todo items for future test reimplementation
+
+### **Repository Cleanup**
+- **Archived historical releases**: Moved old releases to organized archive structure
+- **Enhanced .gitignore**: Added patterns for compiled objects and Swift build artifacts
+- **Organized release structure**: Clean separation between current and historical releases
 
 ## 🆕 What's New in v2.2.0
 

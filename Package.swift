@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v2.6.0 - Comprehensive Testing Methodology & Concurrency Improvements
+// SixLayerFramework v2.7.0 - AI Documentation Fixes & Test Suite Optimization
 
 import PackageDescription
 
