@@ -38,6 +38,10 @@ public struct IntelligentFormView {
                         generateFormContent(
                             analysis: analysis,
                             initialData: initialData,
+                            dataBinder: dataBinder,
+                            formStateManager: formStateManager,
+                            analyticsManager: analyticsManager,
+                            inputHandlingManager: inputHandlingManager,
                             customFieldView: customFieldView,
                             formStrategy: formStrategy
                         )
@@ -58,6 +62,10 @@ public struct IntelligentFormView {
                         generateFormContent(
                             analysis: analysis,
                             initialData: initialData,
+                            dataBinder: dataBinder,
+                            formStateManager: formStateManager,
+                            analyticsManager: analyticsManager,
+                            inputHandlingManager: inputHandlingManager,
                             customFieldView: customFieldView,
                             formStrategy: formStrategy
                         )
@@ -94,6 +102,10 @@ public struct IntelligentFormView {
                 generateFormContent(
                     analysis: analysis,
                     initialData: data,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView,
                     formStrategy: formStrategy
                 )
@@ -159,6 +171,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         formStateManager: FormStateManager?,
+        analyticsManager: FormAnalyticsManager?,
+        inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         formStrategy: FormStrategy
     ) -> some View {
@@ -168,6 +182,10 @@ public struct IntelligentFormView {
                 generateVerticalLayout(
                     analysis: analysis,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
                 
@@ -175,6 +193,10 @@ public struct IntelligentFormView {
                 generateHorizontalLayout(
                     analysis: analysis,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
                 
@@ -182,6 +204,10 @@ public struct IntelligentFormView {
                 generateGridLayout(
                     analysis: analysis,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
                 
@@ -189,6 +215,10 @@ public struct IntelligentFormView {
                 generateAdaptiveLayout(
                     analysis: analysis,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView,
                     formStrategy: formStrategy
                 )
@@ -197,6 +227,10 @@ public struct IntelligentFormView {
                 generateVerticalLayout(
                     analysis: analysis,
                     initialData: initialData,
+                    dataBinder: dataBinder,
+                    formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
             }
@@ -209,6 +243,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         formStateManager: FormStateManager?,
+        analyticsManager: FormAnalyticsManager?,
+        inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         VStack(spacing: 16) {
@@ -232,6 +268,8 @@ public struct IntelligentFormView {
                                         initialData: initialData,
                                         dataBinder: dataBinder,
                                         formStateManager: formStateManager,
+                                        analyticsManager: analyticsManager,
+                                        inputHandlingManager: inputHandlingManager,
                                         customFieldView: customFieldView
                                     )
                                 }
@@ -247,6 +285,8 @@ public struct IntelligentFormView {
                             initialData: initialData,
                             dataBinder: dataBinder,
                             formStateManager: formStateManager,
+                            analyticsManager: analyticsManager,
+                            inputHandlingManager: inputHandlingManager,
                             customFieldView: customFieldView
                         )
                     }
@@ -261,6 +301,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         formStateManager: FormStateManager?,
+        analyticsManager: FormAnalyticsManager?,
+        inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         LazyVGrid(columns: [
@@ -273,6 +315,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
             }
@@ -285,6 +329,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         formStateManager: FormStateManager?,
+        analyticsManager: FormAnalyticsManager?,
+        inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         let columns = min(3, max(1, Int(sqrt(Double(analysis.fields.count)))))
@@ -296,6 +342,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     formStateManager: formStateManager,
+                    analyticsManager: analyticsManager,
+                    inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
             }
@@ -308,6 +356,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         formStateManager: FormStateManager?,
+        analyticsManager: FormAnalyticsManager?,
+        inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         formStrategy: FormStrategy
     ) -> some View {
@@ -317,6 +367,8 @@ public struct IntelligentFormView {
                 initialData: initialData,
                 dataBinder: dataBinder,
                 formStateManager: formStateManager,
+                analyticsManager: analyticsManager,
+                inputHandlingManager: inputHandlingManager,
                 customFieldView: customFieldView
             ))
         } else if analysis.fields.count <= 8 {
@@ -325,6 +377,8 @@ public struct IntelligentFormView {
                 initialData: initialData,
                 dataBinder: dataBinder,
                 formStateManager: formStateManager,
+                analyticsManager: analyticsManager,
+                inputHandlingManager: inputHandlingManager,
                 customFieldView: customFieldView
             ))
         } else {
@@ -333,6 +387,8 @@ public struct IntelligentFormView {
                 initialData: initialData,
                 dataBinder: dataBinder,
                 formStateManager: formStateManager,
+                analyticsManager: analyticsManager,
+                inputHandlingManager: inputHandlingManager,
                 customFieldView: customFieldView
             ))
         }
@@ -375,6 +431,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         formStateManager: FormStateManager?,
+        analyticsManager: FormAnalyticsManager?,
+        inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -406,8 +464,8 @@ public struct IntelligentFormView {
                             analyticsManager.trackFieldInteraction(
                                 formId: "intelligent_form",
                                 fieldId: field.name,
-                                interactionType: .change,
-                                userId: nil
+                                userId: nil,
+                                interactionType: .change
                             )
                         }
                         
@@ -701,7 +759,7 @@ private struct DefaultPlatformFieldView: View {
 public extension View {
     
     /// Apply intelligent form generation
-    func platformIntelligentForm<T>(
+    internal func platformIntelligentForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
         dataBinder: DataBinder<T>? = nil,
@@ -726,7 +784,7 @@ public extension View {
     }
     
     /// Apply intelligent form generation for existing data
-    func platformIntelligentForm<T>(
+    internal func platformIntelligentForm<T>(
         for data: T,
         dataBinder: DataBinder<T>? = nil,
         formStateManager: FormStateManager? = nil,

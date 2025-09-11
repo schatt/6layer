@@ -1066,7 +1066,7 @@ private struct GenericFallbackView: View {
             Text("Content")
                 .font(.headline)
             
-            Text("Type: \(type(of: content))")
+            Text("Type: \(String(describing: type(of: content)))")
                 .font(.caption)
                 .foregroundColor(.secondary)
             
@@ -1081,7 +1081,7 @@ private struct GenericFallbackView: View {
                         HStack {
                             Text("\(key):")
                                 .fontWeight(.medium)
-                            Text("\(dictContent[key] ?? "nil")")
+                            Text("\(String(describing: dictContent[key] ?? "nil"))")
                                 .foregroundColor(.secondary)
                         }
                     }

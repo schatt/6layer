@@ -215,7 +215,7 @@ public class AccessibilityOptimizationManager: ObservableObject {
 public struct AccessibilitySystemChecker {
     
     /// Current accessibility system state
-    public struct SystemState {
+    public struct SystemState: Equatable {
         let isVoiceOverRunning: Bool
         let isDarkerSystemColorsEnabled: Bool
         let isReduceTransparencyEnabled: Bool
