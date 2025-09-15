@@ -6,36 +6,47 @@ import SwiftUI
 public struct ExpandableCardCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
     
     @State private var expandedItem: Item.ID?
     @State private var hoveredItem: Item.ID?
     
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
+    
     public var body: some View {
-        GeometryReader { geometry in
-            let screenWidth = geometry.size.width
-            
-            // Get layout decision from Layer 2
-            let layoutDecision = determineIntelligentCardLayout_L2(
-                contentCount: items.count,
-                screenWidth: screenWidth,
-                deviceType: DeviceType.current,
-                contentComplexity: hints.complexity
-            )
-            
-            // Get strategy from Layer 3
-            let strategy = selectCardExpansionStrategy_L3(
-                contentCount: items.count,
-                screenWidth: screenWidth,
-                deviceType: DeviceType.current,
-                interactionStyle: .expandable,
-                contentDensity: .balanced
-            )
-            
-            // Render the appropriate layout
-            renderCardLayout(
-                layoutDecision: layoutDecision,
-                strategy: strategy
-            )
+        if items.isEmpty {
+            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+        } else {
+            GeometryReader { geometry in
+                let screenWidth = geometry.size.width
+                
+                // Get layout decision from Layer 2
+                let layoutDecision = determineIntelligentCardLayout_L2(
+                    contentCount: items.count,
+                    screenWidth: screenWidth,
+                    deviceType: DeviceType.current,
+                    contentComplexity: hints.complexity
+                )
+                
+                // Get strategy from Layer 3
+                let strategy = selectCardExpansionStrategy_L3(
+                    contentCount: items.count,
+                    screenWidth: screenWidth,
+                    deviceType: DeviceType.current,
+                    interactionStyle: .expandable,
+                    contentDensity: .balanced
+                )
+                
+                // Render the appropriate layout
+                renderCardLayout(
+                    layoutDecision: layoutDecision,
+                    strategy: strategy
+                )
+            }
         }
     }
     
@@ -193,15 +204,26 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
 public struct CoverFlowCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
     
     public var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 20) {
-                ForEach(items) { item in
-                    CoverFlowCardComponent(item: item)
+        if items.isEmpty {
+            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+        } else {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(items) { item in
+                        CoverFlowCardComponent(item: item)
+                    }
                 }
+                .padding(.horizontal, 40)
             }
-            .padding(.horizontal, 40)
         }
     }
 }
@@ -230,25 +252,36 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
 public struct GridCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
     
     public var body: some View {
-        GeometryReader { geometry in
-            let layoutDecision = determineIntelligentCardLayout_L2(
-                contentCount: items.count,
-                screenWidth: geometry.size.width,
-                deviceType: DeviceType.current,
-                contentComplexity: hints.complexity
-            )
-            
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: layoutDecision.spacing), count: layoutDecision.columns),
-                spacing: layoutDecision.spacing
-            ) {
-                ForEach(items) { item in
-                    SimpleCardComponent(item: item, layoutDecision: layoutDecision)
+        if items.isEmpty {
+            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+        } else {
+            GeometryReader { geometry in
+                let layoutDecision = determineIntelligentCardLayout_L2(
+                    contentCount: items.count,
+                    screenWidth: geometry.size.width,
+                    deviceType: DeviceType.current,
+                    contentComplexity: hints.complexity
+                )
+                
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.flexible(), spacing: layoutDecision.spacing), count: layoutDecision.columns),
+                    spacing: layoutDecision.spacing
+                ) {
+                    ForEach(items) { item in
+                        SimpleCardComponent(item: item, layoutDecision: layoutDecision)
+                    }
                 }
+                .padding(layoutDecision.padding)
             }
-            .padding(layoutDecision.padding)
         }
     }
 }
@@ -257,14 +290,25 @@ public struct GridCollectionView<Item: Identifiable>: View {
 public struct ListCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
     
     public var body: some View {
-        LazyVStack(spacing: 12) {
-            ForEach(items) { item in
-                ListCardComponent(item: item)
+        if items.isEmpty {
+            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+        } else {
+            LazyVStack(spacing: 12) {
+                ForEach(items) { item in
+                    ListCardComponent(item: item)
+                }
             }
+            .padding(16)
         }
-        .padding(16)
     }
 }
 
@@ -272,17 +316,28 @@ public struct ListCollectionView<Item: Identifiable>: View {
 public struct MasonryCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
     
     public var body: some View {
-        LazyVGrid(
-            columns: Array(repeating: GridItem(.flexible()), count: 3),
-            spacing: 16
-        ) {
-            ForEach(items) { item in
-                MasonryCardComponent(item: item)
+        if items.isEmpty {
+            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+        } else {
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible()), count: 3),
+                spacing: 16
+            ) {
+                ForEach(items) { item in
+                    MasonryCardComponent(item: item)
+                }
             }
+            .padding(16)
         }
-        .padding(16)
     }
 }
 
@@ -290,15 +345,26 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
 public struct AdaptiveCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
     
     public var body: some View {
-        // Choose the best layout based on content and device
-        if items.count <= 2 {
-            ListCollectionView(items: items, hints: hints)
-        } else if DeviceType.current == .phone {
-            ListCollectionView(items: items, hints: hints)
+        if items.isEmpty {
+            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
         } else {
-            GridCollectionView(items: items, hints: hints)
+            // Choose the best layout based on content and device
+            if items.count <= 2 {
+                ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+            } else if DeviceType.current == .phone {
+                ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+            } else {
+                GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+            }
         }
     }
 }

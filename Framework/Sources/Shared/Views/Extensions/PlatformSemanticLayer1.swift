@@ -97,11 +97,12 @@ public struct PresentationHints: Sendable {
 @MainActor
 public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
-    hints: PresentationHints
+    hints: PresentationHints,
+    onCreateItem: (() -> Void)? = nil
 ) -> some View {
     // Generic implementation that uses hints to guide decisions
     // This function doesn't know about specific business logic
-    return GenericItemCollectionView(items: items, hints: hints)
+    return GenericItemCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
 }
 
 /// Generic function for presenting numeric data
@@ -215,7 +216,8 @@ public func platformPresentContent_L1(
 @MainActor
 public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
-    hints: EnhancedPresentationHints
+    hints: EnhancedPresentationHints,
+    onCreateItem: (() -> Void)? = nil
 ) -> some View {
     // Convert enhanced hints to basic hints for backward compatibility
     let basicHints = PresentationHints(
@@ -229,7 +231,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     // Process extensible hints and merge custom data
     let processedHints = processExtensibleHints(hints, into: basicHints)
     
-    return GenericItemCollectionView(items: items, hints: processedHints)
+    return GenericItemCollectionView(items: items, hints: processedHints, onCreateItem: onCreateItem)
         .environment(\.extensibleHints, hints.extensibleHints)
 }
 
@@ -365,24 +367,36 @@ public func platformPresentTemporalData_L1(
 public struct GenericItemCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
     
     public var body: some View {
+        // Handle empty collections with appropriate empty state
+        if items.isEmpty {
+            return AnyView(CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem))
+        }
+        
         // Layer 1: Intelligent presentation decision based on hints and platform
         let presentationStrategy = determinePresentationStrategy()
         
         switch presentationStrategy {
         case .expandableCards:
-            ExpandableCardCollectionView(items: items, hints: hints)
+            return AnyView(ExpandableCardCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
         case .coverFlow:
-            CoverFlowCollectionView(items: items, hints: hints)
+            return AnyView(CoverFlowCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
         case .grid:
-            GridCollectionView(items: items, hints: hints)
+            return AnyView(GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
         case .list:
-            ListCollectionView(items: items, hints: hints)
+            return AnyView(ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
         case .masonry:
-            MasonryCollectionView(items: items, hints: hints)
+            return AnyView(MasonryCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
         case .adaptive:
-            AdaptiveCollectionView(items: items, hints: hints)
+            return AnyView(AdaptiveCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
         }
     }
     
@@ -452,6 +466,264 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
             return .adaptive
         default:
             return .adaptive
+        }
+    }
+}
+
+/// Empty state view for collections with intelligent messaging based on context
+public struct CollectionEmptyStateView: View {
+    let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    
+    public init(hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+    }
+    
+    public var body: some View {
+        VStack(spacing: 20) {
+            // Icon based on data type and context
+            Image(systemName: emptyStateIcon)
+                .font(.system(size: 48))
+                .foregroundColor(.secondary)
+            
+            VStack(spacing: 8) {
+                Text(emptyStateTitle)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Text(emptyStateMessage)
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            
+            // Create action button if provided
+            if let onCreateItem = onCreateItem {
+                Button(action: onCreateItem) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "plus.circle.fill")
+                        Text(createButtonTitle)
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(Color.accentColor)
+                    .cornerRadius(8)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var emptyStateIcon: String {
+        switch hints.dataType {
+        case .media:
+            return "photo.on.rectangle"
+        case .navigation:
+            return "list.bullet"
+        case .form:
+            return "doc.text"
+        case .numeric:
+            return "chart.bar"
+        case .temporal:
+            return "calendar"
+        case .hierarchical:
+            return "folder"
+        case .collection:
+            return "square.grid.2x2"
+        case .generic:
+            return "tray"
+        case .text:
+            return "text.alignleft"
+        case .number:
+            return "number"
+        case .date:
+            return "calendar"
+        case .image:
+            return "photo"
+        case .boolean:
+            return "checkmark.circle"
+        case .list:
+            return "list.bullet"
+        case .grid:
+            return "grid"
+        case .chart:
+            return "chart.bar"
+        case .action:
+            return "play.circle"
+        case .product:
+            return "bag"
+        case .user:
+            return "person"
+        case .transaction:
+            return "creditcard"
+        case .communication:
+            return "message"
+        case .location:
+            return "location"
+        case .custom:
+            return "gear"
+        }
+    }
+    
+    private var emptyStateTitle: String {
+        switch hints.dataType {
+        case .media:
+            return "No Media Items"
+        case .navigation:
+            return "No Navigation Items"
+        case .form:
+            return "No Form Fields"
+        case .numeric:
+            return "No Data Available"
+        case .temporal:
+            return "No Events"
+        case .hierarchical:
+            return "No Items"
+        case .collection:
+            return "No Items"
+        case .generic:
+            return "No Items"
+        case .text:
+            return "No Text Content"
+        case .number:
+            return "No Numbers"
+        case .date:
+            return "No Dates"
+        case .image:
+            return "No Images"
+        case .boolean:
+            return "No Boolean Values"
+        case .list:
+            return "No List Items"
+        case .grid:
+            return "No Grid Items"
+        case .chart:
+            return "No Chart Data"
+        case .action:
+            return "No Actions"
+        case .product:
+            return "No Products"
+        case .user:
+            return "No Users"
+        case .transaction:
+            return "No Transactions"
+        case .communication:
+            return "No Messages"
+        case .location:
+            return "No Locations"
+        case .custom:
+            return "No Items"
+        }
+    }
+    
+    private var emptyStateMessage: String {
+        let contextMessage = contextSpecificMessage
+        let complexityMessage = complexitySpecificMessage
+        
+        if !contextMessage.isEmpty && !complexityMessage.isEmpty {
+            return "\(contextMessage) \(complexityMessage)"
+        } else if !contextMessage.isEmpty {
+            return contextMessage
+        } else if !complexityMessage.isEmpty {
+            return complexityMessage
+        } else {
+            return "This collection is currently empty."
+        }
+    }
+    
+    private var contextSpecificMessage: String {
+        switch hints.context {
+        case .dashboard:
+            return "Add some items to get started."
+        case .detail:
+            return "No additional items to display."
+        case .summary:
+            return "No summary data available."
+        case .edit:
+            return "No items to edit."
+        case .create:
+            return "Create your first item."
+        case .search:
+            return "Try adjusting your search criteria."
+        case .browse:
+            return "No items to browse."
+        case .list:
+            return "No items in this list."
+        case .form:
+            return "No form fields available."
+        case .modal:
+            return "Select an item to continue."
+        case .navigation:
+            return "No navigation items available."
+        }
+    }
+    
+    private var complexitySpecificMessage: String {
+        switch hints.complexity {
+        case .simple:
+            return "Keep it simple and focused."
+        case .moderate:
+            return "Consider organizing your content."
+        case .complex:
+            return "Use filters or categories to manage complexity."
+        case .veryComplex:
+            return "Use advanced filtering and organization tools."
+        }
+    }
+    
+    private var createButtonTitle: String {
+        switch hints.dataType {
+        case .media:
+            return "Add Media"
+        case .navigation:
+            return "Add Navigation Item"
+        case .form:
+            return "Add Form Field"
+        case .numeric:
+            return "Add Data"
+        case .temporal:
+            return "Add Event"
+        case .hierarchical:
+            return "Add Item"
+        case .collection:
+            return "Add Item"
+        case .generic:
+            return "Add Item"
+        case .text:
+            return "Add Text"
+        case .number:
+            return "Add Number"
+        case .date:
+            return "Add Date"
+        case .image:
+            return "Add Image"
+        case .boolean:
+            return "Add Boolean"
+        case .list:
+            return "Add List Item"
+        case .grid:
+            return "Add Grid Item"
+        case .chart:
+            return "Add Chart Data"
+        case .action:
+            return "Add Action"
+        case .product:
+            return "Add Product"
+        case .user:
+            return "Add User"
+        case .transaction:
+            return "Add Transaction"
+        case .communication:
+            return "Add Message"
+        case .location:
+            return "Add Location"
+        case .custom:
+            return "Add Item"
         }
     }
 }
