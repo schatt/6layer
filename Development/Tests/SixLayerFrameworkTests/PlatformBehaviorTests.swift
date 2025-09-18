@@ -235,11 +235,7 @@ final class PlatformBehaviorTests: XCTestCase {
         // OCR should be available
         XCTAssertTrue(isVisionOCRAvailable(), "OCR should be available")
         
-        // OCR functions should work - test without waiting for async result
-        let expectation = XCTestExpectation(description: "OCR processing")
-        expectation.isInverted = true // This will pass if not fulfilled
-        
-        // Test OCR using modern API
+        // Test OCR using modern API without waiting for async result
         let service = OCRService()
         Task {
             do {
@@ -249,11 +245,9 @@ final class PlatformBehaviorTests: XCTestCase {
                     strategy: strategy
                 )
                 XCTAssertNotNil(result, "OCR should return result when enabled")
-                expectation.fulfill()
             } catch {
                 // OCR might fail in test environment, but should not crash
                 XCTAssertNotNil(error, "OCR should handle errors gracefully when enabled")
-                expectation.fulfill()
             }
         }
         

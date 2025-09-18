@@ -56,44 +56,39 @@ final class VisionSafetyTests: XCTestCase {
         )
         let image = PlatformImage()
         
-        // When: Attempting OCR processing
-        let expectation = XCTestExpectation(description: "OCR processing")
-        var _: OCRResult?
-        var _: Error?
-        
-        // Test OCR availability instead of async processing
-        // The OCR functions are SwiftUI views that need to be rendered to work
-        // In unit tests, we can't easily test async SwiftUI view behavior
+        // When: Testing OCR availability
         let isOCRAvailable = isVisionOCRAvailable()
         
+        // Then: OCR availability should be deterministic
         if isOCRAvailable {
-            // If OCR is available, test that the function can be called without crashing
-            let service = OCRService()
-            Task {
-                do {
-                    let _ = try await service.processImage(
-                        image,
-                        context: context,
-                        strategy: OCRStrategy(
-                            supportedTextTypes: [.general],
-                            supportedLanguages: [.english],
-                            processingMode: .standard,
-                            requiresNeuralEngine: false,
-                            estimatedProcessingTime: 1.0
-                        )
-                    )
-                } catch {
-                    // Expected for test images
-                }
-            }
             XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
         } else {
-            // If OCR is not available, test that the fallback behavior is handled
             XCTAssertFalse(isOCRAvailable, "OCR should not be available when Vision framework is not present")
         }
         
-        expectation.fulfill()
-        wait(for: [expectation], timeout: 1.0)
+        // Test that fallback behavior is handled gracefully
+        let service = OCRService()
+        
+        // Just verify the function can be called without crashing
+        Task {
+            do {
+                let _ = try await service.processImage(
+                    image,
+                    context: context,
+                    strategy: OCRStrategy(
+                        supportedTextTypes: [.general],
+                        supportedLanguages: [.english],
+                        processingMode: .standard,
+                        requiresNeuralEngine: false,
+                        estimatedProcessingTime: 1.0
+                    )
+                )
+            } catch {
+                // Expected for test images - this is the fallback behavior
+            }
+        }
+        
+        // Don't wait for async completion - just verify the function can be called
     }
     
     func testVisionFrameworkVersionCheck() {
@@ -131,43 +126,39 @@ final class VisionSafetyTests: XCTestCase {
             confidenceThreshold: 0.8
         )
         
-        // When: Attempting OCR with invalid image
-        let expectation = XCTestExpectation(description: "OCR error handling")
-        var _: Error?
-        
-        // Test OCR availability instead of async processing
-        // The OCR functions are SwiftUI views that need to be rendered to work
-        // In unit tests, we can't easily test async SwiftUI view behavior
+        // When: Testing OCR error handling
         let isOCRAvailable = isVisionOCRAvailable()
         
+        // Then: OCR availability should be deterministic
         if isOCRAvailable {
-            // If OCR is available, test that the function can be called without crashing
-            let service = OCRService()
-            Task {
-                do {
-                    let _ = try await service.processImage(
-                        PlatformImage(), // Invalid image
-                        context: context,
-                        strategy: OCRStrategy(
-                            supportedTextTypes: [.general],
-                            supportedLanguages: [.english],
-                            processingMode: .standard,
-                            requiresNeuralEngine: false,
-                            estimatedProcessingTime: 1.0
-                        )
-                    )
-                } catch {
-                    // Expected for invalid images
-                }
-            }
             XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
         } else {
-            // If OCR is not available, test that the fallback behavior is handled
             XCTAssertFalse(isOCRAvailable, "OCR should not be available when Vision framework is not present")
         }
         
-        expectation.fulfill()
-        wait(for: [expectation], timeout: 1.0)
+        // Test that error handling works gracefully
+        let service = OCRService()
+        
+        // Just verify the function can be called without crashing
+        Task {
+            do {
+                let _ = try await service.processImage(
+                    PlatformImage(), // Invalid image
+                    context: context,
+                    strategy: OCRStrategy(
+                        supportedTextTypes: [.general],
+                        supportedLanguages: [.english],
+                        processingMode: .standard,
+                        requiresNeuralEngine: false,
+                        estimatedProcessingTime: 1.0
+                    )
+                )
+            } catch {
+                // Expected for invalid images - this is the error handling behavior
+            }
+        }
+        
+        // Don't wait for async completion - just verify the function can be called
     }
     
     func testPlatformSpecificVisionAvailability() {

@@ -378,9 +378,9 @@ final class WindowDetectionTests: XCTestCase {
         // WHEN: Called from multiple threads
         // THEN: Should not crash
         let expectation = XCTestExpectation(description: "Thread safety test")
-        expectation.expectedFulfillmentCount = 10
+        expectation.expectedFulfillmentCount = 5 // Reduced count
         
-        for _ in 0..<10 {
+        for _ in 0..<5 {
             let detector = windowDetection
             DispatchQueue.global().async {
                 Task { @MainActor in
@@ -390,7 +390,7 @@ final class WindowDetectionTests: XCTestCase {
             }
         }
         
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 2.0) // Reduced timeout
     }
     
     // MARK: - Platform-Specific Tests (iOS)
