@@ -332,15 +332,6 @@ public struct FormContentKey: PreferenceKey {
     }
 }
 
-// MARK: - Content Complexity
-
-/// Represents the complexity level of content for layout decisions
-public enum ContentComplexity: String, CaseIterable, Sendable {
-    case simple = "simple"
-    case moderate = "moderate"
-    case complex = "complex"
-    case veryComplex = "veryComplex"
-}
 
 // MARK: - Layout Preference
 
@@ -743,4 +734,107 @@ public enum LayoutApproach: String, CaseIterable {
     case dynamic = "dynamic"
     case masonry = "masonry"
     case list = "list"
+}
+
+// MARK: - Presentation Hints
+
+/// Data type hints for presentation
+public enum DataTypeHint: String, CaseIterable, Sendable {
+    case generic = "generic"
+    case text = "text"
+    case number = "number"
+    case date = "date"
+    case image = "image"
+    case boolean = "boolean"
+    case collection = "collection"
+    case numeric = "numeric"
+    case hierarchical = "hierarchical"
+    case temporal = "temporal"
+    case media = "media"
+    case form = "form"
+    case list = "list"
+    case grid = "grid"
+    case chart = "chart"
+    case custom = "custom"
+    case user = "user"
+    case transaction = "transaction"
+    case action = "action"
+    case product = "product"
+    case communication = "communication"
+    case location = "location"
+    case navigation = "navigation"
+    case card = "card"
+    case detail = "detail"
+    case modal = "modal"
+    case sheet = "sheet"
+}
+
+/// Presentation preference levels
+public enum PresentationPreference: String, CaseIterable, Sendable {
+    case automatic = "automatic"
+    case minimal = "minimal"
+    case moderate = "moderate"
+    case rich = "rich"
+    case custom = "custom"
+    case detail = "detail"
+    case modal = "modal"
+    case navigation = "navigation"
+    case list = "list"
+    case masonry = "masonry"
+    case form = "form"
+    case card = "card"
+    case cards = "cards"
+    case compact = "compact"
+    case grid = "grid"
+    case chart = "chart"
+    case coverFlow = "coverFlow"
+}
+
+/// Presentation context types
+public enum PresentationContext: String, CaseIterable, Sendable {
+    case dashboard = "dashboard"
+    case browse = "browse"
+    case detail = "detail"
+    case edit = "edit"
+    case create = "create"
+    case search = "search"
+    case settings = "settings"
+    case profile = "profile"
+    case summary = "summary"
+    case list = "list"
+    case form = "form"
+    case modal = "modal"
+    case navigation = "navigation"
+}
+
+/// Content complexity levels
+public enum ContentComplexity: String, CaseIterable, Sendable {
+    case simple = "simple"
+    case moderate = "moderate"
+    case complex = "complex"
+    case veryComplex = "veryComplex"
+    case advanced = "advanced"
+}
+
+/// Simple presentation hints for basic usage
+public struct PresentationHints: Sendable {
+    public let dataType: DataTypeHint
+    public let presentationPreference: PresentationPreference
+    public let complexity: ContentComplexity
+    public let context: PresentationContext
+    public var customPreferences: [String: String]
+    
+    public init(
+        dataType: DataTypeHint = .generic,
+        presentationPreference: PresentationPreference = .automatic,
+        complexity: ContentComplexity = .moderate,
+        context: PresentationContext = .dashboard,
+        customPreferences: [String: String] = [:]
+    ) {
+        self.dataType = dataType
+        self.presentationPreference = presentationPreference
+        self.complexity = complexity
+        self.context = context
+        self.customPreferences = customPreferences
+    }
 }

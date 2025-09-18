@@ -23,7 +23,7 @@ public struct FormUsageExample: View {
     
     public var body: some View {
         NavigationView {
-            FixedSimpleFormView(
+            SimpleFormView(
                 fields: createFormFields(),
                 hints: createPresentationHints(),
                 onSubmit: handleFormSubmission,

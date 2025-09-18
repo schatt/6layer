@@ -100,7 +100,7 @@ private func calculateOptimalColumns(
             return min(4, max(2, contentCount / 2))
         case .moderate:
             return min(3, max(2, contentCount / 3))
-        case .complex, .veryComplex:
+        case .complex, .veryComplex, .advanced:
             return min(2, max(1, contentCount / 4))
         }
         
@@ -157,6 +157,8 @@ private func calculateOptimalSpacing(deviceType: DeviceType, contentComplexity: 
         return baseSpacing * 1.5
     case .veryComplex:
         return baseSpacing * 2.0
+    case .advanced:
+        return baseSpacing * 2.0
     }
 }
 
@@ -172,6 +174,8 @@ private func calculateOptimalHeight(cardWidth: CGFloat, contentComplexity: Conte
     case .complex:
         aspectRatio = 1.6
     case .veryComplex:
+        aspectRatio = 1.8
+    case .advanced:
         aspectRatio = 1.8
     }
     
@@ -206,6 +210,8 @@ private func calculateExpansionScale(deviceType: DeviceType, contentComplexity: 
     case .complex:
         return baseScale * 1.1
     case .veryComplex:
+        return baseScale * 1.15
+    case .advanced:
         return baseScale * 1.15
     }
 }

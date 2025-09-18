@@ -446,7 +446,7 @@ private extension DataIntrospectionEngine {
                 description: "Use standard layout with sections",
                 implementation: "platformStandardLayout"
             ))
-        case .complex, .veryComplex:
+        case .complex, .veryComplex, .advanced:
             recommendations.append(UIRecommendation(
                 type: .layout,
                 priority: .critical,

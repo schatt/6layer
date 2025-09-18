@@ -263,7 +263,7 @@ public struct FrameworkIntegrationExample: View {
                 .appleHIGCompliant() // Apply Apple HIG compliance
                 
                 // Use platform-specific presentation
-                platformPresentFormData_L1(
+                SimpleFormView(
                     fields: createFormFields(),
                     hints: createFormHints()
                 )
@@ -274,10 +274,16 @@ public struct FrameworkIntegrationExample: View {
     }
     
     private func createFormFields() -> [GenericFormField] {
+        // Note: This is a simplified example - in real usage, you'd need to manage state properly
+        // For demonstration purposes, we'll create fields with constant bindings
+        let nameBinding = Binding<String>(get: { "" }, set: { _ in })
+        let emailBinding = Binding<String>(get: { "" }, set: { _ in })
+        let ageBinding = Binding<String>(get: { "" }, set: { _ in })
+        
         return [
-            GenericFormField(label: "Name", fieldType: .text),
-            GenericFormField(label: "Email", fieldType: .text),
-            GenericFormField(label: "Age", fieldType: .number)
+            GenericFormField(label: "Name", value: nameBinding, fieldType: .text),
+            GenericFormField(label: "Email", value: emailBinding, fieldType: .text),
+            GenericFormField(label: "Age", value: ageBinding, fieldType: .number)
         ]
     }
     

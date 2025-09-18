@@ -95,12 +95,15 @@ public extension IntelligentDetailView {
     ) -> DetailLayoutStrategy {
         // Check hints first for explicit preferences
         if let hints = hints {
-            if hints.presentationPreference == .compact {
+            switch hints.presentationPreference {
+            case .compact:
                 return .compact
-            } else if hints.presentationPreference == .detail {
+            case .detail:
                 return .detailed
-            } else if hints.presentationPreference == .card {
+            case .card:
                 return .standard
+            default:
+                break
             }
         }
         

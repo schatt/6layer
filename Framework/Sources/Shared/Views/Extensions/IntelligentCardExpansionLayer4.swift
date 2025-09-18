@@ -19,7 +19,25 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         if items.isEmpty {
-            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+            VStack(spacing: 16) {
+                Image(systemName: "tray")
+                    .font(.system(size: 48))
+                    .foregroundColor(.secondary)
+                
+                Text("No items available")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                if let onCreateItem = onCreateItem {
+                    Button("Add Item") {
+                        onCreateItem()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.platformBackground)
         } else {
             GeometryReader { geometry in
                 let screenWidth = geometry.size.width
@@ -214,7 +232,25 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         if items.isEmpty {
-            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+            VStack(spacing: 16) {
+                Image(systemName: "tray")
+                    .font(.system(size: 48))
+                    .foregroundColor(.secondary)
+                
+                Text("No items available")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                if let onCreateItem = onCreateItem {
+                    Button("Add Item") {
+                        onCreateItem()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.platformBackground)
         } else {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
@@ -262,7 +298,25 @@ public struct GridCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         if items.isEmpty {
-            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+            VStack(spacing: 16) {
+                Image(systemName: "tray")
+                    .font(.system(size: 48))
+                    .foregroundColor(.secondary)
+                
+                Text("No items available")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                if let onCreateItem = onCreateItem {
+                    Button("Add Item") {
+                        onCreateItem()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.platformBackground)
         } else {
             GeometryReader { geometry in
                 let layoutDecision = determineIntelligentCardLayout_L2(
@@ -300,7 +354,25 @@ public struct ListCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         if items.isEmpty {
-            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+            VStack(spacing: 16) {
+                Image(systemName: "tray")
+                    .font(.system(size: 48))
+                    .foregroundColor(.secondary)
+                
+                Text("No items available")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                if let onCreateItem = onCreateItem {
+                    Button("Add Item") {
+                        onCreateItem()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.platformBackground)
         } else {
             LazyVStack(spacing: 12) {
                 ForEach(items) { item in
@@ -326,7 +398,25 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         if items.isEmpty {
-            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+            VStack(spacing: 16) {
+                Image(systemName: "tray")
+                    .font(.system(size: 48))
+                    .foregroundColor(.secondary)
+                
+                Text("No items available")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                if let onCreateItem = onCreateItem {
+                    Button("Add Item") {
+                        onCreateItem()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.platformBackground)
         } else {
             LazyVGrid(
                 columns: Array(repeating: GridItem(.flexible()), count: 3),
@@ -355,7 +445,25 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         if items.isEmpty {
-            CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+            VStack(spacing: 16) {
+                Image(systemName: "tray")
+                    .font(.system(size: 48))
+                    .foregroundColor(.secondary)
+                
+                Text("No items available")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                if let onCreateItem = onCreateItem {
+                    Button("Add Item") {
+                        onCreateItem()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.platformBackground)
         } else {
             // Choose the best layout based on content and device
             if items.count <= 2 {

@@ -12,24 +12,43 @@ import XCTest
 @MainActor
 final class Layer1PresentationTests: XCTestCase {
     
+    // MARK: - Test Helpers
+    
+    /// Helper function to create GenericFormField with proper binding for tests
+    private func createTestField(
+        label: String,
+        placeholder: String? = nil,
+        value: String = "",
+        isRequired: Bool = false,
+        fieldType: DynamicFieldType = .text
+    ) -> GenericFormField {
+        return GenericFormField(
+            label: label,
+            placeholder: placeholder,
+            value: .constant(value),
+            isRequired: isRequired,
+            fieldType: fieldType
+        )
+    }
+    
     // MARK: - Test Data
     
-    let testFields: [GenericFormField] = [
-        GenericFormField(
+    lazy var testFields: [GenericFormField] = [
+        createTestField(
             label: "Name",
             placeholder: "Enter your name",
             value: "",
             isRequired: true,
             fieldType: .text
         ),
-        GenericFormField(
+        createTestField(
             label: "Email",
             placeholder: "Enter your email",
             value: "",
             isRequired: true,
             fieldType: .email
         ),
-        GenericFormField(
+        createTestField(
             label: "Age",
             placeholder: "Enter your age",
             value: "",
@@ -230,7 +249,7 @@ final class Layer1PresentationTests: XCTestCase {
     func testPlatformPresentFormData_L1_HandlesLargeFieldSets() {
         // Given: Large number of fields
         let largeFieldSet = (1...100).map { i in
-            GenericFormField(
+            createTestField(
                 label: "Field \(i)",
                 placeholder: "Enter value \(i)",
                 value: "",
@@ -253,14 +272,14 @@ final class Layer1PresentationTests: XCTestCase {
     func testPlatformPresentFormData_L1_HandlesSpecialCharacters() {
         // Given: Fields with special characters
         let specialFields = [
-            GenericFormField(
+            createTestField(
                 label: "Name with émojis 🚀",
                 placeholder: "Enter your name with special chars",
                 value: "",
                 isRequired: true,
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Email with symbols",
                 placeholder: "user@example.com",
                 value: "",
@@ -341,7 +360,7 @@ final class Layer1PresentationTests: XCTestCase {
     func testPlatformPresentFormData_L1_Performance() {
         // Given: Large field set
         let largeFieldSet = (1...1000).map { i in
-            GenericFormField(
+            createTestField(
                 label: "Field \(i)",
                 placeholder: "Enter value \(i)",
                 value: "",

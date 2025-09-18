@@ -239,6 +239,7 @@ private func calculateOptimalColumns(
     case .moderate: baseWidth = 250
     case .complex: baseWidth = 300
     case .veryComplex: baseWidth = 350
+    case .advanced: baseWidth = 400
     }
     
     let columns = max(1, Int(width / baseWidth))

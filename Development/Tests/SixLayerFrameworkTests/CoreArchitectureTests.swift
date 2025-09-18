@@ -3,6 +3,25 @@ import XCTest
 
 final class CoreArchitectureTests: XCTestCase {
     
+    // MARK: - Test Helpers
+    
+    /// Helper function to create GenericFormField with proper binding for tests
+    private func createTestField(
+        label: String,
+        placeholder: String? = nil,
+        value: String = "",
+        isRequired: Bool = false,
+        fieldType: DynamicFieldType = .text
+    ) -> GenericFormField {
+        return GenericFormField(
+            label: label,
+            placeholder: placeholder,
+            value: .constant(value),
+            isRequired: isRequired,
+            fieldType: fieldType
+        )
+    }
+    
     // MARK: - Layer 1: Semantic Intent & Data Type Recognition Tests
     
     func testDataTypeHintCreation() throws {
@@ -194,7 +213,7 @@ final class CoreArchitectureTests: XCTestCase {
         let isRequired = true
         
         // When
-        let field = GenericFormField(
+        let field = createTestField(
             label: label,
             value: value,
             isRequired: isRequired

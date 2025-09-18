@@ -114,6 +114,8 @@ private func chooseLayoutApproach(complexity: ContentComplexity, capabilities: D
         return .responsive
     case .veryComplex:
         return .dynamic
+    case .advanced:
+        return .dynamic
     }
 }
 
@@ -130,6 +132,8 @@ private func calculateOptimalColumns(itemCount: Int, complexity: ContentComplexi
     case .complex:
         complexityLimit = 5
     case .veryComplex:
+        complexityLimit = 6
+    case .advanced:
         complexityLimit = 6
     }
     
@@ -157,6 +161,8 @@ private func calculateOptimalSpacing(complexity: ContentComplexity, capabilities
         return 24
     case .veryComplex:
         return 32
+    case .advanced:
+        return 32
     }
 }
 
@@ -169,6 +175,8 @@ private func choosePerformanceStrategy(complexity: ContentComplexity, capabiliti
     case .complex:
         return .highPerformance
     case .veryComplex:
+        return .maximumPerformance
+    case .advanced:
         return .maximumPerformance
     }
 }
@@ -424,6 +432,8 @@ private func calculateOptimalCardColumns(
         complexityAdjustment = 1  // Increase columns for complex content
     case .veryComplex:
         complexityAdjustment = 1  // Increase columns for very complex content
+    case .advanced:
+        complexityAdjustment = 1  // Increase columns for advanced content
     }
     
     // Apply device-specific limits

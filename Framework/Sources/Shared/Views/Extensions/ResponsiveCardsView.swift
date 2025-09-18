@@ -349,6 +349,10 @@ public struct ResponsiveCardView: View {
             Image(systemName: "circle.fill")
                 .foregroundColor(.red)
                 .font(.caption)
+        case .advanced:
+            Image(systemName: "circle.fill")
+                .foregroundColor(.purple)
+                .font(.caption)
         }
     }
 }

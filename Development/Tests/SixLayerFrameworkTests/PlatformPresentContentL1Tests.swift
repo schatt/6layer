@@ -13,6 +13,25 @@ import SwiftUI
 @MainActor
 final class PlatformPresentContentL1Tests: XCTestCase {
     
+    // MARK: - Test Helpers
+    
+    /// Helper function to create GenericFormField with proper binding for tests
+    private func createTestField(
+        label: String,
+        placeholder: String? = nil,
+        value: String = "",
+        isRequired: Bool = false,
+        fieldType: DynamicFieldType = .text
+    ) -> GenericFormField {
+        return GenericFormField(
+            label: label,
+            placeholder: placeholder,
+            value: .constant(value),
+            isRequired: isRequired,
+            fieldType: fieldType
+        )
+    }
+    
     // MARK: - Important Note
     // 
     // platformPresentContent_L1 is reserved for RARE cases where content type
@@ -34,8 +53,8 @@ final class PlatformPresentContentL1Tests: XCTestCase {
     
     private func createTestFormFields() -> [GenericFormField] {
         return [
-            GenericFormField(label: "Name", placeholder: "Enter name", fieldType: .text),
-            GenericFormField(label: "Email", placeholder: "Enter email", fieldType: .email)
+            createTestField(label: "Name", placeholder: "Enter name", fieldType: .text),
+            createTestField(label: "Email", placeholder: "Enter email", fieldType: .email)
         ]
     }
     

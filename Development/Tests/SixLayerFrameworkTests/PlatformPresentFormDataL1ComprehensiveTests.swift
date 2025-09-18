@@ -12,6 +12,25 @@ import XCTest
 @MainActor
 final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
+    // MARK: - Test Helpers
+    
+    /// Helper function to create GenericFormField with proper binding for tests
+    private func createTestField(
+        label: String,
+        placeholder: String? = nil,
+        value: String = "",
+        isRequired: Bool = false,
+        fieldType: DynamicFieldType = .text
+    ) -> GenericFormField {
+        return createTestField(
+            label: label,
+            placeholder: placeholder,
+            value: .constant(value),
+            isRequired: isRequired,
+            fieldType: fieldType
+        )
+    }
+
     // MARK: - Test Configuration
 
     /// Test configuration for form data presentation
@@ -72,7 +91,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // Create fields for each type
         let fields = allFieldTypes.enumerated().map { index, fieldType in
-            GenericFormField(
+            createTestField(
                 label: "Field \(index + 1)",
                 placeholder: "Enter value for \(fieldType.rawValue)",
                 value: getDefaultValue(for: fieldType),
@@ -97,19 +116,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_FieldTypeSpecificBehavior() {
         // Given: Fields with different behaviors
         let fieldsWithOptions = [
-            GenericFormField(
+            createTestField(
                 label: "Select Field",
                 value: "option1", fieldType: .select
             ),
-            GenericFormField(
+            createTestField(
                 label: "Multiselect Field",
                 value: "option1,option2", fieldType: .multiselect
             ),
-            GenericFormField(
+            createTestField(
                 label: "Radio Field",
                 value: "option1", fieldType: .radio
             ),
-            GenericFormField(
+            createTestField(
                 label: "Checkbox Field",
                 value: "true", fieldType: .checkbox
             )
@@ -131,11 +150,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_MultiValueFields() {
         // Given: Fields that support multiple values
         let multiValueFields = [
-            GenericFormField(
+            createTestField(
                 label: "Multiselect Field",
                 value: "option1,option2,option3", fieldType: .multiselect
             ),
-            GenericFormField(
+            createTestField(
                 label: "Checkbox Field",
                 value: "true", fieldType: .checkbox
             )
@@ -182,9 +201,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         let fields = [
-            GenericFormField(label: "Name", fieldType: .text),
-            GenericFormField(label: "Email", fieldType: .email),
-            GenericFormField(label: "Age", fieldType: .number)
+            createTestField(label: "Name", fieldType: .text),
+            createTestField(label: "Email", fieldType: .email),
+            createTestField(label: "Age", fieldType: .number)
         ]
 
         // When: Creating form presentation with enhanced hints
@@ -222,8 +241,8 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         let fields = [
-            GenericFormField(label: "Title", fieldType: .text),
-            GenericFormField(label: "Description", fieldType: .textarea)
+            createTestField(label: "Title", fieldType: .text),
+            createTestField(label: "Description", fieldType: .textarea)
         ]
 
         // When: Creating form with multiple extensible hints
@@ -240,22 +259,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_CrossPlatformCompatibility() {
         // Given: Fields that work across platforms
         let crossPlatformFields = [
-            GenericFormField(
+            createTestField(
                 label: "Name",
                 placeholder: "Enter your name",
                 isRequired: true, fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Email",
                 placeholder: "Enter your email",
                 isRequired: true, fieldType: .email
             ),
-            GenericFormField(
+            createTestField(
                 label: "Phone",
                 placeholder: "Enter your phone",
                 fieldType: .phone
             ),
-            GenericFormField(
+            createTestField(
                 label: "Date of Birth",
                 placeholder: "Select your date of birth",
                 fieldType: .date
@@ -287,11 +306,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_PlatformSpecificKeyboardTypes() {
         // Given: Fields that should use different keyboard types on iOS
         let keyboardTestFields = [
-            GenericFormField(label: "Text", fieldType: .text),
-            GenericFormField(label: "Email", fieldType: .email),
-            GenericFormField(label: "Number", fieldType: .number),
-            GenericFormField(label: "Phone", fieldType: .phone),
-            GenericFormField(label: "URL", fieldType: .url)
+            createTestField(label: "Text", fieldType: .text),
+            createTestField(label: "Email", fieldType: .email),
+            createTestField(label: "Number", fieldType: .number),
+            createTestField(label: "Phone", fieldType: .phone),
+            createTestField(label: "URL", fieldType: .url)
         ]
 
         // When: Creating form presentation
@@ -320,7 +339,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_LargeFieldSetPerformance() {
         // Given: Very large field set for performance testing
         let largeFieldSet = (1...1000).map { i in
-            GenericFormField(
+            createTestField(
                 label: "Field \(i)",
                 placeholder: "Value \(i)",
                 value: "default\(i)",
@@ -346,7 +365,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_MemoryEfficiency() {
         // Given: Memory-intensive field set
         let memoryFields = (1...500).map { i in
-            GenericFormField(
+            createTestField(
                 label: "Rich Text Field \(i)",
                 placeholder: "Enter rich content \(i)",
                 value: String(repeating: "Long content ", count: 100), // 1.3KB per field
@@ -370,19 +389,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_ValidationScenarios() {
         // Given: Fields with various validation requirements
         let validationFields = [
-            GenericFormField(
+            createTestField(
                 label: "Required Text",
                 value: "", isRequired: true, fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Required Email",
                 value: "", isRequired: true, fieldType: .email
             ),
-            GenericFormField(
+            createTestField(
                 label: "Optional Number",
                 value: "123", isRequired: false, fieldType: .number
             ),
-            GenericFormField(
+            createTestField(
                 label: "Invalid Email",
                 value: "invalid-email", fieldType: .email
             )
@@ -405,22 +424,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_EmptyAndNilValues() {
         // Given: Fields with empty and nil values
         let edgeCaseFields = [
-            GenericFormField(
+            createTestField(
                 label: "Empty Label",
                 value: "", fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Nil Placeholder",
                 placeholder: nil,
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Empty Everything",
                 placeholder: nil,
                 value: "",
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Whitespace Only",
                 value: "   ",
                 fieldType: .text
@@ -444,25 +463,25 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_SpecialCharacterHandling() {
         // Given: Fields with special characters and Unicode
         let specialCharFields = [
-            GenericFormField(
+            createTestField(
                 label: "Emoji Field 🚀",
                 placeholder: "Enter with emoji 🎉",
                 value: "Unicode: ñáéíóú",
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "RTL Text",
                 placeholder: "نص عربي",
                 value: "عربي",
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Symbols & Punctuation",
                 placeholder: "!@#$%^&*()",
                 value: "©®™€¥£¢",
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Math Symbols",
                 placeholder: "∑∆∏√∞",
                 value: "αβγδε",
@@ -496,9 +515,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         let fields = [
-            GenericFormField(label: "Name", fieldType: .text),
-            GenericFormField(label: "Email", fieldType: .email),
-            GenericFormField(label: "Phone", fieldType: .phone)
+            createTestField(label: "Name", fieldType: .text),
+            createTestField(label: "Email", fieldType: .email),
+            createTestField(label: "Phone", fieldType: .phone)
         ]
 
         // When: Testing all hint combinations
@@ -527,9 +546,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         let fields = [
-            GenericFormField(label: "Title", fieldType: .text),
-            GenericFormField(label: "Description", fieldType: .textarea),
-            GenericFormField(label: "Category", fieldType: .select)
+            createTestField(label: "Title", fieldType: .text),
+            createTestField(label: "Description", fieldType: .textarea),
+            createTestField(label: "Category", fieldType: .select)
         ]
 
         // When: Creating form with custom preferences
@@ -546,22 +565,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_AccessibilitySupport() {
         // Given: Fields with accessibility considerations
         let accessibilityFields = [
-            GenericFormField(
+            createTestField(
                 label: "Name (Required)",
                 placeholder: "Enter your full name",
                 isRequired: true, fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: "Email Address",
                 placeholder: "your.email@example.com",
                 isRequired: true, fieldType: .email
             ),
-            GenericFormField(
+            createTestField(
                 label: "Phone Number",
                 placeholder: "(555) 123-4567",
                 fieldType: .phone
             ),
-            GenericFormField(
+            createTestField(
                 label: "Date of Birth",
                 placeholder: "MM/DD/YYYY",
                 fieldType: .date
@@ -601,13 +620,13 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_ErrorRecovery() {
         // Given: Fields with potentially problematic data
         let problematicFields = [
-            GenericFormField(
+            createTestField(
                 label: "",
                 placeholder: "",
                 value: String(repeating: "x", count: 10000), // Very long value
                 fieldType: .text
             ),
-            GenericFormField(
+            createTestField(
                 label: String(repeating: "Label", count: 1000), // Very long label
                 fieldType: .text
             )
