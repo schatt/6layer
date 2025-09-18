@@ -129,16 +129,20 @@ extension NavigationStrategy {
             return .navigationStack
         case .summary:
             return .navigationStack
-        case .create:
-            return .modal
         case .list:
-            return .navigationStack
+            return .adaptive
         case .form:
             return .modal
         case .modal:
             return .modal
         case .navigation:
             return .navigationStack
+        case .settings:
+            return .navigationStack
+        case .profile:
+            return .navigationStack
+        case .create:
+            return .modal
         }
     }
 }

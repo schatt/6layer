@@ -22,7 +22,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         isRequired: Bool = false,
         fieldType: DynamicFieldType = .text
     ) -> GenericFormField {
-        return createTestField(
+        return GenericFormField(
             label: label,
             placeholder: placeholder,
             value: .constant(value),

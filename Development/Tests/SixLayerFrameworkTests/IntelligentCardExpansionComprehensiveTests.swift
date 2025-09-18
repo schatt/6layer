@@ -863,9 +863,9 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
     func testPlatformPresentItemCollectionL1WithCreateAction() {
         // Test with create action provided
-        var createActionCalled = false
+        var _ = false
         let createAction = {
-            createActionCalled = true
+            // Test callback is accepted
         }
         
         let hints = PresentationHints(
@@ -909,9 +909,9 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
     func testCollectionEmptyStateViewWithCreateAction() {
         // Test empty state view with create action
-        var createActionCalled = false
+        var _ = false
         let createAction = {
-            createActionCalled = true
+            // Test callback is accepted
         }
         
         let hints = PresentationHints(
