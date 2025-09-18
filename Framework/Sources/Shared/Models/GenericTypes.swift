@@ -72,27 +72,85 @@ public struct GenericDataItem: Identifiable, Hashable {
 
 // MARK: - Generic Form Field
 
-/// Generic form field for form handling
+/// Generic form field for form handling with binding support
 public struct GenericFormField: Identifiable {
     public let id = UUID()
     public let label: String
     public let placeholder: String?
-    public let value: String
     public let isRequired: Bool
     public let fieldType: DynamicFieldType
+    public let validationRules: [ValidationRule]
+    public let options: [String] // For select, radio, multiselect fields
+    public let maxLength: Int?
+    public let minLength: Int?
+    
+    // Binding for two-way data binding
+    @Binding public var value: String
     
     public init(
         label: String,
         placeholder: String? = nil,
-        value: String = "",
+        value: Binding<String>,
         isRequired: Bool = false,
-        fieldType: DynamicFieldType = .text
+        fieldType: DynamicFieldType = .text,
+        validationRules: [ValidationRule] = [],
+        options: [String] = [],
+        maxLength: Int? = nil,
+        minLength: Int? = nil
     ) {
         self.label = label
         self.placeholder = placeholder
-        self.value = value
+        self._value = value
         self.isRequired = isRequired
         self.fieldType = fieldType
+        self.validationRules = validationRules
+        self.options = options
+        self.maxLength = maxLength
+        self.minLength = minLength
+    }
+}
+
+// MARK: - Validation Rule
+
+/// Form field validation rule
+public struct ValidationRule {
+    public let rule: ValidationRuleType
+    public let message: String
+    public let customValidator: ((String) -> Bool)?
+    
+    public init(
+        rule: ValidationRuleType,
+        message: String,
+        customValidator: ((String) -> Bool)? = nil
+    ) {
+        self.rule = rule
+        self.message = message
+        self.customValidator = customValidator
+    }
+}
+
+// MARK: - Validation Rule Types
+
+public enum ValidationRuleType {
+    case required
+    case email
+    case phone
+    case url
+    case minLength(Int)
+    case maxLength(Int)
+    case pattern(String) // Regex pattern
+    case custom((String) -> Bool)
+}
+
+// MARK: - Form Validation Result
+
+public struct FormValidationResult {
+    public let isValid: Bool
+    public let errors: [String: String] // fieldId: errorMessage
+    
+    public init(isValid: Bool, errors: [String: String] = [:]) {
+        self.isValid = isValid
+        self.errors = errors
     }
 }
 
