@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 // MARK: - Layer 2: Layout Decision Engine
 // This layer analyzes content and makes layout decisions based on content characteristics
