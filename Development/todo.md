@@ -1,22 +1,33 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v3.0.0 - Major UI Binding Improvements** 🚀
+## 📍 **Current Status: v3.0.1 - iOS Compilation Fixes** 🚀
 
-**Last Release**: v3.0.0 - Major UI Binding Improvements with Breaking Changes  
+**Last Release**: v3.0.1 - Major UI Binding Improvements with iOS Compilation Fixes  
 **Current Phase**: Framework Enhancement Areas - Medium-Impact Areas (Priority 2)  
 **Next Phase**: Advanced Features and Enterprise Capabilities
-**Note**: v3.0.0 introduces breaking changes for form fields, adds collection view callbacks, and implements card content display system
+**Note**: v3.0.1 fixes iOS compilation errors from v3.0.0, maintains all breaking changes for form fields, and adds collection view callbacks
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
-## 📋 **Recent Release Summary (v2.8.0 - v3.0.0)**
+## 📋 **Recent Release Summary (v2.8.0 - v3.0.1)**
 
-### **v3.0.0 - Major UI Binding Improvements** ✅ **COMPLETED**
+### **v3.0.1 - iOS Compilation Fixes** ✅ **COMPLETED**
+- **iOS Compilation Fixes**: Fixed Metal API availability issues on iOS platforms
+- **Platform-Specific Checks**: Added proper checks for isLowPower and isRemovable properties
+- **Cross-Platform Compatibility**: Maintained functionality while ensuring compilation success
+- **Breaking Changes**: Form fields now require proper data bindings instead of static text
+- **Collection View Callbacks**: Added optional callback parameters for item selection, deletion, and editing
+- **Card Content Display System**: Implemented CardDisplayable protocol for dynamic item display
+- **Card Action Buttons**: Added proper callback handling for edit and delete operations
+- **Migration Guide**: Comprehensive documentation for breaking changes
+
+### **v3.0.0 - Major UI Binding Improvements** ⚠️ **BROKEN BUILD**
 - **BREAKING CHANGES**: Form fields now require proper data bindings instead of static text
 - **Collection View Callbacks**: Added optional callback parameters for item selection, deletion, and editing
 - **Card Content Display System**: Implemented CardDisplayable protocol for dynamic item display
 - **Card Action Buttons**: Added proper callback handling for edit and delete operations
 - **Migration Guide**: Comprehensive documentation for breaking changes
+- **iOS Compilation Errors**: Metal API usage caused compilation failures on iOS
 
 ### **v2.9.3 - UI Binding Fixes** ✅ **COMPLETED**
 - **Collection View Callbacks**: Added missing callback parameters for item selection, deletion, and editing
