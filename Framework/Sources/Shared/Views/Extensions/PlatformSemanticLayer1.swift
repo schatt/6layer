@@ -8,11 +8,21 @@ import SwiftUI
 public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
     hints: PresentationHints,
-    onCreateItem: (() -> Void)? = nil
+    onCreateItem: (() -> Void)? = nil,
+    onItemSelected: ((Item) -> Void)? = nil,
+    onItemDeleted: ((Item) -> Void)? = nil,
+    onItemEdited: ((Item) -> Void)? = nil
 ) -> some View {
     // Generic implementation that uses hints to guide decisions
     // This function doesn't know about specific business logic
-    return GenericItemCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+    return GenericItemCollectionView(
+        items: items, 
+        hints: hints, 
+        onCreateItem: onCreateItem,
+        onItemSelected: onItemSelected,
+        onItemDeleted: onItemDeleted,
+        onItemEdited: onItemEdited
+    )
 }
 
 /// Generic function for presenting numeric data
@@ -127,7 +137,10 @@ public func platformPresentContent_L1(
 public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
     hints: EnhancedPresentationHints,
-    onCreateItem: (() -> Void)? = nil
+    onCreateItem: (() -> Void)? = nil,
+    onItemSelected: ((Item) -> Void)? = nil,
+    onItemDeleted: ((Item) -> Void)? = nil,
+    onItemEdited: ((Item) -> Void)? = nil
 ) -> some View {
     // Convert enhanced hints to basic hints for backward compatibility
     let basicHints = PresentationHints(
@@ -141,8 +154,15 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     // Process extensible hints and merge custom data
     let processedHints = processExtensibleHints(hints, into: basicHints)
     
-    return GenericItemCollectionView(items: items, hints: processedHints, onCreateItem: onCreateItem)
-        .environment(\.extensibleHints, hints.extensibleHints)
+    return GenericItemCollectionView(
+        items: items, 
+        hints: processedHints, 
+        onCreateItem: onCreateItem,
+        onItemSelected: onItemSelected,
+        onItemDeleted: onItemDeleted,
+        onItemEdited: onItemEdited
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
 }
 
 /// Generic function for presenting numeric data with enhanced hints
@@ -278,11 +298,24 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -296,17 +329,53 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
         
         switch presentationStrategy {
         case .expandableCards:
-            return AnyView(ExpandableCardCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
+            return AnyView(ExpandableCardCollectionView(
+                items: items, 
+                hints: hints, 
+                onCreateItem: onCreateItem,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
         case .coverFlow:
-            return AnyView(CoverFlowCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
+            return AnyView(CoverFlowCollectionView(
+                items: items, 
+                hints: hints, 
+                onCreateItem: onCreateItem,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
         case .grid:
-            return AnyView(GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
+            return AnyView(GridCollectionView(
+                items: items, 
+                hints: hints, 
+                onCreateItem: onCreateItem,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
         case .list:
-            return AnyView(ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
+            return AnyView(ListCollectionView(
+                items: items, 
+                hints: hints, 
+                onCreateItem: onCreateItem,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
         case .masonry:
-            return AnyView(MasonryCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
+            return AnyView(MasonryCollectionView(
+                items: items, 
+                hints: hints, 
+                onCreateItem: onCreateItem
+            ))
         case .adaptive:
-            return AnyView(AdaptiveCollectionView(items: items, hints: hints, onCreateItem: onCreateItem))
+            return AnyView(AdaptiveCollectionView(
+                items: items, 
+                hints: hints, 
+                onCreateItem: onCreateItem
+            ))
         }
     }
     
