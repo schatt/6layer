@@ -20,15 +20,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - Reduce Motion Behavior Tests
     
-    func testReduceMotionBehavior() {
-        // Test that functions behave differently when reduce motion is enabled
-        testReduceMotionCardExpansion()
-        testReduceMotionAnimations()
-        testReduceMotionTransitions()
-        testReduceMotionHoverEffects()
-    }
-    
-    private func testReduceMotionCardExpansion() {
+    func testReduceMotionCardExpansion() {
         let performanceConfig = getCardExpansionPerformanceConfig()
         
         // When reduce motion is enabled, animations should be shorter or disabled
@@ -47,7 +39,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         }
     }
     
-    private func testReduceMotionAnimations() {
+    func testReduceMotionAnimations() {
         let performanceConfig = getCardExpansionPerformanceConfig()
         
         // Animations should be configurable for reduce motion
@@ -59,7 +51,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(performanceConfig.supportsSmoothAnimations, "Smooth animations should be configurable")
     }
     
-    private func testReduceMotionTransitions() {
+    func testReduceMotionTransitions() {
         // Test that transitions respect reduce motion
         let testView = createTestView()
         
@@ -68,7 +60,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for reduce motion")
     }
     
-    private func testReduceMotionHoverEffects() {
+    func testReduceMotionHoverEffects() {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsHover {
@@ -80,15 +72,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - High Contrast Behavior Tests
     
-    func testHighContrastBehavior() {
-        // Test that functions behave differently when high contrast is enabled
-        testHighContrastColors()
-        testHighContrastText()
-        testHighContrastBorders()
-        testHighContrastFocusIndicators()
-    }
-    
-    private func testHighContrastColors() {
+    func testHighContrastColors() {
         // Test that colors are adjusted for high contrast
         let testColor = Color.blue
         
@@ -103,7 +87,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         }
     }
     
-    private func testHighContrastText() {
+    func testHighContrastText() {
         // Test that text is optimized for high contrast
         let testView = createTestView()
         
@@ -112,7 +96,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for high contrast")
     }
     
-    private func testHighContrastBorders() {
+    func testHighContrastBorders() {
         // Test that borders are enhanced for high contrast
         let testView = createTestView()
         
@@ -121,7 +105,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for high contrast borders")
     }
     
-    private func testHighContrastFocusIndicators() {
+    func testHighContrastFocusIndicators() {
         // Test that focus indicators are enhanced for high contrast
         let testView = createTestView()
         
@@ -132,15 +116,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - VoiceOver Behavior Tests
     
-    func testVoiceOverBehavior() {
-        // Test that functions behave differently when VoiceOver is enabled
-        testVoiceOverAccessibility()
-        testVoiceOverNavigation()
-        testVoiceOverAnnouncements()
-        testVoiceOverFocusManagement()
-    }
-    
-    private func testVoiceOverAccessibility() {
+    func testVoiceOverAccessibility() {
         let accessibilityManager = AccessibilityOptimizationManager()
         
         // VoiceOver should be supported on all platforms
@@ -153,7 +129,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(accessibilityManager.accessibilityLevel, "Accessibility level should be available")
     }
     
-    private func testVoiceOverNavigation() {
+    func testVoiceOverNavigation() {
         let config = getCardExpansionPlatformConfig()
         
         // VoiceOver should be supported on all platforms
@@ -164,7 +140,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertTrue(config.supportsVoiceOver, "Navigation should be optimized for VoiceOver")
     }
     
-    private func testVoiceOverAnnouncements() {
+    func testVoiceOverAnnouncements() {
         // Test that announcements are optimized for VoiceOver
         let testView = createTestView()
         
@@ -173,7 +149,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for VoiceOver announcements")
     }
     
-    private func testVoiceOverFocusManagement() {
+    func testVoiceOverFocusManagement() {
         // Test that focus management is optimized for VoiceOver
         let testView = createTestView()
         
@@ -184,15 +160,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - Switch Control Behavior Tests
     
-    func testSwitchControlBehavior() {
-        // Test that functions behave differently when Switch Control is enabled
-        testSwitchControlAccessibility()
-        testSwitchControlNavigation()
-        testSwitchControlTiming()
-        testSwitchControlFocusManagement()
-    }
-    
-    private func testSwitchControlAccessibility() {
+    func testSwitchControlAccessibility() {
         let config = getCardExpansionPlatformConfig()
         
         // Switch Control should be supported on all platforms
@@ -202,7 +170,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertTrue(config.supportsSwitchControl, "Accessibility should be optimized for Switch Control")
     }
     
-    private func testSwitchControlNavigation() {
+    func testSwitchControlNavigation() {
         // Test that navigation is optimized for Switch Control
         let testView = createTestView()
         
@@ -211,7 +179,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for Switch Control navigation")
     }
     
-    private func testSwitchControlTiming() {
+    func testSwitchControlTiming() {
         // Test that timing is optimized for Switch Control
         let config = getCardExpansionPlatformConfig()
         
@@ -220,7 +188,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
                                    "Touch targets should be adequate for Switch Control")
     }
     
-    private func testSwitchControlFocusManagement() {
+    func testSwitchControlFocusManagement() {
         // Test that focus management is optimized for Switch Control
         let testView = createTestView()
         
@@ -231,15 +199,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - Dynamic Type Behavior Tests
     
-    func testDynamicTypeBehavior() {
-        // Test that functions behave differently when Dynamic Type is enabled
-        testDynamicTypeTextScaling()
-        testDynamicTypeLayout()
-        testDynamicTypeSpacing()
-        testDynamicTypeAccessibility()
-    }
-    
-    private func testDynamicTypeTextScaling() {
+    func testDynamicTypeTextScaling() {
         // Test that text scales appropriately for Dynamic Type
         let testView = createTestView()
         
@@ -248,7 +208,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for Dynamic Type text scaling")
     }
     
-    private func testDynamicTypeLayout() {
+    func testDynamicTypeLayout() {
         // Test that layout adapts to Dynamic Type
         let testView = createTestView()
         
@@ -257,7 +217,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for Dynamic Type layout")
     }
     
-    private func testDynamicTypeSpacing() {
+    func testDynamicTypeSpacing() {
         // Test that spacing adapts to Dynamic Type
         let testView = createTestView()
         
@@ -266,7 +226,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for Dynamic Type spacing")
     }
     
-    private func testDynamicTypeAccessibility() {
+    func testDynamicTypeAccessibility() {
         // Test that accessibility is optimized for Dynamic Type
         let config = getCardExpansionPlatformConfig()
         
@@ -277,15 +237,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - AssistiveTouch Behavior Tests
     
-    func testAssistiveTouchBehavior() {
-        // Test that functions behave differently when AssistiveTouch is enabled
-        testAssistiveTouchAccessibility()
-        testAssistiveTouchNavigation()
-        testAssistiveTouchTiming()
-        testAssistiveTouchFocusManagement()
-    }
-    
-    private func testAssistiveTouchAccessibility() {
+    func testAssistiveTouchAccessibility() {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsAssistiveTouch {
@@ -298,7 +250,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         }
     }
     
-    private func testAssistiveTouchNavigation() {
+    func testAssistiveTouchNavigation() {
         // Test that navigation is optimized for AssistiveTouch
         let testView = createTestView()
         
@@ -307,7 +259,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for AssistiveTouch navigation")
     }
     
-    private func testAssistiveTouchTiming() {
+    func testAssistiveTouchTiming() {
         // Test that timing is optimized for AssistiveTouch
         let config = getCardExpansionPlatformConfig()
         
@@ -318,7 +270,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         }
     }
     
-    private func testAssistiveTouchFocusManagement() {
+    func testAssistiveTouchFocusManagement() {
         // Test that focus management is optimized for AssistiveTouch
         let testView = createTestView()
         
@@ -327,31 +279,10 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertNotNil(testView, "View should be configurable for AssistiveTouch focus management")
     }
     
-    // MARK: - Comprehensive Accessibility Preference Testing
-    
-    func testAllAccessibilityPreferences() {
-        // Test all accessibility preferences comprehensively
-        testReduceMotionBehavior()
-        testHighContrastBehavior()
-        testVoiceOverBehavior()
-        testSwitchControlBehavior()
-        testDynamicTypeBehavior()
-        testAssistiveTouchBehavior()
-        
-        print("✅ All accessibility preferences tested successfully!")
-    }
     
     // MARK: - Accessibility Preference Combination Tests
     
-    func testAccessibilityPreferenceCombinations() {
-        // Test that multiple accessibility preferences work together
-        testReduceMotionAndHighContrast()
-        testVoiceOverAndSwitchControl()
-        testDynamicTypeAndHighContrast()
-        testAssistiveTouchAndVoiceOver()
-    }
-    
-    private func testReduceMotionAndHighContrast() {
+    func testReduceMotionAndHighContrast() {
         // Test that reduce motion and high contrast work together
         let performanceConfig = getCardExpansionPerformanceConfig()
         
@@ -369,7 +300,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         }
     }
     
-    private func testVoiceOverAndSwitchControl() {
+    func testVoiceOverAndSwitchControl() {
         // Test that VoiceOver and Switch Control work together
         let config = getCardExpansionPlatformConfig()
         
@@ -378,7 +309,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         XCTAssertTrue(config.supportsSwitchControl, "Switch Control should work with VoiceOver")
     }
     
-    private func testDynamicTypeAndHighContrast() {
+    func testDynamicTypeAndHighContrast() {
         // Test that Dynamic Type and high contrast work together
         let testView = createTestView()
         
@@ -395,7 +326,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
         }
     }
     
-    private func testAssistiveTouchAndVoiceOver() {
+    func testAssistiveTouchAndVoiceOver() {
         // Test that AssistiveTouch and VoiceOver work together
         let config = getCardExpansionPlatformConfig()
         
@@ -408,14 +339,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     
     // MARK: - Accessibility Preference Edge Cases
     
-    func testAccessibilityPreferenceEdgeCases() {
-        // Test edge cases for accessibility preferences
-        testAllPreferencesEnabled()
-        testAllPreferencesDisabled()
-        testConflictingPreferences()
-    }
-    
-    private func testAllPreferencesEnabled() {
+    func testAllPreferencesEnabled() {
         // Test that all preferences can be enabled simultaneously
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -427,7 +351,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
                                    "Animation duration should be configurable with all preferences")
     }
     
-    private func testAllPreferencesDisabled() {
+    func testAllPreferencesDisabled() {
         // Test that the framework works when all preferences are disabled
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -439,7 +363,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
                                    "Animation duration should be configurable with no preferences")
     }
     
-    private func testConflictingPreferences() {
+    func testConflictingPreferences() {
         // Test that conflicting preferences are handled gracefully
         let config = getCardExpansionPlatformConfig()
         
