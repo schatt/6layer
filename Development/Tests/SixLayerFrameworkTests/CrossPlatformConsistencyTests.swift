@@ -255,15 +255,9 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     
     // MARK: - Cross-Platform Consistency Tests
     
-    /// Test all cross-platform configurations
-    func testAllCrossPlatformConfigurations() {
-        for config in crossPlatformTestConfigurations {
-            testCrossPlatformConfiguration(config)
-        }
-    }
     
     /// Test a specific cross-platform configuration
-    private func testCrossPlatformConfiguration(_ config: CrossPlatformTestConfig) {
+    func testCrossPlatformConfiguration(_ config: CrossPlatformTestConfig) {
         print("🌐 Testing cross-platform consistency for: \(config.name)")
         
         // Test behavior consistency
@@ -279,14 +273,14 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     // MARK: - Behavior Consistency Tests
     
     /// Test that behaviors are consistent across platforms
-    private func testBehaviorConsistency(_ config: CrossPlatformTestConfig) {
+    func testBehaviorConsistency(_ config: CrossPlatformTestConfig) {
         for expectedBehavior in config.expectedBehaviors {
             testBehaviorConsistency(expectedBehavior, config: config)
         }
     }
     
     /// Test a specific behavior consistency
-    private func testBehaviorConsistency(
+    func testBehaviorConsistency(
         _ expectedBehavior: CrossPlatformTestConfig.ExpectedBehavior,
         config: CrossPlatformTestConfig
     ) {
@@ -298,7 +292,7 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     }
     
     /// Test that a behavior is consistent across platforms
-    private func testConsistentBehavior(
+    func testConsistentBehavior(
         _ expectedBehavior: CrossPlatformTestConfig.ExpectedBehavior,
         config: CrossPlatformTestConfig
     ) {
@@ -313,7 +307,7 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     }
     
     /// Test that a behavior varies appropriately across platforms
-    private func testVariableBehavior(
+    func testVariableBehavior(
         _ expectedBehavior: CrossPlatformTestConfig.ExpectedBehavior,
         config: CrossPlatformTestConfig
     ) {
@@ -325,14 +319,14 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     // MARK: - Platform-Specific Behavior Tests
     
     /// Test platform-specific behavior
-    private func testPlatformSpecificBehavior(_ config: CrossPlatformTestConfig) {
+    func testPlatformSpecificBehavior(_ config: CrossPlatformTestConfig) {
         for platform in config.expectedPlatforms {
             testPlatformSpecificBehavior(config, platform: platform)
         }
     }
     
     /// Test behavior for a specific platform
-    private func testPlatformSpecificBehavior(_ config: CrossPlatformTestConfig, platform: Platform) {
+    func testPlatformSpecificBehavior(_ config: CrossPlatformTestConfig, platform: Platform) {
         print("📱 Testing platform-specific behavior for \(platform) in \(config.name)")
         
         // Test that the platform supports the expected capabilities
@@ -343,7 +337,7 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     }
     
     /// Test that a platform supports the expected capabilities
-    private func testPlatformCapabilitySupport(_ config: CrossPlatformTestConfig, platform: Platform) {
+    func testPlatformCapabilitySupport(_ config: CrossPlatformTestConfig, platform: Platform) {
         let platformConfig = createPlatformConfig(platform: platform, capabilityState: config.capabilityState)
         
         // Test touch support
@@ -390,7 +384,7 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     }
     
     /// Test platform behavior
-    private func testPlatformBehavior(_ config: CrossPlatformTestConfig, platform: Platform) {
+    func testPlatformBehavior(_ config: CrossPlatformTestConfig, platform: Platform) {
         let platformConfig = createPlatformConfig(platform: platform, capabilityState: config.capabilityState)
         
         // Test that the platform configuration is valid
@@ -414,7 +408,7 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     // MARK: - Capability Consistency Tests
     
     /// Test capability consistency
-    private func testCapabilityConsistency(_ config: CrossPlatformTestConfig) {
+    func testCapabilityConsistency(_ config: CrossPlatformTestConfig) {
         // Test that the capability state is internally consistent
         testInternalCapabilityConsistency(config)
         
@@ -423,7 +417,7 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     }
     
     /// Test internal capability consistency
-    private func testInternalCapabilityConsistency(_ config: CrossPlatformTestConfig) {
+    func testInternalCapabilityConsistency(_ config: CrossPlatformTestConfig) {
         let capabilityState = config.capabilityState
         
         // Haptic feedback should only be available with touch
@@ -452,14 +446,14 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     }
     
     /// Test platform capability consistency
-    private func testPlatformCapabilityConsistency(_ config: CrossPlatformTestConfig) {
+    func testPlatformCapabilityConsistency(_ config: CrossPlatformTestConfig) {
         for platform in config.expectedPlatforms {
             testPlatformCapabilityConsistency(config, platform: platform)
         }
     }
     
     /// Test platform capability consistency for a specific platform
-    private func testPlatformCapabilityConsistency(_ config: CrossPlatformTestConfig, platform: Platform) {
+    func testPlatformCapabilityConsistency(_ config: CrossPlatformTestConfig, platform: Platform) {
         // Test that the capability state makes sense for the platform
         switch platform {
         case .iOS:
