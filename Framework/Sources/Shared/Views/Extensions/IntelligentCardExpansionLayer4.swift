@@ -163,20 +163,27 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     @ViewBuilder
     private var cardContent: some View {
         // Icon or image
-        Image(systemName: "star.fill")
+        Image(systemName: cardIcon)
             .font(.title2)
-            .foregroundColor(.blue)
+            .foregroundColor(cardColor)
         
         // Title
-        Text("Card Title")
+        Text(cardTitle)
             .font(.headline)
             .lineLimit(2)
         
-        // Subtitle
-        Text("Card description goes here")
-            .font(.caption)
-            .foregroundColor(.secondary)
-            .lineLimit(3)
+        // Subtitle or description
+        if let subtitle = cardSubtitle {
+            Text(subtitle)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .lineLimit(2)
+        } else if let description = cardDescription {
+            Text(description)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .lineLimit(3)
+        }
     }
     
     @ViewBuilder
@@ -188,9 +195,15 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
             
-            Text("This content is revealed when the card is expanded. It can contain additional information, actions, or interactive elements.")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            if let description = cardDescription {
+                Text(description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("This content is revealed when the card is expanded. It can contain additional information, actions, or interactive elements.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
             
             HStack {
                 if let onItemEdited = onItemEdited {
@@ -244,6 +257,43 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
             impactFeedback.impactOccurred()
             #endif
         }
+    }
+    
+    // MARK: - Card Displayable Support
+    
+    private var cardTitle: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardTitle
+        }
+        return "Item"
+    }
+    
+    private var cardSubtitle: String? {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardSubtitle
+        }
+        return nil
+    }
+    
+    private var cardDescription: String? {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardDescription
+        }
+        return nil
+    }
+    
+    private var cardIcon: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardIcon ?? "star.fill"
+        }
+        return "star.fill"
+    }
+    
+    private var cardColor: Color {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardColor ?? .blue
+        }
+        return .blue
     }
 }
 
@@ -320,12 +370,21 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
     
     public var body: some View {
         VStack {
-            Image(systemName: "star.fill")
+            Image(systemName: cardIcon)
                 .font(.largeTitle)
-                .foregroundColor(.blue)
+                .foregroundColor(cardColor)
             
-            Text("Cover Flow Card")
+            Text(cardTitle)
                 .font(.headline)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+            
+            if let subtitle = cardSubtitle {
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+            }
         }
         .frame(width: 200, height: 300)
         .background(.regularMaterial)
@@ -334,6 +393,36 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
         .onTapGesture {
             onItemSelected?(item)
         }
+    }
+    
+    // MARK: - Card Displayable Support
+    
+    private var cardTitle: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardTitle
+        }
+        return "Item"
+    }
+    
+    private var cardSubtitle: String? {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardSubtitle
+        }
+        return nil
+    }
+    
+    private var cardIcon: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardIcon ?? "star.fill"
+        }
+        return "star.fill"
+    }
+    
+    private var cardColor: Color {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardColor ?? .blue
+        }
+        return .blue
     }
 }
 
@@ -598,12 +687,16 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
     
     public var body: some View {
         VStack {
-            Image(systemName: "star.fill")
+            // Display item icon or fallback
+            Image(systemName: cardIcon)
                 .font(.title2)
-                .foregroundColor(.blue)
+                .foregroundColor(cardColor)
             
-            Text("Simple Card")
+            // Display item title
+            Text(cardTitle)
                 .font(.headline)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
         }
         .frame(width: layoutDecision.cardWidth, height: layoutDecision.cardHeight)
         .background(.regularMaterial)
@@ -613,6 +706,29 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
             onItemSelected?(item)
         }
     }
+    
+    // MARK: - Card Displayable Support
+    
+    private var cardTitle: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardTitle
+        }
+        return "Item"
+    }
+    
+    private var cardIcon: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardIcon ?? "star.fill"
+        }
+        return "star.fill"
+    }
+    
+    private var cardColor: Color {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardColor ?? .blue
+        }
+        return .blue
+    }
 }
 
 /// List card component
@@ -621,16 +737,21 @@ public struct ListCardComponent<Item: Identifiable>: View {
     
     public var body: some View {
         HStack {
-            Image(systemName: "star.fill")
+            Image(systemName: cardIcon)
                 .font(.title2)
-                .foregroundColor(.blue)
+                .foregroundColor(cardColor)
             
             VStack(alignment: .leading) {
-                Text("List Card")
+                Text(cardTitle)
                     .font(.headline)
-                Text("Description")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                
+                if let subtitle = cardSubtitle {
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
             }
             
             Spacer()
@@ -643,6 +764,36 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(8)
     }
+    
+    // MARK: - Card Displayable Support
+    
+    private var cardTitle: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardTitle
+        }
+        return "Item"
+    }
+    
+    private var cardSubtitle: String? {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardSubtitle
+        }
+        return nil
+    }
+    
+    private var cardIcon: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardIcon ?? "star.fill"
+        }
+        return "star.fill"
+    }
+    
+    private var cardColor: Color {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardColor ?? .blue
+        }
+        return .blue
+    }
 }
 
 /// Masonry card component
@@ -651,17 +802,57 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
     
     public var body: some View {
         VStack {
-            Image(systemName: "star.fill")
+            Image(systemName: cardIcon)
                 .font(.title)
-                .foregroundColor(.blue)
+                .foregroundColor(cardColor)
             
-            Text("Masonry Card")
+            Text(cardTitle)
                 .font(.headline)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+            
+            if let description = cardDescription {
+                Text(description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(3)
+                    .multilineTextAlignment(.center)
+            }
         }
         .frame(maxWidth: .infinity)
         .frame(height: CGFloat.random(in: 150...250))
         .background(.regularMaterial)
         .cornerRadius(12)
         .shadow(radius: 4)
+    }
+    
+    // MARK: - Card Displayable Support
+    
+    private var cardTitle: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardTitle
+        }
+        return "Item"
+    }
+    
+    private var cardDescription: String? {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardDescription
+        }
+        return nil
+    }
+    
+    private var cardIcon: String {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardIcon ?? "star.fill"
+        }
+        return "star.fill"
+    }
+    
+    private var cardColor: Color {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardColor ?? .blue
+        }
+        return .blue
     }
 }

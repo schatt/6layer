@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v2.9.3 - UI Binding Fixes and Thread Safety Improvements
+// SixLayerFramework v3.0.0 - Major UI Binding Improvements with Breaking Changes
 
 import PackageDescription
 
