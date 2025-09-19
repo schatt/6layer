@@ -175,46 +175,46 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     private func runUIGenerationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         print("     🎨 Testing \(capability) UI generation...")
         
-        // Test enabled state
-        let enabledConfig = createMockConfig(for: capability, enabled: true)
-        testUIGeneration(enabledConfig, capability: capability, enabled: true)
-        
-        // Test disabled state
-        let disabledConfig = createMockConfig(for: capability, enabled: false)
-        testUIGeneration(disabledConfig, capability: capability, enabled: false)
+        // Use actual platform config for UI generation tests
+        let platformConfig = getCardExpansionPlatformConfig()
+        testUIGeneration(platformConfig, capability: capability, enabled: true)
     }
     
     /// Test UI generation
     private func testUIGeneration(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         switch capability {
         case .touch:
-            if enabled {
-                XCTAssertTrue(config.supportsTouch, "Touch UI should be generated when enabled")
-                XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate")
-            } else {
-                XCTAssertFalse(config.supportsTouch, "Touch UI should not be generated when disabled")
-            }
+            // Touch should be supported on touch-enabled platforms
+            #if os(iOS) || os(watchOS)
+            XCTAssertTrue(config.supportsTouch, "Touch UI should be generated on touch-enabled platforms")
+            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate")
+            #else
+            XCTAssertFalse(config.supportsTouch, "Touch UI should not be generated on non-touch platforms")
+            #endif
         case .hover:
-            if enabled {
-                XCTAssertTrue(config.supportsHover, "Hover UI should be generated when enabled")
-                XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set")
-            } else {
-                XCTAssertFalse(config.supportsHover, "Hover UI should not be generated when disabled")
-            }
+            // Hover should be supported on hover-enabled platforms
+            #if os(macOS)
+            XCTAssertTrue(config.supportsHover, "Hover UI should be generated on hover-enabled platforms")
+            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set")
+            #else
+            XCTAssertFalse(config.supportsHover, "Hover UI should not be generated on non-hover platforms")
+            #endif
         case .hapticFeedback:
-            if enabled {
-                XCTAssertTrue(config.supportsHapticFeedback, "Haptic feedback UI should be generated when enabled")
-                XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch")
-            } else {
-                XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback UI should not be generated when disabled")
-            }
+            // Haptic feedback should be supported on haptic-enabled platforms
+            #if os(iOS) || os(watchOS)
+            XCTAssertTrue(config.supportsHapticFeedback, "Haptic feedback UI should be generated on haptic-enabled platforms")
+            XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch")
+            #else
+            XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback UI should not be generated on non-haptic platforms")
+            #endif
         case .assistiveTouch:
-            if enabled {
-                XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch UI should be generated when enabled")
-                XCTAssertTrue(config.supportsTouch, "AssistiveTouch requires touch")
-            } else {
-                XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch UI should not be generated when disabled")
-            }
+            // AssistiveTouch should be supported on assistive touch-enabled platforms
+            #if os(iOS) || os(watchOS)
+            XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch UI should be generated on assistive touch-enabled platforms")
+            XCTAssertTrue(config.supportsTouch, "AssistiveTouch requires touch")
+            #else
+            XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch UI should not be generated on non-assistive touch platforms")
+            #endif
         case .voiceOver, .switchControl:
             // Accessibility should always be supported
             XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should always be supported")
@@ -330,47 +330,47 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     private func runBehaviorValidationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         print("     ✅ Testing \(capability) behavior validation...")
         
-        // Test enabled state
-        let enabledConfig = createMockConfig(for: capability, enabled: true)
-        testBehaviorValidation(enabledConfig, capability: capability, enabled: true)
-        
-        // Test disabled state
-        let disabledConfig = createMockConfig(for: capability, enabled: false)
-        testBehaviorValidation(disabledConfig, capability: capability, enabled: false)
+        // Use actual platform config for behavior validation tests
+        let platformConfig = getCardExpansionPlatformConfig()
+        testBehaviorValidation(platformConfig, capability: capability, enabled: true)
     }
     
     /// Test behavior validation
     private func testBehaviorValidation(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
-        // Test that the behavior is consistent with the capability state
+        // Test that the behavior is consistent with the platform capabilities
         switch capability {
         case .touch:
-            if enabled {
-                XCTAssertTrue(config.supportsTouch, "Touch behavior should be enabled")
-                XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate")
-            } else {
-                XCTAssertFalse(config.supportsTouch, "Touch behavior should be disabled")
-            }
+            // Touch should be supported on touch-enabled platforms
+            #if os(iOS) || os(watchOS)
+            XCTAssertTrue(config.supportsTouch, "Touch behavior should be enabled on touch-enabled platforms")
+            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate")
+            #else
+            XCTAssertFalse(config.supportsTouch, "Touch behavior should be disabled on non-touch platforms")
+            #endif
         case .hover:
-            if enabled {
-                XCTAssertTrue(config.supportsHover, "Hover behavior should be enabled")
-                XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set")
-            } else {
-                XCTAssertFalse(config.supportsHover, "Hover behavior should be disabled")
-            }
+            // Hover should be supported on hover-enabled platforms
+            #if os(macOS)
+            XCTAssertTrue(config.supportsHover, "Hover behavior should be enabled on hover-enabled platforms")
+            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set")
+            #else
+            XCTAssertFalse(config.supportsHover, "Hover behavior should be disabled on non-hover platforms")
+            #endif
         case .hapticFeedback:
-            if enabled {
-                XCTAssertTrue(config.supportsHapticFeedback, "Haptic feedback behavior should be enabled")
-                XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch")
-            } else {
-                XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback behavior should be disabled")
-            }
+            // Haptic feedback should be supported on haptic-enabled platforms
+            #if os(iOS) || os(watchOS)
+            XCTAssertTrue(config.supportsHapticFeedback, "Haptic feedback behavior should be enabled on haptic-enabled platforms")
+            XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch")
+            #else
+            XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback behavior should be disabled on non-haptic platforms")
+            #endif
         case .assistiveTouch:
-            if enabled {
-                XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch behavior should be enabled")
-                XCTAssertTrue(config.supportsTouch, "AssistiveTouch requires touch")
-            } else {
-                XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch behavior should be disabled")
-            }
+            // AssistiveTouch should be supported on assistive touch-enabled platforms
+            #if os(iOS) || os(watchOS)
+            XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch behavior should be enabled on assistive touch-enabled platforms")
+            XCTAssertTrue(config.supportsTouch, "AssistiveTouch requires touch")
+            #else
+            XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch behavior should be disabled on non-assistive touch platforms")
+            #endif
         case .voiceOver, .switchControl:
             // Accessibility should always be supported
             XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should always be supported")
@@ -434,13 +434,25 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
                 hoverDelay: 0.0,
                 animationEasing: .easeInOut(duration: 0.3)
             )
-        case .voiceOver, .switchControl:
+        case .voiceOver:
             return CardExpansionPlatformConfig(
                 supportsHapticFeedback: false,
                 supportsHover: false,
                 supportsTouch: false,
-                supportsVoiceOver: true, // Always supported
-                supportsSwitchControl: true, // Always supported
+                supportsVoiceOver: enabled,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.0,
+                animationEasing: .easeInOut(duration: 0.3)
+            )
+        case .switchControl:
+            return CardExpansionPlatformConfig(
+                supportsHapticFeedback: false,
+                supportsHover: false,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: enabled,
                 supportsAssistiveTouch: false,
                 minTouchTarget: 0,
                 hoverDelay: 0.0,

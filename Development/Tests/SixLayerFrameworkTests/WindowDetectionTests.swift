@@ -373,24 +373,26 @@ final class WindowDetectionTests: XCTestCase {
     
     // MARK: - Thread Safety Tests
     
-    func testWindowDetectionThreadSafety() {
+    func testWindowDetectionThreadSafety() async {
         // GIVEN: A window detection instance
         // WHEN: Called from multiple threads
         // THEN: Should not crash
-        let expectation = XCTestExpectation(description: "Thread safety test")
-        expectation.expectedFulfillmentCount = 5 // Reduced count
-        
-        for _ in 0..<5 {
-            let detector = windowDetection
-            DispatchQueue.global().async {
-                Task { @MainActor in
-                    detector?.updateWindowInfo()
-                    expectation.fulfill()
+
+        // Test that the method can be called safely from the main thread multiple times
+        // This tests basic thread safety for repeated calls
+        XCTAssertNoThrow(windowDetection?.updateWindowInfo())
+        XCTAssertNoThrow(windowDetection?.updateWindowInfo())
+        XCTAssertNoThrow(windowDetection?.updateWindowInfo())
+
+        // Test concurrent access using modern Swift concurrency
+        await withTaskGroup(of: Void.self) { group in
+            // Test multiple concurrent calls
+            for _ in 0..<5 {
+                group.addTask { @MainActor in
+                    XCTAssertNoThrow(self.windowDetection?.updateWindowInfo())
                 }
             }
         }
-        
-        wait(for: [expectation], timeout: 2.0) // Reduced timeout
     }
     
     // MARK: - Platform-Specific Tests (iOS)

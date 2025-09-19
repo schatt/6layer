@@ -52,11 +52,12 @@ final class CoreArchitectureTests: XCTestCase {
         let complexities = ContentComplexity.allCases
         
         // Then
-        XCTAssertEqual(complexities.count, 4)
+        XCTAssertEqual(complexities.count, 5)
         XCTAssertTrue(complexities.contains(.simple))
         XCTAssertTrue(complexities.contains(.moderate))
         XCTAssertTrue(complexities.contains(.complex))
         XCTAssertTrue(complexities.contains(.veryComplex))
+        XCTAssertTrue(complexities.contains(.advanced))
     }
     
     func testPresentationContextEnumeration() throws {
@@ -64,7 +65,7 @@ final class CoreArchitectureTests: XCTestCase {
         let contexts = PresentationContext.allCases
         
         // Then
-        XCTAssertEqual(contexts.count, 11)
+        XCTAssertEqual(contexts.count, 13)
         XCTAssertTrue(contexts.contains(.list))
         XCTAssertTrue(contexts.contains(.detail))
         XCTAssertTrue(contexts.contains(.form))
@@ -78,7 +79,7 @@ final class CoreArchitectureTests: XCTestCase {
         let dataTypes = DataTypeHint.allCases
         
         // Then
-        XCTAssertEqual(dataTypes.count, 23)
+        XCTAssertEqual(dataTypes.count, 27)
         XCTAssertTrue(dataTypes.contains(.text))
         XCTAssertTrue(dataTypes.contains(.number))
         XCTAssertTrue(dataTypes.contains(.date))
@@ -94,7 +95,7 @@ final class CoreArchitectureTests: XCTestCase {
         let preferences = PresentationPreference.allCases
         
         // Then
-        XCTAssertEqual(preferences.count, 15)
+        XCTAssertEqual(preferences.count, 17)
         XCTAssertTrue(preferences.contains(.card))
         XCTAssertTrue(preferences.contains(.list))
         XCTAssertTrue(preferences.contains(.grid))

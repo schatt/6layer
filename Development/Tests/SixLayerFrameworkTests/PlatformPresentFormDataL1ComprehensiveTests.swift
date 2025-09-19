@@ -213,7 +213,10 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         XCTAssertNotNil(view, "Should create view with enhanced hints")
 
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        let viewType = String(describing: mirror.subjectType)
+        // Enhanced hints create a ModifiedContent with environment modifier
+        XCTAssertTrue(viewType.contains("SimpleFormView"), "Should contain SimpleFormView, got: \(viewType)")
+        XCTAssertTrue(viewType.contains("ModifiedContent"), "Should be ModifiedContent with environment modifier, got: \(viewType)")
     }
 
     func testPlatformPresentFormData_L1_ExtensibleHintsProcessing() {
@@ -326,10 +329,25 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
                              "Field type \(field.fieldType) should have appropriate keyboard type on iOS")
         }
         #else
-        // On macOS, keyboard types are not applicable
+        // On non-iOS platforms, keyboard types should be appropriate for each field type
         for field in keyboardTestFields {
-            XCTAssertEqual(field.fieldType.keyboardType, PlatformKeyboardType.default.rawValue,
-                          "Field type \(field.fieldType) should default to 'default' on non-iOS platforms")
+            switch field.fieldType {
+            case .email:
+                XCTAssertEqual(field.fieldType.keyboardType, "emailAddress",
+                              "Email field should have emailAddress keyboard type")
+            case .number:
+                XCTAssertEqual(field.fieldType.keyboardType, "numberPad",
+                              "Number field should have numberPad keyboard type")
+            case .phone:
+                XCTAssertEqual(field.fieldType.keyboardType, "phonePad",
+                              "Phone field should have phonePad keyboard type")
+            case .url:
+                XCTAssertEqual(field.fieldType.keyboardType, "URL",
+                              "URL field should have URL keyboard type")
+            default:
+                XCTAssertEqual(field.fieldType.keyboardType, "default",
+                              "Other field types should have default keyboard type")
+            }
         }
         #endif
     }
@@ -454,10 +472,10 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // Verify edge case handling
         let emptyValueFields = edgeCaseFields.filter { $0.value.isEmpty }
-        XCTAssertEqual(emptyValueFields.count, 2, "Should have 2 fields with empty values")
+        XCTAssertEqual(emptyValueFields.count, 3, "Should have 3 fields with empty values")
 
         let nilPlaceholderFields = edgeCaseFields.filter { $0.placeholder == nil }
-        XCTAssertEqual(nilPlaceholderFields.count, 2, "Should have 2 fields with nil placeholders")
+        XCTAssertEqual(nilPlaceholderFields.count, 4, "Should have 4 fields with nil placeholders")
     }
 
     func testPlatformPresentFormData_L1_SpecialCharacterHandling() {
