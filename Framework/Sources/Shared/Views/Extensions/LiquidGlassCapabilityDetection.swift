@@ -37,7 +37,12 @@ enum LiquidGlassRuntimeDetection {
         #if canImport(Metal)
         guard let device = MTLCreateSystemDefaultDevice() else { return false }
         // You can refine this to check specific GPU families/feature sets if needed
+        #if os(macOS)
         let hasMetal = device.isLowPower == false || device.isRemovable == false
+        #else
+        // On iOS, we can't check isLowPower or isRemovable, so just check if Metal is available
+        let hasMetal = true
+        #endif
         #else
         let hasMetal = false
         #endif
