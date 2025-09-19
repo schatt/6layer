@@ -7,14 +7,27 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
     @State private var expandedItem: Item.ID?
     @State private var hoveredItem: Item.ID?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -88,7 +101,10 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                     onCollapse: { expandedItem = nil },
                     onHover: { isHovering in
                         hoveredItem = isHovering ? item.id : nil
-                    }
+                    },
+                    onItemSelected: onItemSelected,
+                    onItemDeleted: onItemDeleted,
+                    onItemEdited: onItemEdited
                 )
             }
         }
@@ -106,6 +122,9 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     let onExpand: () -> Void
     let onCollapse: () -> Void
     let onHover: (Bool) -> Void
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
     public var body: some View {
         let scale = calculateScale()
@@ -129,6 +148,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         .animation(animation, value: isExpanded)
         .onTapGesture {
             handleTap()
+            onItemSelected?(item)
         }
         .onHover { isHovering in
             onHover(isHovering)
@@ -173,11 +193,20 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
                 .foregroundColor(.secondary)
             
             HStack {
-                Button("Action 1") { }
+                if let onItemEdited = onItemEdited {
+                    Button("Edit") { 
+                        onItemEdited(item)
+                    }
                     .buttonStyle(.bordered)
+                }
                 
-                Button("Action 2") { }
+                if let onItemDeleted = onItemDeleted {
+                    Button("Delete") { 
+                        onItemDeleted(item)
+                    }
                     .buttonStyle(.bordered)
+                    .foregroundColor(.red)
+                }
             }
         }
     }
@@ -223,11 +252,24 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -255,7 +297,12 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(items) { item in
-                        CoverFlowCardComponent(item: item)
+                        CoverFlowCardComponent(
+                            item: item,
+                            onItemSelected: onItemSelected,
+                            onItemDeleted: onItemDeleted,
+                            onItemEdited: onItemEdited
+                        )
                     }
                 }
                 .padding(.horizontal, 40)
@@ -267,6 +314,9 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
 /// Cover flow card component
 public struct CoverFlowCardComponent<Item: Identifiable>: View {
     let item: Item
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
     public var body: some View {
         VStack {
@@ -281,6 +331,9 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(16)
         .shadow(radius: 8)
+        .onTapGesture {
+            onItemSelected?(item)
+        }
     }
 }
 
@@ -289,11 +342,24 @@ public struct GridCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -331,7 +397,13 @@ public struct GridCollectionView<Item: Identifiable>: View {
                     spacing: layoutDecision.spacing
                 ) {
                     ForEach(items) { item in
-                        SimpleCardComponent(item: item, layoutDecision: layoutDecision)
+                        SimpleCardComponent(
+                            item: item, 
+                            layoutDecision: layoutDecision,
+                            onItemSelected: onItemSelected,
+                            onItemDeleted: onItemDeleted,
+                            onItemEdited: onItemEdited
+                        )
                     }
                 }
                 .padding(layoutDecision.padding)
@@ -345,11 +417,24 @@ public struct ListCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -389,11 +474,24 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -436,11 +534,24 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
     let items: [Item]
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
-    public init(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(
+        items: [Item], 
+        hints: PresentationHints, 
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
         self.items = items
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
@@ -481,6 +592,9 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
 public struct SimpleCardComponent<Item: Identifiable>: View {
     let item: Item
     let layoutDecision: IntelligentCardLayoutDecision
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
     
     public var body: some View {
         VStack {
@@ -495,6 +609,9 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(12)
         .shadow(radius: 4)
+        .onTapGesture {
+            onItemSelected?(item)
+        }
     }
 }
 

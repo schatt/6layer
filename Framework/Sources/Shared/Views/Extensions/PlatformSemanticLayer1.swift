@@ -368,13 +368,19 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
             return AnyView(MasonryCollectionView(
                 items: items, 
                 hints: hints, 
-                onCreateItem: onCreateItem
+                onCreateItem: onCreateItem,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
             ))
         case .adaptive:
             return AnyView(AdaptiveCollectionView(
                 items: items, 
                 hints: hints, 
-                onCreateItem: onCreateItem
+                onCreateItem: onCreateItem,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
             ))
         }
     }
@@ -909,8 +915,13 @@ public struct ModalFormView: View {
                 DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
                     .datePickerStyle(.compact)
             case .select:
-                Text("Select field: \(field.label)")
-                    .foregroundColor(.secondary)
+                Picker(field.placeholder ?? "Select option", selection: field.$value) {
+                    Text("Select an option").tag("")
+                    ForEach(field.options, id: \.self) { option in
+                        Text(option).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
             case .textarea:
                 TextEditor(text: .constant(""))
                     .frame(minHeight: 80)
@@ -921,8 +932,23 @@ public struct ModalFormView: View {
             case .checkbox:
                 Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
             case .radio:
-                Text("Radio field: \(field.label)")
-                    .foregroundColor(.secondary)
+                VStack(alignment: .leading) {
+                    Text(field.label)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    
+                    ForEach(field.options, id: \.self) { option in
+                        HStack {
+                            Button(action: {
+                                field.value = option
+                            }) {
+                                Image(systemName: field.value == option ? "largecircle.fill.circle" : "circle")
+                                    .foregroundColor(field.value == option ? .blue : .gray)
+                            }
+                            Text(option)
+                        }
+                    }
+                }
             case .phone:
                 TextField(field.placeholder ?? "Enter phone", text: .constant(""))
                     .textFieldStyle(.roundedBorder)

@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v2.9.0 - Intelligent Empty Collection Handling with Create Actions
+// SixLayerFramework v2.9.3 - UI Binding Fixes and Thread Safety Improvements
 
 import PackageDescription
 

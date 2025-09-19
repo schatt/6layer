@@ -385,7 +385,10 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
             isHovered: false,
             onExpand: {},
             onCollapse: {},
-            onHover: { _ in }
+            onHover: { _ in },
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
         )
         
         XCTAssertNotNil(card)
@@ -423,7 +426,10 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
             isHovered: false,
             onExpand: {},
             onCollapse: {},
-            onHover: { _ in }
+            onHover: { _ in },
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
         )
         
         let contentRevealCard = ExpandableCardComponent(
@@ -434,7 +440,10 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
             isHovered: false,
             onExpand: {},
             onCollapse: {},
-            onHover: { _ in }
+            onHover: { _ in },
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
         )
         
         XCTAssertNotNil(hoverCard)

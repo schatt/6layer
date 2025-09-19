@@ -391,13 +391,14 @@ final class WindowDetectionTests: XCTestCase {
         DispatchQueue.global(qos: .background).async {
             // Test that we can call updateWindowInfo from a background queue
             // The method should handle this gracefully
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 XCTAssertNoThrow(self.windowDetection?.updateWindowInfo())
                 expectation.fulfill()
             }
         }
         
-        wait(for: [expectation], timeout: 1.0)
+        // Use a shorter timeout and ensure the expectation is fulfilled
+        wait(for: [expectation], timeout: 0.5)
     }
     
     // MARK: - Platform-Specific Tests (iOS)

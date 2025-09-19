@@ -228,13 +228,17 @@ public struct ThemedGenericFormView: View {
                 .datePickerStyle(.compact)
                 
             case .select:
-                Text("Select field: \(field.label)")
-                    .font(typography.body)
-                    .foregroundColor(colors.textSecondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding()
-                    .background(colors.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                Picker(field.placeholder ?? "Select option", selection: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                )) {
+                    Text("Select an option").tag("")
+                    ForEach(field.options, id: \.self) { option in
+                        Text(option).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
+                .themedTextField()
                     
             case .textarea:
                 TextEditor(text: Binding(
@@ -251,13 +255,23 @@ public struct ThemedGenericFormView: View {
                 ))
                 
             case .radio:
-                Text("Radio field: \(field.label)")
-                    .font(typography.body)
-                    .foregroundColor(colors.textSecondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding()
-                    .background(colors.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                VStack(alignment: .leading) {
+                    Text(field.label)
+                        .font(typography.body)
+                        .fontWeight(.medium)
+                    
+                    ForEach(field.options, id: \.self) { option in
+                        HStack {
+                            Button(action: {
+                                formData[field.id.uuidString] = option
+                            }) {
+                                Image(systemName: (formData[field.id.uuidString] as? String ?? "") == option ? "largecircle.fill.circle" : "circle")
+                                    .foregroundColor((formData[field.id.uuidString] as? String ?? "") == option ? .blue : .gray)
+                            }
+                            Text(option)
+                        }
+                    }
+                }
             case .phone:
                 TextField(field.placeholder ?? "Enter phone", text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
