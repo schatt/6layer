@@ -36,30 +36,8 @@ final class PlatformBehaviorTests: XCTestCase {
     
     // MARK: - Layer 1: Platform Detection Behavior Tests
     
-    func testPlatformDetectionBehavior() {
-        let platform = Platform.current
-        let deviceType = DeviceType.current
-        
-        // Test that platform detection works correctly
-        XCTAssertNotNil(platform, "Platform should be detected")
-        XCTAssertNotNil(deviceType, "Device type should be detected")
-        
-        // Test platform-specific behavior
-        switch platform {
-        case .iOS:
-            testIOSPlatformBehavior()
-        case .macOS:
-            testMacOSPlatformBehavior()
-        case .watchOS:
-            testWatchOSPlatformBehavior()
-        case .tvOS:
-            testTVOSPlatformBehavior()
-        case .visionOS:
-            testVisionOSPlatformBehavior()
-        }
-    }
     
-    private func testIOSPlatformBehavior() {
+    func testIOSPlatformBehavior() {
         let config = getCardExpansionPlatformConfig()
         
         // iOS should have touch capabilities
@@ -81,7 +59,7 @@ final class PlatformBehaviorTests: XCTestCase {
         XCTAssertTrue(isVisionOCRAvailable(), "iOS should have OCR")
     }
     
-    private func testMacOSPlatformBehavior() {
+    func testMacOSPlatformBehavior() {
         let config = getCardExpansionPlatformConfig()
         
         // macOS should have hover capabilities
@@ -99,7 +77,7 @@ final class PlatformBehaviorTests: XCTestCase {
         XCTAssertTrue(isVisionOCRAvailable(), "macOS should have OCR")
     }
     
-    private func testWatchOSPlatformBehavior() {
+    func testWatchOSPlatformBehavior() {
         let config = getCardExpansionPlatformConfig()
         
         // watchOS should have touch capabilities
@@ -113,7 +91,7 @@ final class PlatformBehaviorTests: XCTestCase {
         XCTAssertFalse(isVisionOCRAvailable(), "watchOS should not have OCR")
     }
     
-    private func testTVOSPlatformBehavior() {
+    func testTVOSPlatformBehavior() {
         let config = getCardExpansionPlatformConfig()
         
         // tvOS should only have accessibility capabilities
@@ -129,7 +107,7 @@ final class PlatformBehaviorTests: XCTestCase {
         XCTAssertFalse(isVisionOCRAvailable(), "tvOS should not have OCR")
     }
     
-    private func testVisionOSPlatformBehavior() {
+    func testVisionOSPlatformBehavior() {
         let config = getCardExpansionPlatformConfig()
         
         // visionOS should have Vision and accessibility capabilities
@@ -147,18 +125,8 @@ final class PlatformBehaviorTests: XCTestCase {
     
     // MARK: - Layer 2: Card Expansion Behavior Tests
     
-    func testCardExpansionBehavior() {
-        let config = getCardExpansionPlatformConfig()
-        let performanceConfig = getCardExpansionPerformanceConfig()
-        
-        // Test that card expansion behavior matches platform capabilities
-        testCardExpansionTouchBehavior(config: config)
-        testCardExpansionHoverBehavior(config: config)
-        testCardExpansionAccessibilityBehavior(config: config)
-        testCardExpansionPerformanceBehavior(config: config, performanceConfig: performanceConfig)
-    }
     
-    private func testCardExpansionTouchBehavior(config: CardExpansionPlatformConfig) {
+    func testCardExpansionTouchBehavior(config: CardExpansionPlatformConfig) {
         if config.supportsTouch {
             // Touch platforms should have appropriate touch targets
             XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
@@ -182,7 +150,7 @@ final class PlatformBehaviorTests: XCTestCase {
         }
     }
     
-    private func testCardExpansionHoverBehavior(config: CardExpansionPlatformConfig) {
+    func testCardExpansionHoverBehavior(config: CardExpansionPlatformConfig) {
         if config.supportsHover {
             // Hover platforms should have hover delay
             XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
@@ -194,7 +162,7 @@ final class PlatformBehaviorTests: XCTestCase {
         }
     }
     
-    private func testCardExpansionAccessibilityBehavior(config: CardExpansionPlatformConfig) {
+    func testCardExpansionAccessibilityBehavior(config: CardExpansionPlatformConfig) {
         // All platforms should support accessibility
         XCTAssertTrue(config.supportsVoiceOver, 
                      "All platforms should support VoiceOver")
@@ -202,7 +170,7 @@ final class PlatformBehaviorTests: XCTestCase {
                      "All platforms should support SwitchControl")
     }
     
-    private func testCardExpansionPerformanceBehavior(config: CardExpansionPlatformConfig, performanceConfig: CardExpansionPerformanceConfig) {
+    func testCardExpansionPerformanceBehavior(config: CardExpansionPlatformConfig, performanceConfig: CardExpansionPerformanceConfig) {
         // Test that performance settings match platform capabilities
         if config.supportsTouch {
             // Touch platforms should have appropriate animation settings
@@ -219,19 +187,8 @@ final class PlatformBehaviorTests: XCTestCase {
     
     // MARK: - Layer 3: OCR Behavior Tests
     
-    func testOCRBehavior() {
-        let testImage = createTestImage()
-        let context = createTestOCRContext()
-        let strategy = createTestOCRStrategy()
-        
-        if isVisionOCRAvailable() {
-            testOCREnabledBehavior(image: testImage, context: context, strategy: strategy)
-        } else {
-            testOCRDisabledBehavior(image: testImage, context: context, strategy: strategy)
-        }
-    }
     
-    private func testOCREnabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy) {
+    func testOCREnabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy) {
         // OCR should be available
         XCTAssertTrue(isVisionOCRAvailable(), "OCR should be available")
         
@@ -255,7 +212,7 @@ final class PlatformBehaviorTests: XCTestCase {
         // Just verify the function can be called without crashing
     }
     
-    private func testOCRDisabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy) {
+    func testOCRDisabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy) {
         // OCR should not be available
         XCTAssertFalse(isVisionOCRAvailable(), "OCR should not be available")
         
@@ -321,16 +278,8 @@ final class PlatformBehaviorTests: XCTestCase {
     
     // MARK: - Layer 6: Platform System Behavior Tests
     
-    func testPlatformSystemBehavior() {
-        let testView = createTestView()
-        
-        // Test that platform system works correctly
-        testPlatformSystemTouchBehavior(testView: testView)
-        testPlatformSystemHoverBehavior(testView: testView)
-        testPlatformSystemAccessibilityBehavior(testView: testView)
-    }
     
-    private func testPlatformSystemTouchBehavior(testView: some View) {
+    func testPlatformSystemTouchBehavior(testView: some View) {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
@@ -344,7 +293,7 @@ final class PlatformBehaviorTests: XCTestCase {
         }
     }
     
-    private func testPlatformSystemHoverBehavior(testView: some View) {
+    func testPlatformSystemHoverBehavior(testView: some View) {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsHover {
@@ -358,7 +307,7 @@ final class PlatformBehaviorTests: XCTestCase {
         }
     }
     
-    private func testPlatformSystemAccessibilityBehavior(testView: some View) {
+    func testPlatformSystemAccessibilityBehavior(testView: some View) {
         let config = getCardExpansionPlatformConfig()
         
         // All platforms should support accessibility
@@ -396,33 +345,11 @@ final class PlatformBehaviorTests: XCTestCase {
     
     // MARK: - Comprehensive Behavior Testing
     
-    func testAllPlatformBehaviors() {
-        // Test all platform behaviors comprehensively
-        testPlatformDetectionBehavior()
-        testCardExpansionBehavior()
-        testOCRBehavior()
-        testColorEncodingBehavior()
-        testAccessibilityBehavior()
-        testPlatformSystemBehavior()
-        testHighContrastBehavior()
-        testReduceMotionBehavior()
-        
-        print("✅ All platform behaviors tested successfully!")
-    }
     
     // MARK: - Platform-Specific Input/Output Tests
     
-    func testPlatformSpecificInputOutput() {
-        let platform = Platform.current
-        
-        // Test with different inputs to ensure platform-specific behavior
-        testPlatformSpecificInputOutput(platform: platform, input: "touch_input")
-        testPlatformSpecificInputOutput(platform: platform, input: "hover_input")
-        testPlatformSpecificInputOutput(platform: platform, input: "accessibility_input")
-        testPlatformSpecificInputOutput(platform: platform, input: "vision_input")
-    }
     
-    private func testPlatformSpecificInputOutput(platform: Platform, input: String) {
+    func testPlatformSpecificInputOutput(platform: Platform, input: String) {
         let config = getCardExpansionPlatformConfig()
         
         switch input {

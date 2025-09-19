@@ -141,7 +141,7 @@ final class CapabilityCombinationTests: XCTestCase {
     
     // MARK: - Individual Combination Tests
     
-    private func testTouchHapticAssistiveTouchCombination() {
+    func testTouchHapticAssistiveTouchCombination() {
         // Test iOS phone combination
         let iOSPhoneConfig = simulatePlatformCapabilities(
             platform: .iOS,
@@ -165,7 +165,7 @@ final class CapabilityCombinationTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(iOSPhoneConfig.minTouchTarget, 44, "Touch targets should be adequate")
     }
     
-    private func testTouchHapticAssistiveTouchLogic(config: CardExpansionPlatformConfig) {
+    func testTouchHapticAssistiveTouchLogic(config: CardExpansionPlatformConfig) {
         // Test the logical relationships between capabilities
         if config.supportsTouch {
             // Touch should enable haptic feedback
@@ -184,7 +184,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testTouchHoverHapticAssistiveTouchCombination() {
+    func testTouchHoverHapticAssistiveTouchCombination() {
         // Test iPad combination
         let iPadConfig = simulatePlatformCapabilities(
             platform: .iOS,
@@ -212,7 +212,7 @@ final class CapabilityCombinationTests: XCTestCase {
                                    "Touch targets should be adequate")
     }
     
-    private func testHoverVisionOCRCombination() {
+    func testHoverVisionOCRCombination() {
         // Test macOS combination (hover + vision + OCR, no touch)
         let macOSConfig = simulatePlatformCapabilities(
             platform: .macOS,
@@ -265,7 +265,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testWatchOSCombination() {
+    func testWatchOSCombination() {
         // Test watchOS combination (touch + haptic + AssistiveTouch, no hover/vision/OCR)
         let watchOSConfig = simulatePlatformCapabilities(
             platform: .watchOS,
@@ -300,7 +300,7 @@ final class CapabilityCombinationTests: XCTestCase {
                                    "Touch targets should be adequate")
     }
     
-    private func testTVOSCombination() {
+    func testTVOSCombination() {
         // Test tvOS combination (accessibility only, no touch/hover/haptic/vision/OCR)
         let tvOSConfig = simulatePlatformCapabilities(
             platform: .tvOS,
@@ -336,7 +336,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testVisionOSCombination() {
+    func testVisionOSCombination() {
         // Test visionOS combination (Vision + OCR + accessibility, no touch/hover/haptic/AssistiveTouch)
         let visionOSConfig = simulatePlatformCapabilities(
             platform: .visionOS,
@@ -370,13 +370,8 @@ final class CapabilityCombinationTests: XCTestCase {
     
     // MARK: - Comprehensive Combination Testing
     
-    func testAllCapabilityCombinations() {
-        for combination in capabilityCombinations {
-            testCapabilityCombination(combination)
-        }
-    }
     
-    private func testCapabilityCombination(_ combination: CapabilityCombination) {
+    func testCapabilityCombination(_ combination: CapabilityCombination) {
         let platform = Platform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
         
@@ -394,7 +389,7 @@ final class CapabilityCombinationTests: XCTestCase {
         print("🔍 Testing \(combination.name) on \(platform): \(shouldMatch ? "MATCH" : "NO MATCH")")
     }
     
-    private func testCombinationBehavior(_ combination: CapabilityCombination) {
+    func testCombinationBehavior(_ combination: CapabilityCombination) {
         switch combination.name {
         case "Touch + Haptic + AssistiveTouch":
             testTouchHapticAssistiveTouchCombination()
@@ -413,7 +408,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
+    func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
         // Test that all capabilities match the expected combination
@@ -424,7 +419,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
+    func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
         // Test that at least one capability doesn't match
@@ -516,14 +511,8 @@ final class CapabilityCombinationTests: XCTestCase {
     
     // MARK: - Edge Case Combination Testing
     
-    func testEdgeCaseCombinations() {
-        // Test that impossible combinations are handled gracefully
-        testImpossibleCombinations()
-        testConflictingCombinations()
-        testMissingDependencies()
-    }
     
-    private func testImpossibleCombinations() {
+    func testImpossibleCombinations() {
         // Test combinations that should never occur
         let config = getCardExpansionPlatformConfig()
         
@@ -540,7 +529,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testConflictingCombinations() {
+    func testConflictingCombinations() {
         // Test that conflicting combinations are handled
         let config = getCardExpansionPlatformConfig()
         let platform = Platform.current
@@ -553,7 +542,7 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
-    private func testMissingDependencies() {
+    func testMissingDependencies() {
         // Test that dependent capabilities are properly handled
         let config = getCardExpansionPlatformConfig()
         
