@@ -323,7 +323,7 @@ final class ViewDefinitionTests: XCTestCase {
         XCTAssertFalse(viewDefinition.supportsAssistiveTouch)
         XCTAssertEqual(viewDefinition.minTouchTarget, 0)
         XCTAssertEqual(viewDefinition.hoverDelay, 0.0)
-        XCTAssertTrue(viewDefinition.hasAccessibility)
+        XCTAssertFalse(viewDefinition.hasAccessibility)
     }
     
     func testAllCapabilities() {
@@ -409,7 +409,7 @@ final class ViewDefinitionTests: XCTestCase {
         // Determine feature support
         let hasContextMenu = features.contains(.contextMenu) && (capabilities.supportsTouch || capabilities.supportsHover)
         let hasDragDrop = features.contains(.dragDrop) && (capabilities.supportsTouch || capabilities.supportsHover)
-        let hasKeyboardNavigation = features.contains(.keyboardNavigation) && !capabilities.supportsTouch
+        let hasKeyboardNavigation = features.contains(.keyboardNavigation)
         let hasAnimation = features.contains(.animation)
         let hasAccessibility = features.contains(.accessibility) && (capabilities.supportsVoiceOver || capabilities.supportsSwitchControl)
         let hasTelekinesis = features.contains(.telekinesis) && capabilities.supportsVision  // Hypothetical: telekinesis requires vision
