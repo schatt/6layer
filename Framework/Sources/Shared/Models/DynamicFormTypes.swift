@@ -9,6 +9,7 @@ public struct DynamicFormField: Identifiable, Hashable {
     public let type: DynamicFieldType
     public let label: String
     public let placeholder: String?
+    public let description: String? // Help text for the field
     public let isRequired: Bool
     public let validationRules: [String: String]?
     public let options: [String]? // For select/radio/checkbox fields
@@ -20,6 +21,7 @@ public struct DynamicFormField: Identifiable, Hashable {
         type: DynamicFieldType,
         label: String,
         placeholder: String? = nil,
+        description: String? = nil,
         isRequired: Bool = false,
         validationRules: [String: String]? = nil,
         options: [String]? = nil,
@@ -30,6 +32,7 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.type = type
         self.label = label
         self.placeholder = placeholder
+        self.description = description
         self.isRequired = isRequired
         self.validationRules = validationRules
         self.options = options

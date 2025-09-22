@@ -119,18 +119,9 @@ final class ViewGenerationTests: XCTestCase {
         let simpleAnalysis = DataIntrospectionEngine.analyze(simpleData)
         let complexAnalysis = DataIntrospectionEngine.analyze(complexData)
         
-        // Debug output to see what's happening
-        print("DEBUG: simpleAnalysis.complexity = \(simpleAnalysis.complexity)")
-        print("DEBUG: simpleAnalysis.fields.count = \(simpleAnalysis.fields.count)")
-        print("DEBUG: complexAnalysis.complexity = \(complexAnalysis.complexity)")
-        print("DEBUG: complexAnalysis.fields.count = \(complexAnalysis.fields.count)")
-        
         // THEN: Should determine appropriate layout strategies
         let simpleStrategy = IntelligentDetailView.determineLayoutStrategy(analysis: simpleAnalysis, hints: nil)
         let complexStrategy = IntelligentDetailView.determineLayoutStrategy(analysis: complexAnalysis, hints: nil)
-        
-        print("DEBUG: simpleStrategy = \(simpleStrategy)")
-        print("DEBUG: complexStrategy = \(complexStrategy)")
         
         XCTAssertNotNil(simpleStrategy)
         XCTAssertNotNil(complexStrategy)

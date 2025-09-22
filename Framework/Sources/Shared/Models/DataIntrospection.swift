@@ -17,7 +17,7 @@ public struct DataIntrospectionEngine {
         public static func analyze<T>(_ data: T) -> DataAnalysisResult {
         let mirror = Mirror(reflecting: data)
         let fields = extractFields(from: mirror)
-        let complexity = calculateComplexity(fields: fields)
+        let complexity = calculateComplexity(fields: fields, data: data)
         let patterns = detectPatterns(fields: fields)
         let recommendations = generateRecommendations(
             fields: fields,
@@ -109,6 +109,14 @@ public enum FieldType: String, CaseIterable {
 // MARK: - Complexity Analysis
 
 // Note: ContentComplexity is defined in PlatformTypes.swift
+
+/// Content richness levels for complexity analysis
+public enum ContentRichness {
+    case minimal
+    case moderate
+    case rich
+    case veryRich
+}
 // We use the existing enum to avoid duplication
 
 // MARK: - Pattern Detection
@@ -376,8 +384,8 @@ private extension DataIntrospectionEngine {
         return true
     }
     
-    /// Calculate complexity based on fields
-    static func calculateComplexity(fields: [DataField]) -> ContentComplexity {
+    /// Calculate complexity based on fields and content richness
+    static func calculateComplexity(fields: [DataField], data: Any? = nil) -> ContentComplexity {
         let fieldCount = fields.count
         let hasComplexTypes = fields.contains { $0.type == .relationship }
         let hasHierarchicalTypes = fields.contains { $0.type == .hierarchical }
@@ -385,21 +393,94 @@ private extension DataIntrospectionEngine {
         // Count hierarchical types separately as they're less complex than relationships
         let hierarchicalCount = fields.filter { $0.type == .hierarchical }.count
         
+        // Analyze content richness if data is provided
+        let contentRichness = data != nil ? analyzeContentRichness(data: data!, fields: fields) : .minimal
+        
+        // Base complexity from field structure
+        let baseComplexity: ContentComplexity
         switch (fieldCount, hasComplexTypes, hasHierarchicalTypes, hierarchicalCount) {
         case (0...3, false, false, 0):
-            return .simple
+            baseComplexity = .simple
         case (4...7, false, false, 0):
-            return .moderate
+            baseComplexity = .moderate
         case (4...7, false, true, 1...2):
-            return .moderate  // Allow 1-2 hierarchical types for moderate
+            baseComplexity = .moderate  // Allow 1-2 hierarchical types for moderate
         case (8...15, false, false, 0):
-            return .complex
+            baseComplexity = .complex
         case (8...15, false, true, 1...3):
-            return .complex   // Allow 1-3 hierarchical types for complex
+            baseComplexity = .complex   // Allow 1-3 hierarchical types for complex
         case (_, true, _, _):
-            return .veryComplex  // Any relationships make it very complex
+            baseComplexity = .veryComplex  // Any relationships make it very complex
         default:
+            baseComplexity = .veryComplex
+        }
+        
+        // Adjust complexity based on content richness
+        return adjustComplexityForContent(baseComplexity, contentRichness: contentRichness)
+    }
+    
+    /// Analyze content richness of the data
+    static func analyzeContentRichness(data: Any, fields: [DataField]) -> ContentRichness {
+        let mirror = Mirror(reflecting: data)
+        var totalContentLength = 0
+        var richFieldCount = 0
+        var maxFieldLength = 0
+        
+        for child in mirror.children {
+            guard let label = child.label,
+                  let field = fields.first(where: { $0.name == label }) else { continue }
+            
+            let contentLength = getContentLength(child.value)
+            totalContentLength += contentLength
+            maxFieldLength = max(maxFieldLength, contentLength)
+            
+            // Consider a field "rich" if it has substantial content
+            if contentLength > 50 {
+                richFieldCount += 1
+            }
+        }
+        
+        // Determine richness level
+        if totalContentLength > 500 || richFieldCount >= 3 || maxFieldLength > 200 {
+            return .veryRich
+        } else if totalContentLength > 200 || richFieldCount >= 2 || maxFieldLength > 100 {
+            return .rich
+        } else if totalContentLength > 50 || richFieldCount >= 1 {
+            return .moderate
+        } else {
+            return .minimal
+        }
+    }
+    
+    /// Get content length for a value
+    static func getContentLength(_ value: Any) -> Int {
+        switch value {
+        case let string as String:
+            return string.count
+        case let array as [Any]:
+            return array.reduce(0) { $0 + getContentLength($1) }
+        case let dict as [String: Any]:
+            return dict.values.reduce(0) { $0 + getContentLength($1) }
+        default:
+            return String(describing: value).count
+        }
+    }
+    
+    /// Adjust complexity based on content richness
+    static func adjustComplexityForContent(_ baseComplexity: ContentComplexity, contentRichness: ContentRichness) -> ContentComplexity {
+        switch (baseComplexity, contentRichness) {
+        case (.simple, .veryRich):
+            return .complex
+        case (.simple, .rich):
+            return .moderate
+        case (.moderate, .veryRich):
             return .veryComplex
+        case (.moderate, .rich):
+            return .complex
+        case (.complex, .veryRich):
+            return .veryComplex
+        default:
+            return baseComplexity
         }
     }
     
