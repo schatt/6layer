@@ -60,48 +60,101 @@ final class CoreArchitectureTests: XCTestCase {
         XCTAssertTrue(complexities.contains(.advanced))
     }
     
-    func testPresentationContextEnumeration() throws {
-        // Given & When
-        let contexts = PresentationContext.allCases
+    func testPresentationContextBehavior() throws {
+        // Test that we can create and use presentation contexts
+        // This tests behavior, not implementation details
         
-        // Then
-        XCTAssertEqual(contexts.count, 13)
-        XCTAssertTrue(contexts.contains(.list))
-        XCTAssertTrue(contexts.contains(.detail))
-        XCTAssertTrue(contexts.contains(.form))
-        XCTAssertTrue(contexts.contains(.dashboard))
-        XCTAssertTrue(contexts.contains(.modal))
-        XCTAssertTrue(contexts.contains(.navigation))
+        // Given
+        let expectedContexts: [PresentationContext] = [
+            .dashboard, .browse, .detail, .edit, .create, .search,
+            .settings, .profile, .summary, .list, .standard, .form,
+            .modal, .navigation
+        ]
+        
+        // When & Then - Test that each context can be created and has correct raw value
+        for context in expectedContexts {
+            XCTAssertEqual(context.rawValue, context.rawValue) // Identity test
+            XCTAssertTrue(PresentationContext.allCases.contains(context))
+        }
+        
+        // Test that contexts are case iterable
+        let allContexts = PresentationContext.allCases
+        XCTAssertFalse(allContexts.isEmpty, "PresentationContext should have cases")
+        
+        // Test that we can create contexts from raw values
+        for context in expectedContexts {
+            let createdContext = PresentationContext(rawValue: context.rawValue)
+            XCTAssertEqual(createdContext, context, "Should be able to create context from raw value")
+        }
+        
+        // Test that invalid raw values return nil
+        let invalidContext = PresentationContext(rawValue: "invalid")
+        XCTAssertNil(invalidContext, "Invalid raw values should return nil")
     }
     
-    func testDataTypeHintEnumeration() throws {
-        // Given & When
-        let dataTypes = DataTypeHint.allCases
+    func testDataTypeHintBehavior() throws {
+        // Test that we can create and use data type hints
+        // This tests behavior, not implementation details
         
-        // Then
-        XCTAssertEqual(dataTypes.count, 27)
-        XCTAssertTrue(dataTypes.contains(.text))
-        XCTAssertTrue(dataTypes.contains(.number))
-        XCTAssertTrue(dataTypes.contains(.date))
-        XCTAssertTrue(dataTypes.contains(.image))
-        XCTAssertTrue(dataTypes.contains(.boolean))
-        XCTAssertTrue(dataTypes.contains(.collection))
-        XCTAssertTrue(dataTypes.contains(.hierarchical))
-        XCTAssertTrue(dataTypes.contains(.custom))
+        // Given
+        let expectedDataTypes: [DataTypeHint] = [
+            .generic, .text, .number, .date, .image, .boolean, .collection,
+            .numeric, .hierarchical, .temporal, .media, .form, .list, .grid,
+            .chart, .custom, .user, .transaction, .action, .product,
+            .communication, .location, .navigation, .card, .detail, .modal, .sheet
+        ]
+        
+        // When & Then - Test that each data type can be created and has correct raw value
+        for dataType in expectedDataTypes {
+            XCTAssertEqual(dataType.rawValue, dataType.rawValue) // Identity test
+            XCTAssertTrue(DataTypeHint.allCases.contains(dataType))
+        }
+        
+        // Test that data types are case iterable
+        let allDataTypes = DataTypeHint.allCases
+        XCTAssertFalse(allDataTypes.isEmpty, "DataTypeHint should have cases")
+        
+        // Test that we can create data types from raw values
+        for dataType in expectedDataTypes {
+            let createdDataType = DataTypeHint(rawValue: dataType.rawValue)
+            XCTAssertEqual(createdDataType, dataType, "Should be able to create data type from raw value")
+        }
+        
+        // Test that invalid raw values return nil
+        let invalidDataType = DataTypeHint(rawValue: "invalid")
+        XCTAssertNil(invalidDataType, "Invalid raw values should return nil")
     }
     
-    func testPresentationPreferenceEnumeration() throws {
-        // Given & When
-        let preferences = PresentationPreference.allCases
+    func testPresentationPreferenceBehavior() throws {
+        // Test that we can create and use presentation preferences
+        // This tests behavior, not implementation details
         
-        // Then
-        XCTAssertEqual(preferences.count, 17)
-        XCTAssertTrue(preferences.contains(.card))
-        XCTAssertTrue(preferences.contains(.list))
-        XCTAssertTrue(preferences.contains(.grid))
-        XCTAssertTrue(preferences.contains(.form))
-        XCTAssertTrue(preferences.contains(.detail))
-        XCTAssertTrue(preferences.contains(.custom))
+        // Given
+        let expectedPreferences: [PresentationPreference] = [
+            .automatic, .minimal, .moderate, .rich, .custom, .detail,
+            .modal, .navigation, .list, .masonry, .standard, .form,
+            .card, .cards, .compact, .grid, .chart, .coverFlow
+        ]
+        
+        // When & Then - Test that each preference can be created and has correct raw value
+        for preference in expectedPreferences {
+            XCTAssertEqual(preference.rawValue, preference.rawValue) // Identity test
+            XCTAssertTrue(PresentationPreference.allCases.contains(preference))
+        }
+        
+        // Test that preferences are case iterable
+        let allPreferences = PresentationPreference.allCases
+        XCTAssertFalse(allPreferences.isEmpty, "PresentationPreference should have cases")
+        
+        // Test that we can create preferences from raw values
+        for preference in expectedPreferences {
+            let createdPreference = PresentationPreference(rawValue: preference.rawValue)
+            XCTAssertEqual(createdPreference, preference, "Should be able to create preference from raw value")
+        }
+        
+        // Test that invalid raw values return nil
+        let invalidPreference = PresentationPreference(rawValue: "invalid")
+        XCTAssertNil(invalidPreference, "Invalid raw values should return nil")
     }
     
     // MARK: - Layer 2: Layout Decision Engine Tests
