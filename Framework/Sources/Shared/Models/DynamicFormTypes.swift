@@ -44,6 +44,7 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
     case email = "email"
     case password = "password"
     case number = "number"
+    case integer = "integer"  // High Priority: Native Int support
     case phone = "phone"
     case date = "date"
     case time = "time"
@@ -54,12 +55,16 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
     case checkbox = "checkbox"
     case textarea = "textarea"
     case file = "file"
-    case url = "url"
+    case image = "image"      // High Priority: Native image support
+    case url = "url"          // High Priority: Native URL support
     case color = "color"
     case range = "range"
     case toggle = "toggle"
     case richtext = "richtext"
     case autocomplete = "autocomplete"
+    case array = "array"      // Medium Priority: Native array support
+    case data = "data"        // Medium Priority: Native Data support
+    case `enum` = "enum"      // Low Priority: Native enum support
     case custom = "custom"
     
     /// Check if field type supports options
@@ -88,7 +93,7 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
         switch self {
         case .email:
             return .emailAddress
-        case .number, .range:
+        case .number, .range, .integer:
             return .numberPad
         case .phone:
             return .phonePad
@@ -103,7 +108,7 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
         switch self {
         case .email:
             return "emailAddress"
-        case .number, .range:
+        case .number, .range, .integer:
             return "numberPad"
         case .phone:
             return "phonePad"
@@ -211,29 +216,29 @@ public class DynamicFormState: ObservableObject {
     }
     
     /// Get value for a specific field
-        func getValue<T>(for fieldId: String) -> T? {
+    public func getValue<T>(for fieldId: String) -> T? {
         return fieldValues[fieldId] as? T
     }
     
     /// Set value for a specific field
-        func setValue<T>(_ value: T, for fieldId: String) {
+    public func setValue<T>(_ value: T, for fieldId: String) {
         fieldValues[fieldId] = value
         isDirty = true
         clearErrors(for: fieldId)
     }
     
     /// Check if field has errors
-        func hasErrors(for fieldId: String) -> Bool {
+    public func hasErrors(for fieldId: String) -> Bool {
         return !(fieldErrors[fieldId]?.isEmpty ?? true)
     }
     
     /// Get errors for a specific field
-        func getErrors(for fieldId: String) -> [String] {
+    public func getErrors(for fieldId: String) -> [String] {
         return fieldErrors[fieldId] ?? []
     }
     
     /// Add error for a specific field
-        func addError(_ error: String, for fieldId: String) {
+    public func addError(_ error: String, for fieldId: String) {
         if fieldErrors[fieldId] == nil {
             fieldErrors[fieldId] = []
         }
@@ -241,22 +246,22 @@ public class DynamicFormState: ObservableObject {
     }
     
     /// Clear errors for a specific field
-        func clearErrors(for fieldId: String) {
+    public func clearErrors(for fieldId: String) {
         fieldErrors.removeValue(forKey: fieldId)
     }
     
     /// Clear all errors
-        func clearAllErrors() {
+    public func clearAllErrors() {
         fieldErrors.removeAll()
     }
     
     /// Check if section is collapsed
-        func isSectionCollapsed(_ sectionId: String) -> Bool {
+    public func isSectionCollapsed(_ sectionId: String) -> Bool {
         return sectionStates[sectionId] ?? false
     }
     
     /// Toggle section collapsed state
-        func toggleSection(_ sectionId: String) {
+    public func toggleSection(_ sectionId: String) {
         sectionStates[sectionId] = !isSectionCollapsed(sectionId)
     }
     
@@ -266,7 +271,7 @@ public class DynamicFormState: ObservableObject {
     }
     
     /// Reset form to initial state
-        func reset() {
+    public func reset() {
         fieldValues.removeAll()
         fieldErrors.removeAll()
         sectionStates.removeAll()
