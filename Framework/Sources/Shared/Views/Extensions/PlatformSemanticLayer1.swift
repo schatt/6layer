@@ -129,6 +129,25 @@ public func platformPresentContent_L1(
     return GenericContentView(content: content, hints: hints)
 }
 
+/// Generic function for presenting settings interface
+/// Uses hints to determine optimal settings presentation strategy
+@MainActor
+public func platformPresentSettings_L1(
+    settings: [SettingsSectionData],
+    hints: PresentationHints,
+    onSettingChanged: ((String, Any) -> Void)? = nil,
+    onSettingsSaved: (() -> Void)? = nil,
+    onSettingsCancelled: (() -> Void)? = nil
+) -> some View {
+    return GenericSettingsView(
+        settings: settings,
+        hints: hints,
+        onSettingChanged: onSettingChanged,
+        onSettingsSaved: onSettingsSaved,
+        onSettingsCancelled: onSettingsCancelled
+    )
+}
+
 // MARK: - Enhanced Presentation Hints Overloads
 
 /// Generic function for presenting any collection of identifiable items with enhanced hints
@@ -1827,5 +1846,307 @@ extension Color {
         #else
         return "#000000"
         #endif
+    }
+}
+
+// MARK: - Settings Data Structures
+
+/// Data structure representing a settings section
+public struct SettingsSectionData: Identifiable {
+    public let id = UUID()
+    public let title: String
+    public let items: [SettingsItemData]
+    public let isCollapsible: Bool
+    public let isExpanded: Bool
+    
+    public init(
+        title: String,
+        items: [SettingsItemData],
+        isCollapsible: Bool = false,
+        isExpanded: Bool = true
+    ) {
+        self.title = title
+        self.items = items
+        self.isCollapsible = isCollapsible
+        self.isExpanded = isExpanded
+    }
+}
+
+/// Data structure representing a settings item
+public struct SettingsItemData: Identifiable {
+    public let id = UUID()
+    public let key: String
+    public let title: String
+    public let description: String?
+    public let type: SettingsItemType
+    public let value: Any?
+    public let options: [String]?
+    public let isEnabled: Bool
+    
+    public init(
+        key: String,
+        title: String,
+        description: String? = nil,
+        type: SettingsItemType,
+        value: Any? = nil,
+        options: [String]? = nil,
+        isEnabled: Bool = true
+    ) {
+        self.key = key
+        self.title = title
+        self.description = description
+        self.type = type
+        self.value = value
+        self.options = options
+        self.isEnabled = isEnabled
+    }
+}
+
+/// Types of settings items
+public enum SettingsItemType: String, CaseIterable {
+    case toggle = "toggle"
+    case text = "text"
+    case number = "number"
+    case select = "select"
+    case slider = "slider"
+    case color = "color"
+    case button = "button"
+    case info = "info"
+}
+
+// MARK: - Generic Settings View
+
+/// Generic settings view that adapts to platform and hints
+public struct GenericSettingsView: View {
+    let settings: [SettingsSectionData]
+    let hints: PresentationHints
+    let onSettingChanged: ((String, Any) -> Void)?
+    let onSettingsSaved: (() -> Void)?
+    let onSettingsCancelled: (() -> Void)?
+    
+    @State private var values: [String: Any] = [:]
+    @State private var sectionStates: [String: Bool] = [:]
+    
+    public init(
+        settings: [SettingsSectionData],
+        hints: PresentationHints,
+        onSettingChanged: ((String, Any) -> Void)? = nil,
+        onSettingsSaved: (() -> Void)? = nil,
+        onSettingsCancelled: (() -> Void)? = nil
+    ) {
+        self.settings = settings
+        self.hints = hints
+        self.onSettingChanged = onSettingChanged
+        self.onSettingsSaved = onSettingsSaved
+        self.onSettingsCancelled = onSettingsCancelled
+    }
+    
+    public var body: some View {
+        VStack(spacing: 0) {
+            // Settings content
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(settings) { section in
+                        SettingsSectionView(
+                            section: section,
+                            values: $values,
+                            sectionStates: $sectionStates,
+                            onSettingChanged: onSettingChanged
+                        )
+                    }
+                }
+                .padding()
+            }
+            
+            // Action buttons
+            if onSettingsSaved != nil || onSettingsCancelled != nil {
+                HStack(spacing: 16) {
+                    if let onSettingsCancelled = onSettingsCancelled {
+                        Button("Cancel") {
+                            onSettingsCancelled()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    
+                    Spacer()
+                    
+                    if let onSettingsSaved = onSettingsSaved {
+                        Button("Save") {
+                            onSettingsSaved()
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                }
+                .padding()
+                .background(Color(.systemBackground))
+            }
+        }
+        .navigationTitle("Settings")
+        .onAppear {
+            initializeValues()
+        }
+    }
+    
+    private func initializeValues() {
+        for section in settings {
+            for item in section.items {
+                if values[item.key] == nil {
+                    values[item.key] = item.value
+                }
+            }
+            sectionStates[section.id.uuidString] = section.isExpanded
+        }
+    }
+}
+
+/// Individual settings section view
+struct SettingsSectionView: View {
+    let section: SettingsSectionData
+    @Binding var values: [String: Any]
+    @Binding var sectionStates: [String: Bool]
+    let onSettingChanged: ((String, Any) -> Void)?
+    
+    private var isExpanded: Bool {
+        sectionStates[section.id.uuidString] ?? section.isExpanded
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Section header
+            HStack {
+                Text(section.title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+                
+                if section.isCollapsible {
+                    Button(action: {
+                        sectionStates[section.id.uuidString]?.toggle()
+                    }) {
+                        Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            
+            // Section items
+            if isExpanded {
+                VStack(spacing: 8) {
+                    ForEach(section.items) { item in
+                        GenericSettingsItemView(
+                            item: item,
+                            value: Binding(
+                                get: { values[item.key] },
+                                set: { newValue in
+                                    values[item.key] = newValue
+                                    onSettingChanged?(item.key, newValue)
+                                }
+                            )
+                        )
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+    }
+}
+
+/// Individual settings item view
+struct GenericSettingsItemView: View {
+    let item: SettingsItemData
+    @Binding var value: Any?
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(item.title)
+                    .font(.body)
+                    .foregroundColor(.primary)
+                
+                if let description = item.description {
+                    Text(description)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            Spacer()
+            
+            // Item-specific controls
+            switch item.type {
+            case .toggle:
+                Toggle("", isOn: Binding(
+                    get: { value as? Bool ?? false },
+                    set: { value = $0 }
+                ))
+                .disabled(!item.isEnabled)
+                
+            case .text:
+                TextField("", text: Binding(
+                    get: { value as? String ?? "" },
+                    set: { value = $0 }
+                ))
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: 200)
+                .disabled(!item.isEnabled)
+                
+            case .number:
+                TextField("", value: Binding(
+                    get: { value as? Double },
+                    set: { value = $0 }
+                ), format: .number)
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: 100)
+                .disabled(!item.isEnabled)
+                
+            case .select:
+                if let options = item.options {
+                    Picker("", selection: Binding(
+                        get: { value as? String ?? options.first ?? "" },
+                        set: { value = $0 }
+                    )) {
+                        ForEach(options, id: \.self) { option in
+                            Text(option).tag(option)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .disabled(!item.isEnabled)
+                }
+                
+            case .slider:
+                if let doubleValue = value as? Double {
+                    Slider(value: Binding(
+                        get: { doubleValue },
+                        set: { value = $0 }
+                    ), in: 0...100)
+                    .disabled(!item.isEnabled)
+                }
+                
+            case .color:
+                if let colorValue = value as? Color {
+                    ColorPicker("", selection: Binding(
+                        get: { colorValue },
+                        set: { value = $0 }
+                    ))
+                    .disabled(!item.isEnabled)
+                }
+                
+            case .button:
+                Button(item.title) {
+                    // Button action would be handled by onSettingChanged
+                    onSettingChanged?(item.key, true)
+                }
+                .disabled(!item.isEnabled)
+                
+            case .info:
+                Text(value as? String ?? "")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.vertical, 4)
     }
 }
