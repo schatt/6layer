@@ -2,15 +2,7 @@ import XCTest
 import SwiftUI
 @testable import SixLayerFramework
 
-// Type aliases for DRY test patterns
-typealias PlatformCapability = DRYTestPatterns.PlatformCapability
-typealias AccessibilityFeature = DRYTestPatterns.AccessibilityFeature
-typealias ViewInfo = DRYTestPatterns.ViewInfo
-typealias TestDataItem = DRYTestPatterns.TestDataItem
-typealias PlatformCapabilityChecker = DRYTestPatterns.PlatformCapabilityChecker
-typealias AccessibilityFeatureChecker = DRYTestPatterns.AccessibilityFeatureChecker
-typealias MockPlatformCapabilityChecker = DRYTestPatterns.MockPlatformCapabilityChecker
-typealias MockAccessibilityFeatureChecker = DRYTestPatterns.MockAccessibilityFeatureChecker
+// Use fully qualified names for DRY test patterns
 
 /// Core View Function Tests
 /// Tests the core view generation functions with every combination of capabilities and accessibility features
@@ -22,22 +14,22 @@ final class CoreViewFunctionTests: XCTestCase {
     // MARK: - Test Data
     
     
-    var sampleData: [TestDataItem] = []
-    var mockCapabilityChecker: MockPlatformCapabilityChecker!
-    var mockAccessibilityChecker: MockAccessibilityFeatureChecker!
+    var sampleData: [DRYTestPatterns.TestDataItem] = []
+    var mockCapabilityChecker: DRYTestPatterns.MockDRYTestPatterns.DRYTestPatterns.PlatformCapabilityChecker!
+    var mockAccessibilityChecker: DRYTestPatterns.MockDRYTestPatterns.DRYTestPatterns.AccessibilityFeatureChecker!
     
     override func setUp() {
         super.setUp()
         
         sampleData = [
-            TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
-            TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
-            TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
+            DRYTestPatterns.TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
+            DRYTestPatterns.TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
+            DRYTestPatterns.TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
         ]
         
         // Setup mock capability checkers
-        mockCapabilityChecker = MockPlatformCapabilityChecker()
-        mockAccessibilityChecker = MockAccessibilityFeatureChecker()
+        mockCapabilityChecker = DRYTestPatterns.MockDRYTestPatterns.DRYTestPatterns.PlatformCapabilityChecker()
+        mockAccessibilityChecker = DRYTestPatterns.MockDRYTestPatterns.DRYTestPatterns.AccessibilityFeatureChecker()
     }
     
     override func tearDown() {
@@ -57,9 +49,9 @@ final class CoreViewFunctionTests: XCTestCase {
     func testIntelligentDetailViewWithAllCapabilities() {
         // Test realistic combinations instead of exhaustive testing
         let realisticCombinations = [
-            (Set([PlatformCapability.touch, PlatformCapability.haptic]), Set([AccessibilityFeature.reduceMotion])),
-            (Set([PlatformCapability.hover]), Set([AccessibilityFeature.increaseContrast])),
-            (Set<PlatformCapability>(), Set<AccessibilityFeature>())
+            (Set([DRYTestPatterns.PlatformCapability.touch, DRYTestPatterns.PlatformCapability.haptic]), Set([DRYTestPatterns.AccessibilityFeature.reduceMotion])),
+            (Set([DRYTestPatterns.PlatformCapability.hover]), Set([DRYTestPatterns.AccessibilityFeature.increaseContrast])),
+            (Set<DRYTestPatterns.PlatformCapability>(), Set<DRYTestPatterns.AccessibilityFeature>())
         ]
         
         for (platformCapabilities, accessibilityFeatures) in realisticCombinations {
@@ -71,8 +63,8 @@ final class CoreViewFunctionTests: XCTestCase {
     }
     
     func testIntelligentDetailViewWithSpecificCombination(
-        platformCapabilities: Set<PlatformCapability>,
-        accessibilityFeatures: Set<AccessibilityFeature>
+        platformCapabilities: Set<DRYTestPatterns.PlatformCapability>,
+        accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>
     ) {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
@@ -90,7 +82,7 @@ final class CoreViewFunctionTests: XCTestCase {
         let view = IntelligentDetailView.platformDetailView(for: item, hints: hints)
         
         // THEN: Should generate correct view for this combination
-        let viewInfo = extractViewInfo(
+        let viewInfo = extractDRYTestPatterns.ViewInfo(
             from: view,
             platformCapabilities: platformCapabilities,
             accessibilityFeatures: accessibilityFeatures
@@ -118,9 +110,9 @@ final class CoreViewFunctionTests: XCTestCase {
     func testIntelligentFormViewWithAllCapabilities() {
         // Test realistic combinations instead of exhaustive testing
         let realisticCombinations = [
-            (Set([PlatformCapability.touch, PlatformCapability.haptic]), Set([AccessibilityFeature.reduceMotion])),
-            (Set([PlatformCapability.hover]), Set([AccessibilityFeature.increaseContrast])),
-            (Set<PlatformCapability>(), Set<AccessibilityFeature>())
+            (Set([DRYTestPatterns.PlatformCapability.touch, DRYTestPatterns.PlatformCapability.haptic]), Set([DRYTestPatterns.AccessibilityFeature.reduceMotion])),
+            (Set([DRYTestPatterns.PlatformCapability.hover]), Set([DRYTestPatterns.AccessibilityFeature.increaseContrast])),
+            (Set<DRYTestPatterns.PlatformCapability>(), Set<DRYTestPatterns.AccessibilityFeature>())
         ]
         
         for (platformCapabilities, accessibilityFeatures) in realisticCombinations {
@@ -132,8 +124,8 @@ final class CoreViewFunctionTests: XCTestCase {
     }
     
     func testIntelligentFormViewWithSpecificCombination(
-        platformCapabilities: Set<PlatformCapability>,
-        accessibilityFeatures: Set<AccessibilityFeature>
+        platformCapabilities: Set<DRYTestPatterns.PlatformCapability>,
+        accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>
     ) {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
@@ -148,7 +140,7 @@ final class CoreViewFunctionTests: XCTestCase {
         )
         
         // THEN: Should generate correct form for this combination
-        let viewInfo = extractViewInfo(from: view, platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
+        let viewInfo = extractDRYTestPatterns.ViewInfo(from: view, platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
         
         // Verify view generation
         XCTAssertNotNil(view, "Should generate a form for platform: \(platformCapabilities), accessibility: \(accessibilityFeatures)")
@@ -162,9 +154,9 @@ final class CoreViewFunctionTests: XCTestCase {
     func testSimpleCardComponentWithAllCapabilities() {
         // Test realistic combinations instead of exhaustive testing
         let realisticCombinations = [
-            (Set([PlatformCapability.touch, PlatformCapability.haptic]), Set([AccessibilityFeature.reduceMotion])),
-            (Set([PlatformCapability.hover]), Set([AccessibilityFeature.increaseContrast])),
-            (Set<PlatformCapability>(), Set<AccessibilityFeature>())
+            (Set([DRYTestPatterns.PlatformCapability.touch, DRYTestPatterns.PlatformCapability.haptic]), Set([DRYTestPatterns.AccessibilityFeature.reduceMotion])),
+            (Set([DRYTestPatterns.PlatformCapability.hover]), Set([DRYTestPatterns.AccessibilityFeature.increaseContrast])),
+            (Set<DRYTestPatterns.PlatformCapability>(), Set<DRYTestPatterns.AccessibilityFeature>())
         ]
         
         for (platformCapabilities, accessibilityFeatures) in realisticCombinations {
@@ -176,8 +168,8 @@ final class CoreViewFunctionTests: XCTestCase {
     }
     
     func testSimpleCardComponentWithSpecificCombination(
-        platformCapabilities: Set<PlatformCapability>,
-        accessibilityFeatures: Set<AccessibilityFeature>
+        platformCapabilities: Set<DRYTestPatterns.PlatformCapability>,
+        accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>
     ) {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
@@ -193,7 +185,7 @@ final class CoreViewFunctionTests: XCTestCase {
         )
         
         // THEN: Should generate correct card for this combination
-        let viewInfo = extractViewInfo(from: view, platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
+        let viewInfo = extractDRYTestPatterns.ViewInfo(from: view, platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
         
         // Verify view generation
         XCTAssertNotNil(view, "Should generate a card for platform: \(platformCapabilities), accessibility: \(accessibilityFeatures)")
@@ -233,10 +225,10 @@ final class CoreViewFunctionTests: XCTestCase {
             XCTAssertNotNil(view, "Should generate view with touch \(description)")
             
             // Create platform capabilities and accessibility features sets
-            let platformCapabilities: Set<PlatformCapability> = [.touch]
-            let accessibilityFeatures: Set<AccessibilityFeature> = []
+            let platformCapabilities: Set<DRYTestPatterns.PlatformCapability> = [.touch]
+            let accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature> = []
             
-            let viewInfo = extractViewInfo(
+            let viewInfo = extractDRYTestPatterns.ViewInfo(
                 from: view,
                 platformCapabilities: platformCapabilities,
                 accessibilityFeatures: accessibilityFeatures
@@ -279,10 +271,10 @@ final class CoreViewFunctionTests: XCTestCase {
             XCTAssertNotNil(view, "Should generate view with hover \(description)")
             
             // Create platform capabilities and accessibility features sets
-            let platformCapabilities: Set<PlatformCapability> = [.hover]
-            let accessibilityFeatures: Set<AccessibilityFeature> = []
+            let platformCapabilities: Set<DRYTestPatterns.PlatformCapability> = [.hover]
+            let accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature> = []
             
-            let viewInfo = extractViewInfo(
+            let viewInfo = extractDRYTestPatterns.ViewInfo(
                 from: view,
                 platformCapabilities: platformCapabilities,
                 accessibilityFeatures: accessibilityFeatures
@@ -298,8 +290,8 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    func testIntelligentDetailViewWithAccessibilityFeatures() {
-        let testCases: [(AccessibilityFeature, String)] = [
+    func testIntelligentDetailViewWithDRYTestPatterns.AccessibilityFeatures() {
+        let testCases: [(DRYTestPatterns.AccessibilityFeature, String)] = [
             (.reduceMotion, "reduce motion"),
             (.increaseContrast, "increase contrast"),
             (.boldText, "bold text"),
@@ -308,7 +300,7 @@ final class CoreViewFunctionTests: XCTestCase {
         
         for (feature, description) in testCases {
             // Test enabled state
-            configureAccessibilityFeature(feature, enabled: true)
+            configureDRYTestPatterns.AccessibilityFeature(feature, enabled: true)
             let item = sampleData[0]
             let hints = createPresentationHints(
                 capabilityChecker: mockCapabilityChecker,
@@ -319,38 +311,38 @@ final class CoreViewFunctionTests: XCTestCase {
             XCTAssertNotNil(view, "Should generate view with \(description) enabled")
             
             // Create platform capabilities and accessibility features sets
-            let platformCapabilities: Set<PlatformCapability> = [.hover]
-            let accessibilityFeatures: Set<AccessibilityFeature> = []
+            let platformCapabilities: Set<DRYTestPatterns.PlatformCapability> = [.hover]
+            let accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature> = []
             
-            let viewInfo = extractViewInfo(
+            let viewInfo = extractDRYTestPatterns.ViewInfo(
                 from: view,
                 platformCapabilities: platformCapabilities,
                 accessibilityFeatures: accessibilityFeatures
             )
             
             // Verify feature is applied
-            verifyAccessibilityFeature(viewInfo: viewInfo, feature: feature, shouldBeEnabled: true)
+            verifyDRYTestPatterns.AccessibilityFeature(viewInfo: viewInfo, feature: feature, shouldBeEnabled: true)
             
             // Test disabled state
-            configureAccessibilityFeature(feature, enabled: false)
+            configureDRYTestPatterns.AccessibilityFeature(feature, enabled: false)
             let disabledView = IntelligentDetailView.platformDetailView(for: item, hints: hints)
             XCTAssertNotNil(disabledView, "Should generate view with \(description) disabled")
             
-            let disabledViewInfo = extractViewInfo(
+            let disabledDRYTestPatterns.ViewInfo = extractDRYTestPatterns.ViewInfo(
                 from: disabledView,
                 platformCapabilities: platformCapabilities,
                 accessibilityFeatures: accessibilityFeatures
             )
             
             // Verify feature is not applied
-            verifyAccessibilityFeature(viewInfo: disabledViewInfo, feature: feature, shouldBeEnabled: false)
+            verifyDRYTestPatterns.AccessibilityFeature(viewInfo: disabledDRYTestPatterns.ViewInfo, feature: feature, shouldBeEnabled: false)
         }
     }
     
     // MARK: - Helper Methods
     
     
-    private func configureMockCapabilityChecker(platformCapabilities: Set<PlatformCapability>) {
+    private func configureMockCapabilityChecker(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>) {
         mockCapabilityChecker.touchSupported = platformCapabilities.contains(.touch)
         mockCapabilityChecker.hoverSupported = platformCapabilities.contains(.hover)
         mockCapabilityChecker.hapticSupported = platformCapabilities.contains(.haptic)
@@ -361,21 +353,21 @@ final class CoreViewFunctionTests: XCTestCase {
         mockCapabilityChecker.ocrSupported = platformCapabilities.contains(.ocr)
     }
     
-    private func configureMockAccessibilityChecker(accessibilityFeatures: Set<AccessibilityFeature>) {
-        mockAccessibilityChecker.reduceMotionEnabled = accessibilityFeatures.contains(AccessibilityFeature.reduceMotion)
-        mockAccessibilityChecker.increaseContrastEnabled = accessibilityFeatures.contains(AccessibilityFeature.increaseContrast)
-        mockAccessibilityChecker.reduceTransparencyEnabled = accessibilityFeatures.contains(AccessibilityFeature.reduceTransparency)
-        mockAccessibilityChecker.boldTextEnabled = accessibilityFeatures.contains(AccessibilityFeature.boldText)
-        mockAccessibilityChecker.largerTextEnabled = accessibilityFeatures.contains(AccessibilityFeature.largerText)
-        mockAccessibilityChecker.buttonShapesEnabled = accessibilityFeatures.contains(AccessibilityFeature.buttonShapes)
-        mockAccessibilityChecker.onOffLabelsEnabled = accessibilityFeatures.contains(AccessibilityFeature.onOffLabels)
-        mockAccessibilityChecker.grayscaleEnabled = accessibilityFeatures.contains(AccessibilityFeature.grayscale)
-        mockAccessibilityChecker.invertColorsEnabled = accessibilityFeatures.contains(AccessibilityFeature.invertColors)
-        mockAccessibilityChecker.smartInvertEnabled = accessibilityFeatures.contains(AccessibilityFeature.smartInvert)
-        mockAccessibilityChecker.differentiateWithoutColorEnabled = accessibilityFeatures.contains(AccessibilityFeature.differentiateWithoutColor)
+    private func configureMockAccessibilityChecker(accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) {
+        mockAccessibilityChecker.reduceMotionEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceMotion)
+        mockAccessibilityChecker.increaseContrastEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.increaseContrast)
+        mockAccessibilityChecker.reduceTransparencyEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceTransparency)
+        mockAccessibilityChecker.boldTextEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.boldText)
+        mockAccessibilityChecker.largerTextEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.largerText)
+        mockAccessibilityChecker.buttonShapesEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.buttonShapes)
+        mockAccessibilityChecker.onOffLabelsEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.onOffLabels)
+        mockAccessibilityChecker.grayscaleEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.grayscale)
+        mockAccessibilityChecker.invertColorsEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.invertColors)
+        mockAccessibilityChecker.smartInvertEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.smartInvert)
+        mockAccessibilityChecker.differentiateWithoutColorEnabled = accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.differentiateWithoutColor)
     }
     
-    private func configureAccessibilityFeature(_ feature: AccessibilityFeature, enabled: Bool) {
+    private func configureDRYTestPatterns.AccessibilityFeature(_ feature: DRYTestPatterns.AccessibilityFeature, enabled: Bool) {
         switch feature {
         case .reduceMotion:
             mockAccessibilityChecker.reduceMotionEnabled = enabled
@@ -403,13 +395,13 @@ final class CoreViewFunctionTests: XCTestCase {
     }
     
     private func createPresentationHints(
-        capabilityChecker: PlatformCapabilityChecker,
-        accessibilityChecker: AccessibilityFeatureChecker
+        capabilityChecker: DRYTestPatterns.DRYTestPatterns.PlatformCapabilityChecker,
+        accessibilityChecker: DRYTestPatterns.DRYTestPatterns.AccessibilityFeatureChecker
     ) -> PresentationHints {
         // Create presentation hints based on injected capability checkers
         let dataType = DataTypeHint.generic
-        let platformCapabilities = Set<PlatformCapability>([.touch, .hover, .haptic])
-        let accessibilityFeatures = Set<AccessibilityFeature>([AccessibilityFeature.reduceMotion, AccessibilityFeature.increaseContrast])
+        let platformCapabilities = Set<DRYTestPatterns.PlatformCapability>([.touch, .hover, .haptic])
+        let accessibilityFeatures = Set<DRYTestPatterns.AccessibilityFeature>([DRYTestPatterns.AccessibilityFeature.reduceMotion, DRYTestPatterns.AccessibilityFeature.increaseContrast])
         let presentationPreference = determinePresentationPreference(platformCapabilities: platformCapabilities)
         let complexity = determineComplexity(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
         let context = PresentationContext.standard
@@ -423,11 +415,11 @@ final class CoreViewFunctionTests: XCTestCase {
     }
     
     private func createLayoutDecision(
-        capabilityChecker: PlatformCapabilityChecker,
-        accessibilityChecker: AccessibilityFeatureChecker
+        capabilityChecker: DRYTestPatterns.DRYTestPatterns.PlatformCapabilityChecker,
+        accessibilityChecker: DRYTestPatterns.DRYTestPatterns.AccessibilityFeatureChecker
     ) -> IntelligentCardLayoutDecision {
-        let platformCapabilities = Set<PlatformCapability>([.touch, .hover, .haptic])
-        let accessibilityFeatures = Set<AccessibilityFeature>([AccessibilityFeature.reduceMotion, AccessibilityFeature.increaseContrast])
+        let platformCapabilities = Set<DRYTestPatterns.PlatformCapability>([.touch, .hover, .haptic])
+        let accessibilityFeatures = Set<DRYTestPatterns.AccessibilityFeature>([DRYTestPatterns.AccessibilityFeature.reduceMotion, DRYTestPatterns.AccessibilityFeature.increaseContrast])
         let columns = determineColumns(platformCapabilities: platformCapabilities)
         let spacing = determineSpacing(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
         let cardWidth = determineCardWidth(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
@@ -444,8 +436,8 @@ final class CoreViewFunctionTests: XCTestCase {
     }
     
     private func createExpansionStrategy(
-        for platformCapabilities: Set<PlatformCapability>,
-        accessibilityFeatures: Set<AccessibilityFeature>
+        for platformCapabilities: Set<DRYTestPatterns.PlatformCapability>,
+        accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>
     ) -> CardExpansionStrategy {
         let primaryStrategy = determinePrimaryStrategy(platformCapabilities: platformCapabilities)
         let _ = determineSecondaryStrategy(platformCapabilities: platformCapabilities)
@@ -462,14 +454,14 @@ final class CoreViewFunctionTests: XCTestCase {
         )
     }
     
-    private func extractViewInfo(
+    private func extractDRYTestPatterns.ViewInfo(
         from view: some View,
-        platformCapabilities: Set<PlatformCapability>,
-        accessibilityFeatures: Set<AccessibilityFeature>
-    ) -> ViewInfo {
+        platformCapabilities: Set<DRYTestPatterns.PlatformCapability>,
+        accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>
+    ) -> DRYTestPatterns.ViewInfo {
         // Extract view information based on the view type and capabilities
         // This would need to be implemented based on how you want to verify view properties
-        return ViewInfo(
+        return DRYTestPatterns.ViewInfo(
             viewType: determineExpectedViewType(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures),
             supportsTouch: platformCapabilities.contains(.touch),
             supportsHover: platformCapabilities.contains(.hover),
@@ -479,17 +471,17 @@ final class CoreViewFunctionTests: XCTestCase {
             supportsSwitchControl: platformCapabilities.contains(.switchControl),
             supportsVision: platformCapabilities.contains(.vision),
             supportsOCR: platformCapabilities.contains(.ocr),
-            hasReduceMotion: accessibilityFeatures.contains(AccessibilityFeature.reduceMotion),
-            hasIncreaseContrast: accessibilityFeatures.contains(AccessibilityFeature.increaseContrast),
-            hasReduceTransparency: accessibilityFeatures.contains(AccessibilityFeature.reduceTransparency),
-            hasBoldText: accessibilityFeatures.contains(AccessibilityFeature.boldText),
-            hasLargerText: accessibilityFeatures.contains(AccessibilityFeature.largerText),
-            hasButtonShapes: accessibilityFeatures.contains(AccessibilityFeature.buttonShapes),
-            hasOnOffLabels: accessibilityFeatures.contains(AccessibilityFeature.onOffLabels),
-            hasGrayscale: accessibilityFeatures.contains(AccessibilityFeature.grayscale),
-            hasInvertColors: accessibilityFeatures.contains(AccessibilityFeature.invertColors),
-            hasSmartInvert: accessibilityFeatures.contains(AccessibilityFeature.smartInvert),
-            hasDifferentiateWithoutColor: accessibilityFeatures.contains(AccessibilityFeature.differentiateWithoutColor),
+            hasReduceMotion: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceMotion),
+            hasIncreaseContrast: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.increaseContrast),
+            hasReduceTransparency: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceTransparency),
+            hasBoldText: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.boldText),
+            hasLargerText: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.largerText),
+            hasButtonShapes: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.buttonShapes),
+            hasOnOffLabels: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.onOffLabels),
+            hasGrayscale: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.grayscale),
+            hasInvertColors: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.invertColors),
+            hasSmartInvert: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.smartInvert),
+            hasDifferentiateWithoutColor: accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.differentiateWithoutColor),
             minTouchTarget: platformCapabilities.contains(.touch) ? 44 : 0,
             hoverDelay: platformCapabilities.contains(.hover) ? 0.1 : 0.0,
             animationDuration: determineAnimationDuration(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures)
@@ -498,7 +490,7 @@ final class CoreViewFunctionTests: XCTestCase {
     
     // MARK: - Verification Methods
     
-    private func verifyPlatformProperties(viewInfo: ViewInfo, capabilityChecker: PlatformCapabilityChecker) {
+    private func verifyPlatformProperties(viewInfo: DRYTestPatterns.ViewInfo, capabilityChecker: DRYTestPatterns.DRYTestPatterns.PlatformCapabilityChecker) {
         XCTAssertEqual(viewInfo.supportsTouch, capabilityChecker.supportsTouch(), "Touch support should match capability checker")
         XCTAssertEqual(viewInfo.supportsHover, capabilityChecker.supportsHover(), "Hover support should match capability checker")
         XCTAssertEqual(viewInfo.supportsHapticFeedback, capabilityChecker.supportsHapticFeedback(), "Haptic feedback support should match capability checker")
@@ -513,7 +505,7 @@ final class CoreViewFunctionTests: XCTestCase {
         XCTAssertEqual(viewInfo.hoverDelay, capabilityChecker.supportsHover() ? 0.1 : 0.0, "Hover delay should match capability checker")
     }
     
-    private func verifyAccessibilityProperties(viewInfo: ViewInfo, accessibilityChecker: AccessibilityFeatureChecker) {
+    private func verifyAccessibilityProperties(viewInfo: DRYTestPatterns.ViewInfo, accessibilityChecker: DRYTestPatterns.DRYTestPatterns.AccessibilityFeatureChecker) {
         XCTAssertEqual(viewInfo.hasReduceMotion, accessibilityChecker.hasReduceMotion(), "Reduce motion should match accessibility checker")
         XCTAssertEqual(viewInfo.hasIncreaseContrast, accessibilityChecker.hasIncreaseContrast(), "Increase contrast should match accessibility checker")
         XCTAssertEqual(viewInfo.hasReduceTransparency, accessibilityChecker.hasReduceTransparency(), "Reduce transparency should match accessibility checker")
@@ -527,7 +519,7 @@ final class CoreViewFunctionTests: XCTestCase {
         XCTAssertEqual(viewInfo.hasDifferentiateWithoutColor, accessibilityChecker.hasDifferentiateWithoutColor(), "Differentiate without color should match accessibility checker")
     }
     
-    private func verifyAccessibilityFeature(viewInfo: ViewInfo, feature: AccessibilityFeature, shouldBeEnabled: Bool) {
+    private func verifyDRYTestPatterns.AccessibilityFeature(viewInfo: DRYTestPatterns.ViewInfo, feature: DRYTestPatterns.AccessibilityFeature, shouldBeEnabled: Bool) {
         switch feature {
         case .reduceMotion:
             XCTAssertEqual(viewInfo.hasReduceMotion, shouldBeEnabled, "Reduce motion should be \(shouldBeEnabled ? "enabled" : "disabled")")
@@ -554,7 +546,7 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func verifyFormProperties(viewInfo: ViewInfo, platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) {
+    private func verifyFormProperties(viewInfo: DRYTestPatterns.ViewInfo, platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) {
         // Verify form-specific properties
         XCTAssertNotNil(viewInfo, "Form should be generated")
         
@@ -568,16 +560,16 @@ final class CoreViewFunctionTests: XCTestCase {
         }
         
         // Verify accessibility features are applied
-        if accessibilityFeatures.contains(AccessibilityFeature.reduceMotion) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceMotion) {
             XCTAssertTrue(viewInfo.hasReduceMotion, "Form should respect reduce motion")
         }
         
-        if accessibilityFeatures.contains(AccessibilityFeature.increaseContrast) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.increaseContrast) {
             XCTAssertTrue(viewInfo.hasIncreaseContrast, "Form should respect increase contrast")
         }
     }
     
-    private func verifyCardProperties(viewInfo: ViewInfo, platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) {
+    private func verifyCardProperties(viewInfo: DRYTestPatterns.ViewInfo, platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) {
         // Verify card-specific properties
         XCTAssertNotNil(viewInfo, "Card should be generated")
         
@@ -593,16 +585,16 @@ final class CoreViewFunctionTests: XCTestCase {
         }
         
         // Verify accessibility features are applied
-        if accessibilityFeatures.contains(AccessibilityFeature.reduceMotion) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceMotion) {
             XCTAssertTrue(viewInfo.hasReduceMotion, "Card should respect reduce motion")
         }
         
-        if accessibilityFeatures.contains(AccessibilityFeature.increaseContrast) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.increaseContrast) {
             XCTAssertTrue(viewInfo.hasIncreaseContrast, "Card should respect increase contrast")
         }
     }
     
-    private func verifyExpandableCardProperties(viewInfo: ViewInfo, platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) {
+    private func verifyExpandableCardProperties(viewInfo: DRYTestPatterns.ViewInfo, platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) {
         // Verify expandable card-specific properties
         XCTAssertNotNil(viewInfo, "Expandable card should be generated")
         
@@ -622,7 +614,7 @@ final class CoreViewFunctionTests: XCTestCase {
     
     // MARK: - Strategy Determination Methods
     
-    private func determineExpectedViewType(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> String {
+    private func determineExpectedViewType(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> String {
         if platformCapabilities.contains(.touch) || platformCapabilities.contains(.hover) {
             return "ExpandableCardComponent"
         } else {
@@ -630,7 +622,7 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determinePresentationPreference(platformCapabilities: Set<PlatformCapability>) -> PresentationPreference {
+    private func determinePresentationPreference(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>) -> PresentationPreference {
         if platformCapabilities.contains(.touch) {
             return .card
         } else if platformCapabilities.contains(.hover) {
@@ -640,7 +632,7 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determineComplexity(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> ContentComplexity {
+    private func determineComplexity(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> ContentComplexity {
         let capabilityCount = platformCapabilities.count
         let accessibilityCount = accessibilityFeatures.count
         
@@ -655,7 +647,7 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determineColumns(platformCapabilities: Set<PlatformCapability>) -> Int {
+    private func determineColumns(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>) -> Int {
         if platformCapabilities.contains(.touch) && platformCapabilities.contains(.hover) {
             return 3 // iPad
         } else if platformCapabilities.contains(.hover) {
@@ -667,10 +659,10 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determineSpacing(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> CGFloat {
+    private func determineSpacing(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> CGFloat {
         var spacing: CGFloat = 16
         
-        if accessibilityFeatures.contains(AccessibilityFeature.largerText) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.largerText) {
             spacing += 4
         }
         
@@ -681,10 +673,10 @@ final class CoreViewFunctionTests: XCTestCase {
         return spacing
     }
     
-    private func determineCardWidth(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> CGFloat {
+    private func determineCardWidth(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> CGFloat {
         var width: CGFloat = 200
         
-        if accessibilityFeatures.contains(AccessibilityFeature.largerText) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.largerText) {
             width += 20
         }
         
@@ -695,10 +687,10 @@ final class CoreViewFunctionTests: XCTestCase {
         return width
     }
     
-    private func determineCardHeight(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> CGFloat {
+    private func determineCardHeight(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> CGFloat {
         var height: CGFloat = 150
         
-        if accessibilityFeatures.contains(AccessibilityFeature.largerText) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.largerText) {
             height += 20
         }
         
@@ -709,10 +701,10 @@ final class CoreViewFunctionTests: XCTestCase {
         return height
     }
     
-    private func determinePadding(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> CGFloat {
+    private func determinePadding(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> CGFloat {
         var padding: CGFloat = 16
         
-        if accessibilityFeatures.contains(AccessibilityFeature.largerText) {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.largerText) {
             padding += 4
         }
         
@@ -723,7 +715,7 @@ final class CoreViewFunctionTests: XCTestCase {
         return padding
     }
     
-    private func determinePrimaryStrategy(platformCapabilities: Set<PlatformCapability>) -> ExpansionStrategy {
+    private func determinePrimaryStrategy(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>) -> ExpansionStrategy {
         if platformCapabilities.contains(.touch) {
             return .contentReveal
         } else if platformCapabilities.contains(.hover) {
@@ -733,7 +725,7 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determineSecondaryStrategy(platformCapabilities: Set<PlatformCapability>) -> ExpansionStrategy {
+    private func determineSecondaryStrategy(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>) -> ExpansionStrategy {
         if platformCapabilities.contains(.hover) {
             return .hoverExpand
         } else {
@@ -741,8 +733,8 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determineAnimationDuration(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> TimeInterval {
-        if accessibilityFeatures.contains(AccessibilityFeature.reduceMotion) {
+    private func determineAnimationDuration(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>, accessibilityFeatures: Set<DRYTestPatterns.AccessibilityFeature>) -> TimeInterval {
+        if accessibilityFeatures.contains(DRYTestPatterns.AccessibilityFeature.reduceMotion) {
             return 0.0
         } else if platformCapabilities.contains(.touch) {
             return 0.3
@@ -753,7 +745,7 @@ final class CoreViewFunctionTests: XCTestCase {
         }
     }
     
-    private func determineSupportedStrategies(platformCapabilities: Set<PlatformCapability>) -> [ExpansionStrategy] {
+    private func determineSupportedStrategies(platformCapabilities: Set<DRYTestPatterns.PlatformCapability>) -> [ExpansionStrategy] {
         var strategies: [ExpansionStrategy] = []
         
         if platformCapabilities.contains(.touch) {
