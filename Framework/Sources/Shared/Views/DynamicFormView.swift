@@ -167,7 +167,7 @@ public struct DynamicFormFieldView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Field label
+            // Field label with hover tooltip
             HStack {
                 Text(field.label)
                     .font(.body)
@@ -181,6 +181,7 @@ public struct DynamicFormFieldView: View {
                 
                 Spacer()
             }
+            .modifier(FieldHoverTooltipModifier(description: field.description))
             
             // Field input
             fieldInput
@@ -831,5 +832,72 @@ public struct DynamicEnumField: View {
                 print("Form cancelled")
             }
         )
+    }
+}
+
+// MARK: - Field Hover Tooltip Modifier
+
+/// Modifier that adds hover tooltip support for form field descriptions
+/// Follows Apple HIG guidelines for tooltip timing and accessibility
+struct FieldHoverTooltipModifier: ViewModifier {
+    let description: String?
+    @State private var isHovering = false
+    @State private var showTooltip = false
+    @State private var hoverTimer: Timer?
+    
+    func body(content: Content) -> some View {
+        content
+            .onHover { hovering in
+                isHovering = hovering
+                
+                if hovering && description != nil {
+                    // Start timer for 0.5 second delay per HIG
+                    hoverTimer?.invalidate()
+                    hoverTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                        if isHovering {
+                            showTooltip = true
+                        }
+                    }
+                } else {
+                    hoverTimer?.invalidate()
+                    showTooltip = false
+                }
+            }
+            .overlay(
+                // Tooltip overlay
+                Group {
+                    if showTooltip, let description = description {
+                        #if os(macOS)
+                        // macOS: Show tooltip on hover
+                        Text(description)
+                            .font(.caption)
+                            .padding(8)
+                            .background(Color.black.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(6)
+                            .offset(y: -40)
+                            .transition(.opacity.combined(with: .scale))
+                        #else
+                        // iOS: No tooltip, rely on accessibility
+                        EmptyView()
+                        #endif
+                    }
+                }
+                .animation(.easeInOut(duration: 0.2), value: showTooltip)
+            )
+            .accessibilityLabel(accessibilityLabel)
+            .accessibilityHint(accessibilityHint ?? "")
+    }
+    
+    private var accessibilityLabel: String {
+        // Include description in accessibility label for screen readers
+        if let description = description {
+            return "\(description)"
+        }
+        return ""
+    }
+    
+    private var accessibilityHint: String? {
+        return description
     }
 }
