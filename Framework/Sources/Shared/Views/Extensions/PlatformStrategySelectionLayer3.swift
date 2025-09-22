@@ -152,6 +152,10 @@ public enum GridType {
         type = .fixed
         breakpoints = []
         adaptive = false
+    case (.vision, _):
+        type = .fixed
+        breakpoints = []
+        adaptive = false
     case (.pad, .simple):
         type = .adaptive
         breakpoints = [600, 900]
@@ -257,6 +261,9 @@ private func calculateAdaptiveWidths(
     switch device {
     case .mac:
         minWidth = 200
+        maxWidth = width * 0.8
+    case .vision:
+        minWidth = 300
         maxWidth = width * 0.8
     case .pad:
         minWidth = 180

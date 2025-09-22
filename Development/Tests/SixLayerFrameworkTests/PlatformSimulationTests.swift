@@ -293,6 +293,8 @@ final class PlatformSimulationTests: XCTestCase {
             case .phone:
                 XCTAssertTrue(screenSize.width < 500, 
                              "Phone screen should be narrow")
+            case .vision:
+                XCTAssertTrue(screenSize.width >= 1000, "Vision Pro should have large screen")
                 XCTAssertTrue(screenSize.height > screenSize.width, 
                              "Phone should be taller than wide")
             case .pad:

@@ -237,6 +237,8 @@ func optimizeForDevice<Content: View>(
     switch device {
     case .phone:
         return content()
+    case .vision:
+        return content()
     case .pad:
         return content()
     case .mac:

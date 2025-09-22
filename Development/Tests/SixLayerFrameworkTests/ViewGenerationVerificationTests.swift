@@ -340,14 +340,14 @@ final class ViewGenerationVerificationTests: XCTestCase {
         item: TestDataItem,
         capabilities: PlatformCapabilities,
         accessibilityFeatures: [AccessibilityFeature] = []
-    ) -> some View {
+    ) -> AnyView {
         // This would call your actual framework method that generates views
         // For now, we'll create a mock view that represents what should be generated
         
         if capabilities.supportsTouch || capabilities.supportsHover {
-            return createExpandableCardView(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
+            return AnyView(createExpandableCardView(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures))
         } else {
-            return createSimpleCardView(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
+            return AnyView(createSimpleCardView(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures))
         }
     }
     

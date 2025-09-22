@@ -113,7 +113,7 @@ extension NavigationStrategy {
     /// Recommended navigation strategy for different presentation contexts
     static func recommended(for context: PresentationContext) -> NavigationStrategy {
         switch context {
-        case .dashboard:
+        case .dashboard, .standard:
             #if os(macOS)
             return .splitView
             #else

@@ -46,6 +46,7 @@ public enum DeviceType: String, CaseIterable {
     case tv = "tv"
     case watch = "watch"
     case car = "car"
+    case vision = "vision"
     
     /// Current device type detection
     @MainActor
@@ -781,6 +782,7 @@ public enum PresentationPreference: String, CaseIterable, Sendable {
     case navigation = "navigation"
     case list = "list"
     case masonry = "masonry"
+    case standard = "standard"
     case form = "form"
     case card = "card"
     case cards = "cards"
@@ -802,6 +804,7 @@ public enum PresentationContext: String, CaseIterable, Sendable {
     case profile = "profile"
     case summary = "summary"
     case list = "list"
+    case standard = "standard"
     case form = "form"
     case modal = "modal"
     case navigation = "navigation"

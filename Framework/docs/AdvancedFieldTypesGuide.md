@@ -38,6 +38,16 @@ The Advanced Field Types system provides a comprehensive set of sophisticated fo
 - **Fallback Support** - Graceful degradation for unknown field types
 - **Extensibility** - Easy addition of new field types
 
+### 🎯 Native Type Support (v3.1.0+)
+- **Integer Fields** - Native `Int` support with number pad keyboard
+- **Image Fields** - Cross-platform image handling with mock types
+- **URL Fields** - Native `URL` support with URL keyboard type
+- **Array Fields** - Native array support for collections
+- **Data Fields** - Native `Data` support for binary content
+- **Enum Fields** - Native enum support with picker interface
+- **Type Safety** - Full compile-time type checking
+- **Cross-Platform** - Consistent behavior across iOS, macOS, and other platforms
+
 ## Architecture
 
 ### Layer 1: Semantic - Field Types
@@ -48,6 +58,13 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
     case file = "file"
     case date = "date"
     case time = "time"
+    // Native Type Support (v3.1.0+)
+    case integer = "integer"      // High Priority: Native Int support
+    case image = "image"          // High Priority: Native image support
+    case url = "url"              // High Priority: Native URL support
+    case array = "array"          // Medium Priority: Native array support
+    case data = "data"            // Medium Priority: Native Data support
+    case `enum` = "enum"          // Low Priority: Native enum support
     case datetime = "datetime"
     case custom = "custom"
     // ... other field types
@@ -388,6 +405,101 @@ The Advanced Field Types system includes comprehensive test coverage:
 2. **Optimize Rendering** - Minimize unnecessary redraws
 3. **Handle Large Datasets** - Implement efficient filtering and pagination
 4. **Memory Management** - Properly clean up resources
+
+## Native Type Usage Examples
+
+### Integer Fields
+```swift
+// Create an integer field
+let ageField = DynamicFormField(
+    id: "age",
+    type: .integer,
+    label: "Age",
+    placeholder: "Enter your age"
+)
+
+// Use with form state
+let formState = DynamicFormState()
+formState.setValue(25, for: "age")
+let age: Int? = formState.getValue(for: "age")
+```
+
+### Image Fields
+```swift
+// Create an image field
+let profileField = DynamicFormField(
+    id: "profilePhoto",
+    type: .image,
+    label: "Profile Photo"
+)
+
+// Use with mock image types for cross-platform compatibility
+let mockImage = MockImage(id: "profile-123", data: imageData)
+formState.setValue(mockImage, for: "profilePhoto")
+let image: MockImage? = formState.getValue(for: "profilePhoto")
+```
+
+### URL Fields
+```swift
+// Create a URL field
+let websiteField = DynamicFormField(
+    id: "website",
+    type: .url,
+    label: "Website",
+    placeholder: "https://example.com"
+)
+
+// Use with mock URL types
+let mockURL = MockURL("https://example.com")
+formState.setValue(mockURL, for: "website")
+let url: MockURL? = formState.getValue(for: "website")
+```
+
+### Array Fields
+```swift
+// Create an array field
+let tagsField = DynamicFormField(
+    id: "tags",
+    type: .array,
+    label: "Tags"
+)
+
+// Use with arrays
+let tags = ["swift", "ios", "ui"]
+formState.setValue(tags, for: "tags")
+let retrievedTags: [String]? = formState.getValue(for: "tags")
+```
+
+### Data Fields
+```swift
+// Create a data field
+let fileField = DynamicFormField(
+    id: "fileData",
+    type: .data,
+    label: "File Data"
+)
+
+// Use with Data
+let fileData = Data("file content".utf8)
+formState.setValue(fileData, for: "fileData")
+let retrievedData: Data? = formState.getValue(for: "fileData")
+```
+
+### Enum Fields
+```swift
+// Create an enum field
+let statusField = DynamicFormField(
+    id: "status",
+    type: .enum,
+    label: "Status",
+    options: ["active", "inactive", "pending"]
+)
+
+// Use with enum types
+let status = MockUserStatus.active
+formState.setValue(status, for: "status")
+let retrievedStatus: MockUserStatus? = formState.getValue(for: "status")
+```
 
 ## Troubleshooting
 

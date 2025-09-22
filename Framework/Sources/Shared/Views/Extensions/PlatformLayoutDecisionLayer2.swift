@@ -442,6 +442,8 @@ private func calculateOptimalCardColumns(
     switch deviceType {
     case .phone:
         deviceLimit = 2
+    case .vision:
+        deviceLimit = 1
     case .pad:
         deviceLimit = 3
     case .mac:

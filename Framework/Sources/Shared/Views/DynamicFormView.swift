@@ -209,6 +209,11 @@ public struct DynamicFormFieldView: View {
                 field: field,
                 formState: formState
             )
+        case .integer:
+            DynamicIntegerField(
+                field: field,
+                formState: formState
+            )
         case .textarea:
             DynamicTextAreaField(
                 field: field,
@@ -265,6 +270,26 @@ public struct DynamicFormFieldView: View {
                 formState: formState,
                 allowedTypes: [.image, .pdf, .text, .audio, .video],
                 maxFileSize: 50 * 1024 * 1024 // 50MB default
+            )
+        case .image:
+            DynamicImageField(
+                field: field,
+                formState: formState
+            )
+        case .array:
+            DynamicArrayField(
+                field: field,
+                formState: formState
+            )
+        case .data:
+            DynamicDataField(
+                field: field,
+                formState: formState
+            )
+        case .`enum`:
+            DynamicEnumField(
+                field: field,
+                formState: formState
             )
         case .richtext:
             RichTextEditorField(
@@ -598,6 +623,168 @@ public struct DynamicFileField: View {
             formState.setValue("file_selected", for: field.id)
         }
         .buttonStyle(.bordered)
+    }
+}
+
+// MARK: - High Priority Native Type Fields
+
+/// Integer field for dynamic forms with native Int support
+public struct DynamicIntegerField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        TextField(
+            field.placeholder ?? field.label,
+            value: Binding(
+                get: { formState.getValue(for: field.id) ?? 0 },
+                set: { formState.setValue($0, for: field.id) }
+            ),
+            format: .number
+        )
+        .textFieldStyle(.roundedBorder)
+        #if os(iOS)
+        .keyboardType(.numberPad)
+        #endif
+    }
+}
+
+/// Image field for dynamic forms with native image support
+public struct DynamicImageField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button("Select Image") {
+                // Image picker implementation would go here
+                // For now, create a mock image for testing
+                let mockImage = MockImage(id: "test-image", data: "image-data".data(using: .utf8)!)
+                formState.setValue(mockImage, for: field.id)
+            }
+            .buttonStyle(.bordered)
+            
+            // Display selected image if available
+            if let image: MockImage = formState.getValue(for: field.id) {
+                Text("Selected: \(image.id)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+}
+
+/// URL field for dynamic forms with native URL support
+public struct DynamicURLField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        TextField(
+            field.placeholder ?? field.label,
+            text: Binding(
+                get: { 
+                    if let url: MockURL = formState.getValue(for: field.id) {
+                        return url.absoluteString
+                    }
+                    return ""
+                },
+                set: { 
+                    formState.setValue(MockURL($0), for: field.id)
+                }
+            )
+        )
+        .textFieldStyle(.roundedBorder)
+        #if os(iOS)
+        .keyboardType(.URL)
+        .textContentType(.URL)
+        #endif
+    }
+}
+
+// MARK: - Medium Priority Native Type Fields
+
+/// Array field for dynamic forms with native array support
+public struct DynamicArrayField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            TextField(
+                field.placeholder ?? "Add item",
+                text: .constant("") // This would be managed by a separate state
+            )
+            .textFieldStyle(.roundedBorder)
+            .onSubmit {
+                // Add item to array logic would go here
+            }
+            
+            // Display current array items
+            if let items: [String] = formState.getValue(for: field.id) {
+                ForEach(items, id: \.self) { item in
+                    HStack {
+                        Text(item)
+                        Spacer()
+                        Button("Remove") {
+                            // Remove item logic would go here
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// Data field for dynamic forms with native Data support
+public struct DynamicDataField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button("Select Data File") {
+                // Data file picker implementation would go here
+                let testData = "Hello World".data(using: .utf8)!
+                formState.setValue(testData, for: field.id)
+            }
+            .buttonStyle(.bordered)
+            
+            // Display data info if available
+            if let data: Data = formState.getValue(for: field.id) {
+                Text("Data size: \(data.count) bytes")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+}
+
+// MARK: - Low Priority Native Type Fields
+
+/// Enum field for dynamic forms with native enum support
+public struct DynamicEnumField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View {
+        Picker(field.label, selection: Binding(
+            get: { 
+                // This would need to be more generic for different enum types
+                // For now, return a default value
+                return ""
+            },
+            set: { 
+                // Set enum value logic would go here
+                formState.setValue($0, for: field.id)
+            }
+        )) {
+            ForEach(field.options ?? [], id: \.self) { option in
+                Text(option).tag(option)
+            }
+        }
+        .pickerStyle(.menu)
     }
 }
 

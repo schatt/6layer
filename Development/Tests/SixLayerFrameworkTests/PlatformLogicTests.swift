@@ -76,8 +76,10 @@ final class PlatformLogicTests: XCTestCase {
             switch deviceType {
             case .phone:
                 XCTAssertTrue(config.supportsTouch, "Phone should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "Phone should support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "Phone should not support hover")
+            case .car:
+                XCTAssertTrue(config.supportsTouch, "Car should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "Car should support haptic feedback")
+                XCTAssertFalse(config.supportsHover, "Car should not support hover")
                 
             case .pad:
                 XCTAssertTrue(config.supportsTouch, "Pad should support touch")
@@ -328,6 +330,18 @@ final class PlatformLogicTests: XCTestCase {
                 hoverDelay: 0.0,
                 animationEasing: .easeInOut(duration: 0.3)
             )
+        case .car:
+            return CardExpansionPlatformConfig(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: false,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 44,
+                hoverDelay: 0.0,
+                animationEasing: .easeInOut(duration: 0.3)
+            )
         case .pad:
             return CardExpansionPlatformConfig(
                 supportsHapticFeedback: true,
@@ -463,21 +477,18 @@ final class PlatformLogicTests: XCTestCase {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return CardExpansionPerformanceConfig(
-                maxAnimationDuration: 0.3,
-                preferredAnimationDuration: 0.2,
-                minAnimationDuration: 0.1
+                targetFrameRate: 60,
+                maxAnimationDuration: 0.3
             )
         case .watchOS:
             return CardExpansionPerformanceConfig(
-                maxAnimationDuration: 0.2,
-                preferredAnimationDuration: 0.15,
-                minAnimationDuration: 0.05
+                targetFrameRate: 30,
+                maxAnimationDuration: 0.2
             )
         case .tvOS:
             return CardExpansionPerformanceConfig(
-                maxAnimationDuration: 0.4,
-                preferredAnimationDuration: 0.3,
-                minAnimationDuration: 0.2
+                targetFrameRate: 60,
+                maxAnimationDuration: 0.4
             )
         }
     }

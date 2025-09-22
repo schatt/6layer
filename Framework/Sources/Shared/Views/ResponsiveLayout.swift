@@ -100,6 +100,8 @@ public struct ResponsivePadding: ViewModifier {
         switch DeviceType.current {
         case .phone:
             return 16
+        case .vision:
+            return 20
         case .pad:
             return 20
         case .mac:

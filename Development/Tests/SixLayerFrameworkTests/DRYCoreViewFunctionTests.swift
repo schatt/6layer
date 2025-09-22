@@ -1,11 +1,25 @@
 import XCTest
 import SwiftUI
+
+// Import types from DRYTestPatterns
+typealias PlatformCapabilityChecker = DRYTestPatterns.PlatformCapabilityChecker
+typealias AccessibilityFeatureChecker = DRYTestPatterns.AccessibilityFeatureChecker
+typealias AccessibilityFeature = DRYTestPatterns.AccessibilityFeature
+typealias ViewInfo = DRYTestPatterns.ViewInfo
+typealias TestDataItem = DRYTestPatterns.TestDataItem
+typealias MockPlatformCapabilityChecker = DRYTestPatterns.MockPlatformCapabilityChecker
+typealias MockAccessibilityFeatureChecker = DRYTestPatterns.MockAccessibilityFeatureChecker
 @testable import SixLayerFramework
 
 /// DRY Core View Function Tests
 /// Demonstrates how to eliminate duplication using reusable patterns
 @MainActor
 final class DRYCoreViewFunctionTests: XCTestCase {
+    
+    // MARK: - Test Data Types
+    // TestDataItem is now imported from DRYTestPatterns
+    
+    // Mock classes are now imported from DRYTestPatterns
     
     // MARK: - Test Data
     
@@ -367,7 +381,9 @@ final class DRYCoreViewFunctionTests: XCTestCase {
         // This would extract actual view properties in a real implementation
         // For now, return a mock ViewInfo based on the checkers
         return ViewInfo(
-            viewType: "MockView",
+            id: "mock-view-\(UUID().uuidString)",
+            title: "Mock View",
+            isAccessible: true,
             supportsTouch: capabilityChecker.supportsTouch(),
             supportsHover: capabilityChecker.supportsHover(),
             supportsHapticFeedback: capabilityChecker.supportsHapticFeedback(),
@@ -376,6 +392,8 @@ final class DRYCoreViewFunctionTests: XCTestCase {
             supportsSwitchControl: capabilityChecker.supportsSwitchControl(),
             supportsVision: capabilityChecker.supportsVision(),
             supportsOCR: capabilityChecker.supportsOCR(),
+            minTouchTarget: capabilityChecker.supportsTouch() ? 44 : 0,
+            hoverDelay: capabilityChecker.supportsHover() ? 0.1 : 0.0,
             hasReduceMotion: accessibilityChecker.hasReduceMotion(),
             hasIncreaseContrast: accessibilityChecker.hasIncreaseContrast(),
             hasReduceTransparency: accessibilityChecker.hasReduceTransparency(),
@@ -387,9 +405,7 @@ final class DRYCoreViewFunctionTests: XCTestCase {
             hasInvertColors: accessibilityChecker.hasInvertColors(),
             hasSmartInvert: accessibilityChecker.hasSmartInvert(),
             hasDifferentiateWithoutColor: accessibilityChecker.hasDifferentiateWithoutColor(),
-            minTouchTarget: capabilityChecker.supportsTouch() ? 44 : 0,
-            hoverDelay: capabilityChecker.supportsHover() ? 0.1 : 0.0,
-            animationDuration: accessibilityChecker.hasReduceMotion() ? 0.0 : 0.3
+            viewType: "MockView"
         )
     }
 }

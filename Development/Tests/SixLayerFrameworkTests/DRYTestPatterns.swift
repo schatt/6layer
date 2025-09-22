@@ -7,6 +7,157 @@ import SwiftUI
 @MainActor
 final class DRYTestPatterns {
     
+    // MARK: - Test Data Types
+    
+    struct TestDataItem: Identifiable {
+        let id = UUID()
+        let title: String
+        let subtitle: String?
+        let description: String?
+        let value: Int
+        let isActive: Bool
+    }
+    
+    /// Platform capability checker protocol
+    protocol PlatformCapabilityChecker {
+        func supportsTouch() -> Bool
+        func supportsHover() -> Bool
+        func supportsHapticFeedback() -> Bool
+        func supportsAssistiveTouch() -> Bool
+        func supportsVoiceOver() -> Bool
+        func supportsSwitchControl() -> Bool
+        func supportsVision() -> Bool
+        func supportsOCR() -> Bool
+    }
+    
+    /// Accessibility feature checker protocol
+    protocol AccessibilityFeatureChecker {
+        func hasReduceMotion() -> Bool
+        func hasIncreaseContrast() -> Bool
+        func hasReduceTransparency() -> Bool
+        func hasBoldText() -> Bool
+        func hasLargerText() -> Bool
+        func hasButtonShapes() -> Bool
+        func hasOnOffLabels() -> Bool
+        func hasGrayscale() -> Bool
+        func hasInvertColors() -> Bool
+        func hasSmartInvert() -> Bool
+        func hasDifferentiateWithoutColor() -> Bool
+    }
+    
+    /// Mock platform capability checker for testing
+    class MockPlatformCapabilityChecker: PlatformCapabilityChecker {
+        var touchSupported: Bool = false
+        var hoverSupported: Bool = false
+        var hapticSupported: Bool = false
+        var assistiveTouchSupported: Bool = false
+        var voiceOverSupported: Bool = false
+        var switchControlSupported: Bool = false
+        var visionSupported: Bool = false
+        var ocrSupported: Bool = false
+        
+        func supportsTouch() -> Bool { return touchSupported }
+        func supportsHover() -> Bool { return hoverSupported }
+        func supportsHapticFeedback() -> Bool { return hapticSupported }
+        func supportsAssistiveTouch() -> Bool { return assistiveTouchSupported }
+        func supportsVoiceOver() -> Bool { return voiceOverSupported }
+        func supportsSwitchControl() -> Bool { return switchControlSupported }
+        func supportsVision() -> Bool { return visionSupported }
+        func supportsOCR() -> Bool { return ocrSupported }
+    }
+    
+    /// Platform capability enum
+    enum PlatformCapability: String, CaseIterable {
+        case touch = "touch"
+        case hover = "hover"
+        case haptic = "haptic"
+        case assistiveTouch = "assistiveTouch"
+        case voiceOver = "voiceOver"
+        case switchControl = "switchControl"
+        case vision = "vision"
+        case ocr = "ocr"
+    }
+    
+    /// Accessibility feature enum
+    enum AccessibilityFeature: String, CaseIterable {
+        case reduceMotion = "reduceMotion"
+        case increaseContrast = "increaseContrast"
+        case reduceTransparency = "reduceTransparency"
+        case boldText = "boldText"
+        case largerText = "largerText"
+        case buttonShapes = "buttonShapes"
+        case onOffLabels = "onOffLabels"
+        case grayscale = "grayscale"
+        case invertColors = "invertColors"
+        case smartInvert = "smartInvert"
+        case differentiateWithoutColor = "differentiateWithoutColor"
+    }
+    
+    /// View info struct for testing
+    struct ViewInfo {
+        let id: String
+        let title: String
+        let isAccessible: Bool
+        let supportsTouch: Bool
+        let supportsHover: Bool
+        let supportsHapticFeedback: Bool
+        let supportsAssistiveTouch: Bool
+        let supportsVoiceOver: Bool
+        let supportsSwitchControl: Bool
+        let supportsVision: Bool
+        let supportsOCR: Bool
+        let minTouchTarget: CGFloat
+        let hoverDelay: TimeInterval
+        let hasReduceMotion: Bool
+        let hasIncreaseContrast: Bool
+        let hasReduceTransparency: Bool
+        let hasBoldText: Bool
+        let hasLargerText: Bool
+        let hasButtonShapes: Bool
+        let hasOnOffLabels: Bool
+        let hasGrayscale: Bool
+        let hasInvertColors: Bool
+        let hasSmartInvert: Bool
+        let hasDifferentiateWithoutColor: Bool
+        let viewType: String
+    }
+    
+    /// Complexity enum for testing
+    enum Complexity: String, CaseIterable {
+        case simple = "simple"
+        case moderate = "moderate"
+        case complex = "complex"
+        case veryComplex = "veryComplex"
+        case advanced = "advanced"
+    }
+    
+    /// Mock accessibility feature checker for testing
+    class MockAccessibilityFeatureChecker: AccessibilityFeatureChecker {
+        var reduceMotionEnabled: Bool = false
+        var increaseContrastEnabled: Bool = false
+        var reduceTransparencyEnabled: Bool = false
+        var boldTextEnabled: Bool = false
+        var largerTextEnabled: Bool = false
+        var buttonShapesEnabled: Bool = false
+        var onOffLabelsEnabled: Bool = false
+        var grayscaleEnabled: Bool = false
+        var invertColorsEnabled: Bool = false
+        var smartInvertEnabled: Bool = false
+        var differentiateWithoutColorEnabled: Bool = false
+        
+        func hasReduceMotion() -> Bool { return reduceMotionEnabled }
+        func hasIncreaseContrast() -> Bool { return increaseContrastEnabled }
+        func hasReduceTransparency() -> Bool { return reduceTransparencyEnabled }
+        func hasBoldText() -> Bool { return boldTextEnabled }
+        func hasLargerText() -> Bool { return largerTextEnabled }
+        func hasButtonShapes() -> Bool { return buttonShapesEnabled }
+        func hasOnOffLabels() -> Bool { return onOffLabelsEnabled }
+        func hasGrayscale() -> Bool { return grayscaleEnabled }
+        func hasInvertColors() -> Bool { return invertColorsEnabled }
+        func hasSmartInvert() -> Bool { return smartInvertEnabled }
+        func hasDifferentiateWithoutColor() -> Bool { return differentiateWithoutColorEnabled }
+    }
+    
     // MARK: - Test Data Factory
     
     static func createTestItem(
@@ -234,12 +385,12 @@ final class DRYTestPatterns {
         }
     }
     
-    private static func determineComplexity(capabilityChecker: PlatformCapabilityChecker, accessibilityChecker: AccessibilityFeatureChecker) -> Complexity {
+    private static func determineComplexity(capabilityChecker: PlatformCapabilityChecker, accessibilityChecker: AccessibilityFeatureChecker) -> ContentComplexity {
         let capabilityCount = countCapabilities(capabilityChecker)
         let accessibilityCount = countAccessibilityFeatures(accessibilityChecker)
         
         if capabilityCount >= 6 && accessibilityCount >= 8 {
-            return .veryComplex
+            return .advanced
         } else if capabilityCount >= 4 && accessibilityCount >= 5 {
             return .complex
         } else if capabilityCount >= 2 && accessibilityCount >= 3 {

@@ -85,13 +85,16 @@ private func calculateOptimalColumns(
     switch deviceType {
     case .phone:
         // iPhone: 1-2 columns based on content
-        if contentCount <= 4 {
+        if contentCount <= 2 {
             return 1
         } else if screenWidth > 400 {
             return 2
         } else {
             return 1
         }
+    case .vision:
+        // Vision: 1 column for immersive experience
+        return 1
         
     case .pad:
         // iPad: 2-4 columns based on content and complexity
@@ -135,6 +138,8 @@ private func calculateOptimalSpacing(deviceType: DeviceType, contentComplexity: 
     switch deviceType {
     case .phone:
         baseSpacing = 12
+    case .vision:
+        baseSpacing = 16
     case .pad:
         baseSpacing = 16
     case .mac:
@@ -189,6 +194,8 @@ private func calculateExpansionScale(deviceType: DeviceType, contentComplexity: 
     switch deviceType {
     case .phone:
         baseScale = 1.1 // Subtle expansion on small screens
+    case .vision:
+        baseScale = 1.05 // Minimal expansion for immersive experience
     case .pad:
         baseScale = 1.15 // Moderate expansion on tablets
     case .mac:
@@ -221,6 +228,8 @@ private func calculateAnimationDuration(deviceType: DeviceType) -> TimeInterval 
     switch deviceType {
     case .phone, .pad:
         return 0.25 // Fast animations for touch interfaces
+    case .vision:
+        return 0.3 // Slightly slower for immersive experience
     case .mac:
         return 0.3 // Slightly slower for desktop
     case .watch:

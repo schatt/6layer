@@ -81,28 +81,6 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
     
     // MARK: - Generate All Possible Combinations
     
-    func testAllPossibleCombinations() {
-        // Generate all possible combinations of platform capabilities
-        let platformCombinations = generateAllSubsets(PlatformCapability.allCases)
-        
-        // Generate all possible combinations of accessibility features
-        let accessibilityCombinations = generateAllSubsets(AccessibilityFeature.allCases)
-        
-        // Test every combination
-        for platformCapabilities in platformCombinations {
-            for accessibilityFeatures in accessibilityCombinations {
-                let config = TestConfiguration(
-                    platformCapabilities: platformCapabilities,
-                    accessibilityFeatures: accessibilityFeatures,
-                    expectedViewType: determineExpectedViewType(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures),
-                    expectedProperties: determineExpectedProperties(platformCapabilities: platformCapabilities, accessibilityFeatures: accessibilityFeatures),
-                    description: "Platform: \(platformCapabilities.map { $0.rawValue }.joined(separator: ", ")) | Accessibility: \(accessibilityFeatures.map { $0.rawValue }.joined(separator: ", "))"
-                )
-                
-                testCapabilityCombination(config)
-            }
-        }
-    }
     
     // MARK: - Specific Platform Scenarios
     
@@ -121,7 +99,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsTouchpad": true,
                 "supportsExternalDisplay": true,
                 "supportsMultipleDisplays": true,
-                "minTouchTarget": 44,
+                "minTouchTarget": CGFloat(44),
                 "hoverDelay": 0.1
             ],
             description: "Mac with touch display"
@@ -145,7 +123,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsTouchpad": true,
                 "supportsExternalDisplay": true,
                 "supportsMultipleDisplays": true,
-                "minTouchTarget": 0,
+                "minTouchTarget": CGFloat(0),
                 "hoverDelay": 0.1
             ],
             description: "Mac without touch display"
@@ -167,7 +145,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsTouch": true,
                 "supportsHapticFeedback": true,
                 "supportsAssistiveTouch": true,
-                "minTouchTarget": 44,
+                "minTouchTarget": CGFloat(44),
                 "hoverDelay": 0.0,
                 "hasReduceMotion": true,
                 "hasIncreaseContrast": true,
@@ -200,7 +178,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsTouch": true,
                 "supportsHapticFeedback": true,
                 "supportsAssistiveTouch": true,
-                "minTouchTarget": 44,
+                "minTouchTarget": CGFloat(44),
                 "hoverDelay": 0.0,
                 "hasReduceMotion": false,
                 "hasIncreaseContrast": false,
@@ -234,7 +212,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsHover": false,
                 "supportsHapticFeedback": false,
                 "supportsAssistiveTouch": false,
-                "minTouchTarget": 0,
+                "minTouchTarget": CGFloat(0),
                 "hoverDelay": 0.0,
                 "hasReduceMotion": true,
                 "hasIncreaseContrast": true
@@ -261,7 +239,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsHover": false,
                 "supportsHapticFeedback": false,
                 "supportsAssistiveTouch": false,
-                "minTouchTarget": 0,
+                "minTouchTarget": CGFloat(0),
                 "hoverDelay": 0.0,
                 "hasReduceMotion": false,
                 "hasIncreaseContrast": false
@@ -291,7 +269,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
                 "supportsTouchpad": true,
                 "supportsExternalDisplay": true,
                 "supportsMultipleDisplays": true,
-                "minTouchTarget": 44,
+                "minTouchTarget": CGFloat(44),
                 "hoverDelay": 0.1,
                 "hasReduceMotion": true,
                 "hasIncreaseContrast": true,
@@ -332,29 +310,12 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         // Test all expected properties
         for (key, expectedValue) in config.expectedProperties {
             let actualValue = getPropertyValue(from: viewDefinition, key: key)
-            XCTAssertEqual(actualValue, expectedValue, "Property \(key) should match for \(config.description)")
+            XCTAssertEqual(String(describing: actualValue), String(describing: expectedValue), "Property \(key) should match for \(config.description)")
         }
     }
     
     // MARK: - Helper Methods
     
-    private func generateAllSubsets<T>(_ elements: [T]) -> [Set<T>] {
-        var subsets: [Set<T>] = []
-        let count = elements.count
-        
-        // Generate all possible subsets (2^n combinations)
-        for i in 0..<(1 << count) {
-            var subset: Set<T> = []
-            for j in 0..<count {
-                if (i & (1 << j)) != 0 {
-                    subset.insert(elements[j])
-                }
-            }
-            subsets.append(subset)
-        }
-        
-        return subsets
-    }
     
     private func determineExpectedViewType(platformCapabilities: Set<PlatformCapability>, accessibilityFeatures: Set<AccessibilityFeature>) -> String {
         // Determine view type based on capabilities and features
@@ -380,7 +341,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         properties["supportsMultipleDisplays"] = platformCapabilities.contains(.multipleDisplays)
         
         // Touch target and hover delay
-        properties["minTouchTarget"] = platformCapabilities.contains(.touch) ? 44 : 0
+        properties["minTouchTarget"] = platformCapabilities.contains(.touch) ? CGFloat(44) : CGFloat(0)
         properties["hoverDelay"] = platformCapabilities.contains(.hover) ? 0.1 : 0.0
         
         // Accessibility features

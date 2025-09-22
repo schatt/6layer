@@ -358,6 +358,8 @@ public struct EnhancedDeviceCapabilities {
                 return baseMemory * 8 // 8GB
             case .tv:
                 return baseMemory * 4 // 4GB
+            case .vision:
+                return baseMemory * 2 // Vision Pro has more memory
             case .watch:
                 return baseMemory / 4 // 256MB
             case .car:
@@ -449,6 +451,8 @@ extension DeviceType {
         switch self {
         case .phone:
             return "iPhone"
+        case .vision:
+            return "Vision Pro"
         case .pad:
             return "iPad"
         case .mac:

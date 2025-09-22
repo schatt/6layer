@@ -641,6 +641,8 @@ public struct CollectionEmptyStateView: View {
         switch hints.context {
         case .dashboard:
             return "Add some items to get started."
+        case .standard:
+            return "No items available."
         case .detail:
             return "No additional items to display."
         case .summary:
@@ -981,6 +983,26 @@ public struct ModalFormView: View {
             case .autocomplete:
                 Text("Autocomplete field: \(field.label)")
                     .foregroundColor(.secondary)
+            case .integer:
+                TextField(field.placeholder ?? "Enter integer", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+            case .image:
+                Text("Image field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .array:
+                Text("Array field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .data:
+                Text("Data field: \(field.label)")
+                    .foregroundColor(.secondary)
+            case .`enum`:
+                Picker(field.placeholder ?? "Select option", selection: .constant("")) {
+                    Text("Select an option").tag("")
+                    ForEach(field.options, id: \.self) { option in
+                        Text(option).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
             case .custom:
                 Text("Custom field: \(field.label)")
                     .foregroundColor(.secondary)
@@ -1398,6 +1420,29 @@ public struct SimpleFormView: View {
                             clearFieldError(field)
                         }
                     
+                case .integer:
+                    TextField(field.placeholder ?? "Enter integer", text: field.$value)
+                        .textFieldStyle(.roundedBorder)
+                        .onChange(of: field.value) { _ in
+                            clearFieldError(field)
+                        }
+                case .image:
+                    Text("Image field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .array:
+                    Text("Array field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .data:
+                    Text("Data field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .`enum`:
+                    Picker(field.placeholder ?? "Select option", selection: field.$value) {
+                        Text("Select an option").tag("")
+                        ForEach(field.options, id: \.self) { option in
+                            Text(option).tag(option)
+                        }
+                    }
+                    .pickerStyle(.menu)
                 case .custom:
                     TextField(field.placeholder ?? "Custom field", text: field.$value)
                         .textFieldStyle(.roundedBorder)

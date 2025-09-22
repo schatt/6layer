@@ -79,9 +79,10 @@ final class ViewGenerationTests: XCTestCase {
         // GIVEN: A test data item and presentation hints
         let item = sampleData[0]
         let hints = PresentationHints(
+            dataType: .generic,
             presentationPreference: .compact,
-            accessibilityLevel: .standard,
-            colorScheme: .light
+            complexity: .moderate,
+            context: .dashboard
         )
         
         // WHEN: Generating an intelligent detail view with hints
@@ -123,9 +124,10 @@ final class ViewGenerationTests: XCTestCase {
         // GIVEN: Data and explicit hints
         let item = sampleData[0]
         let hints = PresentationHints(
+            dataType: .generic,
             presentationPreference: .detail,
-            accessibilityLevel: .standard,
-            colorScheme: .light
+            complexity: .moderate,
+            context: .dashboard
         )
         
         // WHEN: Determining layout strategy with hints
@@ -319,9 +321,10 @@ final class ViewGenerationTests: XCTestCase {
         // GIVEN: Data with accessibility hints
         let item = sampleData[0]
         let hints = PresentationHints(
-            presentationPreference: .standard,
-            accessibilityLevel: .enhanced,
-            colorScheme: .dark
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .dashboard
         )
         
         // WHEN: Generating a view with accessibility hints

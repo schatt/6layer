@@ -165,6 +165,13 @@ private func selectPrimaryStrategy(
         } else if supportedStrategies.contains(.contentReveal) {
             return .contentReveal
         }
+    case .vision:
+        // Vision: prefer content reveal for immersive experience
+        if supportedStrategies.contains(.contentReveal) {
+            return .contentReveal
+        } else if supportedStrategies.contains(.hoverExpand) {
+            return .hoverExpand
+        }
         
     case .pad:
         // Tablet: prefer content reveal, then focus mode
@@ -226,6 +233,8 @@ private func calculateExpansionScale(
     switch deviceType {
     case .phone:
         deviceMultiplier = 0.9 // Slightly less expansion on small screens
+    case .vision:
+        deviceMultiplier = 0.95 // Minimal expansion for immersive experience
     case .pad:
         deviceMultiplier = 1.0
     case .mac:
@@ -277,6 +286,8 @@ private func calculateAnimationDuration(
     switch deviceType {
     case .phone, .pad:
         return baseDuration * 0.8 // Faster on touch devices
+    case .vision:
+        return baseDuration * 0.9 // Slightly slower for immersive experience
     case .mac:
         return baseDuration // Standard on desktop
     case .watch:

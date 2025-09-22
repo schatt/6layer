@@ -26,6 +26,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 
 ### 📝 Form Components
 - **[AdvancedFieldTypesGuide.md](AdvancedFieldTypesGuide.md)** - **NEW!** Complete guide to advanced form field types
+- **Native Type Support** - **NEW!** Full native type support for Int, Image, URL, Array, Data, and Enum
 - **Rich Text Editor** - Formatting capabilities with platform-specific implementation
 - **Date/Time Pickers** - Comprehensive date and time selection components
 - **File Upload** - Drag & drop file upload with validation

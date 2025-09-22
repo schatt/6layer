@@ -347,6 +347,48 @@ public struct ThemedGenericFormView: View {
                     .padding()
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .integer:
+                TextField(field.placeholder ?? "Enter integer", text: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                ))
+                .themedTextField()
+            case .image:
+                Text("Image field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .array:
+                Text("Array field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .data:
+                Text("Data field: \(field.label)")
+                    .font(typography.body)
+                    .foregroundColor(colors.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding()
+                    .background(colors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            case .`enum`:
+                Picker(field.placeholder ?? "Select option", selection: Binding(
+                    get: { formData[field.id.uuidString] as? String ?? "" },
+                    set: { formData[field.id.uuidString] = $0 }
+                )) {
+                    Text("Select an option").tag("")
+                    ForEach(field.options, id: \.self) { option in
+                        Text(option).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
+                .themedTextField()
             case .custom:
                 Text("Custom field: \(field.label)")
                     .font(typography.body)

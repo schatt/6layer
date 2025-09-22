@@ -344,6 +344,12 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
             case .url:
                 XCTAssertEqual(field.fieldType.keyboardType, "URL",
                               "URL field should have URL keyboard type")
+            case .integer:
+                XCTAssertEqual(field.fieldType.keyboardType, "numberPad",
+                              "Integer field should have numberPad keyboard type")
+            case .image, .array, .data, .enum:
+                XCTAssertEqual(field.fieldType.keyboardType, "default",
+                              "Complex field types should have default keyboard type")
             default:
                 XCTAssertEqual(field.fieldType.keyboardType, "default",
                               "Other field types should have default keyboard type")
@@ -670,12 +676,20 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
             return "user@example.com"
         case .password:
             return "password123"
-        case .number, .range:
+        case .number, .range, .integer:
             return "42"
         case .phone:
             return "+1 (555) 123-4567"
         case .url:
             return "https://example.com"
+        case .image:
+            return "image_placeholder"
+        case .array:
+            return "item1,item2,item3"
+        case .data:
+            return "data_placeholder"
+        case .enum:
+            return "option1"
         case .date:
             return "2024-01-15"
         case .time:
