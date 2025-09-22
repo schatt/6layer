@@ -9,7 +9,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[README_UsageExamples.md](README_UsageExamples.md)** - Practical usage examples and patterns
 - **[DeveloperExtensionGuide.md](DeveloperExtensionGuide.md)** - **NEW!** Complete guide for developers extending the framework
 - **[ExtensionQuickReference.md](ExtensionQuickReference.md)** - **NEW!** Quick reference card for common patterns
-- **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - **NEW!** Guide for AI agents working with the framework
+- **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - **NEW!** Guide for AI agents working with the framework (includes Settings Management)
 
 ### 🏗️ Architecture Details
 - **[README_Layer1_Semantic.md](README_Layer1_Semantic.md)** - Semantic intent layer
@@ -23,6 +23,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[HintsSystemExtensibility.md](HintsSystemExtensibility.md)** - Custom hints and extensibility
 - **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
 - **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
+- **Settings Management** - Centralized settings system (see AI_AGENT_GUIDE.md)
 
 ### 📝 Form Components
 - **[AdvancedFieldTypesGuide.md](AdvancedFieldTypesGuide.md)** - **NEW!** Complete guide to advanced form field types
@@ -61,6 +62,11 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 **For Platform-Specific Development:**
 1. Review [platform-specific-patterns.md](platform-specific-patterns.md)
 2. Check [keyboard-consistency-guidelines.md](keyboard-consistency-guidelines.md)
+
+**For Settings Management:**
+1. See [AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md) Settings Management section
+2. Use VisualDesignSystem.shared for centralized settings
+3. Leverage automatic platform and accessibility detection
 
 ## 🔍 Finding What You Need
 

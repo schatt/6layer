@@ -8,8 +8,20 @@ AI agents need to understand:
 - **Framework Architecture**: Generic core with extensible business logic
 - **How to Use Generic Functions**: Layer 1 functions with business-specific hints
 - **Extensible Hints System**: CustomHint and EnhancedPresentationHints
+- **Settings Management**: Centralized, reactive settings system
 - **Best Practices**: Combining generic framework with business needs
 - **Apple HIG Compliance**: Automatic adherence to Apple's Human Interface Guidelines
+
+## 📚 **Table of Contents**
+
+1. **[Framework Architecture](#-framework-architecture-correct-understanding)** - Core 6-layer architecture principles
+2. **[Generic Core Functions](#-what-the-framework-actually-provides)** - Available framework functions
+3. **[Working with Developers](#-working-with-developers)** - AI agent best practices
+4. **[Apple HIG Compliance](#-apple-hig-compliance-by-default)** - Automatic design compliance
+5. **[Settings Management](#️-settings-management)** - Centralized settings system
+6. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
+7. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
+8. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
 
 ## 🏗️ **Framework Architecture (Correct Understanding)**
 
@@ -985,6 +997,202 @@ AI Agent: "It already does! The framework automatically follows Apple's
 3. **Platform Adaptation**: Automatically uses the right patterns for each platform
 4. **Consistent Design**: Follows Apple's design guidelines automatically
 5. **Future-Proof**: Updates with new Apple guidelines automatically
+
+## ⚙️ **Settings Management**
+
+### **Core Settings Philosophy**
+The SixLayer Framework handles settings through a **centralized, reactive system** that automatically adapts to platform and accessibility requirements.
+
+**🎯 Key Principle**: Settings are **automatically detected and applied** - developers rarely need to configure them manually.
+
+### **Settings Architecture Overview**
+
+#### **1. Visual Design System (Primary Settings Manager)**
+```swift
+// ✅ CORRECT: Use the centralized settings manager
+let designSystem = VisualDesignSystem.shared
+
+// Access current settings
+let currentTheme = designSystem.currentTheme
+let accessibilitySettings = designSystem.accessibilitySettings
+let platformStyle = designSystem.platformStyle
+```
+
+#### **2. Platform-Specific Settings**
+```swift
+// ✅ CORRECT: Platform settings are automatically configured
+let platformSettings = PlatformOptimizationSettings(for: .iOS)
+// Framework automatically sets appropriate defaults for each platform
+```
+
+#### **3. Accessibility Settings**
+```swift
+// ✅ CORRECT: Accessibility is automatically detected
+let accessibility = AccessibilitySettings()
+// Framework automatically detects VoiceOver, reduced motion, etc.
+```
+
+### **When AI Agents Should Recommend Settings Usage**
+
+#### **✅ DO Recommend Settings When:**
+1. **Theme Management**: User wants to change app appearance
+2. **Accessibility Features**: User needs specific accessibility support
+3. **Platform Optimization**: User wants to optimize for specific platform
+4. **Custom Configuration**: User needs business-specific settings
+
+#### **❌ DON'T Recommend Settings When:**
+1. **Basic UI**: Standard forms, lists, and navigation
+2. **Default Behavior**: Most functionality works without configuration
+3. **Apple HIG Compliance**: Framework handles this automatically
+
+### **Common Settings Patterns**
+
+#### **1. Theme Management**
+```swift
+// ✅ CORRECT: Change theme programmatically
+VisualDesignSystem.shared.currentTheme = .dark
+
+// ✅ CORRECT: Listen for theme changes
+VisualDesignSystem.shared.onThemeChange = {
+    // Update UI when theme changes
+}
+```
+
+#### **2. Accessibility Configuration**
+```swift
+// ✅ CORRECT: Check accessibility settings
+let designSystem = VisualDesignSystem.shared
+if designSystem.accessibilitySettings.voiceOverSupport {
+    // Provide enhanced VoiceOver support
+}
+```
+
+#### **3. Platform-Specific Features**
+```swift
+// ✅ CORRECT: Use platform-specific settings
+let platformSettings = PlatformOptimizationSettings(for: .iOS)
+if platformSettings.featureFlags["hapticFeedback"] == true {
+    // Enable haptic feedback
+}
+```
+
+### **Settings Best Practices for AI Agents**
+
+#### **1. Default to Automatic Detection**
+```swift
+// ✅ CORRECT: Let framework detect settings automatically
+let designSystem = VisualDesignSystem.shared
+// Framework automatically detects system theme, accessibility, etc.
+
+// ❌ WRONG: Manually configure everything
+let theme = Theme.light // Don't hardcode unless necessary
+```
+
+#### **2. Use Settings for Business Logic**
+```swift
+// ✅ CORRECT: Use settings for business-specific configuration
+let hints = PresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    customPreferences: [
+        "showAdvancedSettings": userWantsAdvanced,
+        "enableNotifications": userWantsNotifications
+    ]
+)
+```
+
+#### **3. Respect User Preferences**
+```swift
+// ✅ CORRECT: Check user preferences before applying settings
+if userPreferences.enableHapticFeedback {
+    // Apply haptic feedback
+}
+```
+
+### **Settings Troubleshooting for AI Agents**
+
+#### **Common Issues and Solutions**
+
+1. **Settings Not Persisting**
+   - Check if using `UserDefaults` correctly
+   - Verify settings are being saved after changes
+
+2. **Platform Settings Not Applied**
+   - Ensure using correct platform detection
+   - Check if platform-specific features are enabled
+
+3. **Accessibility Settings Not Working**
+   - Verify accessibility detection is working
+   - Check if accessibility features are properly implemented
+
+### **Integration with Hints System**
+
+Settings work seamlessly with the hints system:
+
+```swift
+// ✅ CORRECT: Combine settings with hints
+let hints = EnhancedPresentationHints(
+    dataType: .form,
+    presentationPreference: .form,
+    extensibleHints: [
+        CustomHint(
+            hintType: "settings.main",
+            customData: [
+                "showCategories": true,
+                "showSearch": true,
+                "exportSettings": true
+            ]
+        )
+    ]
+)
+```
+
+### **Settings Usage Patterns**
+
+#### **When Developers Ask About Theming:**
+```
+Developer: "How do I change the app's theme?"
+AI Agent: "Use VisualDesignSystem.shared.currentTheme = .dark. The framework 
+          automatically handles all color updates and accessibility 
+          considerations. No manual configuration needed."
+```
+
+#### **When Developers Ask About Accessibility:**
+```
+Developer: "How do I make this accessible?"
+AI Agent: "The framework automatically handles accessibility! It detects 
+          VoiceOver, reduced motion, and other accessibility settings, then 
+          applies appropriate styling and behavior. You don't need to 
+          configure anything."
+```
+
+#### **When Developers Ask About Platform-Specific Behavior:**
+```
+Developer: "How do I make this work differently on iOS vs macOS?"
+AI Agent: "The framework automatically adapts! It detects the platform and 
+          applies the appropriate Apple HIG patterns. iOS gets navigation 
+          stacks and haptic feedback, macOS gets window-based navigation 
+          and keyboard shortcuts. No configuration needed."
+```
+
+### **⚡ Settings Quick Reference**
+
+| Task | Code | When to Use |
+|------|------|-------------|
+| Change theme | `VisualDesignSystem.shared.currentTheme = .dark` | User wants different appearance |
+| Check accessibility | `designSystem.accessibilitySettings.voiceOverSupport` | Need to adapt for accessibility |
+| Platform features | `PlatformOptimizationSettings(for: .iOS)` | Platform-specific optimization |
+| Custom settings | `customPreferences` in hints | Business-specific configuration |
+| Listen for changes | `designSystem.onThemeChange = { }` | React to setting changes |
+
+### **Key Takeaways for AI Agents**
+
+1. **Settings are mostly automatic** - don't over-configure
+2. **Use VisualDesignSystem.shared** for most settings needs
+3. **Platform settings are pre-configured** - rarely need changes
+4. **Accessibility is automatic** - framework handles detection
+5. **Use settings for business logic** - not basic UI functionality
+6. **Combine with hints system** - for complex configuration needs
 
 ## 🎯 **Best Practices Summary**
 
