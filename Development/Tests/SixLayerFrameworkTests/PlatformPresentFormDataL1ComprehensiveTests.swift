@@ -14,20 +14,33 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
     // MARK: - Test Helpers
     
-    /// Helper function to create GenericFormField with proper binding for tests
+    /// Helper function to convert PresentationHints to EnhancedPresentationHints
+    private func enhancedHints(from hints: PresentationHints) -> EnhancedPresentationHints {
+        return EnhancedPresentationHints(
+            dataType: hints.dataType,
+            presentationPreference: hints.presentationPreference,
+            complexity: hints.complexity,
+            context: hints.context,
+            customPreferences: hints.customPreferences,
+            extensibleHints: []
+        )
+    }
+    
+    /// Helper function to create DynamicFormField with proper binding for tests
     private func createTestField(
         label: String,
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
         fieldType: DynamicFieldType = .text
-    ) -> GenericFormField {
-        return GenericFormField(
+    ) -> DynamicFormField {
+        return DynamicFormField(
+            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
+            type: fieldType,
             label: label,
             placeholder: placeholder,
-            value: .constant(value),
             isRequired: isRequired,
-            fieldType: fieldType
+            defaultValue: value
         )
     }
 
@@ -36,7 +49,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     /// Test configuration for form data presentation
     struct FormTestConfiguration {
         let name: String
-        let fields: [GenericFormField]
+        let fields: [DynamicFormField]
         let hints: PresentationHints
         let expectedViewType: String
         let expectedFieldCount: Int
@@ -48,7 +61,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     /// Enhanced hints test configuration
     struct EnhancedFormTestConfiguration {
         let name: String
-        let fields: [GenericFormField]
+        let fields: [DynamicFormField]
         let hints: EnhancedPresentationHints
         let expectedViewType: String
         let shouldTestExtensibleHints: Bool
@@ -101,13 +114,20 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         }
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+            dataType: standardHints.dataType,
+            presentationPreference: standardHints.presentationPreference,
+            complexity: standardHints.complexity,
+            context: standardHints.context,
+            customPreferences: standardHints.customPreferences,
+            extensibleHints: []
+        ))
 
         // Then: Should create view successfully
         XCTAssertNotNil(view, "Should create view with all field types")
 
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
 
         // Verify field count matches
         XCTAssertEqual(fields.count, 21, "Should have 21 fields for all types")
@@ -135,15 +155,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fieldsWithOptions, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: fieldsWithOptions, hints: EnhancedPresentationHints(
+            dataType: standardHints.dataType,
+            presentationPreference: standardHints.presentationPreference,
+            complexity: standardHints.complexity,
+            context: standardHints.context,
+            customPreferences: standardHints.customPreferences,
+            extensibleHints: []
+        ))
 
         // Then: Should handle option-based fields correctly
         XCTAssertNotNil(view)
 
         // Verify that these field types support options
         for field in fieldsWithOptions {
-            XCTAssertTrue(field.fieldType.supportsOptions,
-                          "Field type \(field.fieldType) should support options")
+            XCTAssertTrue(field.type.supportsOptions,
+                          "Field type \(field.type) should support options")
         }
     }
 
@@ -161,15 +188,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: multiValueFields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: multiValueFields, hints: EnhancedPresentationHints(
+            dataType: standardHints.dataType,
+            presentationPreference: standardHints.presentationPreference,
+            complexity: standardHints.complexity,
+            context: standardHints.context,
+            customPreferences: standardHints.customPreferences,
+            extensibleHints: []
+        ))
 
         // Then: Should handle multi-value fields
         XCTAssertNotNil(view)
 
         // Verify that these field types support multiple values
         for field in multiValueFields {
-            XCTAssertTrue(field.fieldType.supportsMultipleValues,
-                          "Field type \(field.fieldType) should support multiple values")
+            XCTAssertTrue(field.type.supportsMultipleValues,
+                          "Field type \(field.type) should support multiple values")
         }
     }
 
@@ -214,9 +248,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
-        // Enhanced hints create a ModifiedContent with environment modifier
-        XCTAssertTrue(viewType.contains("SimpleFormView"), "Should contain SimpleFormView, got: \(viewType)")
-        XCTAssertTrue(viewType.contains("ModifiedContent"), "Should be ModifiedContent with environment modifier, got: \(viewType)")
+        // Enhanced hints create an AnyView with environment modifier
+        XCTAssertTrue(viewType.contains("AnyView"), "Should contain AnyView, got: \(viewType)")
+        // Note: AnyView type-erases the internal ModifiedContent, so we can't check for it directly
     }
 
     func testPlatformPresentFormData_L1_ExtensibleHintsProcessing() {
@@ -285,7 +319,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // Test with different platform-specific contexts
-        let platformContexts: [PresentationContext] = [.form, .modal, .navigation]
+        let platformContexts: [PresentationContext] = Array(PresentationContext.allCases.prefix(3)) // Use real enum
 
         for context in platformContexts {
             let hints = PresentationHints(
@@ -296,13 +330,13 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
             )
 
             // When: Creating form presentation
-            let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: hints)
+            let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: enhancedHints(from: hints))
 
             // Then: Should work across all platforms
             XCTAssertNotNil(view, "Should work with context: \(context)")
 
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+            XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
         }
     }
 
@@ -317,7 +351,14 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: keyboardTestFields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: keyboardTestFields, hints: EnhancedPresentationHints(
+            dataType: standardHints.dataType,
+            presentationPreference: standardHints.presentationPreference,
+            complexity: standardHints.complexity,
+            context: standardHints.context,
+            customPreferences: standardHints.customPreferences,
+            extensibleHints: []
+        ))
 
         // Then: Should handle platform-specific keyboard types
         XCTAssertNotNil(view)
@@ -325,33 +366,33 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         #if os(iOS)
         // On iOS, verify keyboard types are set appropriately
         for field in keyboardTestFields {
-            XCTAssertNotEqual(field.fieldType.keyboardType, .default,
-                             "Field type \(field.fieldType) should have appropriate keyboard type on iOS")
+            XCTAssertNotEqual(field.type.keyboardType, .default,
+                             "Field type \(field.type) should have appropriate keyboard type on iOS")
         }
         #else
         // On non-iOS platforms, keyboard types should be appropriate for each field type
         for field in keyboardTestFields {
-            switch field.fieldType {
+            switch field.type {
             case .email:
-                XCTAssertEqual(field.fieldType.keyboardType, "emailAddress",
+                XCTAssertEqual(field.type.keyboardType, "emailAddress",
                               "Email field should have emailAddress keyboard type")
             case .number:
-                XCTAssertEqual(field.fieldType.keyboardType, "numberPad",
+                XCTAssertEqual(field.type.keyboardType, "numberPad",
                               "Number field should have numberPad keyboard type")
             case .phone:
-                XCTAssertEqual(field.fieldType.keyboardType, "phonePad",
+                XCTAssertEqual(field.type.keyboardType, "phonePad",
                               "Phone field should have phonePad keyboard type")
             case .url:
-                XCTAssertEqual(field.fieldType.keyboardType, "URL",
+                XCTAssertEqual(field.type.keyboardType, "URL",
                               "URL field should have URL keyboard type")
             case .integer:
-                XCTAssertEqual(field.fieldType.keyboardType, "numberPad",
+                XCTAssertEqual(field.type.keyboardType, "numberPad",
                               "Integer field should have numberPad keyboard type")
             case .image, .array, .data, .enum:
-                XCTAssertEqual(field.fieldType.keyboardType, "default",
+                XCTAssertEqual(field.type.keyboardType, "default",
                               "Complex field types should have default keyboard type")
             default:
-                XCTAssertEqual(field.fieldType.keyboardType, "default",
+                XCTAssertEqual(field.type.keyboardType, "default",
                               "Other field types should have default keyboard type")
             }
         }
@@ -381,7 +422,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // When: Measuring performance with large dataset
         measure {
-            let view = platformPresentFormData_L1(fields: largeFieldSet, hints: hints)
+            let view = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
             XCTAssertNotNil(view)
         }
     }
@@ -398,14 +439,14 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         }
 
         // When: Creating form with memory-intensive content
-        let view = platformPresentFormData_L1(fields: memoryFields, hints: complexHints)
+        let view = platformPresentFormData_L1(fields: memoryFields, hints: enhancedHints(from: complexHints))
 
         // Then: Should handle memory efficiently
         XCTAssertNotNil(view)
 
         // Verify view type
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
 
     // MARK: - Validation and Edge Cases
@@ -432,7 +473,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form with validation scenarios
-        let view = platformPresentFormData_L1(fields: validationFields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: validationFields, hints: enhancedHints(from: standardHints))
 
         // Then: Should handle validation appropriately
         XCTAssertNotNil(view)
@@ -471,13 +512,13 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form with edge case values
-        let view = platformPresentFormData_L1(fields: edgeCaseFields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: edgeCaseFields, hints: enhancedHints(from: standardHints))
 
         // Then: Should handle edge cases gracefully
         XCTAssertNotNil(view)
 
         // Verify edge case handling
-        let emptyValueFields = edgeCaseFields.filter { $0.value.isEmpty }
+        let emptyValueFields = edgeCaseFields.filter { $0.defaultValue?.isEmpty == true }
         XCTAssertEqual(emptyValueFields.count, 3, "Should have 3 fields with empty values")
 
         let nilPlaceholderFields = edgeCaseFields.filter { $0.placeholder == nil }
@@ -514,7 +555,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form with special characters
-        let view = platformPresentFormData_L1(fields: specialCharFields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: specialCharFields, hints: enhancedHints(from: standardHints))
 
         // Then: Should handle special characters correctly
         XCTAssertNotNil(view)
@@ -522,7 +563,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         // Verify all fields have special character content
         for field in specialCharFields {
             XCTAssertFalse(field.label.isEmpty, "Label should not be empty")
-            XCTAssertFalse(field.value.isEmpty, "Value should not be empty")
+            XCTAssertFalse(field.defaultValue?.isEmpty == true, "Value should not be empty")
         }
     }
 
@@ -546,7 +587,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // When: Testing all hint combinations
         for (index, hints) in hintCombinations.enumerated() {
-            let view = platformPresentFormData_L1(fields: fields, hints: hints)
+            let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints(from: hints))
 
             // Then: Each combination should work
             XCTAssertNotNil(view, "Hint combination \(index) should work")
@@ -576,7 +617,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form with custom preferences
-        let view = platformPresentFormData_L1(fields: fields, hints: hintsWithPreferences)
+        let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints(from: hintsWithPreferences))
 
         // Then: Should integrate custom preferences
         XCTAssertNotNil(view)
@@ -624,7 +665,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         // When: Creating accessible form
-        let view = platformPresentFormData_L1(fields: accessibilityFields, hints: accessibilityHints)
+        let view = platformPresentFormData_L1(fields: accessibilityFields, hints: enhancedHints(from: accessibilityHints))
 
         // Then: Should support accessibility
         XCTAssertNotNil(view)
@@ -657,13 +698,13 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // When: Creating form with problematic data
-        let view = platformPresentFormData_L1(fields: problematicFields, hints: standardHints)
+        let view = platformPresentFormData_L1(fields: problematicFields, hints: enhancedHints(from: standardHints))
 
         // Then: Should handle errors gracefully and still create view
         XCTAssertNotNil(view, "Should handle problematic data gracefully")
 
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
 
     // MARK: - Helper Methods

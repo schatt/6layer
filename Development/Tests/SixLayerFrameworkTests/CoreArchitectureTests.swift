@@ -5,20 +5,21 @@ final class CoreArchitectureTests: XCTestCase {
     
     // MARK: - Test Helpers
     
-    /// Helper function to create GenericFormField with proper binding for tests
+    /// Helper function to create DynamicFormField with proper binding for tests
     private func createTestField(
         label: String,
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
         fieldType: DynamicFieldType = .text
-    ) -> GenericFormField {
-        return GenericFormField(
+    ) -> DynamicFormField {
+        return DynamicFormField(
+            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
+            type: fieldType,
             label: label,
             placeholder: placeholder,
-            value: .constant(value),
             isRequired: isRequired,
-            fieldType: fieldType
+            defaultValue: value
         )
     }
     
@@ -60,101 +61,242 @@ final class CoreArchitectureTests: XCTestCase {
         XCTAssertTrue(complexities.contains(.advanced))
     }
     
-    func testPresentationContextBehavior() throws {
-        // Test that we can create and use presentation contexts
-        // This tests behavior, not implementation details
+    func testPresentationContextBusinessBehavior() throws {
+        // Test that PresentationContext creates different user experiences
+        // This tests the actual business value, not just technical properties
         
-        // Given
-        let expectedContexts: [PresentationContext] = [
+        // Test that different contexts create different form field sets
+        // This is the core business behavior - context determines user experience
+        
+        // Dashboard context should create simple, overview-focused fields
+        let dashboardFields = createDynamicFormFields(context: .dashboard)
+        XCTAssertEqual(dashboardFields.count, 2, "Dashboard should have 2 simple fields")
+        XCTAssertTrue(dashboardFields.contains { $0.label == "Dashboard Name" })
+        XCTAssertTrue(dashboardFields.contains { $0.label == "Auto Refresh" })
+        XCTAssertTrue(dashboardFields.contains { $0.type == .toggle })
+        
+        // Detail context should create rich, comprehensive fields
+        let detailFields = createDynamicFormFields(context: .detail)
+        XCTAssertEqual(detailFields.count, 5, "Detail should have 5 comprehensive fields")
+        XCTAssertTrue(detailFields.contains { $0.label == "Title" })
+        XCTAssertTrue(detailFields.contains { $0.label == "Description" })
+        XCTAssertTrue(detailFields.contains { $0.label == "Created Date" })
+        XCTAssertTrue(detailFields.contains { $0.label == "Created Time" })
+        XCTAssertTrue(detailFields.contains { $0.label == "Attachments" })
+        XCTAssertTrue(detailFields.contains { $0.type == .richtext })
+        XCTAssertTrue(detailFields.contains { $0.type == .file })
+        
+        // Test that contexts produce different user experiences
+        XCTAssertNotEqual(dashboardFields.count, detailFields.count, 
+                         "Different contexts should produce different field counts")
+        
+        // Test that contexts can be used in PresentationHints for UI generation
+        let dashboardHints = PresentationHints(context: .dashboard)
+        let detailHints = PresentationHints(context: .detail)
+        
+        XCTAssertEqual(dashboardHints.context, .dashboard)
+        XCTAssertEqual(detailHints.context, .detail)
+        XCTAssertNotEqual(dashboardHints.context, detailHints.context)
+    }
+    
+    // MARK: - GENERIC TESTS (COMMENTED OUT - NOT REAL COVERAGE)
+    /*
+    func testAllPresentationContextsHaveFields() throws {
+        // Test that ALL PresentationContext cases return fields
+        // This will FAIL if we add a new context without handling it in createDynamicFormFields
+        
+        for context in PresentationContext.allCases {
+            let fields = createDynamicFormFields(context: context)
+            
+            // Each context should return at least one field
+            XCTAssertFalse(fields.isEmpty, "Context \(context) should return at least one field")
+            
+            // Each field should have required properties
+            for field in fields {
+                XCTAssertFalse(field.id.isEmpty, "Field ID should not be empty for context \(context)")
+                XCTAssertFalse(field.label.isEmpty, "Field label should not be empty for context \(context)")
+            }
+        }
+    }
+    */
+    
+    
+    func testPresentationContextCompleteness() throws {
+        // Test that we have all expected contexts and no unexpected ones
+        // This will FAIL if someone adds/removes contexts without updating tests
+        
+        let expectedContexts: Set<PresentationContext> = [
             .dashboard, .browse, .detail, .edit, .create, .search,
             .settings, .profile, .summary, .list, .standard, .form,
             .modal, .navigation
         ]
         
-        // When & Then - Test that each context can be created and has correct raw value
-        for context in expectedContexts {
-            XCTAssertEqual(context.rawValue, context.rawValue) // Identity test
-            XCTAssertTrue(PresentationContext.allCases.contains(context))
-        }
+        let actualContexts = Set(PresentationContext.allCases)
         
-        // Test that contexts are case iterable
-        let allContexts = PresentationContext.allCases
-        XCTAssertFalse(allContexts.isEmpty, "PresentationContext should have cases")
+        // This will fail if contexts are added or removed
+        XCTAssertEqual(actualContexts, expectedContexts, 
+                      "PresentationContext enum has changed. Update test expectations and verify behavior.")
+    }
+    
+    
+    func testPresentationContextSemanticMeaning() throws {
+        // Test that contexts have distinct semantic meanings
+        // This verifies that each context represents a different use case
         
-        // Test that we can create contexts from raw values
-        for context in expectedContexts {
-            let createdContext = PresentationContext(rawValue: context.rawValue)
-            XCTAssertEqual(createdContext, context, "Should be able to create context from raw value")
-        }
+        // Test that different contexts produce different hints
+        let dashboardHints = PresentationHints(context: .dashboard)
+        let detailHints = PresentationHints(context: .detail)
+        let formHints = PresentationHints(context: .form)
         
-        // Test that invalid raw values return nil
-        let invalidContext = PresentationContext(rawValue: "invalid")
-        XCTAssertNil(invalidContext, "Invalid raw values should return nil")
+        XCTAssertNotEqual(dashboardHints.context, detailHints.context)
+        XCTAssertNotEqual(detailHints.context, formHints.context)
+        XCTAssertNotEqual(dashboardHints.context, formHints.context)
+        
+        // Test that contexts can be used in different scenarios
+        let contexts = Array(PresentationContext.allCases.prefix(5)) // Use real enum, test first 5
+        let uniqueContexts = Set(contexts)
+        XCTAssertEqual(uniqueContexts.count, contexts.count, "All contexts should be unique")
     }
     
     func testDataTypeHintBehavior() throws {
-        // Test that we can create and use data type hints
-        // This tests behavior, not implementation details
+        // Test that DataTypeHint provides the behavior it's supposed to provide
+        // This tests actual functionality, not just existence
         
-        // Given
-        let expectedDataTypes: [DataTypeHint] = [
+        // Test that data types can be used in PresentationHints
+        let textHints = PresentationHints(dataType: .text)
+        XCTAssertEqual(textHints.dataType, .text)
+        
+        let imageHints = PresentationHints(dataType: .image)
+        XCTAssertEqual(imageHints.dataType, .image)
+        
+        // Test that data types have meaningful raw values for serialization
+        XCTAssertEqual(DataTypeHint.text.rawValue, "text")
+        XCTAssertEqual(DataTypeHint.image.rawValue, "image")
+        XCTAssertEqual(DataTypeHint.number.rawValue, "number")
+        XCTAssertEqual(DataTypeHint.date.rawValue, "date")
+        
+        // Test that data types can be created from raw values (round-trip)
+        XCTAssertEqual(DataTypeHint(rawValue: "text"), .text)
+        XCTAssertEqual(DataTypeHint(rawValue: "image"), .image)
+        XCTAssertEqual(DataTypeHint(rawValue: "number"), .number)
+        
+        // Test that invalid raw values return nil
+        XCTAssertNil(DataTypeHint(rawValue: "invalid"))
+        XCTAssertNil(DataTypeHint(rawValue: ""))
+        
+        // Test that all data types are case iterable (for UI generation)
+        let allDataTypes = DataTypeHint.allCases
+        XCTAssertFalse(allDataTypes.isEmpty, "DataTypeHint should have cases")
+        XCTAssertTrue(allDataTypes.contains(.text))
+        XCTAssertTrue(allDataTypes.contains(.image))
+        XCTAssertTrue(allDataTypes.contains(.number))
+    }
+    
+    func testDataTypeHintCompleteness() throws {
+        // Test that we have all expected data types and no unexpected ones
+        // This will FAIL if someone adds/removes data types without updating tests
+        
+        let expectedDataTypes: Set<DataTypeHint> = [
             .generic, .text, .number, .date, .image, .boolean, .collection,
             .numeric, .hierarchical, .temporal, .media, .form, .list, .grid,
             .chart, .custom, .user, .transaction, .action, .product,
             .communication, .location, .navigation, .card, .detail, .modal, .sheet
         ]
         
-        // When & Then - Test that each data type can be created and has correct raw value
-        for dataType in expectedDataTypes {
-            XCTAssertEqual(dataType.rawValue, dataType.rawValue) // Identity test
-            XCTAssertTrue(DataTypeHint.allCases.contains(dataType))
-        }
+        let actualDataTypes = Set(DataTypeHint.allCases)
         
-        // Test that data types are case iterable
-        let allDataTypes = DataTypeHint.allCases
-        XCTAssertFalse(allDataTypes.isEmpty, "DataTypeHint should have cases")
+        // This will fail if data types are added or removed
+        XCTAssertEqual(actualDataTypes, expectedDataTypes, 
+                      "DataTypeHint enum has changed. Update test expectations and verify behavior.")
+    }
+    
+    func testDataTypeHintSemanticMeaning() throws {
+        // Test that data types have distinct semantic meanings
+        // This verifies that each data type represents a different content type
         
-        // Test that we can create data types from raw values
-        for dataType in expectedDataTypes {
-            let createdDataType = DataTypeHint(rawValue: dataType.rawValue)
-            XCTAssertEqual(createdDataType, dataType, "Should be able to create data type from raw value")
-        }
+        // Test that different data types produce different hints
+        let textHints = PresentationHints(dataType: .text)
+        let imageHints = PresentationHints(dataType: .image)
+        let numberHints = PresentationHints(dataType: .number)
         
-        // Test that invalid raw values return nil
-        let invalidDataType = DataTypeHint(rawValue: "invalid")
-        XCTAssertNil(invalidDataType, "Invalid raw values should return nil")
+        XCTAssertNotEqual(textHints.dataType, imageHints.dataType)
+        XCTAssertNotEqual(imageHints.dataType, numberHints.dataType)
+        XCTAssertNotEqual(textHints.dataType, numberHints.dataType)
+        
+        // Test that data types can be used in different scenarios
+        let dataTypes = Array(DataTypeHint.allCases.prefix(5)) // Use real enum, test first 5
+        let uniqueDataTypes = Set(dataTypes)
+        XCTAssertEqual(uniqueDataTypes.count, dataTypes.count, "All data types should be unique")
     }
     
     func testPresentationPreferenceBehavior() throws {
-        // Test that we can create and use presentation preferences
-        // This tests behavior, not implementation details
+        // Test that PresentationPreference provides the behavior it's supposed to provide
+        // This tests actual functionality, not just existence
         
-        // Given
-        let expectedPreferences: [PresentationPreference] = [
+        // Test that preferences can be used in PresentationHints
+        let automaticHints = PresentationHints(presentationPreference: .automatic)
+        XCTAssertEqual(automaticHints.presentationPreference, .automatic)
+        
+        let cardHints = PresentationHints(presentationPreference: .card)
+        XCTAssertEqual(cardHints.presentationPreference, .card)
+        
+        // Test that preferences have meaningful raw values for serialization
+        XCTAssertEqual(PresentationPreference.automatic.rawValue, "automatic")
+        XCTAssertEqual(PresentationPreference.card.rawValue, "card")
+        XCTAssertEqual(PresentationPreference.grid.rawValue, "grid")
+        XCTAssertEqual(PresentationPreference.detail.rawValue, "detail")
+        
+        // Test that preferences can be created from raw values (round-trip)
+        XCTAssertEqual(PresentationPreference(rawValue: "automatic"), .automatic)
+        XCTAssertEqual(PresentationPreference(rawValue: "card"), .card)
+        XCTAssertEqual(PresentationPreference(rawValue: "grid"), .grid)
+        
+        // Test that invalid raw values return nil
+        XCTAssertNil(PresentationPreference(rawValue: "invalid"))
+        XCTAssertNil(PresentationPreference(rawValue: ""))
+        
+        // Test that all preferences are case iterable (for UI generation)
+        let allPreferences = PresentationPreference.allCases
+        XCTAssertFalse(allPreferences.isEmpty, "PresentationPreference should have cases")
+        XCTAssertTrue(allPreferences.contains(.automatic))
+        XCTAssertTrue(allPreferences.contains(.card))
+        XCTAssertTrue(allPreferences.contains(.grid))
+    }
+    
+    func testPresentationPreferenceCompleteness() throws {
+        // Test that we have all expected preferences and no unexpected ones
+        // This will FAIL if someone adds/removes preferences without updating tests
+        
+        let expectedPreferences: Set<PresentationPreference> = [
             .automatic, .minimal, .moderate, .rich, .custom, .detail,
             .modal, .navigation, .list, .masonry, .standard, .form,
             .card, .cards, .compact, .grid, .chart, .coverFlow
         ]
         
-        // When & Then - Test that each preference can be created and has correct raw value
-        for preference in expectedPreferences {
-            XCTAssertEqual(preference.rawValue, preference.rawValue) // Identity test
-            XCTAssertTrue(PresentationPreference.allCases.contains(preference))
-        }
+        let actualPreferences = Set(PresentationPreference.allCases)
         
-        // Test that preferences are case iterable
-        let allPreferences = PresentationPreference.allCases
-        XCTAssertFalse(allPreferences.isEmpty, "PresentationPreference should have cases")
+        // This will fail if preferences are added or removed
+        XCTAssertEqual(actualPreferences, expectedPreferences, 
+                      "PresentationPreference enum has changed. Update test expectations and verify behavior.")
+    }
+    
+    func testPresentationPreferenceSemanticMeaning() throws {
+        // Test that preferences have distinct semantic meanings
+        // This verifies that each preference represents a different presentation style
         
-        // Test that we can create preferences from raw values
-        for preference in expectedPreferences {
-            let createdPreference = PresentationPreference(rawValue: preference.rawValue)
-            XCTAssertEqual(createdPreference, preference, "Should be able to create preference from raw value")
-        }
+        // Test that different preferences produce different hints
+        let automaticHints = PresentationHints(presentationPreference: .automatic)
+        let cardHints = PresentationHints(presentationPreference: .card)
+        let gridHints = PresentationHints(presentationPreference: .grid)
         
-        // Test that invalid raw values return nil
-        let invalidPreference = PresentationPreference(rawValue: "invalid")
-        XCTAssertNil(invalidPreference, "Invalid raw values should return nil")
+        XCTAssertNotEqual(automaticHints.presentationPreference, cardHints.presentationPreference)
+        XCTAssertNotEqual(cardHints.presentationPreference, gridHints.presentationPreference)
+        XCTAssertNotEqual(automaticHints.presentationPreference, gridHints.presentationPreference)
+        
+        // Test that preferences can be used in different scenarios
+        let preferences = Array(PresentationPreference.allCases.prefix(5)) // Use real enum, test first 5
+        let uniquePreferences = Set(preferences)
+        XCTAssertEqual(uniquePreferences.count, preferences.count, "All preferences should be unique")
     }
     
     // MARK: - Layer 2: Layout Decision Engine Tests
@@ -260,7 +402,7 @@ final class CoreArchitectureTests: XCTestCase {
     
     // MARK: - Layer 4: Component Implementation Tests
     
-    func testGenericFormFieldCreation() throws {
+    func testDynamicFormFieldCreation() throws {
         // Given
         let label = "Test Field"
         let value = "Test Value"
@@ -275,7 +417,7 @@ final class CoreArchitectureTests: XCTestCase {
         
         // Then
         XCTAssertEqual(field.label, label)
-        XCTAssertEqual(field.value, value)
+        XCTAssertEqual(field.defaultValue, value)
         XCTAssertEqual(field.isRequired, isRequired)
     }
     

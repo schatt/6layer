@@ -853,7 +853,7 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
     func testCollectionEmptyStateViewWithDifferentComplexities() {
         // Test empty state view with different complexity levels
-        let testCases: [ContentComplexity] = [.simple, .moderate, .complex]
+        let testCases: [ContentComplexity] = Array(ContentComplexity.allCases) // Use real enum
         
         for complexity in testCases {
             let hints = PresentationHints(

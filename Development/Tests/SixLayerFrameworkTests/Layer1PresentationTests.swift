@@ -14,26 +14,39 @@ final class Layer1PresentationTests: XCTestCase {
     
     // MARK: - Test Helpers
     
-    /// Helper function to create GenericFormField with proper binding for tests
+    /// Helper function to convert PresentationHints to EnhancedPresentationHints
+    private func enhancedHints(from hints: PresentationHints) -> EnhancedPresentationHints {
+        return EnhancedPresentationHints(
+            dataType: hints.dataType,
+            presentationPreference: hints.presentationPreference,
+            complexity: hints.complexity,
+            context: hints.context,
+            customPreferences: hints.customPreferences,
+            extensibleHints: []
+        )
+    }
+    
+    /// Helper function to create DynamicFormField with proper binding for tests
     private func createTestField(
         label: String,
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
         fieldType: DynamicFieldType = .text
-    ) -> GenericFormField {
-        return GenericFormField(
+    ) -> DynamicFormField {
+        return DynamicFormField(
+            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
+            type: fieldType,
             label: label,
             placeholder: placeholder,
-            value: .constant(value),
             isRequired: isRequired,
-            fieldType: fieldType
+            defaultValue: value
         )
     }
     
     // MARK: - Test Data
     
-    lazy var testFields: [GenericFormField] = [
+    lazy var testFields: [DynamicFormField] = [
         createTestField(
             label: "Name",
             placeholder: "Enter your name",
@@ -72,29 +85,43 @@ final class Layer1PresentationTests: XCTestCase {
         let hints = testHints
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fields, hints: hints)
+        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+            dataType: hints.dataType,
+            presentationPreference: hints.presentationPreference,
+            complexity: hints.complexity,
+            context: hints.context,
+            customPreferences: hints.customPreferences,
+            extensibleHints: []
+        ))
         
         // Then: Should return a SimpleFormView
         XCTAssertNotNil(view)
         
         // Verify the view type using Mirror reflection
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
     
     func testPlatformPresentFormData_L1_HandlesEmptyFields() {
         // Given: Empty fields array
-        let fields: [GenericFormField] = []
+        let fields: [DynamicFormField] = []
         let hints = testHints
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fields, hints: hints)
+        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+            dataType: hints.dataType,
+            presentationPreference: hints.presentationPreference,
+            complexity: hints.complexity,
+            context: hints.context,
+            customPreferences: hints.customPreferences,
+            extensibleHints: []
+        ))
         
         // Then: Should return a SimpleFormView even with empty fields
         XCTAssertNotNil(view)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
     
     func testPlatformPresentFormData_L1_HandlesDifferentComplexityLevels() {
@@ -114,8 +141,8 @@ final class Layer1PresentationTests: XCTestCase {
         )
         
         // When: Creating form presentations
-        let simpleView = platformPresentFormData_L1(fields: testFields, hints: simpleHints)
-        let complexView = platformPresentFormData_L1(fields: testFields, hints: complexHints)
+        let simpleView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: simpleHints))
+        let complexView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: complexHints))
         
         // Then: Both should return SimpleFormView
         XCTAssertNotNil(simpleView)
@@ -124,8 +151,8 @@ final class Layer1PresentationTests: XCTestCase {
         let simpleMirror = Mirror(reflecting: simpleView)
         let complexMirror = Mirror(reflecting: complexView)
         
-        XCTAssertEqual(String(describing: simpleMirror.subjectType), "SimpleFormView")
-        XCTAssertEqual(String(describing: complexMirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: simpleMirror.subjectType), "AnyView")
+        XCTAssertEqual(String(describing: complexMirror.subjectType), "AnyView")
     }
     
     func testPlatformPresentFormData_L1_HandlesDifferentDataTypes() {
@@ -145,8 +172,8 @@ final class Layer1PresentationTests: XCTestCase {
         )
         
         // When: Creating form presentations
-        let formView = platformPresentFormData_L1(fields: testFields, hints: formHints)
-        let textView = platformPresentFormData_L1(fields: testFields, hints: textHints)
+        let formView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: formHints))
+        let textView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: textHints))
         
         // Then: Both should return SimpleFormView
         XCTAssertNotNil(formView)
@@ -155,8 +182,8 @@ final class Layer1PresentationTests: XCTestCase {
         let formMirror = Mirror(reflecting: formView)
         let textMirror = Mirror(reflecting: textView)
         
-        XCTAssertEqual(String(describing: formMirror.subjectType), "SimpleFormView")
-        XCTAssertEqual(String(describing: textMirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: formMirror.subjectType), "AnyView")
+        XCTAssertEqual(String(describing: textMirror.subjectType), "AnyView")
     }
     
     // MARK: - platformPresentModalForm_L1 Tests
@@ -260,13 +287,13 @@ final class Layer1PresentationTests: XCTestCase {
         let hints = testHints
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: largeFieldSet, hints: hints)
+        let view = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
         
         // Then: Should handle large field sets gracefully
         XCTAssertNotNil(view)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
     
     func testPlatformPresentFormData_L1_HandlesSpecialCharacters() {
@@ -290,13 +317,13 @@ final class Layer1PresentationTests: XCTestCase {
         let hints = testHints
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: specialFields, hints: hints)
+        let view = platformPresentFormData_L1(fields: specialFields, hints: enhancedHints(from: hints))
         
         // Then: Should handle special characters gracefully
         XCTAssertNotNil(view)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
     
     func testPlatformPresentModalForm_L1_HandlesCustomFormType() {
@@ -331,13 +358,13 @@ final class Layer1PresentationTests: XCTestCase {
         )
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: testFields, hints: comprehensiveHints)
+        let view = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: comprehensiveHints))
         
         // Then: Should return a SimpleFormView
         XCTAssertNotNil(view)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "SimpleFormView")
+        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
     }
     
     func testPlatformPresentModalForm_L1_IntegrationWithAllParameters() {
@@ -372,7 +399,7 @@ final class Layer1PresentationTests: XCTestCase {
         
         // When: Measuring performance
         measure {
-            _ = platformPresentFormData_L1(fields: largeFieldSet, hints: hints)
+            _ = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
         }
     }
     

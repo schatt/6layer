@@ -15,20 +15,21 @@ final class PlatformPresentContentL1Tests: XCTestCase {
     
     // MARK: - Test Helpers
     
-    /// Helper function to create GenericFormField with proper binding for tests
+    /// Helper function to create DynamicFormField with proper binding for tests
     private func createTestField(
         label: String,
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
         fieldType: DynamicFieldType = .text
-    ) -> GenericFormField {
-        return GenericFormField(
+    ) -> DynamicFormField {
+        return DynamicFormField(
+            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
+            type: fieldType,
             label: label,
             placeholder: placeholder,
-            value: .constant(value),
             isRequired: isRequired,
-            fieldType: fieldType
+            defaultValue: value
         )
     }
     
@@ -51,7 +52,7 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         ]
     }
     
-    private func createTestFormFields() -> [GenericFormField] {
+    private func createTestFormFields() -> [DynamicFormField] {
         return [
             createTestField(label: "Name", placeholder: "Enter name", fieldType: .text),
             createTestField(label: "Email", placeholder: "Enter email", fieldType: .email)

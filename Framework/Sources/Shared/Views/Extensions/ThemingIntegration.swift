@@ -113,6 +113,9 @@ public struct ThemedIntelligentFormView<DataType: Codable>: View {
 }
 
 /// Themed version of GenericFormView
+// MARK: - DEPRECATED: This struct uses GenericFormField which has been deprecated
+// TODO: Replace with DynamicFormField equivalents
+/*
 public struct ThemedGenericFormView: View {
     let fields: [GenericFormField]
     let onSubmit: ([String: Any]) -> Void
@@ -401,6 +404,7 @@ public struct ThemedGenericFormView: View {
         }
     }
 }
+*/
 
 /// Themed version of ResponsiveCardView
 public struct ThemedResponsiveCardView: View {

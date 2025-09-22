@@ -350,7 +350,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     func testImageProcessingPipeline_Integration() async throws {
         // Given
         let image = createTestImage()
-        let purposes: [ImagePurpose] = [.ocr, .fuelReceipt, .document, .photo, .thumbnail, .preview]
+        let purposes: [ImagePurpose] = Array(ImagePurpose.allCases.prefix(6)) // Use real enum
         
         // When
         var results: [ProcessedImage] = []

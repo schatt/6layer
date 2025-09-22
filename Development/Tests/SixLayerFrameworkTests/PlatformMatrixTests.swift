@@ -231,7 +231,7 @@ final class PlatformMatrixTests: XCTestCase {
     
     func testCarPlayFeatureAvailabilityMatrix() {
         // Test all CarPlay features
-        let features: [CarPlayFeature] = [.navigation, .music, .phone, .messages, .voiceControl, .knobControl, .touchControl]
+        let features: [CarPlayFeature] = Array(CarPlayFeature.allCases) // Use real enum
         
         for feature in features {
             let isAvailable = CarPlayCapabilityDetection.isFeatureAvailable(feature)

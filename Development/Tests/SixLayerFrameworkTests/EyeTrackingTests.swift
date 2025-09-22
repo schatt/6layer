@@ -345,7 +345,7 @@ final class EyeTrackingTests: XCTestCase {
     }
     
     func testEyeTrackingWithDifferentSensitivities() {
-        let sensitivities: [EyeTrackingSensitivity] = [.low, .medium, .high, .adaptive]
+        let sensitivities: [EyeTrackingSensitivity] = Array(EyeTrackingSensitivity.allCases) // Use real enum
         
         for sensitivity in sensitivities {
             let config = EyeTrackingConfig(sensitivity: sensitivity)

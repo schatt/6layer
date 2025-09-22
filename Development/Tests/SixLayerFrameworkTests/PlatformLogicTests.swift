@@ -12,7 +12,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testPlatformDetectionLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing platform detection logic
         for platform in platforms {
@@ -65,7 +65,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testDeviceTypeDetectionLogic() {
         // GIVEN: Different device types
-        let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .watch, .tv, .vision]
+        let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
         
         // WHEN: Testing device type detection logic
         for deviceType in deviceTypes {
@@ -113,8 +113,8 @@ final class PlatformLogicTests: XCTestCase {
     
     func testCapabilityMatrixConsistency() {
         // GIVEN: All platform and device combinations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
-        let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .watch, .tv, .vision]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
         
         // WHEN: Testing capability matrix consistency
         for platform in platforms {
@@ -155,7 +155,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testVisionFrameworkAvailabilityLogic() {
         // GIVEN: Different platforms
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing Vision framework availability logic
         for platform in platforms {
@@ -174,7 +174,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testOCRAvailabilityLogic() {
         // GIVEN: Different platforms
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing OCR availability logic
         for platform in platforms {
@@ -195,7 +195,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testLayoutDecisionLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing layout decision logic
         for platform in platforms {
@@ -227,7 +227,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testAnimationLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing animation logic
         for platform in platforms {

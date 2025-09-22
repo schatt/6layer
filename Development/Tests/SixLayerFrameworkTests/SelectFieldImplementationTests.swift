@@ -21,13 +21,13 @@ final class SelectFieldImplementationTests: XCTestCase {
         )
     }
     
-    private var genericSelectField: GenericFormField {
-        GenericFormField(
+    private var dynamicSelectField: DynamicFormField {
+        DynamicFormField(
+            id: "choose_option",
+            type: .select,
             label: "Choose Option",
             placeholder: "Select an option",
-            value: .constant(""),
             isRequired: true,
-            fieldType: .select,
             options: ["Option 1", "Option 2", "Option 3", "Option 4"]
         )
     }
@@ -63,7 +63,7 @@ final class SelectFieldImplementationTests: XCTestCase {
         
         // Then: View should be created successfully
         XCTAssertNotNil(view)
-        XCTAssertEqual(field.options?.count, 4)
+        XCTAssertEqual(field.options?.count ?? 0, 4)
     }
     
     func testDynamicSelectFieldHasDefaultSelection() {
@@ -81,14 +81,14 @@ final class SelectFieldImplementationTests: XCTestCase {
     
     func testGenericSelectFieldHasPicker() {
         // Given: Generic select field
-        let field = genericSelectField
+        let field = dynamicSelectField
         
         // When: Creating generic select field view
         let view = VStack {
             Text(field.label)
-            Picker(field.placeholder ?? "Select option", selection: field.$value) {
+            Picker(field.placeholder ?? "Select option", selection: .constant(field.defaultValue ?? "")) {
                 Text("Select an option").tag("")
-                ForEach(field.options, id: \.self) { option in
+                ForEach(field.options ?? [], id: \.self) { option in
                     Text(option).tag(option)
                 }
             }
@@ -101,14 +101,14 @@ final class SelectFieldImplementationTests: XCTestCase {
     
     func testGenericSelectFieldShowsOptions() {
         // Given: Generic select field with options
-        let field = genericSelectField
+        let field = dynamicSelectField
         
         // When: Creating generic select field view
         let view = VStack {
             Text(field.label)
-            Picker(field.placeholder ?? "Select option", selection: field.$value) {
+            Picker(field.placeholder ?? "Select option", selection: .constant(field.defaultValue ?? "")) {
                 Text("Select an option").tag("")
-                ForEach(field.options, id: \.self) { option in
+                ForEach(field.options ?? [], id: \.self) { option in
                     Text(option).tag(option)
                 }
             }
@@ -117,7 +117,7 @@ final class SelectFieldImplementationTests: XCTestCase {
         
         // Then: View should be created successfully
         XCTAssertNotNil(view)
-        XCTAssertEqual(field.options.count, 4)
+        XCTAssertEqual(field.options?.count ?? 0, 4)
     }
     
     // MARK: - Theming Integration Tests
@@ -158,7 +158,7 @@ final class SelectFieldImplementationTests: XCTestCase {
     
     func testPlatformSemanticLayerSelectFieldShouldBeInteractive() {
         // Given: Platform semantic layer select field
-        let field = genericSelectField
+        let field = dynamicSelectField
         
         // When: Creating platform semantic layer select field
         // This should be interactive, not just text display
@@ -167,9 +167,9 @@ final class SelectFieldImplementationTests: XCTestCase {
                 .font(.subheadline)
                 .fontWeight(.medium)
             
-            Picker(field.placeholder ?? "Select option", selection: field.$value) {
+            Picker(field.placeholder ?? "Select option", selection: .constant(field.defaultValue ?? "")) {
                 Text("Select an option").tag("")
-                ForEach(field.options, id: \.self) { option in
+                ForEach(field.options ?? [], id: \.self) { option in
                     Text(option).tag(option)
                 }
             }

@@ -412,8 +412,8 @@ final class ExtensibleHintsTests: XCTestCase {
             extensibleHints: [formHint]
         )
         let testFields = [
-            GenericFormField(label: "Name", value: .constant(""), fieldType: .text),
-            GenericFormField(label: "Email", value: .constant(""), fieldType: .email)
+            DynamicFormField(id: "name", type: .text, label: "Name"),
+            DynamicFormField(id: "email", type: .email, label: "Email")
         ]
         
         // When

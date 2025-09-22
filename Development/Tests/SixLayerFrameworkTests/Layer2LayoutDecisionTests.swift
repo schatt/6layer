@@ -365,7 +365,7 @@ final class Layer2LayoutDecisionTests: XCTestCase {
             TestItem(title: "Item \(i)", content: "Content")
         }
         
-        let dataTypes: [DataTypeHint] = [.text, .number, .date, .image, .collection, .chart, .navigation]
+        let dataTypes: [DataTypeHint] = Array(DataTypeHint.allCases.prefix(7)) // Use real enum
         
         for dataType in dataTypes {
             let hints = PresentationHints(

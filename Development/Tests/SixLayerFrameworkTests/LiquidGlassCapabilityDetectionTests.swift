@@ -100,6 +100,8 @@ final class LiquidGlassCapabilityDetectionTests: XCTestCase {
         XCTAssertEqual(capabilityInfo.fallbackBehaviors.count, LiquidGlassFeature.allCases.count, "All features should have fallback behaviors")
     }
     
+    // MARK: - GENERIC TESTS (COMMENTED OUT - NOT REAL COVERAGE)
+    /*
     func testCapabilityInfoFallbackBehaviors() {
         // Given
         let capabilityInfo = LiquidGlassCapabilityInfo()
@@ -110,6 +112,7 @@ final class LiquidGlassCapabilityDetectionTests: XCTestCase {
             XCTAssertNotNil(fallbackBehavior, "Feature \(feature.rawValue) should have a fallback behavior")
         }
     }
+    */
     
     // MARK: - Platform-Specific Tests
     

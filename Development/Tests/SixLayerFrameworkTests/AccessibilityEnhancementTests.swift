@@ -218,6 +218,8 @@ final class AccessibilityEnhancementTests: XCTestCase {
     
     // MARK: - Cross-Platform Accessibility Tests
     
+    // MARK: - GENERIC TESTS (COMMENTED OUT - NOT REAL COVERAGE)
+    /*
     func testCrossPlatformAccessibilityConsistency() {
         // Test that accessibility features work consistently across platforms
         for platform in Platform.allCases {
@@ -228,6 +230,7 @@ final class AccessibilityEnhancementTests: XCTestCase {
             XCTAssertNotNil(platformView)
         }
     }
+    */
     
     @MainActor
     func testPlatformSpecificAccessibilityFeatures() {

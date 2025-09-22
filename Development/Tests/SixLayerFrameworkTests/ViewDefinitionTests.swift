@@ -45,7 +45,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,
             supportsOCR: false
         )
-        let features = [Feature.cardExpansion, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.cardExpansion, .animation, .accessibility] // Specific features for ExpandableCardComponent
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -75,7 +75,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,
             supportsOCR: false
         )
-        let features = [Feature.cardExpansion, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.cardExpansion, .animation, .accessibility] // Specific features for ExpandableCardComponent
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -105,7 +105,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,
             supportsOCR: false
         )
-        let features = [Feature.cardExpansion, Feature.contextMenu, Feature.dragDrop, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.cardExpansion, .contextMenu, .dragDrop, .keyboardNavigation, .animation, .accessibility] // Specific features for ExpandableCardComponent
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -137,7 +137,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,
             supportsOCR: false
         )
-        let features = [Feature.keyboardNavigation, Feature.accessibility]
+        let features: [Feature] = [.keyboardNavigation, .accessibility] // Specific features for SimpleCardComponent
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -167,7 +167,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: true,
             supportsOCR: true
         )
-        let features = [Feature.cardExpansion, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.cardExpansion, .animation, .accessibility] // Specific features for ExpandableCardComponent
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -201,7 +201,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,
             supportsOCR: false
         )
-        let features = [Feature.contextMenu, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.contextMenu, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -227,7 +227,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,
             supportsOCR: false
         )
-        let features = [Feature.dragDrop, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.dragDrop, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -255,7 +255,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: true,
             supportsOCR: true
         )
-        let features = [Feature.telekinesis, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.telekinesis, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
         let item = sampleData[0]
         
         // WHEN: Generating view definition
@@ -281,7 +281,7 @@ final class ViewDefinitionTests: XCTestCase {
             supportsVision: false,  // No vision
             supportsOCR: false
         )
-        let features = [Feature.telekinesis, Feature.animation, Feature.accessibility]
+        let features: [Feature] = [.telekinesis, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
         let item = sampleData[0]
         
         // WHEN: Generating view definition

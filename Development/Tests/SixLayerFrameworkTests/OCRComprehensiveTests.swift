@@ -387,7 +387,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testPlatformOCRStrategyL3BasicFunctionality() {
         // Test basic OCR strategy selection
-        let textTypes: [TextType] = [.price, .number, .date]
+        let textTypes: [TextType] = Array(TextType.allCases.prefix(3)) // Use real enum
         
         let strategy = platformOCRStrategy_L3(textTypes: textTypes)
         
@@ -399,7 +399,7 @@ final class OCRComprehensiveTests: XCTestCase {
     func testPlatformOCRStrategyL3WithDifferentTextTypes() {
         // Test with different text types
         let generalStrategy = platformOCRStrategy_L3(textTypes: [.general])
-        let specificStrategy = platformOCRStrategy_L3(textTypes: [.price, .number, .date, .email, .url])
+        let specificStrategy = platformOCRStrategy_L3(textTypes: Array(TextType.allCases.prefix(5))) // Use real enum
         
         XCTAssertNotNil(generalStrategy)
         XCTAssertNotNil(specificStrategy)
@@ -660,7 +660,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testEndToEndOCRWorkflow() {
         // Test complete end-to-end OCR workflow
-        let textTypes: [TextType] = [.price, .number, .date]
+        let textTypes: [TextType] = Array(TextType.allCases.prefix(3)) // Use real enum
         let context = OCRContext(
             textTypes: textTypes,
             language: .english,
@@ -706,7 +706,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testCrossLayerDataFlow() {
         // Test that data flows correctly between layers
-        let textTypes: [TextType] = [.price, .number]
+        let textTypes: [TextType] = Array(TextType.allCases.prefix(2)) // Use real enum
         let context = OCRContext(
             textTypes: textTypes,
             language: .english,
@@ -779,7 +779,7 @@ final class OCRComprehensiveTests: XCTestCase {
     func testOCRPerformanceWithMultipleTextTypes() {
         // Test performance with multiple text types
         measure {
-            let textTypes: [TextType] = [.general, .price, .number, .date, .email, .url, .phone, .address]
+            let textTypes: [TextType] = Array(TextType.allCases) // Use real enum
             let context = OCRContext(
                 textTypes: textTypes,
                 language: .english,
@@ -812,7 +812,7 @@ final class OCRComprehensiveTests: XCTestCase {
     func testOCRPerformanceWithDifferentLanguages() {
         // Test performance with different languages
         let testImage = createTestPlatformImage()
-        let languages: [OCRLanguage] = [.english, .spanish, .french, .german, .italian]
+        let languages: [OCRLanguage] = Array(OCRLanguage.allCases.prefix(5)) // Use real enum
 
         for language in languages {
             let context = OCRContext(
@@ -993,7 +993,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testEdgeCaseWithAllTextTypes() {
         // Test with all available text types
-        let allTextTypes: [TextType] = [.general, .price, .number, .date, .email, .url, .phone, .address]
+        let allTextTypes: [TextType] = Array(TextType.allCases) // Use real enum
 
         let context = OCRContext(
             textTypes: allTextTypes,
@@ -1015,7 +1015,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testEdgeCaseWithAllLanguages() {
         // Test with all available languages
-        let allLanguages: [OCRLanguage] = [.english, .spanish, .french, .german, .italian, .portuguese, .chinese, .japanese, .korean, .arabic, .russian]
+        let allLanguages: [OCRLanguage] = Array(OCRLanguage.allCases) // Use real enum
 
         let testImage = createTestPlatformImage()
 
@@ -1039,7 +1039,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testEdgeCaseWithAllDocumentTypes() {
         // Test with all available document types
-        let allDocumentTypes: [DocumentType] = [.receipt, .invoice, .businessCard, .form, .license, .passport, .general, .fuelReceipt, .idDocument, .medicalRecord, .legalDocument]
+        let allDocumentTypes: [DocumentType] = Array(DocumentType.allCases) // Use real enum
 
         let testImage = createTestPlatformImage()
 

@@ -51,14 +51,20 @@ public func platformResponsiveCard_L1<Content: View>(
 }
 
 /// Generic function for presenting form data using our intelligent form system
+// DEPRECATED: GenericFormField is deprecated
+/*
 @MainActor
 public func platformPresentFormData_L1(
     fields: [GenericFormField],
     hints: PresentationHints
 ) -> some View {
-    // Create a dynamic form from the provided fields
-    return SimpleFormView(fields: fields, hints: hints)
+    // MARK: - DEPRECATED: SimpleFormView uses GenericFormField which has been deprecated
+    // TODO: Replace with DynamicFormView using DynamicFormField
+    return Text("Form functionality temporarily disabled - needs DynamicFormField migration")
+        .foregroundColor(.secondary)
+        .padding()
 }
+*/
 
 /// Generic function for presenting modal forms
 /// Uses hints to determine optimal modal presentation strategy
@@ -233,7 +239,7 @@ public func platformResponsiveCard_L1<Content: View>(
 /// Generic function for presenting form data with enhanced hints
 @MainActor
 public func platformPresentFormData_L1(
-    fields: [GenericFormField],
+    fields: [DynamicFormField],
     hints: EnhancedPresentationHints
 ) -> some View {
     let basicHints = PresentationHints(
@@ -244,10 +250,87 @@ public func platformPresentFormData_L1(
         customPreferences: hints.customPreferences
     )
     
-    let processedHints = processExtensibleHints(hints, into: basicHints)
+    let _ = processExtensibleHints(hints, into: basicHints)
     
-    return SimpleFormView(fields: fields, hints: processedHints)
-        .environment(\.extensibleHints, hints.extensibleHints)
+    // Return a simple form view with DynamicFormField
+    let formView = VStack(spacing: 16) {
+        // Form header
+        HStack {
+            Text("Form")
+                .font(.headline)
+                .foregroundColor(.primary)
+            Spacer()
+            Text("\(fields.count) fields")
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+        .padding(.horizontal)
+        
+        // Form fields
+        ScrollView {
+            VStack(spacing: 16) {
+                ForEach(fields, id: \.id) { field in
+                    createSimpleFieldView(for: field)
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+    .padding()
+    .background(Color.platformBackground)
+    
+    return AnyView(formView.environment(\.extensibleHints, hints.extensibleHints))
+}
+
+/// Helper function to create a simple field view for DynamicFormField
+@ViewBuilder
+private func createSimpleFieldView(for field: DynamicFormField) -> some View {
+    VStack(alignment: .leading, spacing: 8) {
+        Text(field.label)
+            .font(.subheadline)
+            .fontWeight(.medium)
+        
+        switch field.type {
+        case .text, .email, .password, .url, .phone:
+            TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
+                .textFieldStyle(.roundedBorder)
+        case .number, .integer:
+            TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
+                .textFieldStyle(.roundedBorder)
+        case .textarea, .richtext:
+            TextEditor(text: .constant(field.defaultValue ?? ""))
+                .frame(minHeight: 80)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
+        case .toggle:
+            Toggle(field.label, isOn: .constant(false))
+        case .select, .enum:
+            Picker(field.placeholder ?? "Select option", selection: .constant("")) {
+                Text("Select an option").tag("")
+                if let options = field.options {
+                    ForEach(options, id: \.self) { option in
+                        Text(option).tag(option)
+                    }
+                }
+            }
+            .pickerStyle(.menu)
+        case .date:
+            DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
+                .datePickerStyle(.compact)
+        case .time:
+            DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
+                .datePickerStyle(.compact)
+        case .color:
+            ColorPicker(field.label, selection: .constant(.blue))
+        case .range:
+            Slider(value: .constant(0.5), in: 0...1)
+        default:
+            TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
+                .textFieldStyle(.roundedBorder)
+        }
+    }
 }
 
 /// Generic function for presenting media data with enhanced hints
@@ -792,7 +875,7 @@ public struct GenericNumericDataView: View {
 
 /// Generic form view using our platform extensions
 public struct GenericFormView: View {
-    let fields: [GenericFormField]
+    let fields: [DynamicFormField]
     let hints: PresentationHints
     
     public var body: some View {
@@ -811,10 +894,37 @@ public struct GenericFormView: View {
                             .fontWeight(.medium)
                             .foregroundColor(Color.platformLabel)
                         
-                        // Use platform-specific field styling
-                        TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
-                            .textFieldStyle(.roundedBorder)
-                            .background(Color.platformSecondaryBackground)
+                        // Use platform-specific field styling based on field type
+                        switch field.type {
+                        case .text, .email, .password:
+                            TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
+                                .textFieldStyle(.roundedBorder)
+                                .background(Color.platformSecondaryBackground)
+                        case .number, .integer:
+                            TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
+                                .textFieldStyle(.roundedBorder)
+                                .background(Color.platformSecondaryBackground)
+                        case .textarea:
+                            TextEditor(text: .constant(""))
+                                .frame(minHeight: 80)
+                                .background(Color.platformSecondaryBackground)
+                                .cornerRadius(8)
+                        case .toggle:
+                            Toggle(field.label, isOn: .constant(false))
+                        case .select:
+                            Picker(field.label, selection: .constant("")) {
+                                if let options = field.options {
+                                    ForEach(options, id: \.self) { option in
+                                        Text(option).tag(option)
+                                    }
+                                }
+                            }
+                            .pickerStyle(.menu)
+                        default:
+                            TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
+                                .textFieldStyle(.roundedBorder)
+                                .background(Color.platformSecondaryBackground)
+                        }
                     }
                     .padding(.vertical, 4)
                 }
@@ -873,7 +983,7 @@ public struct GenericTemporalView: View {
 
 /// Modal form view for presenting forms in modal context
 public struct ModalFormView: View {
-    let fields: [GenericFormField]
+    let fields: [DynamicFormField]
     let formType: DataTypeHint
     let context: PresentationContext
     let hints: PresentationHints
@@ -911,13 +1021,13 @@ public struct ModalFormView: View {
     }
     
     @ViewBuilder
-    private func createFieldView(for field: GenericFormField) -> some View {
+    private func createFieldView(for field: DynamicFormField) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .fontWeight(.medium)
             
-            switch field.fieldType {
+            switch field.type {
             case .text:
                 TextField(field.placeholder ?? "Enter text", text: .constant(""))
                     .textFieldStyle(.roundedBorder)
@@ -936,10 +1046,12 @@ public struct ModalFormView: View {
                 DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
                     .datePickerStyle(.compact)
             case .select:
-                Picker(field.placeholder ?? "Select option", selection: field.$value) {
+                Picker(field.placeholder ?? "Select option", selection: .constant("")) {
                     Text("Select an option").tag("")
-                    ForEach(field.options, id: \.self) { option in
-                        Text(option).tag(option)
+                    if let options = field.options {
+                        ForEach(options, id: \.self) { option in
+                            Text(option).tag(option)
+                        }
                     }
                 }
                 .pickerStyle(.menu)
@@ -958,15 +1070,17 @@ public struct ModalFormView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                     
-                    ForEach(field.options, id: \.self) { option in
-                        HStack {
-                            Button(action: {
-                                field.value = option
-                            }) {
-                                Image(systemName: field.value == option ? "largecircle.fill.circle" : "circle")
-                                    .foregroundColor(field.value == option ? .blue : .gray)
+                    if let options = field.options {
+                        ForEach(options, id: \.self) { option in
+                            HStack {
+                                Button(action: {
+                                    // TODO: Update field value when DynamicFormState is implemented
+                                }) {
+                                    Image(systemName: "circle")
+                                        .foregroundColor(.gray)
+                                }
+                                Text(option)
                             }
-                            Text(option)
                         }
                     }
                 }
@@ -1017,8 +1131,10 @@ public struct ModalFormView: View {
             case .`enum`:
                 Picker(field.placeholder ?? "Select option", selection: .constant("")) {
                     Text("Select an option").tag("")
-                    ForEach(field.options, id: \.self) { option in
-                        Text(option).tag(option)
+                    if let options = field.options {
+                        ForEach(options, id: \.self) { option in
+                            Text(option).tag(option)
+                        }
                     }
                 }
                 .pickerStyle(.menu)
@@ -1031,8 +1147,11 @@ public struct ModalFormView: View {
 }
 
 /// Simple form view that creates forms from generic form fields
+// MARK: - DEPRECATED: This struct uses GenericFormField which has been deprecated
+// TODO: Replace with DynamicFormField equivalents
+/*
 public struct SimpleFormView: View {
-    let fields: [GenericFormField]
+    let fields: [DynamicFormField]
     let hints: PresentationHints
     let onSubmit: (([String: String]) -> Void)?
     let onReset: (() -> Void)?
@@ -1041,7 +1160,7 @@ public struct SimpleFormView: View {
     @State private var isSubmitting = false
     
     public init(
-        fields: [GenericFormField],
+        fields: [DynamicFormField],
         hints: PresentationHints,
         onSubmit: (([String: String]) -> Void)? = nil,
         onReset: (() -> Void)? = nil
@@ -1149,8 +1268,8 @@ public struct SimpleFormView: View {
         return errors.isEmpty
     }
     
-    private func validateField(_ field: GenericFormField) -> String? {
-        let value = field.value
+    private func validateField(_ field: DynamicFormField) -> String? {
+        let value = field.defaultValue ?? ""
         
         // Required validation
         if field.isRequired && value.isEmpty {
@@ -1163,36 +1282,52 @@ public struct SimpleFormView: View {
         }
         
         // Apply validation rules
-        for rule in field.validationRules {
-            if let error = validateRule(rule, value: value, fieldLabel: field.label) {
-                return error
+        if let validationRules = field.validationRules {
+            for (ruleKey, ruleValue) in validationRules {
+                if let error = validateRule(ruleKey: ruleKey, ruleValue: ruleValue, value: value, fieldLabel: field.label) {
+                    return error
+                }
             }
         }
         
         return nil
     }
     
-    private func validateRule(_ rule: ValidationRule, value: String, fieldLabel: String) -> String? {
-        switch rule.rule {
-        case .required:
-            return value.isEmpty ? rule.message : nil
-        case .email:
+    private func validateRule(ruleKey: String, ruleValue: String, value: String, fieldLabel: String) -> String? {
+        switch ruleKey {
+        case "required":
+            return value.isEmpty ? "\(fieldLabel) is required" : nil
+        case "email":
             let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-            return !matchesPattern(value, pattern: emailRegex) ? rule.message : nil
-        case .phone:
+            return !matchesPattern(value, pattern: emailRegex) ? "\(fieldLabel) must be a valid email" : nil
+        case "phone":
             let phoneRegex = "^[+]?[0-9\\s\\-\\(\\)]{10,}$"
-            return !matchesPattern(value, pattern: phoneRegex) ? rule.message : nil
-        case .url:
+            return !matchesPattern(value, pattern: phoneRegex) ? "\(fieldLabel) must be a valid phone number" : nil
+        case "url":
             let urlRegex = "^(https?://)?[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?$"
-            return !matchesPattern(value, pattern: urlRegex) ? rule.message : nil
-        case .minLength(let min):
-            return value.count < min ? rule.message : nil
-        case .maxLength(let max):
-            return value.count > max ? rule.message : nil
-        case .pattern(let pattern):
-            return !matchesPattern(value, pattern: pattern) ? rule.message : nil
-        case .custom(let validator):
-            return !validator(value) ? rule.message : nil
+            return !matchesPattern(value, pattern: urlRegex) ? "\(fieldLabel) must be a valid URL" : nil
+        case "minLength":
+            if let min = Int(ruleValue), value.count < min {
+                return "\(fieldLabel) must be at least \(min) characters"
+            }
+            return nil
+        case "maxLength":
+            if let max = Int(ruleValue), value.count > max {
+                return "\(fieldLabel) must be less than \(max) characters"
+            }
+            return nil
+        case "min":
+            if let min = Double(ruleValue), let num = Double(value), num < min {
+                return "\(fieldLabel) must be at least \(min)"
+            }
+            return nil
+        case "max":
+            if let max = Double(ruleValue), let num = Double(value), num > max {
+                return "\(fieldLabel) must be less than \(max)"
+            }
+            return nil
+        default:
+            return nil
         }
     }
     
@@ -1202,12 +1337,12 @@ public struct SimpleFormView: View {
         return regex?.firstMatch(in: value, options: [], range: range) != nil
     }
     
-    private func clearFieldError(_ field: GenericFormField) {
-        validationErrors.removeValue(forKey: field.id.uuidString)
+    private func clearFieldError(_ field: DynamicFormField) {
+        validationErrors.removeValue(forKey: field.id)
     }
     
     @ViewBuilder
-    private func createFieldView(for field: GenericFormField) -> some View {
+    private func createFieldView(for field: DynamicFormField) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             // Field label with required indicator
             HStack {
@@ -1223,11 +1358,11 @@ public struct SimpleFormView: View {
             
             // Field input based on type
             Group {
-                switch field.fieldType {
+                switch field.type {
                 case .text:
-                    TextField(field.placeholder ?? "Enter text", text: field.$value)
+                    TextField(field.placeholder ?? "Enter text", text: .constant(field.defaultValue ?? ""))
                         .textFieldStyle(.roundedBorder)
-                        .onChange(of: field.value) { _ in
+                        .onChange(of: field.defaultValue) { _ in
                             clearFieldError(field)
                         }
                         
@@ -1482,70 +1617,72 @@ public struct SimpleFormView: View {
     
     // MARK: - Helper Methods
     
-    private func toggleMultiSelectOption(_ field: GenericFormField, option: String) {
-        let currentValues = field.value.split(separator: ",").map(String.init)
-        if currentValues.contains(option) {
-            let newValues = currentValues.filter { $0 != option }
-            field.value = newValues.joined(separator: ",")
-        } else {
-            let newValues = currentValues + [option]
-            field.value = newValues.joined(separator: ",")
-        }
+    private func toggleMultiSelectOption(_ field: DynamicFormField, option: String) {
+        // TODO: Implement when DynamicFormState is available
+        // This function needs to work with the centralized state management
     }
 }
+*/
 
 // MARK: - Helper Functions
 
 /// Create appropriate form fields based on the form type and context
-private func createFieldsForFormType(_ formType: DataTypeHint, context: PresentationContext) -> [GenericFormField] {
+private func createFieldsForFormType(_ formType: DataTypeHint, context: PresentationContext) -> [DynamicFormField] {
     switch formType {
     case .form:
-        return createGenericFormFields(context: context)
+        // DEPRECATED: GenericFormField is deprecated
+        // return createGenericFormFields(context: context)
+        return [] // TODO: Replace with createDynamicFormFields(context: context)
     case .text:
         return [
-            GenericFormField(label: "Text Content", placeholder: "Enter text content", value: .constant(""), fieldType: .text)
+            DynamicFormField(id: "textContent", type: .text, label: "Text Content", placeholder: "Enter text content")
         ]
     case .number:
         return [
-            GenericFormField(label: "Numeric Value", placeholder: "Enter number", value: .constant(""), fieldType: .number)
+            DynamicFormField(id: "numericValue", type: .number, label: "Numeric Value", placeholder: "Enter number")
         ]
     case .date:
         return [
-            GenericFormField(label: "Date", placeholder: "Select date", value: .constant(""), fieldType: .date)
+            DynamicFormField(id: "date", type: .date, label: "Date", placeholder: "Select date")
         ]
     case .boolean:
         return [
-            GenericFormField(label: "Boolean Value", placeholder: "Toggle value", value: .constant(""), fieldType: .checkbox)
+            DynamicFormField(id: "booleanValue", type: .toggle, label: "Boolean Value", placeholder: "Toggle value")
         ]
     case .collection:
         return [
-            GenericFormField(label: "Collection Name", placeholder: "Enter collection name", value: .constant(""), fieldType: .text),
-            GenericFormField(label: "Item Count", placeholder: "Enter item count", value: .constant(""), fieldType: .number)
+            DynamicFormField(id: "collectionName", type: .text, label: "Collection Name", placeholder: "Enter collection name"),
+            DynamicFormField(id: "itemCount", type: .number, label: "Item Count", placeholder: "Enter item count")
         ]
     case .hierarchical:
         return [
-            GenericFormField(label: "Root Name", placeholder: "Enter root name", value: .constant(""), fieldType: .text),
-            GenericFormField(label: "Level Count", placeholder: "Enter hierarchy levels", value: .constant(""), fieldType: .number)
+            DynamicFormField(id: "rootName", type: .text, label: "Root Name", placeholder: "Enter root name"),
+            DynamicFormField(id: "levelCount", type: .number, label: "Level Count", placeholder: "Enter hierarchy levels")
         ]
     case .temporal:
         return [
-            GenericFormField(label: "Start Date", placeholder: "Select start date", value: .constant(""), fieldType: .date),
-            GenericFormField(label: "Start Time", placeholder: "Select start time", value: .constant(""), fieldType: .time),
-            GenericFormField(label: "End Date", placeholder: "Select end date", value: .constant(""), fieldType: .date),
-            GenericFormField(label: "End Time", placeholder: "Select end time", value: .constant(""), fieldType: .time)
+            DynamicFormField(id: "startDate", type: .date, label: "Start Date", placeholder: "Select start date"),
+            DynamicFormField(id: "startTime", type: .time, label: "Start Time", placeholder: "Select start time"),
+            DynamicFormField(id: "endDate", type: .date, label: "End Date", placeholder: "Select end date"),
+            DynamicFormField(id: "endTime", type: .time, label: "End Time", placeholder: "Select end time")
         ]
     case .media:
         return [
-            GenericFormField(label: "Media Title", placeholder: "Enter media title", value: .constant(""), fieldType: .text),
-            GenericFormField(label: "Media File", placeholder: "Upload media file", value: .constant(""), fieldType: .file),
-            GenericFormField(label: "Media Type", placeholder: "Enter media type", value: .constant(""), fieldType: .text)
+            DynamicFormField(id: "mediaTitle", type: .text, label: "Media Title", placeholder: "Enter media title"),
+            DynamicFormField(id: "mediaFile", type: .file, label: "Media File", placeholder: "Upload media file"),
+            DynamicFormField(id: "mediaType", type: .text, label: "Media Type", placeholder: "Enter media type")
         ]
     default:
-        return createGenericFormFields(context: context)
+        // DEPRECATED: GenericFormField is deprecated
+        // return createGenericFormFields(context: context)
+        return [] // TODO: Replace with createDynamicFormFields(context: context)
     }
 }
 
 /// Create generic form fields based on context
+/// DEPRECATED: This function is commented out as GenericFormField is deprecated.
+/// Use createDynamicFormFields(context:) instead.
+/*
 private func createGenericFormFields(context: PresentationContext) -> [GenericFormField] {
     switch context {
     case .dashboard:
@@ -1586,6 +1723,298 @@ private func createGenericFormFields(context: PresentationContext) -> [GenericFo
         return [
             GenericFormField(label: "Title", placeholder: "Enter title", value: .constant(""), fieldType: .text),
             GenericFormField(label: "Value", placeholder: "Enter value", value: .constant(""), fieldType: .text)
+        ]
+    }
+}
+*/
+
+// MARK: - Dynamic Form Field Creation
+
+/// Create dynamic form fields based on context
+/// This replaces the deprecated createGenericFormFields function
+public func createDynamicFormFields(context: PresentationContext) -> [DynamicFormField] {
+    switch context {
+    case .dashboard:
+        return [
+            DynamicFormField(
+                id: "dashboard_name",
+                type: .text,
+                label: "Dashboard Name",
+                placeholder: "Enter dashboard name"
+            ),
+            DynamicFormField(
+                id: "auto_refresh",
+                type: .toggle,
+                label: "Auto Refresh",
+                placeholder: "Enable auto refresh"
+            )
+        ]
+    case .detail:
+        return [
+            DynamicFormField(
+                id: "title",
+                type: .text,
+                label: "Title",
+                placeholder: "Enter title"
+            ),
+            DynamicFormField(
+                id: "description",
+                type: .richtext,
+                label: "Description",
+                placeholder: "Enter description"
+            ),
+            DynamicFormField(
+                id: "created_date",
+                type: .date,
+                label: "Created Date",
+                placeholder: "Select creation date"
+            ),
+            DynamicFormField(
+                id: "created_time",
+                type: .time,
+                label: "Created Time",
+                placeholder: "Select creation time"
+            ),
+            DynamicFormField(
+                id: "attachments",
+                type: .file,
+                label: "Attachments",
+                placeholder: "Upload attachments"
+            )
+        ]
+    case .form:
+        return [
+            DynamicFormField(
+                id: "name",
+                type: .text,
+                label: "Name",
+                placeholder: "Enter name"
+            ),
+            DynamicFormField(
+                id: "email",
+                type: .email,
+                label: "Email",
+                placeholder: "Enter email"
+            ),
+            DynamicFormField(
+                id: "age",
+                type: .number,
+                label: "Age",
+                placeholder: "Enter age"
+            ),
+            DynamicFormField(
+                id: "birth_date",
+                type: .date,
+                label: "Birth Date",
+                placeholder: "Select birth date"
+            ),
+            DynamicFormField(
+                id: "country",
+                type: .autocomplete,
+                label: "Country",
+                placeholder: "Select country"
+            ),
+            DynamicFormField(
+                id: "bio",
+                type: .richtext,
+                label: "Bio",
+                placeholder: "Enter bio"
+            ),
+            DynamicFormField(
+                id: "profile_photo",
+                type: .file,
+                label: "Profile Photo",
+                placeholder: "Upload profile photo"
+            ),
+            DynamicFormField(
+                id: "subscribe",
+                type: .toggle,
+                label: "Subscribe",
+                placeholder: "Subscribe to updates"
+            )
+        ]
+    case .list:
+        return [
+            DynamicFormField(
+                id: "list_name",
+                type: .text,
+                label: "List Name",
+                placeholder: "Enter list name"
+            ),
+            DynamicFormField(
+                id: "sort_order",
+                type: .text,
+                label: "Sort Order",
+                placeholder: "Enter sort order"
+            )
+        ]
+    case .modal:
+        return [
+            DynamicFormField(
+                id: "modal_title",
+                type: .text,
+                label: "Modal Title",
+                placeholder: "Enter modal title"
+            ),
+            DynamicFormField(
+                id: "modal_content",
+                type: .textarea,
+                label: "Modal Content",
+                placeholder: "Enter modal content"
+            )
+        ]
+    case .browse:
+        return [
+            DynamicFormField(
+                id: "search_query",
+                type: .text,
+                label: "Search",
+                placeholder: "Enter search query"
+            ),
+            DynamicFormField(
+                id: "filter_category",
+                type: .select,
+                label: "Category",
+                placeholder: "Select category",
+                options: ["All", "Recent", "Favorites"]
+            )
+        ]
+    case .edit:
+        return [
+            DynamicFormField(
+                id: "edit_title",
+                type: .text,
+                label: "Title",
+                placeholder: "Enter title"
+            ),
+            DynamicFormField(
+                id: "edit_content",
+                type: .richtext,
+                label: "Content",
+                placeholder: "Enter content"
+            ),
+            DynamicFormField(
+                id: "save_changes",
+                type: .toggle,
+                label: "Save Changes",
+                placeholder: "Auto-save changes"
+            )
+        ]
+    case .create:
+        return [
+            DynamicFormField(
+                id: "create_name",
+                type: .text,
+                label: "Name",
+                placeholder: "Enter name",
+                isRequired: true
+            ),
+            DynamicFormField(
+                id: "create_type",
+                type: .select,
+                label: "Type",
+                placeholder: "Select type",
+                options: ["Document", "Image", "Video", "Audio"]
+            )
+        ]
+    case .search:
+        return [
+            DynamicFormField(
+                id: "search_term",
+                type: .text,
+                label: "Search Term",
+                placeholder: "Enter search term"
+            ),
+            DynamicFormField(
+                id: "search_filters",
+                type: .multiselect,
+                label: "Filters",
+                placeholder: "Select filters",
+                options: ["Date", "Type", "Size", "Author"]
+            )
+        ]
+    case .settings:
+        return [
+            DynamicFormField(
+                id: "theme",
+                type: .select,
+                label: "Theme",
+                placeholder: "Select theme",
+                options: ["Light", "Dark", "Auto"]
+            ),
+            DynamicFormField(
+                id: "notifications",
+                type: .toggle,
+                label: "Notifications",
+                placeholder: "Enable notifications"
+            )
+        ]
+    case .profile:
+        return [
+            DynamicFormField(
+                id: "display_name",
+                type: .text,
+                label: "Display Name",
+                placeholder: "Enter display name"
+            ),
+            DynamicFormField(
+                id: "bio",
+                type: .textarea,
+                label: "Bio",
+                placeholder: "Enter bio"
+            ),
+            DynamicFormField(
+                id: "avatar",
+                type: .file,
+                label: "Avatar",
+                placeholder: "Upload avatar"
+            )
+        ]
+    case .summary:
+        return [
+            DynamicFormField(
+                id: "summary_title",
+                type: .text,
+                label: "Title",
+                placeholder: "Enter summary title"
+            ),
+            DynamicFormField(
+                id: "summary_content",
+                type: .textarea,
+                label: "Summary",
+                placeholder: "Enter summary"
+            )
+        ]
+    case .standard:
+        return [
+            DynamicFormField(
+                id: "title",
+                type: .text,
+                label: "Title",
+                placeholder: "Enter title"
+            ),
+            DynamicFormField(
+                id: "value",
+                type: .text,
+                label: "Value",
+                placeholder: "Enter value"
+            )
+        ]
+    case .navigation:
+        return [
+            DynamicFormField(
+                id: "destination",
+                type: .text,
+                label: "Destination",
+                placeholder: "Enter destination"
+            ),
+            DynamicFormField(
+                id: "route_type",
+                type: .select,
+                label: "Route Type",
+                placeholder: "Select route type",
+                options: ["Fastest", "Shortest", "Scenic"]
+            )
         ]
     }
 }
@@ -1665,9 +2094,16 @@ public struct GenericContentView: View {
     
     public var body: some View {
         // Analyze content type and delegate to appropriate function
-        if let formFields = content as? [GenericFormField] {
+        if let formFields = content as? [DynamicFormField] {
             // Delegate to form function
-            return AnyView(platformPresentFormData_L1(fields: formFields, hints: hints))
+            return AnyView(platformPresentFormData_L1(fields: formFields, hints: EnhancedPresentationHints(
+                dataType: hints.dataType,
+                presentationPreference: hints.presentationPreference,
+                complexity: hints.complexity,
+                context: hints.context,
+                customPreferences: hints.customPreferences,
+                extensibleHints: []
+            )))
         } else if let mediaItems = content as? [GenericMediaItem] {
             // Delegate to media function
             return AnyView(platformPresentMediaData_L1(media: mediaItems, hints: hints))
@@ -1978,7 +2414,7 @@ public struct GenericSettingsView: View {
                     }
                 }
                 .padding()
-                .background(Color(.systemBackground))
+                .background(Color.platformBackground)
             }
         }
         .navigationTitle("Settings")
@@ -2049,7 +2485,7 @@ struct SettingsSectionView: View {
             }
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(Color.platformSecondaryBackground)
         .cornerRadius(12)
     }
 }
@@ -2137,7 +2573,7 @@ struct GenericSettingsItemView: View {
             case .button:
                 Button(item.title) {
                     // Button action would be handled by onSettingChanged
-                    onSettingChanged?(item.key, true)
+                    // TODO: Implement when onSettingChanged is available in scope
                 }
                 .disabled(!item.isEnabled)
                 

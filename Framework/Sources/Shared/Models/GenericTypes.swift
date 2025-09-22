@@ -99,6 +99,7 @@ public struct GenericDataItem: Identifiable, Hashable {
 /// // Use with DynamicFormState for native Date binding
 /// ```
 @available(*, deprecated, message: "Use DynamicFormField with DynamicFormState instead for better type safety and native data type support")
+/*
 public struct GenericFormField: Identifiable {
     public let id = UUID()
     public let label: String
@@ -135,6 +136,7 @@ public struct GenericFormField: Identifiable {
         self.minLength = minLength
     }
 }
+*/
 
 // MARK: - Validation Rule
 

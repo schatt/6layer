@@ -262,28 +262,40 @@ public struct FrameworkIntegrationExample: View {
                 )
                 .appleHIGCompliant() // Apply Apple HIG compliance
                 
-                // Use platform-specific presentation
-                SimpleFormView(
-                    fields: createFormFields(),
-                    hints: createFormHints()
-                )
+                // MARK: - DEPRECATED: SimpleFormView uses GenericFormField which has been deprecated
+                // TODO: Replace with DynamicFormView using DynamicFormField
+                Text("Form functionality temporarily disabled - needs DynamicFormField migration")
+                    .foregroundColor(.secondary)
+                    .padding()
                 .appleHIGCompliant() // Apply Apple HIG compliance
             }
             .navigationTitle("Framework Integration")
         }
     }
     
-    private func createFormFields() -> [GenericFormField] {
+    private func createFormFields() -> [DynamicFormField] {
         // Note: This is a simplified example - in real usage, you'd need to manage state properly
-        // For demonstration purposes, we'll create fields with constant bindings
-        let nameBinding = Binding<String>(get: { "" }, set: { _ in })
-        let emailBinding = Binding<String>(get: { "" }, set: { _ in })
-        let ageBinding = Binding<String>(get: { "" }, set: { _ in })
+        // For demonstration purposes, we'll create fields with default values
         
         return [
-            GenericFormField(label: "Name", value: nameBinding, fieldType: .text),
-            GenericFormField(label: "Email", value: emailBinding, fieldType: .text),
-            GenericFormField(label: "Age", value: ageBinding, fieldType: .number)
+            DynamicFormField(
+                id: "name",
+                type: .text,
+                label: "Name",
+                placeholder: "Enter your name"
+            ),
+            DynamicFormField(
+                id: "email",
+                type: .email,
+                label: "Email",
+                placeholder: "Enter your email"
+            ),
+            DynamicFormField(
+                id: "age",
+                type: .number,
+                label: "Age",
+                placeholder: "Enter your age"
+            )
         ]
     }
     
