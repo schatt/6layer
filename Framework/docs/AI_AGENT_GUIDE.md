@@ -23,6 +23,8 @@ The SixLayer Framework is built on a **6-layer architecture** where **Layer 1 (S
 Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Selection → Layer 4: Component Implementation → Layer 5: Platform Optimization → Layer 6: Platform System
 ```
 
+**📚 For complete architecture details, see [6-Layer Architecture Overview](README_6LayerArchitecture.md)**
+
 ### **Layer 1 Philosophy in Practice:**
 
 #### **✅ CORRECT: Express Intent, Let Framework Decide Implementation**
@@ -108,6 +110,8 @@ public func platformPresentContent_L1(
 ) -> some View
 ```
 
+**📚 For complete Layer 1 function reference, see [Layer 1: Semantic Intent](README_Layer1_Semantic.md)**
+
 ### **⚠️ Important: Generic Types Clarification**
 ```swift
 // ❌ WRONG: These are NOT types you create instances of:
@@ -162,6 +166,8 @@ let financialHint = CustomHint.forFinancialDashboard(
     refreshRate: 60
 )
 ```
+
+**📚 For detailed hints system guidance, see [Hints System Extensibility Guide](HintsSystemExtensibility.md)**
 
 ### **4. Business Configuration Through Custom Preferences:**
 ```swift
@@ -274,6 +280,172 @@ struct VehicleFormView: View {
 ## 🎨 **Custom View Extensibility**
 
 ### **How Developers Can Create Custom Views**
+
+The framework provides **multiple extensibility points** for developers to create custom views. For comprehensive guidance on custom views and business logic integration, see the [Custom Views & Business Logic Guide](CustomViewsAndBusinessLogicGuide.md).
+
+### **6-Layer Architecture Integration for Custom Views**
+
+When creating custom views, developers should leverage the full 6-layer architecture:
+
+```swift
+struct MyBusinessView: View {
+    let businessData: [BusinessItem]
+    
+    var body: some View {
+        VStack {
+            // Layer 1: Semantic Intent
+            platformPresentItemCollection_L1(
+                items: businessData,
+                hints: createBusinessHints()
+            )
+        }
+        .onAppear {
+            // Layer 2: Layout Decision
+            let decision = determineOptimalCardLayout_L2(
+                cardCount: businessData.count,
+                screenWidth: UIScreen.main.bounds.width,
+                screenHeight: UIScreen.main.bounds.height,
+                deviceType: .current
+            )
+            
+            // Layer 3: Strategy Selection
+            let strategy = selectCardLayoutStrategy_L3(
+                contentCount: businessData.count,
+                screenWidth: UIScreen.main.bounds.width,
+                deviceType: .current,
+                contentComplexity: .moderate
+            )
+        }
+        // Layer 4: Component Implementation (handled by framework)
+        // Layer 5: Performance Optimization
+        .platformMemoryOptimization()
+        .platformRenderingOptimization()
+        .platformViewCaching()
+        // Layer 6: Platform-Specific Features
+        #if os(iOS)
+        .platformIOSHapticFeedback(style: .medium) { }
+        .platformIOSSwipeGestures(
+            onSwipeLeft: { /* Custom business logic */ },
+            onSwipeRight: { /* Custom business logic */ }
+        )
+        #elseif os(macOS)
+        .platformMacOSWindowSizing(
+            minWidth: 800,
+            minHeight: 600,
+            idealWidth: 1200,
+            idealHeight: 800
+        )
+        .platformMacOSToolbar {
+            // Custom toolbar for business actions
+        }
+        #endif
+    }
+    
+    private func createBusinessHints() -> EnhancedPresentationHints {
+        let businessHint = CustomHint(
+            hintType: "myapp.business",
+            priority: .high,
+            customData: [
+                "businessType": "inventory",
+                "showAdvancedMetrics": true,
+                "layoutStyle": "adaptive"
+            ]
+        )
+        
+        return EnhancedPresentationHints(
+            dataType: .collection,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .dashboard,
+            extensibleHints: [businessHint]
+        )
+    }
+}
+```
+
+### **Business Logic Extension Patterns**
+
+The framework provides powerful patterns for extending with business logic:
+
+#### **1. Custom Hints for Business Logic**
+```swift
+class InventoryHint: CustomHint {
+    init(showAdvancedMetrics: Bool = false, refreshInterval: Int = 30) {
+        super.init(
+            hintType: "inventory.management",
+            priority: .high,
+            overridesDefault: false,
+            customData: [
+                "showAdvancedMetrics": showAdvancedMetrics,
+                "refreshInterval": refreshInterval,
+                "businessType": "inventory",
+                "layoutStyle": "adaptive",
+                "showQuickActions": true
+            ]
+        )
+    }
+}
+```
+
+#### **2. Business Logic Factories**
+```swift
+extension EnhancedPresentationHints {
+    /// Create hints optimized for inventory management
+    static func forInventory(
+        showAdvancedMetrics: Bool = false,
+        refreshInterval: Int = 30
+    ) -> EnhancedPresentationHints {
+        let inventoryHint = InventoryHint(
+            showAdvancedMetrics: showAdvancedMetrics,
+            refreshInterval: refreshInterval
+        )
+        
+        return EnhancedPresentationHints(
+            dataType: .collection,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .dashboard,
+            extensibleHints: [inventoryHint]
+        )
+    }
+}
+```
+
+#### **3. Business-Specific View Extensions**
+```swift
+extension View {
+    /// Custom form section for business data
+    func businessFormSection<Content: View>(
+        title: String,
+        businessType: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+                
+                Text(businessType.uppercased())
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(4)
+            }
+            
+            content()
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(radius: 2)
+    }
+}
+```
 
 The framework provides **multiple extensibility points** for developers to create custom views:
 
@@ -435,6 +607,8 @@ let enhancedHints = EnhancedPresentationHints(
 4. **Custom hints** - Control view behavior through the hints system
 5. **Extensible hints** - Add business-specific logic through CustomHint
 
+**📚 For comprehensive custom view patterns, see [Custom Views & Business Logic Guide](CustomViewsAndBusinessLogicGuide.md)**
+
 ## 🚫 **Common Mistakes to Avoid**
 
 ### **1. Mixing 6layer Functions with SwiftUI Building Blocks (CRITICAL ERROR):**
@@ -561,6 +735,22 @@ platformPresentFormData_L1(fields: fields, hints: hints)
 - **Performance Benchmarking**: See `Framework/Sources/Shared/Views/Extensions/CrossPlatformOptimizationLayer6.swift` (PerformanceBenchmarking struct)
 - **Complete Function Index**: See `Framework/docs/FunctionIndex.md`
 - **Complex Forms Best Practices**: See `Framework/docs/ComplexFormsBestPractices.md`
+
+### **📚 Comprehensive Documentation References:**
+- **Custom Views & Business Logic**: [Custom Views & Business Logic Guide](CustomViewsAndBusinessLogicGuide.md) - Complete guide for creating custom views and business logic extensions
+- **Hints System Extensibility**: [Hints System Extensibility Guide](HintsSystemExtensibility.md) - Deep dive into the extensible hints system
+- **Developer Extension Guide**: [Developer Extension Guide](DeveloperExtensionGuide.md) - How developers can extend the framework
+- **6-Layer Architecture**: [6-Layer Architecture Overview](README_6LayerArchitecture.md) - Complete architecture documentation
+- **Layer-Specific Guides**:
+  - [Layer 1: Semantic Intent](README_Layer1_Semantic.md) - Semantic functions and intent expression
+  - [Layer 2: Layout Decision](README_Layer2_Decision.md) - Layout decision engine
+  - [Layer 3: Strategy Selection](README_Layer3_Strategy.md) - Strategy selection functions
+  - [Layer 4: Component Implementation](README_Layer4_Implementation.md) - UI component implementation
+  - [Layer 5: Performance](README_Layer5_Performance.md) - Performance optimization
+  - [Layer 6: Platform](README_Layer6_Platform.md) - Platform-specific features
+- **Advanced Field Types**: [Advanced Field Types Guide](AdvancedFieldTypesGuide.md) - Custom field types and form components
+- **Platform-Specific Patterns**: [Platform-Specific Patterns](platform-specific-patterns.md) - iOS/macOS specific implementations
+- **Extension Quick Reference**: [Extension Quick Reference](ExtensionQuickReference.md) - Quick reference for common extension patterns
 
 ### **✅ What's Extensible:**
 1. **Business-Specific Behavior**: Through `CustomHint` system

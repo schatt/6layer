@@ -120,6 +120,25 @@ The framework has compilation errors due to missing CarManager-specific types an
    - Usage examples and demos
    - Migration guides
 
+### Phase 4: Framework Extensibility (FUTURE ROADMAP)
+1. **Component Registry System**
+   - Add registry system for custom components
+   - Allow extension of the decision engine (L2)
+   - Provide protocols for framework integration
+   - Enable custom `platform*` function creation
+
+2. **Enhanced Extension Patterns**
+   - Custom subsection definition protocols
+   - Business logic extension templates
+   - Project-level extension architecture
+   - Advanced hints system capabilities
+
+3. **Developer Experience Improvements**
+   - Better documentation for custom views
+   - Extension pattern examples
+   - Business logic integration guides
+   - AI agent guidance enhancements
+
 ## 📁 Project Structure
 
 ```

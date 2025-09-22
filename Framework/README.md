@@ -6,6 +6,8 @@
 
 A modern, intelligent UI framework that provides a six-layer abstraction architecture for cross-platform Swift development. This framework eliminates platform-specific UI code while maintaining native performance and user experience.
 
+> **🤖 For AI Assistants**: This framework has a specific architecture that requires careful understanding. **Please read the [AI Agent Guide](docs/AI_AGENT_GUIDE.md) first** before attempting to help with this framework. It contains critical information about the Layer 1 Semantic Intent philosophy and common mistakes to avoid.
+
 ## 🏗️ Architecture Overview
 
 The SixLayer Framework implements a sophisticated six-layer UI abstraction that transforms semantic intent into intelligent, platform-optimized layouts:
@@ -606,13 +608,17 @@ xcodebuild test -scheme SixLayerFramework -destination 'platform=iOS Simulator,n
 
 ## 📚 Documentation
 
+### 🤖 **AI Agent Guide** (For AI Assistants)
+- **[AI Agent Guide](docs/AI_AGENT_GUIDE.md)** - **Essential for AI assistants** working with the framework. Contains complete architecture understanding, correct usage patterns, and common mistakes to avoid.
+
+### 📖 **Developer Documentation**
 - [Six-Layer Architecture Overview](docs/six-layer-architecture-current-status.md)
 - [Implementation Plan](docs/six-layer-architecture-implementation-plan.md)
 - [API Reference](docs/6layerapi.txt)
 - [Usage Examples](docs/README_UsageExamples.md)
 - [Developer Extension Guide](docs/DeveloperExtensionGuide.md)
+- [Custom Views & Business Logic Guide](docs/CustomViewsAndBusinessLogicGuide.md) - Complete guide for custom views and business logic integration
 - [Function Index](docs/FunctionIndex.md)
-- [AI Agent Guide](docs/AI_AGENT_GUIDE.md) - For AI assistants working with the framework
 
 ## 🤝 Contributing
 
