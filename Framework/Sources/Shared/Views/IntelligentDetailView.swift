@@ -17,51 +17,55 @@ public struct IntelligentDetailView {
         public static func platformDetailView<T>(
         for data: T,
         hints: PresentationHints? = nil,
-        @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() }
+        @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { fieldName, value, fieldType in
+            Text(String(describing: value))
+                .foregroundColor(.secondary)
+        }
     ) -> some View {
         let analysis = DataIntrospectionEngine.analyze(data)
         let layoutStrategy = determineLayoutStrategy(analysis: analysis, hints: hints)
         
-        return Group {
-            switch layoutStrategy {
-            case .compact:
-                platformCompactDetailView(
-                    data: data,
-                    analysis: analysis,
-                    customFieldView: customFieldView
-                )
-            case .standard:
-                platformStandardDetailView(
-                    data: data,
-                    analysis: analysis,
-                    customFieldView: customFieldView
-                )
-            case .detailed:
-                platformDetailedDetailView(
-                    data: data,
-                    analysis: analysis,
-                    customFieldView: customFieldView
-                )
-            case .tabbed:
-                platformTabbedDetailView(
-                    data: data,
-                    analysis: analysis,
-                    customFieldView: customFieldView
-                )
-            case .adaptive:
-                platformAdaptiveDetailView(
-                    data: data,
-                    analysis: analysis,
-                    customFieldView: customFieldView
-                )
-            }
+        switch layoutStrategy {
+        case .compact:
+            return AnyView(platformCompactDetailView(
+                data: data,
+                analysis: analysis,
+                customFieldView: customFieldView
+            ))
+        case .standard:
+            return AnyView(platformStandardDetailView(
+                data: data,
+                analysis: analysis,
+                customFieldView: customFieldView
+            ))
+        case .detailed:
+            return AnyView(platformDetailedDetailView(
+                data: data,
+                analysis: analysis,
+                customFieldView: customFieldView
+            ))
+        case .tabbed:
+            return AnyView(platformTabbedDetailView(
+                data: data,
+                analysis: analysis,
+                customFieldView: customFieldView
+            ))
+        case .adaptive:
+            return AnyView(platformAdaptiveDetailView(
+                data: data,
+                analysis: analysis,
+                customFieldView: customFieldView
+            ))
         }
     }
     
     /// Generate a detail view using default layout strategy
         public static func platformDetailView<T>(
         for data: T,
-        @ViewBuilder customFieldView: @escaping (String, String, FieldType) -> some View = { _, _, _ in EmptyView() }
+        @ViewBuilder customFieldView: @escaping (String, String, FieldType) -> some View = { fieldName, value, fieldType in
+            Text(value)
+                .foregroundColor(.secondary)
+        }
     ) -> some View {
         platformDetailView(
             for: data,
@@ -379,11 +383,7 @@ public extension IntelligentDetailView {
             Spacer()
             
             // Use custom field view if provided, otherwise use default
-            if customFieldView is (String, Any, FieldType) -> EmptyView {
-                platformDefaultFieldValue(field: field, value: value)
-            } else {
-                customFieldView(field.name, value, field.type)
-            }
+            customFieldView(field.name, value, field.type)
         }
         .padding(.vertical, 4)
     }
@@ -401,11 +401,7 @@ public extension IntelligentDetailView {
                 .foregroundColor(.primary)
             
             // Use custom field view if provided, otherwise use default
-            if customFieldView is (String, Any, FieldType) -> EmptyView {
-                platformDefaultFieldValue(field: field, value: value)
-            } else {
-                customFieldView(field.name, value, field.type)
-            }
+            customFieldView(field.name, value, field.type)
             
             // Show field metadata
             HStack {

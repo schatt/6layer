@@ -443,46 +443,8 @@ public struct IntelligentFormView {
                 .foregroundColor(Color.platformLabel)
             
             // Field input
-            if customFieldView is (String, Any, FieldType) -> EmptyView {
-                // Use default platform field view
-                DefaultPlatformFieldView(
-                    field: field,
-                    value: initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field),
-                    onValueChange: { newValue in
-                        // Connect to data binding system
-                        if let dataBinder = dataBinder {
-                            dataBinder.updateField(field.name, value: newValue)
-                        }
-                        
-                        // Connect to form state management
-                        if let formStateManager = formStateManager {
-                            formStateManager.updateField(field.name, value: newValue)
-                        }
-                        
-                        // Track field interaction in analytics
-                        if let analyticsManager = analyticsManager {
-                            analyticsManager.trackFieldInteraction(
-                                formId: "intelligent_form",
-                                fieldId: field.name,
-                                userId: nil,
-                                interactionType: .change
-                            )
-                        }
-                        
-                        // Provide input handling feedback
-                        if let inputHandlingManager = inputHandlingManager {
-                            let behavior = inputHandlingManager.getInteractionBehavior(for: .tap)
-                            if behavior.shouldProvideHapticFeedback {
-                                inputHandlingManager.hapticManager.triggerFeedback(.light)
-                            }
-                        }
-                    },
-                    formStateManager: formStateManager
-                )
-            } else {
-                // Use custom field view
-                customFieldView(field.name, initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field), field.type)
-            }
+            // Use custom field view
+            customFieldView(field.name, initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field), field.type)
             
             // Field description if available
             if let description = getFieldDescription(for: field) {
