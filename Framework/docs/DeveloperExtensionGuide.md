@@ -437,30 +437,38 @@ struct FinancialDashboardView: View {
 
 ```swift
 struct CustomExpenseForm: View {
-    @State private var amount = ""
-    @State private var description = ""
-    @State private var category = ""
+    @StateObject private var formState = DynamicFormState(configuration: formConfig)
+    
+    private let formConfig = DynamicFormConfiguration(
+        sections: [
+            DynamicFormSection(
+                id: "expense",
+                title: "Expense Details",
+                fields: [
+                    DynamicFormField(id: "amount", type: .number, label: "Amount"),
+                    DynamicFormField(id: "description", type: .text, label: "Description"),
+                    DynamicFormField(id: "category", type: .select, label: "Category", options: ["Travel", "Meals", "Office", "Other"])
+                ]
+            )
+        ]
+    )
     
     var body: some View {
         VStack(spacing: 20) {
-            // Use framework for form presentation
-            platformPresentFormData_L1(
-                fields: [
-                    GenericFormField(label: "Amount", value: $amount),
-                    GenericFormField(label: "Description", value: $description),
-                    GenericFormField(label: "Category", value: $category)
-                ],
-                hints: PresentationHints(
-                    dataType: .form,
-                    presentationPreference: .automatic,
-                    complexity: .simple,
-                    context: .input
-                )
+            // Use framework for form presentation with native types
+            DynamicFormView(
+                configuration: formConfig,
+                formState: formState
             )
             
             // Custom submit button
             Button("Submit Expense") {
-                // Handle submission
+                // Handle submission - access native types directly
+                let amount: Double = formState.getValue(for: "amount") ?? 0.0
+                let description: String = formState.getValue(for: "description") ?? ""
+                let category: String = formState.getValue(for: "category") ?? ""
+                
+                // Process form data...
             }
             .buttonStyle(.borderedProminent)
         }
@@ -468,6 +476,8 @@ struct CustomExpenseForm: View {
     }
 }
 ```
+
+**⚠️ Note**: The deprecated `GenericFormField` and `platformPresentFormData_L1` functions have been replaced with `DynamicFormField` and `DynamicFormView` for better type safety and native data type support.
 
 ## Troubleshooting
 
@@ -562,12 +572,17 @@ Key functions for extension:
 
 - `platformPresentItemCollection_L1()` - Present collections
 - `platformPresentNumericData_L1()` - Present numeric data
-- `platformPresentFormData_L1()` - Present forms
+- `platformPresentFormData_L1()` - Present forms ⚠️ **DEPRECATED** - Use `DynamicFormView` instead
 - `platformResponsiveCard_L1()` - Present responsive cards
 - `platformCardGrid()` - Grid layout
 - `platformCardStyle()` - Card styling
 - `platformMemoryOptimization()` - Memory optimization
 - `platformRenderingOptimization()` - Rendering optimization
+
+**Form Functions (Recommended):**
+- `DynamicFormView()` - Modern form presentation with native types
+- `DynamicFormField()` - Form field configuration
+- `DynamicFormState()` - Form state management
 
 ### Support
 

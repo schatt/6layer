@@ -73,6 +73,32 @@ public struct GenericDataItem: Identifiable, Hashable {
 // MARK: - Generic Form Field
 
 /// Generic form field for form handling with binding support
+/// 
+/// ⚠️ **DEPRECATED**: This struct is deprecated and will be removed in a future version.
+/// Use `DynamicFormField` with `DynamicFormState` instead, which provides:
+/// - Native data type support (Date, Bool, Double, etc.)
+/// - Better type safety
+/// - More flexible field configuration
+/// - Consistent API across the framework
+/// 
+/// **Migration Guide:**
+/// ```swift
+/// // Old (deprecated)
+/// GenericFormField(
+///     label: "Date",
+///     value: $dateString,  // String binding
+///     fieldType: .date
+/// )
+/// 
+/// // New (recommended)
+/// DynamicFormField(
+///     id: "date",
+///     type: .date,
+///     label: "Date"
+/// )
+/// // Use with DynamicFormState for native Date binding
+/// ```
+@available(*, deprecated, message: "Use DynamicFormField with DynamicFormState instead for better type safety and native data type support")
 public struct GenericFormField: Identifiable {
     public let id = UUID()
     public let label: String

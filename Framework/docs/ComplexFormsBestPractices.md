@@ -19,6 +19,8 @@ Use the SixLayer Framework for basic forms where it provides value. Use SwiftUI 
 - **Rapid prototyping** of basic forms
 - **Form structure** is more important than custom interactions
 
+**⚠️ Important**: Use `DynamicFormField` with `DynamicFormState` instead of the deprecated `GenericFormField`. `DynamicFormField` provides native data type support and better type safety.
+
 ### ✅ Use SwiftUI Directly When:
 - **Complex business logic** (calculations, conditional rendering)
 - **Custom UI components** (photo pickers, custom calculators)
@@ -57,21 +59,35 @@ VStack {
 ### Example: Fuel Purchase Form
 ```swift
 struct FuelPurchaseForm: View {
-    @State private var basicData = BasicFormData()
+    @StateObject private var formState = DynamicFormState(configuration: formConfig)
     @State private var gallons: Double = 0
     @State private var totalCost: Double = 0
     @State private var receiptImage: UIImage?
     
+    private let formConfig = DynamicFormConfiguration(
+        sections: [
+            DynamicFormSection(
+                id: "basic",
+                title: "Basic Information",
+                fields: [
+                    DynamicFormField(id: "date", type: .date, label: "Date"),
+                    DynamicFormField(id: "odometer", type: .number, label: "Odometer"),
+                    DynamicFormField(id: "isFillUp", type: .toggle, label: "Complete Fill-Up")
+                ]
+            )
+        ]
+    )
+    
     var body: some View {
         VStack {
-            // Framework handles basic fields
-            IntelligentFormView.generateForm(
-                for: BasicFormData.self,
-                initialData: basicData
+            // Framework handles basic fields with native types
+            DynamicFormView(
+                configuration: formConfig,
+                formState: formState
             )
             
             // Custom components for complex logic
-            if basicData.isFillUp {
+            if formState.getValue(for: "isFillUp") ?? false {
                 MPGCalculatorView(
                     gallons: $gallons,
                     totalCost: $totalCost
@@ -222,7 +238,7 @@ struct ExpenseForm: View {
 // Add only what you actually need
 struct FormSection {
     let title: String
-    let fields: [GenericFormField]
+    let fields: [DynamicFormField]  // Use DynamicFormField instead of deprecated GenericFormField
 }
 
 // Add specific field types
@@ -234,7 +250,7 @@ enum FormFieldType {
 
 // Add simple conditional logic
 struct ConditionalField {
-    let field: GenericFormField
+    let field: DynamicFormField  // Use DynamicFormField instead of deprecated GenericFormField
     let showWhen: (FormState) -> Bool
 }
 ```

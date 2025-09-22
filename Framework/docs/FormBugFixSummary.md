@@ -3,6 +3,38 @@
 ## Overview
 This document summarizes the fixes applied to resolve the critical issues identified in the 6-Layer Framework form implementation bug report.
 
+## ⚠️ Important Notice: GenericFormField Deprecated
+
+**As of v3.0.0, `GenericFormField` is deprecated and will be removed in a future version.**
+
+The fixes described in this document were applied to `GenericFormField` to resolve immediate issues, but the recommended approach is to migrate to `DynamicFormField` with `DynamicFormState`, which provides:
+
+- **Native data type support** (Date, Bool, Double, etc.) instead of string-only bindings
+- **Better type safety** and validation
+- **More flexible field configuration**
+- **Consistent API** across the framework
+- **Better performance** (no string conversions required)
+
+**Migration Guide:**
+```swift
+// Old (deprecated) - requires manual string conversion
+GenericFormField(
+    label: "Purchase Date",
+    value: $dateString,  // String binding
+    fieldType: .date
+)
+
+// New (recommended) - native Date support
+DynamicFormField(
+    id: "purchaseDate",
+    type: .date,
+    label: "Purchase Date"
+)
+// Use with DynamicFormState for native Date binding
+```
+
+See the [API Documentation](6layerapi.txt) for complete migration details.
+
 ## Issues Fixed
 
 ### 1. ✅ Non-Interactive Form Fields

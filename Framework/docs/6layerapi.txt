@@ -2,12 +2,51 @@ SixLayer Framework API Reference
 
 ## Current API Functions (v2.6.0+)
 
+## ⚠️ Deprecated APIs
+
+### GenericFormField (Deprecated)
+The `GenericFormField` struct and related `platformPresentFormData_L1` functions are deprecated and will be removed in a future version.
+
+**Why deprecated:**
+- Forces string bindings for all field types, requiring manual conversion
+- Inconsistent with SwiftUI conventions
+- Limited type safety
+- Duplicates functionality already available in `DynamicFormField`
+
+**Migration to DynamicFormField:**
+```swift
+// Old (deprecated)
+platformPresentFormData_L1(
+    fields: [GenericFormField(label: "Date", value: $dateString, fieldType: .date)],
+    hints: hints
+)
+
+// New (recommended)
+DynamicFormView(
+    configuration: DynamicFormConfiguration(
+        sections: [DynamicFormSection(
+            id: "main",
+            title: "Form",
+            fields: [DynamicFormField(id: "date", type: .date, label: "Date")]
+        )]
+    ),
+    formState: DynamicFormState(configuration: config)
+)
+```
+
+**Benefits of DynamicFormField:**
+- Native data type support (Date, Bool, Double, etc.)
+- Better type safety and validation
+- More flexible field configuration
+- Consistent API across the framework
+- Better performance (no string conversions)
+
 ### Layer 1 Semantic Functions (PlatformSemanticLayer1.swift)
 - `platformPresentItemCollection_L1<Item: Identifiable>(items: [Item], hints: PresentationHints, onCreateItem: (() -> Void)? = nil) -> some View`
   - **Empty State Handling**: Automatically displays intelligent empty state when items array is empty
   - **Context-Aware Messaging**: Empty state messages adapt based on data type, context, and complexity hints
   - **Create Action Support**: Optional create action parameter for actionable empty states with data-type-specific button labels
-- `platformPresentFormData_L1(fields: [GenericFormField], hints: PresentationHints) -> some View`
+- `platformPresentFormData_L1(fields: [GenericFormField], hints: PresentationHints) -> some View` ⚠️ **DEPRECATED** - Use DynamicFormField instead
 - `platformPresentNumericData_L1(data: [GenericNumericData], hints: PresentationHints) -> some View`
 - `platformResponsiveCard_L1<Content: View>(@ViewBuilder content: () -> Content, hints: PresentationHints) -> some View`
 - `platformPresentMediaData_L1(media: [GenericMediaItem], hints: PresentationHints) -> some View`
@@ -17,7 +56,7 @@ SixLayer Framework API Reference
 
 ### Enhanced Hints Overloads
 - `platformPresentItemCollection_L1<Item: Identifiable>(items: [Item], hints: EnhancedPresentationHints, onCreateItem: (() -> Void)? = nil) -> some View`
-- `platformPresentFormData_L1(fields: [GenericFormField], hints: EnhancedPresentationHints) -> some View`
+- `platformPresentFormData_L1(fields: [GenericFormField], hints: EnhancedPresentationHints) -> some View` ⚠️ **DEPRECATED** - Use DynamicFormField instead
 - `platformPresentNumericData_L1(data: [GenericNumericData], hints: EnhancedPresentationHints) -> some View`
 - `platformResponsiveCard_L1<Content: View>(@ViewBuilder content: () -> Content, hints: EnhancedPresentationHints) -> some View`
 - `platformPresentMediaData_L1(media: [GenericMediaItem], hints: EnhancedPresentationHints) -> some View`
