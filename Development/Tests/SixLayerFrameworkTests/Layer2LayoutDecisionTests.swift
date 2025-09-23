@@ -22,33 +22,49 @@ final class Layer2LayoutDecisionTests: XCTestCase {
     
     // MARK: - determineOptimalLayout_L2 Tests
     
-    func testDetermineOptimalLayout_L2_SimpleContent() {
-        // Given: Simple content with few items
-        let items = [
-            TestItem(title: "Item 1", content: "Simple content"),
-            TestItem(title: "Item 2", content: "Simple content")
-        ]
-        let hints = PresentationHints(
-            dataType: .text,
-            presentationPreference: .list,
-            complexity: .simple,
-            context: .dashboard
-        )
+    func testDetermineOptimalLayout_L2_ContentComplexityAlgorithm() {
+        // Test the actual content complexity analysis algorithm
+        // Algorithm: 0-5=simple, 6-9=moderate, 10-25=complex, 25+=veryComplex
         
-        // When: Determining optimal layout
-        let decision = determineOptimalLayout_L2(
-            items: items,
-            hints: hints,
+        // Test simple content (0-5 items)
+        let simpleItems = (1...3).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let simpleDecision = determineOptimalLayout_L2(
+            items: simpleItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .simple, context: .dashboard),
             screenWidth: 375,
             deviceType: .phone
         )
+        XCTAssertEqual(simpleDecision.approach, .uniform, "3 items should result in uniform approach (simple content)")
         
-        // Then: Should return appropriate layout decision
-        XCTAssertNotNil(decision)
-        XCTAssertTrue(decision.columns > 0)
-        XCTAssertTrue(decision.spacing >= 0)
-        XCTAssertFalse(decision.reasoning.isEmpty)
-        XCTAssertEqual(decision.performance, .standard) // Simple content should use standard performance
+        // Test moderate content (6-9 items)
+        let moderateItems = (1...7).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let moderateDecision = determineOptimalLayout_L2(
+            items: moderateItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .moderate, context: .dashboard),
+            screenWidth: 375,
+            deviceType: .phone
+        )
+        XCTAssertEqual(moderateDecision.approach, .adaptive, "7 items should result in adaptive approach (moderate content)")
+        
+        // Test complex content (10-25 items)
+        let complexItems = (1...15).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let complexDecision = determineOptimalLayout_L2(
+            items: complexItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .complex, context: .dashboard),
+            screenWidth: 375,
+            deviceType: .phone
+        )
+        XCTAssertEqual(complexDecision.approach, .responsive, "15 items should result in responsive approach (complex content)")
+        
+        // Test very complex content (25+ items)
+        let veryComplexItems = (1...30).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let veryComplexDecision = determineOptimalLayout_L2(
+            items: veryComplexItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .veryComplex, context: .dashboard),
+            screenWidth: 375,
+            deviceType: .phone
+        )
+        XCTAssertEqual(veryComplexDecision.approach, .dynamic, "30 items should result in dynamic approach (very complex content)")
     }
     
     func testDetermineOptimalLayout_L2_ComplexContent() {
@@ -224,11 +240,55 @@ final class Layer2LayoutDecisionTests: XCTestCase {
         XCTAssertFalse(decision.reasoning.isEmpty)
     }
     
+    func testDetermineOptimalLayout_L2_ColumnCalculationAlgorithm() {
+        // Test the actual column calculation algorithm
+        // Algorithm: baseColumns = max(1, min(6, itemCount / 3))
+        // Then apply complexity limits: simple=3, moderate=4, complex=5, veryComplex=6
+        // Then apply device limits: mobile<768=2, tablet>=768=4, desktop>=1024=6
+        
+        // Test mobile device (width < 768) - should be limited to 2 columns max
+        let mobileItems = (1...10).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let mobileDecision = determineOptimalLayout_L2(
+            items: mobileItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .complex, context: .dashboard),
+            screenWidth: 375, // Mobile width
+            deviceType: .phone
+        )
+        XCTAssertLessThanOrEqual(mobileDecision.columns, 2, "Mobile devices should be limited to 2 columns max")
+        
+        // Test tablet device (width >= 768) - should allow more columns
+        let tabletItems = (1...10).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let tabletDecision = determineOptimalLayout_L2(
+            items: tabletItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .complex, context: .dashboard),
+            screenWidth: 768, // Tablet width
+            deviceType: .pad
+        )
+        XCTAssertGreaterThan(tabletDecision.columns, 2, "Tablet devices should allow more than 2 columns")
+        XCTAssertLessThanOrEqual(tabletDecision.columns, 5, "Complex content should be limited to 5 columns")
+        
+        // Test desktop device (width >= 1024) - should allow maximum columns
+        let desktopItems = (1...20).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let desktopDecision = determineOptimalLayout_L2(
+            items: desktopItems,
+            hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .veryComplex, context: .dashboard),
+            screenWidth: 1024, // Desktop width
+            deviceType: .pad
+        )
+        XCTAssertGreaterThan(desktopDecision.columns, 3, "Desktop devices should allow many columns")
+        XCTAssertLessThanOrEqual(desktopDecision.columns, 6, "Very complex content should be limited to 6 columns")
+    }
+    
     // MARK: - determineOptimalFormLayout_L2 Tests
     
-    func testDetermineOptimalFormLayout_L2_SimpleForm() {
-        // Given: Simple form hints
-        let hints = PresentationHints(
+    func testDetermineOptimalFormLayout_L2_FieldCountComplexityAlgorithm() {
+        // Test the actual form complexity analysis algorithm
+        // Algorithm: fieldCount >= 8 && hasComplexFields && hasValidation = complex
+        //           fieldCount >= 5 = moderate
+        //           fieldCount < 5 = simple
+        
+        // Test simple form (fieldCount < 5)
+        let simpleHints = PresentationHints(
             dataType: .form,
             presentationPreference: .form,
             complexity: .simple,
@@ -239,18 +299,57 @@ final class Layer2LayoutDecisionTests: XCTestCase {
                 "hasValidation": "false"
             ]
         )
+        let simpleDecision = determineOptimalFormLayout_L2(hints: simpleHints)
+        XCTAssertEqual(simpleDecision.contentComplexity, .simple, "3 fields should result in simple complexity")
+        XCTAssertEqual(simpleDecision.validation, .none, "No validation specified should result in none")
         
-        // When: Determining optimal form layout
-        let decision = determineOptimalFormLayout_L2(hints: hints)
+        // Test moderate form (fieldCount >= 5)
+        let moderateHints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .form,
+            complexity: .moderate,
+            context: .form,
+            customPreferences: [
+                "fieldCount": "6",
+                "hasComplexFields": "false",
+                "hasValidation": "true"
+            ]
+        )
+        let moderateDecision = determineOptimalFormLayout_L2(hints: moderateHints)
+        XCTAssertEqual(moderateDecision.contentComplexity, .moderate, "6 fields should result in moderate complexity")
+        XCTAssertEqual(moderateDecision.validation, .realTime, "Validation specified should result in realTime")
         
-        // Then: Should return appropriate form layout decision
-        XCTAssertNotNil(decision)
-        XCTAssertEqual(decision.preferredContainer, .adaptive)
-        XCTAssertEqual(decision.fieldLayout, .standard)
-        XCTAssertEqual(decision.spacing, .comfortable)
-        XCTAssertEqual(decision.validation, .none)
-        XCTAssertEqual(decision.contentComplexity, .simple)
-        XCTAssertFalse(decision.reasoning.isEmpty)
+        // Test complex form (fieldCount >= 8 && hasComplexFields && hasValidation)
+        let complexHints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .form,
+            complexity: .complex,
+            context: .form,
+            customPreferences: [
+                "fieldCount": "10",
+                "hasComplexFields": "true",
+                "hasValidation": "true"
+            ]
+        )
+        let complexDecision = determineOptimalFormLayout_L2(hints: complexHints)
+        XCTAssertEqual(complexDecision.contentComplexity, .complex, "10 fields with complex fields and validation should result in complex complexity")
+        XCTAssertEqual(complexDecision.validation, .realTime, "Validation specified should result in realTime")
+        
+        // Test edge case: many fields but no complex fields or validation
+        let edgeHints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .form,
+            complexity: .moderate,
+            context: .form,
+            customPreferences: [
+                "fieldCount": "12",
+                "hasComplexFields": "false",
+                "hasValidation": "false"
+            ]
+        )
+        let edgeDecision = determineOptimalFormLayout_L2(hints: edgeHints)
+        XCTAssertEqual(edgeDecision.contentComplexity, .moderate, "12 fields without complex fields should result in moderate complexity")
+        XCTAssertEqual(edgeDecision.validation, .none, "No validation specified should result in none")
     }
     
     func testDetermineOptimalFormLayout_L2_ComplexForm() {
