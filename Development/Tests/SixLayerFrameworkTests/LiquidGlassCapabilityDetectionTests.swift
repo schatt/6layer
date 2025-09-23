@@ -100,19 +100,74 @@ final class LiquidGlassCapabilityDetectionTests: XCTestCase {
         XCTAssertEqual(capabilityInfo.fallbackBehaviors.count, LiquidGlassFeature.allCases.count, "All features should have fallback behaviors")
     }
     
-    // MARK: - GENERIC TESTS (COMMENTED OUT - NOT REAL COVERAGE)
-    /*
-    func testCapabilityInfoFallbackBehaviors() {
-        // Given
+    // MARK: - REAL TDD TESTS FOR LIQUID GLASS CAPABILITY FALLBACK BEHAVIORS
+    
+    func testCapabilityInfoFallbackBehaviorsCompleteness() throws {
+        // Test that ALL LiquidGlassFeature cases have fallback behaviors
+        // This will FAIL if we add a new feature without handling it in LiquidGlassCapabilityInfo
+        
         let capabilityInfo = LiquidGlassCapabilityInfo()
         
-        // When & Then
         for feature in LiquidGlassFeature.allCases {
             let fallbackBehavior = capabilityInfo.fallbackBehaviors[feature]
             XCTAssertNotNil(fallbackBehavior, "Feature \(feature.rawValue) should have a fallback behavior")
         }
     }
-    */
+    
+    func testCapabilityInfoFallbackBehaviorsBusinessLogic() throws {
+        // Test that each LiquidGlassFeature has appropriate fallback behavior for its business purpose
+        // This tests the actual business behavior, not just existence
+        
+        let capabilityInfo = LiquidGlassCapabilityInfo()
+        
+        for feature in LiquidGlassFeature.allCases {
+            let fallbackBehavior = capabilityInfo.fallbackBehaviors[feature]
+            XCTAssertNotNil(fallbackBehavior, "Feature \(feature.rawValue) should have a fallback behavior")
+            
+            // Test feature-specific fallback requirements using switch for compiler enforcement
+            switch feature {
+            case .materials:
+                // Materials should have opaque background fallback
+                XCTAssertEqual(fallbackBehavior, .opaqueBackground, "Materials should have opaque background fallback")
+                
+            case .floatingControls:
+                // Floating controls should have standard controls fallback
+                XCTAssertEqual(fallbackBehavior, .standardControls, "Floating controls should have standard controls fallback")
+                
+            case .contextualMenus:
+                // Contextual menus should have standard menus fallback
+                XCTAssertEqual(fallbackBehavior, .standardMenus, "Contextual menus should have standard menus fallback")
+                
+            case .adaptiveWallpapers:
+                // Adaptive wallpapers should have static wallpapers fallback
+                XCTAssertEqual(fallbackBehavior, .staticWallpapers, "Adaptive wallpapers should have static wallpapers fallback")
+                
+            case .dynamicReflections:
+                // Dynamic reflections should have no reflections fallback
+                XCTAssertEqual(fallbackBehavior, .noReflections, "Dynamic reflections should have no reflections fallback")
+            }
+        }
+    }
+    
+    func testCapabilityInfoFallbackBehaviorsExhaustiveness() throws {
+        // Test that LiquidGlassCapabilityInfo handles ALL LiquidGlassFeature cases
+        // This will FAIL if we add a new feature without handling it
+        
+        let capabilityInfo = LiquidGlassCapabilityInfo()
+        let allFeatures = LiquidGlassFeature.allCases
+        var handledFeatures: Set<LiquidGlassFeature> = []
+        
+        for feature in allFeatures {
+            // This will fail if LiquidGlassCapabilityInfo doesn't handle the feature
+            let fallbackBehavior = capabilityInfo.fallbackBehaviors[feature]
+            XCTAssertNotNil(fallbackBehavior, "Feature \(feature.rawValue) should have a fallback behavior")
+            handledFeatures.insert(feature)
+        }
+        
+        // Verify we handled all features
+        XCTAssertEqual(handledFeatures.count, allFeatures.count, 
+                      "All LiquidGlassFeature cases should be handled")
+    }
     
     // MARK: - Platform-Specific Tests
     

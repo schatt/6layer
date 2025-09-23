@@ -99,10 +99,10 @@ final class CoreArchitectureTests: XCTestCase {
         XCTAssertNotEqual(dashboardHints.context, detailHints.context)
     }
     
-    // MARK: - GENERIC TESTS (COMMENTED OUT - NOT REAL COVERAGE)
-    /*
-    func testAllPresentationContextsHaveFields() throws {
-        // Test that ALL PresentationContext cases return fields
+    // MARK: - REAL TDD TESTS FOR PRESENTATION CONTEXT FIELD GENERATION
+    
+    func testPresentationContextFieldGenerationCompleteness() throws {
+        // Test that ALL PresentationContext cases are handled in createDynamicFormFields
         // This will FAIL if we add a new context without handling it in createDynamicFormFields
         
         for context in PresentationContext.allCases {
@@ -118,7 +118,105 @@ final class CoreArchitectureTests: XCTestCase {
             }
         }
     }
-    */
+    
+    func testPresentationContextFieldGenerationBehavior() throws {
+        // Test that each PresentationContext returns appropriate fields for its business purpose
+        // This tests the actual business behavior, not just existence
+        
+        for context in PresentationContext.allCases {
+            let fields = createDynamicFormFields(context: context)
+            
+            // Test context-specific field requirements using switch for compiler enforcement
+            switch context {
+            case .dashboard:
+                // Dashboard should have dashboard-specific fields
+                XCTAssertTrue(fields.contains { $0.id.contains("dashboard") || $0.id.contains("auto_refresh") }, 
+                            "Dashboard context should have dashboard/auto_refresh fields")
+                
+            case .browse:
+                // Browse should have search/filter fields
+                XCTAssertTrue(fields.contains { $0.id.contains("search") || $0.id.contains("filter") }, 
+                            "Browse context should have search/filter fields")
+                
+            case .detail:
+                // Detail should have comprehensive information fields
+                XCTAssertGreaterThan(fields.count, 2, "Detail context should have multiple information fields")
+                
+            case .edit:
+                // Edit should have editable fields
+                XCTAssertTrue(fields.contains { $0.type == .text || $0.type == .textarea }, 
+                            "Edit context should have text input fields")
+                
+            case .create:
+                // Create should have form fields for new item creation
+                XCTAssertTrue(fields.contains { $0.id.contains("name") || $0.id.contains("title") }, 
+                            "Create context should have name/title fields")
+                
+            case .search:
+                // Search should have search-specific fields
+                XCTAssertTrue(fields.contains { $0.id.contains("query") || $0.id.contains("search") }, 
+                            "Search context should have query/search fields")
+                
+            case .settings:
+                // Settings should have configuration fields
+                XCTAssertTrue(fields.contains { $0.id.contains("theme") || $0.id.contains("notifications") }, 
+                            "Settings context should have theme/notifications fields")
+                
+            case .profile:
+                // Profile should have user information fields
+                XCTAssertTrue(fields.contains { $0.id.contains("display_name") || $0.id.contains("bio") || $0.id.contains("avatar") }, 
+                            "Profile context should have display_name/bio/avatar fields")
+                
+            case .form:
+                // Form should have comprehensive form fields
+                XCTAssertGreaterThan(fields.count, 3, "Form context should have multiple form fields")
+                
+            case .modal:
+                // Modal should have focused, specific fields
+                XCTAssertLessThanOrEqual(fields.count, 5, "Modal context should have focused, limited fields")
+                
+            case .summary:
+                // Summary should have overview fields
+                XCTAssertTrue(fields.contains { $0.id.contains("summary") || $0.id.contains("overview") }, 
+                            "Summary context should have summary/overview fields")
+                
+            case .list:
+                // List should have list-specific fields
+                XCTAssertTrue(fields.contains { $0.id.contains("list") || $0.id.contains("item") }, 
+                            "List context should have list/item fields")
+                
+            case .standard:
+                // Standard should have basic fields
+                XCTAssertGreaterThan(fields.count, 0, "Standard context should have basic fields")
+                
+            case .navigation:
+                // Navigation should have navigation-specific fields
+                XCTAssertTrue(fields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
+                            "Navigation context should have navigation/route fields")
+            }
+        }
+    }
+    
+    func testPresentationContextFieldGenerationExhaustiveness() throws {
+        // Test that createDynamicFormFields handles ALL PresentationContext cases
+        // This will FAIL if we add a new context without handling it
+        
+        let allContexts = PresentationContext.allCases
+        var handledContexts: Set<PresentationContext> = []
+        
+        for context in allContexts {
+            // This will fail if createDynamicFormFields doesn't handle the context
+            let fields = createDynamicFormFields(context: context)
+            handledContexts.insert(context)
+            
+            // Verify we got fields (not empty array)
+            XCTAssertFalse(fields.isEmpty, "Context \(context) should return fields")
+        }
+        
+        // Verify we handled all contexts
+        XCTAssertEqual(handledContexts.count, allContexts.count, 
+                      "All PresentationContext cases should be handled")
+    }
     
     
     func testPresentationContextCompleteness() throws {
