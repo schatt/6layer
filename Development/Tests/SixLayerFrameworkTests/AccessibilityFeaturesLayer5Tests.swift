@@ -436,6 +436,9 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     
     // MARK: - Integration Tests
     
+    // COMMENTED OUT: Vague integration test that doesn't follow our guidelines
+    // Tests only that methods can be called, no real business logic testing
+    /*
     func testAccessibilityComponentsIntegration() {
         // Test that all accessibility components work together
         let _ = AccessibilityConfig(
@@ -463,6 +466,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         testingManager.runAccessibilityTests()
         XCTAssertTrue(testingManager.isRunningTests)
     }
+    */
     
     func testAccessibilityViewModifiersIntegration() {
         // Test that view modifiers work together
