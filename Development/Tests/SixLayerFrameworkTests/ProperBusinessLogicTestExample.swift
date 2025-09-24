@@ -104,6 +104,106 @@ final class ProperBusinessLogicTestExample: XCTestCase {
                 // Test numeric data type behavior
                 let hints = PresentationHints(dataType: dataType)
                 XCTAssertEqual(hints.dataType, .numeric, "Numeric data type should be set correctly")
+                
+            case .text:
+                // Test text data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .text, "Text data type should be set correctly")
+                
+            case .number:
+                // Test number data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .number, "Number data type should be set correctly")
+                
+            case .date:
+                // Test date data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .date, "Date data type should be set correctly")
+                
+            case .image:
+                // Test image data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .image, "Image data type should be set correctly")
+                
+            case .boolean:
+                // Test boolean data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .boolean, "Boolean data type should be set correctly")
+                
+            case .list:
+                // Test list data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .list, "List data type should be set correctly")
+                
+            case .grid:
+                // Test grid data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .grid, "Grid data type should be set correctly")
+                
+            case .chart:
+                // Test chart data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .chart, "Chart data type should be set correctly")
+                
+            case .custom:
+                // Test custom data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .custom, "Custom data type should be set correctly")
+                
+            case .user:
+                // Test user data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .user, "User data type should be set correctly")
+                
+            case .transaction:
+                // Test transaction data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .transaction, "Transaction data type should be set correctly")
+                
+            case .action:
+                // Test action data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .action, "Action data type should be set correctly")
+                
+            case .product:
+                // Test product data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .product, "Product data type should be set correctly")
+                
+            case .communication:
+                // Test communication data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .communication, "Communication data type should be set correctly")
+                
+            case .location:
+                // Test location data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .location, "Location data type should be set correctly")
+                
+            case .navigation:
+                // Test navigation data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .navigation, "Navigation data type should be set correctly")
+                
+            case .card:
+                // Test card data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .card, "Card data type should be set correctly")
+                
+            case .detail:
+                // Test detail data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .detail, "Detail data type should be set correctly")
+                
+            case .modal:
+                // Test modal data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .modal, "Modal data type should be set correctly")
+                
+            case .sheet:
+                // Test sheet data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .sheet, "Sheet data type should be set correctly")
             }
         }
     }
@@ -127,50 +227,65 @@ final class ProperBusinessLogicTestExample: XCTestCase {
                 let hints = PresentationHints(context: context)
                 XCTAssertEqual(hints.context, .modal, "Modal context should be set correctly")
                 
-            case .sheet:
-                // Test sheet context behavior
+            case .browse:
+                // Test browse context behavior
                 let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .sheet, "Sheet context should be set correctly")
-                
-            case .fullScreen:
-                // Test full screen context behavior
-                let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .fullScreen, "Full screen context should be set correctly")
-                
-            case .sidebar:
-                // Test sidebar context behavior
-                let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .sidebar, "Sidebar context should be set correctly")
-                
-            case .popover:
-                // Test popover context behavior
-                let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .popover, "Popover context should be set correctly")
-                
-            case .navigation:
-                // Test navigation context behavior
-                let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .navigation, "Navigation context should be set correctly")
-                
-            case .tab:
-                // Test tab context behavior
-                let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .tab, "Tab context should be set correctly")
-                
-            case .feed:
-                // Test feed context behavior
-                let hints = PresentationHints(context: context)
-                XCTAssertEqual(hints.context, .feed, "Feed context should be set correctly")
+                XCTAssertEqual(hints.context, .browse, "Browse context should be set correctly")
                 
             case .detail:
                 // Test detail context behavior
                 let hints = PresentationHints(context: context)
                 XCTAssertEqual(hints.context, .detail, "Detail context should be set correctly")
                 
+            case .edit:
+                // Test edit context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .edit, "Edit context should be set correctly")
+                
+            case .create:
+                // Test create context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .create, "Create context should be set correctly")
+                
+            case .search:
+                // Test search context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .search, "Search context should be set correctly")
+                
             case .settings:
                 // Test settings context behavior
                 let hints = PresentationHints(context: context)
                 XCTAssertEqual(hints.context, .settings, "Settings context should be set correctly")
+                
+            case .profile:
+                // Test profile context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .profile, "Profile context should be set correctly")
+                
+            case .summary:
+                // Test summary context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .summary, "Summary context should be set correctly")
+                
+            case .list:
+                // Test list context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .list, "List context should be set correctly")
+                
+            case .standard:
+                // Test standard context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .standard, "Standard context should be set correctly")
+                
+            case .form:
+                // Test form context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .form, "Form context should be set correctly")
+                
+            case .navigation:
+                // Test navigation context behavior
+                let hints = PresentationHints(context: context)
+                XCTAssertEqual(hints.context, .navigation, "Navigation context should be set correctly")
             }
         }
     }
@@ -180,36 +295,38 @@ final class ProperBusinessLogicTestExample: XCTestCase {
     func testOCRStrategySelection_BusinessLogic() {
         // Given
         let image = createTestImage()
-        let context = createTestOCRContext()
+        let textTypes: [OCRTextType] = [.printed, .handwritten]
+        let platform = Platform.current
         
-        // When
-        let strategy = selectOCRStrategy_L3(image: image, context: context)
+        // When - Use actual OCR strategy selection function
+        let strategy = platformOCRStrategy_L3(textTypes: textTypes, platform: platform)
         
         // Then - Test actual business logic
-        switch context.documentType {
-        case .receipt:
-            // Test receipt-specific strategy selection
-            XCTAssertTrue(strategy is ReceiptOCRStrategy, "Receipt documents should use ReceiptOCRStrategy")
+        XCTAssertNotNil(strategy, "OCR strategy should be created")
+        XCTAssertTrue(strategy.textTypes.contains(.printed), "Strategy should support printed text")
+        XCTAssertTrue(strategy.textTypes.contains(.handwritten), "Strategy should support handwritten text")
+        
+        // Test platform-specific strategy selection
+        switch platform {
+        case .iOS:
+            // Test iOS-specific OCR strategy
+            XCTAssertEqual(strategy.platform, .iOS, "Strategy should be configured for iOS")
             
-        case .businessCard:
-            // Test business card-specific strategy selection
-            XCTAssertTrue(strategy is BusinessCardOCRStrategy, "Business cards should use BusinessCardOCRStrategy")
+        case .macOS:
+            // Test macOS-specific OCR strategy
+            XCTAssertEqual(strategy.platform, .macOS, "Strategy should be configured for macOS")
             
-        case .invoice:
-            // Test invoice-specific strategy selection
-            XCTAssertTrue(strategy is InvoiceOCRStrategy, "Invoices should use InvoiceOCRStrategy")
+        case .watchOS:
+            // Test watchOS-specific OCR strategy
+            XCTAssertEqual(strategy.platform, .watchOS, "Strategy should be configured for watchOS")
             
-        case .idDocument:
-            // Test ID document-specific strategy selection
-            XCTAssertTrue(strategy is IDDocumentOCRStrategy, "ID documents should use IDDocumentOCRStrategy")
+        case .tvOS:
+            // Test tvOS-specific OCR strategy
+            XCTAssertEqual(strategy.platform, .tvOS, "Strategy should be configured for tvOS")
             
-        case .medicalRecord:
-            // Test medical record-specific strategy selection
-            XCTAssertTrue(strategy is MedicalRecordOCRStrategy, "Medical records should use MedicalRecordOCRStrategy")
-            
-        case .legalDocument:
-            // Test legal document-specific strategy selection
-            XCTAssertTrue(strategy is LegalDocumentOCRStrategy, "Legal documents should use LegalDocumentOCRStrategy")
+        case .visionOS:
+            // Test visionOS-specific OCR strategy
+            XCTAssertEqual(strategy.platform, .visionOS, "Strategy should be configured for visionOS")
         }
     }
     

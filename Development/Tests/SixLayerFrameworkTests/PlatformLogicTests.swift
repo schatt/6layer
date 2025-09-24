@@ -103,6 +103,11 @@ final class PlatformLogicTests: XCTestCase {
                 XCTAssertFalse(config.supportsTouch, "Car should not support touch")
                 XCTAssertFalse(config.supportsHapticFeedback, "Car should not support haptic feedback")
                 XCTAssertFalse(config.supportsHover, "Car should not support hover")
+                
+            case .vision:
+                XCTAssertTrue(config.supportsTouch, "Vision should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "Vision should support haptic feedback")
+                XCTAssertFalse(config.supportsHover, "Vision should not support hover")
             }
         }
     }

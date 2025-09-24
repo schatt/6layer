@@ -260,6 +260,106 @@ final class ComprehensiveTestExample: XCTestCase {
                 // Test numeric data type behavior
                 let hints = PresentationHints(dataType: dataType)
                 XCTAssertEqual(hints.dataType, .numeric, "Numeric data type should be set correctly")
+                
+            case .text:
+                // Test text data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .text, "Text data type should be set correctly")
+                
+            case .number:
+                // Test number data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .number, "Number data type should be set correctly")
+                
+            case .date:
+                // Test date data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .date, "Date data type should be set correctly")
+                
+            case .image:
+                // Test image data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .image, "Image data type should be set correctly")
+                
+            case .boolean:
+                // Test boolean data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .boolean, "Boolean data type should be set correctly")
+                
+            case .list:
+                // Test list data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .list, "List data type should be set correctly")
+                
+            case .grid:
+                // Test grid data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .grid, "Grid data type should be set correctly")
+                
+            case .chart:
+                // Test chart data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .chart, "Chart data type should be set correctly")
+                
+            case .custom:
+                // Test custom data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .custom, "Custom data type should be set correctly")
+                
+            case .user:
+                // Test user data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .user, "User data type should be set correctly")
+                
+            case .transaction:
+                // Test transaction data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .transaction, "Transaction data type should be set correctly")
+                
+            case .action:
+                // Test action data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .action, "Action data type should be set correctly")
+                
+            case .product:
+                // Test product data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .product, "Product data type should be set correctly")
+                
+            case .communication:
+                // Test communication data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .communication, "Communication data type should be set correctly")
+                
+            case .location:
+                // Test location data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .location, "Location data type should be set correctly")
+                
+            case .navigation:
+                // Test navigation data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .navigation, "Navigation data type should be set correctly")
+                
+            case .card:
+                // Test card data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .card, "Card data type should be set correctly")
+                
+            case .detail:
+                // Test detail data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .detail, "Detail data type should be set correctly")
+                
+            case .modal:
+                // Test modal data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .modal, "Modal data type should be set correctly")
+                
+            case .sheet:
+                // Test sheet data type behavior
+                let hints = PresentationHints(dataType: dataType)
+                XCTAssertEqual(hints.dataType, .sheet, "Sheet data type should be set correctly")
             }
         }
     }

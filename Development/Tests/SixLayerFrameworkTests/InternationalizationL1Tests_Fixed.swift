@@ -162,7 +162,7 @@ final class InternationalizationL1Tests_Fixed: XCTestCase {
         
         // When
         let view = platformPresentLocalizedTime_L1(
-            time: time,
+            date: time,
             hints: hints
         )
         

@@ -67,7 +67,7 @@ final class CompleteTestCriteriaExample: XCTestCase {
     override func tearDown() {
         testHints = nil
         internationalizationHints = nil
-        performanceMetrics = nil
+        performanceMetrics.removeAll()
         super.tearDown()
     }
     
