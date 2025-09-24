@@ -162,7 +162,7 @@ final class PlatformSimulationTests: XCTestCase {
         }
     }
     
-    private func testPlatformConfiguration(_ platform: SimulatedPlatform) {
+    func testPlatformConfiguration(_ platform: SimulatedPlatform) {
         // Test that the platform configuration is internally consistent
         XCTAssertTrue(platform.capabilities.isInternallyConsistent(), 
                      "Platform \(platform.platform) (\(platform.deviceType)) should be internally consistent")

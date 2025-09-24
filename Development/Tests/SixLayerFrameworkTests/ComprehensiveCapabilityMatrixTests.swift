@@ -291,7 +291,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
     
     // MARK: - Test Implementation
     
-    private func testCapabilityCombination(_ config: TestConfiguration) {
+    func testCapabilityCombination(_ config: TestConfiguration) {
         print("🧪 Testing: \(config.description)")
         
         // GIVEN: A test data item

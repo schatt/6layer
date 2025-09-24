@@ -550,7 +550,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     }
     
     /// Test a specific view generation configuration
-    private func testViewGenerationConfiguration(_ config: ViewGenerationTestConfig) {
+    func testViewGenerationConfiguration(_ config: ViewGenerationTestConfig) {
         print("🎨 Testing view generation for: \(config.name)")
         
         // Test view component generation
@@ -569,14 +569,14 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     // MARK: - View Component Generation Tests
     
     /// Test that the correct view components are generated
-    private func testViewComponentGeneration(_ config: ViewGenerationTestConfig) {
+    func testViewComponentGeneration(_ config: ViewGenerationTestConfig) {
         for expectedComponent in config.expectedViewComponents {
             testViewComponent(expectedComponent, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific view component
-    private func testViewComponent(
+    func testViewComponent(
         _ expectedComponent: ViewGenerationTestConfig.ExpectedViewComponent,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
@@ -619,14 +619,14 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     // MARK: - Modifier Generation Tests
     
     /// Test that the correct modifiers are generated
-    private func testModifierGeneration(_ config: ViewGenerationTestConfig) {
+    func testModifierGeneration(_ config: ViewGenerationTestConfig) {
         for expectedModifier in config.expectedModifiers {
             testModifier(expectedModifier, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific modifier
-    private func testModifier(
+    func testModifier(
         _ expectedModifier: ViewGenerationTestConfig.ExpectedModifier,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
@@ -671,14 +671,14 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     // MARK: - Behavior Generation Tests
     
     /// Test that the correct behaviors are generated
-    private func testBehaviorGeneration(_ config: ViewGenerationTestConfig) {
+    func testBehaviorGeneration(_ config: ViewGenerationTestConfig) {
         for expectedBehavior in config.expectedBehaviors {
             testBehavior(expectedBehavior, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific behavior
-    private func testBehavior(
+    func testBehavior(
         _ expectedBehavior: ViewGenerationTestConfig.ExpectedBehavior,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
@@ -721,7 +721,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     // MARK: - Integration Tests
     
     /// Test view generation integration
-    private func testViewGenerationIntegration(_ config: ViewGenerationTestConfig) {
+    func testViewGenerationIntegration(_ config: ViewGenerationTestConfig) {
         // Test that the configuration can be used to generate a complete view
         let mockConfig = createMockPlatformConfig(from: config.capabilities)
         
@@ -748,7 +748,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     }
     
     /// Test view generation behavior
-    private func testViewGenerationBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testViewGenerationBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration produces the expected view behavior
         // This would test actual view generation in a real implementation
         

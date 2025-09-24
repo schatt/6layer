@@ -436,7 +436,7 @@ final class UIGenerationVerificationTests: XCTestCase {
     }
     
     /// Test a specific UI generation configuration
-    private func testUIGenerationConfiguration(_ config: UIGenerationTestConfig) {
+    func testUIGenerationConfiguration(_ config: UIGenerationTestConfig) {
         print("🎨 Testing UI generation for: \(config.name)")
         
         // Test UI component generation
@@ -455,14 +455,14 @@ final class UIGenerationVerificationTests: XCTestCase {
     // MARK: - UI Component Generation Tests
     
     /// Test that the correct UI components are generated
-    private func testUIComponentGeneration(_ config: UIGenerationTestConfig) {
+    func testUIComponentGeneration(_ config: UIGenerationTestConfig) {
         for expectedComponent in config.expectedUIComponents {
             testUIComponent(expectedComponent, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific UI component
-    private func testUIComponent(
+    func testUIComponent(
         _ expectedComponent: UIGenerationTestConfig.ExpectedUIComponent,
         capabilities: UIGenerationTestConfig.CapabilitySet,
         configName: String
@@ -501,14 +501,14 @@ final class UIGenerationVerificationTests: XCTestCase {
     // MARK: - Modifier Generation Tests
     
     /// Test that the correct modifiers are generated
-    private func testModifierGeneration(_ config: UIGenerationTestConfig) {
+    func testModifierGeneration(_ config: UIGenerationTestConfig) {
         for expectedModifier in config.expectedModifiers {
             testModifier(expectedModifier, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific modifier
-    private func testModifier(
+    func testModifier(
         _ expectedModifier: UIGenerationTestConfig.ExpectedModifier,
         capabilities: UIGenerationTestConfig.CapabilitySet,
         configName: String
@@ -547,14 +547,14 @@ final class UIGenerationVerificationTests: XCTestCase {
     // MARK: - Behavior Generation Tests
     
     /// Test that the correct behaviors are generated
-    private func testBehaviorGeneration(_ config: UIGenerationTestConfig) {
+    func testBehaviorGeneration(_ config: UIGenerationTestConfig) {
         for expectedBehavior in config.expectedBehaviors {
             testBehavior(expectedBehavior, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific behavior
-    private func testBehavior(
+    func testBehavior(
         _ expectedBehavior: UIGenerationTestConfig.ExpectedBehavior,
         capabilities: UIGenerationTestConfig.CapabilitySet,
         configName: String
@@ -593,7 +593,7 @@ final class UIGenerationVerificationTests: XCTestCase {
     // MARK: - Integration Tests
     
     /// Test UI generation integration
-    private func testUIGenerationIntegration(_ config: UIGenerationTestConfig) {
+    func testUIGenerationIntegration(_ config: UIGenerationTestConfig) {
         // Test that the configuration can be used to generate a complete UI
         let mockConfig = createMockPlatformConfig(from: config.capabilities)
         
@@ -620,7 +620,7 @@ final class UIGenerationVerificationTests: XCTestCase {
     }
     
     /// Test UI generation behavior
-    private func testUIGenerationBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testUIGenerationBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration produces the expected UI behavior
         // This would test actual view generation in a real implementation
         
