@@ -142,7 +142,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testAccessibilityStateBehavior(_ state: AccessibilityState) {
+    func testAccessibilityStateBehavior(_ state: AccessibilityState) {
         print("🔍 Testing accessibility state: \(state.description)")
         
         // Test that the framework behaves correctly for this accessibility state
@@ -157,7 +157,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         testAccessibilityStateCombination(state)
     }
     
-    private func testReduceMotionBehavior(state: AccessibilityState) {
+    func testReduceMotionBehavior(state: AccessibilityState) {
         let performanceConfig = getCardExpansionPerformanceConfig()
         
         if state.reduceMotion {
@@ -175,7 +175,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testHighContrastBehavior(state: AccessibilityState) {
+    func testHighContrastBehavior(state: AccessibilityState) {
         let testColor = Color.blue
         
         if state.highContrast {
@@ -203,7 +203,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testVoiceOverBehavior(state: AccessibilityState) {
+    func testVoiceOverBehavior(state: AccessibilityState) {
         let config = getCardExpansionPlatformConfig()
         let accessibilityManager = AccessibilityOptimizationManager()
         
@@ -219,7 +219,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testSwitchControlBehavior(state: AccessibilityState) {
+    func testSwitchControlBehavior(state: AccessibilityState) {
         let config = getCardExpansionPlatformConfig()
         
         if state.switchControl {
@@ -233,7 +233,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testDynamicTypeBehavior(state: AccessibilityState) {
+    func testDynamicTypeBehavior(state: AccessibilityState) {
         let config = getCardExpansionPlatformConfig()
         
         if state.dynamicType {
@@ -247,7 +247,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testAssistiveTouchBehavior(state: AccessibilityState) {
+    func testAssistiveTouchBehavior(state: AccessibilityState) {
         let config = getCardExpansionPlatformConfig()
         
         if state.assistiveTouch {
@@ -267,7 +267,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         }
     }
     
-    private func testAccessibilityStateCombination(_ state: AccessibilityState) {
+    func testAccessibilityStateCombination(_ state: AccessibilityState) {
         // Test that the framework handles the combination of accessibility features correctly
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -310,7 +310,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     
     // MARK: - Platform-Specific Accessibility State Tests
     
-    private func testPlatformSpecificAccessibilityStates() {
+    func testPlatformSpecificAccessibilityStates() {
         // Test all platform-specific accessibility states by simulating each platform
         // This ensures comprehensive testing regardless of the actual test execution platform
         

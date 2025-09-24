@@ -228,7 +228,7 @@ final class CapabilityMatrixTests: XCTestCase {
         }
     }
     
-    private func testCapability(_ capabilityTest: CapabilityTest) {
+    func testCapability(_ capabilityTest: CapabilityTest) {
         let platform = Platform.current
         let isSupported = capabilityTest.testSupported()
         let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)

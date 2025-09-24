@@ -16,7 +16,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     }
     
     /// Test touch functions when touch is enabled
-    private func testTouchDependentFunctionsEnabled() {
+    func testTouchDependentFunctionsEnabled() {
         // Create a mock configuration with touch enabled
         let mockConfig = CardExpansionPlatformConfig(
             supportsHapticFeedback: true,
@@ -38,7 +38,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     }
     
     /// Test touch functions when touch is disabled
-    private func testTouchDependentFunctionsDisabled() {
+    func testTouchDependentFunctionsDisabled() {
         // Create a mock configuration with touch disabled
         let mockConfig = CardExpansionPlatformConfig(
             supportsHapticFeedback: false,
@@ -59,7 +59,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         XCTAssertEqual(mockConfig.minTouchTarget, 0, "Touch targets should be zero when touch is disabled")
     }
     
-    private func testTouchFunctionsEnabled() {
+    func testTouchFunctionsEnabled() {
         // Test that touch-related functions work correctly when touch is supported
         let config = getCardExpansionPlatformConfig()
         
@@ -76,7 +76,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
                      "AssistiveTouch should be available when touch is supported")
     }
     
-    private func testTouchFunctionsDisabled() {
+    func testTouchFunctionsDisabled() {
         // Test that touch-related functions handle disabled state gracefully
         let config = getCardExpansionPlatformConfig()
         
@@ -106,7 +106,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     }
     
     /// Test hover functions when hover is enabled
-    private func testHoverDependentFunctionsEnabled() {
+    func testHoverDependentFunctionsEnabled() {
         // Create a mock configuration with hover enabled
         let mockConfig = CardExpansionPlatformConfig(
             supportsHapticFeedback: false,
@@ -127,7 +127,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     }
     
     /// Test hover functions when hover is disabled
-    private func testHoverDependentFunctionsDisabled() {
+    func testHoverDependentFunctionsDisabled() {
         // Create a mock configuration with hover disabled
         let mockConfig = CardExpansionPlatformConfig(
             supportsHapticFeedback: true,
@@ -146,7 +146,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         XCTAssertEqual(mockConfig.hoverDelay, 0, "Hover delay should be zero when hover is disabled")
     }
     
-    private func testHoverFunctionsEnabled() {
+    func testHoverFunctionsEnabled() {
         let config = getCardExpansionPlatformConfig()
         
         // Hover should be supported
@@ -162,7 +162,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
                       "Touch should not be supported when hover is enabled")
     }
     
-    private func testHoverFunctionsDisabled() {
+    func testHoverFunctionsDisabled() {
         let config = getCardExpansionPlatformConfig()
         
         // Hover should not be supported
@@ -186,7 +186,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         }
     }
     
-    private func testVisionFunctionsEnabled() {
+    func testVisionFunctionsEnabled() {
         // Vision framework should be available
         XCTAssertTrue(isVisionFrameworkAvailable(), 
                      "Vision framework should be available when enabled")
@@ -223,7 +223,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         }
     }
     
-    private func testVisionFunctionsDisabled() {
+    func testVisionFunctionsDisabled() {
         // Vision framework should not be available
         XCTAssertFalse(isVisionFrameworkAvailable(), 
                       "Vision framework should not be available when disabled")
@@ -286,7 +286,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         testColorEncodingFunctionsEnabled()
     }
     
-    private func testColorEncodingFunctionsEnabled() {
+    func testColorEncodingFunctionsEnabled() {
         // Color encoding should work on all platforms
         let testColor = Color.blue
         
