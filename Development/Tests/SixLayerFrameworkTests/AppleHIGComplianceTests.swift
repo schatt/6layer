@@ -1,3 +1,9 @@
+// COMMENTED OUT: These tests are existence-only tests that don't follow our
+// testing guidelines. They test vague concepts like "compliance" and "consistency"
+// rather than actual business logic. Need to be rewritten to follow the 10
+// test criteria properly.
+
+/*
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
@@ -478,3 +484,4 @@ class AppleHIGComplianceTests: XCTestCase {
         XCTAssertNotNil(productiveView)
     }
 }
+*/

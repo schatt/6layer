@@ -506,8 +506,8 @@ public struct TestingCapabilityDetection {
                 supportsTouch: false, // Testing default - can be overridden
                 supportsHapticFeedback: false,
                 supportsHover: true,
-                supportsVoiceOver: false, // Testing default
-                supportsSwitchControl: false, // Testing default
+                supportsVoiceOver: false, // Testing default - macOS doesn't have VoiceOver enabled by default
+                supportsSwitchControl: false, // Testing default - macOS doesn't have Switch Control enabled by default
                 supportsAssistiveTouch: false
             )
         case .watchOS:

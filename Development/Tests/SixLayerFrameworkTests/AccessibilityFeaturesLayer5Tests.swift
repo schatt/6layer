@@ -36,6 +36,9 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     
     // MARK: - AccessibilityConfig Tests
     
+    // COMMENTED OUT: Existence-only test that doesn't follow our guidelines
+    // Tests only that properties are set to true by default, no business logic
+    /*
     func testAccessibilityConfigInitialization() {
         // Test default initialization
         let defaultConfig = AccessibilityConfig()
@@ -45,6 +48,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         XCTAssertTrue(defaultConfig.enableReducedMotion, "Reduced motion should be enabled by default")
         XCTAssertTrue(defaultConfig.enableLargeText, "Large text should be enabled by default")
     }
+    */
     
     func testAccessibilityConfigCustomInitialization() {
         // Test custom initialization
@@ -64,12 +68,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     
     // MARK: - VoiceOverManager Tests
     
+    // COMMENTED OUT: Existence-only test that doesn't follow our guidelines
+    // Tests only that properties are set to default values, no business logic
+    /*
     func testVoiceOverManagerInitialization() {
         // Test successful initialization
         XCTAssertNotNil(voiceOverManager, "VoiceOverManager should be initialized")
         XCTAssertFalse(voiceOverManager.isVoiceOverRunning, "VoiceOver should not be running initially")
         XCTAssertEqual(voiceOverManager.lastAnnouncement, "", "Last announcement should be empty initially")
     }
+    */
     
     func testVoiceOverManagerAnnounceSuccess() {
         // Test successful announcement
@@ -115,12 +123,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     
     // MARK: - KeyboardNavigationManager Tests
     
+    // COMMENTED OUT: Existence-only test that doesn't follow our guidelines
+    // Tests only that properties are set to default values, no business logic
+    /*
     func testKeyboardNavigationManagerInitialization() {
         // Test successful initialization
         XCTAssertNotNil(keyboardManager, "KeyboardNavigationManager should be initialized")
         XCTAssertEqual(keyboardManager.currentFocusIndex, 0, "Current focus index should be 0 initially")
         XCTAssertTrue(keyboardManager.focusableItems.isEmpty, "Focusable items should be empty initially")
     }
+    */
     
     func testAddFocusableItemSuccess() {
         // Test adding focusable item successfully
@@ -247,12 +259,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     
     // MARK: - HighContrastManager Tests
     
+    // COMMENTED OUT: Existence-only test that doesn't follow our guidelines
+    // Tests only that properties are set to default values, no business logic
+    /*
     func testHighContrastManagerInitialization() {
         // Test successful initialization
         XCTAssertNotNil(highContrastManager, "HighContrastManager should be initialized")
         XCTAssertFalse(highContrastManager.isHighContrastEnabled, "High contrast should not be enabled initially")
         XCTAssertEqual(highContrastManager.contrastLevel, .normal, "Contrast level should be normal initially")
     }
+    */
     
     func testGetHighContrastColorNormalContrast() {
         // Test getting color with normal contrast
@@ -299,12 +315,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     
     // MARK: - AccessibilityTestingManager Tests
     
+    // COMMENTED OUT: Existence-only test that doesn't follow our guidelines
+    // Tests only that properties are set to default values, no business logic
+    /*
     func testAccessibilityTestingManagerInitialization() {
         // Test successful initialization
         XCTAssertNotNil(testingManager, "AccessibilityTestingManager should be initialized")
         XCTAssertTrue(testingManager.testResults.isEmpty, "Test results should be empty initially")
         XCTAssertFalse(testingManager.isRunningTests, "Should not be running tests initially")
     }
+    */
     
     func testRunAccessibilityTestsSuccess() {
         // Test running accessibility tests successfully

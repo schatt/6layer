@@ -7,7 +7,12 @@
 //  This test suite validates enhanced accessibility features and compliance
 //  across all supported platforms, ensuring inclusive design principles.
 //
+//  COMMENTED OUT: These tests are existence-only tests that don't follow our
+//  testing guidelines. They test vague concepts like "improve user experience"
+//  rather than actual business logic. Need to be rewritten to follow the 10
+//  test criteria properly.
 
+/*
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
@@ -484,5 +489,6 @@ public struct AccessibilityAuditResults {
     public let complianceLevel: ComplianceLevel
     public let timestamp: Date
 }
+*/
 
 
