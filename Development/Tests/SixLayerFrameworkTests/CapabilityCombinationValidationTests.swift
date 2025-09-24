@@ -99,7 +99,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testAccessibilityDependencies(config: config)
     }
     
-    private func testTouchDependencies(config: CardExpansionPlatformConfig) {
+    func testTouchDependencies(config: CardExpansionPlatformConfig) {
         if config.supportsTouch {
             // Touch should enable haptic feedback
             XCTAssertTrue(config.supportsHapticFeedback, 
@@ -119,7 +119,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         }
     }
     
-    private func testHoverDependencies(config: CardExpansionPlatformConfig) {
+    func testHoverDependencies(config: CardExpansionPlatformConfig) {
         if config.supportsHover {
             // Hover should have appropriate delay
             XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
@@ -131,7 +131,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         }
     }
     
-    private func testVisionDependencies(config: CardExpansionPlatformConfig) {
+    func testVisionDependencies(config: CardExpansionPlatformConfig) {
         let visionAvailable = isVisionFrameworkAvailable()
         let ocrAvailable = isVisionOCRAvailable()
         
@@ -140,7 +140,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
                      "OCR availability should match Vision framework availability")
     }
     
-    private func testAccessibilityDependencies(config: CardExpansionPlatformConfig) {
+    func testAccessibilityDependencies(config: CardExpansionPlatformConfig) {
         // VoiceOver and SwitchControl should always be available
         XCTAssertTrue(config.supportsVoiceOver, 
                      "VoiceOver should be available on all platforms")
@@ -160,7 +160,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testVisionOCRInteraction()
     }
     
-    private func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: Platform) {
+    func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: Platform) {
         if platform == .iOS {
             // iPad can have both touch and hover
             // This is a special case that we allow
@@ -180,7 +180,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         }
     }
     
-    private func testTouchHapticInteraction(config: CardExpansionPlatformConfig) {
+    func testTouchHapticInteraction(config: CardExpansionPlatformConfig) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             XCTAssertTrue(config.supportsTouch, 
@@ -188,7 +188,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         }
     }
     
-    private func testVisionOCRInteraction() {
+    func testVisionOCRInteraction() {
         // OCR should only be available with Vision
         if isVisionOCRAvailable() {
             XCTAssertTrue(isVisionFrameworkAvailable(), 
@@ -230,7 +230,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testConflictingCombinations(config: config)
     }
     
-    private func testImpossibleCombinations(config: CardExpansionPlatformConfig) {
+    func testImpossibleCombinations(config: CardExpansionPlatformConfig) {
         // Haptic feedback without touch should never occur
         if config.supportsHapticFeedback {
             XCTAssertTrue(config.supportsTouch, 
@@ -244,7 +244,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         }
     }
     
-    private func testConflictingCombinations(config: CardExpansionPlatformConfig) {
+    func testConflictingCombinations(config: CardExpansionPlatformConfig) {
         let platform = Platform.current
         
         if platform != .iOS {

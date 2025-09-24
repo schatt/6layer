@@ -175,7 +175,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test a specific capability configuration
-    private func testCapabilityConfiguration(_ config: CapabilityTestConfig) {
+    func testCapabilityConfiguration(_ config: CapabilityTestConfig) {
         print("🧪 Testing configuration: \(config.name)")
         
         // Test 1: Capability detection
@@ -194,7 +194,7 @@ final class CapabilityTestingFramework: XCTestCase {
     // MARK: - Capability Detection Tests
     
     /// Test that capability detection works correctly for the configuration
-    private func testCapabilityDetection(_ config: CapabilityTestConfig) {
+    func testCapabilityDetection(_ config: CapabilityTestConfig) {
         let mockConfig = config.createMockPlatformConfig()
         
         // Test touch capabilities
@@ -225,7 +225,7 @@ final class CapabilityTestingFramework: XCTestCase {
     // MARK: - UI Generation Tests
     
     /// Test that the correct UI components are generated for the configuration
-    private func testUIGeneration(_ config: CapabilityTestConfig) {
+    func testUIGeneration(_ config: CapabilityTestConfig) {
         let mockConfig = config.createMockPlatformConfig()
         
         // Test touch-related UI generation
@@ -254,7 +254,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test touch-related UI generation
-    private func testTouchUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testTouchUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that touch targets are appropriate
         XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44,
                                   "Touch targets should be adequate for touch-enabled \(configName)")
@@ -265,7 +265,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test non-touch UI generation
-    private func testNonTouchUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testNonTouchUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that touch-related features are disabled
         XCTAssertFalse(config.supportsTouch, "Touch should not be supported for \(configName)")
         XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback should not be supported for \(configName)")
@@ -273,21 +273,21 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test hover-related UI generation
-    private func testHoverUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testHoverUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that hover is supported
         XCTAssertTrue(config.supportsHover, "Hover should be supported for \(configName)")
         XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set for \(configName)")
     }
     
     /// Test non-hover UI generation
-    private func testNonHoverUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testNonHoverUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that hover is not supported
         XCTAssertFalse(config.supportsHover, "Hover should not be supported for \(configName)")
         XCTAssertEqual(config.hoverDelay, 0, "Hover delay should be zero for \(configName)")
     }
     
     /// Test haptic feedback UI generation
-    private func testHapticUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testHapticUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that haptic feedback is supported
         XCTAssertTrue(config.supportsHapticFeedback, "Haptic feedback should be supported for \(configName)")
         
@@ -296,13 +296,13 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test non-haptic UI generation
-    private func testNonHapticUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testNonHapticUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that haptic feedback is not supported
         XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback should not be supported for \(configName)")
     }
     
     /// Test accessibility UI generation
-    private func testAccessibilityUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testAccessibilityUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that accessibility features are always supported
         XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should always be supported for \(configName)")
         XCTAssertTrue(config.supportsSwitchControl, "Switch Control should always be supported for \(configName)")
@@ -311,7 +311,7 @@ final class CapabilityTestingFramework: XCTestCase {
     // MARK: - Behavior Validation Tests
     
     /// Test that the configuration behaves correctly
-    private func testBehaviorValidation(_ config: CapabilityTestConfig) {
+    func testBehaviorValidation(_ config: CapabilityTestConfig) {
         let mockConfig = config.createMockPlatformConfig()
         
         // Test logical consistency
@@ -325,7 +325,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test logical consistency of capabilities
-    private func testLogicalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testLogicalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             XCTAssertTrue(config.supportsTouch, "Haptic feedback should only be available with touch for \(configName)")
@@ -344,7 +344,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test platform-specific behavior
-    private func testPlatformSpecificBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testPlatformSpecificBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration makes sense for its platform
         switch config.supportsTouch {
         case true:
@@ -359,7 +359,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test edge case handling
-    private func testEdgeCaseHandling(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testEdgeCaseHandling(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that all boolean capabilities are properly set
         let capabilities: [String: Bool] = [
             "Touch": config.supportsTouch,
@@ -378,7 +378,7 @@ final class CapabilityTestingFramework: XCTestCase {
     // MARK: - Consistency Tests
     
     /// Test consistency across different aspects
-    private func testConsistencyChecks(_ config: CapabilityTestConfig) {
+    func testConsistencyChecks(_ config: CapabilityTestConfig) {
         let mockConfig = config.createMockPlatformConfig()
         
         // Test internal consistency
@@ -389,7 +389,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test internal consistency of the configuration
-    private func testInternalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testInternalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that related capabilities are consistent
         if config.supportsHapticFeedback {
             XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch for \(configName)")
@@ -405,7 +405,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test cross-platform consistency
-    private func testCrossPlatformConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testCrossPlatformConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the same capability state produces consistent behavior
         // This would be more comprehensive in a real implementation
         XCTAssertNotNil(config, "Configuration should be valid for \(configName)")
@@ -510,7 +510,7 @@ final class CapabilityTestingFramework: XCTestCase {
     }
     
     /// Test UI generation with a mock configuration
-    private func testUIGenerationWithMockConfig(_ config: CardExpansionPlatformConfig, configName: String) {
+    func testUIGenerationWithMockConfig(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration can be used to generate appropriate UI
         // This would test actual view generation in a real implementation
         

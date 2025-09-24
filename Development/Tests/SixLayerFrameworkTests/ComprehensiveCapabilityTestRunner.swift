@@ -139,7 +139,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test capability detection
-    private func testCapabilityDetection(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+    func testCapabilityDetection(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         switch capability {
         case .touch:
             XCTAssertEqual(config.supportsTouch, enabled, "Touch detection should be \(enabled)")
@@ -181,7 +181,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test UI generation
-    private func testUIGeneration(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+    func testUIGeneration(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         switch capability {
         case .touch:
             // Touch should be supported on touch-enabled platforms
@@ -245,7 +245,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test cross-platform consistency
-    private func testCrossPlatformConsistency(_ platform: Platform, capability: TestRunnerConfig.CapabilityType) {
+    func testCrossPlatformConsistency(_ platform: Platform, capability: TestRunnerConfig.CapabilityType) {
         let platformConfig = createPlatformConfig(platform: platform)
         
         // Test that the platform configuration is consistent
@@ -299,7 +299,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test view generation integration
-    private func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: Platform) {
+    func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: Platform) {
         // Test that the configuration is valid for view generation
         XCTAssertNotNil(config, "Configuration should be valid for view generation on \(platform)")
         
@@ -336,7 +336,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test behavior validation
-    private func testBehaviorValidation(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+    func testBehaviorValidation(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         // Test that the behavior is consistent with the platform capabilities
         switch capability {
         case .touch:
