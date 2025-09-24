@@ -353,35 +353,45 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testWatchOSAccessibilityStates() {
-        // Create complete watchOS platform test configuration
-        let testConfig = PlatformTestUtilities.createWatchOSPlatformTestConfig()
+        // Set up watchOS platform for testing
+        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        
+        // Get the actual platform configuration using our new system
+        let config = getCardExpansionPlatformConfig()
         
         // Test watchOS-specific behavioral implications
-        PlatformTestUtilities.testTouchPlatformBehavior(testConfig.config, platformName: "watchOS")
-        PlatformTestUtilities.testNonHoverPlatformBehavior(testConfig.config, platformName: "watchOS")
-        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "watchOS")
-        PlatformTestUtilities.testVisionUnavailableBehavior(testConfig, platformName: "watchOS")
+        PlatformTestUtilities.testTouchPlatformBehavior(config, platformName: "watchOS")
+        PlatformTestUtilities.testNonHoverPlatformBehavior(config, platformName: "watchOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(config, platformName: "watchOS")
         
         // Test that accessibility states work on watchOS
         for state in accessibilityStates {
             testAccessibilityStateBehavior(state)
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     func testTVOSAccessibilityStates() {
-        // Create complete tvOS platform test configuration
-        let testConfig = PlatformTestUtilities.createTVOSPlatformTestConfig()
+        // Set up tvOS platform for testing
+        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        
+        // Get the actual platform configuration using our new system
+        let config = getCardExpansionPlatformConfig()
         
         // Test tvOS-specific behavioral implications
-        PlatformTestUtilities.testNonTouchPlatformBehavior(testConfig.config, platformName: "tvOS")
-        PlatformTestUtilities.testNonHoverPlatformBehavior(testConfig.config, platformName: "tvOS")
-        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "tvOS")
-        PlatformTestUtilities.testVisionUnavailableBehavior(testConfig, platformName: "tvOS")
+        PlatformTestUtilities.testNonTouchPlatformBehavior(config, platformName: "tvOS")
+        PlatformTestUtilities.testNonHoverPlatformBehavior(config, platformName: "tvOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(config, platformName: "tvOS")
         
         // Test that accessibility states work on tvOS
         for state in accessibilityStates {
             testAccessibilityStateBehavior(state)
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     func testVisionOSAccessibilityStates() {

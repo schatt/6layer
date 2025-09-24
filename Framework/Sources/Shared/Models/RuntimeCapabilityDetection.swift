@@ -35,6 +35,11 @@ public struct RuntimeCapabilityDetection {
         return Thread.current.threadDictionary["testPlatform"] as? Platform
     }
     
+    /// Get the current platform (test platform if set, otherwise actual platform)
+    public static var currentPlatform: Platform {
+        return testPlatform ?? Platform.current
+    }
+    
     /// Get platform-specific defaults for the current test platform
     private static func getTestDefaults() -> TestingCapabilityDefaults {
         guard let platform = testPlatform else {
@@ -121,7 +126,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -228,7 +233,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -288,7 +293,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -351,7 +356,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -394,7 +399,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -437,7 +442,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -492,9 +497,9 @@ public struct TestingCapabilityDetection {
                 supportsTouch: true,
                 supportsHapticFeedback: true,
                 supportsHover: false, // Will be true for iPad in actual detection
-                supportsVoiceOver: false, // Testing default
-                supportsSwitchControl: false, // Testing default
-                supportsAssistiveTouch: false // Testing default
+                supportsVoiceOver: true, // iOS supports VoiceOver
+                supportsSwitchControl: true, // iOS supports Switch Control
+                supportsAssistiveTouch: true // iOS supports AssistiveTouch
             )
         case .macOS:
             return TestingCapabilityDefaults(
