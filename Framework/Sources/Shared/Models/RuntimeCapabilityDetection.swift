@@ -22,31 +22,138 @@ import AppKit
 /// instead of making assumptions based on platform
 public struct RuntimeCapabilityDetection {
     
+    // MARK: - Thread-Local Testing Support
+    
+    /// Thread-local test platform for simulating cross-platform behavior
+    /// When set, all capability detection functions will return values for the simulated platform
+    public static func setTestPlatform(_ platform: Platform?) {
+        Thread.current.threadDictionary["testPlatform"] = platform
+    }
+    
+    /// Get the current test platform for this thread
+    private static var testPlatform: Platform? {
+        return Thread.current.threadDictionary["testPlatform"] as? Platform
+    }
+    
+    /// Get platform-specific defaults for the current test platform
+    private static func getTestDefaults() -> TestingCapabilityDefaults {
+        guard let platform = testPlatform else {
+            return TestingCapabilityDetection.getTestingDefaults(for: Platform.current)
+        }
+        return TestingCapabilityDetection.getTestingDefaults(for: platform)
+    }
+    
+    // MARK: - Capability-Level Override Support
+    
+    /// Override touch support detection for testing
+    public static func setTestTouchSupport(_ value: Bool?) {
+        Thread.current.threadDictionary["testTouchSupport"] = value
+    }
+    
+    /// Override haptic feedback detection for testing
+    public static func setTestHapticFeedback(_ value: Bool?) {
+        Thread.current.threadDictionary["testHapticFeedback"] = value
+    }
+    
+    /// Override hover detection for testing
+    public static func setTestHover(_ value: Bool?) {
+        Thread.current.threadDictionary["testHover"] = value
+    }
+    
+    /// Override VoiceOver detection for testing
+    public static func setTestVoiceOver(_ value: Bool?) {
+        Thread.current.threadDictionary["testVoiceOver"] = value
+    }
+    
+    /// Override Switch Control detection for testing
+    public static func setTestSwitchControl(_ value: Bool?) {
+        Thread.current.threadDictionary["testSwitchControl"] = value
+    }
+    
+    /// Override AssistiveTouch detection for testing
+    public static func setTestAssistiveTouch(_ value: Bool?) {
+        Thread.current.threadDictionary["testAssistiveTouch"] = value
+    }
+    
+    /// Clear all capability overrides
+    public static func clearAllCapabilityOverrides() {
+        Thread.current.threadDictionary.removeObject(forKey: "testTouchSupport")
+        Thread.current.threadDictionary.removeObject(forKey: "testHapticFeedback")
+        Thread.current.threadDictionary.removeObject(forKey: "testHover")
+        Thread.current.threadDictionary.removeObject(forKey: "testVoiceOver")
+        Thread.current.threadDictionary.removeObject(forKey: "testSwitchControl")
+        Thread.current.threadDictionary.removeObject(forKey: "testAssistiveTouch")
+    }
+    
+    // MARK: - Private Capability Override Getters
+    
+    private static var testTouchSupport: Bool? {
+        return Thread.current.threadDictionary["testTouchSupport"] as? Bool
+    }
+    
+    private static var testHapticFeedback: Bool? {
+        return Thread.current.threadDictionary["testHapticFeedback"] as? Bool
+    }
+    
+    private static var testHover: Bool? {
+        return Thread.current.threadDictionary["testHover"] as? Bool
+    }
+    
+    private static var testVoiceOver: Bool? {
+        return Thread.current.threadDictionary["testVoiceOver"] as? Bool
+    }
+    
+    private static var testSwitchControl: Bool? {
+        return Thread.current.threadDictionary["testSwitchControl"] as? Bool
+    }
+    
+    private static var testAssistiveTouch: Bool? {
+        return Thread.current.threadDictionary["testAssistiveTouch"] as? Bool
+    }
+    
     // MARK: - Touch Capability Detection
     
     /// Detects if touch input is actually supported by querying the OS
     @MainActor
     public static var supportsTouch: Bool {
-        // Use testing defaults when in testing mode
-        if TestingCapabilityDetection.isTestingMode {
-            let platform = Platform.current
-            let defaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
-            return defaults.supportsTouch
+        // Check for capability override first
+        if let testValue = testTouchSupport {
+            return testValue
         }
         
-        #if os(iOS)
-        return detectiOSTouchSupport()
-        #elseif os(macOS)
-        return detectmacOSTouchSupport()
-        #elseif os(watchOS)
-        return true // Apple Watch always supports touch
-        #elseif os(tvOS)
-        return false // Apple TV doesn't support touch
-        #elseif os(visionOS)
-        return true // Vision Pro supports touch gestures
-        #else
-        return false
-        #endif
+        let platform = testPlatform ?? Platform.current
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return detectiOSTouchSupport()
+            #else
+            return getTestDefaults().supportsTouch
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return detectmacOSTouchSupport()
+            #else
+            return getTestDefaults().supportsTouch
+            #endif
+        case .watchOS:
+            #if os(watchOS)
+            return true // Apple Watch always supports touch
+            #else
+            return getTestDefaults().supportsTouch
+            #endif
+        case .tvOS:
+            #if os(tvOS)
+            return false // Apple TV doesn't support touch
+            #else
+            return getTestDefaults().supportsTouch
+            #endif
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision Pro supports touch gestures
+            #else
+            return getTestDefaults().supportsTouch
+            #endif
+        }
     }
     
     #if os(iOS)
@@ -116,26 +223,44 @@ public struct RuntimeCapabilityDetection {
     /// Detects if haptic feedback is actually supported
     @MainActor
     public static var supportsHapticFeedback: Bool {
-        // Use testing defaults when in testing mode
-        if TestingCapabilityDetection.isTestingMode {
-            let platform = Platform.current
-            let defaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
-            return defaults.supportsHapticFeedback
+        // Check for capability override first
+        if let testValue = testHapticFeedback {
+            return testValue
         }
         
-        #if os(iOS)
-        return detectiOSHapticSupport()
-        #elseif os(macOS)
-        return detectmacOSHapticSupport()
-        #elseif os(watchOS)
-        return true // Apple Watch supports haptics
-        #elseif os(tvOS)
-        return false // Apple TV doesn't support haptics
-        #elseif os(visionOS)
-        return true // Vision Pro supports haptics
-        #else
-        return false
-        #endif
+        let platform = testPlatform ?? Platform.current
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return detectiOSHapticSupport()
+            #else
+            return getTestDefaults().supportsHapticFeedback
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return detectmacOSHapticSupport()
+            #else
+            return getTestDefaults().supportsHapticFeedback
+            #endif
+        case .watchOS:
+            #if os(watchOS)
+            return true // Apple Watch supports haptics
+            #else
+            return getTestDefaults().supportsHapticFeedback
+            #endif
+        case .tvOS:
+            #if os(tvOS)
+            return false // Apple TV doesn't support haptics
+            #else
+            return getTestDefaults().supportsHapticFeedback
+            #endif
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision Pro supports haptics
+            #else
+            return getTestDefaults().supportsHapticFeedback
+            #endif
+        }
     }
     
     #if os(iOS)
@@ -158,26 +283,44 @@ public struct RuntimeCapabilityDetection {
     /// Detects if hover events are actually supported
     @MainActor
     public static var supportsHover: Bool {
-        // Use testing defaults when in testing mode
-        if TestingCapabilityDetection.isTestingMode {
-            let platform = Platform.current
-            let defaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
-            return defaults.supportsHover
+        // Check for capability override first
+        if let testValue = testHover {
+            return testValue
         }
         
-        #if os(iOS)
-        return detectiOSHoverSupport()
-        #elseif os(macOS)
-        return detectmacOSHoverSupport()
-        #elseif os(watchOS)
-        return false // Apple Watch doesn't support hover
-        #elseif os(tvOS)
-        return false // Apple TV doesn't support hover
-        #elseif os(visionOS)
-        return true // Vision Pro supports hover
-        #else
-        return false
-        #endif
+        let platform = testPlatform ?? Platform.current
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return detectiOSHoverSupport()
+            #else
+            return getTestDefaults().supportsHover
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return detectmacOSHoverSupport()
+            #else
+            return getTestDefaults().supportsHover
+            #endif
+        case .watchOS:
+            #if os(watchOS)
+            return false // Apple Watch doesn't support hover
+            #else
+            return getTestDefaults().supportsHover
+            #endif
+        case .tvOS:
+            #if os(tvOS)
+            return false // Apple TV doesn't support hover
+            #else
+            return getTestDefaults().supportsHover
+            #endif
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision Pro supports hover
+            #else
+            return getTestDefaults().supportsHover
+            #endif
+        }
     }
     
     #if os(iOS)
@@ -203,55 +346,122 @@ public struct RuntimeCapabilityDetection {
     /// Detects if VoiceOver is actually available
     @MainActor
     public static var supportsVoiceOver: Bool {
-        #if os(iOS)
-        return UIAccessibility.isVoiceOverRunning
-        #elseif os(macOS)
-        return NSWorkspace.shared.isVoiceOverEnabled
-        #elseif os(watchOS)
-        return true // Apple Watch supports VoiceOver
-        #elseif os(tvOS)
-        return true // Apple TV supports VoiceOver
-        #elseif os(visionOS)
-        return true // Vision Pro supports VoiceOver
-        #else
-        return false
-        #endif
+        // Check for capability override first
+        if let testValue = testVoiceOver {
+            return testValue
+        }
+        
+        let platform = testPlatform ?? Platform.current
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return UIAccessibility.isVoiceOverRunning
+            #else
+            return getTestDefaults().supportsVoiceOver
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return NSWorkspace.shared.isVoiceOverEnabled
+            #else
+            return getTestDefaults().supportsVoiceOver
+            #endif
+        case .watchOS:
+            #if os(watchOS)
+            return true // Apple Watch supports VoiceOver
+            #else
+            return getTestDefaults().supportsVoiceOver
+            #endif
+        case .tvOS:
+            #if os(tvOS)
+            return true // Apple TV supports VoiceOver
+            #else
+            return getTestDefaults().supportsVoiceOver
+            #endif
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision Pro supports VoiceOver
+            #else
+            return getTestDefaults().supportsVoiceOver
+            #endif
+        }
     }
     
     /// Detects if Switch Control is actually available
     @MainActor
     public static var supportsSwitchControl: Bool {
-        #if os(iOS)
-        return UIAccessibility.isSwitchControlRunning
-        #elseif os(macOS)
-        return NSWorkspace.shared.isSwitchControlEnabled
-        #elseif os(watchOS)
-        return true // Apple Watch supports Switch Control
-        #elseif os(tvOS)
-        return true // Apple TV supports Switch Control
-        #elseif os(visionOS)
-        return true // Vision Pro supports Switch Control
-        #else
-        return false
-        #endif
+        // Check for capability override first
+        if let testValue = testSwitchControl {
+            return testValue
+        }
+        
+        let platform = testPlatform ?? Platform.current
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return UIAccessibility.isSwitchControlRunning
+            #else
+            return getTestDefaults().supportsSwitchControl
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return NSWorkspace.shared.isSwitchControlEnabled
+            #else
+            return getTestDefaults().supportsSwitchControl
+            #endif
+        case .watchOS:
+            #if os(watchOS)
+            return true // Apple Watch supports Switch Control
+            #else
+            return getTestDefaults().supportsSwitchControl
+            #endif
+        case .tvOS:
+            #if os(tvOS)
+            return true // Apple TV supports Switch Control
+            #else
+            return getTestDefaults().supportsSwitchControl
+            #endif
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision Pro supports Switch Control
+            #else
+            return getTestDefaults().supportsSwitchControl
+            #endif
+        }
     }
     
     /// Detects if AssistiveTouch is actually available
     @MainActor
     public static var supportsAssistiveTouch: Bool {
-        #if os(iOS)
-        return UIAccessibility.isAssistiveTouchRunning
-        #elseif os(macOS)
-        return false // macOS doesn't have AssistiveTouch
-        #elseif os(watchOS)
-        return true // Apple Watch supports AssistiveTouch
-        #elseif os(tvOS)
-        return false // Apple TV doesn't have AssistiveTouch
-        #elseif os(visionOS)
-        return true // Vision Pro supports AssistiveTouch
-        #else
-        return false
-        #endif
+        // Check for capability override first
+        if let testValue = testAssistiveTouch {
+            return testValue
+        }
+        
+        let platform = testPlatform ?? Platform.current
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return UIAccessibility.isAssistiveTouchRunning
+            #else
+            return getTestDefaults().supportsAssistiveTouch
+            #endif
+        case .macOS:
+            return false // macOS doesn't have AssistiveTouch
+        case .watchOS:
+            #if os(watchOS)
+            return true // Apple Watch supports AssistiveTouch
+            #else
+            return getTestDefaults().supportsAssistiveTouch
+            #endif
+        case .tvOS:
+            return false // Apple TV doesn't have AssistiveTouch
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision Pro supports AssistiveTouch
+            #else
+            return getTestDefaults().supportsAssistiveTouch
+            #endif
+        }
     }
 }
 

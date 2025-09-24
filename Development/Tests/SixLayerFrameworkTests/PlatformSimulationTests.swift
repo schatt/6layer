@@ -30,7 +30,7 @@ final class PlatformSimulationTests: XCTestCase {
     
     // MARK: - Platform Simulation Matrix
     
-    private let simulatedPlatforms: [SimulatedPlatform] = [
+    public static let simulatedPlatforms: [SimulatedPlatform] = [
         // iOS Platforms
         SimulatedPlatform(
             platform: .iOS,
@@ -157,7 +157,7 @@ final class PlatformSimulationTests: XCTestCase {
     // MARK: - Comprehensive Platform Testing
     
     func testAllPlatformCombinations() {
-        for simulatedPlatform in simulatedPlatforms {
+        for simulatedPlatform in PlatformSimulationTests.simulatedPlatforms {
             testPlatformConfiguration(simulatedPlatform)
         }
     }
@@ -185,7 +185,7 @@ final class PlatformSimulationTests: XCTestCase {
     // MARK: - Device Type Specific Testing
     
     func testPhoneSpecificFeatures() {
-        let phonePlatforms = simulatedPlatforms.filter { $0.deviceType == .phone }
+        let phonePlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .phone }
         
         for platform in phonePlatforms {
             XCTAssertTrue(platform.capabilities.supportsTouch, 
@@ -200,7 +200,7 @@ final class PlatformSimulationTests: XCTestCase {
     }
     
     func testPadSpecificFeatures() {
-        let padPlatforms = simulatedPlatforms.filter { $0.deviceType == .pad }
+        let padPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .pad }
         
         for platform in padPlatforms {
             XCTAssertTrue(platform.capabilities.supportsTouch, 
@@ -215,7 +215,7 @@ final class PlatformSimulationTests: XCTestCase {
     }
     
     func testMacSpecificFeatures() {
-        let macPlatforms = simulatedPlatforms.filter { $0.deviceType == .mac }
+        let macPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .mac }
         
         for platform in macPlatforms {
             XCTAssertFalse(platform.capabilities.supportsTouch, 
@@ -230,7 +230,7 @@ final class PlatformSimulationTests: XCTestCase {
     }
     
     func testWatchSpecificFeatures() {
-        let watchPlatforms = simulatedPlatforms.filter { $0.deviceType == .watch }
+        let watchPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .watch }
         
         for platform in watchPlatforms {
             XCTAssertTrue(platform.capabilities.supportsTouch, 
@@ -247,7 +247,7 @@ final class PlatformSimulationTests: XCTestCase {
     }
     
     func testTVSpecificFeatures() {
-        let tvPlatforms = simulatedPlatforms.filter { $0.deviceType == .tv }
+        let tvPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .tv }
         
         for platform in tvPlatforms {
             XCTAssertFalse(platform.capabilities.supportsTouch, 
@@ -264,7 +264,7 @@ final class PlatformSimulationTests: XCTestCase {
     }
     
     func testVisionSpecificFeatures() {
-        let visionPlatforms = simulatedPlatforms.filter { $0.platform == .visionOS }
+        let visionPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.platform == .visionOS }
         
         for platform in visionPlatforms {
             XCTAssertFalse(platform.capabilities.supportsTouch, 
@@ -285,7 +285,7 @@ final class PlatformSimulationTests: XCTestCase {
     // MARK: - Screen Size Testing
     
     func testScreenSizeAppropriateness() {
-        for platform in simulatedPlatforms {
+        for platform in PlatformSimulationTests.simulatedPlatforms {
             let screenSize = platform.screenSize
             let deviceType = platform.deviceType
             
