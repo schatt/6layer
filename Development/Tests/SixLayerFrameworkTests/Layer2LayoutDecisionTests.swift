@@ -5,6 +5,20 @@
 //  Layer 2 (Decision) TDD Tests
 //  Tests for determineOptimalLayout_L2 and determineOptimalFormLayout_L2 functions
 //
+//  Test Documentation:
+//  Business purpose of function: Determine optimal layout approach and form layout based on content complexity, field count, and device capabilities
+//  What are we actually testing:
+//    - Content complexity algorithm (0-5=simple, 6-9=moderate, 10-25=complex, 25+=veryComplex)
+//    - Layout approach selection (simple=uniform, moderate=adaptive, complex=responsive, veryComplex=dynamic)
+//    - Column calculation algorithm with complexity and device limits
+//    - Form layout business logic (field count, complexity, validation decisions)
+//  HOW are we testing it:
+//    - Test content complexity calculation with various field counts and types
+//    - Test layout approach selection with different complexity levels
+//    - Test column calculation with device width constraints
+//    - Test form layout decisions based on field complexity and validation requirements
+//    - Validate business logic algorithms rather than just testing existence
+//
 
 import XCTest
 @testable import SixLayerFramework

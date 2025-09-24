@@ -88,7 +88,29 @@
 - **Accessibility Updates**: Dynamic accessibility state management
 - **Theme Changes**: Automatic theme switching and dark mode support
 
-## 📝 **Current Migration Todos (v3.1.3)**
+## 📝 **Current Test Audit Todos (v3.1.3)**
+
+### **Test Suite Audit and Documentation** 🔄 **IN PROGRESS**
+
+**Test Documentation Tasks:**
+- [x] ✅ **COMPLETED**: Fix hanging OCR tests - Vision framework timeout issues
+- [x] ✅ **COMPLETED**: Remove meaningless time-based assertions from OCR strategy tests since we use mock services
+- [x] ✅ **COMPLETED**: Replace generic Layer 2 tests with proper business logic validation
+- [x] ✅ **COMPLETED**: Create comprehensive tests for Layer 4 navigation functions
+- [x] ✅ **COMPLETED**: Create comprehensive tests for OCR disambiguation functions
+- [x] ✅ **COMPLETED**: Create comprehensive tests for OCR strategy functions
+- [x] ✅ **COMPLETED**: Add documentation headers to test files (OCRStrategyTests, Layer2LayoutDecisionTests, GenericLayoutDecisionTests, CoreArchitectureTests)
+- [ ] 🔄 **IN PROGRESS**: Audit all 88 test files for proper business logic testing vs generic existence testing
+- [ ] 📋 **PENDING**: Document business purpose, testing scope, and methodology for remaining test files
+- [ ] 📋 **PENDING**: Identify and fix remaining generic/existence-only tests
+- [ ] 📋 **PENDING**: Audit commented-out test files (FormFieldInteractionTests.swift, InteractiveFormTests.swift) for generic tests
+- [ ] 📋 **PENDING**: Audit ALL test files (including disabled .disabled extension files) for generic tests
+- [ ] 📋 **PENDING**: Create systematic approach to audit all 88 test files for proper business logic testing
+
+**Test Audit Results So Far:**
+- **✅ Good Tests (Testing Business Logic)**: OCRStrategyTests, Layer2LayoutDecisionTests, GenericLayoutDecisionTests, CoreArchitectureTests
+- **❌ Generic Tests (Testing Existence Only)**: FormFieldInteractionTests.swift (commented out), InteractiveFormTests.swift (commented out)
+- **📋 Pattern Identified**: Commented-out files tend to have generic tests, active files tend to have better business logic tests
 
 ### **GenericFormField to DynamicFormField Migration** ✅ **COMPLETED (v3.1.3)**
 

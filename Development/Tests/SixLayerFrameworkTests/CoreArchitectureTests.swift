@@ -1,3 +1,25 @@
+//
+//  CoreArchitectureTests.swift
+//  SixLayerFrameworkTests
+//
+//  Tests for core architecture components and business logic
+//
+//  Test Documentation:
+//  Business purpose of function: Validate core architecture components and business logic behavior
+//  What are we actually testing:
+//    - Content complexity enumeration validation (all 5 complexity levels)
+//    - Presentation context business behavior (different contexts create different field sets)
+//    - Business value validation (dashboard vs detail context differences)
+//    - Data type hint creation and validation
+//    - Dynamic form field creation based on context
+//  HOW are we testing it:
+//    - Test enumeration completeness with XCTAssertEqual and XCTAssertTrue
+//    - Test business behavior by validating different contexts produce different field counts and types
+//    - Test field type validation (toggle, richtext, file) based on context
+//    - Test PresentationHints creation and context assignment
+//    - Validate business logic rather than just testing existence
+//
+
 import XCTest
 @testable import SixLayerFramework
 

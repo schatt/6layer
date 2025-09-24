@@ -57,29 +57,30 @@ public func getCardExpansionPlatformConfig() -> CardExpansionPlatformConfig {
     }
 }
 
-/// iOS-specific configuration
+/// iOS-specific configuration using runtime capability detection
+@MainActor
 private func iOSCardExpansionConfig(deviceType: DeviceType) -> CardExpansionPlatformConfig {
     switch deviceType {
     case .phone:
         return CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
+            supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride,
+            supportsHover: RuntimeCapabilityDetection.supportsHoverWithOverride,
+            supportsTouch: RuntimeCapabilityDetection.supportsTouchWithOverride,
+            supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
+            supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
+            supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
             minTouchTarget: 44,
             hoverDelay: 0.0,
             animationEasing: .easeInOut(duration: 0.25)
         )
     case .pad:
         return CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: true,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
+            supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride,
+            supportsHover: RuntimeCapabilityDetection.supportsHoverWithOverride,
+            supportsTouch: RuntimeCapabilityDetection.supportsTouchWithOverride,
+            supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
+            supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
+            supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
             minTouchTarget: 44,
             hoverDelay: 0.1,
             animationEasing: .easeInOut(duration: 0.3)
@@ -89,15 +90,16 @@ private func iOSCardExpansionConfig(deviceType: DeviceType) -> CardExpansionPlat
     }
 }
 
-/// macOS-specific configuration
+/// macOS-specific configuration using runtime capability detection
+@MainActor
 private func macOSCardExpansionConfig() -> CardExpansionPlatformConfig {
     return CardExpansionPlatformConfig(
-        supportsHapticFeedback: false,
-        supportsHover: true,
-        supportsTouch: false,
-        supportsVoiceOver: true,
-        supportsSwitchControl: true,
-        supportsAssistiveTouch: false,
+        supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride,
+        supportsHover: RuntimeCapabilityDetection.supportsHoverWithOverride,
+        supportsTouch: RuntimeCapabilityDetection.supportsTouchWithOverride,
+        supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
+        supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
+        supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
         minTouchTarget: 44,
         hoverDelay: 0.1,
         animationEasing: .easeInOut(duration: 0.3)

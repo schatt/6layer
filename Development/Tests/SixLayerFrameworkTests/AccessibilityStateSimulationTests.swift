@@ -322,12 +322,13 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testIOSAccessibilityStates() {
-        // Create mock iOS configuration for testing
-        let config = createMockIOSPlatformConfig()
+        // Create complete iOS platform test configuration
+        let testConfig = PlatformTestUtilities.createIOSPlatformTestConfig()
         
         // Test iOS-specific behavioral implications
-        testTouchPlatformBehavior(config, platformName: "iOS")
-        testAccessibilityPlatformBehavior(config, platformName: "iOS")
+        PlatformTestUtilities.testTouchPlatformBehavior(testConfig.config, platformName: "iOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "iOS")
+        PlatformTestUtilities.testVisionAvailableBehavior(testConfig, platformName: "iOS")
         
         // Test that all accessibility states work on iOS
         for state in accessibilityStates {
@@ -336,13 +337,14 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testMacOSAccessibilityStates() {
-        // Create mock macOS configuration for testing
-        let config = createMockMacOSPlatformConfig()
+        // Create complete macOS platform test configuration
+        let testConfig = PlatformTestUtilities.createMacOSPlatformTestConfig()
         
         // Test macOS-specific behavioral implications
-        testHoverPlatformBehavior(config, platformName: "macOS")
-        testNonTouchPlatformBehavior(config, platformName: "macOS")
-        testAccessibilityPlatformBehavior(config, platformName: "macOS")
+        PlatformTestUtilities.testHoverPlatformBehavior(testConfig.config, platformName: "macOS")
+        PlatformTestUtilities.testNonTouchPlatformBehavior(testConfig.config, platformName: "macOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "macOS")
+        PlatformTestUtilities.testVisionAvailableBehavior(testConfig, platformName: "macOS")
         
         // Test that accessibility states work on macOS
         for state in accessibilityStates {
@@ -351,14 +353,14 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testWatchOSAccessibilityStates() {
-        // Create mock watchOS configuration for testing
-        let config = createMockWatchOSPlatformConfig()
+        // Create complete watchOS platform test configuration
+        let testConfig = PlatformTestUtilities.createWatchOSPlatformTestConfig()
         
         // Test watchOS-specific behavioral implications
-        testTouchPlatformBehavior(config, platformName: "watchOS")
-        testNonHoverPlatformBehavior(config, platformName: "watchOS")
-        testAccessibilityPlatformBehavior(config, platformName: "watchOS")
-        testVisionUnavailableBehavior(platformName: "watchOS")
+        PlatformTestUtilities.testTouchPlatformBehavior(testConfig.config, platformName: "watchOS")
+        PlatformTestUtilities.testNonHoverPlatformBehavior(testConfig.config, platformName: "watchOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "watchOS")
+        PlatformTestUtilities.testVisionUnavailableBehavior(testConfig, platformName: "watchOS")
         
         // Test that accessibility states work on watchOS
         for state in accessibilityStates {
@@ -367,14 +369,14 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testTVOSAccessibilityStates() {
-        // Create mock tvOS configuration for testing
-        let config = createMockTVOSPlatformConfig()
+        // Create complete tvOS platform test configuration
+        let testConfig = PlatformTestUtilities.createTVOSPlatformTestConfig()
         
         // Test tvOS-specific behavioral implications
-        testNonTouchPlatformBehavior(config, platformName: "tvOS")
-        testNonHoverPlatformBehavior(config, platformName: "tvOS")
-        testAccessibilityPlatformBehavior(config, platformName: "tvOS")
-        testVisionUnavailableBehavior(platformName: "tvOS")
+        PlatformTestUtilities.testNonTouchPlatformBehavior(testConfig.config, platformName: "tvOS")
+        PlatformTestUtilities.testNonHoverPlatformBehavior(testConfig.config, platformName: "tvOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "tvOS")
+        PlatformTestUtilities.testVisionUnavailableBehavior(testConfig, platformName: "tvOS")
         
         // Test that accessibility states work on tvOS
         for state in accessibilityStates {
@@ -383,14 +385,14 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testVisionOSAccessibilityStates() {
-        // Create mock visionOS configuration for testing
-        let config = createMockVisionOSPlatformConfig()
+        // Create complete visionOS platform test configuration
+        let testConfig = PlatformTestUtilities.createVisionOSPlatformTestConfig()
         
         // Test visionOS-specific behavioral implications
-        testNonTouchPlatformBehavior(config, platformName: "visionOS")
-        testNonHoverPlatformBehavior(config, platformName: "visionOS")
-        testAccessibilityPlatformBehavior(config, platformName: "visionOS")
-        testVisionAvailableBehavior(platformName: "visionOS")
+        PlatformTestUtilities.testNonTouchPlatformBehavior(testConfig.config, platformName: "visionOS")
+        PlatformTestUtilities.testNonHoverPlatformBehavior(testConfig.config, platformName: "visionOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "visionOS")
+        PlatformTestUtilities.testVisionAvailableBehavior(testConfig, platformName: "visionOS")
         
         // Test that accessibility states work on visionOS
         for state in accessibilityStates {
@@ -408,180 +410,56 @@ final class AccessibilityStateSimulationTests: XCTestCase {
         print("✅ All accessibility states tested successfully!")
     }
     
-    // MARK: - Mock Platform Configuration Helpers
-    
-    private func createMockIOSPlatformConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
-    }
-    
-    private func createMockMacOSPlatformConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: true,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 0,
-            hoverDelay: 0.1,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
-    }
-    
-    private func createMockWatchOSPlatformConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.2)
-        )
-    }
-    
-    private func createMockTVOSPlatformConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: false,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 0,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
-    }
-    
-    private func createMockVisionOSPlatformConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: false,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
-    }
-    
-    private func createMockVisionAvailability(for platform: Platform) -> Bool {
-        switch platform {
-        case .iOS, .macOS, .visionOS:
-            return true
-        case .watchOS, .tvOS:
-            return false
-        }
-    }
-    
-    private func createMockOCRAvailability(for platform: Platform) -> Bool {
-        switch platform {
-        case .iOS, .macOS, .visionOS:
-            return true
-        case .watchOS, .tvOS:
-            return false
-        }
-    }
-    
-    // MARK: - Behavioral Test Methods
-    
-    /// Test the behavioral implications of touch platform capabilities
-    private func testTouchPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
-        // Touch platforms should have adequate touch targets
-        XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
-                                   "\(platformName) should have adequate touch targets")
+    /// Test that each platform helper completely sets all capabilities for its platform
+    func testPlatformHelperCompleteness() {
+        // Test that each platform helper sets ALL capabilities correctly
         
-        // Touch platforms should support haptic feedback
-        XCTAssertTrue(config.supportsHapticFeedback, 
-                     "\(platformName) should support haptic feedback")
+        // Test iOS completeness
+        let iOSConfig = PlatformTestUtilities.createIOSPlatformTestConfig()
+        XCTAssertTrue(iOSConfig.config.supportsTouch, "iOS helper should set touch support")
+        XCTAssertTrue(iOSConfig.config.supportsHapticFeedback, "iOS helper should set haptic feedback")
+        XCTAssertTrue(iOSConfig.config.supportsAssistiveTouch, "iOS helper should set AssistiveTouch")
+        XCTAssertFalse(iOSConfig.config.supportsHover, "iOS helper should disable hover")
+        XCTAssertTrue(iOSConfig.visionAvailable, "iOS helper should set Vision availability")
+        XCTAssertTrue(iOSConfig.ocrAvailable, "iOS helper should set OCR availability")
         
-        // Touch platforms should support AssistiveTouch
-        XCTAssertTrue(config.supportsAssistiveTouch, 
-                     "\(platformName) should support AssistiveTouch")
+        // Test macOS completeness
+        let macOSConfig = PlatformTestUtilities.createMacOSPlatformTestConfig()
+        XCTAssertFalse(macOSConfig.config.supportsTouch, "macOS helper should disable touch")
+        XCTAssertFalse(macOSConfig.config.supportsHapticFeedback, "macOS helper should disable haptic feedback")
+        XCTAssertFalse(macOSConfig.config.supportsAssistiveTouch, "macOS helper should disable AssistiveTouch")
+        XCTAssertTrue(macOSConfig.config.supportsHover, "macOS helper should set hover support")
+        XCTAssertTrue(macOSConfig.visionAvailable, "macOS helper should set Vision availability")
+        XCTAssertTrue(macOSConfig.ocrAvailable, "macOS helper should set OCR availability")
         
-        // Touch platforms should have zero hover delay (no hover)
-        XCTAssertEqual(config.hoverDelay, 0, 
-                      "\(platformName) should have zero hover delay")
+        // Test watchOS completeness
+        let watchOSConfig = PlatformTestUtilities.createWatchOSPlatformTestConfig()
+        XCTAssertTrue(watchOSConfig.config.supportsTouch, "watchOS helper should set touch support")
+        XCTAssertTrue(watchOSConfig.config.supportsHapticFeedback, "watchOS helper should set haptic feedback")
+        XCTAssertTrue(watchOSConfig.config.supportsAssistiveTouch, "watchOS helper should set AssistiveTouch")
+        XCTAssertFalse(watchOSConfig.config.supportsHover, "watchOS helper should disable hover")
+        XCTAssertFalse(watchOSConfig.visionAvailable, "watchOS helper should disable Vision")
+        XCTAssertFalse(watchOSConfig.ocrAvailable, "watchOS helper should disable OCR")
+        
+        // Test tvOS completeness
+        let tvOSConfig = PlatformTestUtilities.createTVOSPlatformTestConfig()
+        XCTAssertFalse(tvOSConfig.config.supportsTouch, "tvOS helper should disable touch")
+        XCTAssertFalse(tvOSConfig.config.supportsHapticFeedback, "tvOS helper should disable haptic feedback")
+        XCTAssertFalse(tvOSConfig.config.supportsAssistiveTouch, "tvOS helper should disable AssistiveTouch")
+        XCTAssertFalse(tvOSConfig.config.supportsHover, "tvOS helper should disable hover")
+        XCTAssertFalse(tvOSConfig.visionAvailable, "tvOS helper should disable Vision")
+        XCTAssertFalse(tvOSConfig.ocrAvailable, "tvOS helper should disable OCR")
+        
+        // Test visionOS completeness
+        let visionOSConfig = PlatformTestUtilities.createVisionOSPlatformTestConfig()
+        XCTAssertFalse(visionOSConfig.config.supportsTouch, "visionOS helper should disable touch")
+        XCTAssertFalse(visionOSConfig.config.supportsHapticFeedback, "visionOS helper should disable haptic feedback")
+        XCTAssertFalse(visionOSConfig.config.supportsAssistiveTouch, "visionOS helper should disable AssistiveTouch")
+        XCTAssertFalse(visionOSConfig.config.supportsHover, "visionOS helper should disable hover")
+        XCTAssertTrue(visionOSConfig.visionAvailable, "visionOS helper should set Vision availability")
+        XCTAssertTrue(visionOSConfig.ocrAvailable, "visionOS helper should set OCR availability")
+        
+        print("✅ All platform helpers set complete capability configurations!")
     }
     
-    /// Test the behavioral implications of non-touch platform capabilities
-    private func testNonTouchPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
-        // Non-touch platforms should not support haptic feedback
-        XCTAssertFalse(config.supportsHapticFeedback, 
-                      "\(platformName) should not support haptic feedback")
-        
-        // Non-touch platforms should not support AssistiveTouch
-        XCTAssertFalse(config.supportsAssistiveTouch, 
-                      "\(platformName) should not support AssistiveTouch")
-        
-        // Non-touch platforms should have zero touch target requirement
-        XCTAssertEqual(config.minTouchTarget, 0, 
-                      "\(platformName) should have zero touch target requirement")
-    }
-    
-    /// Test the behavioral implications of hover platform capabilities
-    private func testHoverPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
-        // Hover platforms should have hover delay set
-        XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
-                                   "\(platformName) should have hover delay set")
-        
-        // Hover platforms should not support touch (mutually exclusive)
-        XCTAssertFalse(config.supportsTouch, 
-                      "\(platformName) should not support touch (hover exclusive)")
-    }
-    
-    /// Test the behavioral implications of non-hover platform capabilities
-    private func testNonHoverPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
-        // Non-hover platforms should have zero hover delay
-        XCTAssertEqual(config.hoverDelay, 0, 
-                      "\(platformName) should have zero hover delay")
-    }
-    
-    /// Test the behavioral implications of accessibility platform capabilities
-    private func testAccessibilityPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
-        // All platforms should support VoiceOver
-        XCTAssertTrue(config.supportsVoiceOver, 
-                     "\(platformName) should support VoiceOver")
-        
-        // All platforms should support Switch Control
-        XCTAssertTrue(config.supportsSwitchControl, 
-                     "\(platformName) should support Switch Control")
-    }
-    
-    /// Test the behavioral implications of Vision framework availability
-    private func testVisionAvailableBehavior(platformName: String) {
-        // Vision-available platforms should have OCR
-        XCTAssertTrue(createMockOCRAvailability(for: .visionOS), 
-                     "\(platformName) should have OCR available")
-        
-        // Vision-available platforms should have Vision framework
-        XCTAssertTrue(createMockVisionAvailability(for: .visionOS), 
-                     "\(platformName) should have Vision framework")
-    }
-    
-    /// Test the behavioral implications of Vision framework unavailability
-    private func testVisionUnavailableBehavior(platformName: String) {
-        // Vision-unavailable platforms should not have OCR
-        XCTAssertFalse(createMockOCRAvailability(for: .watchOS), 
-                      "\(platformName) should not have OCR available")
-        
-        // Vision-unavailable platforms should not have Vision framework
-        XCTAssertFalse(createMockVisionAvailability(for: .watchOS), 
-                      "\(platformName) should not have Vision framework")
-    }
 }

@@ -6,6 +6,21 @@
 //  Tests the intelligent layout decision engine that analyzes content
 //  and makes optimal layout decisions based on content characteristics
 //
+//  Test Documentation:
+//  Business purpose of function: Analyze content characteristics and determine optimal layout approach (uniform, adaptive, responsive, dynamic) and column count
+//  What are we actually testing:
+//    - Layout approach selection based on item count (small=uniform, medium=adaptive, large=responsive, veryLarge=dynamic)
+//    - Column count calculation based on item count, screen width, and device type
+//    - Device-specific layout behavior (phone vs pad differences)
+//    - Screen width impact on layout decisions
+//    - Edge cases (empty items, very large item counts)
+//  HOW are we testing it:
+//    - Test with different item counts (0, 3, 8, 50, 200) to validate complexity thresholds
+//    - Test with different device types (phone, pad) and screen widths
+//    - Validate specific layout approach selections (.uniform, .adaptive, .dynamic)
+//    - Validate column count calculations with XCTAssertGreaterThan assertions
+//    - Test edge cases like empty item arrays
+//
 
 import XCTest
 import SwiftUI

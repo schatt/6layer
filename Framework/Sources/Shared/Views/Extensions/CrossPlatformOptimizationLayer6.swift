@@ -57,6 +57,7 @@ public class CrossPlatformOptimizationManager: ObservableObject {
 // MARK: - Platform Types
 
 /// Platform-specific optimization extensions
+@MainActor
 public extension Platform {
     /// Check if platform supports specific features
     var supportsHapticFeedback: Bool {
@@ -69,12 +70,8 @@ public extension Platform {
     }
     
     var supportsTouchGestures: Bool {
-        switch self {
-        case .iOS, .watchOS, .visionOS:
-            return true
-        case .macOS, .tvOS:
-            return false
-        }
+        // Use runtime detection instead of hardcoded platform assumptions
+        return RuntimeCapabilityDetection.supportsTouchWithOverride
     }
     
     var supportsKeyboardNavigation: Bool {

@@ -252,68 +252,7 @@ final class PlatformLogicTests: XCTestCase {
     // MARK: - Helper Methods
     
     private func createMockPlatformConfig(for platform: Platform) -> CardExpansionPlatformConfig {
-        switch platform {
-        case .iOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: true,
-                supportsHover: false, // iPhone doesn't have hover
-                supportsTouch: true,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: true,
-                minTouchTarget: 44,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .macOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: true,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.1,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .watchOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: true,
-                supportsHover: false,
-                supportsTouch: true,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: true,
-                minTouchTarget: 44,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.2)
-            )
-        case .tvOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: false,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .visionOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: true,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.1,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        }
+        return PlatformTestUtilities.getPlatformConfig(for: platform)
     }
     
     private func createMockDeviceConfig(for deviceType: DeviceType) -> CardExpansionPlatformConfig {

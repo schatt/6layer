@@ -464,70 +464,9 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
         }
     }
     
-    /// Create a platform configuration for a specific platform
+    /// Create a platform configuration for a specific platform using centralized utilities
     private func createPlatformConfig(platform: Platform) -> CardExpansionPlatformConfig {
-        switch platform {
-        case .iOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: true,
-                supportsHover: false,
-                supportsTouch: true,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: true,
-                minTouchTarget: 44,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .macOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: true,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.1,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .watchOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: true,
-                supportsHover: false,
-                supportsTouch: true,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: true,
-                minTouchTarget: 44,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .tvOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: false,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .visionOS:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: false,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        }
+        return PlatformTestUtilities.getPlatformConfig(for: platform)
     }
     
     // MARK: - Individual Test Runners
