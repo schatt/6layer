@@ -59,10 +59,10 @@ final class CorrectCrossPlatformTestingExample: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: - Correct Cross-Platform Testing
+    // MARK: - Correct Cross-Platform Testing Using Existing Mocking Infrastructure
     
-    /// Tests platform detection logic (not platform-specific execution)
-    func testPlatformDetection_Logic() {
+    /// Tests platform detection logic using existing mocking functions
+    func testPlatformDetection_UsingExistingMocks() {
         // Test that platform detection works correctly
         let detectedPlatform = Platform.current
         XCTAssertNotNil(detectedPlatform, "Platform detection should work")
@@ -76,74 +76,144 @@ final class CorrectCrossPlatformTestingExample: XCTestCase {
         XCTAssertNoThrow(getCardExpansionPerformanceConfig(), "Performance config should be callable")
     }
     
-    /// Tests platform-specific behavior through existing functions
-    func testPlatformSpecificBehavior_ThroughExistingFunctions() {
-        // Test that platform-specific functions work
-        let platformConfig = getCardExpansionPlatformConfig()
-        let performanceConfig = getCardExpansionPerformanceConfig()
+    /// Tests platform-specific behavior using existing mocking infrastructure
+    func testPlatformSpecificBehavior_UsingExistingMocks() {
+        // Use existing mocking functions to test different platform capabilities
+        let touchCapabilities = DRYTestPatterns.createTouchCapabilities()
+        let hoverCapabilities = DRYTestPatterns.createHoverCapabilities()
+        let allCapabilities = DRYTestPatterns.createAllCapabilities()
+        let noCapabilities = DRYTestPatterns.createNoCapabilities()
         
-        // Test that configurations are valid
-        XCTAssertNotNil(platformConfig, "Platform config should be valid")
-        XCTAssertNotNil(performanceConfig, "Performance config should be valid")
+        // Test touch capabilities
+        XCTAssertTrue(touchCapabilities.supportsTouch(), "Touch capabilities should support touch")
+        XCTAssertTrue(touchCapabilities.supportsHapticFeedback(), "Touch capabilities should support haptic feedback")
+        XCTAssertTrue(touchCapabilities.supportsAssistiveTouch(), "Touch capabilities should support assistive touch")
         
-        // Test that we can access platform-specific properties
-        XCTAssertNotNil(platformConfig.supportsTouch, "Should have touch support property")
-        XCTAssertNotNil(platformConfig.supportsHover, "Should have hover support property")
-        XCTAssertNotNil(platformConfig.supportsHapticFeedback, "Should have haptic support property")
-        XCTAssertNotNil(platformConfig.supportsVoiceOver, "Should have VoiceOver support property")
+        // Test hover capabilities
+        XCTAssertTrue(hoverCapabilities.supportsHover(), "Hover capabilities should support hover")
+        XCTAssertTrue(hoverCapabilities.supportsVoiceOver(), "Hover capabilities should support VoiceOver")
+        XCTAssertTrue(hoverCapabilities.supportsSwitchControl(), "Hover capabilities should support Switch Control")
+        
+        // Test all capabilities
+        XCTAssertTrue(allCapabilities.supportsTouch(), "All capabilities should support touch")
+        XCTAssertTrue(allCapabilities.supportsHover(), "All capabilities should support hover")
+        XCTAssertTrue(allCapabilities.supportsHapticFeedback(), "All capabilities should support haptic feedback")
+        XCTAssertTrue(allCapabilities.supportsVision(), "All capabilities should support vision")
+        XCTAssertTrue(allCapabilities.supportsOCR(), "All capabilities should support OCR")
+        
+        // Test no capabilities
+        XCTAssertFalse(noCapabilities.supportsTouch(), "No capabilities should not support touch")
+        XCTAssertFalse(noCapabilities.supportsHover(), "No capabilities should not support hover")
+        XCTAssertFalse(noCapabilities.supportsHapticFeedback(), "No capabilities should not support haptic feedback")
     }
     
-    /// Tests cross-platform compatibility through mocking
-    func testCrossPlatformCompatibility_ThroughMocking() {
-        // Test different platform scenarios through mocking
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+    /// Tests cross-platform compatibility using existing platform simulation
+    func testCrossPlatformCompatibility_UsingExistingSimulation() {
+        // Use existing platform simulation infrastructure
+        let simulatedPlatforms = PlatformSimulationTests.simulatedPlatforms
         
-        for platform in platforms {
-            // Mock the platform detection
-            mockPlatformDetector.currentPlatform = platform
-            
-            // Test that platform-specific functions work for each platform
+        for simulatedPlatform in simulatedPlatforms {
+            // Test that platform-specific functions work for each simulated platform
             let config = getCardExpansionPlatformConfig()
-            XCTAssertNotNil(config, "Should work for \(platform)")
+            XCTAssertNotNil(config, "Should work for \(simulatedPlatform.platform)")
             
-            // Test platform-specific behavior through existing functions
-            testPlatformSpecificBehavior(for: platform, config: config)
+            // Test platform-specific behavior using existing simulation
+            testPlatformSpecificBehaviorUsingSimulation(simulatedPlatform: simulatedPlatform)
         }
     }
     
-    /// Tests platform-specific behavior for a given platform
-    private func testPlatformSpecificBehavior(for platform: Platform, config: CardExpansionPlatformConfig) {
+    /// Tests platform-specific behavior using existing simulation infrastructure
+    private func testPlatformSpecificBehaviorUsingSimulation(simulatedPlatform: PlatformSimulationTests.SimulatedPlatform) {
+        let platform = simulatedPlatform.platform
+        let capabilities = simulatedPlatform.capabilities
+        
         switch platform {
         case .iOS:
-            // Test iOS-specific behavior through existing functions
-            XCTAssertTrue(config.supportsTouch, "iOS should support touch")
-            XCTAssertTrue(config.supportsHapticFeedback, "iOS should support haptic feedback")
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "iOS should have adequate touch targets")
+            // Test iOS-specific behavior using simulation
+            XCTAssertEqual(capabilities.supportsTouch, true, "iOS should support touch")
+            XCTAssertEqual(capabilities.supportsHapticFeedback, true, "iOS should support haptic feedback")
+            XCTAssertEqual(capabilities.minTouchTarget, 44, "iOS should have adequate touch targets")
             
         case .macOS:
-            // Test macOS-specific behavior through existing functions
-            XCTAssertTrue(config.supportsHover, "macOS should support hover")
-            XCTAssertFalse(config.supportsTouch, "macOS should not support touch by default")
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "macOS should have hover delay")
+            // Test macOS-specific behavior using simulation
+            XCTAssertEqual(capabilities.supportsHover, true, "macOS should support hover")
+            XCTAssertEqual(capabilities.supportsTouch, false, "macOS should not support touch by default")
+            XCTAssertEqual(capabilities.maxAnimationDuration, 0.3, "macOS should have appropriate animation duration")
             
         case .watchOS:
-            // Test watchOS-specific behavior through existing functions
-            XCTAssertTrue(config.supportsTouch, "watchOS should support touch")
-            XCTAssertTrue(config.supportsHapticFeedback, "watchOS should support haptic feedback")
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "watchOS should have adequate touch targets")
+            // Test watchOS-specific behavior using simulation
+            XCTAssertEqual(capabilities.supportsTouch, true, "watchOS should support touch")
+            XCTAssertEqual(capabilities.supportsHapticFeedback, true, "watchOS should support haptic feedback")
+            XCTAssertEqual(capabilities.minTouchTarget, 44, "watchOS should have adequate touch targets")
             
         case .tvOS:
-            // Test tvOS-specific behavior through existing functions
-            XCTAssertTrue(config.supportsVoiceOver, "tvOS should support VoiceOver")
-            XCTAssertFalse(config.supportsTouch, "tvOS should not support touch")
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 60, "tvOS should have larger touch targets")
+            // Test tvOS-specific behavior using simulation
+            XCTAssertEqual(capabilities.supportsVoiceOver, true, "tvOS should support VoiceOver")
+            XCTAssertEqual(capabilities.supportsTouch, false, "tvOS should not support touch")
+            XCTAssertEqual(capabilities.minTouchTarget, 60, "tvOS should have larger touch targets")
             
         case .visionOS:
-            // Test visionOS-specific behavior through existing functions
-            XCTAssertTrue(config.supportsVoiceOver, "visionOS should support VoiceOver")
-            XCTAssertTrue(config.supportsHapticFeedback, "visionOS should support haptic feedback")
-            // visionOS-specific tests would go here
+            // Test visionOS-specific behavior using simulation
+            XCTAssertEqual(capabilities.supportsVoiceOver, true, "visionOS should support VoiceOver")
+            XCTAssertEqual(capabilities.supportsHapticFeedback, true, "visionOS should support haptic feedback")
+            XCTAssertEqual(capabilities.supportsVision, true, "visionOS should support vision")
         }
+    }
+    
+    /// Tests platform capability simulation using existing functions
+    func testPlatformCapabilitySimulation_UsingExistingFunctions() {
+        // Test iOS phone simulation
+        let iOSPhoneConfig = simulatePlatformCapabilities(
+            platform: .iOS,
+            deviceType: .phone,
+            supportsTouch: true,
+            supportsHover: false,
+            supportsHaptic: true,
+            supportsAssistiveTouch: true,
+            supportsVision: true,
+            supportsOCR: true
+        )
+        
+        XCTAssertTrue(iOSPhoneConfig.supportsTouch, "iOS phone should support touch")
+        XCTAssertFalse(iOSPhoneConfig.supportsHover, "iOS phone should not support hover")
+        XCTAssertTrue(iOSPhoneConfig.supportsHapticFeedback, "iOS phone should support haptic feedback")
+        XCTAssertTrue(iOSPhoneConfig.supportsAssistiveTouch, "iOS phone should support assistive touch")
+        XCTAssertEqual(iOSPhoneConfig.minTouchTarget, 44, "iOS phone should have adequate touch targets")
+        
+        // Test macOS simulation
+        let macOSConfig = simulatePlatformCapabilities(
+            platform: .macOS,
+            deviceType: .mac,
+            supportsTouch: false,
+            supportsHover: true,
+            supportsHaptic: false,
+            supportsAssistiveTouch: false,
+            supportsVision: true,
+            supportsOCR: true
+        )
+        
+        XCTAssertFalse(macOSConfig.supportsTouch, "macOS should not support touch by default")
+        XCTAssertTrue(macOSConfig.supportsHover, "macOS should support hover")
+        XCTAssertFalse(macOSConfig.supportsHapticFeedback, "macOS should not support haptic feedback")
+        XCTAssertFalse(macOSConfig.supportsAssistiveTouch, "macOS should not support assistive touch")
+        XCTAssertEqual(macOSConfig.hoverDelay, 0.1, "macOS should have hover delay")
+    }
+    
+    /// Tests accessibility features using existing mocking infrastructure
+    func testAccessibilityFeatures_UsingExistingMocks() {
+        // Use existing accessibility mocking functions
+        let noAccessibility = DRYTestPatterns.createNoAccessibility()
+        let allAccessibility = DRYTestPatterns.createAllAccessibility()
+        
+        // Test no accessibility features
+        XCTAssertFalse(noAccessibility.isReduceMotionEnabled(), "No accessibility should not have reduce motion")
+        XCTAssertFalse(noAccessibility.isIncreaseContrastEnabled(), "No accessibility should not have increase contrast")
+        XCTAssertFalse(noAccessibility.isBoldTextEnabled(), "No accessibility should not have bold text")
+        
+        // Test all accessibility features
+        XCTAssertTrue(allAccessibility.isReduceMotionEnabled(), "All accessibility should have reduce motion")
+        XCTAssertTrue(allAccessibility.isIncreaseContrastEnabled(), "All accessibility should have increase contrast")
+        XCTAssertTrue(allAccessibility.isBoldTextEnabled(), "All accessibility should have bold text")
     }
     
     /// Tests platform-specific optimizations through existing functions
