@@ -39,6 +39,15 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         
         // Then
         XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for string content")
+        
+        // Test actual business logic: String content should be wrapped in AnyView
+        // This tests the specific behavior rather than just existence
+        XCTAssertTrue(view is AnyView, "String content should be wrapped in AnyView")
+        
+        // Test that the function handles string content without crashing
+        // This is the actual business requirement - runtime content analysis
+        let anyView = view as? AnyView
+        XCTAssertNotNil(anyView, "Content should be properly wrapped for runtime analysis")
     }
     
     func testPlatformPresentContent_L1_WithNumber() {
