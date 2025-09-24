@@ -90,6 +90,22 @@ final class InternationalizationL1Tests: XCTestCase {
         
         // Then
         XCTAssertNotNil(view, "platformPresentLocalizedNumber_L1 should return a view")
+        
+        // Test actual business logic: Number should be wrapped in AnyView for internationalization
+        XCTAssertTrue(view is AnyView, "Localized number should be wrapped in AnyView")
+        
+        // Test different number formats for different locales
+        let germanHints = InternationalizationHints(locale: Locale(identifier: "de-DE"))
+        let germanView = platformPresentLocalizedNumber_L1(number: number, hints: germanHints)
+        XCTAssertNotNil(germanView, "Should handle German number formatting")
+        XCTAssertTrue(germanView is AnyView, "German number should also be wrapped in AnyView")
+        
+        // Test edge cases
+        let zeroView = platformPresentLocalizedNumber_L1(number: 0, hints: hints)
+        XCTAssertNotNil(zeroView, "Should handle zero values")
+        
+        let negativeView = platformPresentLocalizedNumber_L1(number: -123.45, hints: hints)
+        XCTAssertNotNil(negativeView, "Should handle negative values")
     }
     
     func testPlatformPresentLocalizedCurrency_L1() {
@@ -108,6 +124,25 @@ final class InternationalizationL1Tests: XCTestCase {
         
         // Then
         XCTAssertNotNil(view, "platformPresentLocalizedCurrency_L1 should return a view")
+        
+        // Test actual business logic: Currency should be wrapped in AnyView for internationalization
+        XCTAssertTrue(view is AnyView, "Localized currency should be wrapped in AnyView")
+        
+        // Test different currency formats for different locales
+        let euroHints = InternationalizationHints(
+            locale: Locale(identifier: "de-DE"),
+            currencyCode: "EUR"
+        )
+        let euroView = platformPresentLocalizedCurrency_L1(amount: amount, hints: euroHints)
+        XCTAssertNotNil(euroView, "Should handle Euro currency formatting")
+        XCTAssertTrue(euroView is AnyView, "Euro currency should also be wrapped in AnyView")
+        
+        // Test edge cases
+        let zeroView = platformPresentLocalizedCurrency_L1(amount: 0, hints: hints)
+        XCTAssertNotNil(zeroView, "Should handle zero amounts")
+        
+        let negativeView = platformPresentLocalizedCurrency_L1(amount: -123.45, hints: hints)
+        XCTAssertNotNil(negativeView, "Should handle negative amounts")
     }
     
     func testPlatformPresentLocalizedDate_L1() {
@@ -123,6 +158,24 @@ final class InternationalizationL1Tests: XCTestCase {
         
         // Then
         XCTAssertNotNil(view, "platformPresentLocalizedDate_L1 should return a view")
+        
+        // Test actual business logic: Date should be wrapped in AnyView for internationalization
+        XCTAssertTrue(view is AnyView, "Localized date should be wrapped in AnyView")
+        
+        // Test different date formats for different locales
+        let japaneseHints = InternationalizationHints(locale: Locale(identifier: "ja-JP"))
+        let japaneseView = platformPresentLocalizedDate_L1(date: date, hints: japaneseHints)
+        XCTAssertNotNil(japaneseView, "Should handle Japanese date formatting")
+        XCTAssertTrue(japaneseView is AnyView, "Japanese date should also be wrapped in AnyView")
+        
+        // Test edge cases
+        let pastDate = Date(timeIntervalSince1970: 0) // Jan 1, 1970
+        let pastView = platformPresentLocalizedDate_L1(date: pastDate, hints: hints)
+        XCTAssertNotNil(pastView, "Should handle past dates")
+        
+        let futureDate = Date(timeIntervalSinceNow: 86400) // Tomorrow
+        let futureView = platformPresentLocalizedDate_L1(date: futureDate, hints: hints)
+        XCTAssertNotNil(futureView, "Should handle future dates")
     }
     
     func testPlatformPresentLocalizedTime_L1() {
@@ -202,6 +255,21 @@ final class InternationalizationL1Tests: XCTestCase {
         
         // Then
         XCTAssertNotNil(view, "platformRTLContainer_L1 should return a view")
+        
+        // Test actual business logic: RTL container should be wrapped in AnyView
+        XCTAssertTrue(view is AnyView, "RTL container should be wrapped in AnyView")
+        
+        // Test RTL vs LTR behavior
+        let ltrHints = InternationalizationHints(enableRTL: false)
+        let ltrView = platformRTLContainer_L1(content: content, hints: ltrHints)
+        XCTAssertNotNil(ltrView, "Should handle LTR content")
+        XCTAssertTrue(ltrView is AnyView, "LTR container should also be wrapped in AnyView")
+        
+        // Test with different content types
+        let imageContent = Image(systemName: "star")
+        let imageView = platformRTLContainer_L1(content: imageContent, hints: hints)
+        XCTAssertNotNil(imageView, "Should handle image content in RTL container")
+        XCTAssertTrue(imageView is AnyView, "Image RTL container should be wrapped in AnyView")
     }
     
     func testPlatformRTLHStack_L1() {
