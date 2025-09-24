@@ -151,86 +151,57 @@ final class OCRComprehensiveTests: XCTestCase {
     }
     
     func testPlatformOCRWithVisualCorrectionL1WithDifferentLanguages() {
-        // Test with different languages
-        let englishContext = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
-        )
+        // Test with different languages using all available text types
+        let languages: [OCRLanguage] = [.english, .spanish, .french]
+        let textTypes = TextType.allCases
         
-        let spanishContext = OCRContext(
-            textTypes: [.general],
-            language: .spanish,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
-        )
-        
-        let frenchContext = OCRContext(
-            textTypes: [.general],
-            language: .french,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
-        )
-        
-        let englishView = platformOCRWithVisualCorrection_L1(
-            image: testImage,
-            context: englishContext
-        ) { result in
-            XCTAssertNotNil(result)
+        for language in languages {
+            for textType in textTypes {
+                let context = OCRContext(
+                    textTypes: [textType],
+                    language: language,
+                    confidenceThreshold: 0.8,
+                    allowsEditing: true
+                )
+                
+                // Test business logic: Each language-textType combination should work
+                let view = platformOCRWithVisualCorrection_L1(
+                    image: testImage,
+                    context: context
+                ) { result in
+                    XCTAssertNotNil(result, "OCR should work for \(language) with \(textType)")
+                }
+                
+                XCTAssertNotNil(view, "View should be created for \(language) with \(textType)")
+            }
         }
-        
-        let spanishView = platformOCRWithVisualCorrection_L1(
-            image: testImage,
-            context: spanishContext
-        ) { result in
-            XCTAssertNotNil(result)
-        }
-        
-        let frenchView = platformOCRWithVisualCorrection_L1(
-            image: testImage,
-            context: frenchContext
-        ) { result in
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(englishView)
-        XCTAssertNotNil(spanishView)
-        XCTAssertNotNil(frenchView)
     }
     
     func testPlatformOCRWithVisualCorrectionL1WithDifferentConfidenceThresholds() {
-        // Test with different confidence thresholds
-        let lowConfidenceContext = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.1,
-            allowsEditing: true
-        )
+        // Test with different confidence thresholds using all text types
+        let confidenceThresholds: [Double] = [0.1, 0.3, 0.5, 0.7, 0.9]
+        let textTypes = TextType.allCases
         
-        let highConfidenceContext = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.9,
-            allowsEditing: true
-        )
-        
-        let lowConfidenceView = platformOCRWithVisualCorrection_L1(
-            image: testImage,
-            context: lowConfidenceContext
-        ) { result in
-            XCTAssertNotNil(result)
+        for confidence in confidenceThresholds {
+            for textType in textTypes {
+                let context = OCRContext(
+                    textTypes: [textType],
+                    language: .english,
+                    confidenceThreshold: confidence,
+                    allowsEditing: true
+                )
+                
+                // Test business logic: Each confidence-textType combination should work
+                let view = platformOCRWithVisualCorrection_L1(
+                    image: testImage,
+                    context: context
+                ) { result in
+                    XCTAssertNotNil(result, "OCR should work with confidence \(confidence) for \(textType)")
+                }
+                
+                XCTAssertNotNil(view, "View should be created with confidence \(confidence) for \(textType)")
+            }
         }
-        
-        let highConfidenceView = platformOCRWithVisualCorrection_L1(
-            image: testImage,
-            context: highConfidenceContext
-        ) { result in
-            XCTAssertNotNil(result)
-        }
-        
-        XCTAssertNotNil(lowConfidenceView)
-        XCTAssertNotNil(highConfidenceView)
     }
     
     func testPlatformOCRWithVisualCorrectionL1BasicDocumentAnalysis() {
@@ -397,23 +368,48 @@ final class OCRComprehensiveTests: XCTestCase {
     }
     
     func testPlatformOCRStrategyL3WithDifferentTextTypes() {
-        // Test with different text types
-        let generalStrategy = platformOCRStrategy_L3(textTypes: [.general])
-        let specificStrategy = platformOCRStrategy_L3(textTypes: Array(TextType.allCases.prefix(5))) // Use real enum
+        // Test with all text types from production enum
+        let allTextTypes = TextType.allCases
         
-        XCTAssertNotNil(generalStrategy)
-        XCTAssertNotNil(specificStrategy)
+        for textType in allTextTypes {
+            // Test each text type individually
+            let strategy = platformOCRStrategy_L3(textTypes: [textType])
+            XCTAssertNotNil(strategy, "Strategy should be created for text type: \(textType)")
+            
+            // Test business logic: Each text type should produce a valid strategy
+            XCTAssertEqual(strategy.textTypes.count, 1, "Strategy should contain exactly one text type")
+            XCTAssertTrue(strategy.textTypes.contains(textType), "Strategy should contain the requested text type: \(textType)")
+        }
+        
+        // Test with multiple text types
+        let multipleTextTypes = Array(TextType.allCases.prefix(3))
+        let multiStrategy = platformOCRStrategy_L3(textTypes: multipleTextTypes)
+        XCTAssertNotNil(multiStrategy, "Strategy should be created for multiple text types")
+        XCTAssertEqual(multiStrategy.textTypes.count, 3, "Strategy should contain all requested text types")
     }
     
     func testPlatformOCRStrategyL3WithLanguage() {
-        // Test with language parameter - platformOCRStrategy_L3 doesn't take language parameter
-        let englishStrategy = platformOCRStrategy_L3(textTypes: [.general])
-        let spanishStrategy = platformOCRStrategy_L3(textTypes: [.general])
-        let frenchStrategy = platformOCRStrategy_L3(textTypes: [.general])
+        // Test that OCR strategy works with different text types for different languages
+        // Note: platformOCRStrategy_L3 doesn't take language parameter directly,
+        // but we can test that it works with various text types that might be used
+        // for different language contexts
         
-        XCTAssertNotNil(englishStrategy)
-        XCTAssertNotNil(spanishStrategy)
-        XCTAssertNotNil(frenchStrategy)
+        let textTypesForLanguages: [(String, [TextType])] = [
+            ("English", [.general, .price, .number, .date]),
+            ("Spanish", [.general, .address, .email, .phone]),
+            ("French", [.general, .url, .price, .date])
+        ]
+        
+        for (language, textTypes) in textTypesForLanguages {
+            let strategy = platformOCRStrategy_L3(textTypes: textTypes)
+            XCTAssertNotNil(strategy, "Strategy should be created for \(language) text types")
+            
+            // Test business logic: Strategy should support all requested text types
+            for textType in textTypes {
+                XCTAssertTrue(strategy.textTypes.contains(textType), 
+                             "Strategy should support \(textType) for \(language)")
+            }
+        }
     }
     
     // MARK: - Layer 4 Tests: Component Implementation
