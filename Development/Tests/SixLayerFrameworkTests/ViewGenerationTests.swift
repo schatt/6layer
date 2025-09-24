@@ -148,7 +148,7 @@ final class ViewGenerationTests: XCTestCase {
         let strategy = IntelligentDetailView.determineLayoutStrategy(analysis: analysis, hints: hints)
         
         // THEN: Should respect the hints
-        XCTAssertEqual(strategy, .detailed)
+        XCTAssertEqual(strategy, DetailLayoutStrategy.detailed)
     }
     
     // MARK: - Field View Generation Tests
