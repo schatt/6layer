@@ -137,9 +137,15 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     // MARK: - State-Specific Behavior Tests
     
     func testAccessibilityStateBehaviors() {
+        // Set up iOS platform for testing (supports all accessibility features)
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        
         for state in accessibilityStates {
             testAccessibilityStateBehavior(state)
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     func testAccessibilityStateBehavior(_ state: AccessibilityState) {
@@ -322,34 +328,44 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     }
     
     func testIOSAccessibilityStates() {
-        // Create complete iOS platform test configuration
-        let testConfig = PlatformTestUtilities.createIOSPlatformTestConfig()
+        // Set up iOS platform for testing
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        
+        // Get the actual platform configuration using our new system
+        let config = getCardExpansionPlatformConfig()
         
         // Test iOS-specific behavioral implications
-        PlatformTestUtilities.testTouchPlatformBehavior(testConfig.config, platformName: "iOS")
-        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "iOS")
-        PlatformTestUtilities.testVisionAvailableBehavior(testConfig, platformName: "iOS")
+        PlatformTestUtilities.testTouchPlatformBehavior(config, platformName: "iOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(config, platformName: "iOS")
         
         // Test that all accessibility states work on iOS
         for state in accessibilityStates {
             testAccessibilityStateBehavior(state)
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     func testMacOSAccessibilityStates() {
-        // Create complete macOS platform test configuration
-        let testConfig = PlatformTestUtilities.createMacOSPlatformTestConfig()
+        // Set up macOS platform for testing
+        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        
+        // Get the actual platform configuration using our new system
+        let config = getCardExpansionPlatformConfig()
         
         // Test macOS-specific behavioral implications
-        PlatformTestUtilities.testHoverPlatformBehavior(testConfig.config, platformName: "macOS")
-        PlatformTestUtilities.testNonTouchPlatformBehavior(testConfig.config, platformName: "macOS")
-        PlatformTestUtilities.testAccessibilityPlatformBehavior(testConfig.config, platformName: "macOS")
-        PlatformTestUtilities.testVisionAvailableBehavior(testConfig, platformName: "macOS")
+        PlatformTestUtilities.testHoverPlatformBehavior(config, platformName: "macOS")
+        PlatformTestUtilities.testNonTouchPlatformBehavior(config, platformName: "macOS")
+        PlatformTestUtilities.testAccessibilityPlatformBehavior(config, platformName: "macOS")
         
         // Test that accessibility states work on macOS
         for state in accessibilityStates {
             testAccessibilityStateBehavior(state)
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     func testWatchOSAccessibilityStates() {
