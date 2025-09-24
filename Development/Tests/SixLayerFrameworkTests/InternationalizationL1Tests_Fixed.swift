@@ -174,7 +174,7 @@ final class InternationalizationL1Tests_Fixed: XCTestCase {
         
         // Test 24-hour vs 12-hour format handling
         let militaryHints = InternationalizationHints(locale: Locale(identifier: "en-GB"))
-        let militaryView = platformPresentLocalizedTime_L1(time: time, hints: militaryHints)
+        let militaryView = platformPresentLocalizedTime_L1(date: time, hints: militaryHints)
         XCTAssertNotNil(militaryView, "Should handle 24-hour time format")
         XCTAssertTrue(militaryView is AnyView, "Military time should also be wrapped in AnyView")
     }
@@ -186,7 +186,7 @@ final class InternationalizationL1Tests_Fixed: XCTestCase {
         
         // When
         let view = platformPresentLocalizedPercentage_L1(
-            percentage: percentage,
+            value: percentage,
             hints: hints
         )
         

@@ -393,6 +393,18 @@ final class PlatformLogicTests: XCTestCase {
                 hoverDelay: 0.1,
                 animationEasing: .easeInOut(duration: 0.3)
             )
+        case .vision:
+            return CardExpansionPlatformConfig(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.0,
+                animationEasing: .easeInOut(duration: 0.25)
+            )
         }
     }
     

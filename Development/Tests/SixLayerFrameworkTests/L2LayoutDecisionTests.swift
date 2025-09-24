@@ -605,33 +605,33 @@ final class L2LayoutDecisionTests: XCTestCase {
         }
     }
     
-    private func createSimpleFormFields() -> [GenericFormField] {
+    private func createSimpleFormFields() -> [DynamicFormField] {
         return [
-            GenericFormField(
+            DynamicFormField(
+                id: "name",
+                type: .text,
                 label: "Name",
                 placeholder: "Enter your name",
-                value: Binding.constant(""),
                 isRequired: true,
-                fieldType: .text
             ),
-            GenericFormField(
+            DynamicFormField(
+                id: "email",
+                type: .email,
                 label: "Email",
                 placeholder: "Enter your email",
-                value: Binding.constant(""),
-                isRequired: true,
-                fieldType: .email
+                isRequired: true
             )
         ]
     }
     
-    private func createComplexFormFields() -> [GenericFormField] {
+    private func createComplexFormFields() -> [DynamicFormField] {
         return (1...20).map { index in
-            GenericFormField(
+            DynamicFormField(
+                id: "field_\(index)",
+                type: .text,
                 label: "Field \(index)",
                 placeholder: "Enter value \(index)",
-                value: Binding.constant(""),
-                isRequired: index % 2 == 0,
-                fieldType: .text
+                isRequired: index % 2 == 0
             )
         }
     }
