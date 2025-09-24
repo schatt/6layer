@@ -179,7 +179,7 @@ final class OCRComprehensiveTests: XCTestCase {
     
     func testPlatformOCRWithVisualCorrectionL1WithDifferentConfidenceThresholds() {
         // Test with different confidence thresholds using all text types
-        let confidenceThresholds: [Double] = [0.1, 0.3, 0.5, 0.7, 0.9]
+        let confidenceThresholds: [Float] = [0.1, 0.3, 0.5, 0.7, 0.9]
         let textTypes = TextType.allCases
         
         for confidence in confidenceThresholds {
@@ -377,15 +377,15 @@ final class OCRComprehensiveTests: XCTestCase {
             XCTAssertNotNil(strategy, "Strategy should be created for text type: \(textType)")
             
             // Test business logic: Each text type should produce a valid strategy
-            XCTAssertEqual(strategy.textTypes.count, 1, "Strategy should contain exactly one text type")
-            XCTAssertTrue(strategy.textTypes.contains(textType), "Strategy should contain the requested text type: \(textType)")
+            XCTAssertEqual(strategy.supportedTextTypes.count, 1, "Strategy should contain exactly one text type")
+            XCTAssertTrue(strategy.supportedTextTypes.contains(textType), "Strategy should contain the requested text type: \(textType)")
         }
         
         // Test with multiple text types
         let multipleTextTypes = Array(TextType.allCases.prefix(3))
         let multiStrategy = platformOCRStrategy_L3(textTypes: multipleTextTypes)
         XCTAssertNotNil(multiStrategy, "Strategy should be created for multiple text types")
-        XCTAssertEqual(multiStrategy.textTypes.count, 3, "Strategy should contain all requested text types")
+        XCTAssertEqual(multiStrategy.supportedTextTypes.count, 3, "Strategy should contain all requested text types")
     }
     
     func testPlatformOCRStrategyL3WithLanguage() {
@@ -406,7 +406,7 @@ final class OCRComprehensiveTests: XCTestCase {
             
             // Test business logic: Strategy should support all requested text types
             for textType in textTypes {
-                XCTAssertTrue(strategy.textTypes.contains(textType), 
+                XCTAssertTrue(strategy.supportedTextTypes.contains(textType), 
                              "Strategy should support \(textType) for \(language)")
             }
         }

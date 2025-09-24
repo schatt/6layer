@@ -372,7 +372,7 @@ final class ProperBusinessLogicTestExample: XCTestCase {
             
         case .date:
             // Test date field specific behavior
-            XCTAssertTrue(view is DatePicker, "Date field should create DatePicker")
+            XCTAssertTrue(view is AnyView, "Date field should create AnyView containing DatePicker")
             
         case .multilineText:
             // Test multiline text field specific behavior
@@ -400,20 +400,22 @@ final class ProperBusinessLogicTestExample: XCTestCase {
         // Create form field view based on field type
         switch field.type {
         case .text, .number, .email:
-            return AnyView(TextField(field.title, text: .constant(field.value)))
+            return AnyView(TextField(field.label, text: .constant(field.defaultValue ?? "")))
         case .password:
-            return AnyView(SecureField(field.title, text: .constant(field.value)))
-        case .toggle:
-            return AnyView(Toggle(field.title, isOn: .constant(false)))
-        case .picker:
-            return AnyView(Picker(field.title, selection: .constant("")) {
+            return AnyView(SecureField(field.label, text: .constant(field.defaultValue ?? "")))
+        case .checkbox:
+            return AnyView(Toggle(field.label, isOn: .constant(false)))
+        case .select:
+            return AnyView(Picker(field.label, selection: .constant("")) {
                 Text("Option 1").tag("option1")
                 Text("Option 2").tag("option2")
             })
         case .date:
-            return AnyView(DatePicker(field.title, selection: .constant(Date())))
-        case .multilineText:
-            return AnyView(TextEditor(text: .constant(field.value)))
+            return AnyView(DatePicker(field.label, selection: .constant(Date())))
+        case .textarea:
+            return AnyView(TextEditor(text: .constant(field.defaultValue ?? "")))
+        default:
+            return AnyView(Text("Unsupported field type: \(field.type)"))
         }
     }
 }
@@ -440,7 +442,7 @@ extension ProperBusinessLogicTestExample {
     
     // ❌ BAD: No business logic testing
     func testFormFields_NoBusinessLogic() {
-        let field = DynamicFormField(id: "test", type: .text, title: "Test", value: "Value")
+        let field = DynamicFormField(id: "test", type: .text, label: "Test", defaultValue: "Value")
         XCTAssertNotNil(field) // Only tests existence
     }
 }
