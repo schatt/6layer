@@ -515,27 +515,27 @@ public struct TestingCapabilityDetection {
                 supportsTouch: true,
                 supportsHapticFeedback: true,
                 supportsHover: false,
-                supportsVoiceOver: false,
-                supportsSwitchControl: false,
-                supportsAssistiveTouch: false
+                supportsVoiceOver: true, // Apple Watch supports VoiceOver
+                supportsSwitchControl: true, // Apple Watch supports Switch Control
+                supportsAssistiveTouch: true // Apple Watch supports AssistiveTouch
             )
         case .tvOS:
             return TestingCapabilityDefaults(
                 supportsTouch: false,
                 supportsHapticFeedback: false,
                 supportsHover: false,
-                supportsVoiceOver: false,
-                supportsSwitchControl: false,
-                supportsAssistiveTouch: false
+                supportsVoiceOver: true, // Apple TV supports VoiceOver
+                supportsSwitchControl: true, // Apple TV supports Switch Control
+                supportsAssistiveTouch: false // Apple TV doesn't have AssistiveTouch
             )
         case .visionOS:
             return TestingCapabilityDefaults(
                 supportsTouch: true,
                 supportsHapticFeedback: true,
                 supportsHover: true,
-                supportsVoiceOver: false,
-                supportsSwitchControl: false,
-                supportsAssistiveTouch: false
+                supportsVoiceOver: true, // Vision Pro supports VoiceOver
+                supportsSwitchControl: true, // Vision Pro supports Switch Control
+                supportsAssistiveTouch: true // Vision Pro supports AssistiveTouch
             )
         }
     }
