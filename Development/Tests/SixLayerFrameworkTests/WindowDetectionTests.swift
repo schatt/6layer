@@ -373,7 +373,7 @@ final class WindowDetectionTests: XCTestCase {
     
     // MARK: - Thread Safety Tests
     
-    /*func testWindowDetectionThreadSafety_DISABLED() {
+    func testWindowDetectionThreadSafety() {
         // GIVEN: A window detection instance
         // WHEN: Called from multiple threads
         // THEN: Should not crash
@@ -387,7 +387,7 @@ final class WindowDetectionTests: XCTestCase {
         // Test that the method can be called safely from different contexts
         // This is a simplified test that doesn't use async/await to avoid hanging
         let expectation = XCTestExpectation(description: "Thread safety test")
-        
+
         DispatchQueue.global(qos: .background).async {
             // Test that we can call updateWindowInfo from a background queue
             // The method should handle this gracefully
@@ -396,10 +396,10 @@ final class WindowDetectionTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        
+
         // Use a shorter timeout and ensure the expectation is fulfilled
         wait(for: [expectation], timeout: 0.5)
-    }*/
+    }
     
     // MARK: - Platform-Specific Tests (iOS)
     
