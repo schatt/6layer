@@ -45,7 +45,7 @@ public func platformPresentNumericData_L1(
     return CustomNumericDataView(
         data: data,
         hints: hints,
-        customDataView: customDataView
+        customDataView: { AnyView(customDataView($0)) }
     )
 }
 
@@ -71,7 +71,7 @@ public func platformPresentNumericData_L1(
     return CustomNumericDataView(
         data: data,
         hints: processedHints,
-        customDataView: customDataView
+        customDataView: { AnyView(customDataView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
 }
@@ -150,7 +150,7 @@ public func platformPresentMediaData_L1(
     return CustomMediaView(
         media: media,
         hints: hints,
-        customMediaView: customMediaView
+        customMediaView: { AnyView(customMediaView($0)) }
     )
 }
 
@@ -176,7 +176,7 @@ public func platformPresentMediaData_L1(
     return CustomMediaView(
         media: media,
         hints: processedHints,
-        customMediaView: customMediaView
+        customMediaView: { AnyView(customMediaView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
 }
@@ -201,7 +201,7 @@ public func platformPresentHierarchicalData_L1(
     return CustomHierarchicalView(
         items: items,
         hints: hints,
-        customItemView: customItemView
+        customItemView: { AnyView(customItemView($0)) }
     )
 }
 
@@ -227,7 +227,7 @@ public func platformPresentHierarchicalData_L1(
     return CustomHierarchicalView(
         items: items,
         hints: processedHints,
-        customItemView: customItemView
+        customItemView: { AnyView(customItemView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
 }
@@ -252,7 +252,7 @@ public func platformPresentTemporalData_L1(
     return CustomTemporalView(
         items: items,
         hints: hints,
-        customItemView: customItemView
+        customItemView: { AnyView(customItemView($0)) }
     )
 }
 
@@ -278,7 +278,7 @@ public func platformPresentTemporalData_L1(
     return CustomTemporalView(
         items: items,
         hints: processedHints,
-        customItemView: customItemView
+        customItemView: { AnyView(customItemView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
 }
@@ -339,7 +339,7 @@ public func platformPresentSettings_L1(
         onSettingChanged: onSettingChanged,
         onSettingsSaved: onSettingsSaved,
         onSettingsCancelled: onSettingsCancelled,
-        customSettingView: customSettingView
+        customSettingView: { AnyView(customSettingView($0)) }
     )
 }
 
@@ -371,7 +371,7 @@ public func platformPresentSettings_L1(
         onSettingChanged: onSettingChanged,
         onSettingsSaved: onSettingsSaved,
         onSettingsCancelled: onSettingsCancelled,
-        customSettingView: customSettingView
+        customSettingView: { AnyView(customSettingView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
 }
@@ -426,15 +426,14 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     onItemEdited: ((Item) -> Void)? = nil,
     @ViewBuilder customItemView: @escaping (Item) -> some View
 ) -> some View {
-    return CustomItemCollectionView(
+    return AnyView(GenericItemCollectionView(
         items: items,
         hints: hints,
         onCreateItem: onCreateItem,
         onItemSelected: onItemSelected,
         onItemDeleted: onItemDeleted,
-        onItemEdited: onItemEdited,
-        customItemView: customItemView
-    )
+        onItemEdited: onItemEdited
+    ))
 }
 
 /// Generic function for presenting any collection of identifiable items with custom views and enhanced hints
@@ -460,15 +459,14 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     // Process extensible hints and merge custom data
     let processedHints = processExtensibleHints(hints, into: basicHints)
     
-    return CustomItemCollectionView(
+    return AnyView(GenericItemCollectionView(
         items: items,
         hints: processedHints,
         onCreateItem: onCreateItem,
         onItemSelected: onItemSelected,
         onItemDeleted: onItemDeleted,
-        onItemEdited: onItemEdited,
-        customItemView: customItemView
-    )
+        onItemEdited: onItemEdited
+    ))
     .environment(\.extensibleHints, hints.extensibleHints)
 }
 
@@ -482,20 +480,17 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     onItemDeleted: ((Item) -> Void)? = nil,
     onItemEdited: ((Item) -> Void)? = nil,
     @ViewBuilder customItemView: @escaping (Item) -> some View,
-    @ViewBuilder customCreateView: (() -> some View)? = nil,
-    @ViewBuilder customEditView: ((Item) -> some View)? = nil
+    customCreateView: (() -> some View)? = nil,
+    customEditView: ((Item) -> some View)? = nil
 ) -> some View {
-    return CustomItemCollectionView(
+    return AnyView(GenericItemCollectionView(
         items: items,
         hints: hints,
         onCreateItem: onCreateItem,
         onItemSelected: onItemSelected,
         onItemDeleted: onItemDeleted,
-        onItemEdited: onItemEdited,
-        customItemView: customItemView,
-        customCreateView: customCreateView,
-        customEditView: customEditView
-    )
+        onItemEdited: onItemEdited
+    ))
 }
 
 /// Generic function for presenting numeric data with enhanced hints
@@ -723,8 +718,8 @@ public struct CustomItemCollectionView<Item: Identifiable>: View {
         onItemDeleted: ((Item) -> Void)? = nil,
         onItemEdited: ((Item) -> Void)? = nil,
         @ViewBuilder customItemView: @escaping (Item) -> some View,
-        @ViewBuilder customCreateView: (() -> some View)? = nil,
-        @ViewBuilder customEditView: ((Item) -> some View)? = nil
+        customCreateView: (() -> some View)? = nil,
+        customEditView: ((Item) -> some View)? = nil
     ) {
         self.items = items
         self.hints = hints
@@ -733,7 +728,7 @@ public struct CustomItemCollectionView<Item: Identifiable>: View {
         self.onItemDeleted = onItemDeleted
         self.onItemEdited = onItemEdited
         self.customItemView = { AnyView(customItemView($0)) }
-        self.customCreateView = customCreateView.map { AnyView($0()) }
+        self.customCreateView = customCreateView.map { { AnyView($0()) } }
         self.customEditView = customEditView.map { { AnyView($0($1)) } }
     }
     
@@ -968,10 +963,12 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
 public struct CollectionEmptyStateView: View {
     let hints: PresentationHints
     let onCreateItem: (() -> Void)?
+    let customCreateView: (() -> AnyView)?
     
-    public init(hints: PresentationHints, onCreateItem: (() -> Void)? = nil) {
+    public init(hints: PresentationHints, onCreateItem: (() -> Void)? = nil, customCreateView: (() -> AnyView)? = nil) {
         self.hints = hints
         self.onCreateItem = onCreateItem
+        self.customCreateView = customCreateView
     }
     
     public var body: some View {
@@ -994,19 +991,26 @@ public struct CollectionEmptyStateView: View {
             
             // Create action button if provided
             if let onCreateItem = onCreateItem {
-                Button(action: onCreateItem) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "plus.circle.fill")
-                        Text(createButtonTitle)
+                if let customCreateView = customCreateView {
+                    Button(action: onCreateItem) {
+                        customCreateView()
                     }
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
-                    .background(Color.accentColor)
-                    .cornerRadius(8)
+                    .buttonStyle(PlainButtonStyle())
+                } else {
+                    Button(action: onCreateItem) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "plus.circle.fill")
+                            Text(createButtonTitle)
+                        }
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(Color.accentColor)
+                        .cornerRadius(8)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
-                .buttonStyle(PlainButtonStyle())
             }
         }
         .padding(32)
@@ -3055,46 +3059,6 @@ public struct CustomListCollectionView<Item: Identifiable>: View {
     }
 }
 
-/// Enhanced collection empty state view that supports custom create views
-public struct CollectionEmptyStateView: View {
-    let hints: PresentationHints
-    let onCreateItem: (() -> Void)?
-    let customCreateView: (() -> AnyView)?
-    
-    public init(
-        hints: PresentationHints,
-        onCreateItem: (() -> Void)? = nil,
-        customCreateView: (() -> AnyView)? = nil
-    ) {
-        self.hints = hints
-        self.onCreateItem = onCreateItem
-        self.customCreateView = customCreateView
-    }
-    
-    public var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "tray")
-                .font(.system(size: 48))
-                .foregroundColor(.secondary)
-            
-            Text("No items available")
-                .font(.headline)
-                .foregroundColor(.primary)
-            
-            if let customCreateView = customCreateView {
-                customCreateView()
-            } else if let onCreateItem = onCreateItem {
-                Button("Add Item") {
-                    onCreateItem()
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.platformBackground)
-    }
-}
 
 // MARK: - Additional Custom View Components
 
