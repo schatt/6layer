@@ -35,6 +35,11 @@ public struct RuntimeCapabilityDetection {
         return Thread.current.threadDictionary["testPlatform"] as? Platform
     }
     
+    /// Get the current platform (test platform if set, otherwise actual platform)
+    public static var currentPlatform: Platform {
+        return testPlatform ?? Platform.current
+    }
+    
     /// Get platform-specific defaults for the current test platform
     private static func getTestDefaults() -> TestingCapabilityDefaults {
         guard let platform = testPlatform else {
@@ -121,7 +126,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -228,7 +233,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -288,7 +293,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -351,7 +356,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -394,7 +399,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -437,7 +442,7 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        let platform = testPlatform ?? Platform.current
+        let platform = currentPlatform
         switch platform {
         case .iOS:
             #if os(iOS)
@@ -492,17 +497,17 @@ public struct TestingCapabilityDetection {
                 supportsTouch: true,
                 supportsHapticFeedback: true,
                 supportsHover: false, // Will be true for iPad in actual detection
-                supportsVoiceOver: false, // Testing default
-                supportsSwitchControl: false, // Testing default
-                supportsAssistiveTouch: false // Testing default
+                supportsVoiceOver: true, // iOS supports VoiceOver
+                supportsSwitchControl: true, // iOS supports Switch Control
+                supportsAssistiveTouch: true // iOS supports AssistiveTouch
             )
         case .macOS:
             return TestingCapabilityDefaults(
                 supportsTouch: false, // Testing default - can be overridden
                 supportsHapticFeedback: false,
                 supportsHover: true,
-                supportsVoiceOver: false, // Testing default
-                supportsSwitchControl: false, // Testing default
+                supportsVoiceOver: false, // Testing default - macOS doesn't have VoiceOver enabled by default
+                supportsSwitchControl: false, // Testing default - macOS doesn't have Switch Control enabled by default
                 supportsAssistiveTouch: false
             )
         case .watchOS:
@@ -510,27 +515,27 @@ public struct TestingCapabilityDetection {
                 supportsTouch: true,
                 supportsHapticFeedback: true,
                 supportsHover: false,
-                supportsVoiceOver: false,
-                supportsSwitchControl: false,
-                supportsAssistiveTouch: false
+                supportsVoiceOver: true, // Apple Watch supports VoiceOver
+                supportsSwitchControl: true, // Apple Watch supports Switch Control
+                supportsAssistiveTouch: true // Apple Watch supports AssistiveTouch
             )
         case .tvOS:
             return TestingCapabilityDefaults(
                 supportsTouch: false,
                 supportsHapticFeedback: false,
                 supportsHover: false,
-                supportsVoiceOver: false,
-                supportsSwitchControl: false,
-                supportsAssistiveTouch: false
+                supportsVoiceOver: true, // Apple TV supports VoiceOver
+                supportsSwitchControl: true, // Apple TV supports Switch Control
+                supportsAssistiveTouch: false // Apple TV doesn't have AssistiveTouch
             )
         case .visionOS:
             return TestingCapabilityDefaults(
                 supportsTouch: true,
                 supportsHapticFeedback: true,
                 supportsHover: true,
-                supportsVoiceOver: false,
-                supportsSwitchControl: false,
-                supportsAssistiveTouch: false
+                supportsVoiceOver: true, // Vision Pro supports VoiceOver
+                supportsSwitchControl: true, // Vision Pro supports Switch Control
+                supportsAssistiveTouch: true // Vision Pro supports AssistiveTouch
             )
         }
     }

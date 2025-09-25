@@ -478,3 +478,4 @@ class AppleHIGComplianceTests: XCTestCase {
         XCTAssertNotNil(productiveView)
     }
 }
+
