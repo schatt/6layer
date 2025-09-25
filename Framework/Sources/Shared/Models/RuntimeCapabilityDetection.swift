@@ -203,7 +203,7 @@ public struct RuntimeCapabilityDetection {
     /// Check for third-party touch driver processes
     private static func hasThirdPartyTouchDrivers() -> Bool {
         // Check for common touch driver processes
-        let touchDriverProcesses = [
+        let _ = [
             "UPDD",           // Universal Pointer Device Driver
             "TouchBase",      // TouchBase driver
             "EloTouch",       // Elo Touch driver

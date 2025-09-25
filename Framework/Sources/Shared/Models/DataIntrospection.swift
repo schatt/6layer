@@ -428,7 +428,7 @@ private extension DataIntrospectionEngine {
         
         for child in mirror.children {
             guard let label = child.label,
-                  let field = fields.first(where: { $0.name == label }) else { continue }
+                  let _ = fields.first(where: { $0.name == label }) else { continue }
             
             let contentLength = getContentLength(child.value)
             totalContentLength += contentLength
