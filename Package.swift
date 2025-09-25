@@ -53,9 +53,6 @@ let package = Package(
             dependencies: ["SixLayerFramework"],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
-                "ValidationEngineTests.swift.disabled",
-                "OCRSemanticLayerTests.swift.disabled",
-                "LiquidGlassDesignSystemTests.swift.disabled",
                 "FunctionIndex_Tests_SixLayerFrameworkTests.md"
             ]
         )
