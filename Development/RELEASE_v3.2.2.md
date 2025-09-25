@@ -1,7 +1,7 @@
-# Release v3.2.1 - Custom View Support for All L1 Functions
+# Release v3.2.2 - Custom View Support for All L1 Functions
 
 **Release Date**: December 2024
-**Version**: 3.2.1
+**Version**: 3.2.2
 **Type**: Bug Fix & Enhancement Release
 
 ## 🎯 Overview
