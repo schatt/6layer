@@ -621,6 +621,128 @@ let enhancedHints = EnhancedPresentationHints(
 
 **📚 For comprehensive custom view patterns, see [Custom Views & Business Logic Guide](CustomViewsAndBusinessLogicGuide.md)**
 
+### **🎯 New in v3.2.0: Custom View Support for All L1 Functions**
+
+The framework now provides comprehensive custom view support across all Layer 1 presentation functions, allowing complete visual customization while maintaining intelligent platform adaptation.
+
+#### **Available Custom View Functions:**
+
+```swift
+// Item Collections with Custom Views
+platformPresentItemCollection_L1(
+    items: items,
+    hints: hints,
+    customItemView: { item in
+        MyCustomItemView(item: item)
+    },
+    customCreateView: {
+        MyCustomCreateButton()
+    },
+    customEditView: { item in
+        MyCustomEditView(item: item)
+    }
+)
+
+// Settings with Custom Views
+platformPresentSettings_L1(
+    settings: settings,
+    hints: hints,
+    customSettingView: { setting in
+        MyCustomSettingCard(setting: setting)
+    }
+)
+
+// Media with Custom Views
+platformPresentMediaData_L1(
+    media: mediaItems,
+    hints: hints,
+    customMediaView: { mediaItem in
+        MyCustomMediaCard(mediaItem: mediaItem)
+    }
+)
+
+// Hierarchical Data with Custom Views
+platformPresentHierarchicalData_L1(
+    items: hierarchicalItems,
+    hints: hints,
+    customItemView: { item in
+        MyCustomTreeView(item: item)
+    }
+)
+
+// Temporal Data with Custom Views
+platformPresentTemporalData_L1(
+    items: timelineItems,
+    hints: hints,
+    customItemView: { item in
+        MyCustomTimelineItem(item: item)
+    }
+)
+
+// Numeric Data with Custom Views
+platformPresentNumericData_L1(
+    data: numericData,
+    hints: hints,
+    customDataView: { dataItem in
+        MyCustomChart(dataItem: dataItem)
+    }
+)
+```
+
+#### **Key Benefits:**
+- **100% Backward Compatible** - All existing code continues to work
+- **Intelligent Layout** - Automatic grid/list decisions based on platform and hints
+- **Framework Benefits** - Custom views still get performance optimizations
+- **Enhanced Hints** - Full integration with extensible hints system
+- **Platform Adaptation** - Automatic iOS/macOS behavior adaptation
+
+#### **When to Use Custom Views:**
+- **Business-Specific UI** - When you need custom visual presentation
+- **Brand Consistency** - When you need specific styling and branding
+- **Complex Interactions** - When you need custom gesture handling
+- **Specialized Layouts** - When you need specific layout requirements
+
+#### **Best Practices:**
+```swift
+// ✅ Good: Use custom views with framework benefits
+platformPresentItemCollection_L1(
+    items: products,
+    hints: createProductHints(),
+    customItemView: { product in
+        ProductCard(product: product)
+            .customProductStyle()
+            .onTapGesture {
+                selectedProduct = product
+            }
+    }
+)
+// Still gets: .platformMemoryOptimization()
+//           .platformRenderingOptimization()
+
+// ✅ Good: Combine with enhanced hints
+let enhancedHints = EnhancedPresentationHints(
+    dataType: .collection,
+    presentationPreference: .automatic,
+    complexity: .moderate,
+    context: .browse,
+    extensibleHints: [
+        EcommerceProductHint(
+            category: "electronics",
+            showPricing: true,
+            showReviews: true
+        )
+    ]
+)
+
+platformPresentItemCollection_L1(
+    items: products,
+    hints: enhancedHints,
+    customItemView: { product in
+        CustomProductView(product: product)
+    }
+)
+```
+
 ## 🚫 **Common Mistakes to Avoid**
 
 ### **1. Mixing 6layer Functions with SwiftUI Building Blocks (CRITICAL ERROR):**

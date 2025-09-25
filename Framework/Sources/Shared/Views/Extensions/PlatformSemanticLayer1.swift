@@ -34,6 +34,48 @@ public func platformPresentNumericData_L1(
     return GenericNumericDataView(data: data, hints: hints)
 }
 
+/// Generic function for presenting numeric data with custom views
+/// Allows specifying custom views for individual numeric data items
+@MainActor
+public func platformPresentNumericData_L1(
+    data: [GenericNumericData],
+    hints: PresentationHints,
+    @ViewBuilder customDataView: @escaping (GenericNumericData) -> some View
+) -> some View {
+    return CustomNumericDataView(
+        data: data,
+        hints: hints,
+        customDataView: customDataView
+    )
+}
+
+/// Generic function for presenting numeric data with custom views and enhanced hints
+@MainActor
+public func platformPresentNumericData_L1(
+    data: [GenericNumericData],
+    hints: EnhancedPresentationHints,
+    @ViewBuilder customDataView: @escaping (GenericNumericData) -> some View
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return CustomNumericDataView(
+        data: data,
+        hints: processedHints,
+        customDataView: customDataView
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
+}
+
 /// Generic function for presenting responsive cards
 @MainActor
 public func platformResponsiveCard_L1<Content: View>(
@@ -97,6 +139,48 @@ public func platformPresentMediaData_L1(
     return GenericMediaView(media: media, hints: hints)
 }
 
+/// Generic function for presenting media data with custom views
+/// Allows specifying custom views for individual media items
+@MainActor
+public func platformPresentMediaData_L1(
+    media: [GenericMediaItem],
+    hints: PresentationHints,
+    @ViewBuilder customMediaView: @escaping (GenericMediaItem) -> some View
+) -> some View {
+    return CustomMediaView(
+        media: media,
+        hints: hints,
+        customMediaView: customMediaView
+    )
+}
+
+/// Generic function for presenting media data with custom views and enhanced hints
+@MainActor
+public func platformPresentMediaData_L1(
+    media: [GenericMediaItem],
+    hints: EnhancedPresentationHints,
+    @ViewBuilder customMediaView: @escaping (GenericMediaItem) -> some View
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return CustomMediaView(
+        media: media,
+        hints: processedHints,
+        customMediaView: customMediaView
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
+}
+
 /// Generic function for presenting hierarchical data
 @MainActor
 public func platformPresentHierarchicalData_L1(
@@ -106,6 +190,48 @@ public func platformPresentHierarchicalData_L1(
     return GenericHierarchicalView(items: items, hints: hints)
 }
 
+/// Generic function for presenting hierarchical data with custom views
+/// Allows specifying custom views for individual hierarchical items
+@MainActor
+public func platformPresentHierarchicalData_L1(
+    items: [GenericHierarchicalItem],
+    hints: PresentationHints,
+    @ViewBuilder customItemView: @escaping (GenericHierarchicalItem) -> some View
+) -> some View {
+    return CustomHierarchicalView(
+        items: items,
+        hints: hints,
+        customItemView: customItemView
+    )
+}
+
+/// Generic function for presenting hierarchical data with custom views and enhanced hints
+@MainActor
+public func platformPresentHierarchicalData_L1(
+    items: [GenericHierarchicalItem],
+    hints: EnhancedPresentationHints,
+    @ViewBuilder customItemView: @escaping (GenericHierarchicalItem) -> some View
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return CustomHierarchicalView(
+        items: items,
+        hints: processedHints,
+        customItemView: customItemView
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
+}
+
 /// Generic function for presenting temporal data
 @MainActor
 public func platformPresentTemporalData_L1(
@@ -113,6 +239,48 @@ public func platformPresentTemporalData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericTemporalView(items: items, hints: hints)
+}
+
+/// Generic function for presenting temporal data with custom views
+/// Allows specifying custom views for individual temporal items
+@MainActor
+public func platformPresentTemporalData_L1(
+    items: [GenericTemporalItem],
+    hints: PresentationHints,
+    @ViewBuilder customItemView: @escaping (GenericTemporalItem) -> some View
+) -> some View {
+    return CustomTemporalView(
+        items: items,
+        hints: hints,
+        customItemView: customItemView
+    )
+}
+
+/// Generic function for presenting temporal data with custom views and enhanced hints
+@MainActor
+public func platformPresentTemporalData_L1(
+    items: [GenericTemporalItem],
+    hints: EnhancedPresentationHints,
+    @ViewBuilder customItemView: @escaping (GenericTemporalItem) -> some View
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return CustomTemporalView(
+        items: items,
+        hints: processedHints,
+        customItemView: customItemView
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
 }
 
 /// Generic function for presenting unknown content at runtime
@@ -154,6 +322,60 @@ public func platformPresentSettings_L1(
     )
 }
 
+/// Generic function for presenting settings interface with custom views
+/// Allows specifying custom views for settings sections and individual settings
+@MainActor
+public func platformPresentSettings_L1(
+    settings: [SettingsSectionData],
+    hints: PresentationHints,
+    onSettingChanged: ((String, Any) -> Void)? = nil,
+    onSettingsSaved: (() -> Void)? = nil,
+    onSettingsCancelled: (() -> Void)? = nil,
+    @ViewBuilder customSettingView: @escaping (SettingsSectionData) -> some View
+) -> some View {
+    return CustomSettingsView(
+        settings: settings,
+        hints: hints,
+        onSettingChanged: onSettingChanged,
+        onSettingsSaved: onSettingsSaved,
+        onSettingsCancelled: onSettingsCancelled,
+        customSettingView: customSettingView
+    )
+}
+
+/// Generic function for presenting settings interface with custom views and enhanced hints
+@MainActor
+public func platformPresentSettings_L1(
+    settings: [SettingsSectionData],
+    hints: EnhancedPresentationHints,
+    onSettingChanged: ((String, Any) -> Void)? = nil,
+    onSettingsSaved: (() -> Void)? = nil,
+    onSettingsCancelled: (() -> Void)? = nil,
+    @ViewBuilder customSettingView: @escaping (SettingsSectionData) -> some View
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return CustomSettingsView(
+        settings: settings,
+        hints: processedHints,
+        onSettingChanged: onSettingChanged,
+        onSettingsSaved: onSettingsSaved,
+        onSettingsCancelled: onSettingsCancelled,
+        customSettingView: customSettingView
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
+}
+
 // MARK: - Enhanced Presentation Hints Overloads
 
 /// Generic function for presenting any collection of identifiable items with enhanced hints
@@ -188,6 +410,92 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemEdited: onItemEdited
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+// MARK: - Custom View Support Overloads
+
+/// Generic function for presenting any collection of identifiable items with custom views
+/// Allows specifying custom views for item display, editing, and creation
+@MainActor
+public func platformPresentItemCollection_L1<Item: Identifiable>(
+    items: [Item],
+    hints: PresentationHints,
+    onCreateItem: (() -> Void)? = nil,
+    onItemSelected: ((Item) -> Void)? = nil,
+    onItemDeleted: ((Item) -> Void)? = nil,
+    onItemEdited: ((Item) -> Void)? = nil,
+    @ViewBuilder customItemView: @escaping (Item) -> some View
+) -> some View {
+    return CustomItemCollectionView(
+        items: items,
+        hints: hints,
+        onCreateItem: onCreateItem,
+        onItemSelected: onItemSelected,
+        onItemDeleted: onItemDeleted,
+        onItemEdited: onItemEdited,
+        customItemView: customItemView
+    )
+}
+
+/// Generic function for presenting any collection of identifiable items with custom views and enhanced hints
+@MainActor
+public func platformPresentItemCollection_L1<Item: Identifiable>(
+    items: [Item],
+    hints: EnhancedPresentationHints,
+    onCreateItem: (() -> Void)? = nil,
+    onItemSelected: ((Item) -> Void)? = nil,
+    onItemDeleted: ((Item) -> Void)? = nil,
+    onItemEdited: ((Item) -> Void)? = nil,
+    @ViewBuilder customItemView: @escaping (Item) -> some View
+) -> some View {
+    // Convert enhanced hints to basic hints for backward compatibility
+    let basicHints = PresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences
+    )
+    
+    // Process extensible hints and merge custom data
+    let processedHints = processExtensibleHints(hints, into: basicHints)
+    
+    return CustomItemCollectionView(
+        items: items,
+        hints: processedHints,
+        onCreateItem: onCreateItem,
+        onItemSelected: onItemSelected,
+        onItemDeleted: onItemDeleted,
+        onItemEdited: onItemEdited,
+        customItemView: customItemView
+    )
+    .environment(\.extensibleHints, hints.extensibleHints)
+}
+
+/// Generic function for presenting any collection of identifiable items with custom views for all actions
+@MainActor
+public func platformPresentItemCollection_L1<Item: Identifiable>(
+    items: [Item],
+    hints: PresentationHints,
+    onCreateItem: (() -> Void)? = nil,
+    onItemSelected: ((Item) -> Void)? = nil,
+    onItemDeleted: ((Item) -> Void)? = nil,
+    onItemEdited: ((Item) -> Void)? = nil,
+    @ViewBuilder customItemView: @escaping (Item) -> some View,
+    @ViewBuilder customCreateView: (() -> some View)? = nil,
+    @ViewBuilder customEditView: ((Item) -> some View)? = nil
+) -> some View {
+    return CustomItemCollectionView(
+        items: items,
+        hints: hints,
+        onCreateItem: onCreateItem,
+        onItemSelected: onItemSelected,
+        onItemDeleted: onItemDeleted,
+        onItemEdited: onItemEdited,
+        customItemView: customItemView,
+        customCreateView: customCreateView,
+        customEditView: customEditView
+    )
 }
 
 /// Generic function for presenting numeric data with enhanced hints
@@ -394,6 +702,105 @@ public func platformPresentTemporalData_L1(
 }
 
 // MARK: - Generic View Structures
+
+/// Custom item collection view that supports custom views for items and actions
+public struct CustomItemCollectionView<Item: Identifiable>: View {
+    let items: [Item]
+    let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
+    let customItemView: (Item) -> AnyView
+    let customCreateView: (() -> AnyView)?
+    let customEditView: ((Item) -> AnyView)?
+    
+    public init(
+        items: [Item],
+        hints: PresentationHints,
+        onCreateItem: (() -> Void)? = nil,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil,
+        @ViewBuilder customItemView: @escaping (Item) -> some View,
+        @ViewBuilder customCreateView: (() -> some View)? = nil,
+        @ViewBuilder customEditView: ((Item) -> some View)? = nil
+    ) {
+        self.items = items
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
+        self.customItemView = { AnyView(customItemView($0)) }
+        self.customCreateView = customCreateView.map { AnyView($0()) }
+        self.customEditView = customEditView.map { { AnyView($0($1)) } }
+    }
+    
+    public var body: some View {
+        if items.isEmpty {
+            return AnyView(CollectionEmptyStateView(
+                hints: hints, 
+                onCreateItem: onCreateItem,
+                customCreateView: customCreateView
+            ))
+        }
+        
+        // Use custom item views with intelligent layout
+        let presentationStrategy = determinePresentationStrategy()
+        
+        switch presentationStrategy {
+        case .grid:
+            return AnyView(CustomGridCollectionView(
+                items: items,
+                hints: hints,
+                customItemView: customItemView,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
+        case .list:
+            return AnyView(CustomListCollectionView(
+                items: items,
+                hints: hints,
+                customItemView: customItemView,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
+        default:
+            // Fall back to grid for custom views
+            return AnyView(CustomGridCollectionView(
+                items: items,
+                hints: hints,
+                customItemView: customItemView,
+                onItemSelected: onItemSelected,
+                onItemDeleted: onItemDeleted,
+                onItemEdited: onItemEdited
+            ))
+        }
+    }
+    
+    /// Determine the optimal presentation strategy based on hints and platform
+    private func determinePresentationStrategy() -> PresentationStrategy {
+        let itemType = hints.customPreferences["itemType"] ?? "generic"
+        let interactionStyle = hints.customPreferences["interactionStyle"] ?? "static"
+        
+        // Platform-aware decision making
+        let platform = Platform.current
+        let deviceType = DeviceType.current
+        
+        // For custom views, prefer grid on larger screens, list on smaller
+        switch platform {
+        case .macOS, .visionOS:
+            return .grid
+        case .iOS:
+            return deviceType == .pad ? .grid : .list
+        case .watchOS, .tvOS:
+            return .list
+        }
+    }
+}
 
 /// Generic item collection view with intelligent presentation decisions
 public struct GenericItemCollectionView<Item: Identifiable>: View {
@@ -2584,5 +2991,227 @@ struct GenericSettingsItemView: View {
             }
         }
         .padding(.vertical, 4)
+    }
+}
+
+// MARK: - Custom Collection View Components
+
+/// Custom grid collection view that uses custom item views
+public struct CustomGridCollectionView<Item: Identifiable>: View {
+    let items: [Item]
+    let hints: PresentationHints
+    let customItemView: (Item) -> AnyView
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
+    
+    public var body: some View {
+        GeometryReader { geometry in
+            let columns = determineColumns(for: geometry.size.width)
+            let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 16), count: columns)
+            
+            ScrollView {
+                LazyVGrid(columns: gridColumns, spacing: 16) {
+                    ForEach(items) { item in
+                        customItemView(item)
+                            .onTapGesture {
+                                onItemSelected?(item)
+                            }
+                    }
+                }
+                .padding(16)
+            }
+        }
+    }
+    
+    private func determineColumns(for width: CGFloat) -> Int {
+        let minItemWidth: CGFloat = 200
+        let maxColumns = Int(width / minItemWidth)
+        return max(1, min(maxColumns, 4))
+    }
+}
+
+/// Custom list collection view that uses custom item views
+public struct CustomListCollectionView<Item: Identifiable>: View {
+    let items: [Item]
+    let hints: PresentationHints
+    let customItemView: (Item) -> AnyView
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
+    
+    public var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 12) {
+                ForEach(items) { item in
+                    customItemView(item)
+                        .onTapGesture {
+                            onItemSelected?(item)
+                        }
+                }
+            }
+            .padding(16)
+        }
+    }
+}
+
+/// Enhanced collection empty state view that supports custom create views
+public struct CollectionEmptyStateView: View {
+    let hints: PresentationHints
+    let onCreateItem: (() -> Void)?
+    let customCreateView: (() -> AnyView)?
+    
+    public init(
+        hints: PresentationHints,
+        onCreateItem: (() -> Void)? = nil,
+        customCreateView: (() -> AnyView)? = nil
+    ) {
+        self.hints = hints
+        self.onCreateItem = onCreateItem
+        self.customCreateView = customCreateView
+    }
+    
+    public var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "tray")
+                .font(.system(size: 48))
+                .foregroundColor(.secondary)
+            
+            Text("No items available")
+                .font(.headline)
+                .foregroundColor(.primary)
+            
+            if let customCreateView = customCreateView {
+                customCreateView()
+            } else if let onCreateItem = onCreateItem {
+                Button("Add Item") {
+                    onCreateItem()
+                }
+                .buttonStyle(.borderedProminent)
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.platformBackground)
+    }
+}
+
+// MARK: - Additional Custom View Components
+
+/// Custom settings view that supports custom setting views
+public struct CustomSettingsView: View {
+    let settings: [SettingsSectionData]
+    let hints: PresentationHints
+    let onSettingChanged: ((String, Any) -> Void)?
+    let onSettingsSaved: (() -> Void)?
+    let onSettingsCancelled: (() -> Void)?
+    let customSettingView: (SettingsSectionData) -> AnyView
+    
+    public var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 16) {
+                ForEach(settings, id: \.title) { setting in
+                    customSettingView(setting)
+                }
+            }
+            .padding(16)
+        }
+        .background(Color.platformBackground)
+    }
+}
+
+/// Custom media view that supports custom media item views
+public struct CustomMediaView: View {
+    let media: [GenericMediaItem]
+    let hints: PresentationHints
+    let customMediaView: (GenericMediaItem) -> AnyView
+    
+    public var body: some View {
+        GeometryReader { geometry in
+            let columns = determineColumns(for: geometry.size.width)
+            let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 16), count: columns)
+            
+            ScrollView {
+                LazyVGrid(columns: gridColumns, spacing: 16) {
+                    ForEach(media, id: \.id) { mediaItem in
+                        customMediaView(mediaItem)
+                    }
+                }
+                .padding(16)
+            }
+        }
+    }
+    
+    private func determineColumns(for width: CGFloat) -> Int {
+        let minItemWidth: CGFloat = 200
+        let maxColumns = Int(width / minItemWidth)
+        return max(1, min(maxColumns, 4))
+    }
+}
+
+/// Custom hierarchical view that supports custom hierarchical item views
+public struct CustomHierarchicalView: View {
+    let items: [GenericHierarchicalItem]
+    let hints: PresentationHints
+    let customItemView: (GenericHierarchicalItem) -> AnyView
+    
+    public var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 8) {
+                ForEach(items, id: \.id) { item in
+                    customItemView(item)
+                }
+            }
+            .padding(16)
+        }
+        .background(Color.platformBackground)
+    }
+}
+
+/// Custom temporal view that supports custom temporal item views
+public struct CustomTemporalView: View {
+    let items: [GenericTemporalItem]
+    let hints: PresentationHints
+    let customItemView: (GenericTemporalItem) -> AnyView
+    
+    public var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 12) {
+                ForEach(items, id: \.id) { item in
+                    customItemView(item)
+                }
+            }
+            .padding(16)
+        }
+        .background(Color.platformBackground)
+    }
+}
+
+/// Custom numeric data view that supports custom numeric data item views
+public struct CustomNumericDataView: View {
+    let data: [GenericNumericData]
+    let hints: PresentationHints
+    let customDataView: (GenericNumericData) -> AnyView
+    
+    public var body: some View {
+        GeometryReader { geometry in
+            let columns = determineColumns(for: geometry.size.width)
+            let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 16), count: columns)
+            
+            ScrollView {
+                LazyVGrid(columns: gridColumns, spacing: 16) {
+                    ForEach(data, id: \.id) { dataItem in
+                        customDataView(dataItem)
+                    }
+                }
+                .padding(16)
+            }
+        }
+    }
+    
+    private func determineColumns(for width: CGFloat) -> Int {
+        let minItemWidth: CGFloat = 200
+        let maxColumns = Int(width / minItemWidth)
+        return max(1, min(maxColumns, 4))
     }
 }

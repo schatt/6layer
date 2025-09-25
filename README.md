@@ -41,18 +41,42 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
+## 🆕 Latest Release: v3.2.0
+
+### **Custom View Support for All L1 Functions**
+The framework now provides comprehensive custom view support across all Layer 1 presentation functions, allowing complete visual customization while maintaining intelligent platform adaptation.
+
+**New Features:**
+- ✅ **Custom Views** for all L1 functions (`platformPresentItemCollection_L1`, `platformPresentSettings_L1`, etc.)
+- ✅ **100% Backward Compatible** - existing code continues to work unchanged
+- ✅ **Enhanced Navigation** - fixed bugs and improved accessibility
+- ✅ **Intelligent Layout** - automatic optimal presentation decisions
+- ✅ **Framework Benefits** - custom views still get performance optimizations
+
+**Example:**
+```swift
+platformPresentItemCollection_L1(
+    items: products,
+    hints: hints,
+    customItemView: { product in
+        MyCustomProductView(product: product)
+    }
+)
+```
+
 ## 🔗 Quick Links
 
 - **[Framework README](Framework/README.md)** - Complete framework documentation
 - **[Project Status](Development/PROJECT_STATUS.md)** - Current development status
 - **[Roadmap](Development/todo.md)** - Development phases and progress
 - **[Documentation](Framework/docs/)** - Technical implementation details
-- **[OCR Overlay Guide](Framework/docs/OCROverlayGuide.md)** - **NEW!** Interactive visual text correction
+- **[Release Notes v3.2.0](Development/RELEASE_v3.2.0.md)** - **NEW!** Custom view support
+- **[OCR Overlay Guide](Framework/docs/OCROverlayGuide.md)** - Interactive visual text correction
 
 ## 📋 Current Status
 
-**Version**: v2.3.3 (Consumer Compatibility Fix)  
-**Phase**: Bug Fixes and Stability  
+**Version**: v3.2.0 (Custom View Support for All L1 Functions)  
+**Phase**: Major Enhancement - Custom View Support  
 **Next**: Continue with comprehensive testing and feature development
 
 ## 🤝 Contributing

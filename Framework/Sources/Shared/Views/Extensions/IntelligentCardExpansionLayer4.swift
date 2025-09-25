@@ -734,6 +734,21 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
 /// List card component
 public struct ListCardComponent<Item: Identifiable>: View {
     let item: Item
+    let onItemSelected: ((Item) -> Void)?
+    let onItemDeleted: ((Item) -> Void)?
+    let onItemEdited: ((Item) -> Void)?
+    
+    public init(
+        item: Item,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
+        self.item = item
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
+    }
     
     public var body: some View {
         HStack {
@@ -763,6 +778,13 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .padding()
         .background(.regularMaterial)
         .cornerRadius(8)
+        .onTapGesture {
+            onItemSelected?(item)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityAction(named: "Activate") {
+            onItemSelected?(item)
+        }
     }
     
     // MARK: - Card Displayable Support
