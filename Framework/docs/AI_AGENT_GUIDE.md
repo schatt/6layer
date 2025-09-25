@@ -621,7 +621,7 @@ let enhancedHints = EnhancedPresentationHints(
 
 **📚 For comprehensive custom view patterns, see [Custom Views & Business Logic Guide](CustomViewsAndBusinessLogicGuide.md)**
 
-### **🎯 New in v3.2.0: Custom View Support for All L1 Functions**
+### **🎯 New in v3.2.1: Custom View Support for All L1 Functions**
 
 The framework now provides comprehensive custom view support across all Layer 1 presentation functions, allowing complete visual customization while maintaining intelligent platform adaptation.
 

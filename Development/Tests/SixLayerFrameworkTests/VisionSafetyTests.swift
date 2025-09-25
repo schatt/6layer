@@ -37,14 +37,16 @@ final class VisionSafetyTests: XCTestCase {
         let _ = PlatformImage()
         
         // When: Checking OCR availability
-        let isOCRAvailable = isVisionOCRAvailable()
-        
+        let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: Platform.current)
+
         // Then: Should return appropriate availability status
-        #if canImport(Vision)
-        XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
-        #else
-        XCTAssertFalse(isOCRAvailable, "OCR should not be available when Vision framework is absent")
-        #endif
+        let platform = Platform.current
+        switch platform {
+        case .iOS, .macOS:
+            XCTAssertTrue(isOCRAvailable, "OCR should be available on \(platform)")
+        case .watchOS, .tvOS, .visionOS:
+            XCTAssertFalse(isOCRAvailable, "OCR should not be available on \(platform)")
+        }
     }
     
     func testOCRFallbackBehavior() {
@@ -183,50 +185,14 @@ final class VisionSafetyTests: XCTestCase {
 
 // MARK: - Helper Functions for Testing
 
-/// Check if Vision OCR is available
+/// Check if Vision OCR is available using centralized utilities
 private func isVisionOCRAvailable() -> Bool {
-    #if canImport(Vision)
-    #if os(iOS)
-    if #available(iOS 11.0, *) {
-        return true
-    } else {
-        return false
-    }
-    #elseif os(macOS)
-    if #available(macOS 10.15, *) {
-        return true
-    } else {
-        return false
-    }
-    #else
-    return false
-    #endif
-    #else
-    return false
-    #endif
+    return PlatformTestUtilities.getOCRAvailability(for: Platform.current)
 }
 
-/// Check if Vision framework is compatible with current platform
+/// Check if Vision framework is compatible with current platform using centralized utilities
 private func isVisionFrameworkCompatible() -> Bool {
-    #if canImport(Vision)
-    #if os(iOS)
-    if #available(iOS 11.0, *) {
-        return true
-    } else {
-        return false
-    }
-    #elseif os(macOS)
-    if #available(macOS 10.15, *) {
-        return true
-    } else {
-        return false
-    }
-    #else
-    return false
-    #endif
-    #else
-    return false
-    #endif
+    return PlatformTestUtilities.getVisionAvailability(for: Platform.current)
 }
 
 /// Get Vision availability information

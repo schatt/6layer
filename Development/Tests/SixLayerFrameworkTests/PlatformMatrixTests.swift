@@ -119,22 +119,12 @@ final class PlatformMatrixTests: XCTestCase {
     // MARK: - Vision Framework Availability Matrix
     
     func testVisionFrameworkAvailabilityMatrix() {
-        let isAvailable = isVisionFrameworkAvailable()
-        
+        let isAvailable = PlatformTestUtilities.getVisionAvailability(for: Platform.current)
+
         // Vision framework availability by platform
         switch Platform.current {
-        case .iOS:
-            if #available(iOS 11.0, *) {
-                XCTAssertTrue(isAvailable, "Vision should be available on iOS 11.0+")
-            } else {
-                XCTAssertFalse(isAvailable, "Vision should not be available on iOS < 11.0")
-            }
-        case .macOS:
-            if #available(macOS 10.15, *) {
-                XCTAssertTrue(isAvailable, "Vision should be available on macOS 10.15+")
-            } else {
-                XCTAssertFalse(isAvailable, "Vision should not be available on macOS < 10.15")
-            }
+        case .iOS, .macOS:
+            XCTAssertTrue(isAvailable, "Vision should be available on \(Platform.current)")
         case .watchOS, .tvOS, .visionOS:
             XCTAssertFalse(isAvailable, "Vision should not be available on \(Platform.current)")
         }

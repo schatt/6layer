@@ -110,38 +110,15 @@ final class CapabilityMatrixTests: XCTestCase {
         // Vision Framework Capability
         CapabilityTest(
             name: "Vision Framework Support",
-            testSupported: { isVisionFrameworkAvailable() },
+            testSupported: { PlatformTestUtilities.getVisionAvailability(for: Platform.current) },
             testBehavior: {
-                let isVisionAvailable = isVisionFrameworkAvailable()
-                if isVisionAvailable {
-                    // Vision should be available on supported platforms
-                    let platform = Platform.current
-                    switch platform {
-                    case .iOS:
-                        if #available(iOS 11.0, *) {
-                            XCTAssertTrue(isVisionAvailable, "Vision should be available on iOS 11.0+")
-                        } else {
-                            XCTAssertFalse(isVisionAvailable, "Vision should not be available on iOS < 11.0")
-                        }
-                    case .macOS:
-                        if #available(macOS 10.15, *) {
-                            XCTAssertTrue(isVisionAvailable, "Vision should be available on macOS 10.15+")
-                        } else {
-                            XCTAssertFalse(isVisionAvailable, "Vision should not be available on macOS < 10.15")
-                        }
-                    case .watchOS, .tvOS, .visionOS:
-                        XCTAssertFalse(isVisionAvailable, "Vision should not be available on \(platform)")
-                    }
-                } else {
-                    // Vision should not be available on unsupported platforms
-                    let platform = Platform.current
-                    switch platform {
-                    case .watchOS, .tvOS:
-                        XCTAssertFalse(isVisionAvailable, "Vision should not be available on \(platform)")
-                    default:
-                        // iOS/macOS might not be available due to version constraints
-                        break
-                    }
+                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: Platform.current)
+                let platform = Platform.current
+                switch platform {
+                case .iOS, .macOS:
+                    XCTAssertTrue(isVisionAvailable, "Vision should be available on \(platform)")
+                case .watchOS, .tvOS, .visionOS:
+                    XCTAssertFalse(isVisionAvailable, "Vision should not be available on \(platform)")
                 }
             },
             expectedPlatforms: [.iOS, .macOS, .visionOS]
@@ -150,15 +127,15 @@ final class CapabilityMatrixTests: XCTestCase {
         // OCR Capability
         CapabilityTest(
             name: "OCR Support",
-            testSupported: { isVisionOCRAvailable() },
+            testSupported: { PlatformTestUtilities.getOCRAvailability(for: Platform.current) },
             testBehavior: {
-                let isOCRAvailable = isVisionOCRAvailable()
-                let isVisionAvailable = isVisionFrameworkAvailable()
-                
+                let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: Platform.current)
+                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: Platform.current)
+
                 // OCR should only be available if Vision is available
-                XCTAssertEqual(isOCRAvailable, isVisionAvailable, 
+                XCTAssertEqual(isOCRAvailable, isVisionAvailable,
                              "OCR availability should match Vision framework availability")
-                
+
                 if isOCRAvailable {
                     // OCR should work when available - test that functions don't crash
                     let testImage = PlatformImage()
@@ -172,7 +149,7 @@ final class CapabilityMatrixTests: XCTestCase {
                         supportedLanguages: [.english],
                         processingMode: .standard
                     )
-                    
+
                     // Test that OCR functions can be called without crashing
                     let service = OCRService()
                     Task {

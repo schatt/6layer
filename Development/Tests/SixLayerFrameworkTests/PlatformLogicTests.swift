@@ -414,21 +414,11 @@ final class PlatformLogicTests: XCTestCase {
     }
     
     private func createMockVisionAvailability(for platform: Platform) -> Bool {
-        switch platform {
-        case .iOS, .macOS:
-            return true
-        case .watchOS, .tvOS, .visionOS:
-            return false
-        }
+        return PlatformTestUtilities.getVisionAvailability(for: platform)
     }
-    
+
     private func createMockOCRAvailability(for platform: Platform) -> Bool {
-        switch platform {
-        case .iOS, .macOS:
-            return true
-        case .watchOS, .tvOS, .visionOS:
-            return false
-        }
+        return PlatformTestUtilities.getOCRAvailability(for: platform)
     }
     
     private func createMockLayoutDecision(for platform: Platform) -> IntelligentCardLayoutDecision {

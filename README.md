@@ -41,7 +41,7 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v3.2.0
+## 🆕 Latest Release: v3.2.1
 
 ### **Custom View Support for All L1 Functions**
 The framework now provides comprehensive custom view support across all Layer 1 presentation functions, allowing complete visual customization while maintaining intelligent platform adaptation.
@@ -70,12 +70,12 @@ platformPresentItemCollection_L1(
 - **[Project Status](Development/PROJECT_STATUS.md)** - Current development status
 - **[Roadmap](Development/todo.md)** - Development phases and progress
 - **[Documentation](Framework/docs/)** - Technical implementation details
-- **[Release Notes v3.2.0](Development/RELEASE_v3.2.0.md)** - **NEW!** Custom view support
+- **[Release Notes v3.2.1](Development/RELEASE_v3.2.1.md)** - Custom view support with bug fixes
 - **[OCR Overlay Guide](Framework/docs/OCROverlayGuide.md)** - Interactive visual text correction
 
 ## 📋 Current Status
 
-**Version**: v3.2.0 (Custom View Support for All L1 Functions)  
+**Version**: v3.2.1 (Custom View Support for All L1 Functions)  
 **Phase**: Major Enhancement - Custom View Support  
 **Next**: Continue with comprehensive testing and feature development
 
