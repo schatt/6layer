@@ -439,3 +439,4 @@ final class ModalContainerTests: XCTestCase {
         XCTAssertNotNil(container, "Modal container should be cross-platform compatible")
     }
 }
+
