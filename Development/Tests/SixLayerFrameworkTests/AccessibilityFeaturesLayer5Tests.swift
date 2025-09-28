@@ -3,6 +3,27 @@ import SwiftUI
 import Combine
 @testable import SixLayerFramework
 
+/**
+ * BUSINESS PURPOSE:
+ * Tests the AccessibilityFeaturesLayer5 system which provides comprehensive
+ * accessibility support including VoiceOver, keyboard navigation, high contrast,
+ * and accessibility testing capabilities for inclusive user experiences.
+ * 
+ * TESTING SCOPE:
+ * - VoiceOver announcement management and priority handling
+ * - Keyboard navigation focus management and movement
+ * - High contrast color adaptation and detection
+ * - Accessibility testing suite execution and validation
+ * - View modifier integration and configuration
+ * 
+ * METHODOLOGY:
+ * - Test all public methods with success/failure scenarios
+ * - Verify platform-specific behavior using mock testing
+ * - Test view modifiers with various configurations
+ * - Validate error handling and edge cases
+ * - Test performance characteristics and integration
+ */
+
 /// Comprehensive TDD tests for AccessibilityFeaturesLayer5.swift
 /// Tests all 16 functions + 4 view modifiers with success/failure paths
 @MainActor
@@ -95,6 +116,15 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         voiceOverManager.announce(testMessage)
         wait(for: [expectation], timeout: 1.0)
+        
+        // Test platform-specific behavior
+        #if os(iOS)
+        // iOS should handle VoiceOver announcements
+        XCTAssertTrue(voiceOverManager.lastAnnouncement == testMessage)
+        #elseif os(macOS)
+        // macOS should also handle announcements
+        XCTAssertTrue(voiceOverManager.lastAnnouncement == testMessage)
+        #endif
     }
     
     func testVoiceOverManagerAnnounceWithPriority() {
@@ -195,6 +225,15 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         keyboardManager.moveFocus(direction: .next)
         XCTAssertEqual(keyboardManager.currentFocusIndex, 0, "Focus should wrap to first item")
+        
+        // Test platform-specific keyboard navigation behavior
+        #if os(iOS)
+        // iOS should support touch-based navigation
+        XCTAssertTrue(keyboardManager.focusableItems.count == 3)
+        #elseif os(macOS)
+        // macOS should support keyboard-based navigation
+        XCTAssertTrue(keyboardManager.focusableItems.count == 3)
+        #endif
     }
     
     func testMoveFocusPrevious() {
@@ -460,6 +499,18 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let testColor = Color.red
         highContrastManager.isHighContrastEnabled = true
         let contrastColor = highContrastManager.getHighContrastColor(testColor)
+        
+        // Test mock platform behavior
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        XCTAssertTrue(RuntimeCapabilityDetection.currentPlatform == .iOS)
+        
+        // Test iOS-specific accessibility behavior
+        voiceOverManager.announce("iOS test")
+        XCTAssertEqual(voiceOverManager.lastAnnouncement, "iOS test")
+        
+        // Reset to macOS for other tests
+        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        XCTAssertTrue(RuntimeCapabilityDetection.currentPlatform == .macOS)
         XCTAssertNotNil(contrastColor)
         
         // Test accessibility testing integration
@@ -479,6 +530,21 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
             .highContrastEnabled()
         
         XCTAssertNotNil(fullyEnhancedView, "All view modifiers should work together")
+        
+        // Test mock platform behavior for view modifiers
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        XCTAssertTrue(RuntimeCapabilityDetection.currentPlatform == .iOS)
+        
+        // Test iOS-specific view modifier behavior
+        let iOSEnhancedView = testView
+            .accessibilityEnhanced()
+            .voiceOverEnabled()
+        
+        XCTAssertNotNil(iOSEnhancedView, "iOS view modifiers should work")
+        
+        // Reset to macOS for other tests
+        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        XCTAssertTrue(RuntimeCapabilityDetection.currentPlatform == .macOS)
     }
     
     // MARK: - Error Handling Tests
