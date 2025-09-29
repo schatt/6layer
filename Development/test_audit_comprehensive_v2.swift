@@ -400,3 +400,4 @@ func generateReportContent(audits: [TestFileAudit], frameworkClasses: [Framework
 // Run the audit
 generateReport()
 
+
