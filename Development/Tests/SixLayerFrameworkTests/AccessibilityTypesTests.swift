@@ -1,3 +1,35 @@
+//
+//  AccessibilityTypesTests.swift
+//  SixLayerFrameworkTests
+//
+//  BUSINESS PURPOSE:
+//  Validates accessibility types and enums functionality and comprehensive type system validation,
+//  ensuring proper accessibility type definitions and enum behavior across all supported platforms.
+//
+//  TESTING SCOPE:
+//  - Accessibility type definitions and enum validation
+//  - Platform-specific accessibility type behavior
+//  - Accessibility type conversion and mapping
+//  - Accessibility type consistency and validation
+//  - Cross-platform accessibility type compatibility
+//  - Edge cases and error handling for accessibility types
+//
+//  METHODOLOGY:
+//  - Test accessibility type definitions and enum validation
+//  - Verify platform-specific accessibility type behavior using switch statements
+//  - Test accessibility type conversion and mapping functionality
+//  - Validate accessibility type consistency and validation
+//  - Test cross-platform accessibility type compatibility
+//  - Test edge cases and error handling for accessibility types
+//
+//  QUALITY ASSESSMENT: ✅ GOOD
+//  - ✅ Good: Uses proper business logic testing with enum validation
+//  - ✅ Good: Tests all accessibility types comprehensively
+//  - ✅ Good: Validates enum cases and counts properly
+//  - 🔧 Action Required: Add platform-specific behavior testing
+//  - 🔧 Action Required: Add accessibility type conversion testing
+//
+
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
@@ -5,6 +37,146 @@ import SwiftUI
 /// Comprehensive tests for all accessibility types and enums
 @MainActor
 final class AccessibilityTypesTests: XCTestCase {
+    
+    // MARK: - Platform-Specific Business Logic Tests
+    
+    func testAccessibilityTypesAcrossPlatforms() {
+        // Given: Platform-specific accessibility type expectations
+        let platform = Platform.current
+        
+        // When: Testing accessibility types on different platforms
+        // Then: Test platform-specific business logic
+        switch platform {
+        case .iOS:
+            // iOS should support comprehensive accessibility types
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "iOS should support comprehensive VoiceOver announcement types")
+            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "iOS should support comprehensive VoiceOver gesture types")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "iOS should support comprehensive VoiceOver custom action types")
+            
+            // Test iOS-specific accessibility type behavior
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "iOS should support element announcements")
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.action), "iOS should support action announcements")
+            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.singleTap), "iOS should support single tap gestures")
+            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.doubleTap), "iOS should support double tap gestures")
+            
+        case .macOS:
+            // macOS should support keyboard-focused accessibility types
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "macOS should support comprehensive VoiceOver announcement types")
+            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "macOS should support comprehensive VoiceOver gesture types")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "macOS should support comprehensive VoiceOver custom action types")
+            
+            // Test macOS-specific accessibility type behavior
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "macOS should support element announcements")
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.state), "macOS should support state announcements")
+            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.rotor), "macOS should support rotor gestures")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "macOS should support activate actions")
+            
+        case .watchOS:
+            // watchOS should have simplified accessibility types
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "watchOS should support comprehensive VoiceOver announcement types")
+            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "watchOS should support comprehensive VoiceOver gesture types")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "watchOS should support comprehensive VoiceOver custom action types")
+            
+            // Test watchOS-specific accessibility type behavior
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "watchOS should support element announcements")
+            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.singleTap), "watchOS should support single tap gestures")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "watchOS should support activate actions")
+            
+        case .tvOS:
+            // tvOS should support focus-based accessibility types
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "tvOS should support comprehensive VoiceOver announcement types")
+            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "tvOS should support comprehensive VoiceOver gesture types")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "tvOS should support comprehensive VoiceOver custom action types")
+            
+            // Test tvOS-specific accessibility type behavior
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "tvOS should support element announcements")
+            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.rotor), "tvOS should support rotor gestures")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "tvOS should support activate actions")
+            
+        case .visionOS:
+            // visionOS should support spatial accessibility types
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "visionOS should support comprehensive VoiceOver announcement types")
+            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "visionOS should support comprehensive VoiceOver gesture types")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "visionOS should support comprehensive VoiceOver custom action types")
+            
+            // Test visionOS-specific accessibility type behavior
+            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "visionOS should support element announcements")
+            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.singleTap), "visionOS should support single tap gestures")
+            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "visionOS should support activate actions")
+        }
+    }
+    
+    func testAccessibilityTypeConversionAndMapping() {
+        // Given: Different accessibility types for conversion testing
+        let announcementType = VoiceOverAnnouncementType.element
+        let gestureType = VoiceOverGestureType.singleTap
+        let actionType = VoiceOverCustomActionType.activate
+        
+        // When: Converting accessibility types
+        let announcementString = announcementType.rawValue
+        let gestureString = gestureType.rawValue
+        let actionString = actionType.rawValue
+        
+        // Then: Test business logic for type conversion
+        XCTAssertNotNil(announcementString, "Announcement type should convert to string")
+        XCTAssertNotNil(gestureString, "Gesture type should convert to string")
+        XCTAssertNotNil(actionString, "Action type should convert to string")
+        
+        // Test business logic: String conversion should be reversible
+        XCTAssertEqual(VoiceOverAnnouncementType(rawValue: announcementString), announcementType, 
+                      "Announcement type conversion should be reversible")
+        XCTAssertEqual(VoiceOverGestureType(rawValue: gestureString), gestureType, 
+                      "Gesture type conversion should be reversible")
+        XCTAssertEqual(VoiceOverCustomActionType(rawValue: actionString), actionType, 
+                      "Action type conversion should be reversible")
+        
+        // Test business logic: All enum cases should be convertible
+        for announcementType in VoiceOverAnnouncementType.allCases {
+            XCTAssertNotNil(VoiceOverAnnouncementType(rawValue: announcementType.rawValue), 
+                          "All announcement types should be convertible")
+        }
+        
+        for gestureType in VoiceOverGestureType.allCases {
+            XCTAssertNotNil(VoiceOverGestureType(rawValue: gestureType.rawValue), 
+                          "All gesture types should be convertible")
+        }
+        
+        for actionType in VoiceOverCustomActionType.allCases {
+            XCTAssertNotNil(VoiceOverCustomActionType(rawValue: actionType.rawValue), 
+                          "All action types should be convertible")
+        }
+    }
+    
+    func testAccessibilityTypeConsistencyAndValidation() {
+        // Given: Accessibility types for consistency testing
+        let announcementTypes = VoiceOverAnnouncementType.allCases
+        let gestureTypes = VoiceOverGestureType.allCases
+        let actionTypes = VoiceOverCustomActionType.allCases
+        
+        // When: Validating accessibility type consistency
+        // Then: Test business logic for type consistency
+        XCTAssertTrue(announcementTypes.count > 0, "Should have at least one announcement type")
+        XCTAssertTrue(gestureTypes.count > 0, "Should have at least one gesture type")
+        XCTAssertTrue(actionTypes.count > 0, "Should have at least one action type")
+        
+        // Test business logic: All types should have unique raw values
+        let announcementRawValues = Set(announcementTypes.map { $0.rawValue })
+        XCTAssertEqual(announcementRawValues.count, announcementTypes.count, 
+                      "All announcement types should have unique raw values")
+        
+        let gestureRawValues = Set(gestureTypes.map { $0.rawValue })
+        XCTAssertEqual(gestureRawValues.count, gestureTypes.count, 
+                      "All gesture types should have unique raw values")
+        
+        let actionRawValues = Set(actionTypes.map { $0.rawValue })
+        XCTAssertEqual(actionRawValues.count, actionTypes.count, 
+                      "All action types should have unique raw values")
+        
+        // Test business logic: All types should be case iterable
+        XCTAssertTrue(announcementTypes.contains(.element), "Should contain element announcement type")
+        XCTAssertTrue(gestureTypes.contains(.singleTap), "Should contain single tap gesture type")
+        XCTAssertTrue(actionTypes.contains(.activate), "Should contain activate action type")
+    }
     
     // MARK: - VoiceOver Types Tests
     

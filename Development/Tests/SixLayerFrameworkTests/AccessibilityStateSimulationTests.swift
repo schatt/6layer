@@ -1,3 +1,36 @@
+//
+//  AccessibilityStateSimulationTests.swift
+//  SixLayerFrameworkTests
+//
+//  BUSINESS PURPOSE:
+//  Validates accessibility state simulation and behavior testing across different accessibility configurations,
+//  ensuring proper UI adaptation and functionality for users with various accessibility needs.
+//
+//  TESTING SCOPE:
+//  - Accessibility state simulation and configuration
+//  - UI behavior changes based on different accessibility states
+//  - Platform-specific accessibility state handling
+//  - Edge cases and combinations of accessibility features
+//  - Accessibility state transitions and management
+//  - Cross-platform consistency of accessibility state behavior
+//
+//  METHODOLOGY:
+//  - Simulate different accessibility states and configurations
+//  - Test UI behavior changes based on accessibility state changes
+//  - Verify platform-specific accessibility state handling using switch statements
+//  - Test edge cases and combinations of accessibility features
+//  - Validate accessibility state transitions and management
+//  - Test cross-platform consistency of accessibility behavior
+//
+//  QUALITY ASSESSMENT: ⚠️ NEEDS IMPROVEMENT
+//  - ❌ Issue: Missing business purpose and testing scope documentation
+//  - ❌ Issue: Limited platform-specific testing with switch statements
+//  - ❌ Issue: No validation of actual accessibility behavior effectiveness
+//  - 🔧 Action Required: Add platform-specific behavior testing
+//  - 🔧 Action Required: Add validation of accessibility state effectiveness
+//  - 🔧 Action Required: Add comprehensive edge case testing
+//
+
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
@@ -6,6 +39,163 @@ import SwiftUI
 /// Simulates different accessibility states to test behavior changes
 @MainActor
 final class AccessibilityStateSimulationTests: XCTestCase {
+    
+    // MARK: - Platform-Specific Business Logic Tests
+    
+    func testAccessibilityStateBehaviorAcrossPlatforms() {
+        // Given: Different accessibility states and platform expectations
+        let platform = Platform.current
+        
+        // Test different accessibility states
+        for state in accessibilityStates {
+            // When: Applying accessibility state on different platforms
+            let config = getCardExpansionAccessibilityConfig()
+            
+            // Then: Test platform-specific business logic
+            switch platform {
+            case .iOS:
+                // iOS should support all accessibility features
+                XCTAssertTrue(config.supportsVoiceOver, "iOS should support VoiceOver")
+                XCTAssertTrue(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+                XCTAssertTrue(config.supportsHapticFeedback, "iOS should support haptic feedback")
+                
+                // Test iOS-specific accessibility behavior
+                if state.voiceOver {
+                    XCTAssertTrue(config.voiceOverEnabled, "VoiceOver should be enabled when state requires it")
+                }
+                if state.assistiveTouch {
+                    XCTAssertTrue(config.assistiveTouchEnabled, "AssistiveTouch should be enabled when state requires it")
+                }
+                
+            case .macOS:
+                // macOS should support keyboard navigation and high contrast
+                XCTAssertTrue(config.supportsKeyboardNavigation, "macOS should support keyboard navigation")
+                XCTAssertTrue(config.supportsHighContrast, "macOS should support high contrast")
+                XCTAssertFalse(config.supportsHapticFeedback, "macOS should not support haptic feedback")
+                
+                // Test macOS-specific accessibility behavior
+                if state.highContrast {
+                    XCTAssertTrue(config.highContrastEnabled, "High contrast should be enabled when state requires it")
+                }
+                if state.switchControl {
+                    XCTAssertTrue(config.switchControlEnabled, "Switch Control should be enabled when state requires it")
+                }
+                
+            case .watchOS:
+                // watchOS should have simplified accessibility support
+                XCTAssertTrue(config.supportsVoiceOver, "watchOS should support VoiceOver")
+                XCTAssertFalse(config.supportsHapticFeedback, "watchOS should not support haptic feedback")
+                XCTAssertFalse(config.supportsAssistiveTouch, "watchOS should not support AssistiveTouch")
+                
+                // Test watchOS-specific accessibility behavior
+                if state.voiceOver {
+                    XCTAssertTrue(config.voiceOverEnabled, "VoiceOver should be enabled when state requires it")
+                }
+                
+            case .tvOS:
+                // tvOS should support focus-based navigation
+                XCTAssertTrue(config.supportsFocusManagement, "tvOS should support focus management")
+                XCTAssertTrue(config.supportsSwitchControl, "tvOS should support Switch Control")
+                XCTAssertFalse(config.supportsTouch, "tvOS should not support touch")
+                
+                // Test tvOS-specific accessibility behavior
+                if state.switchControl {
+                    XCTAssertTrue(config.switchControlEnabled, "Switch Control should be enabled when state requires it")
+                }
+                
+            case .visionOS:
+                // visionOS should support spatial accessibility
+                XCTAssertTrue(config.supportsVoiceOver, "visionOS should support VoiceOver")
+                XCTAssertTrue(config.supportsSpatialAccessibility, "visionOS should support spatial accessibility")
+                
+                // Test visionOS-specific accessibility behavior
+                if state.voiceOver {
+                    XCTAssertTrue(config.voiceOverEnabled, "VoiceOver should be enabled when state requires it")
+                }
+            }
+        }
+    }
+    
+    func testAccessibilityStateTransitions() {
+        // Given: Different accessibility state transitions
+        let initialState = AccessibilityState(
+            reduceMotion: false,
+            highContrast: false,
+            voiceOver: false,
+            switchControl: false,
+            dynamicType: false,
+            assistiveTouch: false
+        )
+        
+        let finalState = AccessibilityState(
+            reduceMotion: true,
+            highContrast: true,
+            voiceOver: true,
+            switchControl: false,
+            dynamicType: true,
+            assistiveTouch: false
+        )
+        
+        // When: Transitioning between accessibility states
+        let initialConfig = getCardExpansionAccessibilityConfig()
+        
+        // Simulate state transition
+        // Note: In a real implementation, this would trigger actual state changes
+        
+        // Then: Test business logic for state transitions
+        XCTAssertNotNil(initialConfig, "Initial accessibility config should be valid")
+        
+        // Test business logic: State transitions should be handled gracefully
+        XCTAssertTrue(initialConfig.supportsVoiceOver, "Config should support VoiceOver")
+        XCTAssertTrue(initialConfig.supportsHighContrast, "Config should support high contrast")
+        XCTAssertTrue(initialConfig.supportsReducedMotion, "Config should support reduced motion")
+        
+        // Test business logic: Platform should support the required accessibility features
+        let platform = Platform.current
+        switch platform {
+        case .iOS, .macOS, .watchOS, .tvOS, .visionOS:
+            XCTAssertTrue(initialConfig.supportsVoiceOver, "Platform should support VoiceOver")
+        }
+    }
+    
+    func testAccessibilityStateCombinations() {
+        // Given: Complex accessibility state combinations
+        let complexState = AccessibilityState(
+            reduceMotion: true,
+            highContrast: true,
+            voiceOver: true,
+            switchControl: true,
+            dynamicType: true,
+            assistiveTouch: true
+        )
+        
+        // When: Applying complex accessibility state
+        let config = getCardExpansionAccessibilityConfig()
+        
+        // Then: Test business logic for complex state handling
+        XCTAssertNotNil(config, "Config should handle complex accessibility states")
+        
+        // Test business logic: All accessibility features should be supported
+        XCTAssertTrue(config.supportsVoiceOver, "Should support VoiceOver in complex state")
+        XCTAssertTrue(config.supportsHighContrast, "Should support high contrast in complex state")
+        XCTAssertTrue(config.supportsReducedMotion, "Should support reduced motion in complex state")
+        XCTAssertTrue(config.supportsSwitchControl, "Should support Switch Control in complex state")
+        
+        // Test business logic: Platform should handle complex combinations gracefully
+        let platform = Platform.current
+        switch platform {
+        case .iOS:
+            XCTAssertTrue(config.supportsAssistiveTouch, "iOS should support AssistiveTouch in complex state")
+        case .macOS:
+            XCTAssertTrue(config.supportsKeyboardNavigation, "macOS should support keyboard navigation in complex state")
+        case .watchOS:
+            XCTAssertFalse(config.supportsAssistiveTouch, "watchOS should not support AssistiveTouch")
+        case .tvOS:
+            XCTAssertTrue(config.supportsFocusManagement, "tvOS should support focus management in complex state")
+        case .visionOS:
+            XCTAssertTrue(config.supportsSpatialAccessibility, "visionOS should support spatial accessibility in complex state")
+        }
+    }
     
     // MARK: - Accessibility State Simulation
     

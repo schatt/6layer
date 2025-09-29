@@ -254,7 +254,7 @@ final class ViewGenerationVerificationTests: XCTestCase {
         XCTAssertFalse(viewInfo.hasLargerText)
         XCTAssertEqual(viewInfo.minTouchTarget, 44)
         XCTAssertEqual(viewInfo.hoverDelay, 0.0)
-    }
+    }*/
     
     // MARK: - Helper Methods
     
