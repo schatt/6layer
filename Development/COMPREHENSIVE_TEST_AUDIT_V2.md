@@ -11,6 +11,12 @@ Generated: 2025-09-28 17:10:26 +0000
 4. **Mock Testing**: Uses setTestPlatform() to test non-macOS platforms
 5. **No Generic Tests**: Avoids XCTAssertNotNil without business logic
 6. **No Data Structure Tests**: Avoids testing simple data storage (structs with no business logic)
+7. **Class Usefulness Evaluation**: Classes must contain useful business logic or platform abstraction
+   - **✅ Keep: Platform Abstraction Wrappers**: Classes that handle platform-specific APIs and provide unified interfaces
+   - **✅ Keep: Real Business Logic**: Algorithms, calculations, complex state management, pattern detection
+   - **❌ Delete: Useless Thin Wrappers**: Classes that just call system APIs without adding value or platform abstraction
+   - **❌ Delete: Data Storage Only**: Structs with no methods, just properties
+   - **❌ Delete: Mock Testing**: Testing frameworks should be in test files, not production code
 
 ## TEST DOCUMENTATION GUIDELINES
 
