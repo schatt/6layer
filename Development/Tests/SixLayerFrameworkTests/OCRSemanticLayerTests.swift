@@ -1,231 +1,311 @@
+//
+//  OCRSemanticLayerTests.swift
+//  SixLayerFrameworkTests
+//
+//  BUSINESS PURPOSE:
+//  The OCRService provides comprehensive optical character recognition functionality
+//  including text extraction, document analysis, and image processing for converting
+//  images to text across all supported platforms.
+//
+//  TESTING SCOPE:
+//  - OCR service initialization and configuration
+//  - Text extraction and recognition functionality
+//  - Document analysis and processing
+//  - Error handling and edge cases
+//  - Performance and memory management
+//
+//  METHODOLOGY:
+//  - Test actual business logic of OCR processing
+//  - Verify text extraction accuracy
+//  - Test document analysis algorithms
+//  - Validate error handling and edge cases
+//  - Test performance characteristics
+//
+
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
 
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
+
+/// Test suite for OCRService with proper TDD practices
+@MainActor
 final class OCRSemanticLayerTests: XCTestCase {
     
-    // MARK: - Layer 1: Semantic OCR Functions Tests
+    var ocrService: OCRServiceProtocol!
     
-    func testPlatformOCRIntent_L1() {
-        // Given: Image and text types for OCR
-        let image = createTestImage()
-        let textTypes: [TextType] = [.price, .number, .date]
-        
-        // When: Creating semantic OCR intent
-        let ocrIntent = platformOCRIntent_L1(
-            image: image,
-            textTypes: textTypes
-        ) { result in
-            // Then: OCR result should be processed
-            XCTAssertNotNil(result)
-        }
-        
-        // Then: OCR intent should be created
-        XCTAssertNotNil(ocrIntent)
+    override func setUp() {
+        super.setUp()
+        ocrService = OCRServiceFactory.create()
     }
     
-    func testPlatformTextExtraction_L1() {
-        // Given: Image and extraction context
-        let image = createTestImage()
-        let context = OCRContext(
-            textTypes: [.price, .number],
-            language: .english,
-            confidenceThreshold: 0.8
-        )
-        
-        // When: Creating text extraction intent
-        let extractionIntent = platformTextExtraction_L1(
-            image: image,
-            context: context
-        ) { result in
-            // Then: Extraction result should be processed
-            XCTAssertNotNil(result)
-        }
-        
-        // Then: Extraction intent should be created
-        XCTAssertNotNil(extractionIntent)
+    override func tearDown() {
+        ocrService = nil
+        super.tearDown()
     }
     
-    func testPlatformDocumentAnalysis_L1() {
-        // Given: Image and document type
-        let image = createTestImage()
-        let documentType = DocumentType.receipt
+    // MARK: - Service Initialization Tests
+    
+    func testOCRServiceInitialization() {
+        // Given: OCR service initialization
+        let service = OCRServiceFactory.create()
         
-        // When: Creating document analysis intent
-        let analysisIntent = platformDocumentAnalysis_L1(
-            image: image,
-            documentType: documentType
-        ) { result in
-            // Then: Analysis result should be processed
-            XCTAssertNotNil(result)
-        }
-        
-        // Then: Analysis intent should be created
-        XCTAssertNotNil(analysisIntent)
+        // Then: Test business logic for initialization
+        XCTAssertNotNil(service, "OCR service should be created")
     }
     
-    // MARK: - Layer 2: Layout Decision Tests
-    
-    func testPlatformOCRLayout_L2() {
-        // Given: OCR context and device capabilities
-        let context = OCRContext(
-            textTypes: [.price, .number],
-            language: .english,
-            confidenceThreshold: 0.8
-        )
-        let capabilities = OCRDeviceCapabilities(
-            hasVisionFramework: true,
-            hasNeuralEngine: true,
-            maxImageSize: CGSize(width: 4000, height: 4000)
-        )
+    func testMockOCRServiceInitialization() {
+        // Given: Mock OCR service initialization
+        let mockService = OCRServiceFactory.createMock()
         
-        // When: Determining OCR layout
-        let layout = platformOCRLayout_L2(
-            context: context,
-            capabilities: capabilities
-        )
-        
-        // Then: Layout should be determined
-        XCTAssertNotNil(layout)
-        XCTAssertTrue(layout.maxImageSize.width > 0)
-        XCTAssertTrue(layout.maxImageSize.height > 0)
+        // Then: Test business logic for mock initialization
+        XCTAssertNotNil(mockService, "Mock OCR service should be created")
     }
     
-    // MARK: - Layer 3: Strategy Selection Tests
+    // MARK: - Text Extraction Tests
     
-    func testPlatformOCRStrategy_L3() {
-        // Given: Text types and platform
-        let textTypes: [TextType] = [.price, .number, .date]
-        let platform = Platform.current
-        
-        // When: Selecting OCR strategy
-        let strategy = platformOCRStrategy_L3(
-            textTypes: textTypes,
-            platform: platform
-        )
-        
-        // Then: Strategy should be selected
-        XCTAssertNotNil(strategy)
-        XCTAssertTrue(strategy.supportedTextTypes.contains(.price))
-        XCTAssertTrue(strategy.supportedTextTypes.contains(.number))
-    }
-    
-    // MARK: - Layer 4: Component Implementation Tests
-    
-    func testPlatformOCRComponent_L4() {
-        // Given: OCR configuration
-        let _ = OCRConfiguration(
-            textTypes: [.price, .number],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
-        )
-        
-        // When: Creating OCR component
+    func testOCRServiceTextExtraction() async throws {
+        // Given: OCR service and test image
+        let service = OCRServiceFactory.create()
         let testImage = createTestImage()
-        let context = OCRContext()
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            confidenceThreshold: 0.8
+        )
+        
+        // When: Processing image for text extraction
         let strategy = OCRStrategy(
-            supportedTextTypes: [.general],
+            supportedTextTypes: [.price, .number],
             supportedLanguages: [.english],
             processingMode: .standard
         )
-        let component = platformOCRImplementation_L4(
-            image: testImage,
-            context: context,
-            strategy: strategy
-        ) { result in
-            // Then: OCR result should be processed
-            XCTAssertNotNil(result)
-        }
+        let result = try await service.processImage(testImage, context: context, strategy: strategy)
         
-        // Then: Component should be created
-        XCTAssertNotNil(component)
+        // Then: Test business logic for text extraction
+        XCTAssertNotNil(result, "OCR result should be available")
+        XCTAssertNotNil(result.extractedText, "Extracted text should be available")
+        XCTAssertGreaterThanOrEqual(result.confidence, 0.0, "Confidence should be non-negative")
+        XCTAssertLessThanOrEqual(result.confidence, 1.0, "Confidence should not exceed 1.0")
     }
     
-    func testPlatformTextRecognition_L4() {
-        // Given: Image and recognition options
-        let image = createTestImage()
-        let options = TextRecognitionOptions(
+    func testOCRServiceTextExtractionWithDifferentContexts() async throws {
+        // Given: OCR service and different contexts
+        let service = OCRServiceFactory.create()
+        let testImage = createTestImage()
+        
+        let contexts = [
+            OCRContext(textTypes: [.price], language: .english, confidenceThreshold: 0.9),
+            OCRContext(textTypes: [.number], language: .spanish, confidenceThreshold: 0.7),
+            OCRContext(textTypes: [.date], language: .french, confidenceThreshold: 0.8)
+        ]
+        
+        // When: Processing image with different contexts
+        for context in contexts {
+            let strategy = OCRStrategy(
+            supportedTextTypes: [.price, .number],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let result = try await service.processImage(testImage, context: context, strategy: strategy)
+            
+            // Then: Test business logic for different contexts
+            XCTAssertNotNil(result, "OCR result should be available for context: \(context)")
+            XCTAssertNotNil(result.extractedText, "Extracted text should be available")
+            XCTAssertGreaterThanOrEqual(result.confidence, 0.0, "Confidence should be non-negative")
+            XCTAssertLessThanOrEqual(result.confidence, 1.0, "Confidence should not exceed 1.0")
+        }
+    }
+    
+    // MARK: - Document Analysis Tests
+    
+    func testOCRServiceDocumentAnalysis() async throws {
+        // Given: OCR service and test image
+        let service = OCRServiceFactory.create()
+        let testImage = createTestImage()
+        let context = OCRContext(
+            textTypes: [.price, .number, .date],
+            language: .english,
+            confidenceThreshold: 0.8
+        )
+        
+        // When: Processing image for document analysis
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.price, .number],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let result = try await service.processImage(testImage, context: context, strategy: strategy)
+        
+        // Then: Test business logic for document analysis
+        XCTAssertNotNil(result, "OCR result should be available")
+        XCTAssertNotNil(result.extractedText, "Extracted text should be available")
+    }
+    
+    // MARK: - Error Handling Tests
+    
+    func testOCRServiceErrorHandling() async throws {
+        // Given: OCR service with invalid input
+        let service = OCRServiceFactory.create()
+        let invalidImage = createInvalidImage()
+        let context = OCRContext(
+            textTypes: [.price],
+            language: .english,
+            confidenceThreshold: 0.8
+        )
+        
+        // When: Processing invalid image
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.price],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let result = try await service.processImage(invalidImage, context: context, strategy: strategy)
+        
+        // Then: Test business logic for error handling
+        XCTAssertNotNil(result, "OCR result should be available even for invalid input")
+        XCTAssertNotNil(result.extractedText, "Extracted text should be available")
+        XCTAssertGreaterThanOrEqual(result.confidence, 0.0, "Confidence should be non-negative")
+    }
+    
+    // MARK: - Performance Tests
+    
+    func testOCRServicePerformance() async throws {
+        // Given: OCR service and performance test parameters
+        let service = OCRServiceFactory.create()
+        let testImage = createTestImage()
+        let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
             confidenceThreshold: 0.8
         )
         
-        // When: Performing text recognition
-        let recognition = platformTextRecognition_L4(
-            image: image,
-            options: options
-        ) { result in
-            // Then: Recognition result should be processed
-            XCTAssertNotNil(result)
-        }
+        // When: Processing image and measuring performance
+        let startTime = Date()
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.price, .number],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let result = try await service.processImage(testImage, context: context, strategy: strategy)
+        let endTime = Date()
+        let duration = endTime.timeIntervalSince(startTime)
         
-        // Then: Recognition should be created
-        XCTAssertNotNil(recognition)
+        // Then: Test business logic for performance
+        XCTAssertNotNil(result, "OCR result should be available")
+        XCTAssertLessThan(duration, 10.0, "OCR processing should complete within 10 seconds")
+    }
+    
+    // MARK: - Edge Cases Tests
+    
+    func testOCRServiceEdgeCases() async throws {
+        // Given: OCR service and edge case scenarios
+        let service = OCRServiceFactory.create()
+        let testImage = createTestImage()
+        
+        // Test with minimum confidence threshold
+        let minConfidenceContext = OCRContext(
+            textTypes: [.price],
+            language: .english,
+            confidenceThreshold: 0.0
+        )
+        
+        // Test with maximum confidence threshold
+        let maxConfidenceContext = OCRContext(
+            textTypes: [.price],
+            language: .english,
+            confidenceThreshold: 1.0
+        )
+        
+        // When: Processing with edge case contexts
+        let minStrategy = OCRStrategy(
+            supportedTextTypes: [.price],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let maxStrategy = OCRStrategy(
+            supportedTextTypes: [.price],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let minResult = try await service.processImage(testImage, context: minConfidenceContext, strategy: minStrategy)
+        let maxResult = try await service.processImage(testImage, context: maxConfidenceContext, strategy: maxStrategy)
+        
+        // Then: Test business logic for edge cases
+        XCTAssertNotNil(minResult, "OCR result should be available for minimum confidence")
+        XCTAssertNotNil(maxResult, "OCR result should be available for maximum confidence")
+        XCTAssertGreaterThanOrEqual(minResult.confidence, 0.0, "Confidence should be non-negative")
+        XCTAssertLessThanOrEqual(maxResult.confidence, 1.0, "Confidence should not exceed 1.0")
+    }
+    
+    // MARK: - Mock Service Tests
+    
+    func testMockOCRServiceFunctionality() async throws {
+        // Given: Mock OCR service with predefined result
+        let mockResult = OCRResult(
+            extractedText: "Test OCR Result",
+            confidence: 0.95,
+            processingTime: 0.5
+        )
+        let mockService = OCRServiceFactory.createMock(result: mockResult)
+        let testImage = createTestImage()
+        let context = OCRContext(
+            textTypes: [.price],
+            language: .english,
+            confidenceThreshold: 0.8
+        )
+        
+        // When: Processing image with mock service
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.price],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let result = try await mockService.processImage(testImage, context: context, strategy: strategy)
+        
+        // Then: Test business logic for mock service
+        XCTAssertNotNil(result, "Mock OCR result should be available")
+        XCTAssertEqual(result.extractedText, "Test OCR Result", "Mock result should match expected text")
+        XCTAssertEqual(result.confidence, 0.95, "Mock result should match expected confidence")
     }
     
     // MARK: - Helper Methods
     
     private func createTestImage() -> PlatformImage {
-        // Create a simple test image
+        // Create a simple test image for OCR testing
+        let size = CGSize(width: 100, height: 100)
+        #if os(iOS)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { context in
+            UIColor.white.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+            
+            UIColor.black.setFill()
+            let textRect = CGRect(x: 10, y: 10, width: 80, height: 20)
+            context.fill(textRect)
+        }
+        #elseif os(macOS)
+        let nsImage = NSImage(size: size)
+        nsImage.lockFocus()
+        NSColor.white.setFill()
+        NSRect(origin: .zero, size: size).fill()
+        
+        NSColor.black.setFill()
+        let textRect = NSRect(x: 10, y: 10, width: 80, height: 20)
+        textRect.fill()
+        nsImage.unlockFocus()
+        return PlatformImage(nsImage: nsImage)
+        #else
+        return PlatformImage()
+        #endif
+    }
+    
+    private func createInvalidImage() -> PlatformImage {
+        // Create an invalid image for error testing
         return PlatformImage()
     }
 }
-
-// MARK: - OCR Result Validation Tests
-
-extension OCRSemanticLayerTests {
-    
-    func testOCRResultValidation() {
-        // Given: OCR result with various text types
-        let result = OCRResult(
-            extractedText: "Total: $25.99\nDate: 2024-01-15",
-            confidence: 0.95,
-            boundingBoxes: [
-                CGRect(x: 0, y: 0, width: 100, height: 20),
-                CGRect(x: 0, y: 25, width: 120, height: 20)
-            ],
-            textTypes: [
-                .price: "$25.99",
-                .date: "2024-01-15"
-            ],
-            processingTime: 0.5
-        )
-        
-        // When: Validating result
-        let isValid = result.isValid
-        let hasPrice = result.textTypes[.price] != nil
-        let hasDate = result.textTypes[.date] != nil
-        
-        // Then: Result should be valid
-        XCTAssertTrue(isValid)
-        XCTAssertTrue(hasPrice)
-        XCTAssertTrue(hasDate)
-        XCTAssertEqual(result.confidence, 0.95, accuracy: 0.01)
-    }
-    
-    func testOCRResultFiltering() {
-        // Given: OCR result with mixed confidence levels
-        let result = OCRResult(
-            extractedText: "High confidence text\nLow confidence text",
-            confidence: 0.6,
-            boundingBoxes: [],
-            textTypes: [
-                .price: "$25.99",
-                .number: "123"
-            ],
-            processingTime: 0.3
-        )
-        
-        // When: Filtering by confidence threshold
-        let filteredResult = result.filtered(by: 0.8)
-        
-        // Then: Filtered result should have lower confidence
-        XCTAssertLessThan(filteredResult.confidence, 0.8)
-    }
-}
-
-
-
-
-

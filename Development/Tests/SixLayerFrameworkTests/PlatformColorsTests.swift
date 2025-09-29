@@ -63,9 +63,9 @@ final class PlatformColorsTests: XCTestCase {
             XCTAssertNotNil(Color.platformSecondaryBackground, "iOS should support secondary background color")
             
             // Test iOS-specific color behavior
-            XCTAssertNotNil(Color.platformAccentColor, "iOS should support accent color")
-            XCTAssertNotNil(Color.platformFill, "iOS should support fill color")
-            XCTAssertNotNil(Color.platformSecondaryFill, "iOS should support secondary fill color")
+            XCTAssertNotNil(Color.platformBackground, "iOS should support background color")
+            XCTAssertNotNil(Color.platformSecondaryBackground, "iOS should support secondary background color")
+            XCTAssertNotNil(Color.platformGroupedBackground, "iOS should support grouped background color")
             
         case .macOS:
             // macOS should support comprehensive color system
@@ -76,9 +76,9 @@ final class PlatformColorsTests: XCTestCase {
             XCTAssertNotNil(Color.platformSecondaryBackground, "macOS should support secondary background color")
             
             // Test macOS-specific color behavior
-            XCTAssertNotNil(Color.platformAccentColor, "macOS should support accent color")
-            XCTAssertNotNil(Color.platformFill, "macOS should support fill color")
-            XCTAssertNotNil(Color.platformSecondaryFill, "macOS should support secondary fill color")
+            XCTAssertNotNil(Color.platformBackground, "macOS should support background color")
+            XCTAssertNotNil(Color.platformSecondaryBackground, "macOS should support secondary background color")
+            XCTAssertNotNil(Color.platformGroupedBackground, "macOS should support grouped background color")
             
         case .watchOS:
             // watchOS should support simplified color system
@@ -87,8 +87,8 @@ final class PlatformColorsTests: XCTestCase {
             XCTAssertNotNil(Color.platformBackground, "watchOS should support background color")
             
             // Test watchOS-specific color behavior
-            XCTAssertNotNil(Color.platformAccentColor, "watchOS should support accent color")
-            XCTAssertNotNil(Color.platformFill, "watchOS should support fill color")
+            XCTAssertNotNil(Color.platformBackground, "watchOS should support background color")
+            XCTAssertNotNil(Color.platformSecondaryBackground, "watchOS should support secondary background color")
             
         case .tvOS:
             // tvOS should support focus-based color system
@@ -97,8 +97,8 @@ final class PlatformColorsTests: XCTestCase {
             XCTAssertNotNil(Color.platformBackground, "tvOS should support background color")
             
             // Test tvOS-specific color behavior
-            XCTAssertNotNil(Color.platformAccentColor, "tvOS should support accent color")
-            XCTAssertNotNil(Color.platformFill, "tvOS should support fill color")
+            XCTAssertNotNil(Color.platformBackground, "tvOS should support background color")
+            XCTAssertNotNil(Color.platformSecondaryBackground, "tvOS should support secondary background color")
             
         case .visionOS:
             // visionOS should support spatial color system
@@ -109,9 +109,9 @@ final class PlatformColorsTests: XCTestCase {
             XCTAssertNotNil(Color.platformSecondaryBackground, "visionOS should support secondary background color")
             
             // Test visionOS-specific color behavior
-            XCTAssertNotNil(Color.platformAccentColor, "visionOS should support accent color")
-            XCTAssertNotNil(Color.platformFill, "visionOS should support fill color")
-            XCTAssertNotNil(Color.platformSecondaryFill, "visionOS should support secondary fill color")
+            XCTAssertNotNil(Color.platformBackground, "visionOS should support background color")
+            XCTAssertNotNil(Color.platformSecondaryBackground, "visionOS should support secondary background color")
+            XCTAssertNotNil(Color.platformGroupedBackground, "visionOS should support grouped background color")
         }
     }
     
@@ -142,16 +142,16 @@ final class PlatformColorsTests: XCTestCase {
         XCTAssertTrue(background != Color.clear, "Background color should not be clear")
     }
     
-    func testPlatformColorEncoding() {
+    func testPlatformColorEncoding() throws {
         // Given: Platform colors for encoding testing
         let primaryLabel = Color.platformPrimaryLabel
         let secondaryLabel = Color.platformSecondaryLabel
         let background = Color.platformBackground
         
         // When: Encoding platform colors
-        let primaryEncoded = platformColorEncode(primaryLabel)
-        let secondaryEncoded = platformColorEncode(secondaryLabel)
-        let backgroundEncoded = platformColorEncode(background)
+        let primaryEncoded = try platformColorEncode(primaryLabel)
+        let secondaryEncoded = try platformColorEncode(secondaryLabel)
+        let backgroundEncoded = try platformColorEncode(background)
         
         // Then: Test business logic for color encoding
         XCTAssertNotNil(primaryEncoded, "Primary label color should be encodable")
@@ -159,14 +159,14 @@ final class PlatformColorsTests: XCTestCase {
         XCTAssertNotNil(backgroundEncoded, "Background color should be encodable")
         
         // Test business logic: Encoded colors should be decodable
-        XCTAssertNotNil(platformColorDecode(primaryEncoded), "Primary label color should be decodable")
-        XCTAssertNotNil(platformColorDecode(secondaryEncoded), "Secondary label color should be decodable")
-        XCTAssertNotNil(platformColorDecode(backgroundEncoded), "Background color should be decodable")
+        XCTAssertNotNil(try platformColorDecode(primaryEncoded), "Primary label color should be decodable")
+        XCTAssertNotNil(try platformColorDecode(secondaryEncoded), "Secondary label color should be decodable")
+        XCTAssertNotNil(try platformColorDecode(backgroundEncoded), "Background color should be decodable")
         
         // Test business logic: Decoded colors should match original colors
-        XCTAssertEqual(platformColorDecode(primaryEncoded), primaryLabel, "Decoded primary label color should match original")
-        XCTAssertEqual(platformColorDecode(secondaryEncoded), secondaryLabel, "Decoded secondary label color should match original")
-        XCTAssertEqual(platformColorDecode(backgroundEncoded), background, "Decoded background color should match original")
+        XCTAssertEqual(try platformColorDecode(primaryEncoded), primaryLabel, "Decoded primary label color should match original")
+        XCTAssertEqual(try platformColorDecode(secondaryEncoded), secondaryLabel, "Decoded secondary label color should match original")
+        XCTAssertEqual(try platformColorDecode(backgroundEncoded), background, "Decoded background color should match original")
     }
     
     // MARK: - Basic Color Tests

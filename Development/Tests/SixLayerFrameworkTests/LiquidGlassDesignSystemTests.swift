@@ -9,6 +9,7 @@ import XCTest
 @testable import SixLayerFramework
 
 @available(iOS 26.0, macOS 26.0, *)
+@MainActor
 final class LiquidGlassDesignSystemTests: XCTestCase {
     
     var liquidGlassSystem: LiquidGlassDesignSystem!
