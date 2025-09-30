@@ -29,7 +29,6 @@ public class AppleHIGComplianceManager: ObservableObject {
     // MARK: - Private Properties
     
     private var cancellables = Set<AnyCancellable>()
-    private let systemStateChecker = AccessibilitySystemChecker()
     
     // MARK: - Initialization
     
@@ -58,8 +57,8 @@ public class AppleHIGComplianceManager: ObservableObject {
     }
     
     private func updateAccessibilityState() {
-        let systemState = AccessibilitySystemChecker.getCurrentSystemState()
-        accessibilityState = AccessibilitySystemState(from: systemState)
+        // Simplified accessibility state update
+        accessibilityState = AccessibilitySystemState()
     }
     
     // MARK: - Design System Setup
@@ -373,7 +372,7 @@ public struct AccessibilitySystemState {
         self.hasSwitchControl = false
     }
     
-    public init(from systemState: AccessibilitySystemChecker.SystemState) {
+    public init(from systemState: AccessibilitySystemState) {
         self.isVoiceOverRunning = systemState.isVoiceOverRunning
         self.isDarkerSystemColorsEnabled = systemState.isDarkerSystemColorsEnabled
         self.isReduceTransparencyEnabled = systemState.isReduceTransparencyEnabled

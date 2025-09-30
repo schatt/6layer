@@ -32,3 +32,91 @@ public struct GenericDataItem: Identifiable, Hashable {
         return lhs.id == rhs.id
     }
 }
+
+/// Minimal generic numeric data for internal framework use
+public struct GenericNumericData: Identifiable, Hashable {
+    public let id = UUID()
+    public let value: Double
+    public let label: String
+    public let unit: String?
+    
+    public init(value: Double, label: String, unit: String? = nil) {
+        self.value = value
+        self.label = label
+        self.unit = unit
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public static func == (lhs: GenericNumericData, rhs: GenericNumericData) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+/// Minimal generic media item for internal framework use
+public struct GenericMediaItem: Identifiable, Hashable {
+    public let id = UUID()
+    public let title: String
+    public let url: String?
+    public let thumbnail: String?
+    
+    public init(title: String, url: String? = nil, thumbnail: String? = nil) {
+        self.title = title
+        self.url = url
+        self.thumbnail = thumbnail
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public static func == (lhs: GenericMediaItem, rhs: GenericMediaItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+/// Minimal generic hierarchical item for internal framework use
+public struct GenericHierarchicalItem: Identifiable, Hashable {
+    public let id = UUID()
+    public let title: String
+    public let level: Int
+    public let children: [GenericHierarchicalItem]
+    
+    public init(title: String, level: Int = 0, children: [GenericHierarchicalItem] = []) {
+        self.title = title
+        self.level = level
+        self.children = children
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public static func == (lhs: GenericHierarchicalItem, rhs: GenericHierarchicalItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+/// Minimal generic temporal item for internal framework use
+public struct GenericTemporalItem: Identifiable, Hashable {
+    public let id = UUID()
+    public let title: String
+    public let date: Date
+    public let duration: TimeInterval?
+    
+    public init(title: String, date: Date, duration: TimeInterval? = nil) {
+        self.title = title
+        self.date = date
+        self.duration = duration
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public static func == (lhs: GenericTemporalItem, rhs: GenericTemporalItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
