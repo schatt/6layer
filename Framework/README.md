@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v2.8.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v2.8.1)
+[![Version](https://img.shields.io/badge/version-v3.2.3-blue.svg)](https://github.com/schatt/6layer/releases/tag/v3.2.3)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -34,7 +34,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility First**: Built-in accessibility enhancements
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
-- **Comprehensively Tested**: 790+ tests with platform-aware testing and TDD implementation
+- **Comprehensively Tested**: 790+ tests with platform-aware testing and mandatory TDD implementation
 
 ## 🧪 Comprehensive Testing Framework
 
