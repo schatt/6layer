@@ -53,7 +53,7 @@ let package = Package(
             dependencies: ["SixLayerFramework"],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
-                "FunctionIndex_Tests_SixLayerFrameworkTests.md"
+                // Function index moved to docs directory
             ]
         )
     ]

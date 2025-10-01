@@ -165,46 +165,96 @@ struct PhotoPickerView: UIViewControllerRepresentable {
 // MARK: - macOS Photo Picker View
 
 #if os(macOS)
-struct MacOSPhotoPickerView: NSViewControllerRepresentable {
+struct MacOSPhotoPickerView: View {
     let onImageSelected: (PlatformImage) -> Void
-    
+    @State private var showingFileImporter = false
+    @State private var showingLegacyPicker = false
+
+    var body: some View {
+        if #available(macOS 11.0, *) {
+            // Use SwiftUI's native fileImporter for modern macOS
+            Button("Select Image") {
+                showingFileImporter = true
+            }
+            .fileImporter(
+                isPresented: $showingFileImporter,
+                allowedContentTypes: [.image],
+                allowsMultipleSelection: false
+            ) { result in
+                handleFileSelection(result)
+            }
+        } else {
+            // Fallback for older macOS versions using NSViewControllerRepresentable
+            LegacyMacOSPhotoPickerView(onImageSelected: onImageSelected)
+        }
+    }
+
+    private func handleFileSelection(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            if let url = urls.first {
+                loadImageFromURL(url)
+            }
+        case .failure(let error):
+            print("Error selecting image: \(error.localizedDescription)")
+        }
+    }
+
+    private func loadImageFromURL(_ url: URL) {
+        do {
+            let imageData = try Data(contentsOf: url)
+            if let platformImage = PlatformImage(data: imageData) {
+                onImageSelected(platformImage)
+            }
+        } catch {
+            print("Error loading image: \(error.localizedDescription)")
+        }
+    }
+}
+
+// MARK: - Legacy macOS Photo Picker (for older macOS versions)
+
+@available(macOS, deprecated: 11.0, message: "Use SwiftUI's fileImporter instead")
+struct LegacyMacOSPhotoPickerView: NSViewControllerRepresentable {
+    let onImageSelected: (PlatformImage) -> Void
+
     func makeNSViewController(context: Context) -> NSViewController {
         let controller = NSViewController()
-        
+
         let button = NSButton(title: "Select Photo", target: context.coordinator, action: #selector(Coordinator.selectPhoto))
         button.translatesAutoresizingMaskIntoConstraints = false
         controller.view.addSubview(button)
-        
+
         NSLayoutConstraint.activate([
             button.centerXAnchor.constraint(equalTo: controller.view.centerXAnchor),
             button.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor)
         ])
-        
+
         return controller
     }
-    
+
     func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
         // No updates needed
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+
     class Coordinator: NSObject {
-        let parent: MacOSPhotoPickerView
-        
-        init(_ parent: MacOSPhotoPickerView) {
+        let parent: LegacyMacOSPhotoPickerView
+
+        init(_ parent: LegacyMacOSPhotoPickerView) {
             self.parent = parent
         }
-        
+
         @objc func selectPhoto() {
             let panel = NSOpenPanel()
             panel.allowsMultipleSelection = false
             panel.canChooseDirectories = false
             panel.canChooseFiles = true
             panel.allowedContentTypes = [.image]
-            
+
             if panel.runModal() == .OK, let url = panel.url {
                 if let data = try? Data(contentsOf: url),
                    let platformImage = PlatformImage(data: data) {

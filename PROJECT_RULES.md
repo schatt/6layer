@@ -23,8 +23,16 @@
 
 ## Development Standards
 
+### Test-Driven Development (TDD) Requirement
+**MANDATORY**: All development must follow Test-Driven Development principles.
+
+- **Write tests first**: All new features, bug fixes, and enhancements must begin with failing tests
+- **Red-Green-Refactor cycle**: Follow the complete TDD cycle (failing test → implementation → passing test → refactor)
+- **No implementation without tests**: Code must not be written before corresponding tests exist
+- **Comprehensive test coverage**: Every code path, edge case, and integration point must be tested
+
 ### Code Quality
-- All new code must include appropriate tests
+- All new code must include appropriate tests (redundant with TDD requirement above)
 - Deprecated APIs should be properly marked and documented
 - Breaking changes require major version bumps
 

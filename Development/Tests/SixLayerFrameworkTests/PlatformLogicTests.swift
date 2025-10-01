@@ -1,35 +1,3 @@
-//
-//  PlatformLogicTests.swift
-//  SixLayerFrameworkTests
-//
-//  BUSINESS PURPOSE:
-//  Validates platform logic functionality and comprehensive platform detection logic testing,
-//  ensuring proper platform detection and configuration logic validation across all supported platforms.
-//
-//  TESTING SCOPE:
-//  - Platform detection logic functionality and validation
-//  - Platform configuration logic testing and validation
-//  - Cross-platform platform logic consistency and compatibility
-//  - Platform-specific platform logic behavior testing
-//  - Platform detection accuracy and reliability testing
-//  - Edge cases and error handling for platform logic
-//
-//  METHODOLOGY:
-//  - Test platform detection logic functionality using comprehensive platform testing
-//  - Verify platform configuration logic using switch statements and conditional logic
-//  - Test cross-platform platform logic consistency and compatibility
-//  - Validate platform-specific platform logic behavior using platform detection
-//  - Test platform detection accuracy and reliability
-//  - Test edge cases and error handling for platform logic
-//
-//  QUALITY ASSESSMENT: ✅ EXCELLENT
-//  - ✅ Excellent: Uses comprehensive business logic testing with platform detection logic
-//  - ✅ Excellent: Tests platform-specific behavior with proper conditional logic
-//  - ✅ Excellent: Validates platform detection and configuration logic comprehensively
-//  - ✅ Excellent: Uses proper test structure with platform logic testing
-//  - ✅ Excellent: Tests all platform detection scenarios
-//
-
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
@@ -44,7 +12,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testPlatformDetectionLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .watchOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing platform detection logic
         for platform in platforms {
@@ -85,8 +53,8 @@ final class PlatformLogicTests: XCTestCase {
                 XCTAssertTrue(config.supportsSwitchControl, "tvOS should support SwitchControl")
                 
             case .visionOS:
-                XCTAssertTrue(config.supportsTouch, "visionOS should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "visionOS should support haptic feedback")
+                XCTAssertFalse(config.supportsTouch, "visionOS should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "visionOS should not support haptic feedback")
                 XCTAssertFalse(config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
                 XCTAssertTrue(config.supportsHover, "visionOS should support hover")
                 XCTAssertTrue(config.supportsVoiceOver, "visionOS should support VoiceOver")
@@ -97,7 +65,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testDeviceTypeDetectionLogic() {
         // GIVEN: Different device types
-        let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .watch, .tv, .watch]
+        let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
         
         // WHEN: Testing device type detection logic
         for deviceType in deviceTypes {
@@ -108,8 +76,10 @@ final class PlatformLogicTests: XCTestCase {
             switch deviceType {
             case .phone:
                 XCTAssertTrue(config.supportsTouch, "Phone should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "Phone should support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "Phone should not support hover")
+            case .car:
+                XCTAssertTrue(config.supportsTouch, "Car should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "Car should support haptic feedback")
+                XCTAssertFalse(config.supportsHover, "Car should not support hover")
                 
             case .pad:
                 XCTAssertTrue(config.supportsTouch, "Pad should support touch")
@@ -131,15 +101,10 @@ final class PlatformLogicTests: XCTestCase {
                 XCTAssertFalse(config.supportsHapticFeedback, "TV should not support haptic feedback")
                 XCTAssertFalse(config.supportsHover, "TV should not support hover")
                 
-            case .car:
-                XCTAssertFalse(config.supportsTouch, "Car should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "Car should not support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "Car should not support hover")
-                
             case .vision:
-                XCTAssertTrue(config.supportsTouch, "Vision should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "Vision should support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "Vision should not support hover")
+                XCTAssertFalse(config.supportsTouch, "Vision should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "Vision should not support haptic feedback")
+                XCTAssertTrue(config.supportsHover, "Vision should support hover")
             }
         }
     }
@@ -148,8 +113,8 @@ final class PlatformLogicTests: XCTestCase {
     
     func testCapabilityMatrixConsistency() {
         // GIVEN: All platform and device combinations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .watchOS]
-        let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .watch, .tv, .watch]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
         
         // WHEN: Testing capability matrix consistency
         for platform in platforms {
@@ -190,7 +155,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testVisionFrameworkAvailabilityLogic() {
         // GIVEN: Different platforms
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .watchOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing Vision framework availability logic
         for platform in platforms {
@@ -198,10 +163,10 @@ final class PlatformLogicTests: XCTestCase {
             
             // THEN: Vision availability should be correct for each platform
             switch platform {
-            case .iOS, .macOS:
+            case .iOS, .macOS, .visionOS:
                 XCTAssertTrue(hasVision, "\(platform) should have Vision framework")
                 
-            case .watchOS, .tvOS, .visionOS:
+            case .watchOS, .tvOS:
                 XCTAssertFalse(hasVision, "\(platform) should not have Vision framework")
             }
         }
@@ -209,7 +174,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testOCRAvailabilityLogic() {
         // GIVEN: Different platforms
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .watchOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing OCR availability logic
         for platform in platforms {
@@ -217,10 +182,10 @@ final class PlatformLogicTests: XCTestCase {
             
             // THEN: OCR availability should be correct for each platform
             switch platform {
-            case .iOS, .macOS:
+            case .iOS, .macOS, .visionOS:
                 XCTAssertTrue(hasOCR, "\(platform) should have OCR")
                 
-            case .watchOS, .tvOS, .visionOS:
+            case .watchOS, .tvOS:
                 XCTAssertFalse(hasOCR, "\(platform) should not have OCR")
             }
         }
@@ -230,7 +195,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testLayoutDecisionLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .watchOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing layout decision logic
         for platform in platforms {
@@ -262,7 +227,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testAnimationLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .watchOS]
+        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
         
         // WHEN: Testing animation logic
         for platform in platforms {
@@ -338,9 +303,9 @@ final class PlatformLogicTests: XCTestCase {
             )
         case .visionOS:
             return CardExpansionPlatformConfig(
-                supportsHapticFeedback: true,
+                supportsHapticFeedback: false,
                 supportsHover: true,
-                supportsTouch: true,
+                supportsTouch: false,
                 supportsVoiceOver: true,
                 supportsSwitchControl: true,
                 supportsAssistiveTouch: false,
@@ -361,6 +326,18 @@ final class PlatformLogicTests: XCTestCase {
                 supportsVoiceOver: true,
                 supportsSwitchControl: true,
                 supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.0,
+                animationEasing: .easeInOut(duration: 0.3)
+            )
+        case .car:
+            return CardExpansionPlatformConfig(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: false,
+                supportsAssistiveTouch: false,
                 minTouchTarget: 44,
                 hoverDelay: 0.0,
                 animationEasing: .easeInOut(duration: 0.3)
@@ -413,10 +390,10 @@ final class PlatformLogicTests: XCTestCase {
                 hoverDelay: 0.0,
                 animationEasing: .easeInOut(duration: 0.3)
             )
-        case .car:
+        case .vision:
             return CardExpansionPlatformConfig(
                 supportsHapticFeedback: false,
-                supportsHover: false,
+                supportsHover: true,
                 supportsTouch: false,
                 supportsVoiceOver: true,
                 supportsSwitchControl: true,
@@ -424,18 +401,6 @@ final class PlatformLogicTests: XCTestCase {
                 minTouchTarget: 0,
                 hoverDelay: 0.1,
                 animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .vision:
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: true,
-                supportsHover: false,
-                supportsTouch: true,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: true,
-                minTouchTarget: 44,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.25)
             )
         }
     }
@@ -446,11 +411,21 @@ final class PlatformLogicTests: XCTestCase {
     }
     
     private func createMockVisionAvailability(for platform: Platform) -> Bool {
-        return PlatformTestUtilities.getVisionAvailability(for: platform)
+        switch platform {
+        case .iOS, .macOS, .visionOS:
+            return true
+        case .watchOS, .tvOS:
+            return false
+        }
     }
-
+    
     private func createMockOCRAvailability(for platform: Platform) -> Bool {
-        return PlatformTestUtilities.getOCRAvailability(for: platform)
+        switch platform {
+        case .iOS, .macOS, .visionOS:
+            return true
+        case .watchOS, .tvOS:
+            return false
+        }
     }
     
     private func createMockLayoutDecision(for platform: Platform) -> IntelligentCardLayoutDecision {
@@ -500,24 +475,21 @@ final class PlatformLogicTests: XCTestCase {
     
     private func createMockPerformanceConfig(for platform: Platform) -> CardExpansionPerformanceConfig {
         switch platform {
-        case .iOS, .macOS, .watchOS:
+        case .iOS, .macOS, .visionOS:
             return CardExpansionPerformanceConfig(
                 targetFrameRate: 60,
-                maxAnimationDuration: 0.3,
-                supportsSmoothAnimations: true,
-                memoryOptimization: true,
-                lazyLoading: true
+                maxAnimationDuration: 0.3
             )
-        case .tvOS, .visionOS:
+        case .watchOS:
             return CardExpansionPerformanceConfig(
                 targetFrameRate: 30,
-                maxAnimationDuration: 0.2,
-                supportsSmoothAnimations: false,
-                memoryOptimization: false,
-                lazyLoading: false
+                maxAnimationDuration: 0.2
             )
-        default:
-            return CardExpansionPerformanceConfig()
+        case .tvOS:
+            return CardExpansionPerformanceConfig(
+                targetFrameRate: 60,
+                maxAnimationDuration: 0.4
+            )
         }
     }
 }

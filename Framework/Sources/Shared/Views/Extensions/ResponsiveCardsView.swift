@@ -121,6 +121,40 @@ public struct ResponsiveCardsView: View {
         cards: [ResponsiveCardData],
         layout: CardLayoutDecision
     ) -> some View {
+        // Use hybrid approach: adaptive by default, fixed when performance matters
+        if shouldUseAdaptiveGrid(cards: cards, layout: layout) {
+            responsiveCardAdaptiveGridLayout(cards: cards, layout: layout)
+        } else {
+            responsiveCardFixedGridLayout(cards: cards, layout: layout)
+        }
+    }
+
+    @ViewBuilder
+    private func responsiveCardAdaptiveGridLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
+        GeometryReader { geometry in
+            let minWidth: CGFloat = calculateAdaptiveMinWidth(for: layout.columns)
+            let maxWidth: CGFloat = geometry.size.width * 0.8
+
+            LazyVGrid(
+                columns: [GridItem(.adaptive(minimum: minWidth, maximum: maxWidth))],
+                spacing: layout.spacing
+            ) {
+                ForEach(cards) { card in
+                    ResponsiveCardView(data: card)
+                }
+            }
+            .padding(16)
+        }
+    }
+
+    @ViewBuilder
+    private func responsiveCardFixedGridLayout(
+        cards: [ResponsiveCardData],
+        layout: CardLayoutDecision
+    ) -> some View {
         LazyVGrid(
             columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: layout.columns),
             spacing: layout.spacing
@@ -130,6 +164,38 @@ public struct ResponsiveCardsView: View {
             }
         }
         .padding(16)
+    }
+
+    private func shouldUseAdaptiveGrid(cards: [ResponsiveCardData], layout: CardLayoutDecision) -> Bool {
+        // Check for explicit preference in hints first
+        if let useAdaptive = getAdaptiveGridPreference() {
+            return useAdaptive
+        }
+
+        // Use adaptive grid for:
+        // - Large collections where balancing matters most
+        // - When we want to prevent orphan issues
+        // - Simple to moderate complexity content
+
+        if cards.count >= 12 { return true } // Large collections benefit most from adaptive
+        if cards.count <= 3 { return false } // Small collections don't need adaptive complexity
+        if layout.columns <= 2 { return false } // Single/double column doesn't need adaptive
+
+        // For medium collections, use adaptive for better balance
+        return cards.count >= 6 && layout.columns >= 3
+    }
+
+    private func getAdaptiveGridPreference() -> Bool? {
+        // Check environment or global settings for adaptive grid preference
+        // This could be extended to read from a configuration or user preferences
+        return nil // Default: use intelligent decision
+    }
+
+    private func calculateAdaptiveMinWidth(for columns: Int) -> CGFloat {
+        // Base width per column, adjusted for column count
+        let baseWidth: CGFloat = 220
+        let columnAdjustment = max(0, columns - 2) * 30 // Reduce width for more columns
+        return max(160, baseWidth - CGFloat(columnAdjustment))
     }
     
     @ViewBuilder
@@ -164,8 +230,10 @@ public struct ResponsiveCardsView: View {
         layout: CardLayoutDecision,
         screenWidth: CGFloat
     ) -> some View {
-        let minWidth: CGFloat = 200
+        // Enhanced adaptive layout with intelligent sizing
+        let minWidth: CGFloat = calculateAdaptiveMinWidth(for: layout.columns)
         let maxWidth: CGFloat = screenWidth * 0.8
+
         LazyVGrid(
             columns: [GridItem(.adaptive(minimum: minWidth, maximum: maxWidth))],
             spacing: layout.spacing
@@ -232,16 +300,20 @@ public struct ResponsiveCardsView: View {
         cards: [ResponsiveCardData],
         layout: CardLayoutDecision
     ) -> some View {
-        LazyVGrid(
-            columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: layout.columns),
-            spacing: layout.spacing
-        ) {
-            ForEach(cards) { card in
-                ResponsiveCardView(data: card)
-                    .frame(maxWidth: .infinity)
+        if shouldUseAdaptiveGrid(cards: cards, layout: layout) {
+            responsiveCardAdaptiveGridLayout(cards: cards, layout: layout)
+        } else {
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: layout.columns),
+                spacing: layout.spacing
+            ) {
+                ForEach(cards) { card in
+                    ResponsiveCardView(data: card)
+                        .frame(maxWidth: .infinity)
+                }
             }
+            .padding(16)
         }
-        .padding(16)
     }
     
     @ViewBuilder
@@ -251,15 +323,32 @@ public struct ResponsiveCardsView: View {
     ) -> some View {
         GeometryReader { geometry in
             let columns = Int(geometry.size.width / 300)
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: max(1, columns)),
-                spacing: layout.spacing
-            ) {
-                ForEach(cards) { card in
-                    ResponsiveCardView(data: card)
+            let shouldUseAdaptive = shouldUseAdaptiveGrid(cards: cards, layout: layout)
+
+            if shouldUseAdaptive {
+                let minWidth: CGFloat = calculateAdaptiveMinWidth(for: max(1, columns))
+                let maxWidth: CGFloat = geometry.size.width * 0.8
+
+                LazyVGrid(
+                    columns: [GridItem(.adaptive(minimum: minWidth, maximum: maxWidth))],
+                    spacing: layout.spacing
+                ) {
+                    ForEach(cards) { card in
+                        ResponsiveCardView(data: card)
+                    }
                 }
+                .padding(16)
+            } else {
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.flexible(), spacing: layout.spacing), count: max(1, columns)),
+                    spacing: layout.spacing
+                ) {
+                    ForEach(cards) { card in
+                        ResponsiveCardView(data: card)
+                    }
+                }
+                .padding(16)
             }
-            .padding(16)
         }
     }
     
@@ -373,5 +462,21 @@ public struct ResponsiveCardData: Identifiable {
 #Preview {
     NavigationView {
         ResponsiveCardsView()
+    }
+}
+
+// MARK: - Hybrid Layout Testing
+
+extension ResponsiveCardsView {
+    /// Test function to verify hybrid layout behavior
+    /// This can be used in tests to verify the adaptive/fixed grid decision logic
+    static func testHybridLayoutDecision(cards: [ResponsiveCardData], layout: CardLayoutDecision) -> String {
+        // Extract the logic into a static function for testing
+        if cards.count >= 12 { return "adaptive" } // Large collections benefit most from adaptive
+        if cards.count <= 3 { return "fixed" } // Small collections don't need adaptive complexity
+        if layout.columns <= 2 { return "fixed" } // Single/double column doesn't need adaptive
+
+        // For medium collections, use adaptive for better balance
+        return cards.count >= 6 && layout.columns >= 3 ? "adaptive" : "fixed"
     }
 }

@@ -241,7 +241,7 @@ DRYTestPatterns.verifyPlatformProperties(
 
 - **`DRYTestPatterns.swift`** - Reusable test patterns and factories
 - **`DRYCoreViewFunctionTests.swift`** - Example implementation using DRY patterns
-- **`DRYTestingStrategy.md`** - Comprehensive documentation of DRY approach
+- **`DRYTestingStrategy.md (moved to docs directory)`** - Comprehensive documentation of DRY approach
 
 ### 2. Test Structure
 
@@ -612,7 +612,7 @@ Each test must verify:
 #### 4.1 DRY Test Infrastructure ⭐ **REQUIRED**
 - **`DRYTestPatterns.swift`** - Reusable test patterns and factories
 - **`DRYCoreViewFunctionTests.swift`** - Example implementation using DRY patterns
-- **`DRYTestingStrategy.md`** - Comprehensive documentation of DRY approach
+- **`DRYTestingStrategy.md (moved to docs directory)`** - Comprehensive documentation of DRY approach
 
 #### 4.2 Core View Tests (DRY Implementation)
 - **`DRYIntelligentDetailViewTests.swift`** - Using DRY patterns
