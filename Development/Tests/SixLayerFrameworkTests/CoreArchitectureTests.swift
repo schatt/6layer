@@ -610,7 +610,7 @@ final class CoreArchitectureTests: XCTestCase {
     func testResponsiveBehaviorDefaultValues() throws {
         // When
         let behavior = ResponsiveBehavior(
-            type: .fixed,
+            contentType: .fixed,
             breakpoints: [],
             adaptive: false
         )

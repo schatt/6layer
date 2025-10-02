@@ -281,7 +281,7 @@ final class AccessibilityTypesTests: XCTestCase {
         var actionExecuted = false
         let action = VoiceOverCustomAction(
             name: "Test Action",
-            type: .activate
+            contentType: .activate
         ) {
             actionExecuted = true
         }
@@ -295,14 +295,14 @@ final class AccessibilityTypesTests: XCTestCase {
     func testVoiceOverAnnouncement() {
         let announcement = VoiceOverAnnouncement(
             message: "Test message",
-            type: .element,
+            contentType: .element,
             priority: .normal,
             timing: .immediate,
             delay: 0.5
         )
         
         XCTAssertEqual(announcement.message, "Test message")
-        XCTAssertEqual(announcement.type, .element)
+        XCTAssertEqual(announcement.contentType, .element)
         XCTAssertEqual(announcement.priority, .normal)
         XCTAssertEqual(announcement.timing, .immediate)
         XCTAssertEqual(announcement.delay, 0.5)
@@ -350,11 +350,11 @@ final class AccessibilityTypesTests: XCTestCase {
     
     func testSwitchControlGesture() {
         let gesture = SwitchControlGesture(
-            type: .singleTap,
+            contentType: .singleTap,
             intensity: .medium
         )
         
-        XCTAssertEqual(gesture.type, .singleTap)
+        XCTAssertEqual(gesture.contentType, .singleTap)
         XCTAssertEqual(gesture.intensity, .medium)
         XCTAssertNotNil(gesture.timestamp)
     }
@@ -495,11 +495,11 @@ final class AccessibilityTypesTests: XCTestCase {
     
     func testAssistiveTouchGesture() {
         let gesture = AssistiveTouchGesture(
-            type: .singleTap,
+            contentType: .singleTap,
             intensity: .medium
         )
         
-        XCTAssertEqual(gesture.type, .singleTap)
+        XCTAssertEqual(gesture.contentType, .singleTap)
         XCTAssertEqual(gesture.intensity, .medium)
         XCTAssertNotNil(gesture.timestamp)
     }
@@ -733,13 +733,13 @@ final class AccessibilityTypesTests: XCTestCase {
         var commandExecuted = false
         let command = VoiceControlCustomCommand(
             phrase: "Test command",
-            type: .tap
+            contentType: .tap
         ) {
             commandExecuted = true
         }
         
         XCTAssertEqual(command.phrase, "Test command")
-        XCTAssertEqual(command.type, .tap)
+        XCTAssertEqual(command.contentType, .tap)
         command.handler()
         XCTAssertTrue(commandExecuted)
     }

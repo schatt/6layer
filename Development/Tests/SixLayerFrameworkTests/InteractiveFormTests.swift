@@ -54,11 +54,11 @@ final class InteractiveFormTests: XCTestCase {
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
-        fieldType: DynamicFieldType = .text
+        contentType: DynamicContentType = .text
     ) -> DynamicFormField {
         return DynamicFormField(
             id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
-            type: fieldType,
+            contentType: contentType,
             label: label,
             placeholder: placeholder,
             isRequired: isRequired,
@@ -74,21 +74,21 @@ final class InteractiveFormTests: XCTestCase {
             placeholder: "Enter your name",
             value: "",
             isRequired: true,
-            fieldType: .text
+            contentType: .text
         ),
         createTestField(
             label: "Email",
             placeholder: "Enter your email",
             value: "",
             isRequired: true,
-            fieldType: .email
+            contentType: .email
         ),
         createTestField(
             label: "Age",
             placeholder: "Enter your age",
             value: "",
             isRequired: false,
-            fieldType: .number
+            contentType: .number
         )
     ]
     
@@ -184,7 +184,7 @@ final class InteractiveFormTests: XCTestCase {
                 placeholder: "Enter email",
                 value: "invalid-email",
                 isRequired: true,
-                fieldType: .email
+                contentType: .email
             )
         ]
         
@@ -209,7 +209,7 @@ final class InteractiveFormTests: XCTestCase {
     
     func testDynamicFormViewSupportsAllFieldTypes() {
         // Given
-        let allFieldTypes: [DynamicFieldType] = [
+        let allContentTypes: [DynamicContentType] = [
             .text, .email, .password, .number, .phone, .date, .time, .datetime,
             .select, .multiselect, .radio, .checkbox, .textarea, .file, .url,
             .color, .range, .toggle, .richtext, .autocomplete, .custom
@@ -219,7 +219,7 @@ final class InteractiveFormTests: XCTestCase {
         for fieldType in allFieldTypes {
             let field = createTestField(
                 label: "Test \(fieldType.rawValue)",
-                fieldType: fieldType
+                contentType: fieldType
             )
             
             let formView = // MARK: - DEPRECATED: SimpleFormView uses GenericFormField which has been deprecated
@@ -265,7 +265,7 @@ final class InteractiveFormTests: XCTestCase {
             createTestField(
                 label: "Field \(i)",
                 placeholder: "Enter value \(i)",
-                fieldType: .text
+                contentType: .text
             )
         }
         
@@ -295,13 +295,13 @@ final class InteractiveFormTests: XCTestCase {
                 label: "Required Field",
                 value: "",
                 isRequired: true,
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Email Field",
                 value: "invalid-email",
                 isRequired: true,
-                fieldType: .email
+                contentType: .email
             )
         ]
         
@@ -337,13 +337,13 @@ final class InteractiveFormTests: XCTestCase {
                 label: "Name",
                 value: "John Doe",
                 isRequired: true,
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Email",
                 value: "john@example.com",
                 isRequired: true,
-                fieldType: .email
+                contentType: .email
             )
         ]
         
@@ -400,7 +400,7 @@ final class InteractiveFormTests: XCTestCase {
             createTestField(
                 label: "Field \(i)",
                 placeholder: "Enter value \(i)",
-                fieldType: .text
+                contentType: .text
             )
         }
         

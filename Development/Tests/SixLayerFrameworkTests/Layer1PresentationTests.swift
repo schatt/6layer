@@ -32,11 +32,11 @@ final class Layer1PresentationTests: XCTestCase {
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
-        fieldType: DynamicFieldType = .text
+        contentType: DynamicContentType = .text
     ) -> DynamicFormField {
         return DynamicFormField(
             id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
-            type: fieldType,
+            contentType: contentType,
             label: label,
             placeholder: placeholder,
             isRequired: isRequired,
@@ -52,21 +52,21 @@ final class Layer1PresentationTests: XCTestCase {
             placeholder: "Enter your name",
             value: "",
             isRequired: true,
-            fieldType: .text
+            contentType: .text
         ),
         createTestField(
             label: "Email",
             placeholder: "Enter your email",
             value: "",
             isRequired: true,
-            fieldType: .email
+            contentType: .email
         ),
         createTestField(
             label: "Age",
             placeholder: "Enter your age",
             value: "",
             isRequired: false,
-            fieldType: .number
+            contentType: .number
         )
     ]
     
@@ -281,7 +281,7 @@ final class Layer1PresentationTests: XCTestCase {
                 placeholder: "Enter value \(i)",
                 value: "",
                 isRequired: i % 2 == 0,
-                fieldType: .text
+                contentType: .text
             )
         }
         let hints = testHints
@@ -304,14 +304,14 @@ final class Layer1PresentationTests: XCTestCase {
                 placeholder: "Enter your name with special chars",
                 value: "",
                 isRequired: true,
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Email with symbols",
                 placeholder: "user@example.com",
                 value: "",
                 isRequired: true,
-                fieldType: .email
+                contentType: .email
             )
         ]
         let hints = testHints
@@ -392,7 +392,7 @@ final class Layer1PresentationTests: XCTestCase {
                 placeholder: "Enter value \(i)",
                 value: "",
                 isRequired: i % 2 == 0,
-                fieldType: .text
+                contentType: .text
             )
         }
         let hints = testHints

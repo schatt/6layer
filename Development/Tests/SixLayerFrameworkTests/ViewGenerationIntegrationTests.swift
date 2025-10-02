@@ -581,7 +581,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
     ) {
-        let actualPresence = checkViewComponentPresence(expectedComponent.type, capabilities: capabilities)
+        let actualPresence = checkViewComponentPresence(expectedComponent.contentType, capabilities: capabilities)
         
         XCTAssertEqual(actualPresence, expectedComponent.shouldBePresent,
                       "\(expectedComponent.description) for \(configName)")
@@ -631,7 +631,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
     ) {
-        let actualPresence = checkModifierPresence(expectedModifier.type, capabilities: capabilities)
+        let actualPresence = checkModifierPresence(expectedModifier.contentType, capabilities: capabilities)
         
         XCTAssertEqual(actualPresence, expectedModifier.shouldBePresent,
                       "\(expectedModifier.description) for \(configName)")
@@ -683,7 +683,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
     ) {
-        let actualPresence = checkBehaviorPresence(expectedBehavior.type, capabilities: capabilities)
+        let actualPresence = checkBehaviorPresence(expectedBehavior.contentType, capabilities: capabilities)
         
         XCTAssertEqual(actualPresence, expectedBehavior.shouldBePresent,
                       "\(expectedBehavior.description) for \(configName)")

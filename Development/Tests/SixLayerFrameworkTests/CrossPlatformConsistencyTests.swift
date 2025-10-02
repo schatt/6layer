@@ -76,27 +76,27 @@ final class CrossPlatformConsistencyTests: XCTestCase {
             expectedPlatforms: [.iOS, .watchOS],
             expectedBehaviors: [
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .touchInteraction,
+                    contentType: .touchInteraction,
                     shouldBeConsistent: true,
                     description: "Touch interaction should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .hapticFeedback,
+                    contentType: .hapticFeedback,
                     shouldBeConsistent: true,
                     description: "Haptic feedback should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .assistiveTouchSupport,
+                    contentType: .assistiveTouchSupport,
                     shouldBeConsistent: true,
                     description: "AssistiveTouch support should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .accessibilitySupport,
+                    contentType: .accessibilitySupport,
                     shouldBeConsistent: true,
                     description: "Accessibility support should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .animationBehavior,
+                    contentType: .animationBehavior,
                     shouldBeConsistent: true,
                     description: "Animation behavior should be consistent across platforms"
                 )
@@ -121,22 +121,22 @@ final class CrossPlatformConsistencyTests: XCTestCase {
             expectedPlatforms: [.macOS],
             expectedBehaviors: [
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .hoverInteraction,
+                    contentType: .hoverInteraction,
                     shouldBeConsistent: true,
                     description: "Hover interaction should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .accessibilitySupport,
+                    contentType: .accessibilitySupport,
                     shouldBeConsistent: true,
                     description: "Accessibility support should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .keyboardNavigation,
+                    contentType: .keyboardNavigation,
                     shouldBeConsistent: true,
                     description: "Keyboard navigation should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .animationBehavior,
+                    contentType: .animationBehavior,
                     shouldBeConsistent: true,
                     description: "Animation behavior should be consistent across platforms"
                 )
@@ -161,27 +161,27 @@ final class CrossPlatformConsistencyTests: XCTestCase {
             expectedPlatforms: [.iOS], // iPad only
             expectedBehaviors: [
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .touchInteraction,
+                    contentType: .touchInteraction,
                     shouldBeConsistent: true,
                     description: "Touch interaction should be consistent"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .hoverInteraction,
+                    contentType: .hoverInteraction,
                     shouldBeConsistent: true,
                     description: "Hover interaction should be consistent"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .hapticFeedback,
+                    contentType: .hapticFeedback,
                     shouldBeConsistent: true,
                     description: "Haptic feedback should be consistent"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .assistiveTouchSupport,
+                    contentType: .assistiveTouchSupport,
                     shouldBeConsistent: true,
                     description: "AssistiveTouch support should be consistent"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .accessibilitySupport,
+                    contentType: .accessibilitySupport,
                     shouldBeConsistent: true,
                     description: "Accessibility support should be consistent"
                 )
@@ -206,17 +206,17 @@ final class CrossPlatformConsistencyTests: XCTestCase {
             expectedPlatforms: [.tvOS],
             expectedBehaviors: [
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .accessibilitySupport,
+                    contentType: .accessibilitySupport,
                     shouldBeConsistent: true,
                     description: "Accessibility support should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .keyboardNavigation,
+                    contentType: .keyboardNavigation,
                     shouldBeConsistent: true,
                     description: "Keyboard navigation should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .animationBehavior,
+                    contentType: .animationBehavior,
                     shouldBeConsistent: true,
                     description: "Animation behavior should be consistent across platforms"
                 )
@@ -241,17 +241,17 @@ final class CrossPlatformConsistencyTests: XCTestCase {
             expectedPlatforms: [.macOS, .visionOS],
             expectedBehaviors: [
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .hoverInteraction,
+                    contentType: .hoverInteraction,
                     shouldBeConsistent: true,
                     description: "Hover interaction should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .accessibilitySupport,
+                    contentType: .accessibilitySupport,
                     shouldBeConsistent: true,
                     description: "Accessibility support should be consistent across platforms"
                 ),
                 CrossPlatformTestConfig.ExpectedBehavior(
-                    type: .keyboardNavigation,
+                    contentType: .keyboardNavigation,
                     shouldBeConsistent: true,
                     description: "Keyboard navigation should be consistent across platforms"
                 )
@@ -304,8 +304,8 @@ final class CrossPlatformConsistencyTests: XCTestCase {
     ) {
         // Test that the behavior is consistent across all expected platforms
         for platform in config.expectedPlatforms {
-            let behaviorValue = getBehaviorValue(expectedBehavior.type, platform: platform, capabilityState: config.capabilityState)
-            let expectedValue = getExpectedBehaviorValue(expectedBehavior.type, capabilityState: config.capabilityState)
+            let behaviorValue = getBehaviorValue(expectedBehavior.contentType, platform: platform, capabilityState: config.capabilityState)
+            let expectedValue = getExpectedBehaviorValue(expectedBehavior.contentType, capabilityState: config.capabilityState)
             
             XCTAssertEqual(behaviorValue, expectedValue,
                           "\(expectedBehavior.description) should be consistent across platforms for \(config.name)")

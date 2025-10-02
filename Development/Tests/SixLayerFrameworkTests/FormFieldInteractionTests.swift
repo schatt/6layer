@@ -47,49 +47,49 @@ final class FormFieldInteractionTests: XCTestCase {
         [
             DynamicFormField(
                 id: "text_field",
-                type: .text,
+                contentType: .text,
                 label: "Text Field",
                 placeholder: "Enter text",
                 isRequired: true
             ),
             DynamicFormField(
                 id: "email_field",
-                type: .email,
+                contentType: .email,
                 label: "Email Field",
                 placeholder: "Enter email",
                 isRequired: true
             ),
             DynamicFormField(
                 id: "select_field",
-                type: .select,
+                contentType: .select,
                 label: "Select Field",
                 placeholder: "Choose option",
                 isRequired: false
             ),
             DynamicFormField(
                 id: "radio_field",
-                type: .radio,
+                contentType: .radio,
                 label: "Radio Field",
                 placeholder: "Select option",
                 isRequired: true
             ),
             DynamicFormField(
                 id: "number_field",
-                type: .number,
+                contentType: .number,
                 label: "Number Field",
                 placeholder: "Enter number",
                 isRequired: false
             ),
             DynamicFormField(
                 id: "date_field",
-                type: .date,
+                contentType: .date,
                 label: "Date Field",
                 placeholder: "Select date",
                 isRequired: false
             ),
             DynamicFormField(
                 id: "checkbox_field",
-                type: .checkbox,
+                contentType: .checkbox,
                 label: "Checkbox Field",
                 placeholder: "Check if applicable",
                 isRequired: false
@@ -444,13 +444,13 @@ final class FormFieldInteractionTests: XCTestCase {
     func testFormWithAllFieldTypes() {
         // Given: Form with all field types
         resetCallbacks()
-        let allFieldTypes: [DynamicFieldType] = Array(DynamicFieldType.allCases) // Use real enum
-        let allFields = allFieldTypes.enumerated().map { index, type in
+        let allContentTypes: [DynamicContentType] = Array(DynamicContentType.allCases) // Use real enum
+        let allFields = allContentTypes.enumerated().map { index, contentType in
             DynamicFormField(
-                id: "\(type)_field_\(index)",
-                type: type,
-                label: "\(type) Field",
-                placeholder: "Enter \(type)",
+                id: "\(contentType)_field_\(index)",
+                contentType: contentType,
+                label: "\(contentType) Field",
+                placeholder: "Enter \(contentType)",
                 isRequired: index % 2 == 0
             )
         }
@@ -470,7 +470,7 @@ final class FormFieldInteractionTests: XCTestCase {
         resetCallbacks()
         let longLabelField = DynamicFormField(
             id: "long_label_field",
-            type: .text,
+            contentType: .text,
             label: "This is a very long field label that should wrap properly and not cause layout issues",
             placeholder: "Enter text",
             isRequired: true
@@ -491,7 +491,7 @@ final class FormFieldInteractionTests: XCTestCase {
         resetCallbacks()
         let specialField = DynamicFormField(
             id: "special_field",
-            type: .text,
+            contentType: .text,
             label: "Field with Special Characters: !@#$%^&*()",
             placeholder: "Enter text with special chars: !@#$%^&*()",
             isRequired: false

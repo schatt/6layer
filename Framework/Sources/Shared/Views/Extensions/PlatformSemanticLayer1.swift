@@ -593,22 +593,17 @@ private func createSimpleFieldView(for field: DynamicFormField) -> some View {
             .font(.subheadline)
             .fontWeight(.medium)
         
-        // Handle text fields using OS UITextContentType
+        // Handle text fields using cross-platform text content type
         if let textContentType = field.textContentType {
-            #if os(iOS)
+            // Cross-platform exhaustive switch - same behavior on all platforms
             switch textContentType {
-            case .emailAddress, .password, .telephoneNumber, .URL, .oneTimeCode, .name, .username, .newPassword, .postalCode, .creditCardNumber, .fullStreetAddress, .jobTitle, .organizationName, .givenName, .familyName, .middleName, .namePrefix, .nameSuffix:
+            case .emailAddress, .password, .telephoneNumber, .URL, .oneTimeCode, .name, .username, .newPassword, .postalCode, .creditCardNumber, .fullStreetAddress, .jobTitle, .organizationName, .givenName, .familyName, .middleName, .namePrefix, .nameSuffix, .addressState, .countryName, .streetAddressLine1, .streetAddressLine2, .addressCity, .addressCityAndState, .sublocality, .location:
                 TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
                     .textFieldStyle(.roundedBorder)
-            default:
-                TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
-                    .textFieldStyle(.roundedBorder)
+                    #if canImport(UIKit)
+                    .textContentType(textContentType.uiTextContentType)
+                    #endif
             }
-            #else
-            // On macOS, textContentType is a String
-            TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
-                .textFieldStyle(.roundedBorder)
-            #endif
         }
         // Handle UI components using our custom DynamicContentType
         else if let contentType = field.contentType {

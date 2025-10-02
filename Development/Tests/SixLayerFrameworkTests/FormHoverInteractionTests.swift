@@ -16,7 +16,7 @@ final class FormHoverInteractionTests: XCTestCase {
     private func createFormFieldWithDescription() -> DynamicFormField {
         return DynamicFormField(
             id: "testField",
-            type: .text,
+            contentType: .text,
             label: "Test Field",
             placeholder: "Enter text",
             description: "This field requires a valid email address format",
@@ -27,7 +27,7 @@ final class FormHoverInteractionTests: XCTestCase {
     private func createFormFieldWithoutDescription() -> DynamicFormField {
         return DynamicFormField(
             id: "simpleField",
-            type: .text,
+            contentType: .text,
             label: "Simple Field",
             placeholder: "Enter text",
             isRequired: false

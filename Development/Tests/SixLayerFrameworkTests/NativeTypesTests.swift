@@ -78,17 +78,17 @@ final class NativeTypesTests: XCTestCase {
     
     func testImageFieldTypeExists() {
         // Given
-        let fieldType = DynamicFieldType.image
+        let contentType = DynamicContentType.image
         
         // Then
-        XCTAssertEqual(fieldType.rawValue, "image")
+        XCTAssertEqual(contentType.rawValue, "image")
     }
     
     func testImageFieldNativeBinding() {
         // Given
         let field = DynamicFormField(
             id: "profilePhoto",
-            type: .image,
+            contentType: .image,
             label: "Profile Photo"
         )
         let testImage = MockImage(id: "test-image", data: "test-image-data".data(using: .utf8)!)
@@ -105,7 +105,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "website",
-            type: .url,
+            contentType: .url,
             label: "Website"
         )
         let testURL = MockURL("https://example.com")
@@ -120,17 +120,17 @@ final class NativeTypesTests: XCTestCase {
     
     func testIntegerFieldTypeExists() {
         // Given
-        let fieldType = DynamicFieldType.integer
+        let contentType = DynamicContentType.integer
         
         // Then
-        XCTAssertEqual(fieldType.rawValue, "integer")
+        XCTAssertEqual(contentType.rawValue, "integer")
     }
     
     func testIntegerFieldNativeBinding() {
         // Given
         let field = DynamicFormField(
             id: "age",
-            type: .integer,
+            contentType: .integer,
             label: "Age"
         )
         let testInt = 25
@@ -147,17 +147,17 @@ final class NativeTypesTests: XCTestCase {
     
     func testArrayFieldTypeExists() {
         // Given
-        let fieldType = DynamicFieldType.array
+        let contentType = DynamicContentType.array
         
         // Then
-        XCTAssertEqual(fieldType.rawValue, "array")
+        XCTAssertEqual(contentType.rawValue, "array")
     }
     
     func testArrayFieldNativeBinding() {
         // Given
         let field = DynamicFormField(
             id: "tags",
-            type: .array,
+            contentType: .array,
             label: "Tags"
         )
         let testArray = ["swift", "ios", "testing"]
@@ -174,7 +174,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "score",
-            type: .range,
+            contentType: .range,
             label: "Score",
             metadata: [
                 "minValue": "0",
@@ -193,17 +193,17 @@ final class NativeTypesTests: XCTestCase {
     
     func testDataFieldTypeExists() {
         // Given
-        let fieldType = DynamicFieldType.data
+        let contentType = DynamicContentType.data
         
         // Then
-        XCTAssertEqual(fieldType.rawValue, "data")
+        XCTAssertEqual(contentType.rawValue, "data")
     }
     
     func testDataFieldNativeBinding() {
         // Given
         let field = DynamicFormField(
             id: "document",
-            type: .data,
+            contentType: .data,
             label: "Document"
         )
         let testData = "Hello World".data(using: .utf8)!
@@ -220,17 +220,17 @@ final class NativeTypesTests: XCTestCase {
     
     func testEnumFieldTypeExists() {
         // Given
-        let fieldType = DynamicFieldType.enum
+        let contentType = DynamicContentType.enum
         
         // Then
-        XCTAssertEqual(fieldType.rawValue, "enum")
+        XCTAssertEqual(contentType.rawValue, "enum")
     }
     
     func testEnumFieldNativeBinding() {
         // Given
         let field = DynamicFormField(
             id: "status",
-            type: .enum,
+            contentType: .enum,
             label: "Status",
             options: MockUserStatus.allCases.map { $0.rawValue }
         )
@@ -248,7 +248,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "optionalField",
-            type: .text,
+            contentType: .text,
             label: "Optional Field"
         )
         
@@ -264,7 +264,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "email",
-            type: .email,
+            contentType: .email,
             label: "Email",
             validationRules: [
                 "required": "true",
@@ -286,11 +286,11 @@ final class NativeTypesTests: XCTestCase {
     func testMixedNativeTypesInForm() {
         // Given
         let fields = [
-            DynamicFormField(id: "name", type: .text, label: "Name"),
-            DynamicFormField(id: "age", type: .integer, label: "Age"),
-            DynamicFormField(id: "website", type: .url, label: "Website"),
-            DynamicFormField(id: "tags", type: .array, label: "Tags"),
-            DynamicFormField(id: "profilePhoto", type: .image, label: "Photo")
+            DynamicFormField(id: "name", contentType: .text, label: "Name"),
+            DynamicFormField(id: "age", contentType: .integer, label: "Age"),
+            DynamicFormField(id: "website", contentType: .url, label: "Website"),
+            DynamicFormField(id: "tags", contentType: .array, label: "Tags"),
+            DynamicFormField(id: "profilePhoto", contentType: .image, label: "Photo")
         ]
         
         // When
@@ -318,7 +318,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "age",
-            type: .integer,
+            contentType: .integer,
             label: "Age"
         )
         
@@ -336,7 +336,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "largeArray",
-            type: .array,
+            contentType: .array,
             label: "Large Array"
         )
         let largeArray = Array(1...10000).map { "item\($0)" }
@@ -352,7 +352,7 @@ final class NativeTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "image",
-            type: .image,
+            contentType: .image,
             label: "Image"
         )
         let testImage = MockImage(id: "test", data: "image-data".data(using: .utf8)!)

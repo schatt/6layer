@@ -4,16 +4,130 @@ import SwiftUI
 import UIKit
 #endif
 
+// MARK: - Cross-Platform Text Content Types
+
+/// Cross-platform text content type enum that maps to UITextContentType on iOS/Mac Catalyst
+/// and provides equivalent functionality on native macOS
+public enum SixLayerTextContentType: String, CaseIterable, Hashable {
+    // Person Names and Name Parts
+    case name = "name"
+    case namePrefix = "namePrefix"
+    case givenName = "givenName"
+    case middleName = "middleName"
+    case familyName = "familyName"
+    case nameSuffix = "nameSuffix"
+    
+    // Job/Work Information
+    case jobTitle = "jobTitle"
+    case organizationName = "organizationName"
+    
+    // Contact Information
+    case emailAddress = "emailAddress"
+    case telephoneNumber = "telephoneNumber"
+    
+    // Credentials/Login Information
+    case username = "username"
+    case password = "password"
+    case newPassword = "newPassword"
+    case oneTimeCode = "oneTimeCode"
+    
+    // Location/Address
+    case location = "location"
+    case fullStreetAddress = "fullStreetAddress"
+    case streetAddressLine1 = "streetAddressLine1"
+    case streetAddressLine2 = "streetAddressLine2"
+    case addressCity = "addressCity"
+    case addressState = "addressState"
+    case addressCityAndState = "addressCityAndState"
+    case sublocality = "sublocality"
+    case countryName = "countryName"
+    case postalCode = "postalCode"
+    
+    // URL and Credit Card Number
+    case URL = "URL"
+    case creditCardNumber = "creditCardNumber"
+    
+    #if canImport(UIKit)
+    /// Convert to UITextContentType for iOS/Mac Catalyst
+    public var uiTextContentType: UITextContentType {
+        switch self {
+        case .name: return .name
+        case .namePrefix: return .namePrefix
+        case .givenName: return .givenName
+        case .middleName: return .middleName
+        case .familyName: return .familyName
+        case .nameSuffix: return .nameSuffix
+        case .jobTitle: return .jobTitle
+        case .organizationName: return .organizationName
+        case .emailAddress: return .emailAddress
+        case .telephoneNumber: return .telephoneNumber
+        case .username: return .username
+        case .password: return .password
+        case .newPassword: return .newPassword
+        case .oneTimeCode: return .oneTimeCode
+        case .location: return .location
+        case .fullStreetAddress: return .fullStreetAddress
+        case .streetAddressLine1: return .streetAddressLine1
+        case .streetAddressLine2: return .streetAddressLine2
+        case .addressCity: return .addressCity
+        case .addressState: return .addressState
+        case .addressCityAndState: return .addressCityAndState
+        case .sublocality: return .sublocality
+        case .countryName: return .countryName
+        case .postalCode: return .postalCode
+        case .URL: return .URL
+        case .creditCardNumber: return .creditCardNumber
+        }
+    }
+    
+    /// Create from UITextContentType
+    public init(_ uiTextContentType: UITextContentType) {
+        switch uiTextContentType {
+        case .name: self = .name
+        case .namePrefix: self = .namePrefix
+        case .givenName: self = .givenName
+        case .middleName: self = .middleName
+        case .familyName: self = .familyName
+        case .nameSuffix: self = .nameSuffix
+        case .jobTitle: self = .jobTitle
+        case .organizationName: self = .organizationName
+        case .emailAddress: self = .emailAddress
+        case .telephoneNumber: self = .telephoneNumber
+        case .username: self = .username
+        case .password: self = .password
+        case .newPassword: self = .newPassword
+        case .oneTimeCode: self = .oneTimeCode
+        case .location: self = .location
+        case .fullStreetAddress: self = .fullStreetAddress
+        case .streetAddressLine1: self = .streetAddressLine1
+        case .streetAddressLine2: self = .streetAddressLine2
+        case .addressCity: self = .addressCity
+        case .addressState: self = .addressState
+        case .addressCityAndState: self = .addressCityAndState
+        case .sublocality: self = .sublocality
+        case .countryName: self = .countryName
+        case .postalCode: self = .postalCode
+        case .URL: self = .URL
+        case .creditCardNumber: self = .creditCardNumber
+        @unknown default:
+            // Handle any future UITextContentType cases
+            self = .name // Fallback
+        }
+    }
+    #endif
+    
+    /// Get string representation for native macOS
+    public var stringValue: String {
+        return self.rawValue
+    }
+}
+
 // MARK: - Dynamic Form Field Types
 
 /// Represents a dynamic form field configuration
 public struct DynamicFormField: Identifiable, Hashable {
     public let id: String
-    #if os(iOS)
-    public let textContentType: UITextContentType?  // OS-provided enum for text fields
-    #else
-    public let textContentType: String?  // String representation for non-iOS platforms
-    #endif
+    public let textContentType: SixLayerTextContentType?  // Cross-platform text content type
     public let contentType: DynamicContentType?      // Our custom enum for UI components
     public let label: String
     public let placeholder: String?
@@ -26,7 +140,7 @@ public struct DynamicFormField: Identifiable, Hashable {
     
     public init(
         id: String,
-        textContentType: Any? = nil,
+        textContentType: SixLayerTextContentType? = nil,
         contentType: DynamicContentType? = nil,
         label: String,
         placeholder: String? = nil,
@@ -38,11 +152,7 @@ public struct DynamicFormField: Identifiable, Hashable {
         metadata: [String: String]? = nil
     ) {
         self.id = id
-        #if os(iOS)
-        self.textContentType = textContentType as? UITextContentType
-        #else
-        self.textContentType = textContentType as? String
-        #endif
+        self.textContentType = textContentType
         self.contentType = contentType
         self.label = label
         self.placeholder = placeholder
@@ -54,11 +164,10 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.metadata = metadata
     }
     
-    /// Convenience initializer for text fields using OS UITextContentType (iOS only)
-    #if os(iOS)
+    /// Convenience initializer for text fields using cross-platform text content type
     public init(
         id: String,
-        textContentType: UITextContentType,
+        textContentType: SixLayerTextContentType,
         label: String,
         placeholder: String? = nil,
         description: String? = nil,
@@ -81,7 +190,6 @@ public struct DynamicFormField: Identifiable, Hashable {
             metadata: metadata
         )
     }
-    #endif
     
     /// Convenience initializer for UI components using our custom DynamicContentType
     public init(
@@ -373,11 +481,10 @@ public struct DynamicFormBuilder {
         )
     }
     
-    /// Add a text field using OS UITextContentType (iOS only)
-    #if os(iOS)
+    /// Add a text field using cross-platform text content type
     public mutating func addTextField(
         id: String,
-        textContentType: UITextContentType,
+        textContentType: SixLayerTextContentType,
         label: String,
         placeholder: String? = nil,
         isRequired: Bool = false,
@@ -407,7 +514,6 @@ public struct DynamicFormBuilder {
         
         currentSection?.fields.append(field)
     }
-    #endif
     
     /// Add a UI component using our custom DynamicContentType
     public mutating func addContentField(

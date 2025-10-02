@@ -55,7 +55,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "richText",
-            type: .richtext,
+            contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
@@ -65,7 +65,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(richTextField)
-        XCTAssertEqual(field.type, .richtext)
+        XCTAssertEqual(contentType, .richtext)
         XCTAssertEqual(field.label, "Rich Text Content")
     }
     
@@ -73,7 +73,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "richText",
-            type: .richtext,
+            contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
@@ -91,7 +91,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "richText",
-            type: .richtext,
+            contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
@@ -143,7 +143,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
@@ -158,7 +158,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(autocompleteField)
-        XCTAssertEqual(field.type, .autocomplete)
+        XCTAssertEqual(contentType, .autocomplete)
         XCTAssertEqual(field.label, "Search")
     }
     
@@ -166,7 +166,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
@@ -189,7 +189,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
@@ -236,7 +236,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -253,7 +253,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(fileUploadField)
-        XCTAssertEqual(field.type, .file)
+        XCTAssertEqual(contentType, .file)
         XCTAssertEqual(field.label, "Upload Files")
     }
     
@@ -261,7 +261,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -284,7 +284,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -333,7 +333,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let url = URL(string: "file:///test.pdf")
         
         // When
-        let fileInfo = FileInfo(name: name, size: size, type: type, url: url)
+        let fileInfo = FileInfo(name: name, size: size, contentType: type, url: url)
         
         // Then
         XCTAssertEqual(fileInfo.name, name)
@@ -346,8 +346,8 @@ final class AdvancedFieldTypesTests: XCTestCase {
     func testFileListDisplay() {
         // Given
         let files = [
-            FileInfo(name: "test1.pdf", size: 1024, type: .pdf, url: nil),
-            FileInfo(name: "test2.jpg", size: 2048, type: .image, url: nil)
+            FileInfo(name: "test1.pdf", size: 1024, contentType: .pdf, url: nil),
+            FileInfo(name: "test2.jpg", size: 2048, contentType: .image, url: nil)
         ]
         
         // When
@@ -362,7 +362,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
     
     func testFileRowDisplay() {
         // Given
-        let file = FileInfo(name: "test.pdf", size: 1024, type: .pdf, url: nil)
+        let file = FileInfo(name: "test.pdf", size: 1024, contentType: .pdf, url: nil)
         
         // When
         let fileRow = FileRow(file: file) { _ in
@@ -380,7 +380,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "custom",
-            type: .custom,
+            contentType: .custom,
             label: "Custom Field",
             placeholder: "Custom placeholder"
         )
@@ -401,7 +401,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Then
         XCTAssertNotNil(customField)
         XCTAssertEqual(customField.field.id, field.id)
-        XCTAssertEqual(customField.field.type, .custom)
+        XCTAssertEqual(customField.field.contentType, .custom)
     }
     
     func testCustomFieldRegistry() {
@@ -444,7 +444,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "date",
-            type: .date,
+            contentType: .date,
             label: "Select Date",
             placeholder: "Choose a date"
         )
@@ -455,17 +455,17 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         // XCTAssertNotNil(datePickerField)
-        // XCTAssertEqual(field.type, .date)
+        // XCTAssertEqual(contentType, .date)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(field.type, .date)
+        XCTAssertEqual(contentType, .date)
     }
     
     func testTimePickerFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "time",
-            type: .time,
+            contentType: .time,
             label: "Select Time",
             placeholder: "Choose a time"
         )
@@ -476,17 +476,17 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         // XCTAssertNotNil(timePickerField)
-        // XCTAssertEqual(field.type, .time)
+        // XCTAssertEqual(contentType, .time)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(field.type, .time)
+        XCTAssertEqual(contentType, .time)
     }
     
     func testDateTimePickerFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "datetime",
-            type: .datetime,
+            contentType: .datetime,
             label: "Select Date & Time",
             placeholder: "Choose date and time"
         )
@@ -497,10 +497,10 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         // XCTAssertNotNil(dateTimePickerField)
-        // XCTAssertEqual(field.type, .datetime)
+        // XCTAssertEqual(contentType, .datetime)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(field.type, .datetime)
+        XCTAssertEqual(contentType, .datetime)
     }
     
     // MARK: - Integration Tests
@@ -509,21 +509,21 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let richTextField = DynamicFormField(
             id: "richText",
-            type: .richtext,
+            contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
         
         let autocompleteField = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
         
         let fileUploadField = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -557,7 +557,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "richText",
-            type: .richtext,
+            contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
@@ -575,7 +575,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
@@ -596,7 +596,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -620,7 +620,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -643,7 +643,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -666,7 +666,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
@@ -690,7 +690,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "richText",
-            type: .richtext,
+            contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
@@ -709,7 +709,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
-            type: .autocomplete,
+            contentType: .autocomplete,
             label: "Search",
             placeholder: "Type to search..."
         )
@@ -731,7 +731,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Given
         let field = DynamicFormField(
             id: "files",
-            type: .file,
+            contentType: .file,
             label: "Upload Files",
             placeholder: "Select files to upload"
         )
@@ -796,7 +796,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
             // Create test field
             let field = DynamicFormField(
                 id: "testField",
-                type: .text,
+                contentType: .text,
                 label: "Test Field",
                 placeholder: "Enter text"
             )
@@ -824,7 +824,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
             // Create test field
             let field = DynamicFormField(
                 id: "testField",
-                type: .text,
+                contentType: .text,
                 label: "Test Field",
                 placeholder: "Enter text"
             )
@@ -852,7 +852,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
             // Create test field
             let field = DynamicFormField(
                 id: "testField",
-                type: .text,
+                contentType: .text,
                 label: "Test Field",
                 placeholder: "Enter text"
             )

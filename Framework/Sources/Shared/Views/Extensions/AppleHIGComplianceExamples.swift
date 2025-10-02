@@ -295,21 +295,12 @@ public struct FrameworkIntegrationExample: View {
     }
     
     private func createEmailField() -> DynamicFormField {
-        #if os(iOS)
         return DynamicFormField(
             id: "email",
             textContentType: .emailAddress,
             label: "Email",
             placeholder: "Enter your email"
         )
-        #else
-        return DynamicFormField(
-            id: "email",
-            textContentType: "emailAddress",
-            label: "Email",
-            placeholder: "Enter your email"
-        )
-        #endif
     }
     
     private func createFormHints() -> PresentationHints {

@@ -65,15 +65,15 @@ final class DataFrameAnalysisEngineTests: XCTestCase {
         
         let stringColumn = result.columns.first { $0.name == "name" }
         XCTAssertNotNil(stringColumn)
-        XCTAssertEqual(stringColumn?.type, .string)
+        XCTAssertEqual(stringColumn?.contentType, .string)
         
         let numericColumn = result.columns.first { $0.name == "age" }
         XCTAssertNotNil(numericColumn)
-        XCTAssertEqual(numericColumn?.type, .number)
+        XCTAssertEqual(numericColumn?.contentType, .number)
         
         let booleanColumn = result.columns.first { $0.name == "isActive" }
         XCTAssertNotNil(booleanColumn)
-        XCTAssertEqual(booleanColumn?.type, .boolean)
+        XCTAssertEqual(booleanColumn?.contentType, .boolean)
     }
     
     // MARK: - Statistical Analysis Tests

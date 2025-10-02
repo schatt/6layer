@@ -609,14 +609,14 @@ final class L2LayoutDecisionTests: XCTestCase {
         return [
             DynamicFormField(
                 id: "name",
-                type: .text,
+                contentType: .text,
                 label: "Name",
                 placeholder: "Enter your name",
                 isRequired: true,
             ),
             DynamicFormField(
                 id: "email",
-                type: .email,
+                contentType: .email,
                 label: "Email",
                 placeholder: "Enter your email",
                 isRequired: true
@@ -628,7 +628,7 @@ final class L2LayoutDecisionTests: XCTestCase {
         return (1...20).map { index in
             DynamicFormField(
                 id: "field_\(index)",
-                type: .text,
+                contentType: .text,
                 label: "Field \(index)",
                 placeholder: "Enter value \(index)",
                 isRequired: index % 2 == 0

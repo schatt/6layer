@@ -157,7 +157,7 @@ final class ViewGenerationTests: XCTestCase {
         // GIVEN: A data field
         let field = DataField(
             name: "testField",
-            type: .string,
+            contentType: .string,
             isOptional: false,
             isArray: false,
             isIdentifiable: false
@@ -181,7 +181,7 @@ final class ViewGenerationTests: XCTestCase {
         // GIVEN: A data field
         let field = DataField(
             name: "testField",
-            type: .string,
+            contentType: .string,
             isOptional: true,
             isArray: false,
             isIdentifiable: true

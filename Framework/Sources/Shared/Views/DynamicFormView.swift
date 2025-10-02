@@ -379,16 +379,16 @@ public struct DynamicTextField: View {
         #if os(iOS)
         .keyboardType(keyboardType)
         #endif
-        #if os(iOS)
-        .textContentType(textContentType)
+        #if canImport(UIKit)
+        .textContentType(textContentType?.uiTextContentType)
         #endif
     }
     
-    #if os(iOS)
-    private var textContentType: UITextContentType? {
+    private var textContentType: SixLayerTextContentType? {
         return field.textContentType
     }
     
+    #if canImport(UIKit)
     private var keyboardType: UIKeyboardType {
         guard let textContentType = field.textContentType else {
             return .default
@@ -407,13 +407,9 @@ public struct DynamicTextField: View {
             return .numberPad
         case .postalCode:
             return .numberPad
-        default:
+        case .name, .username, .newPassword, .password, .fullStreetAddress, .jobTitle, .organizationName, .givenName, .familyName, .middleName, .namePrefix, .nameSuffix, .addressState, .countryName, .streetAddressLine1, .streetAddressLine2, .addressCity, .addressCityAndState, .sublocality, .location:
             return .default
         }
-    }
-    #else
-    private var textContentType: String? {
-        return field.textContentType
     }
     #endif
 }
@@ -811,13 +807,8 @@ private func createPersonalInfoFields() -> [DynamicFormField] {
         DynamicFormField(id: "lastName", contentType: .textarea, label: "Last Name", isRequired: true)
     ]
     
-    #if os(iOS)
     fields.append(DynamicFormField(id: "email", textContentType: .emailAddress, label: "Email Address", isRequired: true))
     fields.append(DynamicFormField(id: "phone", textContentType: .telephoneNumber, label: "Phone Number"))
-    #else
-    fields.append(DynamicFormField(id: "email", textContentType: "emailAddress", label: "Email Address", isRequired: true))
-    fields.append(DynamicFormField(id: "phone", textContentType: "telephoneNumber", label: "Phone Number"))
-    #endif
     
     return fields
 }

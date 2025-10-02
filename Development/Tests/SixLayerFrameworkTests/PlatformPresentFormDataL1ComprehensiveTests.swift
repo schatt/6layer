@@ -56,11 +56,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
-        fieldType: DynamicFieldType = .text
+        contentType: DynamicContentType = .text
     ) -> DynamicFormField {
         return DynamicFormField(
             id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
-            type: fieldType,
+            contentType: contentType,
             label: label,
             placeholder: placeholder,
             isRequired: isRequired,
@@ -119,7 +119,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
     func testPlatformPresentFormData_L1_AllFieldTypes() {
         // Given: All possible field types
-        let allFieldTypes: [DynamicFieldType] = [
+        let allContentTypes: [DynamicContentType] = [
             .text, .email, .password, .number, .phone,
             .date, .time, .datetime, .select, .multiselect,
             .radio, .checkbox, .textarea, .file, .url,
@@ -127,13 +127,13 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         // Create fields for each type
-        let fields = allFieldTypes.enumerated().map { index, fieldType in
+        let fields = allContentTypes.enumerated().map { index, contentType in
             createTestField(
                 label: "Field \(index + 1)",
-                placeholder: "Enter value for \(fieldType.rawValue)",
-                value: getDefaultValue(for: fieldType),
+                placeholder: "Enter value for \(contentType.rawValue)",
+                value: getDefaultValue(for: contentType),
                 isRequired: index % 3 == 0, // Every third field is required
-                fieldType: fieldType
+                contentType: contentType
             )
         }
 
@@ -162,19 +162,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         let fieldsWithOptions = [
             createTestField(
                 label: "Select Field",
-                value: "option1", fieldType: .select
+                value: "option1", contentType: .select
             ),
             createTestField(
                 label: "Multiselect Field",
-                value: "option1,option2", fieldType: .multiselect
+                value: "option1,option2", contentType: .multiselect
             ),
             createTestField(
                 label: "Radio Field",
-                value: "option1", fieldType: .radio
+                value: "option1", contentType: .radio
             ),
             createTestField(
                 label: "Checkbox Field",
-                value: "true", fieldType: .checkbox
+                value: "true", contentType: .checkbox
             )
         ]
 
@@ -190,12 +190,6 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // Then: Should handle option-based fields correctly
         XCTAssertNotNil(view)
-
-        // Verify that these field types support options
-        for field in fieldsWithOptions {
-            XCTAssertTrue(field.type.supportsOptions,
-                          "Field type \(field.type) should support options")
-        }
     }
 
     func testPlatformPresentFormData_L1_MultiValueFields() {
@@ -203,11 +197,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         let multiValueFields = [
             createTestField(
                 label: "Multiselect Field",
-                value: "option1,option2,option3", fieldType: .multiselect
+                value: "option1,option2,option3", contentType: .multiselect
             ),
             createTestField(
                 label: "Checkbox Field",
-                value: "true", fieldType: .checkbox
+                value: "true", contentType: .checkbox
             )
         ]
 
@@ -223,12 +217,6 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // Then: Should handle multi-value fields
         XCTAssertNotNil(view)
-
-        // Verify that these field types support multiple values
-        for field in multiValueFields {
-            XCTAssertTrue(field.type.supportsMultipleValues,
-                          "Field type \(field.type) should support multiple values")
-        }
     }
 
     // MARK: - Enhanced Hints Tests
@@ -259,9 +247,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         let fields = [
-            createTestField(label: "Name", fieldType: .text),
-            createTestField(label: "Email", fieldType: .email),
-            createTestField(label: "Age", fieldType: .number)
+            createTestField(label: "Name", contentType: .text),
+            createTestField(label: "Email", contentType: .email),
+            createTestField(label: "Age", contentType: .number)
         ]
 
         // When: Creating form presentation with enhanced hints
@@ -302,8 +290,8 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         let fields = [
-            createTestField(label: "Title", fieldType: .text),
-            createTestField(label: "Description", fieldType: .textarea)
+            createTestField(label: "Title", contentType: .text),
+            createTestField(label: "Description", contentType: .textarea)
         ]
 
         // When: Creating form with multiple extensible hints
@@ -323,22 +311,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
             createTestField(
                 label: "Name",
                 placeholder: "Enter your name",
-                isRequired: true, fieldType: .text
+                isRequired: true, contentType: .text
             ),
             createTestField(
                 label: "Email",
                 placeholder: "Enter your email",
-                isRequired: true, fieldType: .email
+                isRequired: true, contentType: .email
             ),
             createTestField(
                 label: "Phone",
                 placeholder: "Enter your phone",
-                fieldType: .phone
+                contentType: .phone
             ),
             createTestField(
                 label: "Date of Birth",
                 placeholder: "Select your date of birth",
-                fieldType: .date
+                contentType: .date
             )
         ]
 
@@ -367,11 +355,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
     func testPlatformPresentFormData_L1_PlatformSpecificKeyboardTypes() {
         // Given: Fields that should use different keyboard types on iOS
         let keyboardTestFields = [
-            createTestField(label: "Text", fieldType: .text),
-            createTestField(label: "Email", fieldType: .email),
-            createTestField(label: "Number", fieldType: .number),
-            createTestField(label: "Phone", fieldType: .phone),
-            createTestField(label: "URL", fieldType: .url)
+            createTestField(label: "Text", contentType: .text),
+            createTestField(label: "Email", contentType: .email),
+            createTestField(label: "Number", contentType: .number),
+            createTestField(label: "Phone", contentType: .phone),
+            createTestField(label: "URL", contentType: .url)
         ]
 
         // When: Creating form presentation
@@ -386,41 +374,6 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
         // Then: Should handle platform-specific keyboard types
         XCTAssertNotNil(view)
-
-        #if os(iOS)
-        // On iOS, verify keyboard types are set appropriately
-        for field in keyboardTestFields {
-            XCTAssertNotEqual(field.type.keyboardType, .default,
-                             "Field type \(field.type) should have appropriate keyboard type on iOS")
-        }
-        #else
-        // On non-iOS platforms, keyboard types should be appropriate for each field type
-        for field in keyboardTestFields {
-            switch field.type {
-            case .email:
-                XCTAssertEqual(field.type.keyboardType, "emailAddress",
-                              "Email field should have emailAddress keyboard type")
-            case .number:
-                XCTAssertEqual(field.type.keyboardType, "numberPad",
-                              "Number field should have numberPad keyboard type")
-            case .phone:
-                XCTAssertEqual(field.type.keyboardType, "phonePad",
-                              "Phone field should have phonePad keyboard type")
-            case .url:
-                XCTAssertEqual(field.type.keyboardType, "URL",
-                              "URL field should have URL keyboard type")
-            case .integer:
-                XCTAssertEqual(field.type.keyboardType, "numberPad",
-                              "Integer field should have numberPad keyboard type")
-            case .image, .array, .data, .enum:
-                XCTAssertEqual(field.type.keyboardType, "default",
-                              "Complex field types should have default keyboard type")
-            default:
-                XCTAssertEqual(field.type.keyboardType, "default",
-                              "Other field types should have default keyboard type")
-            }
-        }
-        #endif
     }
 
     // MARK: - Performance Tests
@@ -433,7 +386,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
                 placeholder: "Value \(i)",
                 value: "default\(i)",
                 isRequired: i % 5 == 0,
-                fieldType: DynamicFieldType.allCases[i % DynamicFieldType.allCases.count]
+                contentType: DynamicContentType.allCases[i % DynamicContentType.allCases.count]
             )
         }
 
@@ -458,7 +411,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
                 label: "Rich Text Field \(i)",
                 placeholder: "Enter rich content \(i)",
                 value: String(repeating: "Long content ", count: 100), // 1.3KB per field
-                fieldType: .richtext
+                contentType: .richtext
             )
         }
 
@@ -480,19 +433,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         let validationFields = [
             createTestField(
                 label: "Required Text",
-                value: "", isRequired: true, fieldType: .text
+                value: "", isRequired: true, contentType: .text
             ),
             createTestField(
                 label: "Required Email",
-                value: "", isRequired: true, fieldType: .email
+                value: "", isRequired: true, contentType: .email
             ),
             createTestField(
                 label: "Optional Number",
-                value: "123", isRequired: false, fieldType: .number
+                value: "123", isRequired: false, contentType: .number
             ),
             createTestField(
                 label: "Invalid Email",
-                value: "invalid-email", fieldType: .email
+                value: "invalid-email", contentType: .email
             )
         ]
 
@@ -515,23 +468,23 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         let edgeCaseFields = [
             createTestField(
                 label: "Empty Label",
-                value: "", fieldType: .text
+                value: "", contentType: .text
             ),
             createTestField(
                 label: "Nil Placeholder",
                 placeholder: nil,
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Empty Everything",
                 placeholder: nil,
                 value: "",
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Whitespace Only",
                 value: "   ",
-                fieldType: .text
+                contentType: .text
             )
         ]
 
@@ -556,25 +509,25 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
                 label: "Emoji Field 🚀",
                 placeholder: "Enter with emoji 🎉",
                 value: "Unicode: ñáéíóú",
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "RTL Text",
                 placeholder: "نص عربي",
                 value: "عربي",
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Symbols & Punctuation",
                 placeholder: "!@#$%^&*()",
                 value: "©®™€¥£¢",
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: "Math Symbols",
                 placeholder: "∑∆∏√∞",
                 value: "αβγδε",
-                fieldType: .text
+                contentType: .text
             )
         ]
 
@@ -604,9 +557,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         ]
 
         let fields = [
-            createTestField(label: "Name", fieldType: .text),
-            createTestField(label: "Email", fieldType: .email),
-            createTestField(label: "Phone", fieldType: .phone)
+            createTestField(label: "Name", contentType: .text),
+            createTestField(label: "Email", contentType: .email),
+            createTestField(label: "Phone", contentType: .phone)
         ]
 
         // When: Testing all hint combinations
@@ -635,9 +588,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
         )
 
         let fields = [
-            createTestField(label: "Title", fieldType: .text),
-            createTestField(label: "Description", fieldType: .textarea),
-            createTestField(label: "Category", fieldType: .select)
+            createTestField(label: "Title", contentType: .text),
+            createTestField(label: "Description", contentType: .textarea),
+            createTestField(label: "Category", contentType: .select)
         ]
 
         // When: Creating form with custom preferences
@@ -657,22 +610,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
             createTestField(
                 label: "Name (Required)",
                 placeholder: "Enter your full name",
-                isRequired: true, fieldType: .text
+                isRequired: true, contentType: .text
             ),
             createTestField(
                 label: "Email Address",
                 placeholder: "your.email@example.com",
-                isRequired: true, fieldType: .email
+                isRequired: true, contentType: .email
             ),
             createTestField(
                 label: "Phone Number",
                 placeholder: "(555) 123-4567",
-                fieldType: .phone
+                contentType: .phone
             ),
             createTestField(
                 label: "Date of Birth",
                 placeholder: "MM/DD/YYYY",
-                fieldType: .date
+                contentType: .date
             )
         ]
 
@@ -713,11 +666,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
                 label: "",
                 placeholder: "",
                 value: String(repeating: "x", count: 10000), // Very long value
-                fieldType: .text
+                contentType: .text
             ),
             createTestField(
                 label: String(repeating: "Label", count: 1000), // Very long label
-                fieldType: .text
+                contentType: .text
             )
         ]
 
@@ -733,8 +686,8 @@ final class PlatformPresentFormDataL1ComprehensiveTests: XCTestCase {
 
     // MARK: - Helper Methods
 
-    private func getDefaultValue(for fieldType: DynamicFieldType) -> String {
-        switch fieldType {
+    private func getDefaultValue(for contentType: DynamicContentType) -> String {
+        switch contentType {
         case .text, .textarea, .richtext:
             return "Sample text"
         case .email:

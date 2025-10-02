@@ -12,7 +12,7 @@ final class SelectFieldImplementationTests: XCTestCase {
     private var selectField: DynamicFormField {
         DynamicFormField(
             id: "test-select",
-            type: .select,
+            contentType: .select,
             label: "Choose Option",
             placeholder: "Select an option",
             isRequired: true,
@@ -24,7 +24,7 @@ final class SelectFieldImplementationTests: XCTestCase {
     private var dynamicSelectField: DynamicFormField {
         DynamicFormField(
             id: "choose_option",
-            type: .select,
+            contentType: .select,
             label: "Choose Option",
             placeholder: "Select an option",
             isRequired: true,
@@ -216,7 +216,7 @@ final class SelectFieldImplementationTests: XCTestCase {
         // Given: Select field with no options
         let field = DynamicFormField(
             id: "empty-select",
-            type: .select,
+            contentType: .select,
             label: "Empty Select",
             placeholder: "No options available",
             options: []
@@ -233,7 +233,7 @@ final class SelectFieldImplementationTests: XCTestCase {
         // Given: Select field with single option
         let field = DynamicFormField(
             id: "single-select",
-            type: .select,
+            contentType: .select,
             label: "Single Option",
             placeholder: "Only one choice",
             options: ["Only Option"]
@@ -251,7 +251,7 @@ final class SelectFieldImplementationTests: XCTestCase {
         let manyOptions = (1...50).map { "Option \($0)" }
         let field = DynamicFormField(
             id: "many-select",
-            type: .select,
+            contentType: .select,
             label: "Many Options",
             placeholder: "Choose from many options",
             options: manyOptions

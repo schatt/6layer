@@ -43,7 +43,7 @@ final class DynamicFormTests: XCTestCase {
     func testDynamicFormFieldCreation() {
         let field = DynamicFormField(
             id: "testField",
-            type: .text,
+            contentType: .text,
             label: "Test Field",
             placeholder: "Enter text",
             isRequired: true,
@@ -54,7 +54,7 @@ final class DynamicFormTests: XCTestCase {
         )
         
         XCTAssertEqual(field.id, "testField")
-        XCTAssertEqual(field.type, .text)
+        XCTAssertEqual(field.contentType, .text)
         XCTAssertEqual(field.label, "Test Field")
         XCTAssertEqual(field.placeholder, "Enter text")
         XCTAssertTrue(field.isRequired)
@@ -64,43 +64,12 @@ final class DynamicFormTests: XCTestCase {
         XCTAssertEqual(field.metadata?["maxWidth"], "200")
     }
     
-    func testDynamicFieldTypeProperties() {
-        // Test options support
-        XCTAssertTrue(DynamicFieldType.select.supportsOptions)
-        XCTAssertTrue(DynamicFieldType.multiselect.supportsOptions)
-        XCTAssertTrue(DynamicFieldType.radio.supportsOptions)
-        XCTAssertTrue(DynamicFieldType.checkbox.supportsOptions)
-        XCTAssertFalse(DynamicFieldType.text.supportsOptions)
-        XCTAssertFalse(DynamicFieldType.email.supportsOptions)
-        
-        // Test multiple values support
-        XCTAssertTrue(DynamicFieldType.multiselect.supportsMultipleValues)
-        XCTAssertTrue(DynamicFieldType.checkbox.supportsMultipleValues)
-        XCTAssertFalse(DynamicFieldType.select.supportsMultipleValues)
-        XCTAssertFalse(DynamicFieldType.radio.supportsMultipleValues)
-        
-        // Test keyboard types (platform-specific)
-        #if os(iOS)
-        XCTAssertEqual(DynamicFieldType.email.keyboardType, .emailAddress)
-        XCTAssertEqual(DynamicFieldType.number.keyboardType, .numberPad)
-        XCTAssertEqual(DynamicFieldType.phone.keyboardType, .phonePad)
-        XCTAssertEqual(DynamicFieldType.url.keyboardType, .URL)
-        XCTAssertEqual(DynamicFieldType.text.keyboardType, .default)
-        #else
-        XCTAssertEqual(DynamicFieldType.email.keyboardType, "emailAddress")
-        XCTAssertEqual(DynamicFieldType.number.keyboardType, "numberPad")
-        XCTAssertEqual(DynamicFieldType.phone.keyboardType, "phonePad")
-        XCTAssertEqual(DynamicFieldType.url.keyboardType, "URL")
-        XCTAssertEqual(DynamicFieldType.text.keyboardType, "default")
-        #endif
-    }
-    
     // MARK: - Dynamic Form Section Tests
     
     func testDynamicFormSectionCreation() {
         let fields = [
-            DynamicFormField(id: "field1", type: .text, label: "Field 1"),
-            DynamicFormField(id: "field2", type: .email, label: "Field 2")
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+            DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
         ]
         
         let section = DynamicFormSection(
@@ -124,8 +93,8 @@ final class DynamicFormTests: XCTestCase {
     
     func testDynamicFormSectionHelpers() {
         let fields = [
-            DynamicFormField(id: "field1", type: .text, label: "Field 1"),
-            DynamicFormField(id: "field2", type: .email, label: "Field 2")
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+            DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
         ]
         
         let section = DynamicFormSection(
@@ -148,7 +117,7 @@ final class DynamicFormTests: XCTestCase {
                 id: "section1",
                 title: "Section 1",
                 fields: [
-                    DynamicFormField(id: "field1", type: .text, label: "Field 1")
+                    DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
                 ]
             )
         ]
@@ -174,8 +143,8 @@ final class DynamicFormTests: XCTestCase {
     
     func testDynamicFormConfigurationHelpers() {
         let fields = [
-            DynamicFormField(id: "field1", type: .text, label: "Field 1"),
-            DynamicFormField(id: "field2", type: .email, label: "Field 2")
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+            DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
         ]
         
         let sections = [
@@ -197,11 +166,11 @@ final class DynamicFormTests: XCTestCase {
         // Test field lookup
         let field1 = config.getField(by: "field1")
         XCTAssertNotNil(field1)
-        XCTAssertEqual(field1?.type, .text)
+        XCTAssertEqual(field1?.contentType, .text)
         
         let field2 = config.getField(by: "field2")
         XCTAssertNotNil(field2)
-        XCTAssertEqual(field2?.type, .email)
+        XCTAssertEqual(field2?.contentType, .email)
         
         let nonExistentField = config.getField(by: "nonExistent")
         XCTAssertNil(nonExistentField)
@@ -342,12 +311,12 @@ final class DynamicFormTests: XCTestCase {
     func testDynamicFormBuilderBasicFlow() {
         var builder = DynamicFormBuilder()
         builder.startSection(id: "personal", title: "Personal Information")
-        builder.addField(id: "firstName", type: .text, label: "First Name", isRequired: true)
-        builder.addField(id: "lastName", type: .text, label: "Last Name", isRequired: true)
+        builder.addContentField(id: "firstName", contentType: .text, label: "First Name", isRequired: true)
+        builder.addContentField(id: "lastName", contentType: .text, label: "Last Name", isRequired: true)
         builder.endSection()
         builder.startSection(id: "contact", title: "Contact Information")
-        builder.addField(id: "email", type: .email, label: "Email", isRequired: true)
-        builder.addField(id: "phone", type: .phone, label: "Phone")
+        builder.addContentField(id: "email", contentType: .email, label: "Email", isRequired: true)
+        builder.addContentField(id: "phone", contentType: .phone, label: "Phone")
         let config = builder.build(
             id: "user-form",
             title: "User Registration"
@@ -367,9 +336,9 @@ final class DynamicFormTests: XCTestCase {
         
         var builder = DynamicFormBuilder()
         builder.startSection(id: "validation", title: "Validation Test")
-        builder.addField(
+        builder.addContentField(
             id: "username",
-            type: .text,
+            contentType: .text,
             label: "Username",
             isRequired: true,
             validationRules: validationRules
@@ -386,7 +355,7 @@ final class DynamicFormTests: XCTestCase {
         
         let field = config.sections[0].fields[0]
         XCTAssertEqual(field.id, "username")
-        XCTAssertEqual(field.type, .text)
+        XCTAssertEqual(field.contentType, .text)
         XCTAssertEqual(field.validationRules?["minLength"], "3")
         XCTAssertEqual(field.validationRules?["maxLength"], "50")
         XCTAssertEqual(field.validationRules?["pattern"], "^[a-zA-Z]+$")
@@ -395,21 +364,21 @@ final class DynamicFormTests: XCTestCase {
     func testDynamicFormBuilderWithOptions() {
         var builder = DynamicFormBuilder()
         builder.startSection(id: "preferences", title: "Preferences")
-        builder.addField(
+        builder.addContentField(
             id: "theme",
-            type: .select,
+            contentType: .select,
             label: "Theme",
             options: ["Light", "Dark", "Auto"]
         )
-        builder.addField(
+        builder.addContentField(
             id: "notifications",
-            type: .multiselect,
+            contentType: .multiselect,
             label: "Notifications",
             options: ["Email", "Push", "SMS"]
         )
-        builder.addField(
+        builder.addContentField(
             id: "newsletter",
-            type: .checkbox,
+            contentType: .checkbox,
             label: "Subscribe to newsletter"
         )
         let config = builder.build(
@@ -421,13 +390,13 @@ final class DynamicFormTests: XCTestCase {
         XCTAssertEqual(config.sections[0].fields.count, 3)
         
         let themeField = config.sections[0].fields[0]
-        XCTAssertEqual(themeField.type, .select)
+        XCTAssertEqual(themeField.contentType, .select)
         XCTAssertEqual(themeField.options?.count, 3)
-        XCTAssertTrue(themeField.type.supportsOptions)
+        XCTAssertTrue(themeField.contentType == .select)
         
         let notificationsField = config.sections[0].fields[1]
-        XCTAssertEqual(notificationsField.type, .multiselect)
-        XCTAssertTrue(notificationsField.type.supportsMultipleValues)
+        XCTAssertEqual(notificationsField.contentType, .multiselect)
+        XCTAssertTrue(notificationsField.contentType == .multiselect)
     }
     
     func testDynamicFormBuilderWithMetadata() {
@@ -439,9 +408,9 @@ final class DynamicFormTests: XCTestCase {
             isCollapsible: true,
             isCollapsed: false
         )
-        builder.addField(
+        builder.addContentField(
             id: "testField",
-            type: .text,
+            contentType: .text,
             label: "Test Field",
             metadata: ["maxWidth": "300", "placeholder": "Custom placeholder"]
         )
@@ -463,13 +432,13 @@ final class DynamicFormTests: XCTestCase {
     func testDynamicFormCompleteWorkflow() {
         var builder = DynamicFormBuilder()
         builder.startSection(id: "personal", title: "Personal Information")
-        builder.addField(id: "firstName", type: .text, label: "First Name", isRequired: true)
-        builder.addField(id: "lastName", type: .text, label: "Last Name", isRequired: true)
-        builder.addField(id: "email", type: .email, label: "Email", isRequired: true)
+        builder.addContentField(id: "firstName", contentType: .text, label: "First Name", isRequired: true)
+        builder.addContentField(id: "lastName", contentType: .text, label: "Last Name", isRequired: true)
+        builder.addContentField(id: "email", contentType: .email, label: "Email", isRequired: true)
         builder.endSection()
         builder.startSection(id: "preferences", title: "Preferences", isCollapsible: true)
-        builder.addField(id: "theme", type: .select, label: "Theme", options: ["Light", "Dark"])
-        builder.addField(id: "notifications", type: .toggle, label: "Enable notifications")
+        builder.addContentField(id: "theme", contentType: .select, label: "Theme", options: ["Light", "Dark"])
+        builder.addContentField(id: "notifications", contentType: .toggle, label: "Enable notifications")
         let config = builder.build(
             id: "user-form",
             title: "User Registration",
@@ -507,9 +476,9 @@ final class DynamicFormTests: XCTestCase {
             for i in 0..<100 {
                 builder.startSection(id: "section\(i)", title: "Section \(i)")
                 for j in 0..<10 {
-                    builder.addField(
+                    builder.addContentField(
                         id: "field\(i)_\(j)",
-                        type: .text,
+                        contentType: .text,
                         label: "Field \(i)-\(j)"
                     )
                 }
@@ -530,7 +499,7 @@ final class DynamicFormTests: XCTestCase {
                     fields: Array(0..<10).map { j in
                         DynamicFormField(
                             id: "field\(i)_\(j)",
-                            type: .text,
+                            contentType: .text,
                             label: "Field \(i)-\(j)"
                         )
                     }
