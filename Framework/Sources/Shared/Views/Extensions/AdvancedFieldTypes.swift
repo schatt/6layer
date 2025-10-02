@@ -712,7 +712,7 @@ public class CustomFieldRegistry: ObservableObject {
         RichTextEditorField(
             field: DynamicFormField(
                 id: "richText",
-                type: .richtext,
+                contentType: .richtext,
                 label: "Rich Text Content",
                 placeholder: "Enter rich text content"
             ),
@@ -729,7 +729,7 @@ public class CustomFieldRegistry: ObservableObject {
         AutocompleteField(
             field: DynamicFormField(
                 id: "autocomplete",
-                type: .autocomplete,
+                contentType: .autocomplete,
                 label: "Search",
                 placeholder: "Type to search..."
             ),
@@ -747,7 +747,7 @@ public class CustomFieldRegistry: ObservableObject {
         EnhancedFileUploadField(
             field: DynamicFormField(
                 id: "files",
-                type: .file,
+                contentType: .file,
                 label: "Upload Files",
                 placeholder: "Select files to upload"
             ),

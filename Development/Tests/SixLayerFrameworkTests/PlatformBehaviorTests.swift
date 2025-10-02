@@ -465,7 +465,7 @@ final class PlatformBehaviorTests: XCTestCase {
     // MARK: - Platform-Specific Input/Output Tests
     
     
-    func testPlatformSpecificInputOutput(platform: Platform, input: String) {
+    func testPlatformSpecificInputOutput(platform: SixLayerPlatform, input: String) {
         let config = getCardExpansionPlatformConfig()
         
         switch input {

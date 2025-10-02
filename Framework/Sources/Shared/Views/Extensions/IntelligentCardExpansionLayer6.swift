@@ -316,7 +316,7 @@ public struct PlatformAwareExpandableCardView<Item: Identifiable>: View {
     let expansionStrategy: ExpansionStrategy
     
     public var body: some View {
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .iOS:
             iOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
         case .macOS:

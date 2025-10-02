@@ -42,7 +42,7 @@ final class PlatformSimulationTests: XCTestCase {
     // MARK: - Platform Simulation Data
     
     struct SimulatedPlatform {
-        let platform: Platform
+        let platform: SixLayerPlatform
         let deviceType: DeviceType
         let screenSize: CGSize
         let capabilities: PlatformCapabilities
@@ -65,7 +65,7 @@ final class PlatformSimulationTests: XCTestCase {
     public static let simulatedPlatforms: [SimulatedPlatform] = [
         // iOS Platforms
         SimulatedPlatform(
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             deviceType: .phone,
             screenSize: CGSize(width: 375, height: 812), // iPhone 12 mini
             capabilities: PlatformCapabilities(
@@ -81,7 +81,7 @@ final class PlatformSimulationTests: XCTestCase {
             )
         ),
         SimulatedPlatform(
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             deviceType: .pad,
             screenSize: CGSize(width: 1024, height: 1366), // iPad Pro 12.9"
             capabilities: PlatformCapabilities(
@@ -99,7 +99,7 @@ final class PlatformSimulationTests: XCTestCase {
         
         // macOS Platforms
         SimulatedPlatform(
-            platform: .macOS,
+            platform: SixLayerPlatform.macOS,
             deviceType: .mac,
             screenSize: CGSize(width: 1440, height: 900), // MacBook Air
             capabilities: PlatformCapabilities(
@@ -115,7 +115,7 @@ final class PlatformSimulationTests: XCTestCase {
             )
         ),
         SimulatedPlatform(
-            platform: .macOS,
+            platform: SixLayerPlatform.macOS,
             deviceType: .mac,
             screenSize: CGSize(width: 2560, height: 1440), // iMac 27"
             capabilities: PlatformCapabilities(
@@ -133,7 +133,7 @@ final class PlatformSimulationTests: XCTestCase {
         
         // watchOS Platforms
         SimulatedPlatform(
-            platform: .watchOS,
+            platform: SixLayerPlatform.watchOS,
             deviceType: .watch,
             screenSize: CGSize(width: 162, height: 197), // Apple Watch Series 7
             capabilities: PlatformCapabilities(
@@ -151,7 +151,7 @@ final class PlatformSimulationTests: XCTestCase {
         
         // tvOS Platforms
         SimulatedPlatform(
-            platform: .tvOS,
+            platform: SixLayerPlatform.tvOS,
             deviceType: .tv,
             screenSize: CGSize(width: 1920, height: 1080), // Apple TV 4K
             capabilities: PlatformCapabilities(
@@ -169,7 +169,7 @@ final class PlatformSimulationTests: XCTestCase {
         
         // visionOS Platforms
         SimulatedPlatform(
-            platform: .visionOS,
+            platform: SixLayerPlatform.visionOS,
             deviceType: .tv, // Using tv as closest match since .vision doesn't exist
             screenSize: CGSize(width: 1920, height: 1080), // Vision Pro
             capabilities: PlatformCapabilities(
@@ -296,7 +296,7 @@ final class PlatformSimulationTests: XCTestCase {
     }
     
     func testVisionSpecificFeatures() {
-        let visionPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.platform == .visionOS }
+        let visionPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.platform == SixLayerPlatform.visionOS }
         
         for platform in visionPlatforms {
             XCTAssertFalse(platform.capabilities.supportsTouch, 
@@ -385,7 +385,7 @@ extension PlatformSimulationTests.PlatformCapabilities {
         return true
     }
     
-    func satisfiesPlatformConstraints(_ platform: Platform) -> Bool {
+    func satisfiesPlatformConstraints(_ platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS:
             return supportsTouch && supportsHapticFeedback && supportsAssistiveTouch

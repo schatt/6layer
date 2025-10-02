@@ -37,7 +37,7 @@ public struct AppleHIGComplianceModifier: ViewModifier {
 /// Automatically applies accessibility features based on system state
 public struct AutomaticAccessibilityModifier: ViewModifier {
     let accessibilityState: AccessibilitySystemState
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         content
@@ -63,7 +63,7 @@ public struct AutomaticAccessibilityModifier: ViewModifier {
 /// Applies platform-specific design patterns
 public struct PlatformPatternModifier: ViewModifier {
     let designSystem: PlatformDesignSystem
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         content
@@ -78,7 +78,7 @@ public struct PlatformPatternModifier: ViewModifier {
 /// Applies visual design consistency following Apple's guidelines
 public struct VisualConsistencyModifier: ViewModifier {
     let designSystem: PlatformDesignSystem
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         content
@@ -93,7 +93,7 @@ public struct VisualConsistencyModifier: ViewModifier {
 
 /// Applies platform-appropriate interaction patterns
 public struct InteractionPatternModifier: ViewModifier {
-    let platform: Platform
+    let platform: SixLayerPlatform
     let accessibilityState: AccessibilitySystemState
     
     public func body(content: Content) -> some View {
@@ -213,7 +213,7 @@ public struct DynamicTypeModifier: ViewModifier {
 
 /// Platform navigation modifier
 public struct PlatformNavigationModifier: ViewModifier {
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         switch platform {
@@ -287,7 +287,7 @@ public struct SpacingModifier: ViewModifier {
 
 /// Touch target modifier ensuring proper touch targets
 public struct TouchTargetModifier: ViewModifier {
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         if platform == .iOS {
@@ -301,7 +301,7 @@ public struct TouchTargetModifier: ViewModifier {
 
 /// Platform interaction modifier
 public struct PlatformInteractionModifier: ViewModifier {
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         switch platform {
@@ -322,7 +322,7 @@ public struct PlatformInteractionModifier: ViewModifier {
 
 /// Haptic feedback modifier
 public struct HapticFeedbackModifier: ViewModifier {
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         if platform == .iOS {
@@ -344,7 +344,7 @@ public struct HapticFeedbackModifier: ViewModifier {
 
 /// Gesture recognition modifier
 public struct GestureRecognitionModifier: ViewModifier {
-    let platform: Platform
+    let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
         switch platform {

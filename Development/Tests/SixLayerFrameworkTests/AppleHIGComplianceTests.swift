@@ -325,21 +325,21 @@ class AppleHIGComplianceTests: XCTestCase {
         // Given: Platform enum
         // When: Platforms are accessed
         // Then: Should have all expected platforms
-        let platforms = Platform.allCases
-        XCTAssertTrue(platforms.contains(.iOS))
-        XCTAssertTrue(platforms.contains(.macOS))
-        XCTAssertTrue(platforms.contains(.watchOS))
-        XCTAssertTrue(platforms.contains(.tvOS))
+        let platforms = SixLayerPlatform.allCases
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.iOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.macOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.watchOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.tvOS))
     }
     
     func testPlatformStringValues() {
         // Given: Platform enum values
         // When: String values are accessed
         // Then: Should have correct string representations
-        XCTAssertEqual(Platform.iOS.rawValue, "iOS")
-        XCTAssertEqual(Platform.macOS.rawValue, "macOS")
-        XCTAssertEqual(Platform.watchOS.rawValue, "watchOS")
-        XCTAssertEqual(Platform.tvOS.rawValue, "tvOS")
+        XCTAssertEqual(SixLayerPlatform.iOS.rawValue, "iOS")
+        XCTAssertEqual(SixLayerPlatform.macOS.rawValue, "macOS")
+        XCTAssertEqual(SixLayerPlatform.watchOS.rawValue, "watchOS")
+        XCTAssertEqual(SixLayerPlatform.tvOS.rawValue, "tvOS")
     }
     
     // MARK: - HIG Compliance Level Tests
@@ -367,26 +367,109 @@ class AppleHIGComplianceTests: XCTestCase {
     
     // MARK: - Integration Tests
     
+    /**
+     * BUSINESS PURPOSE: AppleHIGComplianceManager automatically applies Apple Human Interface Guidelines compliance
+     * to UI elements, ensuring consistent design patterns, accessibility features, and platform-specific behaviors
+     * without requiring manual configuration from developers.
+     * TESTING SCOPE: Tests accessibility integration through platform configuration
+     * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
+     */
     func testAccessibilityOptimizationManagerIntegration() async {
-        // Given: Simplified accessibility testing (AccessibilityOptimizationManager was removed)
-        let config = getCardExpansionPlatformConfig()
+        // Test with accessibility features enabled
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        
+        let enabledConfig = getCardExpansionPlatformConfig()
         
         // When: Apple HIG compliance is applied through platform configuration
         // Then: Should have proper accessibility support
-        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported")
-        XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported")
-        XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch should be supported")
+        XCTAssertTrue(enabledConfig.supportsVoiceOver, "VoiceOver should be supported when enabled")
+        XCTAssertTrue(enabledConfig.supportsSwitchControl, "Switch Control should be supported when enabled")
+        XCTAssertTrue(enabledConfig.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled")
+        
+        // Test with accessibility features disabled
+        RuntimeCapabilityDetection.setTestVoiceOver(false)
+        RuntimeCapabilityDetection.setTestSwitchControl(false)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        
+        let disabledConfig = getCardExpansionPlatformConfig()
+        
+        // Then: Should reflect disabled state
+        XCTAssertFalse(disabledConfig.supportsVoiceOver, "VoiceOver should be disabled when disabled")
+        XCTAssertFalse(disabledConfig.supportsSwitchControl, "Switch Control should be disabled when disabled")
+        XCTAssertFalse(disabledConfig.supportsAssistiveTouch, "AssistiveTouch should be disabled when disabled")
     }
     
+    /**
+     * BUSINESS PURPOSE: AppleHIGComplianceManager automatically applies Apple Human Interface Guidelines compliance
+     * to UI elements, ensuring consistent design patterns, accessibility features, and platform-specific behaviors
+     * without requiring manual configuration from developers.
+     * TESTING SCOPE: Tests automatic accessibility integration through platform configuration
+     * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
+     */
     func testAutomaticAccessibilityIntegration() async {
-        // Given: Simplified accessibility testing (AccessibilityOptimizationManager was removed)
-        let config = getCardExpansionPlatformConfig()
+        // Test with accessibility features enabled
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        
+        let enabledConfig = getCardExpansionPlatformConfig()
         
         // When: Automatic accessibility is applied through platform configuration
         // Then: Should have proper accessibility support
-        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported")
-        XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported")
-        XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch should be supported")
+        XCTAssertTrue(enabledConfig.supportsVoiceOver, "VoiceOver should be supported when enabled")
+        XCTAssertTrue(enabledConfig.supportsSwitchControl, "Switch Control should be supported when enabled")
+        XCTAssertTrue(enabledConfig.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled")
+        
+        // Test with accessibility features disabled
+        RuntimeCapabilityDetection.setTestVoiceOver(false)
+        RuntimeCapabilityDetection.setTestSwitchControl(false)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        
+        let disabledConfig = getCardExpansionPlatformConfig()
+        
+        // Then: Should reflect disabled state
+        XCTAssertFalse(disabledConfig.supportsVoiceOver, "VoiceOver should be disabled when disabled")
+        XCTAssertFalse(disabledConfig.supportsSwitchControl, "Switch Control should be disabled when disabled")
+        XCTAssertFalse(disabledConfig.supportsAssistiveTouch, "AssistiveTouch should be disabled when disabled")
+    }
+    
+    // MARK: - Platform Testing
+    
+    /**
+     * BUSINESS PURPOSE: AppleHIGComplianceManager automatically applies Apple Human Interface Guidelines compliance
+     * to UI elements, ensuring consistent design patterns, accessibility features, and platform-specific behaviors
+     * without requiring manual configuration from developers.
+     * TESTING SCOPE: Tests platform-specific behavior across all supported platforms
+     * METHODOLOGY: Uses mock platform detection to test each platform's specific capabilities
+     */
+    func testPlatformSpecificComplianceBehavior() async {
+        // Test that platform detection works correctly
+        let originalPlatform = RuntimeCapabilityDetection.currentPlatform
+        
+        // Test iOS platform
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .iOS, "Platform should be set to iOS")
+        
+        // Test macOS platform  
+        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .macOS, "Platform should be set to macOS")
+        
+        // Test watchOS platform
+        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .watchOS, "Platform should be set to watchOS")
+        
+        // Test tvOS platform
+        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .tvOS, "Platform should be set to tvOS")
+        
+        // Test visionOS platform
+        RuntimeCapabilityDetection.setTestPlatform(.visionOS)
+        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .visionOS, "Platform should be set to visionOS")
+        
+        // Reset to original platform
+        RuntimeCapabilityDetection.setTestPlatform(originalPlatform)
     }
     
     // MARK: - Business Purpose Tests

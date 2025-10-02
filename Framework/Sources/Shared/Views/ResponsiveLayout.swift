@@ -97,7 +97,7 @@ public struct ResponsivePadding: ViewModifier {
     }
 
     private var paddingValue: CGFloat {
-        switch DeviceType.current {
+        switch SixLayerPlatform.deviceType {
         case .phone:
             return 16
         case .vision:

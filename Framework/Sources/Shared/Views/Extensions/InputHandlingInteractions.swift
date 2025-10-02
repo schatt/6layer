@@ -23,7 +23,7 @@ import AppKit
 public class InputHandlingManager: ObservableObject {
     
     /// Current platform being optimized for
-    public let currentPlatform: Platform
+    public let currentPlatform: SixLayerPlatform
     
     /// Current interaction patterns for the platform
     public let interactionPatterns: InteractionPatterns
@@ -37,7 +37,7 @@ public class InputHandlingManager: ObservableObject {
     /// Drag and drop manager
     public let dragDropManager: DragDropManager
     
-    public init(platform: Platform = .current) {
+    public init(platform: SixLayerPlatform = .current) {
         self.currentPlatform = platform
         self.interactionPatterns = InteractionPatterns(for: platform)
         self.keyboardManager = KeyboardShortcutManager(for: platform)
@@ -59,7 +59,7 @@ public class InputHandlingManager: ObservableObject {
 
 /// Defines how interactions should behave on different platforms
 public struct InteractionBehavior {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public let gesture: GestureType
     public let patterns: InteractionPatterns
     
@@ -95,9 +95,9 @@ public struct InteractionBehavior {
 
 /// Manages keyboard shortcuts with platform-appropriate behavior
 public class KeyboardShortcutManager {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
     }
     
@@ -161,9 +161,9 @@ public class KeyboardShortcutManager {
 
 /// Manages haptic feedback with platform-appropriate behavior
 public class HapticFeedbackManager {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
     }
     
@@ -255,9 +255,9 @@ public class HapticFeedbackManager {
 
 /// Manages drag and drop operations with platform-appropriate behavior
 public class DragDropManager {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
     }
     

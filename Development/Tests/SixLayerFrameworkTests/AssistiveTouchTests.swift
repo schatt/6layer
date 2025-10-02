@@ -2,11 +2,27 @@ import XCTest
 import SwiftUI
 @testable import SixLayerFramework
 
-/// Tests for AssistiveTouch accessibility features
+/**
+ * BUSINESS PURPOSE: AssistiveTouch provides accessibility features for users with motor impairments, enabling
+ * gesture recognition, custom actions, menu management, and integration support. The AssistiveTouchManager
+ * handles gesture processing, custom action registration, menu operations, and compliance checking to ensure
+ * applications are accessible to users who rely on AssistiveTouch for interaction.
+ * 
+ * TESTING SCOPE: Tests cover AssistiveTouchManager initialization, configuration, custom actions, gesture
+ * recognition, menu management, view modifiers, compliance checking, and performance across all platforms.
+ * Includes platform-specific behavior testing and mock capability detection for comprehensive validation.
+ * 
+ * METHODOLOGY: Uses TDD principles with comprehensive test coverage including platform testing, mock testing,
+ * accessibility validation, and performance benchmarking. Tests both enabled and disabled states of capabilities
+ * using RuntimeCapabilityDetection mock framework.
+ */
 final class AssistiveTouchTests: XCTestCase {
     
     // MARK: - AssistiveTouch Manager Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouchManager initialization creates a manager instance with specific configuration
+    /// TESTING SCOPE: Tests manager creation with various configuration options and verifies all properties are set correctly
+    /// METHODOLOGY: Creates manager with different configurations and asserts all boolean properties match expected values
     func testAssistiveTouchManagerInitialization() {
         // Given: AssistiveTouch configuration
         let config = AssistiveTouchConfig(
@@ -26,18 +42,37 @@ final class AssistiveTouchTests: XCTestCase {
         XCTAssertTrue(manager.isGestureRecognitionEnabled)
     }
     
-    func testAssistiveTouchIntegrationSupport() {
-        // Given: AssistiveTouch Manager with integration enabled
-        let config = AssistiveTouchConfig(enableIntegration: true)
-        let manager = AssistiveTouchManager(config: config)
-        
-        // When: Checking integration support
-        let isSupported = manager.supportsIntegration()
-        
-        // Then: Integration should be supported
-        XCTAssertTrue(isSupported)
+    /// BUSINESS PURPOSE: AssistiveTouchManager provides platform-specific integration support based on runtime capabilities
+    /// TESTING SCOPE: Tests integration support across different platforms and mock capability states
+    /// METHODOLOGY: Uses mock framework to test both enabled and disabled AssistiveTouch states across platforms
+    func testAssistiveTouchIntegrationSupport() async {
+        await MainActor.run {
+            // Test with AssistiveTouch enabled
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+            
+            // Test with AssistiveTouch disabled
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+            XCTAssertFalse(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be disabled")
+            
+            // Test platform-specific behavior
+            for platform in SixLayerPlatform.allCases {
+                RuntimeCapabilityDetection.setTestPlatform(platform)
+                let config = AssistiveTouchConfig(enableIntegration: true)
+                let manager = AssistiveTouchManager(config: config)
+                
+                // Integration should be supported when enabled
+                XCTAssertTrue(manager.supportsIntegration(), "Integration should be supported on \(platform)")
+            }
+            
+            // Reset for next test
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        }
     }
     
+    /// BUSINESS PURPOSE: AssistiveTouchManager handles custom action registration and management for gesture-based interactions
+    /// TESTING SCOPE: Tests custom action creation, registration, and retrieval with various gesture types
+    /// METHODOLOGY: Creates multiple actions with different gestures and verifies they are properly stored and retrievable
     func testAssistiveTouchCustomActions() {
         // Given: AssistiveTouch Manager with custom actions enabled
         let config = AssistiveTouchConfig(enableCustomActions: true)
@@ -64,35 +99,75 @@ final class AssistiveTouchTests: XCTestCase {
         XCTAssertTrue(manager.hasAction(named: "Next Item"))
     }
     
-    func testAssistiveTouchMenuSupport() {
-        // Given: AssistiveTouch Manager with menu support
-        let config = AssistiveTouchConfig(enableMenuSupport: true)
-        let manager = AssistiveTouchManager(config: config)
-        
-        // When: Managing menu
-        let menuResult = manager.manageMenu(for: .show)
-        
-        // Then: Menu should be managed appropriately
-        XCTAssertTrue(menuResult.success)
-        XCTAssertNotNil(menuResult.menuElement)
+    /// BUSINESS PURPOSE: AssistiveTouchManager provides menu management capabilities for accessibility navigation
+    /// TESTING SCOPE: Tests menu operations across platforms and mock capability states
+    /// METHODOLOGY: Uses mock framework to test menu management with different AssistiveTouch states
+    func testAssistiveTouchMenuSupport() async {
+        await MainActor.run {
+            // Test with AssistiveTouch enabled
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            
+            // Given: AssistiveTouch Manager with menu support
+            let config = AssistiveTouchConfig(enableMenuSupport: true)
+            let manager = AssistiveTouchManager(config: config)
+            
+            // When: Managing menu
+            let menuResult = manager.manageMenu(for: .show)
+            
+            // Then: Menu should be managed appropriately
+            XCTAssertTrue(menuResult.success)
+            XCTAssertNotNil(menuResult.menuElement)
+            
+            // Test platform-specific behavior
+            for platform in SixLayerPlatform.allCases {
+                RuntimeCapabilityDetection.setTestPlatform(platform)
+                let platformResult = manager.manageMenu(for: .toggle)
+                XCTAssertTrue(platformResult.success, "Menu should work on \(platform)")
+            }
+            
+            // Reset for next test
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        }
     }
     
-    func testAssistiveTouchGestureRecognition() {
-        // Given: AssistiveTouch Manager with gesture recognition
-        let config = AssistiveTouchConfig(enableGestureRecognition: true)
-        let manager = AssistiveTouchManager(config: config)
-        
-        // When: Processing gestures
-        let gesture = AssistiveTouchGesture(type: .swipeLeft, intensity: .medium)
-        let result = manager.processGesture(gesture)
-        
-        // Then: Gesture should be processed
-        XCTAssertTrue(result.success)
-        XCTAssertNotNil(result.action)
+    /// BUSINESS PURPOSE: AssistiveTouchManager processes gesture recognition for motor-impaired users
+    /// TESTING SCOPE: Tests gesture processing with different gesture types and intensity levels
+    /// METHODOLOGY: Creates various gestures and verifies they are processed correctly with proper results
+    func testAssistiveTouchGestureRecognition() async {
+        await MainActor.run {
+            // Test with AssistiveTouch enabled
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            
+            // Given: AssistiveTouch Manager with gesture recognition
+            let config = AssistiveTouchConfig(enableGestureRecognition: true)
+            let manager = AssistiveTouchManager(config: config)
+            
+            // When: Processing gestures
+            let gesture = AssistiveTouchGesture(type: .swipeLeft, intensity: .medium)
+            let result = manager.processGesture(gesture)
+            
+            // Then: Gesture should be processed
+            XCTAssertTrue(result.success)
+            XCTAssertNotNil(result.action)
+            
+            // Test different gesture types
+            let gestureTypes: [AssistiveTouchGestureType] = [.singleTap, .doubleTap, .swipeRight, .swipeUp, .swipeDown, .longPress]
+            for gestureType in gestureTypes {
+                let testGesture = AssistiveTouchGesture(type: gestureType, intensity: .light)
+                let testResult = manager.processGesture(testGesture)
+                XCTAssertTrue(testResult.success, "Gesture \(gestureType) should be processed")
+            }
+            
+            // Reset for next test
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        }
     }
     
     // MARK: - AssistiveTouch Configuration Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouchConfig provides configuration options for customizing AssistiveTouch behavior
+    /// TESTING SCOPE: Tests configuration creation with various options and verifies all properties are set correctly
+    /// METHODOLOGY: Creates configurations with different options and asserts all properties match expected values
     func testAssistiveTouchConfiguration() {
         // Given: AssistiveTouch configuration
         let config = AssistiveTouchConfig(
@@ -115,6 +190,9 @@ final class AssistiveTouchTests: XCTestCase {
     
     // MARK: - AssistiveTouch Actions Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouchAction represents a custom action that can be triggered by specific gestures
+    /// TESTING SCOPE: Tests action creation with different gesture types and verifies properties are set correctly
+    /// METHODOLOGY: Creates actions with various gestures and asserts all properties match expected values
     func testAssistiveTouchActionCreation() {
         // Given: AssistiveTouch action parameters
         let action = AssistiveTouchAction(
@@ -129,6 +207,9 @@ final class AssistiveTouchTests: XCTestCase {
         XCTAssertNotNil(action.action)
     }
     
+    /// BUSINESS PURPOSE: AssistiveTouchGesture represents different types of gestures that can be recognized
+    /// TESTING SCOPE: Tests gesture creation with different types and intensity levels
+    /// METHODOLOGY: Creates gestures with various types and intensities and verifies properties are correct
     func testAssistiveTouchGestureTypes() {
         // Given: Different gesture types
         let singleTap = AssistiveTouchGesture(type: .singleTap, intensity: .light)
@@ -145,6 +226,9 @@ final class AssistiveTouchTests: XCTestCase {
     
     // MARK: - AssistiveTouch Menu Management Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouchMenuAction defines different operations that can be performed on AssistiveTouch menus
+    /// TESTING SCOPE: Tests menu action enumeration and verifies all actions are properly defined
+    /// METHODOLOGY: Creates instances of different menu actions and verifies they match expected values
     func testAssistiveTouchMenuAction() {
         // Given: Different menu actions
         let showMenu = AssistiveTouchMenuAction.show
@@ -157,6 +241,9 @@ final class AssistiveTouchTests: XCTestCase {
         XCTAssertEqual(toggleMenu, .toggle)
     }
     
+    /// BUSINESS PURPOSE: AssistiveTouchMenuStyle defines different visual styles for AssistiveTouch menus
+    /// TESTING SCOPE: Tests menu style enumeration and verifies all styles are properly defined
+    /// METHODOLOGY: Creates instances of different menu styles and verifies they match expected values
     func testAssistiveTouchMenuStyle() {
         // Given: Different menu styles
         let floating = AssistiveTouchMenuStyle.floating
@@ -171,6 +258,9 @@ final class AssistiveTouchTests: XCTestCase {
     
     // MARK: - AssistiveTouch View Modifier Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouch view modifiers enable AssistiveTouch support for SwiftUI views
+    /// TESTING SCOPE: Tests view modifier application and verifies AssistiveTouch support is enabled
+    /// METHODOLOGY: Applies modifiers to test views and verifies they return valid view instances
     func testAssistiveTouchViewModifier() {
         // Given: A view with AssistiveTouch support
         let view = Text("Test")
@@ -180,6 +270,9 @@ final class AssistiveTouchTests: XCTestCase {
         XCTAssertNotNil(view)
     }
     
+    /// BUSINESS PURPOSE: AssistiveTouch view modifiers with configuration allow customizing AssistiveTouch behavior
+    /// TESTING SCOPE: Tests view modifier application with custom configuration
+    /// METHODOLOGY: Applies modifiers with configuration to test views and verifies they work correctly
     func testAssistiveTouchViewModifierWithConfiguration() {
         // Given: A view with AssistiveTouch configuration
         let config = AssistiveTouchConfig(enableIntegration: true)
@@ -192,6 +285,9 @@ final class AssistiveTouchTests: XCTestCase {
     
     // MARK: - AssistiveTouch Compliance Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouchManager provides compliance checking to ensure views meet accessibility standards
+    /// TESTING SCOPE: Tests compliance checking for views with and without proper AssistiveTouch support
+    /// METHODOLOGY: Creates compliant and non-compliant views and verifies compliance results are accurate
     func testAssistiveTouchCompliance() {
         // Given: A view with AssistiveTouch support
         let view = VStack {
@@ -208,6 +304,9 @@ final class AssistiveTouchTests: XCTestCase {
         XCTAssertEqual(compliance.issues.count, 0)
     }
     
+    /// BUSINESS PURPOSE: AssistiveTouchManager identifies compliance issues in views that lack proper accessibility support
+    /// TESTING SCOPE: Tests compliance checking for views without AssistiveTouch support
+    /// METHODOLOGY: Creates non-compliant views and verifies compliance issues are properly identified
     func testAssistiveTouchComplianceWithIssues() {
         // Given: A view without proper AssistiveTouch support
         let view = Text("No AssistiveTouch support")
@@ -222,6 +321,9 @@ final class AssistiveTouchTests: XCTestCase {
     
     // MARK: - AssistiveTouch Performance Tests
     
+    /// BUSINESS PURPOSE: AssistiveTouchManager performance testing ensures gesture processing is efficient
+    /// TESTING SCOPE: Tests performance of gesture processing operations under load
+    /// METHODOLOGY: Measures execution time of repeated gesture processing operations
     func testAssistiveTouchPerformance() {
         // Given: AssistiveTouch Manager
         let config = AssistiveTouchConfig(enableIntegration: true)

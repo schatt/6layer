@@ -46,7 +46,7 @@ final class CapabilityMatrixTests: XCTestCase {
         let name: String
         let testSupported: () -> Bool
         let testBehavior: () -> Void
-        let expectedPlatforms: [Platform]
+        let expectedPlatforms: [SixLayerPlatform]
     }
     
     private let capabilityTests: [CapabilityTest] = [
@@ -76,7 +76,7 @@ final class CapabilityMatrixTests: XCTestCase {
                                  "Non-touch platforms should not support AssistiveTouch")
                 }
             },
-            expectedPlatforms: [.iOS, .watchOS]
+            expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.watchOS]
         ),
         
         // Hover Capability
@@ -98,7 +98,7 @@ final class CapabilityMatrixTests: XCTestCase {
                                  "Non-hover platforms should have zero hover delay")
                 }
             },
-            expectedPlatforms: [.macOS]
+            expectedPlatforms: [SixLayerPlatform.macOS]
         ),
         
         // Haptic Feedback Capability
@@ -117,7 +117,7 @@ final class CapabilityMatrixTests: XCTestCase {
                                  "Non-haptic platforms should not support touch")
                 }
             },
-            expectedPlatforms: [.iOS, .watchOS]
+            expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.watchOS]
         ),
         
         // AssistiveTouch Capability
@@ -136,16 +136,16 @@ final class CapabilityMatrixTests: XCTestCase {
                                  "Non-AssistiveTouch platforms should not support touch")
                 }
             },
-            expectedPlatforms: [.iOS, .watchOS]
+            expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.watchOS]
         ),
         
         // Vision Framework Capability
         CapabilityTest(
             name: "Vision Framework Support",
-            testSupported: { PlatformTestUtilities.getVisionAvailability(for: Platform.current) },
+            testSupported: { PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current) },
             testBehavior: {
-                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: Platform.current)
-                let platform = Platform.current
+                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
+                let platform = SixLayerPlatform.current
                 switch platform {
                 case .iOS, .macOS:
                     XCTAssertTrue(isVisionAvailable, "Vision should be available on \(platform)")
@@ -153,16 +153,16 @@ final class CapabilityMatrixTests: XCTestCase {
                     XCTAssertFalse(isVisionAvailable, "Vision should not be available on \(platform)")
                 }
             },
-            expectedPlatforms: [.iOS, .macOS, .visionOS]
+            expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.visionOS]
         ),
         
         // OCR Capability
         CapabilityTest(
             name: "OCR Support",
-            testSupported: { PlatformTestUtilities.getOCRAvailability(for: Platform.current) },
+            testSupported: { PlatformTestUtilities.getOCRAvailability(for: SixLayerPlatform.current) },
             testBehavior: {
-                let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: Platform.current)
-                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: Platform.current)
+                let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: SixLayerPlatform.current)
+                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
 
                 // OCR should only be available if Vision is available
                 XCTAssertEqual(isOCRAvailable, isVisionAvailable,
@@ -197,7 +197,7 @@ final class CapabilityMatrixTests: XCTestCase {
                     }
                 }
             },
-            expectedPlatforms: [.iOS, .macOS, .visionOS]
+            expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.visionOS]
         ),
         
         // Color Encoding Capability
@@ -225,7 +225,7 @@ final class CapabilityMatrixTests: XCTestCase {
                     XCTFail("Color encoding/decoding should work on all platforms: \(error)")
                 }
             },
-            expectedPlatforms: [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+            expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS]
         )
     ]
     
@@ -238,7 +238,7 @@ final class CapabilityMatrixTests: XCTestCase {
     }
     
     func testCapability(_ capabilityTest: CapabilityTest) {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let isSupported = capabilityTest.testSupported()
         let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
         
@@ -293,7 +293,7 @@ final class CapabilityMatrixTests: XCTestCase {
     // MARK: - Platform-Specific Capability Validation
     
     func testPlatformCapabilityConsistency() {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let config = getCardExpansionPlatformConfig()
         
         // Test that platform capabilities are internally consistent
@@ -342,7 +342,7 @@ final class CapabilityMatrixTests: XCTestCase {
     // MARK: - Capability Matrix Validation
     
     func testCapabilityMatrix() {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let config = getCardExpansionPlatformConfig()
         
         // Create capability matrix

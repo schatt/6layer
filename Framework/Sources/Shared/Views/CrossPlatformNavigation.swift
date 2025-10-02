@@ -294,7 +294,7 @@ public extension CrossPlatformNavigation {
         analysis: CollectionAnalysisResult
     ) -> some View {
         // Use device characteristics to choose the best strategy
-        let deviceType = DeviceType.current
+        let deviceType = SixLayerPlatform.deviceType
         
         switch deviceType {
         case .phone:

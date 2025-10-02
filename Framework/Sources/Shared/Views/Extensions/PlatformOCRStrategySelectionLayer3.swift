@@ -14,7 +14,7 @@ import Foundation
 /// Select optimal OCR strategy based on text types and platform
 public func platformOCRStrategy_L3(
     textTypes: [TextType],
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     // Determine if neural engine is needed
     let requiresNeuralEngine = requiresNeuralEngineForTextTypes(textTypes)
@@ -47,7 +47,7 @@ public func platformOCRStrategy_L3(
 /// Select OCR strategy for specific document type
 public func platformDocumentOCRStrategy_L3(
     documentType: DocumentType,
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     // Get text types for document type
     let textTypes = getTextTypesForDocumentType(documentType)
@@ -82,7 +82,7 @@ public func platformDocumentOCRStrategy_L3(
 
 /// Select OCR strategy for receipt processing
 public func platformReceiptOCRStrategy_L3(
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     return platformDocumentOCRStrategy_L3(
         documentType: .receipt,
@@ -92,7 +92,7 @@ public func platformReceiptOCRStrategy_L3(
 
 /// Select OCR strategy for business card processing
 public func platformBusinessCardOCRStrategy_L3(
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     return platformDocumentOCRStrategy_L3(
         documentType: .businessCard,
@@ -102,7 +102,7 @@ public func platformBusinessCardOCRStrategy_L3(
 
 /// Select OCR strategy for invoice processing
 public func platformInvoiceOCRStrategy_L3(
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     return platformDocumentOCRStrategy_L3(
         documentType: .invoice,
@@ -143,7 +143,7 @@ private func requiresNeuralEngineForDocumentType(_ documentType: DocumentType) -
 
 /// Determine processing mode for platform
 private func determineProcessingModeForPlatform(
-    platform: Platform,
+    platform: SixLayerPlatform,
     requiresNeuralEngine: Bool
 ) -> OCRProcessingMode {
     switch platform {
@@ -171,7 +171,7 @@ private func determineProcessingModeForPlatform(
 /// Determine processing mode for document type
 private func determineProcessingModeForDocumentType(
     documentType: DocumentType,
-    platform: Platform
+    platform: SixLayerPlatform
 ) -> OCRProcessingMode {
     let baseMode = determineProcessingModeForPlatform(
         platform: platform,
@@ -198,7 +198,7 @@ private func determineProcessingModeForDocumentType(
 }
 
 /// Get supported languages for platform
-private func getSupportedLanguagesForPlatform(_ platform: Platform) -> [OCRLanguage] {
+private func getSupportedLanguagesForPlatform(_ platform: SixLayerPlatform) -> [OCRLanguage] {
     switch platform {
     case .iOS:
         return [.english, .spanish, .french, .german, .italian, .portuguese, .chinese, .japanese, .korean, .arabic, .russian]
@@ -244,7 +244,7 @@ private func getTextTypesForDocumentType(_ documentType: DocumentType) -> [TextT
 /// Estimate processing time based on text types and platform
 private func estimateProcessingTime(
     textTypes: [TextType],
-    platform: Platform,
+    platform: SixLayerPlatform,
     processingMode: OCRProcessingMode
 ) -> TimeInterval {
     // Base processing time
@@ -278,7 +278,7 @@ private func estimateProcessingTime(
 /// Estimate processing time for document type
 private func estimateProcessingTimeForDocumentType(
     documentType: DocumentType,
-    platform: Platform,
+    platform: SixLayerPlatform,
     processingMode: OCRProcessingMode
 ) -> TimeInterval {
     let textTypes = getTextTypesForDocumentType(documentType)
@@ -290,7 +290,7 @@ private func estimateProcessingTimeForDocumentType(
 }
 
 /// Get platform processing multiplier
-private func getPlatformProcessingMultiplier(_ platform: Platform) -> Double {
+private func getPlatformProcessingMultiplier(_ platform: SixLayerPlatform) -> Double {
     switch platform {
     case .iOS:
         return 1.0 // Baseline
@@ -323,7 +323,7 @@ private func getProcessingModeMultiplier(_ mode: OCRProcessingMode) -> Double {
 public func platformOptimalOCRStrategy_L3(
     textTypes: [TextType],
     confidenceThreshold: Float,
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     // Start with base strategy
     var strategy = platformOCRStrategy_L3(textTypes: textTypes, platform: platform)
@@ -354,7 +354,7 @@ public func platformOptimalOCRStrategy_L3(
 public func platformBatchOCRStrategy_L3(
     textTypes: [TextType],
     batchSize: Int,
-    platform: Platform = .current
+    platform: SixLayerPlatform = .current
 ) -> OCRStrategy {
     // Start with base strategy
     let strategy = platformOCRStrategy_L3(textTypes: textTypes, platform: platform)

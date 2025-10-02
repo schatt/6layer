@@ -66,7 +66,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
     
     func testTestingDefaultsForEachPlatform() {
         // Test that each platform has predictable testing defaults
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [SixLayerPlatform] = [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS]
         
         for platform in platforms {
             let defaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
@@ -89,7 +89,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
     
     func testRuntimeTouchDetectionUsesTestingDefaults() {
         // In testing mode, should use hardcoded defaults
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
         // This should use testing defaults, not runtime detection
@@ -100,7 +100,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
     
     func testRuntimeHapticDetectionUsesTestingDefaults() {
         // In testing mode, should use hardcoded defaults
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
         let actualHapticSupport = RuntimeCapabilityDetection.supportsHapticFeedback
@@ -110,7 +110,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
     
     func testRuntimeHoverDetectionUsesTestingDefaults() {
         // In testing mode, should use hardcoded defaults
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
         let actualHoverSupport = RuntimeCapabilityDetection.supportsHover
@@ -189,7 +189,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
         let config = getCardExpansionPlatformConfig()
         
         // The config should use runtime detection (which uses testing defaults in test mode)
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
         XCTAssertEqual(config.supportsTouch, expectedDefaults.supportsTouch, 
@@ -201,7 +201,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
     }
     
     func testPlatformOptimizationUsesRuntimeDetection() {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let supportsTouchGestures = platform.supportsTouchGestures
         
         // Should use runtime detection (which uses testing defaults in test mode)
@@ -233,7 +233,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
         CapabilityOverride.touchSupport = nil
         
         // Should return to testing defaults
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         XCTAssertEqual(RuntimeCapabilityDetection.supportsTouchWithOverride, expectedDefaults.supportsTouch)
     }
@@ -254,7 +254,7 @@ final class RuntimeCapabilityDetectionTDDTests: XCTestCase {
     
     func testOverridePrecedenceOrder() {
         // Override should take precedence over testing defaults
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let testingDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
         // Set override to opposite of testing default

@@ -162,7 +162,7 @@ final class RuntimeCapabilityDetectionTests: XCTestCase {
     }
     
     func testPlatformOptimizationUsesRuntimeDetection() {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let supportsTouchGestures = platform.supportsTouchGestures
         
         print("Platform \(platform) supports touch gestures: \(supportsTouchGestures)")

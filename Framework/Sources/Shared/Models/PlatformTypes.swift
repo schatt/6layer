@@ -11,15 +11,15 @@ import SwiftUI
 // MARK: - Platform Enumeration
 
 /// Represents the target platform for optimization and adaptation
-public enum Platform: String, CaseIterable {
+public enum SixLayerPlatform: String, CaseIterable {
     case iOS = "iOS"
     case macOS = "macOS"
     case watchOS = "watchOS"
     case tvOS = "tvOS"
     case visionOS = "visionOS"
     
-    /// Current platform detection
-    public static var current: Platform {
+    /// Current platform detection (compile-time only)
+    public static var current: SixLayerPlatform {
         #if os(iOS)
         return .iOS
         #elseif os(macOS)
@@ -33,6 +33,48 @@ public enum Platform: String, CaseIterable {
         #else
         return .iOS // Default fallback
         #endif
+    }
+    
+    /// Current platform detection (runtime-aware for testing)
+    public static var currentPlatform: SixLayerPlatform {
+        // Check if test platform is set in RuntimeCapabilityDetection
+        if let testPlatform = RuntimeCapabilityDetection.testPlatform {
+            return testPlatform
+        }
+        
+        // Otherwise fall back to compile-time platform detection
+        return current
+    }
+    
+    /// Current device type detection (runtime-aware for testing)
+    @MainActor
+    public static var deviceType: DeviceType {
+        // If test platform is set, derive device type from test platform
+        if let testPlatform = RuntimeCapabilityDetection.testPlatform {
+            return deriveDeviceTypeFromPlatform(testPlatform)
+        }
+        
+        // Otherwise fall back to compile-time device type detection
+        return DeviceType.current
+    }
+    
+    /// Derive device type from platform for testing purposes
+    private static func deriveDeviceTypeFromPlatform(_ platform: SixLayerPlatform) -> DeviceType {
+        switch platform {
+        case .iOS:
+            // For iOS testing, default to phone unless specifically testing iPad
+            // This could be enhanced with a specific test device type override
+            return .phone
+        case .macOS:
+            return .mac
+        case .watchOS:
+            return .watch
+        case .tvOS:
+            return .tv
+        case .visionOS:
+            // visionOS doesn't have a specific DeviceType, use tv as placeholder
+            return .tv
+        }
     }
 }
 

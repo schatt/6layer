@@ -55,10 +55,10 @@ final class AccessibilityPreferenceTests: XCTestCase {
     /// Tests that getCardExpansionAccessibilityConfig returns different configurations for different platforms
     func testCardExpansionAccessibilityConfig_PlatformSpecificBehavior() {
         // Given: Different platform contexts
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        let platforms: [SixLayerPlatform] = [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS]
         
         // When: Get accessibility configuration for each platform
-        var configurations: [Platform: CardExpansionAccessibilityConfig] = [:]
+        var configurations: [SixLayerPlatform: CardExpansionAccessibilityConfig] = [:]
         for platform in platforms {
             // Note: We can't actually change Platform.current in tests, so we test the current platform
             // and verify it returns a valid configuration
@@ -84,7 +84,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     /// Tests that getCardExpansionPlatformConfig returns platform-specific capabilities
     func testCardExpansionPlatformConfig_PlatformSpecificCapabilities() {
         // Given: Current platform
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // When: Get platform configuration
         let config = getCardExpansionPlatformConfig()
@@ -137,7 +137,7 @@ final class AccessibilityPreferenceTests: XCTestCase {
     /// Tests that getCardExpansionPerformanceConfig returns appropriate performance settings
     func testCardExpansionPerformanceConfig_PerformanceSettings() {
         // Given: Current platform
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // When: Get performance configuration
         let config = getCardExpansionPerformanceConfig()

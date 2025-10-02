@@ -44,7 +44,7 @@ public struct FormUsageExample: View {
             // Name field (required text)
             DynamicFormField(
                 id: "fullName",
-                type: .text,
+                contentType: .textarea,
                 label: "Full Name",
                 placeholder: "Enter your full name",
                 isRequired: true,

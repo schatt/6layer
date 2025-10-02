@@ -202,27 +202,27 @@ public struct ShapeStyleSystem {
     public struct Factory {
         
         /// Creates a background style appropriate for the platform
-        public static func background(for platform: Platform, variant: BackgroundVariant = .standard) -> AnyShapeStyle {
+        public static func background(for platform: SixLayerPlatform, variant: BackgroundVariant = .standard) -> AnyShapeStyle {
             return AnyShapeStyle(StandardColors.systemBackground)
         }
         
         /// Creates a surface style appropriate for the platform
-        public static func surface(for platform: Platform, variant: SurfaceVariant = .standard) -> AnyShapeStyle {
+        public static func surface(for platform: SixLayerPlatform, variant: SurfaceVariant = .standard) -> AnyShapeStyle {
             return AnyShapeStyle(StandardColors.secondarySystemBackground)
         }
         
         /// Creates a text style appropriate for the platform
-        public static func text(for platform: Platform, variant: TextVariant = .primary) -> AnyShapeStyle {
+        public static func text(for platform: SixLayerPlatform, variant: TextVariant = .primary) -> AnyShapeStyle {
             return AnyShapeStyle(StandardColors.label)
         }
         
         /// Creates a border style appropriate for the platform
-        public static func border(for platform: Platform, variant: BorderVariant = .standard) -> AnyShapeStyle {
+        public static func border(for platform: SixLayerPlatform, variant: BorderVariant = .standard) -> AnyShapeStyle {
             return AnyShapeStyle(StandardColors.separator)
         }
         
         /// Creates a gradient style appropriate for the platform
-        public static func gradient(for platform: Platform, variant: GradientVariant = .primary) -> AnyShapeStyle {
+        public static func gradient(for platform: SixLayerPlatform, variant: GradientVariant = .primary) -> AnyShapeStyle {
             switch variant {
             case .primary:
                 return AnyShapeStyle(Gradients.primary)
@@ -243,7 +243,7 @@ public struct ShapeStyleSystem {
         
         /// Creates a material style appropriate for the platform
         @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-        public static func material(for platform: Platform, variant: MaterialVariant = .regular) -> AnyShapeStyle {
+        public static func material(for platform: SixLayerPlatform, variant: MaterialVariant = .regular) -> AnyShapeStyle {
             switch variant {
             case .regular:
                 return AnyShapeStyle(Materials.regular)
@@ -260,7 +260,7 @@ public struct ShapeStyleSystem {
         
         /// Creates a hierarchical style appropriate for the platform
         @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-        public static func hierarchical(for platform: Platform, variant: HierarchicalVariant = .primary) -> AnyShapeStyle {
+        public static func hierarchical(for platform: SixLayerPlatform, variant: HierarchicalVariant = .primary) -> AnyShapeStyle {
             switch variant {
             case .primary:
                 return AnyShapeStyle(HierarchicalStyles.primary)
@@ -345,7 +345,7 @@ public extension View {
     
     /// Apply a platform-appropriate background style
     func platformBackground(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: BackgroundVariant = .standard
     ) -> some View {
         self.background(ShapeStyleSystem.Factory.background(for: platform, variant: variant))
@@ -353,7 +353,7 @@ public extension View {
     
     /// Apply a platform-appropriate surface style
     func platformSurface(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: SurfaceVariant = .standard
     ) -> some View {
         self.background(ShapeStyleSystem.Factory.surface(for: platform, variant: variant))
@@ -361,7 +361,7 @@ public extension View {
     
     /// Apply a platform-appropriate text style
     func platformText(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: TextVariant = .primary
     ) -> some View {
         self.foregroundStyle(ShapeStyleSystem.Factory.text(for: platform, variant: variant))
@@ -369,7 +369,7 @@ public extension View {
     
     /// Apply a platform-appropriate border style
     func platformBorder(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: BorderVariant = .standard,
         width: CGFloat = 1
     ) -> some View {
@@ -381,7 +381,7 @@ public extension View {
     
     /// Apply a platform-appropriate gradient style
     func platformGradient(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: GradientVariant = .primary
     ) -> some View {
         self.background(ShapeStyleSystem.Factory.gradient(for: platform, variant: variant))
@@ -390,7 +390,7 @@ public extension View {
     /// Apply a platform-appropriate material style
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func platformMaterial(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: MaterialVariant = .regular
     ) -> some View {
         self.background(ShapeStyleSystem.Factory.material(for: platform, variant: variant))
@@ -399,7 +399,7 @@ public extension View {
     /// Apply a platform-appropriate hierarchical style
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func platformHierarchical(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         variant: HierarchicalVariant = .primary
     ) -> some View {
         self.foregroundStyle(ShapeStyleSystem.Factory.hierarchical(for: platform, variant: variant))
@@ -414,7 +414,7 @@ public extension View {
     /// Apply a material background with platform-appropriate styling
     func materialBackground(
         _ material: Material = .regularMaterial,
-        for platform: Platform
+        for platform: SixLayerPlatform
     ) -> some View {
         self.background(material)
     }
@@ -422,7 +422,7 @@ public extension View {
     /// Apply a hierarchical material background
     func hierarchicalMaterialBackground(
         _ level: Int = 1,
-        for platform: Platform
+        for platform: SixLayerPlatform
     ) -> some View {
         self.background(.regularMaterial)
     }
@@ -435,7 +435,7 @@ public extension View {
     /// Apply a gradient background with platform-appropriate styling
     func gradientBackground(
         _ gradient: LinearGradient,
-        for platform: Platform
+        for platform: SixLayerPlatform
     ) -> some View {
         self.background(gradient)
     }
@@ -443,7 +443,7 @@ public extension View {
     /// Apply a radial gradient background
     func radialGradientBackground(
         _ gradient: RadialGradient,
-        for platform: Platform
+        for platform: SixLayerPlatform
     ) -> some View {
         self.background(gradient)
     }

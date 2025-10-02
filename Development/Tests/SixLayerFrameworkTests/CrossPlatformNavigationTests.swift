@@ -42,7 +42,7 @@ final class CrossPlatformNavigationTests: XCTestCase {
     
     func testCrossPlatformNavigationAcrossPlatforms() {
         // Given: Platform-specific navigation expectations
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // When: Testing cross-platform navigation on different platforms
         // Then: Test platform-specific business logic
@@ -131,8 +131,8 @@ final class CrossPlatformNavigationTests: XCTestCase {
         XCTAssertNotNil(navigation, "Cross-platform navigation should be created successfully")
         
         // Test business logic: Navigation should support platform detection
-        let platform = Platform.current
-        XCTAssertTrue([.iOS, .macOS, .watchOS, .tvOS, .visionOS].contains(platform), "Navigation should support current platform")
+        let platform = SixLayerPlatform.current
+        XCTAssertTrue([SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS].contains(platform), "Navigation should support current platform")
     }
     
     // MARK: - Cross-Platform Navigation Tests

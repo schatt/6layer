@@ -428,7 +428,7 @@ final class CardActionButtonTests: XCTestCase {
     func testActionButtonBehaviorAcrossPlatforms() {
         // GIVEN: Test item and platform-specific expectations
         let item = sampleItems[0]
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // WHEN: Creating card components on different platforms
         let expandableCard = ExpandableCardComponent(

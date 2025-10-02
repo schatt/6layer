@@ -199,7 +199,13 @@ public struct DynamicFormFieldView: View {
     
     @ViewBuilder
     private var fieldInput: some View {
-        switch field.type {
+        if let textContentType = field.textContentType {
+            DynamicTextField(
+                field: field,
+                formState: formState
+            )
+        } else if let contentType = field.contentType {
+            switch contentType {
         case .text, .email, .password, .phone, .url:
             DynamicTextField(
                 field: field,
@@ -309,6 +315,13 @@ public struct DynamicFormFieldView: View {
                 formState: formState
             )
         }
+        } else {
+            // Fallback for fields with neither textContentType nor contentType
+            DynamicTextField(
+                field: field,
+                formState: formState
+            )
+        }
     }
 }
 
@@ -364,7 +377,7 @@ public struct DynamicTextField: View {
         )
         .textFieldStyle(.roundedBorder)
         #if os(iOS)
-        .keyboardType(field.type.keyboardType)
+        .keyboardType(keyboardType)
         #endif
         #if os(iOS)
         .textContentType(textContentType)
@@ -373,33 +386,34 @@ public struct DynamicTextField: View {
     
     #if os(iOS)
     private var textContentType: UITextContentType? {
-        switch field.type {
-        case .email:
+        return field.textContentType
+    }
+    
+    private var keyboardType: UIKeyboardType {
+        guard let textContentType = field.textContentType else {
+            return .default
+        }
+        
+        switch textContentType {
+        case .emailAddress:
             return .emailAddress
-        case .password:
-            return .password
-        case .phone:
-            return .telephoneNumber
-        case .url:
+        case .telephoneNumber:
+            return .phonePad
+        case .URL:
             return .URL
+        case .oneTimeCode:
+            return .numberPad
+        case .creditCardNumber:
+            return .numberPad
+        case .postalCode:
+            return .numberPad
         default:
-            return nil
+            return .default
         }
     }
     #else
     private var textContentType: String? {
-        switch field.type {
-        case .email:
-            return "emailAddress"
-        case .password:
-            return "password"
-        case .phone:
-            return "telephoneNumber"
-        case .url:
-            return "URL"
-        default:
-            return nil
-        }
+        return field.textContentType
     }
     #endif
 }
@@ -789,6 +803,25 @@ public struct DynamicEnumField: View {
     }
 }
 
+// MARK: - Helper Functions
+
+private func createPersonalInfoFields() -> [DynamicFormField] {
+    var fields: [DynamicFormField] = [
+        DynamicFormField(id: "firstName", contentType: .textarea, label: "First Name", isRequired: true),
+        DynamicFormField(id: "lastName", contentType: .textarea, label: "Last Name", isRequired: true)
+    ]
+    
+    #if os(iOS)
+    fields.append(DynamicFormField(id: "email", textContentType: .emailAddress, label: "Email Address", isRequired: true))
+    fields.append(DynamicFormField(id: "phone", textContentType: .telephoneNumber, label: "Phone Number"))
+    #else
+    fields.append(DynamicFormField(id: "email", textContentType: "emailAddress", label: "Email Address", isRequired: true))
+    fields.append(DynamicFormField(id: "phone", textContentType: "telephoneNumber", label: "Phone Number"))
+    #endif
+    
+    return fields
+}
+
 // MARK: - Preview
 
 #Preview {
@@ -801,21 +834,16 @@ public struct DynamicEnumField: View {
                 id: "personal",
                 title: "Personal Information",
                 description: "Basic details about you",
-                fields: [
-                    DynamicFormField(id: "firstName", type: .text, label: "First Name", isRequired: true),
-                    DynamicFormField(id: "lastName", type: .text, label: "Last Name", isRequired: true),
-                    DynamicFormField(id: "email", type: .email, label: "Email Address", isRequired: true),
-                    DynamicFormField(id: "phone", type: .phone, label: "Phone Number")
-                ]
+                fields: createPersonalInfoFields()
             ),
             DynamicFormSection(
                 id: "preferences",
                 title: "Preferences",
                 description: "Your choices",
                 fields: [
-                    DynamicFormField(id: "newsletter", type: .checkbox, label: "Subscribe to newsletter"),
-                    DynamicFormField(id: "theme", type: .select, label: "Theme", options: ["Light", "Dark", "Auto"]),
-                    DynamicFormField(id: "notifications", type: .toggle, label: "Enable notifications")
+                    DynamicFormField(id: "newsletter", contentType: .checkbox, label: "Subscribe to newsletter"),
+                    DynamicFormField(id: "theme", contentType: .select, label: "Theme", options: ["Light", "Dark", "Auto"]),
+                    DynamicFormField(id: "notifications", contentType: .toggle, label: "Enable notifications")
                 ],
                 isCollapsible: true
             )

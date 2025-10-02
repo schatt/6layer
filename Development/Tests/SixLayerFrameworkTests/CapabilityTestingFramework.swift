@@ -54,7 +54,7 @@ final class CapabilityTestingFramework: XCTestCase {
         let supportsOCR: Bool
         let minTouchTarget: CGFloat
         let hoverDelay: TimeInterval
-        let platform: Platform
+        let platform: SixLayerPlatform
         let deviceType: DeviceType
         
         init(
@@ -69,7 +69,7 @@ final class CapabilityTestingFramework: XCTestCase {
             supportsOCR: Bool = false,
             minTouchTarget: CGFloat = 44,
             hoverDelay: TimeInterval = 0.0,
-            platform: Platform = .iOS,
+            platform: SixLayerPlatform = SixLayerPlatform.iOS,
             deviceType: DeviceType = .phone
         ) {
             self.name = name
@@ -113,7 +113,7 @@ final class CapabilityTestingFramework: XCTestCase {
             supportsTouch: true,
             supportsHapticFeedback: true,
             supportsAssistiveTouch: true,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             deviceType: .phone
         ),
         CapabilityTestConfig(
@@ -122,7 +122,7 @@ final class CapabilityTestingFramework: XCTestCase {
             supportsHover: true,
             supportsHapticFeedback: true,
             supportsAssistiveTouch: true,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             deviceType: .pad
         ),
         CapabilityTestConfig(
@@ -130,7 +130,7 @@ final class CapabilityTestingFramework: XCTestCase {
             supportsTouch: true,
             supportsHapticFeedback: true,
             supportsAssistiveTouch: true,
-            platform: .watchOS,
+            platform: SixLayerPlatform.watchOS,
             deviceType: .watch
         ),
         
@@ -138,7 +138,7 @@ final class CapabilityTestingFramework: XCTestCase {
         CapabilityTestConfig(
             name: "Hover only (macOS)",
             supportsHover: true,
-            platform: .macOS,
+            platform: SixLayerPlatform.macOS,
             deviceType: .mac
         ),
         
@@ -148,7 +148,7 @@ final class CapabilityTestingFramework: XCTestCase {
             supportsHover: true,
             supportsVision: true,
             supportsOCR: true,
-            platform: .macOS,
+            platform: SixLayerPlatform.macOS,
             deviceType: .mac
         ),
         CapabilityTestConfig(
@@ -158,14 +158,14 @@ final class CapabilityTestingFramework: XCTestCase {
             supportsAssistiveTouch: true,
             supportsVision: true,
             supportsOCR: true,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             deviceType: .phone
         ),
         
         // Accessibility-only configurations
         CapabilityTestConfig(
             name: "Accessibility only (tvOS)",
-            platform: .tvOS,
+            platform: SixLayerPlatform.tvOS,
             deviceType: .tv
         ),
         
@@ -174,7 +174,7 @@ final class CapabilityTestingFramework: XCTestCase {
             name: "Vision + OCR (visionOS)",
             supportsVision: true,
             supportsOCR: true,
-            platform: .visionOS,
+            platform: SixLayerPlatform.visionOS,
             deviceType: .tv // Using tv as placeholder
         ),
         

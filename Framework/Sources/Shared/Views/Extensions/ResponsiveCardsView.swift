@@ -77,7 +77,7 @@ public struct ResponsiveCardsView: View {
         let layoutDecision = determineOptimalCardLayout_L2(
             contentCount: cards.count,
             screenWidth: screenWidth,
-            deviceType: DeviceType.current,
+            deviceType: SixLayerPlatform.deviceType,
             contentComplexity: .moderate
         )
         
@@ -85,7 +85,7 @@ public struct ResponsiveCardsView: View {
         let strategy = selectCardLayoutStrategy_L3(
             contentCount: cards.count,
             screenWidth: screenWidth,
-            deviceType: DeviceType.current,
+            deviceType: SixLayerPlatform.deviceType,
             contentComplexity: .moderate
         )
         

@@ -43,11 +43,11 @@ final class PlatformMatrixTests: XCTestCase {
     
     func testPlatformDetectionMatrix() {
         // Test that platform detection works correctly
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current
         
         // Verify we're running on a known platform
-        XCTAssertTrue([.iOS, .macOS, .watchOS, .tvOS, .visionOS].contains(platform), 
+        XCTAssertTrue([SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS].contains(platform), 
                      "Should detect a valid platform")
         
         // Verify device type is appropriate for platform
@@ -76,15 +76,15 @@ final class PlatformMatrixTests: XCTestCase {
         let config = getCardExpansionPlatformConfig()
         
         // Test touch support matrix
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .iOS, .watchOS:
             XCTAssertTrue(config.supportsTouch, 
-                         "\(Platform.current) should support touch")
+                          "\(SixLayerPlatform.current) should support touch")
             XCTAssertTrue(config.supportsHapticFeedback, 
                          "Touch platforms should support haptic feedback")
         case .macOS, .tvOS, .visionOS:
             XCTAssertFalse(config.supportsTouch, 
-                          "\(Platform.current) should not support touch")
+                           "\(SixLayerPlatform.current) should not support touch")
             XCTAssertFalse(config.supportsHapticFeedback, 
                           "Non-touch platforms should not support haptic feedback")
         }
@@ -96,13 +96,13 @@ final class PlatformMatrixTests: XCTestCase {
         let config = getCardExpansionPlatformConfig()
         
         // Test hover support matrix
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .macOS:
             XCTAssertTrue(config.supportsHover, 
                          "macOS should support hover")
         case .iOS, .watchOS, .tvOS, .visionOS:
             XCTAssertFalse(config.supportsHover, 
-                          "\(Platform.current) should not support hover")
+                           "\(SixLayerPlatform.current) should not support hover")
         }
     }
     
@@ -118,13 +118,13 @@ final class PlatformMatrixTests: XCTestCase {
                      "All platforms should support Switch Control")
         
         // AssistiveTouch is iOS/watchOS only
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .iOS, .watchOS:
             XCTAssertTrue(config.supportsAssistiveTouch, 
-                         "\(Platform.current) should support AssistiveTouch")
+                          "\(SixLayerPlatform.current) should support AssistiveTouch")
         case .macOS, .tvOS, .visionOS:
             XCTAssertFalse(config.supportsAssistiveTouch, 
-                          "\(Platform.current) should not support AssistiveTouch")
+                           "\(SixLayerPlatform.current) should not support AssistiveTouch")
         }
     }
     
@@ -134,7 +134,7 @@ final class PlatformMatrixTests: XCTestCase {
         let config = getCardExpansionPlatformConfig()
         
         // Test touch target sizes based on platform
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .iOS:
             XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
                                        "iOS should have 44pt minimum touch targets")
@@ -151,14 +151,14 @@ final class PlatformMatrixTests: XCTestCase {
     // MARK: - Vision Framework Availability Matrix
     
     func testVisionFrameworkAvailabilityMatrix() {
-        let isAvailable = PlatformTestUtilities.getVisionAvailability(for: Platform.current)
+        let isAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
 
         // Vision framework availability by platform
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .iOS, .macOS:
-            XCTAssertTrue(isAvailable, "Vision should be available on \(Platform.current)")
+            XCTAssertTrue(isAvailable, "Vision should be available on \(SixLayerPlatform.current)")
         case .watchOS, .tvOS, .visionOS:
-            XCTAssertFalse(isAvailable, "Vision should not be available on \(Platform.current)")
+            XCTAssertFalse(isAvailable, "Vision should not be available on \(SixLayerPlatform.current)")
         }
     }
     
@@ -176,7 +176,7 @@ final class PlatformMatrixTests: XCTestCase {
                      "Should support smooth animations")
         
         // Platform-specific performance expectations
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .watchOS:
             // Watch should have faster animations
             XCTAssertLessThan(config.maxAnimationDuration, 0.5, 
@@ -228,11 +228,11 @@ final class PlatformMatrixTests: XCTestCase {
         let isCarPlayActive = CarPlayCapabilityDetection.isCarPlayActive
         
         // CarPlay should only be supported on iOS
-        switch Platform.current {
+        switch SixLayerPlatform.current {
         case .iOS:
             XCTAssertTrue(supportsCarPlay, "iOS should support CarPlay")
         case .macOS, .watchOS, .tvOS, .visionOS:
-            XCTAssertFalse(supportsCarPlay, "\(Platform.current) should not support CarPlay")
+            XCTAssertFalse(supportsCarPlay, "\(SixLayerPlatform.current) should not support CarPlay")
         }
         
         // Test CarPlay device type
@@ -321,7 +321,7 @@ final class PlatformMatrixTests: XCTestCase {
     // MARK: - Comprehensive Platform Feature Matrix
     
     func testComprehensivePlatformFeatureMatrix() {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -358,7 +358,7 @@ final class PlatformMatrixTests: XCTestCase {
 // MARK: - Platform Feature Matrix Data Structure
 
 struct PlatformFeatureMatrix {
-    let platform: Platform
+    let platform: SixLayerPlatform
     let deviceType: DeviceType
     let deviceContext: DeviceContext
     let supportsTouch: Bool
@@ -401,7 +401,7 @@ struct PlatformFeatureMatrix {
         }
         
         // CarPlay should only be supported on iOS
-        if supportsCarPlay && platform != .iOS {
+        if supportsCarPlay && platform != SixLayerPlatform.iOS {
             return false
         }
         

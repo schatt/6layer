@@ -30,7 +30,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     func testInputHandlingManagerInitialization() {
         // Given
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let manager = InputHandlingManager(platform: platform)
@@ -48,7 +48,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
         let manager = InputHandlingManager()
         
         // Then
-        XCTAssertEqual(manager.currentPlatform, Platform.current)
+        XCTAssertEqual(manager.currentPlatform, SixLayerPlatform.current)
     }
     
     // MARK: - InteractionBehavior Tests
@@ -105,7 +105,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     func testKeyboardShortcutManagerInitialization() {
         // Given
-        let platform = Platform.macOS
+        let platform = SixLayerPlatform.macOS
         
         // When
         let manager = KeyboardShortcutManager(for: platform)
@@ -202,7 +202,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     func testHapticFeedbackManagerInitialization() {
         // Given
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let manager = HapticFeedbackManager(for: platform)
@@ -255,7 +255,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     func testDragDropManagerInitialization() {
         // Given
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let manager = DragDropManager(for: platform)
@@ -434,7 +434,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     func testCrossPlatformConsistency() {
         // Given
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS]
+        let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
         
         // When & Then
         for platform in platforms {
@@ -533,7 +533,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     func testDragBehaviorWithAllPlatforms() {
         // Given
-        let platforms: [Platform] = [.iOS, .macOS, .watchOS, .tvOS]
+        let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
         
         // When & Then
         for platform in platforms {

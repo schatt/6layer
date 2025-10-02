@@ -76,7 +76,7 @@ final class AccessibilityStateSimulationTests: XCTestCase {
     func testPlatformSpecificAccessibilityConfiguration() {
         // Given: Platform-specific configuration
         let config = getCardExpansionAccessibilityConfig()
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // Then: Test business logic for platform-specific behavior
         switch platform {

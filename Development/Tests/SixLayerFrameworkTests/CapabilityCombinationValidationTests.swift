@@ -42,7 +42,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
     // MARK: - Current Platform Combination Tests
     
     func testCurrentPlatformCombination() {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let config = getCardExpansionPlatformConfig()
         
         print("🔍 Current Platform: \(platform)")
@@ -61,7 +61,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
                      "Current platform combination should be valid")
     }
     
-    private func validateCurrentPlatformCombination(_ platform: Platform, config: CardExpansionPlatformConfig) -> Bool {
+    private func validateCurrentPlatformCombination(_ platform: SixLayerPlatform, config: CardExpansionPlatformConfig) -> Bool {
         switch platform {
         case .iOS:
             // iOS should have touch, haptic, AssistiveTouch, VoiceOver, SwitchControl
@@ -184,7 +184,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
     
     func testCapabilityInteractions() {
         let config = getCardExpansionPlatformConfig()
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // Test that capabilities interact correctly
         testTouchHoverInteraction(config: config, platform: platform)
@@ -192,7 +192,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testVisionOCRInteraction()
     }
     
-    func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: Platform) {
+    func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
         if platform == .iOS {
             // iPad can have both touch and hover
             // This is a special case that we allow
@@ -277,9 +277,9 @@ final class CapabilityCombinationValidationTests: XCTestCase {
     }
     
     func testConflictingCombinations(config: CardExpansionPlatformConfig) {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
-        if platform != .iOS {
+        if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
             if config.supportsTouch && config.supportsHover {
                 XCTFail("Touch and hover should be mutually exclusive on \(platform)")

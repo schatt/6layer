@@ -40,8 +40,8 @@ public struct CardExpansionPlatformConfig {
 /// Get platform-specific configuration for card expansion
 @MainActor
 public func getCardExpansionPlatformConfig() -> CardExpansionPlatformConfig {
-    let platform = RuntimeCapabilityDetection.currentPlatform
-    let deviceType = DeviceType.current
+    let platform = SixLayerPlatform.currentPlatform
+    let deviceType = SixLayerPlatform.deviceType
     
     switch platform {
     case .iOS:
@@ -182,8 +182,8 @@ public struct CardExpansionPerformanceConfig {
 /// Get performance configuration for current platform
 @MainActor
 public func getCardExpansionPerformanceConfig() -> CardExpansionPerformanceConfig {
-    let platform = Platform.current
-    let deviceType = DeviceType.current
+    let platform = SixLayerPlatform.current
+    let deviceType = SixLayerPlatform.deviceType
     
     switch platform {
     case .iOS:
@@ -303,7 +303,7 @@ public struct CardExpansionAccessibilityConfig {
 
 /// Get accessibility configuration for current platform
 public func getCardExpansionAccessibilityConfig() -> CardExpansionAccessibilityConfig {
-    let platform = Platform.current
+    let platform = SixLayerPlatform.current
     
     switch platform {
     case .iOS, .macOS:

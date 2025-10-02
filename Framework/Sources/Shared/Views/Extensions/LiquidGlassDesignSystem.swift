@@ -141,7 +141,7 @@ public struct LiquidGlassMaterial: Equatable {
     }
     
     /// Check platform compatibility
-    public func isCompatible(with platform: Platform) -> Bool {
+    public func isCompatible(with platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS:
             return true
@@ -280,7 +280,7 @@ public struct FloatingControl: Equatable {
     }
     
     /// Check platform support
-    public func isSupported(on platform: Platform) -> Bool {
+    public func isSupported(on platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS:
             return true

@@ -204,6 +204,10 @@ public struct OCRResult: Sendable {
     public let missingRequiredFields: [String]
     public let documentType: DocumentType?
     
+    // Validation properties
+    public let isValid: Bool
+    public let validationReason: String?
+    
     public init(
         extractedText: String,
         confidence: Float,
@@ -214,7 +218,9 @@ public struct OCRResult: Sendable {
         structuredData: [String: String] = [:],
         extractionConfidence: Float = 0.0,
         missingRequiredFields: [String] = [],
-        documentType: DocumentType? = nil
+        documentType: DocumentType? = nil,
+        isValid: Bool? = nil,
+        validationReason: String? = nil
     ) {
         self.extractedText = extractedText
         self.confidence = confidence
@@ -226,11 +232,10 @@ public struct OCRResult: Sendable {
         self.extractionConfidence = extractionConfidence
         self.missingRequiredFields = missingRequiredFields
         self.documentType = documentType
-    }
-    
-    /// Whether the OCR result is valid based on confidence threshold
-    public var isValid: Bool {
-        return confidence >= 0.5
+        
+        // Set validation properties - use provided value or compute from confidence
+        self.isValid = isValid ?? (confidence >= 0.5)
+        self.validationReason = validationReason
     }
     
     /// Filter the result by confidence threshold
@@ -244,7 +249,13 @@ public struct OCRResult: Sendable {
                 boundingBoxes: [],
                 textTypes: [:],
                 processingTime: processingTime,
-                language: language
+                language: language,
+                structuredData: [:],
+                extractionConfidence: extractionConfidence,
+                missingRequiredFields: missingRequiredFields,
+                documentType: documentType,
+                isValid: false,
+                validationReason: "Confidence below threshold (\(threshold))"
             )
         }
     }
@@ -529,5 +540,6 @@ public struct BuiltInPatterns {
         ]
     ]
 }
+
 
 

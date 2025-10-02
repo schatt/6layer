@@ -280,23 +280,36 @@ public struct FrameworkIntegrationExample: View {
         return [
             DynamicFormField(
                 id: "name",
-                type: .text,
+                contentType: .textarea,
                 label: "Name",
                 placeholder: "Enter your name"
             ),
-            DynamicFormField(
-                id: "email",
-                type: .email,
-                label: "Email",
-                placeholder: "Enter your email"
-            ),
+            createEmailField(),
             DynamicFormField(
                 id: "age",
-                type: .number,
+                contentType: .number,
                 label: "Age",
                 placeholder: "Enter your age"
             )
         ]
+    }
+    
+    private func createEmailField() -> DynamicFormField {
+        #if os(iOS)
+        return DynamicFormField(
+            id: "email",
+            textContentType: .emailAddress,
+            label: "Email",
+            placeholder: "Enter your email"
+        )
+        #else
+        return DynamicFormField(
+            id: "email",
+            textContentType: "emailAddress",
+            label: "Email",
+            placeholder: "Enter your email"
+        )
+        #endif
     }
     
     private func createFormHints() -> PresentationHints {

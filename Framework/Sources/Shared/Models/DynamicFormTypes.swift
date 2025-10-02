@@ -1,12 +1,20 @@
 import Foundation
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
 
 // MARK: - Dynamic Form Field Types
 
 /// Represents a dynamic form field configuration
 public struct DynamicFormField: Identifiable, Hashable {
     public let id: String
-    public let type: DynamicFieldType
+    #if os(iOS)
+    public let textContentType: UITextContentType?  // OS-provided enum for text fields
+    #else
+    public let textContentType: String?  // String representation for non-iOS platforms
+    #endif
+    public let contentType: DynamicContentType?      // Our custom enum for UI components
     public let label: String
     public let placeholder: String?
     public let description: String? // Help text for the field
@@ -18,7 +26,8 @@ public struct DynamicFormField: Identifiable, Hashable {
     
     public init(
         id: String,
-        type: DynamicFieldType,
+        textContentType: Any? = nil,
+        contentType: DynamicContentType? = nil,
         label: String,
         placeholder: String? = nil,
         description: String? = nil,
@@ -29,7 +38,12 @@ public struct DynamicFormField: Identifiable, Hashable {
         metadata: [String: String]? = nil
     ) {
         self.id = id
-        self.type = type
+        #if os(iOS)
+        self.textContentType = textContentType as? UITextContentType
+        #else
+        self.textContentType = textContentType as? String
+        #endif
+        self.contentType = contentType
         self.label = label
         self.placeholder = placeholder
         self.description = description
@@ -39,38 +53,95 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.defaultValue = defaultValue
         self.metadata = metadata
     }
+    
+    /// Convenience initializer for text fields using OS UITextContentType (iOS only)
+    #if os(iOS)
+    public init(
+        id: String,
+        textContentType: UITextContentType,
+        label: String,
+        placeholder: String? = nil,
+        description: String? = nil,
+        isRequired: Bool = false,
+        validationRules: [String: String]? = nil,
+        defaultValue: String? = nil,
+        metadata: [String: String]? = nil
+    ) {
+        self.init(
+            id: id,
+            textContentType: textContentType,
+            contentType: nil,
+            label: label,
+            placeholder: placeholder,
+            description: description,
+            isRequired: isRequired,
+            validationRules: validationRules,
+            options: nil,
+            defaultValue: defaultValue,
+            metadata: metadata
+        )
+    }
+    #endif
+    
+    /// Convenience initializer for UI components using our custom DynamicContentType
+    public init(
+        id: String,
+        contentType: DynamicContentType,
+        label: String,
+        placeholder: String? = nil,
+        description: String? = nil,
+        isRequired: Bool = false,
+        validationRules: [String: String]? = nil,
+        options: [String]? = nil,
+        defaultValue: String? = nil,
+        metadata: [String: String]? = nil
+    ) {
+        self.init(
+            id: id,
+            textContentType: nil,
+            contentType: contentType,
+            label: label,
+            placeholder: placeholder,
+            description: description,
+            isRequired: isRequired,
+            validationRules: validationRules,
+            options: options,
+            defaultValue: defaultValue,
+            metadata: metadata
+        )
+    }
 }
 
-/// Types of dynamic form fields
-public enum DynamicFieldType: String, CaseIterable, Hashable {
-    case text = "text"
-    case email = "email"
-    case password = "password"
-    case number = "number"
-    case integer = "integer"  // High Priority: Native Int support
-    case phone = "phone"
-    case date = "date"
-    case time = "time"
-    case datetime = "datetime"
-    case select = "select"
-    case multiselect = "multiselect"
-    case radio = "radio"
-    case checkbox = "checkbox"
-    case textarea = "textarea"
-    case file = "file"
-    case image = "image"      // High Priority: Native image support
-    case url = "url"          // High Priority: Native URL support
-    case color = "color"
-    case range = "range"
-    case toggle = "toggle"
-    case richtext = "richtext"
-    case autocomplete = "autocomplete"
-    case array = "array"      // Medium Priority: Native array support
-    case data = "data"        // Medium Priority: Native Data support
-    case `enum` = "enum"      // Low Priority: Native enum support
-    case custom = "custom"
+/// Custom content types for non-text UI components
+public enum DynamicContentType: String, CaseIterable, Hashable {
+    case text = "text"               // Basic text input
+    case email = "email"             // Email input
+    case password = "password"       // Password input
+    case phone = "phone"             // Phone number input
+    case url = "url"                 // URL input
+    case number = "number"           // Number input with validation
+    case integer = "integer"         // Integer input
+    case date = "date"               // Date picker
+    case time = "time"               // Time picker
+    case datetime = "datetime"       // Date & time picker
+    case select = "select"           // Dropdown picker
+    case multiselect = "multiselect" // Multi-select picker
+    case radio = "radio"             // Radio buttons
+    case checkbox = "checkbox"       // Checkboxes
+    case textarea = "textarea"       // Multi-line text
+    case richtext = "richtext"       // Rich text editor
+    case file = "file"               // File picker
+    case image = "image"             // Image picker
+    case color = "color"             // Color picker
+    case range = "range"             // Slider
+    case toggle = "toggle"           // Toggle switch
+    case array = "array"             // Array input
+    case data = "data"               // Data input
+    case autocomplete = "autocomplete" // Autocomplete field
+    case `enum` = "enum"             // Enum picker
+    case custom = "custom"            // Custom component
     
-    /// Check if field type supports options
+    /// Check if content type supports options
     public var supportsOptions: Bool {
         switch self {
         case .select, .multiselect, .radio, .checkbox:
@@ -80,7 +151,7 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
         }
     }
     
-    /// Check if field type supports multiple values
+    /// Check if content type supports multiple values
     public var supportsMultipleValues: Bool {
         switch self {
         case .multiselect, .checkbox:
@@ -89,39 +160,6 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
             return false
         }
     }
-    
-    /// Get the appropriate keyboard type for text input
-    #if os(iOS)
-    public var keyboardType: UIKeyboardType {
-        switch self {
-        case .email:
-            return .emailAddress
-        case .number, .range, .integer:
-            return .numberPad
-        case .phone:
-            return .phonePad
-        case .url:
-            return .URL
-        default:
-            return .default
-        }
-    }
-    #else
-    public var keyboardType: String {
-        switch self {
-        case .email:
-            return "emailAddress"
-        case .number, .range, .integer:
-            return "numberPad"
-        case .phone:
-            return "phonePad"
-        case .url:
-            return "URL"
-        default:
-            return "default"
-        }
-    }
-    #endif
 }
 
 // MARK: - Dynamic Form Section
@@ -335,10 +373,46 @@ public struct DynamicFormBuilder {
         )
     }
     
-    /// Add a field to the current section
-    public mutating func addField(
+    /// Add a text field using OS UITextContentType (iOS only)
+    #if os(iOS)
+    public mutating func addTextField(
         id: String,
-        type: DynamicFieldType,
+        textContentType: UITextContentType,
+        label: String,
+        placeholder: String? = nil,
+        isRequired: Bool = false,
+        validationRules: [String: String]? = nil,
+        defaultValue: String? = nil,
+        metadata: [String: String]? = nil
+    ) {
+        if currentSection == nil {
+            // Create default section if none exists
+            currentSection = DynamicFormSection(
+                id: "default",
+                title: "Form Fields",
+                fields: []
+            )
+        }
+        
+        let field = DynamicFormField(
+            id: id,
+            textContentType: textContentType,
+            label: label,
+            placeholder: placeholder,
+            isRequired: isRequired,
+            validationRules: validationRules,
+            defaultValue: defaultValue,
+            metadata: metadata
+        )
+        
+        currentSection?.fields.append(field)
+    }
+    #endif
+    
+    /// Add a UI component using our custom DynamicContentType
+    public mutating func addContentField(
+        id: String,
+        contentType: DynamicContentType,
         label: String,
         placeholder: String? = nil,
         isRequired: Bool = false,
@@ -358,7 +432,7 @@ public struct DynamicFormBuilder {
         
         let field = DynamicFormField(
             id: id,
-            type: type,
+            contentType: contentType,
             label: label,
             placeholder: placeholder,
             isRequired: isRequired,

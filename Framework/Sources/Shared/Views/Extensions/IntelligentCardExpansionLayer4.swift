@@ -59,7 +59,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                 let layoutDecision = determineIntelligentCardLayout_L2(
                     contentCount: items.count,
                     screenWidth: screenWidth,
-                    deviceType: DeviceType.current,
+                    deviceType: SixLayerPlatform.deviceType,
                     contentComplexity: hints.complexity
                 )
                 
@@ -67,7 +67,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                 let strategy = selectCardExpansionStrategy_L3(
                     contentCount: items.count,
                     screenWidth: screenWidth,
-                    deviceType: DeviceType.current,
+                    deviceType: SixLayerPlatform.deviceType,
                     interactionStyle: .expandable,
                     contentDensity: .balanced
                 )
@@ -477,7 +477,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
                 let layoutDecision = determineIntelligentCardLayout_L2(
                     contentCount: items.count,
                     screenWidth: geometry.size.width,
-                    deviceType: DeviceType.current,
+                    deviceType: SixLayerPlatform.deviceType,
                     contentComplexity: hints.complexity
                 )
                 
@@ -668,7 +668,7 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
             // Choose the best layout based on content and device
             if items.count <= 2 {
                 ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
-            } else if DeviceType.current == .phone {
+            } else if SixLayerPlatform.deviceType == .phone {
                 ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
             } else {
                 GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)

@@ -33,11 +33,11 @@ final class CoreArchitectureTests: XCTestCase {
         placeholder: String? = nil,
         value: String = "",
         isRequired: Bool = false,
-        fieldType: DynamicFieldType = .text
+        contentType: DynamicContentType = .text
     ) -> DynamicFormField {
         return DynamicFormField(
             id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
-            type: fieldType,
+            contentType: contentType,
             label: label,
             placeholder: placeholder,
             isRequired: isRequired,
@@ -95,7 +95,9 @@ final class CoreArchitectureTests: XCTestCase {
         XCTAssertEqual(dashboardFields.count, 2, "Dashboard should have 2 simple fields")
         XCTAssertTrue(dashboardFields.contains { $0.label == "Dashboard Name" })
         XCTAssertTrue(dashboardFields.contains { $0.label == "Auto Refresh" })
-        XCTAssertTrue(dashboardFields.contains { $0.type == .toggle })
+        XCTAssertTrue(dashboardFields.contains { field in
+            field.contentType == .toggle
+        })
         
         // Detail context should create rich, comprehensive fields
         let detailFields = createDynamicFormFields(context: .detail)
@@ -105,8 +107,12 @@ final class CoreArchitectureTests: XCTestCase {
         XCTAssertTrue(detailFields.contains { $0.label == "Created Date" })
         XCTAssertTrue(detailFields.contains { $0.label == "Created Time" })
         XCTAssertTrue(detailFields.contains { $0.label == "Attachments" })
-        XCTAssertTrue(detailFields.contains { $0.type == .richtext })
-        XCTAssertTrue(detailFields.contains { $0.type == .file })
+        XCTAssertTrue(detailFields.contains { field in
+            field.contentType == .richtext
+        })
+        XCTAssertTrue(detailFields.contains { field in
+            field.contentType == .file
+        })
         
         // Test that contexts produce different user experiences
         XCTAssertNotEqual(dashboardFields.count, detailFields.count, 
@@ -166,8 +172,9 @@ final class CoreArchitectureTests: XCTestCase {
                 
             case .edit:
                 // Edit should have editable fields
-                XCTAssertTrue(fields.contains { $0.type == .text || $0.type == .textarea }, 
-                            "Edit context should have text input fields")
+                XCTAssertTrue(fields.contains { field in
+                    field.contentType == .text || field.contentType == .textarea
+                }, "Edit context should have text input fields")
                 
             case .create:
                 // Create should have form fields for new item creation
@@ -573,13 +580,13 @@ final class CoreArchitectureTests: XCTestCase {
     
     func testPlatformCases() throws {
         // Given & When
-        let platforms = Platform.allCases
+        let platforms = SixLayerPlatform.allCases
         
         // Then
-        XCTAssertTrue(platforms.contains(.iOS))
-        XCTAssertTrue(platforms.contains(.macOS))
-        XCTAssertTrue(platforms.contains(.tvOS))
-        XCTAssertTrue(platforms.contains(.watchOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.iOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.macOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.tvOS))
+        XCTAssertTrue(platforms.contains(SixLayerPlatform.watchOS))
     }
     
     // MARK: - Layer 6: Platform System Integration Tests

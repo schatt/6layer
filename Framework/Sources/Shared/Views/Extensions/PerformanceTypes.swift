@@ -54,10 +54,10 @@ public struct MemoryUsageBenchmark {
 
 /// Cross-platform performance comparison results
 public struct CrossPlatformPerformanceComparison {
-    public let platformResults: [Platform: ViewRenderingBenchmark]
+    public let platformResults: [SixLayerPlatform: ViewRenderingBenchmark]
     public let timestamp: Date
     
-    public init(platformResults: [Platform: ViewRenderingBenchmark], timestamp: Date) {
+    public init(platformResults: [SixLayerPlatform: ViewRenderingBenchmark], timestamp: Date) {
         self.platformResults = platformResults
         self.timestamp = timestamp
     }

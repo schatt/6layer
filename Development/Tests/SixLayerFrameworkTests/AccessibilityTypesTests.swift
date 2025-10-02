@@ -42,7 +42,7 @@ final class AccessibilityTypesTests: XCTestCase {
     
     func testAccessibilityTypesAcrossPlatforms() {
         // Given: Platform-specific accessibility type expectations
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // When: Testing accessibility types on different platforms
         // Then: Test platform-specific business logic

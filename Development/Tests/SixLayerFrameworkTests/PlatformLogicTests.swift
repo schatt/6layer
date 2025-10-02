@@ -12,7 +12,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testPlatformDetectionLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
         // WHEN: Testing platform detection logic
         for platform in platforms {
@@ -113,7 +113,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testCapabilityMatrixConsistency() {
         // GIVEN: All platform and device combinations
-        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
         
         // WHEN: Testing capability matrix consistency
@@ -127,7 +127,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testCapabilityConsistency(_ config: CardExpansionPlatformConfig, platform: Platform, deviceType: DeviceType) {
+    func testCapabilityConsistency(_ config: CardExpansionPlatformConfig, platform: SixLayerPlatform, deviceType: DeviceType) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             XCTAssertTrue(config.supportsTouch, "Haptic feedback should only be available with touch on \(platform) \(deviceType)")
@@ -155,7 +155,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testVisionFrameworkAvailabilityLogic() {
         // GIVEN: Different platforms
-        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
         // WHEN: Testing Vision framework availability logic
         for platform in platforms {
@@ -174,7 +174,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testOCRAvailabilityLogic() {
         // GIVEN: Different platforms
-        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
         // WHEN: Testing OCR availability logic
         for platform in platforms {
@@ -195,7 +195,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testLayoutDecisionLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
         // WHEN: Testing layout decision logic
         for platform in platforms {
@@ -207,7 +207,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: Platform, config: CardExpansionPlatformConfig) {
+    func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: CardExpansionPlatformConfig) {
         // Touch platforms should have appropriate touch targets
         if config.supportsTouch {
             XCTAssertGreaterThanOrEqual(layoutDecision.cardWidth, config.minTouchTarget, "Card width should accommodate touch targets on \(platform)")
@@ -227,7 +227,7 @@ final class PlatformLogicTests: XCTestCase {
     
     func testAnimationLogic() {
         // GIVEN: Different platform configurations
-        let platforms: [Platform] = Array(Platform.allCases) // Use real enum
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
         // WHEN: Testing animation logic
         for platform in platforms {
@@ -239,7 +239,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testAnimationAppropriateness(_ performanceConfig: CardExpansionPerformanceConfig, platform: Platform, config: CardExpansionPlatformConfig) {
+    func testAnimationAppropriateness(_ performanceConfig: CardExpansionPerformanceConfig, platform: SixLayerPlatform, config: CardExpansionPlatformConfig) {
         // Touch platforms should have appropriate animation duration
         if config.supportsTouch {
             XCTAssertGreaterThan(performanceConfig.maxAnimationDuration, 0, "Touch platforms should have animation duration on \(platform)")
@@ -251,7 +251,7 @@ final class PlatformLogicTests: XCTestCase {
     
     // MARK: - Helper Methods
     
-    private func createMockPlatformConfig(for platform: Platform) -> CardExpansionPlatformConfig {
+    private func createMockPlatformConfig(for platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
         switch platform {
         case .iOS:
             return CardExpansionPlatformConfig(
@@ -405,12 +405,12 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    private func createMockPlatformDeviceConfig(platform: Platform, deviceType: DeviceType) -> CardExpansionPlatformConfig {
+    private func createMockPlatformDeviceConfig(platform: SixLayerPlatform, deviceType: DeviceType) -> CardExpansionPlatformConfig {
         // This would be more complex in reality, but for testing we'll use platform as primary
         return createMockPlatformConfig(for: platform)
     }
     
-    private func createMockVisionAvailability(for platform: Platform) -> Bool {
+    private func createMockVisionAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return true
@@ -419,7 +419,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    private func createMockOCRAvailability(for platform: Platform) -> Bool {
+    private func createMockOCRAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return true
@@ -428,7 +428,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    private func createMockLayoutDecision(for platform: Platform) -> IntelligentCardLayoutDecision {
+    private func createMockLayoutDecision(for platform: SixLayerPlatform) -> IntelligentCardLayoutDecision {
         switch platform {
         case .iOS:
             return IntelligentCardLayoutDecision(
@@ -473,7 +473,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    private func createMockPerformanceConfig(for platform: Platform) -> CardExpansionPerformanceConfig {
+    private func createMockPerformanceConfig(for platform: SixLayerPlatform) -> CardExpansionPerformanceConfig {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return CardExpansionPerformanceConfig(

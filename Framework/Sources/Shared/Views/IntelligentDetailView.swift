@@ -343,7 +343,7 @@ public extension IntelligentDetailView {
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         // Use device characteristics to choose the best strategy
-        let deviceType = DeviceType.current
+        let deviceType = SixLayerPlatform.deviceType
         
         switch deviceType {
         case .phone:

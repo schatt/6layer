@@ -45,7 +45,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     struct TestRunnerConfig {
         let name: String
         let testTypes: [TestType]
-        let platforms: [Platform]
+        let platforms: [SixLayerPlatform]
         let capabilities: [CapabilityType]
         
         enum TestType {
@@ -73,33 +73,33 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     private let testRunnerConfigurations: [TestRunnerConfig] = [
         TestRunnerConfig(
             name: "Complete Capability Testing",
-            testTypes: [.capabilityDetection, .uiGeneration, .crossPlatformConsistency, .viewGenerationIntegration, .behaviorValidation],
-            platforms: [.iOS, .macOS, .watchOS, .tvOS, .visionOS],
-            capabilities: [.touch, .hover, .hapticFeedback, .assistiveTouch, .voiceOver, .switchControl, .vision, .ocr]
+            testTypes: [TestRunnerConfig.TestType.capabilityDetection, TestRunnerConfig.TestType.uiGeneration, TestRunnerConfig.TestType.crossPlatformConsistency, TestRunnerConfig.TestType.viewGenerationIntegration, TestRunnerConfig.TestType.behaviorValidation],
+            platforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS],
+            capabilities: [TestRunnerConfig.CapabilityType.touch, TestRunnerConfig.CapabilityType.hover, TestRunnerConfig.CapabilityType.hapticFeedback, TestRunnerConfig.CapabilityType.assistiveTouch, TestRunnerConfig.CapabilityType.voiceOver, TestRunnerConfig.CapabilityType.switchControl, TestRunnerConfig.CapabilityType.vision, TestRunnerConfig.CapabilityType.ocr]
         ),
         TestRunnerConfig(
             name: "Touch-Focused Testing",
-            testTypes: [.capabilityDetection, .uiGeneration, .behaviorValidation],
-            platforms: [.iOS, .watchOS],
-            capabilities: [.touch, .hapticFeedback, .assistiveTouch, .voiceOver, .switchControl]
+            testTypes: [TestRunnerConfig.TestType.capabilityDetection, TestRunnerConfig.TestType.uiGeneration, TestRunnerConfig.TestType.behaviorValidation],
+            platforms: [SixLayerPlatform.iOS, SixLayerPlatform.watchOS],
+            capabilities: [TestRunnerConfig.CapabilityType.touch, TestRunnerConfig.CapabilityType.hapticFeedback, TestRunnerConfig.CapabilityType.assistiveTouch, TestRunnerConfig.CapabilityType.voiceOver, TestRunnerConfig.CapabilityType.switchControl]
         ),
         TestRunnerConfig(
             name: "Hover-Focused Testing",
-            testTypes: [.capabilityDetection, .uiGeneration, .behaviorValidation],
-            platforms: [.macOS],
-            capabilities: [.hover, .voiceOver, .switchControl]
+            testTypes: [TestRunnerConfig.TestType.capabilityDetection, TestRunnerConfig.TestType.uiGeneration, TestRunnerConfig.TestType.behaviorValidation],
+            platforms: [SixLayerPlatform.macOS],
+            capabilities: [TestRunnerConfig.CapabilityType.hover, TestRunnerConfig.CapabilityType.voiceOver, TestRunnerConfig.CapabilityType.switchControl]
         ),
         TestRunnerConfig(
             name: "Accessibility-Focused Testing",
-            testTypes: [.capabilityDetection, .uiGeneration, .crossPlatformConsistency],
-            platforms: [.iOS, .macOS, .watchOS, .tvOS, .visionOS],
-            capabilities: [.voiceOver, .switchControl]
+            testTypes: [TestRunnerConfig.TestType.capabilityDetection, TestRunnerConfig.TestType.uiGeneration, TestRunnerConfig.TestType.crossPlatformConsistency],
+            platforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS],
+            capabilities: [TestRunnerConfig.CapabilityType.voiceOver, TestRunnerConfig.CapabilityType.switchControl]
         ),
         TestRunnerConfig(
             name: "Vision-Focused Testing",
-            testTypes: [.capabilityDetection, .uiGeneration, .behaviorValidation],
-            platforms: [.iOS, .macOS, .visionOS],
-            capabilities: [.vision, .ocr, .voiceOver, .switchControl]
+            testTypes: [TestRunnerConfig.TestType.capabilityDetection, TestRunnerConfig.TestType.uiGeneration, TestRunnerConfig.TestType.behaviorValidation],
+            platforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.visionOS],
+            capabilities: [TestRunnerConfig.CapabilityType.vision, TestRunnerConfig.CapabilityType.ocr, TestRunnerConfig.CapabilityType.voiceOver, TestRunnerConfig.CapabilityType.switchControl]
         )
     ]
     
@@ -162,11 +162,13 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
         print("     🔍 Testing \(capability) detection...")
         
         // Test enabled state
-        let enabledConfig = createMockConfig(for: capability, enabled: true)
+        setMockCapabilityState(capability, enabled: true)
+        let enabledConfig = getCardExpansionPlatformConfig()
         testCapabilityDetection(enabledConfig, capability: capability, enabled: true)
         
         // Test disabled state
-        let disabledConfig = createMockConfig(for: capability, enabled: false)
+        setMockCapabilityState(capability, enabled: false)
+        let disabledConfig = getCardExpansionPlatformConfig()
         testCapabilityDetection(disabledConfig, capability: capability, enabled: false)
     }
     
@@ -207,9 +209,15 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     private func runUIGenerationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         print("     🎨 Testing \(capability) UI generation...")
         
-        // Use actual platform config for UI generation tests
-        let platformConfig = getCardExpansionPlatformConfig()
-        testUIGeneration(platformConfig, capability: capability, enabled: true)
+        // Test with capability enabled
+        setMockCapabilityState(capability, enabled: true)
+        let enabledConfig = getCardExpansionPlatformConfig()
+        testUIGeneration(enabledConfig, capability: capability, enabled: true)
+        
+        // Test with capability disabled
+        setMockCapabilityState(capability, enabled: false)
+        let disabledConfig = getCardExpansionPlatformConfig()
+        testUIGeneration(disabledConfig, capability: capability, enabled: false)
     }
     
     /// Test UI generation
@@ -247,10 +255,12 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
             #else
             XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch UI should not be generated on non-assistive touch platforms")
             #endif
-        case .voiceOver, .switchControl:
-            // Accessibility should always be supported
-            XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should always be supported")
-            XCTAssertTrue(config.supportsSwitchControl, "Switch Control should always be supported")
+        case .voiceOver:
+            // VoiceOver should match the enabled state
+            XCTAssertEqual(config.supportsVoiceOver, enabled, "VoiceOver should be \(enabled)")
+        case .switchControl:
+            // Switch Control should match the enabled state
+            XCTAssertEqual(config.supportsSwitchControl, enabled, "Switch Control should be \(enabled)")
         case .vision, .ocr:
             // Vision/OCR would be tested with actual framework calls
             print("       Vision/OCR UI generation test would be implemented with actual framework calls")
@@ -267,7 +277,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Run cross-platform consistency test for a specific platform
-    private func runCrossPlatformConsistencyTest(_ platform: Platform, config: TestRunnerConfig) {
+    private func runCrossPlatformConsistencyTest(_ platform: SixLayerPlatform, config: TestRunnerConfig) {
         print("     🌐 Testing cross-platform consistency for \(platform)...")
         
         // Test that the platform behaves consistently for each capability
@@ -277,7 +287,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test cross-platform consistency
-    func testCrossPlatformConsistency(_ platform: Platform, capability: TestRunnerConfig.CapabilityType) {
+    func testCrossPlatformConsistency(_ platform: SixLayerPlatform, capability: TestRunnerConfig.CapabilityType) {
         let platformConfig = createPlatformConfig(platform: platform)
         
         // Test that the platform configuration is consistent
@@ -321,7 +331,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Run view generation integration test for a specific platform
-    private func runViewGenerationIntegrationTest(_ platform: Platform, config: TestRunnerConfig) {
+    private func runViewGenerationIntegrationTest(_ platform: SixLayerPlatform, config: TestRunnerConfig) {
         print("     🔗 Testing view generation integration for \(platform)...")
         
         let platformConfig = createPlatformConfig(platform: platform)
@@ -331,7 +341,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Test view generation integration
-    func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: Platform) {
+    func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
         // Test that the configuration is valid for view generation
         XCTAssertNotNil(config, "Configuration should be valid for view generation on \(platform)")
         
@@ -362,9 +372,15 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     private func runBehaviorValidationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         print("     ✅ Testing \(capability) behavior validation...")
         
-        // Use actual platform config for behavior validation tests
-        let platformConfig = getCardExpansionPlatformConfig()
-        testBehaviorValidation(platformConfig, capability: capability, enabled: true)
+        // Test with capability enabled
+        setMockCapabilityState(capability, enabled: true)
+        let enabledConfig = getCardExpansionPlatformConfig()
+        testBehaviorValidation(enabledConfig, capability: capability, enabled: true)
+        
+        // Test with capability disabled
+        setMockCapabilityState(capability, enabled: false)
+        let disabledConfig = getCardExpansionPlatformConfig()
+        testBehaviorValidation(disabledConfig, capability: capability, enabled: false)
     }
     
     /// Test behavior validation
@@ -403,10 +419,12 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
             #else
             XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch behavior should be disabled on non-assistive touch platforms")
             #endif
-        case .voiceOver, .switchControl:
-            // Accessibility should always be supported
-            XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should always be supported")
-            XCTAssertTrue(config.supportsSwitchControl, "Switch Control should always be supported")
+        case .voiceOver:
+            // VoiceOver should match the enabled state
+            XCTAssertEqual(config.supportsVoiceOver, enabled, "VoiceOver should be \(enabled)")
+        case .switchControl:
+            // Switch Control should match the enabled state
+            XCTAssertEqual(config.supportsSwitchControl, enabled, "Switch Control should be \(enabled)")
         case .vision, .ocr:
             // Vision/OCR would be tested with actual framework calls
             print("       Vision/OCR behavior validation would be implemented with actual framework calls")
@@ -414,6 +432,27 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     // MARK: - Helper Methods
+    
+    /// Set mock capability state for testing
+    private func setMockCapabilityState(_ capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+        switch capability {
+        case .touch:
+            RuntimeCapabilityDetection.setTestTouchSupport(enabled)
+        case .hover:
+            RuntimeCapabilityDetection.setTestHover(enabled)
+        case .hapticFeedback:
+            RuntimeCapabilityDetection.setTestHapticFeedback(enabled)
+        case .assistiveTouch:
+            RuntimeCapabilityDetection.setTestAssistiveTouch(enabled)
+        case .voiceOver:
+            RuntimeCapabilityDetection.setTestVoiceOver(enabled)
+        case .switchControl:
+            RuntimeCapabilityDetection.setTestSwitchControl(enabled)
+        case .vision, .ocr:
+            // Vision/OCR would be tested with actual framework calls
+            break
+        }
+    }
     
     /// Create a mock configuration for a specific capability and state
     private func createMockConfig(for capability: TestRunnerConfig.CapabilityType, enabled: Bool) -> CardExpansionPlatformConfig {
@@ -497,7 +536,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     }
     
     /// Create a platform configuration for a specific platform using centralized utilities
-    private func createPlatformConfig(platform: Platform) -> CardExpansionPlatformConfig {
+    private func createPlatformConfig(platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
         return PlatformTestUtilities.getPlatformConfig(for: platform)
     }
     

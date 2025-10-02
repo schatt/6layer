@@ -41,7 +41,7 @@ final class PlatformTestUtilities {
     
     /// Complete platform test configuration containing all capabilities and settings
     struct PlatformTestConfig {
-        let platform: Platform
+        let platform: SixLayerPlatform
         let config: CardExpansionPlatformConfig
         let visionAvailable: Bool
         let ocrAvailable: Bool
@@ -52,7 +52,7 @@ final class PlatformTestUtilities {
     /// Creates a complete iOS platform test configuration with all capabilities set appropriately
     static func createIOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             config: CardExpansionPlatformConfig(
                 supportsHapticFeedback: true,
                 supportsHover: false,
@@ -72,7 +72,7 @@ final class PlatformTestUtilities {
     /// Creates a complete macOS platform test configuration with all capabilities set appropriately
     static func createMacOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
-            platform: .macOS,
+            platform: SixLayerPlatform.macOS,
             config: CardExpansionPlatformConfig(
                 supportsHapticFeedback: false,
                 supportsHover: true,
@@ -92,7 +92,7 @@ final class PlatformTestUtilities {
     /// Creates a complete watchOS platform test configuration with all capabilities set appropriately
     static func createWatchOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
-            platform: .watchOS,
+            platform: SixLayerPlatform.watchOS,
             config: CardExpansionPlatformConfig(
                 supportsHapticFeedback: true,
                 supportsHover: false,
@@ -112,7 +112,7 @@ final class PlatformTestUtilities {
     /// Creates a complete tvOS platform test configuration with all capabilities set appropriately
     static func createTVOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
-            platform: .tvOS,
+            platform: SixLayerPlatform.tvOS,
             config: CardExpansionPlatformConfig(
                 supportsHapticFeedback: false,
                 supportsHover: false,
@@ -132,7 +132,7 @@ final class PlatformTestUtilities {
     /// Creates a complete visionOS platform test configuration with all capabilities set appropriately
     static func createVisionOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
-            platform: .visionOS,
+            platform: SixLayerPlatform.visionOS,
             config: CardExpansionPlatformConfig(
                 supportsHapticFeedback: false,
                 supportsHover: false,
@@ -259,7 +259,7 @@ final class PlatformTestUtilities {
     // MARK: - Platform Configuration Helpers
     
     /// Get platform configuration for a specific platform using centralized helpers
-    static func getPlatformConfig(for platform: Platform) -> CardExpansionPlatformConfig {
+    static func getPlatformConfig(for platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
         switch platform {
         case .iOS:
             return createIOSPlatformTestConfig().config
@@ -275,7 +275,7 @@ final class PlatformTestUtilities {
     }
     
     /// Get Vision availability for a specific platform using centralized helpers
-    static func getVisionAvailability(for platform: Platform) -> Bool {
+    static func getVisionAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return true
@@ -285,7 +285,7 @@ final class PlatformTestUtilities {
     }
     
     /// Get OCR availability for a specific platform using centralized helpers
-    static func getOCRAvailability(for platform: Platform) -> Bool {
+    static func getOCRAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return true

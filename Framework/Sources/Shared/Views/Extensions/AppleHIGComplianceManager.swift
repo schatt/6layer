@@ -24,7 +24,7 @@ public class AppleHIGComplianceManager: ObservableObject {
     @Published public var designSystem: PlatformDesignSystem = PlatformDesignSystem(for: .iOS)
     
     /// Current platform
-    @Published public var currentPlatform: Platform = .iOS
+    @Published public var currentPlatform: SixLayerPlatform = .iOS
     
     // MARK: - Private Properties
     
@@ -41,7 +41,7 @@ public class AppleHIGComplianceManager: ObservableObject {
     // MARK: - Platform Detection
     
     private func setupPlatformDetection() {
-        currentPlatform = Platform.current
+        currentPlatform = SixLayerPlatform.current
     }
     
     // MARK: - Accessibility Monitoring
@@ -386,13 +386,13 @@ public struct AccessibilitySystemState {
 
 /// Platform design system
 public struct PlatformDesignSystem {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public let colorSystem: HIGColorSystem
     public let typographySystem: HIGTypographySystem
     public let spacingSystem: HIGSpacingSystem
     public let iconSystem: HIGIconSystem
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
         self.colorSystem = HIGColorSystem(for: platform)
         self.typographySystem = HIGTypographySystem(for: platform)
@@ -411,7 +411,7 @@ public struct HIGColorSystem {
     public let text: AnyShapeStyle
     public let textSecondary: AnyShapeStyle
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.primary = AnyShapeStyle(ShapeStyleSystem.StandardColors.primary)
         self.secondary = AnyShapeStyle(ShapeStyleSystem.StandardColors.secondary)
         self.accent = AnyShapeStyle(ShapeStyleSystem.StandardColors.accent)
@@ -433,7 +433,7 @@ public struct HIGTypographySystem {
     public let footnote: Font
     public let caption: Font
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         switch platform {
         case .iOS:
             self.largeTitle = .largeTitle
@@ -476,16 +476,16 @@ public struct HIGSpacingSystem {
     public let xxl: CGFloat = 40
     public let xxxl: CGFloat = 48
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         // Spacing is consistent across platforms
     }
 }
 
 /// Icon system for platform
 public struct HIGIconSystem {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
     }
     

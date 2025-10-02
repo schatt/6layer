@@ -593,43 +593,65 @@ private func createSimpleFieldView(for field: DynamicFormField) -> some View {
             .font(.subheadline)
             .fontWeight(.medium)
         
-        switch field.type {
-        case .text, .email, .password, .url, .phone:
+        // Handle text fields using OS UITextContentType
+        if let textContentType = field.textContentType {
+            #if os(iOS)
+            switch textContentType {
+            case .emailAddress, .password, .telephoneNumber, .URL, .oneTimeCode, .name, .username, .newPassword, .postalCode, .creditCardNumber, .fullStreetAddress, .jobTitle, .organizationName, .givenName, .familyName, .middleName, .namePrefix, .nameSuffix:
+                TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
+                    .textFieldStyle(.roundedBorder)
+            default:
+                TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
+                    .textFieldStyle(.roundedBorder)
+            }
+            #else
+            // On macOS, textContentType is a String
             TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
                 .textFieldStyle(.roundedBorder)
-        case .number, .integer:
-            TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
-                .textFieldStyle(.roundedBorder)
-        case .textarea, .richtext:
-            TextEditor(text: .constant(field.defaultValue ?? ""))
-                .frame(minHeight: 80)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-        case .toggle:
-            Toggle(field.label, isOn: .constant(false))
-        case .select, .enum:
-            Picker(field.placeholder ?? "Select option", selection: .constant("")) {
-                Text("Select an option").tag("")
-                if let options = field.options {
-                    ForEach(options, id: \.self) { option in
-                        Text(option).tag(option)
+            #endif
+        }
+        // Handle UI components using our custom DynamicContentType
+        else if let contentType = field.contentType {
+            switch contentType {
+            case .number, .integer:
+                TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
+                    .textFieldStyle(.roundedBorder)
+            case .textarea, .richtext:
+                TextEditor(text: .constant(field.defaultValue ?? ""))
+                    .frame(minHeight: 80)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+            case .toggle:
+                Toggle(field.label, isOn: .constant(false))
+            case .select:
+                Picker(field.placeholder ?? "Select option", selection: .constant("")) {
+                    Text("Select an option").tag("")
+                    if let options = field.options {
+                        ForEach(options, id: \.self) { option in
+                            Text(option).tag(option)
+                        }
                     }
                 }
+                .pickerStyle(.menu)
+            case .date:
+                DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
+                    .datePickerStyle(.compact)
+            case .time:
+                DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
+                    .datePickerStyle(.compact)
+            case .color:
+                ColorPicker(field.label, selection: .constant(.blue))
+            case .range:
+                Slider(value: .constant(0.5), in: 0...1)
+            case .multiselect, .radio, .checkbox, .file, .image, .datetime, .array, .data, .custom, .text, .email, .password, .phone, .url, .autocomplete, .enum:
+                TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
+                    .textFieldStyle(.roundedBorder)
             }
-            .pickerStyle(.menu)
-        case .date:
-            DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
-                .datePickerStyle(.compact)
-        case .time:
-            DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
-                .datePickerStyle(.compact)
-        case .color:
-            ColorPicker(field.label, selection: .constant(.blue))
-        case .range:
-            Slider(value: .constant(0.5), in: 0...1)
-        default:
+        }
+        // Fallback for fields with neither textContentType nor contentType
+        else {
             TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
                 .textFieldStyle(.roundedBorder)
         }
@@ -783,8 +805,8 @@ public struct CustomItemCollectionView<Item: Identifiable>: View {
         let _ = hints.customPreferences["interactionStyle"] ?? "static"
         
         // Platform-aware decision making
-        let platform = Platform.current
-        let deviceType = DeviceType.current
+        let platform = SixLayerPlatform.currentPlatform
+        let deviceType = SixLayerPlatform.deviceType
         
         // For custom views, prefer grid on larger screens, list on smaller
         switch platform {
@@ -826,15 +848,21 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
     public var body: some View {
         // Handle empty collections with appropriate empty state
         if items.isEmpty {
-            return AnyView(CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem))
+            return AnyView(CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
+                .appleHIGCompliant()
+                .automaticAccessibility()
+                .platformPatterns()
+                .visualConsistency()
+                .platformPerformanceOptimized(for: SixLayerPlatform.currentPlatform)
+                .platformMemoryOptimized(for: SixLayerPlatform.currentPlatform))
         }
         
         // Layer 1: Intelligent presentation decision based on hints and platform
         let presentationStrategy = determinePresentationStrategy()
         
-        switch presentationStrategy {
+        let baseView: AnyView = switch presentationStrategy {
         case .expandableCards:
-            return AnyView(ExpandableCardCollectionView(
+            AnyView(ExpandableCardCollectionView(
                 items: items, 
                 hints: hints, 
                 onCreateItem: onCreateItem,
@@ -843,7 +871,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 onItemEdited: onItemEdited
             ))
         case .coverFlow:
-            return AnyView(CoverFlowCollectionView(
+            AnyView(CoverFlowCollectionView(
                 items: items, 
                 hints: hints, 
                 onCreateItem: onCreateItem,
@@ -852,7 +880,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 onItemEdited: onItemEdited
             ))
         case .grid:
-            return AnyView(GridCollectionView(
+            AnyView(GridCollectionView(
                 items: items, 
                 hints: hints, 
                 onCreateItem: onCreateItem,
@@ -861,7 +889,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 onItemEdited: onItemEdited
             ))
         case .list:
-            return AnyView(ListCollectionView(
+            AnyView(ListCollectionView(
                 items: items, 
                 hints: hints, 
                 onCreateItem: onCreateItem,
@@ -870,7 +898,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 onItemEdited: onItemEdited
             ))
         case .masonry:
-            return AnyView(MasonryCollectionView(
+            AnyView(MasonryCollectionView(
                 items: items, 
                 hints: hints, 
                 onCreateItem: onCreateItem,
@@ -879,7 +907,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 onItemEdited: onItemEdited
             ))
         case .adaptive:
-            return AnyView(AdaptiveCollectionView(
+            AnyView(AdaptiveCollectionView(
                 items: items, 
                 hints: hints, 
                 onCreateItem: onCreateItem,
@@ -888,6 +916,15 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 onItemEdited: onItemEdited
             ))
         }
+        
+        // AUTOMATICALLY apply HIG compliance - this is the key fix!
+        return AnyView(baseView
+            .appleHIGCompliant()
+            .automaticAccessibility()
+            .platformPatterns()
+            .visualConsistency()
+            .platformPerformanceOptimized(for: SixLayerPlatform.currentPlatform)
+            .platformMemoryOptimized(for: SixLayerPlatform.currentPlatform))
     }
     
     /// Determine the optimal presentation strategy based on hints and platform
@@ -897,8 +934,8 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
         let _ = hints.customPreferences["layoutPreference"] ?? "automatic"
         
         // Platform-aware decision making
-        let platform = Platform.current
-        let deviceType = DeviceType.current
+        let platform = SixLayerPlatform.currentPlatform
+        let deviceType = SixLayerPlatform.deviceType
         
         // Feature cards with expandable interaction
         if itemType == "featureCards" && interactionStyle == "expandable" {
@@ -1275,13 +1312,22 @@ public struct GenericNumericDataView: View {
     let hints: PresentationHints
     
     public var body: some View {
-        VStack {
+        let baseView = VStack {
             Text("Numeric Data")
                 .font(.headline)
             Text("Data points: \(data.count)")
                 .font(.caption)
         }
         .padding()
+        
+        // AUTOMATICALLY apply HIG compliance
+        return baseView
+            .appleHIGCompliant()
+            .automaticAccessibility()
+            .platformPatterns()
+            .visualConsistency()
+            .platformPerformanceOptimized(for: SixLayerPlatform.current)
+            .platformMemoryOptimized(for: SixLayerPlatform.current)
     }
 }
 
@@ -1307,32 +1353,45 @@ public struct GenericFormView: View {
                             .foregroundColor(Color.platformLabel)
                         
                         // Use platform-specific field styling based on field type
-                        switch field.type {
-                        case .text, .email, .password:
+                        if let textContentType = field.textContentType {
+                            // Handle text fields using OS UITextContentType
                             TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
                                 .textFieldStyle(.roundedBorder)
                                 .background(Color.platformSecondaryBackground)
-                        case .number, .integer:
-                            TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .background(Color.platformSecondaryBackground)
-                        case .textarea:
-                            TextEditor(text: .constant(""))
-                                .frame(minHeight: 80)
-                                .background(Color.platformSecondaryBackground)
-                                .cornerRadius(8)
-                        case .toggle:
-                            Toggle(field.label, isOn: .constant(false))
-                        case .select:
-                            Picker(field.label, selection: .constant("")) {
-                                if let options = field.options {
-                                    ForEach(options, id: \.self) { option in
-                                        Text(option).tag(option)
+                        } else if let contentType = field.contentType {
+                            // Handle UI components using our custom DynamicContentType
+                            switch contentType {
+                            case .text, .email, .password:
+                                TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
+                                    .textFieldStyle(.roundedBorder)
+                                    .background(Color.platformSecondaryBackground)
+                            case .number, .integer:
+                                TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
+                                    .textFieldStyle(.roundedBorder)
+                                    .background(Color.platformSecondaryBackground)
+                            case .textarea:
+                                TextEditor(text: .constant(""))
+                                    .frame(minHeight: 80)
+                                    .background(Color.platformSecondaryBackground)
+                                    .cornerRadius(8)
+                            case .toggle:
+                                Toggle(field.label, isOn: .constant(false))
+                            case .select:
+                                Picker(field.label, selection: .constant("")) {
+                                    if let options = field.options {
+                                        ForEach(options, id: \.self) { option in
+                                            Text(option).tag(option)
+                                        }
                                     }
                                 }
+                                .pickerStyle(.menu)
+                            default:
+                                TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
+                                    .textFieldStyle(.roundedBorder)
+                                    .background(Color.platformSecondaryBackground)
                             }
-                            .pickerStyle(.menu)
-                        default:
+                        } else {
+                            // Fallback for fields with neither textContentType nor contentType
                             TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
                                 .textFieldStyle(.roundedBorder)
                                 .background(Color.platformSecondaryBackground)
@@ -1439,120 +1498,129 @@ public struct ModalFormView: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
             
-            switch field.type {
-            case .text:
+            if let textContentType = field.textContentType {
+                // Handle text fields using OS UITextContentType
                 TextField(field.placeholder ?? "Enter text", text: .constant(""))
                     .textFieldStyle(.roundedBorder)
-            case .email:
-                TextField(field.placeholder ?? "Enter email", text: .constant(""))
-                    .textFieldStyle(.roundedBorder)
-
-            case .password:
-                SecureField(field.placeholder ?? "Enter password", text: .constant(""))
-                    .textFieldStyle(.roundedBorder)
-            case .number:
-                TextField(field.placeholder ?? "Enter number", text: .constant(""))
-                    .textFieldStyle(.roundedBorder)
-
-            case .date:
-                DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
-                    .datePickerStyle(.compact)
-            case .select:
-                Picker(field.placeholder ?? "Select option", selection: .constant("")) {
-                    Text("Select an option").tag("")
-                    if let options = field.options {
-                        ForEach(options, id: \.self) { option in
-                            Text(option).tag(option)
-                        }
-                    }
-                }
-                .pickerStyle(.menu)
-            case .textarea:
-                TextEditor(text: .constant(""))
-                    .frame(minHeight: 80)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                    )
-            case .checkbox:
-                Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
-            case .radio:
-                VStack(alignment: .leading) {
-                    Text(field.label)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                    
-                    if let options = field.options {
-                        ForEach(options, id: \.self) { option in
-                            HStack {
-                                Button(action: {
-                                    // TODO: Update field value when DynamicFormState is implemented
-                                }) {
-                                    Image(systemName: "circle")
-                                        .foregroundColor(.gray)
-                                }
-                                Text(option)
+            } else if let contentType = field.contentType {
+                // Handle UI components using our custom DynamicContentType
+                switch contentType {
+                case .text:
+                    TextField(field.placeholder ?? "Enter text", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .email:
+                    TextField(field.placeholder ?? "Enter email", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .password:
+                    SecureField(field.placeholder ?? "Enter password", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .number:
+                    TextField(field.placeholder ?? "Enter number", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .date:
+                    DatePicker(field.placeholder ?? "Select date", selection: .constant(Date()))
+                        .datePickerStyle(.compact)
+                case .select:
+                    Picker(field.placeholder ?? "Select option", selection: .constant("")) {
+                        Text("Select an option").tag("")
+                        if let options = field.options {
+                            ForEach(options, id: \.self) { option in
+                                Text(option).tag(option)
                             }
                         }
                     }
-                }
-            case .phone:
-                TextField(field.placeholder ?? "Enter phone", text: .constant(""))
-                    .textFieldStyle(.roundedBorder)
-            case .time:
-                DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
-                    .datePickerStyle(.compact)
-            case .datetime:
-                DatePicker(field.placeholder ?? "Select date and time", selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute])
-                    .datePickerStyle(.compact)
-            case .multiselect:
-                Text("Multi-select field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .file:
-                Text("File upload field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .url:
-                TextField(field.placeholder ?? "Enter URL", text: .constant(""))
-                    .textFieldStyle(.roundedBorder)
-            case .color:
-                Text("Color picker field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .range:
-                Text("Range field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .toggle:
-                Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
-            case .richtext:
-                Text("Rich text field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .autocomplete:
-                Text("Autocomplete field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .integer:
-                TextField(field.placeholder ?? "Enter integer", text: .constant(""))
-                    .textFieldStyle(.roundedBorder)
-            case .image:
-                Text("Image field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .array:
-                Text("Array field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .data:
-                Text("Data field: \(field.label)")
-                    .foregroundColor(.secondary)
-            case .`enum`:
-                Picker(field.placeholder ?? "Select option", selection: .constant("")) {
-                    Text("Select an option").tag("")
-                    if let options = field.options {
-                        ForEach(options, id: \.self) { option in
-                            Text(option).tag(option)
+                    .pickerStyle(.menu)
+                case .textarea:
+                    TextEditor(text: .constant(""))
+                        .frame(minHeight: 80)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
+                case .checkbox:
+                    Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
+                case .radio:
+                    VStack(alignment: .leading) {
+                        Text(field.label)
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                        
+                        if let options = field.options {
+                            ForEach(options, id: \.self) { option in
+                                HStack {
+                                    Button(action: {
+                                        // TODO: Update field value when DynamicFormState is implemented
+                                    }) {
+                                        Image(systemName: "circle")
+                                            .foregroundColor(.gray)
+                                    }
+                                    Text(option)
+                                }
+                            }
                         }
                     }
+                case .phone:
+                    TextField(field.placeholder ?? "Enter phone", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .time:
+                    DatePicker(field.placeholder ?? "Select time", selection: .constant(Date()), displayedComponents: .hourAndMinute)
+                        .datePickerStyle(.compact)
+                case .datetime:
+                    DatePicker(field.placeholder ?? "Select date and time", selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute])
+                        .datePickerStyle(.compact)
+                case .multiselect:
+                    Text("Multi-select field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .file:
+                    Text("File upload field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .url:
+                    TextField(field.placeholder ?? "Enter URL", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .color:
+                    Text("Color picker field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .range:
+                    Text("Range field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .toggle:
+                    Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
+                case .richtext:
+                    Text("Rich text field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .autocomplete:
+                    Text("Autocomplete field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .integer:
+                    TextField(field.placeholder ?? "Enter integer", text: .constant(""))
+                        .textFieldStyle(.roundedBorder)
+                case .image:
+                    Text("Image field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .array:
+                    Text("Array field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .data:
+                    Text("Data field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .custom:
+                    Text("Custom field: \(field.label)")
+                        .foregroundColor(.secondary)
+                case .enum:
+                    Picker(field.placeholder ?? "Select option", selection: .constant("")) {
+                        Text("Select an option").tag("")
+                        if let options = field.options {
+                            ForEach(options, id: \.self) { option in
+                                Text(option).tag(option)
+                            }
+                        }
+                    }
+                    .pickerStyle(.menu)
                 }
-                .pickerStyle(.menu)
-            case .custom:
-                Text("Custom field: \(field.label)")
-                    .foregroundColor(.secondary)
+            } else {
+                // Fallback for fields with neither textContentType nor contentType
+                TextField(field.placeholder ?? "Enter text", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
             }
         }
     }
@@ -1770,7 +1838,13 @@ public struct SimpleFormView: View {
             
             // Field input based on type
             Group {
-                switch field.type {
+                if let textContentType = field.textContentType {
+                    // Handle text fields using OS UITextContentType
+                    TextField(field.placeholder ?? "Enter text", text: .constant(field.defaultValue ?? ""))
+                        .textFieldStyle(.roundedBorder)
+                } else if let contentType = field.contentType {
+                    // Handle UI components using our custom DynamicContentType
+                    switch contentType {
                 case .text:
                     TextField(field.placeholder ?? "Enter text", text: .constant(field.defaultValue ?? ""))
                         .textFieldStyle(.roundedBorder)
@@ -2047,42 +2121,42 @@ private func createFieldsForFormType(_ formType: DataTypeHint, context: Presenta
         return [] // TODO: Replace with createDynamicFormFields(context: context)
     case .text:
         return [
-            DynamicFormField(id: "textContent", type: .text, label: "Text Content", placeholder: "Enter text content")
+            DynamicFormField(id: "textContent", contentType: .textarea, label: "Text Content", placeholder: "Enter text content")
         ]
     case .number:
         return [
-            DynamicFormField(id: "numericValue", type: .number, label: "Numeric Value", placeholder: "Enter number")
+            DynamicFormField(id: "numericValue", contentType: .number, label: "Numeric Value", placeholder: "Enter number")
         ]
     case .date:
         return [
-            DynamicFormField(id: "date", type: .date, label: "Date", placeholder: "Select date")
+            DynamicFormField(id: "date", contentType: .date, label: "Date", placeholder: "Select date")
         ]
     case .boolean:
         return [
-            DynamicFormField(id: "booleanValue", type: .toggle, label: "Boolean Value", placeholder: "Toggle value")
+            DynamicFormField(id: "booleanValue", contentType: .toggle, label: "Boolean Value", placeholder: "Toggle value")
         ]
     case .collection:
         return [
-            DynamicFormField(id: "collectionName", type: .text, label: "Collection Name", placeholder: "Enter collection name"),
-            DynamicFormField(id: "itemCount", type: .number, label: "Item Count", placeholder: "Enter item count")
+            DynamicFormField(id: "collectionName", contentType: .textarea, label: "Collection Name", placeholder: "Enter collection name"),
+            DynamicFormField(id: "itemCount", contentType: .number, label: "Item Count", placeholder: "Enter item count")
         ]
     case .hierarchical:
         return [
-            DynamicFormField(id: "rootName", type: .text, label: "Root Name", placeholder: "Enter root name"),
-            DynamicFormField(id: "levelCount", type: .number, label: "Level Count", placeholder: "Enter hierarchy levels")
+            DynamicFormField(id: "rootName", contentType: .textarea, label: "Root Name", placeholder: "Enter root name"),
+            DynamicFormField(id: "levelCount", contentType: .number, label: "Level Count", placeholder: "Enter hierarchy levels")
         ]
     case .temporal:
         return [
-            DynamicFormField(id: "startDate", type: .date, label: "Start Date", placeholder: "Select start date"),
-            DynamicFormField(id: "startTime", type: .time, label: "Start Time", placeholder: "Select start time"),
-            DynamicFormField(id: "endDate", type: .date, label: "End Date", placeholder: "Select end date"),
-            DynamicFormField(id: "endTime", type: .time, label: "End Time", placeholder: "Select end time")
+            DynamicFormField(id: "startDate", contentType: .date, label: "Start Date", placeholder: "Select start date"),
+            DynamicFormField(id: "startTime", contentType: .time, label: "Start Time", placeholder: "Select start time"),
+            DynamicFormField(id: "endDate", contentType: .date, label: "End Date", placeholder: "Select end date"),
+            DynamicFormField(id: "endTime", contentType: .time, label: "End Time", placeholder: "Select end time")
         ]
     case .media:
         return [
-            DynamicFormField(id: "mediaTitle", type: .text, label: "Media Title", placeholder: "Enter media title"),
-            DynamicFormField(id: "mediaFile", type: .file, label: "Media File", placeholder: "Upload media file"),
-            DynamicFormField(id: "mediaType", type: .text, label: "Media Type", placeholder: "Enter media type")
+            DynamicFormField(id: "mediaTitle", contentType: .textarea, label: "Media Title", placeholder: "Enter media title"),
+            DynamicFormField(id: "mediaFile", contentType: .file, label: "Media File", placeholder: "Upload media file"),
+            DynamicFormField(id: "mediaType", contentType: .textarea, label: "Media Type", placeholder: "Enter media type")
         ]
     default:
         // DEPRECATED: GenericFormField is deprecated
@@ -2150,13 +2224,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "dashboard_name",
-                type: .text,
+                contentType: .text,
                 label: "Dashboard Name",
                 placeholder: "Enter dashboard name"
             ),
             DynamicFormField(
                 id: "auto_refresh",
-                type: .toggle,
+                contentType: .toggle,
                 label: "Auto Refresh",
                 placeholder: "Enable auto refresh"
             )
@@ -2165,31 +2239,31 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "title",
-                type: .text,
+                contentType: .text,
                 label: "Title",
                 placeholder: "Enter title"
             ),
             DynamicFormField(
                 id: "description",
-                type: .richtext,
+                contentType: .richtext,
                 label: "Description",
                 placeholder: "Enter description"
             ),
             DynamicFormField(
                 id: "created_date",
-                type: .date,
+                contentType: .date,
                 label: "Created Date",
                 placeholder: "Select creation date"
             ),
             DynamicFormField(
                 id: "created_time",
-                type: .time,
+                contentType: .time,
                 label: "Created Time",
                 placeholder: "Select creation time"
             ),
             DynamicFormField(
                 id: "attachments",
-                type: .file,
+                contentType: .file,
                 label: "Attachments",
                 placeholder: "Upload attachments"
             )
@@ -2198,49 +2272,49 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "name",
-                type: .text,
+                contentType: .text,
                 label: "Name",
                 placeholder: "Enter name"
             ),
             DynamicFormField(
                 id: "email",
-                type: .email,
+                contentType: .email,
                 label: "Email",
                 placeholder: "Enter email"
             ),
             DynamicFormField(
                 id: "age",
-                type: .number,
+                contentType: .number,
                 label: "Age",
                 placeholder: "Enter age"
             ),
             DynamicFormField(
                 id: "birth_date",
-                type: .date,
+                contentType: .date,
                 label: "Birth Date",
                 placeholder: "Select birth date"
             ),
             DynamicFormField(
                 id: "country",
-                type: .autocomplete,
+                contentType: .autocomplete,
                 label: "Country",
                 placeholder: "Select country"
             ),
             DynamicFormField(
                 id: "bio",
-                type: .richtext,
+                contentType: .richtext,
                 label: "Bio",
                 placeholder: "Enter bio"
             ),
             DynamicFormField(
                 id: "profile_photo",
-                type: .file,
+                contentType: .file,
                 label: "Profile Photo",
                 placeholder: "Upload profile photo"
             ),
             DynamicFormField(
                 id: "subscribe",
-                type: .toggle,
+                contentType: .toggle,
                 label: "Subscribe",
                 placeholder: "Subscribe to updates"
             )
@@ -2249,13 +2323,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "list_name",
-                type: .text,
+                contentType: .text,
                 label: "List Name",
                 placeholder: "Enter list name"
             ),
             DynamicFormField(
                 id: "sort_order",
-                type: .text,
+                contentType: .text,
                 label: "Sort Order",
                 placeholder: "Enter sort order"
             )
@@ -2264,13 +2338,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "modal_title",
-                type: .text,
+                contentType: .text,
                 label: "Modal Title",
                 placeholder: "Enter modal title"
             ),
             DynamicFormField(
                 id: "modal_content",
-                type: .textarea,
+                contentType: .textarea,
                 label: "Modal Content",
                 placeholder: "Enter modal content"
             )
@@ -2279,13 +2353,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "search_query",
-                type: .text,
+                contentType: .text,
                 label: "Search",
                 placeholder: "Enter search query"
             ),
             DynamicFormField(
                 id: "filter_category",
-                type: .select,
+                contentType: .select,
                 label: "Category",
                 placeholder: "Select category",
                 options: ["All", "Recent", "Favorites"]
@@ -2295,19 +2369,19 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "edit_title",
-                type: .text,
+                contentType: .text,
                 label: "Title",
                 placeholder: "Enter title"
             ),
             DynamicFormField(
                 id: "edit_content",
-                type: .richtext,
+                contentType: .richtext,
                 label: "Content",
                 placeholder: "Enter content"
             ),
             DynamicFormField(
                 id: "save_changes",
-                type: .toggle,
+                contentType: .toggle,
                 label: "Save Changes",
                 placeholder: "Auto-save changes"
             )
@@ -2316,14 +2390,14 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "create_name",
-                type: .text,
+                contentType: .text,
                 label: "Name",
                 placeholder: "Enter name",
                 isRequired: true
             ),
             DynamicFormField(
                 id: "create_type",
-                type: .select,
+                contentType: .select,
                 label: "Type",
                 placeholder: "Select type",
                 options: ["Document", "Image", "Video", "Audio"]
@@ -2333,13 +2407,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "search_term",
-                type: .text,
+                contentType: .text,
                 label: "Search Term",
                 placeholder: "Enter search term"
             ),
             DynamicFormField(
                 id: "search_filters",
-                type: .multiselect,
+                contentType: .multiselect,
                 label: "Filters",
                 placeholder: "Select filters",
                 options: ["Date", "Type", "Size", "Author"]
@@ -2349,14 +2423,14 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "theme",
-                type: .select,
+                contentType: .select,
                 label: "Theme",
                 placeholder: "Select theme",
                 options: ["Light", "Dark", "Auto"]
             ),
             DynamicFormField(
                 id: "notifications",
-                type: .toggle,
+                contentType: .toggle,
                 label: "Notifications",
                 placeholder: "Enable notifications"
             )
@@ -2365,19 +2439,19 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "display_name",
-                type: .text,
+                contentType: .text,
                 label: "Display Name",
                 placeholder: "Enter display name"
             ),
             DynamicFormField(
                 id: "bio",
-                type: .textarea,
+                contentType: .textarea,
                 label: "Bio",
                 placeholder: "Enter bio"
             ),
             DynamicFormField(
                 id: "avatar",
-                type: .file,
+                contentType: .file,
                 label: "Avatar",
                 placeholder: "Upload avatar"
             )
@@ -2386,13 +2460,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "summary_title",
-                type: .text,
+                contentType: .text,
                 label: "Title",
                 placeholder: "Enter summary title"
             ),
             DynamicFormField(
                 id: "summary_content",
-                type: .textarea,
+                contentType: .textarea,
                 label: "Summary",
                 placeholder: "Enter summary"
             )
@@ -2401,13 +2475,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "title",
-                type: .text,
+                contentType: .text,
                 label: "Title",
                 placeholder: "Enter title"
             ),
             DynamicFormField(
                 id: "value",
-                type: .text,
+                contentType: .text,
                 label: "Value",
                 placeholder: "Enter value"
             )
@@ -2416,13 +2490,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
         return [
             DynamicFormField(
                 id: "destination",
-                type: .text,
+                contentType: .text,
                 label: "Destination",
                 placeholder: "Enter destination"
             ),
             DynamicFormField(
                 id: "route_type",
-                type: .select,
+                contentType: .select,
                 label: "Route Type",
                 placeholder: "Select route type",
                 options: ["Fastest", "Shortest", "Scenic"]

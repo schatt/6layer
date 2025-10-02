@@ -37,10 +37,10 @@ final class VisionSafetyTests: XCTestCase {
         let _ = PlatformImage()
         
         // When: Checking OCR availability
-        let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: Platform.current)
+        let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: SixLayerPlatform.current)
 
         // Then: Should return appropriate availability status
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         switch platform {
         case .iOS, .macOS:
             XCTAssertTrue(isOCRAvailable, "OCR should be available on \(platform)")
@@ -187,12 +187,12 @@ final class VisionSafetyTests: XCTestCase {
 
 /// Check if Vision OCR is available using centralized utilities
 private func isVisionOCRAvailable() -> Bool {
-    return PlatformTestUtilities.getOCRAvailability(for: Platform.current)
+    return PlatformTestUtilities.getOCRAvailability(for: SixLayerPlatform.current)
 }
 
 /// Check if Vision framework is compatible with current platform using centralized utilities
 private func isVisionFrameworkCompatible() -> Bool {
-    return PlatformTestUtilities.getVisionAvailability(for: Platform.current)
+    return PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
 }
 
 /// Get Vision availability information

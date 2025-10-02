@@ -184,7 +184,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformOCRStrategy_L3_WithGeneralText() {
         // Given
         let textTypes = [TextType.general]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -202,7 +202,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformOCRStrategy_L3_WithPriceText() {
         // Given
         let textTypes = [TextType.price]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -220,7 +220,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformOCRStrategy_L3_WithDateText() {
         // Given
         let textTypes = [TextType.date]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -238,7 +238,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformOCRStrategy_L3_WithMultipleTextTypes() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -295,7 +295,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformDocumentOCRStrategy_L3() {
         // Given
         let documentType = DocumentType.general
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformDocumentOCRStrategy_L3(
@@ -312,7 +312,7 @@ final class L3StrategySelectionTests: XCTestCase {
     
     func testPlatformReceiptOCRStrategy_L3() {
         // Given
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformReceiptOCRStrategy_L3(platform: platform)
@@ -326,7 +326,7 @@ final class L3StrategySelectionTests: XCTestCase {
     
     func testPlatformBusinessCardOCRStrategy_L3() {
         // Given
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformBusinessCardOCRStrategy_L3(platform: platform)
@@ -340,7 +340,7 @@ final class L3StrategySelectionTests: XCTestCase {
     
     func testPlatformInvoiceOCRStrategy_L3() {
         // Given
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformInvoiceOCRStrategy_L3(platform: platform)
@@ -355,7 +355,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformOptimalOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         let confidenceThreshold: Float = 0.8
         
         // When
@@ -375,7 +375,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformBatchOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformBatchOCRStrategy_L3(
@@ -824,7 +824,7 @@ final class L3StrategySelectionTests: XCTestCase {
     func testPlatformOCRStrategy_L3_Performance() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let platform = Platform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When & Then
         measure {

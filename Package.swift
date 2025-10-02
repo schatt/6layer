@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v3.2.3 - Image Picker Fix and TDD Mandate
+// SixLayerFramework v3.3.0 - Code Reorganization and Cleanup
 
 import PackageDescription
 

@@ -44,7 +44,7 @@ final class CapabilityCombinationTests: XCTestCase {
     struct CapabilityCombination {
         let name: String
         let capabilities: [String: Bool]
-        let expectedPlatforms: [Platform]
+        let expectedPlatforms: [SixLayerPlatform]
     }
     
     private let capabilityCombinations: [CapabilityCombination] = [
@@ -61,7 +61,7 @@ final class CapabilityCombinationTests: XCTestCase {
                 "Vision": true,
                 "OCR": true
             ],
-            expectedPlatforms: [.iOS]
+            expectedPlatforms: [SixLayerPlatform.iOS]
         ),
         
         // Touch + Hover + Haptic + AssistiveTouch (iPad)
@@ -77,7 +77,7 @@ final class CapabilityCombinationTests: XCTestCase {
                 "Vision": true,
                 "OCR": true
             ],
-            expectedPlatforms: [.iOS] // iPad
+            expectedPlatforms: [SixLayerPlatform.iOS] // iPad
         ),
         
         // Hover + Vision + OCR (macOS)
@@ -93,7 +93,7 @@ final class CapabilityCombinationTests: XCTestCase {
                 "Vision": true,
                 "OCR": true
             ],
-            expectedPlatforms: [.macOS]
+            expectedPlatforms: [SixLayerPlatform.macOS]
         ),
         
         // Touch + Haptic + AssistiveTouch (watchOS)
@@ -109,7 +109,7 @@ final class CapabilityCombinationTests: XCTestCase {
                 "Vision": false,
                 "OCR": false
             ],
-            expectedPlatforms: [.watchOS]
+            expectedPlatforms: [SixLayerPlatform.watchOS]
         ),
         
         // VoiceOver + SwitchControl only (tvOS)
@@ -125,7 +125,7 @@ final class CapabilityCombinationTests: XCTestCase {
                 "Vision": false,
                 "OCR": false
             ],
-            expectedPlatforms: [.tvOS]
+            expectedPlatforms: [SixLayerPlatform.tvOS]
         ),
         
         // Vision + OCR only (visionOS)
@@ -141,14 +141,14 @@ final class CapabilityCombinationTests: XCTestCase {
                 "Vision": true,
                 "OCR": true
             ],
-            expectedPlatforms: [.visionOS]
+            expectedPlatforms: [SixLayerPlatform.visionOS]
         )
     ]
     
     // MARK: - Platform Capability Simulation
     
     private func simulatePlatformCapabilities(
-        platform: Platform,
+        platform: SixLayerPlatform,
         deviceType: DeviceType,
         supportsTouch: Bool,
         supportsHover: Bool,
@@ -173,45 +173,56 @@ final class CapabilityCombinationTests: XCTestCase {
     
     // MARK: - Individual Combination Tests
     
+    /// BUSINESS PURPOSE: Test touch, haptic feedback, and AssistiveTouch capability combination
+    /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate iOS phone capabilities
     func testTouchHapticAssistiveTouchCombination() {
-        // Test iOS phone combination
-        let iOSPhoneConfig = simulatePlatformCapabilities(
-            platform: .iOS,
-            deviceType: .phone,
-            supportsTouch: true,
-            supportsHover: false,
-            supportsHaptic: true,
-            supportsAssistiveTouch: true,
-            supportsVision: true,
-            supportsOCR: true
-        )
+        // Set mock capabilities for iOS phone combination
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true)
+        RuntimeCapabilityDetection.setTestHapticFeedback(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        RuntimeCapabilityDetection.setTestHover(false)
         
         // Test the combination logic
-        testTouchHapticAssistiveTouchLogic(config: iOSPhoneConfig)
+        testTouchHapticAssistiveTouchLogic()
         
         // Test that touch-related functions work together
-        XCTAssertTrue(iOSPhoneConfig.supportsTouch, "Touch should be supported")
-        XCTAssertTrue(iOSPhoneConfig.supportsHapticFeedback, "Haptic should be supported")
-        XCTAssertTrue(iOSPhoneConfig.supportsAssistiveTouch, "AssistiveTouch should be supported")
-        XCTAssertFalse(iOSPhoneConfig.supportsHover, "Hover should not be supported on iPhone")
-        XCTAssertGreaterThanOrEqual(iOSPhoneConfig.minTouchTarget, 44, "Touch targets should be adequate")
+        XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported")
+        XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported")
+        XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported")
+        XCTAssertFalse(RuntimeCapabilityDetection.supportsHover, "Hover should not be supported on iPhone")
+        
+        // Test across all platforms
+        for platform in SixLayerPlatform.allCases {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported when enabled on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported when enabled on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled on \(platform)")
+        }
+        
+        // Clean up
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
-    func testTouchHapticAssistiveTouchLogic(config: CardExpansionPlatformConfig) {
+    /// BUSINESS PURPOSE: Test logical relationships between touch, haptic feedback, and AssistiveTouch capabilities
+    /// TESTING SCOPE: Capability dependency logic, mutual exclusivity, platform consistency
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test capability relationships
+    func testTouchHapticAssistiveTouchLogic() {
         // Test the logical relationships between capabilities
-        if config.supportsTouch {
+        if RuntimeCapabilityDetection.supportsTouch {
             // Touch should enable haptic feedback
-            XCTAssertTrue(config.supportsHapticFeedback, 
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, 
                          "Haptic feedback should be available with touch")
             // Touch should enable AssistiveTouch
-            XCTAssertTrue(config.supportsAssistiveTouch, 
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, 
                          "AssistiveTouch should be available with touch")
         } else {
             // No touch should mean no haptic feedback
-            XCTAssertFalse(config.supportsHapticFeedback, 
+            XCTAssertFalse(RuntimeCapabilityDetection.supportsHapticFeedback, 
                           "Haptic feedback should not be available without touch")
             // No touch should mean no AssistiveTouch
-            XCTAssertFalse(config.supportsAssistiveTouch, 
+            XCTAssertFalse(RuntimeCapabilityDetection.supportsAssistiveTouch, 
                           "AssistiveTouch should not be available without touch")
         }
     }
@@ -219,8 +230,8 @@ final class CapabilityCombinationTests: XCTestCase {
     func testTouchHoverHapticAssistiveTouchCombination() {
         // Test iPad combination
         let iPadConfig = simulatePlatformCapabilities(
-            platform: .iOS,
-            deviceType: .pad,
+            platform: SixLayerPlatform.iOS,
+            deviceType: SixLayerPlatform.deviceType,
             supportsTouch: true,
             supportsHover: true,
             supportsHaptic: true,
@@ -247,8 +258,8 @@ final class CapabilityCombinationTests: XCTestCase {
     func testHoverVisionOCRCombination() {
         // Test macOS combination (hover + vision + OCR, no touch)
         let macOSConfig = simulatePlatformCapabilities(
-            platform: .macOS,
-            deviceType: .mac,
+            platform: SixLayerPlatform.macOS,
+            deviceType: SixLayerPlatform.deviceType,
             supportsTouch: false,
             supportsHover: true,
             supportsHaptic: false,
@@ -300,8 +311,8 @@ final class CapabilityCombinationTests: XCTestCase {
     func testWatchOSCombination() {
         // Test watchOS combination (touch + haptic + AssistiveTouch, no hover/vision/OCR)
         let watchOSConfig = simulatePlatformCapabilities(
-            platform: .watchOS,
-            deviceType: .watch,
+            platform: SixLayerPlatform.watchOS,
+            deviceType: SixLayerPlatform.deviceType,
             supportsTouch: true,
             supportsHover: false,
             supportsHaptic: true,
@@ -335,8 +346,8 @@ final class CapabilityCombinationTests: XCTestCase {
     func testTVOSCombination() {
         // Test tvOS combination (accessibility only, no touch/hover/haptic/vision/OCR)
         let tvOSConfig = simulatePlatformCapabilities(
-            platform: .tvOS,
-            deviceType: .tv,
+            platform: SixLayerPlatform.tvOS,
+            deviceType: SixLayerPlatform.deviceType,
             supportsTouch: false,
             supportsHover: false,
             supportsHaptic: false,
@@ -371,8 +382,8 @@ final class CapabilityCombinationTests: XCTestCase {
     func testVisionOSCombination() {
         // Test visionOS combination (Vision + OCR + accessibility, no touch/hover/haptic/AssistiveTouch)
         let visionOSConfig = simulatePlatformCapabilities(
-            platform: .visionOS,
-            deviceType: .tv, // Using .tv as placeholder since visionOS isn't in DeviceType enum
+            platform: SixLayerPlatform.visionOS,
+            deviceType: SixLayerPlatform.deviceType, // Using .tv as placeholder since visionOS isn't in DeviceType enum
             supportsTouch: false,
             supportsHover: false,
             supportsHaptic: false,
@@ -394,7 +405,7 @@ final class CapabilityCombinationTests: XCTestCase {
         // Touch targets should be larger for Vision Pro (even though touch isn't supported, config should reflect Vision Pro requirements)
         // Note: The simulated config has minTouchTarget: 0, but in a real visionOS environment it would be 60
         // For testing purposes, we verify the logical relationship
-        if Platform.current == .visionOS {
+        if SixLayerPlatform.current == SixLayerPlatform.visionOS {
             XCTAssertGreaterThanOrEqual(visionOSConfig.minTouchTarget, 60, 
                                        "Touch targets should be larger for Vision Pro")
         }
@@ -404,7 +415,7 @@ final class CapabilityCombinationTests: XCTestCase {
     
     
     func testCapabilityCombination(_ combination: CapabilityCombination) {
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
         
         if shouldMatch {
@@ -523,7 +534,7 @@ final class CapabilityCombinationTests: XCTestCase {
     
     func testHoverTouchMutualExclusivity() {
         let config = getCardExpansionPlatformConfig()
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         if platform == .iOS {
             // iPad can have both touch and hover
@@ -564,9 +575,9 @@ final class CapabilityCombinationTests: XCTestCase {
     func testConflictingCombinations() {
         // Test that conflicting combinations are handled
         let config = getCardExpansionPlatformConfig()
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
-        if platform != .iOS {
+        if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
             if config.supportsTouch && config.supportsHover {
                 XCTFail("Touch and hover should be mutually exclusive on \(platform)")

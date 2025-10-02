@@ -26,24 +26,24 @@ public struct RuntimeCapabilityDetection {
     
     /// Thread-local test platform for simulating cross-platform behavior
     /// When set, all capability detection functions will return values for the simulated platform
-    public static func setTestPlatform(_ platform: Platform?) {
+    public static func setTestPlatform(_ platform: SixLayerPlatform?) {
         Thread.current.threadDictionary["testPlatform"] = platform
     }
     
     /// Get the current test platform for this thread
-    private static var testPlatform: Platform? {
-        return Thread.current.threadDictionary["testPlatform"] as? Platform
+    internal static var testPlatform: SixLayerPlatform? {
+        return Thread.current.threadDictionary["testPlatform"] as? SixLayerPlatform
     }
     
     /// Get the current platform (test platform if set, otherwise actual platform)
-    public static var currentPlatform: Platform {
-        return testPlatform ?? Platform.current
+    public static var currentPlatform: SixLayerPlatform {
+        return SixLayerPlatform.currentPlatform
     }
     
     /// Get platform-specific defaults for the current test platform
     private static func getTestDefaults() -> TestingCapabilityDefaults {
         guard let platform = testPlatform else {
-            return TestingCapabilityDetection.getTestingDefaults(for: Platform.current)
+            return TestingCapabilityDetection.getTestingDefaults(for: SixLayerPlatform.current)
         }
         return TestingCapabilityDetection.getTestingDefaults(for: platform)
     }
@@ -490,7 +490,7 @@ public struct TestingCapabilityDetection {
     }
     
     /// Get testing defaults for each platform
-    public static func getTestingDefaults(for platform: Platform) -> TestingCapabilityDefaults {
+    public static func getTestingDefaults(for platform: SixLayerPlatform) -> TestingCapabilityDefaults {
         switch platform {
         case .iOS:
             return TestingCapabilityDefaults(

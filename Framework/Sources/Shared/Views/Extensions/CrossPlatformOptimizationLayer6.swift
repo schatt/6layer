@@ -18,7 +18,7 @@ import Foundation
 public class CrossPlatformOptimizationManager: ObservableObject {
     
     /// Current platform being optimized for
-    public let currentPlatform: Platform
+    public let currentPlatform: SixLayerPlatform
     
     /// Platform-specific optimization settings
     public var optimizationSettings: PlatformOptimizationSettings
@@ -29,7 +29,7 @@ public class CrossPlatformOptimizationManager: ObservableObject {
     /// Platform-specific UI patterns
     public var uiPatterns: PlatformUIPatterns
     
-    public init(platform: Platform = .current) {
+    public init(platform: SixLayerPlatform = .current) {
         self.currentPlatform = platform
         self.optimizationSettings = PlatformOptimizationSettings(for: platform)
         self.performanceMetrics = CrossPlatformPerformanceMetrics()
@@ -58,7 +58,7 @@ public class CrossPlatformOptimizationManager: ObservableObject {
 
 /// Platform-specific optimization extensions
 @MainActor
-public extension Platform {
+public extension SixLayerPlatform {
     /// Check if platform supports specific features
     var supportsHapticFeedback: Bool {
         switch self {
@@ -101,14 +101,14 @@ public struct PlatformOptimizationSettings {
     /// Platform-specific feature flags
     public var featureFlags: [String: Bool]
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.performanceLevel = .balanced
         self.memoryStrategy = .adaptive
         self.renderingOptimizations = RenderingOptimizations(for: platform)
         self.featureFlags = Self.defaultFeatureFlags(for: platform)
     }
     
-    private static func defaultFeatureFlags(for platform: Platform) -> [String: Bool] {
+    private static func defaultFeatureFlags(for platform: SixLayerPlatform) -> [String: Bool] {
         switch platform {
         case .iOS:
             return [
@@ -199,7 +199,7 @@ public struct RenderingOptimizations {
     /// Frame rate optimization
     public var frameRateOptimization: FrameRateOptimization
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.hardwareAcceleration = true
         self.metalRendering = platform == .macOS || platform == .iOS
         self.displayOptimization = DisplayOptimization(for: platform)
@@ -213,7 +213,7 @@ public enum DisplayOptimization: String, CaseIterable {
     case retina = "retina"
     case spatial = "spatial"
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         switch platform {
         case .iOS, .macOS:
             self = .retina
@@ -233,7 +233,7 @@ public enum FrameRateOptimization: String, CaseIterable {
     case fixed120 = "fixed120"
     case variable = "variable"
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         switch platform {
         case .iOS:
             self = .adaptive
@@ -261,7 +261,7 @@ public class CrossPlatformPerformanceMetrics: ObservableObject {
     @Published public var memoryMetrics: MemoryMetrics
     
     /// Platform-specific metrics
-    @Published public var platformMetrics: [Platform: PlatformSpecificMetrics]
+    @Published public var platformMetrics: [SixLayerPlatform: PlatformSpecificMetrics]
     
     public init() {
         self.renderingMetrics = RenderingMetrics()
@@ -269,7 +269,7 @@ public class CrossPlatformPerformanceMetrics: ObservableObject {
         self.platformMetrics = [:]
         
         // Initialize metrics for all platforms
-        for platform in Platform.allCases {
+        for platform in SixLayerPlatform.allCases {
             self.platformMetrics[platform] = PlatformSpecificMetrics(for: platform)
         }
     }
@@ -290,7 +290,7 @@ public class CrossPlatformPerformanceMetrics: ObservableObject {
     
     /// Get performance summary for current platform
         func getCurrentPlatformSummary() -> PerformanceSummary {
-        let currentPlatform = Platform.current
+        let currentPlatform = SixLayerPlatform.current
         let platformMetrics = self.platformMetrics[currentPlatform] ?? PlatformSpecificMetrics(for: currentPlatform)
         
         return PerformanceSummary(
@@ -347,10 +347,10 @@ public struct MemoryMetrics {
 }
 
 public struct PlatformSpecificMetrics {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public var customMetrics: [String: Double]
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
         self.customMetrics = [:]
     }
@@ -366,10 +366,10 @@ public struct PerformanceMeasurement {
     public let type: MeasurementType
     public let metric: PerformanceMetric
     public let value: Double
-    public let platform: Platform?
+    public let platform: SixLayerPlatform?
     public let timestamp: Date
     
-    public init(type: MeasurementType, metric: PerformanceMetric, value: Double, platform: Platform? = nil) {
+    public init(type: MeasurementType, metric: PerformanceMetric, value: Double, platform: SixLayerPlatform? = nil) {
         self.type = type
         self.metric = metric
         self.value = value
@@ -403,7 +403,7 @@ public enum MemoryPressureLevel: Int, CaseIterable {
 // MARK: - Performance Summary
 
 public struct PerformanceSummary {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public let rendering: RenderingMetrics
     public let memory: MemoryMetrics
     public let platformSpecific: PlatformSpecificMetrics
@@ -440,7 +440,7 @@ public struct PerformanceSummary {
 public struct PlatformUIPatterns {
     
     /// Current platform
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     
     /// Platform-specific navigation patterns
     public var navigationPatterns: NavigationPatterns
@@ -451,7 +451,7 @@ public struct PlatformUIPatterns {
     /// Platform-specific layout patterns
     public var layoutPatterns: LayoutPatterns
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
         self.navigationPatterns = NavigationPatterns(for: platform)
         self.interactionPatterns = InteractionPatterns(for: platform)
@@ -460,12 +460,12 @@ public struct PlatformUIPatterns {
 }
 
 public struct NavigationPatterns {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public var primaryNavigation: NavigationType
     public var secondaryNavigation: NavigationType
     public var modalPresentation: ModalType
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
         
         switch platform {
@@ -514,12 +514,12 @@ public enum ModalType: String, CaseIterable {
 }
 
 public struct InteractionPatterns {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public var primaryInput: InputType
     public var secondaryInput: InputType
     public var gestureSupport: [GestureType]
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
         
         switch platform {
@@ -573,12 +573,12 @@ public enum GestureType: String, CaseIterable {
 }
 
 public struct LayoutPatterns {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public var primaryLayout: LayoutType
     public var secondaryLayout: LayoutType
     public var responsiveBreakpoints: [CGFloat]
     
-    public init(for platform: Platform) {
+    public init(for platform: SixLayerPlatform) {
         self.platform = platform
         
         switch platform {
@@ -624,7 +624,7 @@ public class PlatformRecommendationEngine {
     
     /// Generate recommendations for a specific platform
         static func generateRecommendations(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         settings: PlatformOptimizationSettings,
         metrics: CrossPlatformPerformanceMetrics
     ) -> [PlatformRecommendation] {
@@ -649,7 +649,7 @@ public class PlatformRecommendationEngine {
     }
     
     private static func generatePerformanceRecommendations(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         settings: PlatformOptimizationSettings,
         metrics: CrossPlatformPerformanceMetrics
     ) -> [PlatformRecommendation]? {
@@ -671,7 +671,7 @@ public class PlatformRecommendationEngine {
     }
     
     private static func generateUIPatternRecommendations(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         settings: PlatformOptimizationSettings
     ) -> [PlatformRecommendation]? {
         var recommendations: [PlatformRecommendation] = []
@@ -705,7 +705,7 @@ public class PlatformRecommendationEngine {
     }
     
     private static func generatePlatformSpecificRecommendations(
-        for platform: Platform,
+        for platform: SixLayerPlatform,
         settings: PlatformOptimizationSettings
     ) -> [PlatformRecommendation]? {
         switch platform {
@@ -733,7 +733,7 @@ public struct PlatformRecommendation {
     public let description: String
     public let category: RecommendationCategory
     public let priority: RecommendationPriority
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public let timestamp: Date
     
     public init(
@@ -741,7 +741,7 @@ public struct PlatformRecommendation {
         description: String,
         category: RecommendationCategory,
         priority: RecommendationPriority,
-        platform: Platform
+        platform: SixLayerPlatform
     ) {
         self.title = title
         self.description = description
@@ -765,7 +765,7 @@ public enum RecommendationCategory: String, CaseIterable {
 public extension View {
     
     /// Apply platform-specific optimizations
-    func platformSpecificOptimizations(for platform: Platform) -> some View {
+    func platformSpecificOptimizations(for platform: SixLayerPlatform) -> some View {
         return self
             .modifier(PlatformOptimizationModifier(platform: platform))
     }
@@ -787,9 +787,9 @@ public extension View {
 
 /// Modifier for platform-specific optimizations
 public struct PlatformOptimizationModifier: ViewModifier {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     
-    public init(platform: Platform) {
+    public init(platform: SixLayerPlatform) {
         self.platform = platform
     }
     
@@ -837,8 +837,8 @@ public struct UIPatternOptimizationModifier: ViewModifier {
 
 /// Environment key for platform
 public struct PlatformKey: EnvironmentKey {
-    public typealias Value = Platform
-    public static let defaultValue: Platform = .current
+    public typealias Value = SixLayerPlatform
+    public static let defaultValue: SixLayerPlatform = .current
 }
 
 /// Environment key for haptic feedback support
@@ -868,24 +868,24 @@ public struct MemoryStrategyKey: EnvironmentKey {
 
 /// Environment key for navigation patterns
 public struct NavigationPatternsKey: EnvironmentKey {
-    public static let defaultValue: NavigationPatterns = NavigationPatterns(for: .current)
+    public static let defaultValue: NavigationPatterns = NavigationPatterns(for: SixLayerPlatform.current)
 }
 
 /// Environment key for interaction patterns
 public struct InteractionPatternsKey: EnvironmentKey {
-    public static let defaultValue: InteractionPatterns = InteractionPatterns(for: .current)
+    public static let defaultValue: InteractionPatterns = InteractionPatterns(for: SixLayerPlatform.current)
 }
 
 /// Environment key for layout patterns
 public struct LayoutPatternsKey: EnvironmentKey {
-    public static let defaultValue: LayoutPatterns = LayoutPatterns(for: .current)
+    public static let defaultValue: LayoutPatterns = LayoutPatterns(for: SixLayerPlatform.current)
 }
 
 // MARK: - Environment Extensions
 
 public extension EnvironmentValues {
     
-    var platform: Platform {
+    var platform: SixLayerPlatform {
         get { self[PlatformKey.self] }
         set { self[PlatformKey.self] = newValue }
     }
@@ -941,9 +941,9 @@ public struct CrossPlatformTesting {
         _ content: Content,
         testName: String
     ) -> CrossPlatformTestResults {
-        var results: [Platform: TestResult] = [:]
+        var results: [SixLayerPlatform: TestResult] = [:]
         
-        for platform in Platform.allCases {
+        for platform in SixLayerPlatform.allCases {
             let result = testViewOnPlatform(content, platform: platform, testName: testName)
             results[platform] = result
         }
@@ -958,7 +958,7 @@ public struct CrossPlatformTesting {
     /// Test view on specific platform
     private static func testViewOnPlatform<Content: View>(
         _ content: Content,
-        platform: Platform,
+        platform: SixLayerPlatform,
         testName: String
     ) -> TestResult {
         // Simulate platform-specific testing
@@ -982,7 +982,7 @@ public struct CrossPlatformTesting {
         )
     }
     
-    private static func calculateCompatibilityScore(for platform: Platform) -> Double {
+    private static func calculateCompatibilityScore(for platform: SixLayerPlatform) -> Double {
         // Mock compatibility scoring
         switch platform {
         case .iOS: return 0.95
@@ -993,7 +993,7 @@ public struct CrossPlatformTesting {
         }
     }
     
-    private static func calculatePerformanceScore(for platform: Platform) -> Double {
+    private static func calculatePerformanceScore(for platform: SixLayerPlatform) -> Double {
         // Mock performance scoring
         switch platform {
         case .iOS: return 0.88
@@ -1004,7 +1004,7 @@ public struct CrossPlatformTesting {
         }
     }
     
-    private static func calculateAccessibilityScore(for platform: Platform) -> Double {
+    private static func calculateAccessibilityScore(for platform: SixLayerPlatform) -> Double {
         // Mock accessibility scoring
         switch platform {
         case .iOS: return 0.90
@@ -1020,7 +1020,7 @@ public struct CrossPlatformTesting {
 
 public struct CrossPlatformTestResults {
     public let testName: String
-    public let results: [Platform: TestResult]
+    public let results: [SixLayerPlatform: TestResult]
     public let timestamp: Date
     
     public var overallPassRate: Double {
@@ -1028,17 +1028,17 @@ public struct CrossPlatformTestResults {
         return Double(passedTests) / Double(results.count)
     }
     
-    public var platformWithHighestScore: Platform? {
+    public var platformWithHighestScore: SixLayerPlatform? {
         return results.max { $0.value.overallScore < $1.value.overallScore }?.key
     }
     
-    public var platformWithLowestScore: Platform? {
+    public var platformWithLowestScore: SixLayerPlatform? {
         return results.min { $0.value.overallScore < $1.value.overallScore }?.key
     }
 }
 
 public struct TestResult {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public let compatibilityScore: Double
     public let performanceScore: Double
     public let accessibilityScore: Double
@@ -1061,9 +1061,9 @@ public struct PerformanceBenchmarking {
         benchmarkName: String,
         iterations: Int = 100
     ) -> PerformanceBenchmark {
-        var platformResults: [Platform: PlatformBenchmarkResult] = [:]
+        var platformResults: [SixLayerPlatform: PlatformBenchmarkResult] = [:]
         
-        for platform in Platform.allCases {
+        for platform in SixLayerPlatform.allCases {
             let result = benchmarkViewOnPlatform(content, platform: platform, iterations: iterations)
             platformResults[platform] = result
         }
@@ -1078,7 +1078,7 @@ public struct PerformanceBenchmarking {
     /// Benchmark view on specific platform
     private static func benchmarkViewOnPlatform<Content: View>(
         _ content: Content,
-        platform: Platform,
+        platform: SixLayerPlatform,
         iterations: Int
     ) -> PlatformBenchmarkResult {
         let startTime = Date()
@@ -1133,20 +1133,20 @@ public struct PerformanceBenchmarking {
 
 public struct PerformanceBenchmark {
     public let name: String
-    public let platformResults: [Platform: PlatformBenchmarkResult]
+    public let platformResults: [SixLayerPlatform: PlatformBenchmarkResult]
     public let timestamp: Date
     
-    public var fastestPlatform: Platform? {
+    public var fastestPlatform: SixLayerPlatform? {
         return platformResults.min { $0.value.averageRenderTime < $1.value.averageRenderTime }?.key
     }
     
-    public var mostMemoryEfficient: Platform? {
+    public var mostMemoryEfficient: SixLayerPlatform? {
         return platformResults.min { $0.value.peakMemoryUsage < $1.value.peakMemoryUsage }?.key
     }
 }
 
 public struct PlatformBenchmarkResult {
-    public let platform: Platform
+    public let platform: SixLayerPlatform
     public let averageRenderTime: Double
     public let peakMemoryUsage: Double
     public let totalDuration: TimeInterval

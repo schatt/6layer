@@ -49,7 +49,7 @@ final class PlatformColorsTests: XCTestCase {
     
     func testPlatformColorsAcrossPlatforms() {
         // Given: Platform-specific color expectations
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         
         // When: Testing platform colors on different platforms
         // Then: Test platform-specific business logic
@@ -182,7 +182,7 @@ final class PlatformColorsTests: XCTestCase {
         XCTAssertEqual(color, Color.platformLabel, "Platform primary label should equal platform label")
         
         // Test business logic: Platform primary label should be accessible across platforms
-        let platform = Platform.current
+        let platform = SixLayerPlatform.current
         switch platform {
         case .iOS, .macOS, .watchOS, .tvOS, .visionOS:
             XCTAssertNotNil(color, "Platform primary label should be available on \(platform)")
