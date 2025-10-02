@@ -383,16 +383,12 @@ final class PlatformBehaviorTests: XCTestCase {
     
     func testAccessibilityBehavior() {
         let _ = createTestView()
-        let accessibilityManager = AccessibilityOptimizationManager()
+        // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
-        // Test that accessibility manager works on all platforms
-        XCTAssertNotNil(accessibilityManager, "Accessibility manager should work on all platforms")
-        
-        // Test that accessibility properties are available
-        XCTAssertNotNil(accessibilityManager.complianceMetrics, "Compliance metrics should be available")
-        XCTAssertNotNil(accessibilityManager.recommendations, "Recommendations should be available")
-        XCTAssertNotNil(accessibilityManager.auditHistory, "Audit history should be available")
-        XCTAssertNotNil(accessibilityManager.accessibilityLevel, "Accessibility level should be available")
+        // Test that accessibility behavior works on all platforms
+        let config = getCardExpansionPlatformConfig()
+        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported on all platforms")
+        XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported on all platforms")
     }
     
     // MARK: - Layer 6: Platform System Behavior Tests
@@ -442,10 +438,11 @@ final class PlatformBehaviorTests: XCTestCase {
         // For now, we test that the framework can handle high contrast scenarios
         
         let _ = createTestView()
-        let accessibilityManager = AccessibilityOptimizationManager()
+        // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
-        // Test that accessibility manager can handle high contrast scenarios
-        XCTAssertNotNil(accessibilityManager, "Accessibility manager should handle high contrast scenarios")
+        // Test that accessibility behavior can handle high contrast scenarios
+        let config = getCardExpansionPlatformConfig()
+        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported for high contrast scenarios")
     }
     
     // MARK: - Reduce Motion Behavior Tests

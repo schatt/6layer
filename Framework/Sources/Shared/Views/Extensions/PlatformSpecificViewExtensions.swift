@@ -1849,35 +1849,34 @@ public extension View {
             }
         }
         #else
-        if #available(macOS 14.0, *) {
-            self.onChange(of: isPresented.wrappedValue) { _, newValue in
-                if newValue {
-                    #if os(macOS)
-                    let panel = NSOpenPanel()
-                    panel.allowsMultipleSelection = false
-                    panel.canChooseDirectories = false
-                    panel.canChooseFiles = true
-                    panel.allowedContentTypes = allowedContentTypes
-
-                    if panel.runModal() == .OK {
-                        if let url = panel.url {
-                            if url.startAccessingSecurityScopedResource() {
-                                defer { url.stopAccessingSecurityScopedResource() }
-                                onFileSelected(url)
-                            } else {
-                                print("Failed to access security-scoped resource for \(url)")
-                            }
+        if #available(macOS 11.0, *) {
+            // Use SwiftUI's native fileImporter for modern macOS
+            self.fileImporter(
+                isPresented: isPresented,
+                allowedContentTypes: allowedContentTypes,
+                allowsMultipleSelection: false
+            ) { result in
+                switch result {
+                case .success(let urls):
+                    if let url = urls.first {
+                        if url.startAccessingSecurityScopedResource() {
+                            defer { url.stopAccessingSecurityScopedResource() }
+                            onFileSelected(url)
+                        } else {
+                            print("Failed to access security-scoped resource for \(url)")
                         }
                     }
-                    #endif
-                    isPresented.wrappedValue = false
+                case .failure(let error):
+                    print("Error selecting file: \(error.localizedDescription)")
                 }
             }
         } else {
-            // Fallback for older macOS versions
+            // Fallback for older macOS versions - use async approach to avoid blocking
             EmptyView()
                 .onAppear {
-                    handleFilePickerFallback(allowedContentTypes: allowedContentTypes, onFileSelected: onFileSelected, isPresented: isPresented)
+                    Task {
+                        await handleFilePickerFallbackAsync(allowedContentTypes: allowedContentTypes, onFileSelected: onFileSelected, isPresented: isPresented)
+                    }
                 }
         }
         #endif
@@ -1973,12 +1972,13 @@ public extension View {
 
 // MARK: - Helper Functions
 
-/// Helper function to handle file picker fallback for older macOS versions
-private func handleFilePickerFallback(
+/// Helper function to handle file picker fallback for older macOS versions using async approach
+@MainActor
+private func handleFilePickerFallbackAsync(
     allowedContentTypes: [UTType],
     onFileSelected: @escaping (URL) -> Void,
     isPresented: Binding<Bool>
-) {
+) async {
     #if os(macOS)
     let panel = NSOpenPanel()
     panel.allowsMultipleSelection = false
@@ -1986,18 +1986,33 @@ private func handleFilePickerFallback(
     panel.canChooseFiles = true
     panel.allowedContentTypes = allowedContentTypes
 
-    if panel.runModal() == .OK {
-        if let url = panel.url {
+    // Use beginSheetModal instead of runModal to avoid blocking the main thread
+    if let window = NSApplication.shared.keyWindow {
+        await withCheckedContinuation { continuation in
+            panel.beginSheetModal(for: window) { response in
+                if response == .OK, let url = panel.url {
+                    let shouldStopAccess = url.startAccessingSecurityScopedResource()
+                    onFileSelected(url)
+                    if shouldStopAccess {
+                        url.stopAccessingSecurityScopedResource()
+                    }
+                }
+                isPresented.wrappedValue = false
+                continuation.resume()
+            }
+        }
+    } else {
+        // Fallback to runModal only if no key window is available
+        let response = panel.runModal()
+        if response == .OK, let url = panel.url {
             let shouldStopAccess = url.startAccessingSecurityScopedResource()
             onFileSelected(url)
             if shouldStopAccess {
                 url.stopAccessingSecurityScopedResource()
             }
-        } else {
-            print("Failed to access security-scoped resource")
         }
+        isPresented.wrappedValue = false
     }
-    isPresented.wrappedValue = false
     #else
     isPresented.wrappedValue = false
     #endif

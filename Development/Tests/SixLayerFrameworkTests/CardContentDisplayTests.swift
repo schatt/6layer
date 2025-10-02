@@ -233,10 +233,10 @@ final class CardContentDisplayTests: XCTestCase {
     }
     
     func testCardComponentsWorkWithGenericVehicle() {
-        // GIVEN: GenericVehicle instances
+        // GIVEN: GenericDataItem instances (using available types)
         let vehicles = [
-            GenericVehicle(name: "Car 1", description: "A nice car", type: .car),
-            GenericVehicle(name: "Truck 1", description: "A big truck", type: .truck)
+            GenericDataItem(title: "Car 1", subtitle: "A nice car"),
+            GenericDataItem(title: "Truck 1", subtitle: "A big truck")
         ]
         
         // WHEN: Creating card components with GenericVehicle

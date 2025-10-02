@@ -544,22 +544,16 @@ final class CoreArchitectureTests: XCTestCase {
     func testGenericMediaItemCreation() throws {
         // Given
         let title = "Test Image"
-        let description = "A test image for testing"
-        let type = MediaType.image
-        let url = URL(string: "https://example.com/image.jpg")
+        let url = "https://example.com/image.jpg"
         
         // When
         let media = GenericMediaItem(
             title: title,
-            description: description,
-            mediaType: type,
             url: url
         )
         
         // Then
         XCTAssertEqual(media.title, title)
-        XCTAssertEqual(media.description, description)
-        XCTAssertEqual(media.mediaType, type)
         XCTAssertEqual(media.url, url)
     }
     

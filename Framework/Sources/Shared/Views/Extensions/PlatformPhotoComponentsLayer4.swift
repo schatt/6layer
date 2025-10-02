@@ -255,10 +255,24 @@ struct LegacyMacOSPhotoPickerView: NSViewControllerRepresentable {
             panel.canChooseFiles = true
             panel.allowedContentTypes = [.image]
 
-            if panel.runModal() == .OK, let url = panel.url {
-                if let data = try? Data(contentsOf: url),
-                   let platformImage = PlatformImage(data: data) {
-                    parent.onImageSelected(platformImage)
+            // Use beginSheetModal instead of runModal to avoid blocking the main thread
+            if let window = NSApplication.shared.keyWindow {
+                panel.beginSheetModal(for: window) { response in
+                    if response == .OK, let url = panel.url {
+                        if let data = try? Data(contentsOf: url),
+                           let platformImage = PlatformImage(data: data) {
+                            self.parent.onImageSelected(platformImage)
+                        }
+                    }
+                }
+            } else {
+                // Fallback to runModal only if no key window is available
+                let response = panel.runModal()
+                if response == .OK, let url = panel.url {
+                    if let data = try? Data(contentsOf: url),
+                       let platformImage = PlatformImage(data: data) {
+                        parent.onImageSelected(platformImage)
+                    }
                 }
             }
         }

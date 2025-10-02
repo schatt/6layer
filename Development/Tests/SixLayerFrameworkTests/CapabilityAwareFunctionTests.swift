@@ -299,16 +299,12 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     
     func testAccessibilityDependentFunctions() {
         // Test accessibility functions that are available
-        let accessibilityManager = AccessibilityOptimizationManager()
+        // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
-        // Test that accessibility manager can be created
-        XCTAssertNotNil(accessibilityManager, "Accessibility manager should be created")
-        
-        // Test that accessibility manager has expected properties
-        XCTAssertNotNil(accessibilityManager.complianceMetrics, "Compliance metrics should be available")
-        XCTAssertNotNil(accessibilityManager.recommendations, "Recommendations should be available")
-        XCTAssertNotNil(accessibilityManager.auditHistory, "Audit history should be available")
-        XCTAssertNotNil(accessibilityManager.accessibilityLevel, "Accessibility level should be available")
+        // Test that accessibility behavior can be tested
+        let config = getCardExpansionPlatformConfig()
+        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported")
+        XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported")
     }
     
     // MARK: - Color Encoding-Dependent Function Tests
