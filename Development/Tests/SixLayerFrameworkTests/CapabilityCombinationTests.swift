@@ -227,6 +227,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate iPad-specific capability combination functionality for touch, hover, haptic, and AssistiveTouch
+    /// TESTING SCOPE: iPad capability detection, touch+hover coexistence, haptic feedback, AssistiveTouch
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate iPad capabilities
     func testTouchHoverHapticAssistiveTouchCombination() {
         // Test iPad combination
         let iPadConfig = simulatePlatformCapabilities(
@@ -253,8 +256,27 @@ final class CapabilityCombinationTests: XCTestCase {
         // Test that touch targets are appropriate
         XCTAssertGreaterThanOrEqual(iPadConfig.minTouchTarget, 44, 
                                    "Touch targets should be adequate")
+        
+        // Test across all platforms
+        for platform in SixLayerPlatform.allCases {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHoverSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsHover, "Hover should be supported on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported on \(platform)")
+        }
+        
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
+    /// BUSINESS PURPOSE: Validate macOS-specific capability combination functionality for hover, vision, and OCR
+    /// TESTING SCOPE: macOS capability detection, hover support, vision framework, OCR functionality
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate macOS capabilities
     func testHoverVisionOCRCombination() {
         // Test macOS combination (hover + vision + OCR, no touch)
         let macOSConfig = simulatePlatformCapabilities(
@@ -308,6 +330,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate watchOS-specific capability combination functionality for touch, haptic, and AssistiveTouch
+    /// TESTING SCOPE: watchOS capability detection, touch support, haptic feedback, AssistiveTouch, limited capabilities
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate watchOS capabilities
     func testWatchOSCombination() {
         // Test watchOS combination (touch + haptic + AssistiveTouch, no hover/vision/OCR)
         let watchOSConfig = simulatePlatformCapabilities(
@@ -341,8 +366,27 @@ final class CapabilityCombinationTests: XCTestCase {
         // Test that touch targets are appropriate for watch
         XCTAssertGreaterThanOrEqual(watchOSConfig.minTouchTarget, 44, 
                                    "Touch targets should be adequate")
+        
+        // Test across all platforms
+        for platform in SixLayerPlatform.allCases {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            RuntimeCapabilityDetection.setTestHoverSupport(false)
+            
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")
+            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported on \(platform)")
+            XCTAssertFalse(RuntimeCapabilityDetection.supportsHover, "Hover should not be supported on \(platform)")
+        }
+        
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
+    /// BUSINESS PURPOSE: Validate tvOS-specific capability combination functionality with accessibility-only features
+    /// TESTING SCOPE: tvOS capability detection, accessibility support, limited interaction capabilities
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate tvOS capabilities
     func testTVOSCombination() {
         // Test tvOS combination (accessibility only, no touch/hover/haptic/vision/OCR)
         let tvOSConfig = simulatePlatformCapabilities(
@@ -379,6 +423,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate visionOS-specific capability combination functionality for Vision framework and OCR
+    /// TESTING SCOPE: visionOS capability detection, Vision framework support, OCR functionality, accessibility
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate visionOS capabilities
     func testVisionOSCombination() {
         // Test visionOS combination (Vision + OCR + accessibility, no touch/hover/haptic/AssistiveTouch)
         let visionOSConfig = simulatePlatformCapabilities(
@@ -414,6 +461,9 @@ final class CapabilityCombinationTests: XCTestCase {
     // MARK: - Comprehensive Combination Testing
     
     
+    /// BUSINESS PURPOSE: Validate comprehensive capability combination functionality across all defined combinations
+    /// TESTING SCOPE: Capability combination matrix testing, platform matching, combination behavior validation
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test all capability combinations
     func testCapabilityCombination(_ combination: CapabilityCombination) {
         let platform = SixLayerPlatform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
@@ -432,6 +482,9 @@ final class CapabilityCombinationTests: XCTestCase {
         print("🔍 Testing \(combination.name) on \(platform): \(shouldMatch ? "MATCH" : "NO MATCH")")
     }
     
+    /// BUSINESS PURPOSE: Validate capability combination behavior logic for specific combination types
+    /// TESTING SCOPE: Combination behavior validation, platform-specific logic, capability interaction testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test combination-specific behaviors
     func testCombinationBehavior(_ combination: CapabilityCombination) {
         switch combination.name {
         case "Touch + Haptic + AssistiveTouch":
@@ -451,6 +504,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate capability combination matching functionality for expected platform combinations
+    /// TESTING SCOPE: Platform combination matching, capability value validation, combination accuracy testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to verify combination matches platform
     func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
@@ -462,6 +518,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate capability combination exclusion functionality for non-matching platform combinations
+    /// TESTING SCOPE: Platform combination exclusion, capability mismatch detection, combination accuracy testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to verify combination doesn't match platform
     func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
@@ -495,6 +554,9 @@ final class CapabilityCombinationTests: XCTestCase {
     
     // MARK: - Specific Combination Tests
     
+    /// BUSINESS PURPOSE: Validate touch and haptic feedback capability dependency functionality
+    /// TESTING SCOPE: Touch-haptic dependency logic, capability relationship validation, platform consistency
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-haptic relationships
     func testTouchHapticCombination() {
         let config = getCardExpansionPlatformConfig()
         
@@ -509,6 +571,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate touch and AssistiveTouch capability dependency functionality
+    /// TESTING SCOPE: Touch-AssistiveTouch dependency logic, capability relationship validation, accessibility support
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-AssistiveTouch relationships
     func testTouchAssistiveTouchCombination() {
         let config = getCardExpansionPlatformConfig()
         
@@ -523,6 +588,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate Vision framework and OCR capability dependency functionality
+    /// TESTING SCOPE: Vision-OCR dependency logic, framework availability validation, OCR capability testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test Vision-OCR relationships
     func testVisionOCRCombination() {
         let visionAvailable = isVisionFrameworkAvailable()
         let ocrAvailable = isVisionOCRAvailable()
@@ -532,6 +600,9 @@ final class CapabilityCombinationTests: XCTestCase {
                      "OCR availability should match Vision framework availability")
     }
     
+    /// BUSINESS PURPOSE: Validate hover and touch capability mutual exclusivity functionality
+    /// TESTING SCOPE: Touch-hover mutual exclusivity logic, platform-specific exceptions, capability conflict detection
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-hover exclusivity
     func testHoverTouchMutualExclusivity() {
         let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
@@ -555,6 +626,9 @@ final class CapabilityCombinationTests: XCTestCase {
     // MARK: - Edge Case Combination Testing
     
     
+    /// BUSINESS PURPOSE: Validate impossible capability combination detection functionality
+    /// TESTING SCOPE: Impossible combination detection, capability constraint validation, logical consistency testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test impossible combinations
     func testImpossibleCombinations() {
         // Test combinations that should never occur
         let config = getCardExpansionPlatformConfig()
@@ -572,6 +646,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate conflicting capability combination detection functionality
+    /// TESTING SCOPE: Conflicting combination detection, capability conflict resolution, platform-specific conflict handling
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test conflicting combinations
     func testConflictingCombinations() {
         // Test that conflicting combinations are handled
         let config = getCardExpansionPlatformConfig()
@@ -585,6 +662,9 @@ final class CapabilityCombinationTests: XCTestCase {
         }
     }
     
+    /// BUSINESS PURPOSE: Validate capability dependency validation functionality
+    /// TESTING SCOPE: Capability dependency validation, missing dependency detection, dependency chain testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test capability dependencies
     func testMissingDependencies() {
         // Test that dependent capabilities are properly handled
         let config = getCardExpansionPlatformConfig()
@@ -605,6 +685,9 @@ final class CapabilityCombinationTests: XCTestCase {
     
     // MARK: - Performance Combination Testing
     
+    /// BUSINESS PURPOSE: Validate capability combination performance optimization functionality
+    /// TESTING SCOPE: Performance optimization for capability combinations, animation settings, hover delay configuration
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test performance with combinations
     func testPerformanceWithCombinations() {
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
