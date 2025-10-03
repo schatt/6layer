@@ -1,17 +1,27 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v3.4.1 - Cross-Platform Text Content Type Improvements (Fixed)** 🚀
+## 📍 **Current Status: v3.4.3 - Critical TextContentType Bug Fix** 🚀
 
-**Last Release**: v3.4.1 - Cross-Platform Text Content Type Improvements (Fixed)
-**Current Phase**: Cross-Platform Text Content Type Improvements
+**Last Release**: v3.4.3 - Critical TextContentType Bug Fix
+**Current Phase**: Critical Bug Fixes and Framework Stability
 **Next Phase**: Continue with comprehensive test audit fixes
-**Note**: This release introduces SixLayerTextContentType for unified cross-platform text field handling. Fixed compilation error in v3.4.1.
+**Note**: v3.4.1 and v3.4.2 were removed due to critical bugs. v3.4.3 fixes broken textContentType functionality.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
-## 📋 **Recent Release Summary (v2.8.0 - v3.4.1)**
+## 📋 **Recent Release Summary (v2.8.0 - v3.4.3)**
 
-### **v3.4.1 - Cross-Platform Text Content Type Improvements (Fixed)** ✅ **COMPLETED**
+### **v3.4.3 - Critical TextContentType Bug Fix** ✅ **COMPLETED**
+- **Fixed TextContentType Application**: Text fields now properly receive semantic hints
+- **Fixed PlatformSemanticLayer1**: Now applies textContentType.uiTextContentType to TextFields
+- **Fixed DynamicFormView**: Now applies textContentType.uiTextContentType to TextFields
+- **Added Conditional Compilation**: Proper UIKit platform handling for textContentType modifier
+- **Restored Cross-Platform Functionality**: Text content type feature now works as intended
+- **Critical Bug Fix**: Resolved issue where textContentType was captured but never applied
+- **Framework Stability**: Framework now truly stable and production-ready
+- **Removed Broken Releases**: v3.4.1 and v3.4.2 were removed due to critical bugs
+
+### **v3.4.1 - Cross-Platform Text Content Type Improvements (REMOVED)** ❌ **REMOVED**
 - **SixLayerTextContentType Enum**: New cross-platform enum that mirrors all UITextContentType values
 - **Unified API**: App developers now use a single enum across all platforms instead of platform-specific APIs
 - **Platform-Aware Conversion**: Automatically converts to UITextContentType on iOS/Catalyst, provides semantic hints on macOS
