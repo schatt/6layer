@@ -5,6 +5,7 @@
 **Release Date**: January 2025  
 **Status**: ✅ **COMPLETE**  
 **Previous Release**: v3.4.0 - Cross-Platform Text Content Type Improvements  
+**Note**: v3.4.1 and v3.4.2 were removed due to critical bugs  
 **Next Release**: TBD
 
 ---
@@ -14,7 +15,8 @@
 **Release Date**: January 2025  
 **Type**: Critical Bug Fix  
 **Priority**: Critical  
-**Scope**: Fix broken text content type functionality
+**Scope**: Fix broken text content type functionality  
+**Note**: v3.4.1 and v3.4.2 were removed due to critical bugs
 
 ### **🚨 Critical Bug Fix**
 
