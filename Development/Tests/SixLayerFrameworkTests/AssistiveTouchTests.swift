@@ -218,10 +218,10 @@ final class AssistiveTouchTests: XCTestCase {
         let swipeRight = AssistiveTouchGesture(type: .swipeRight, intensity: .light)
         
         // Then: Gestures should have correct types
-        XCTAssertEqual(singleTap.contentType, .singleTap)
-        XCTAssertEqual(doubleTap.contentType, .doubleTap)
-        XCTAssertEqual(swipeLeft.contentType, .swipeLeft)
-        XCTAssertEqual(swipeRight.contentType, .swipeRight)
+        XCTAssertEqual(singleTap.type, .singleTap)
+        XCTAssertEqual(doubleTap.type, .doubleTap)
+        XCTAssertEqual(swipeLeft.type, .swipeLeft)
+        XCTAssertEqual(swipeRight.type, .swipeRight)
     }
     
     // MARK: - AssistiveTouch Menu Management Tests

@@ -204,6 +204,9 @@ public struct DynamicFormFieldView: View {
                 field: field,
                 formState: formState
             )
+            #if canImport(UIKit)
+            .textContentType(textContentType.uiTextContentType)
+            #endif
         } else if let contentType = field.contentType {
             switch contentType {
         case .text, .email, .password, .phone, .url:

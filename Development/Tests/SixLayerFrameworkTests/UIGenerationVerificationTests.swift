@@ -467,7 +467,7 @@ final class UIGenerationVerificationTests: XCTestCase {
         capabilities: UIGenerationTestConfig.CapabilitySet,
         configName: String
     ) {
-        let actualPresence = checkUIComponentPresence(expectedComponent.contentType, capabilities: capabilities)
+        let actualPresence = checkUIComponentPresence(expectedComponent.type, capabilities: capabilities)
         
         XCTAssertEqual(actualPresence, expectedComponent.shouldBePresent,
                       "\(expectedComponent.description) for \(configName)")
@@ -513,7 +513,7 @@ final class UIGenerationVerificationTests: XCTestCase {
         capabilities: UIGenerationTestConfig.CapabilitySet,
         configName: String
     ) {
-        let actualPresence = checkModifierPresence(expectedModifier.contentType, capabilities: capabilities)
+        let actualPresence = checkModifierPresence(expectedModifier.type, capabilities: capabilities)
         
         XCTAssertEqual(actualPresence, expectedModifier.shouldBePresent,
                       "\(expectedModifier.description) for \(configName)")
@@ -559,7 +559,7 @@ final class UIGenerationVerificationTests: XCTestCase {
         capabilities: UIGenerationTestConfig.CapabilitySet,
         configName: String
     ) {
-        let actualPresence = checkBehaviorPresence(expectedBehavior.contentType, capabilities: capabilities)
+        let actualPresence = checkBehaviorPresence(expectedBehavior.type, capabilities: capabilities)
         
         XCTAssertEqual(actualPresence, expectedBehavior.shouldBePresent,
                       "\(expectedBehavior.description) for \(configName)")

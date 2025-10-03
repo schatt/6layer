@@ -1353,6 +1353,9 @@ public struct GenericFormView: View {
                             TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(""))
                                 .textFieldStyle(.roundedBorder)
                                 .background(Color.platformSecondaryBackground)
+                                #if canImport(UIKit)
+                                .textContentType(textContentType.uiTextContentType)
+                                #endif
                         } else if let contentType = field.contentType {
                             // Handle UI components using our custom DynamicContentType
                             switch contentType {
@@ -1497,6 +1500,9 @@ public struct ModalFormView: View {
                 // Handle text fields using OS UITextContentType
                 TextField(field.placeholder ?? "Enter text", text: .constant(""))
                     .textFieldStyle(.roundedBorder)
+                    #if canImport(UIKit)
+                    .textContentType(textContentType.uiTextContentType)
+                    #endif
             } else if let contentType = field.contentType {
                 // Handle UI components using our custom DynamicContentType
                 switch contentType {

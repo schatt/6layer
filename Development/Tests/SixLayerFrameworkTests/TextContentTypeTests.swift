@@ -101,17 +101,17 @@ final class TextContentTypeTests: XCTestCase {
             }
         }
         #else
-        // For non-iOS platforms, test string-based content types
-        let textContentTypes: [String] = [
-            "emailAddress", "password", "telephoneNumber", "URL", "oneTimeCode",
-            "name", "username", "newPassword", "postalCode", "creditCardNumber",
-            "fullStreetAddress", "jobTitle", "organizationName", "givenName",
-            "familyName", "middleName", "namePrefix", "nameSuffix"
+        // For non-iOS platforms, test enum-based content types
+        let textContentTypes: [SixLayerTextContentType] = [
+            .emailAddress, .password, .telephoneNumber, .URL, .oneTimeCode,
+            .name, .username, .newPassword, .postalCode, .creditCardNumber,
+            .fullStreetAddress, .jobTitle, .organizationName, .givenName,
+            .familyName, .middleName, .namePrefix, .nameSuffix
         ]
         
         for textContentType in textContentTypes {
             let field = DynamicFormField(
-                id: "test_\(textContentType)",
+                id: "test_\(textContentType.rawValue)",
                 textContentType: textContentType,
                 label: "Test \(textContentType)",
                 placeholder: "Enter \(textContentType)"
@@ -150,7 +150,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let field = DynamicFormField(
             id: "otp_field",
-            textContentType: "oneTimeCode",
+            textContentType: .oneTimeCode,
             label: "Verification Code",
             placeholder: "Enter 6-digit code"
         )
@@ -160,7 +160,7 @@ final class TextContentTypeTests: XCTestCase {
         
         // Verify OTP field configuration
         XCTAssertNotNil(textField, "Should create OTP text field")
-        XCTAssertEqual(field.textContentType, "oneTimeCode", "OTP field should use oneTimeCode content type")
+        XCTAssertEqual(field.textContentType, .oneTimeCode, "OTP field should use oneTimeCode content type")
         XCTAssertNil(field.contentType, "OTP field should not have custom contentType")
         #endif
     }
@@ -180,7 +180,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let nameField = DynamicFormField(
             id: "name",
-            textContentType: "name",
+            textContentType: .name,
             label: "Full Name",
             placeholder: "Enter your full name"
         )
@@ -191,7 +191,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(nameField.textContentType, .name, "Name field should use name content type")
         #else
-        XCTAssertEqual(nameField.textContentType, "name", "Name field should use name content type")
+        XCTAssertEqual(nameField.textContentType, .name, "Name field should use name content type")
         #endif
         
         // And: Should not have custom contentType
@@ -213,7 +213,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let usernameField = DynamicFormField(
             id: "username",
-            textContentType: "username",
+            textContentType: .username,
             label: "Username",
             placeholder: "Enter username"
         )
@@ -224,7 +224,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(usernameField.textContentType, .username, "Username field should use username content type")
         #else
-        XCTAssertEqual(usernameField.textContentType, "username", "Username field should use username content type")
+        XCTAssertEqual(usernameField.textContentType, .username, "Username field should use username content type")
         #endif
         
         // And: Should not have custom contentType
@@ -246,7 +246,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let postalCodeField = DynamicFormField(
             id: "postalCode",
-            textContentType: "postalCode",
+            textContentType: .postalCode,
             label: "Postal Code",
             placeholder: "Enter postal code"
         )
@@ -257,7 +257,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(postalCodeField.textContentType, .postalCode, "Postal code field should use postalCode content type")
         #else
-        XCTAssertEqual(postalCodeField.textContentType, "postalCode", "Postal code field should use postalCode content type")
+        XCTAssertEqual(postalCodeField.textContentType, .postalCode, "Postal code field should use postalCode content type")
         #endif
         
         // And: Should not have custom contentType
@@ -279,7 +279,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let creditCardField = DynamicFormField(
             id: "creditCard",
-            textContentType: "creditCardNumber",
+            textContentType: .creditCardNumber,
             label: "Credit Card Number",
             placeholder: "Enter credit card number"
         )
@@ -290,7 +290,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(creditCardField.textContentType, .creditCardNumber, "Credit card field should use creditCardNumber content type")
         #else
-        XCTAssertEqual(creditCardField.textContentType, "creditCardNumber", "Credit card field should use creditCardNumber content type")
+        XCTAssertEqual(creditCardField.textContentType, .creditCardNumber, "Credit card field should use creditCardNumber content type")
         #endif
         
         // And: Should not have custom contentType
@@ -312,7 +312,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let addressField = DynamicFormField(
             id: "address",
-            textContentType: "fullStreetAddress",
+            textContentType: .fullStreetAddress,
             label: "Street Address",
             placeholder: "Enter street address"
         )
@@ -323,7 +323,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(addressField.textContentType, .fullStreetAddress, "Address field should use fullStreetAddress content type")
         #else
-        XCTAssertEqual(addressField.textContentType, "fullStreetAddress", "Address field should use fullStreetAddress content type")
+        XCTAssertEqual(addressField.textContentType, .fullStreetAddress, "Address field should use fullStreetAddress content type")
         #endif
         
         // And: Should not have custom contentType
@@ -345,7 +345,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let jobTitleField = DynamicFormField(
             id: "jobTitle",
-            textContentType: "jobTitle",
+            textContentType: .jobTitle,
             label: "Job Title",
             placeholder: "Enter job title"
         )
@@ -356,7 +356,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(jobTitleField.textContentType, .jobTitle, "Job title field should use jobTitle content type")
         #else
-        XCTAssertEqual(jobTitleField.textContentType, "jobTitle", "Job title field should use jobTitle content type")
+        XCTAssertEqual(jobTitleField.textContentType, .jobTitle, "Job title field should use jobTitle content type")
         #endif
         
         // And: Should not have custom contentType
@@ -378,7 +378,7 @@ final class TextContentTypeTests: XCTestCase {
         #else
         let organizationField = DynamicFormField(
             id: "organization",
-            textContentType: "organizationName",
+            textContentType: .organizationName,
             label: "Organization",
             placeholder: "Enter organization name"
         )
@@ -389,7 +389,7 @@ final class TextContentTypeTests: XCTestCase {
         #if os(iOS)
         XCTAssertEqual(organizationField.textContentType, .organizationName, "Organization field should use organizationName content type")
         #else
-        XCTAssertEqual(organizationField.textContentType, "organizationName", "Organization field should use organizationName content type")
+        XCTAssertEqual(organizationField.textContentType, .organizationName, "Organization field should use organizationName content type")
         #endif
         
         // And: Should not have custom contentType
@@ -409,7 +409,7 @@ final class TextContentTypeTests: XCTestCase {
             // Test that text content types are supported on all platforms
             let field = DynamicFormField(
                 id: "test",
-                textContentType: "emailAddress",
+                textContentType: .emailAddress,
                 label: "Test",
                 placeholder: "Enter email"
             )

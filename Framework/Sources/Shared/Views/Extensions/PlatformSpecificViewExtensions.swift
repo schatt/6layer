@@ -601,7 +601,7 @@ public extension View {
     ///
     /// ## Usage Example
     /// ```swift
-    /// .if(RuntimeCapabilityDetection.currentDeviceType == .pad) { view in
+    /// .if(SixLayerPlatform.deviceType == .pad) { view in
     ///     view.frame(maxWidth: .infinity, maxHeight: .infinity)
     /// }
     /// ```
@@ -1916,7 +1916,7 @@ public extension View {
     func deviceAwareFrame() -> some View {
         #if os(iOS)
         // iOS: Device-aware sizing based on device type and orientation
-        if RuntimeCapabilityDetection.currentDeviceType == .pad {
+        if SixLayerPlatform.deviceType == .pad {
             // iPad: Fill available space for optimal tablet experience
             // Supports Split View, Stage Manager, and orientation changes
             return AnyView(self.frame(maxWidth: .infinity, maxHeight: .infinity))

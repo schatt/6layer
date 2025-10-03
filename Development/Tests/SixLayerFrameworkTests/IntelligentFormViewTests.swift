@@ -161,7 +161,7 @@ final class IntelligentFormViewTests: XCTestCase {
     func testFieldDescriptionGeneration() {
         let stringField = DataField(
             name: "test",
-            contentType: .string,
+            type: .string,
             isOptional: true,
             isArray: false,
             isIdentifiable: false,
@@ -178,7 +178,7 @@ final class IntelligentFormViewTests: XCTestCase {
         // Test default values for different field types
         let stringField = DataField(
             name: "test",
-            contentType: .string,
+            type: .string,
             isOptional: false,
             isArray: false,
             isIdentifiable: false,
@@ -187,7 +187,7 @@ final class IntelligentFormViewTests: XCTestCase {
         
         let numberField = DataField(
             name: "test",
-            contentType: .number,
+            type: .number,
             isOptional: false,
             isArray: false,
             isIdentifiable: false,
@@ -196,7 +196,7 @@ final class IntelligentFormViewTests: XCTestCase {
         
         let booleanField = DataField(
             name: "test",
-            contentType: .boolean,
+            type: .boolean,
             isOptional: false,
             isArray: false,
             isIdentifiable: false,
@@ -270,17 +270,17 @@ final class IntelligentFormViewTests: XCTestCase {
         var grouped: [FieldType: [DataField]] = [:]
         
         for field in fields {
-            if grouped[field.contentType] == nil {
-                grouped[field.contentType] = []
+            if grouped[field.type] == nil {
+                grouped[field.type] = []
             }
-            grouped[field.contentType]?.append(field)
+            grouped[field.type]?.append(field)
         }
         
         return grouped
     }
     
     private func getFieldTypeTitle(_ contentType: FieldType) -> String {
-        switch fieldType {
+        switch contentType {
         case .string: return "Text Fields"
         case .number: return "Numeric Fields"
         case .boolean: return "Toggle Fields"
@@ -314,7 +314,7 @@ final class IntelligentFormViewTests: XCTestCase {
     }
     
     private func getDefaultValue(for field: DataField) -> Any {
-        switch field.contentType {
+        switch field.type {
         case .string:
             return ""
         case .number:

@@ -65,7 +65,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(richTextField)
-        XCTAssertEqual(contentType, .richtext)
+        XCTAssertEqual(field.contentType, .richtext)
         XCTAssertEqual(field.label, "Rich Text Content")
     }
     
@@ -158,7 +158,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(autocompleteField)
-        XCTAssertEqual(contentType, .autocomplete)
+        XCTAssertEqual(field.contentType, .autocomplete)
         XCTAssertEqual(field.label, "Search")
     }
     
@@ -253,7 +253,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(fileUploadField)
-        XCTAssertEqual(contentType, .file)
+        XCTAssertEqual(field.contentType, .file)
         XCTAssertEqual(field.label, "Upload Files")
     }
     
@@ -333,7 +333,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let url = URL(string: "file:///test.pdf")
         
         // When
-        let fileInfo = FileInfo(name: name, size: size, contentType: type, url: url)
+        let fileInfo = FileInfo(name: name, size: size, type: type, url: url)
         
         // Then
         XCTAssertEqual(fileInfo.name, name)
@@ -346,8 +346,8 @@ final class AdvancedFieldTypesTests: XCTestCase {
     func testFileListDisplay() {
         // Given
         let files = [
-            FileInfo(name: "test1.pdf", size: 1024, contentType: .pdf, url: nil),
-            FileInfo(name: "test2.jpg", size: 2048, contentType: .image, url: nil)
+            FileInfo(name: "test1.pdf", size: 1024, type: .pdf, url: nil),
+            FileInfo(name: "test2.jpg", size: 2048, type: .image, url: nil)
         ]
         
         // When
@@ -362,7 +362,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
     
     func testFileRowDisplay() {
         // Given
-        let file = FileInfo(name: "test.pdf", size: 1024, contentType: .pdf, url: nil)
+        let file = FileInfo(name: "test.pdf", size: 1024, type: .pdf, url: nil)
         
         // When
         let fileRow = FileRow(file: file) { _ in
@@ -458,7 +458,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // XCTAssertEqual(contentType, .date)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(contentType, .date)
+        XCTAssertEqual(field.contentType, .date)
     }
     
     func testTimePickerFieldInitialization() {
@@ -479,7 +479,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // XCTAssertEqual(contentType, .time)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(contentType, .time)
+        XCTAssertEqual(field.contentType, .time)
     }
     
     func testDateTimePickerFieldInitialization() {
@@ -500,7 +500,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // XCTAssertEqual(contentType, .datetime)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(contentType, .datetime)
+        XCTAssertEqual(field.contentType, .datetime)
     }
     
     // MARK: - Integration Tests
