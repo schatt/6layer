@@ -109,9 +109,6 @@ public enum SixLayerTextContentType: String, CaseIterable, Hashable {
         case .postalCode: self = .postalCode
         case .URL: self = .URL
         case .creditCardNumber: self = .creditCardNumber
-        @unknown default:
-            // Handle any future UITextContentType cases
-            self = .name // Fallback
         }
     }
     #endif
