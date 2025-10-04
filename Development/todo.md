@@ -709,6 +709,39 @@ This helps track which release included specific features and fixes.
 
 ---
 
+## **📋 Test Documentation Guidelines**
+
+### **⚠️ CRITICAL: Business Purpose Documentation**
+
+**The business purpose should describe what FUNCTIONALITY is being tested, NOT what the test does.**
+
+#### **✅ CORRECT Examples:**
+- `/// BUSINESS PURPOSE: Validate touch capability detection functionality`
+- `/// BUSINESS PURPOSE: Validate platform-specific layout behavior functionality`
+- `/// BUSINESS PURPOSE: Validate form validation logic functionality`
+- `/// BUSINESS PURPOSE: Validate accessibility compliance functionality`
+
+#### **❌ INCORRECT Examples:**
+- `/// BUSINESS PURPOSE: Test touch capability detection`
+- `/// BUSINESS PURPOSE: Test platform-specific layout behavior`
+- `/// BUSINESS PURPOSE: Test form validation logic`
+- `/// BUSINESS PURPOSE: Test accessibility compliance`
+
+#### **Key Principles:**
+1. **Focus on the functionality** being validated, not the testing action
+2. **Use "Validate" or "Verify"** instead of "Test"
+3. **Describe the business value** of what's being tested
+4. **Be specific** about what functionality is being validated
+
+#### **Template:**
+```swift
+/// BUSINESS PURPOSE: Validate [specific functionality] functionality
+/// TESTING SCOPE: [what aspects are being tested]
+/// METHODOLOGY: [how the testing is being done]
+```
+
+---
+
 ## **🧪 Test Exhaustiveness Audit Results**
 
 ### **📊 CURRENT AUDIT PROGRESS (v3.3.0)**
@@ -723,8 +756,16 @@ This helps track which release included specific features and fixes.
 - ✅ **Mock Testing**: Uses `RuntimeCapabilityDetection.setTest...()` functions for capability simulation
 - ✅ **Platform Testing**: Tests across all platforms using `SixLayerPlatform.allCases`
 - ✅ **Function Documentation**: Proper business purpose documentation for all functions
-- ✅ **Business Purpose Clarity**: Documents what functionality is being tested, not what the test does
+- ✅ **Business Purpose Clarity**: ⚠️ **CRITICAL** - Documents what **functionality is being tested**, NOT what the test does
 - ✅ **Code Cleanup**: Removed duplicate functions and redundant tests
+
+**⚠️ IMPORTANT: Business Purpose Guidelines**
+- ✅ **CORRECT**: "Validate touch capability detection functionality"
+- ✅ **CORRECT**: "Validate platform-specific layout behavior functionality" 
+- ✅ **CORRECT**: "Validate form validation logic functionality"
+- ❌ **INCORRECT**: "Test touch capability detection"
+- ❌ **INCORRECT**: "Test platform-specific layout behavior"
+- ❌ **INCORRECT**: "Test form validation logic"
 
 **Remaining Test Files (Audit Pending):**
 - 📋 **CapabilityCombinationTests.swift** - Missing platform testing, mock testing, and function documentation (14 functions)
