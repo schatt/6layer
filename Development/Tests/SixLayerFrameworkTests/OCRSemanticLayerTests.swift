@@ -164,12 +164,17 @@ final class OCRSemanticLayerTests: XCTestCase {
             supportedLanguages: [.english],
             processingMode: .standard
         )
-        let result = try await service.processImage(invalidImage, context: context, strategy: strategy)
         
-        // Then: Test business logic for error handling
-        XCTAssertNotNil(result, "OCR result should be available even for invalid input")
-        XCTAssertNotNil(result.extractedText, "Extracted text should be available")
-        XCTAssertGreaterThanOrEqual(result.confidence, 0.0, "Confidence should be non-negative")
+        // Then: Should throw OCRError.invalidImage
+        do {
+            let _ = try await service.processImage(invalidImage, context: context, strategy: strategy)
+            XCTFail("Expected OCRError.invalidImage to be thrown for invalid image")
+        } catch OCRError.invalidImage {
+            // Expected behavior - invalid image should throw error
+            XCTAssertTrue(true, "OCR service correctly throws OCRError.invalidImage for invalid input")
+        } catch {
+            XCTFail("Expected OCRError.invalidImage, but got: \(error)")
+        }
     }
     
     // MARK: - Performance Tests
