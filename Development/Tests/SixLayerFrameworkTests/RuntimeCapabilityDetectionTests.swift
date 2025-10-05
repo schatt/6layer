@@ -38,6 +38,11 @@ import SwiftUI
 @MainActor
 final class RuntimeCapabilityDetectionTests: XCTestCase {
     
+    override func tearDown() {
+        super.tearDown()
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+    }
+    
     // MARK: - Touch Detection Tests
     
     func testTouchDetectionOniOS() {

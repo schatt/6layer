@@ -39,6 +39,11 @@ import SwiftUI
 @MainActor
 final class CapabilityCombinationTests: XCTestCase {
     
+    override func tearDown() {
+        super.tearDown()
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+    }
+    
     // MARK: - Capability Combination Matrix
     
     struct CapabilityCombination {

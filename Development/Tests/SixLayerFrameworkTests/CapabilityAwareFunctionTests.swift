@@ -39,6 +39,11 @@ import SwiftUI
 @MainActor
 final class CapabilityAwareFunctionTests: XCTestCase {
     
+    override func tearDown() {
+        super.tearDown()
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+    }
+    
     // MARK: - Touch-Dependent Function Tests
     
     /// BUSINESS PURPOSE: Test touch-dependent functions across all platforms
