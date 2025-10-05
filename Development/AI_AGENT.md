@@ -11,7 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
-- **[AI_AGENT_v4.1.0.md](AI_AGENT_v4.1.0.md)** - Enhanced Breadcrumb System for UI Testing
+- **[AI_AGENT_v4.1.1.md](AI_AGENT_v4.1.1.md)** - Critical Bug Fix Release
 - **[AI_AGENT_v4.0.1.md](AI_AGENT_v4.0.1.md)** - Automatic Accessibility Identifiers with Debugging
 - **[AI_AGENT_v3.5.0.md](AI_AGENT_v3.5.0.md)** - Dynamic Form Grid Layout
 

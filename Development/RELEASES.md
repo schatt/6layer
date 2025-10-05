@@ -1,16 +1,64 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.1.0 - Enhanced Breadcrumb System for UI Testing** 🚀
+## 📍 **Current Release: v4.1.1 - Critical Bug Fix Release** 🚨
 
 **Release Date**: October 2025  
 **Status**: ✅ **COMPLETE**  
 **Previous Release**: v4.0.1 - Automatic Accessibility Identifiers with Debugging  
-**Note**: Major enhancement with comprehensive UI testing capabilities  
+**Note**: Critical bug fix for automatic accessibility identifier generation  
 **Next Release**: TBD
 
 ---
 
-## 🎯 **v4.1.0 - Enhanced Breadcrumb System for UI Testing** ✅ **COMPLETE**
+## 🚨 **v4.1.1 - Critical Bug Fix Release** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Critical Bug Fix  
+**Priority**: Critical  
+**Scope**: Fix automatic accessibility identifier generation bug  
+**Note**: v4.1.0 was removed due to critical bug - this release fixes the issue
+
+### **🐛 Critical Bug Fix**
+
+- **Fixed**: Automatic accessibility identifiers not being generated for custom UI elements
+- **Fixed**: Enhanced Breadcrumb System modifiers (`.trackViewHierarchy()`, `.screenContext()`, `.navigationState()`) not applying accessibility identifiers
+- **Fixed**: ID generation using hardcoded values instead of actual view context
+- **Fixed**: Missing global automatic ID application system
+
+### **🔧 Technical Fixes**
+
+- Updated `AccessibilityIdentifierAssignmentModifier.generateAutomaticID()` to use actual view hierarchy and screen context
+- Added `.automaticAccessibilityIdentifiers()` to all breadcrumb tracking modifiers
+- Created `GlobalAutomaticAccessibilityIdentifierModifier` and `enableGlobalAutomaticAccessibilityIdentifiers()` view extension
+- Made `currentViewHierarchy`, `currentScreenContext`, and `currentNavigationState` public in `AccessibilityIdentifierConfig`
+
+### **🧪 Testing**
+
+- **5 new TDD tests** added to validate the bug fix
+- **All 1654 tests pass** (0 failures)
+- **Proper Red-Green-Refactor cycle** followed for bug fix
+
+### **📋 Migration Guide**
+
+- **v4.1.0 has been removed** from all package managers due to critical bug
+- **Upgrade to v4.1.1** to get the working version
+- **No breaking changes** - all existing code continues to work
+
+### **📊 Test Coverage**
+
+- **Total Tests**: 1654
+- **Test Failures**: 0
+- **New Tests**: 5 TDD tests for bug validation
+- **Coverage**: All automatic accessibility identifier scenarios
+
+### **🔄 Version History**
+
+- **v4.1.0**: ❌ **REMOVED** - Critical bug in automatic accessibility identifier generation
+- **v4.1.1**: ✅ **CURRENT** - Bug fix release with working automatic accessibility identifiers
+
+---
+
+## 🎯 **v4.1.0 - Enhanced Breadcrumb System for UI Testing** ❌ **REMOVED**
 
 **Release Date**: October 2025  
 **Type**: Feature Enhancement  
