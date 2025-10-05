@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v3.2.3-blue.svg)](https://github.com/schatt/6layer/releases/tag/v3.2.3)
+[![Version](https://img.shields.io/badge/version-v3.4.4-blue.svg)](https://github.com/schatt/6layer/releases/tag/v3.4.4)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -58,6 +58,21 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v3.4.4
+
+### **DynamicFormView Label Duplication Fix**
+- **Fixed Label Duplication**: Resolved duplicate labels in DatePicker, ColorPicker, and Toggle controls
+- **Consistent Label Ownership**: Wrapper labels now own visual presentation, controls provide accessibility labels
+- **Improved Accessibility**: Added explicit `.accessibilityLabel()` to maintain screen reader support
+- **Cross-Platform Consistency**: LabelsHidden() applied consistently across iOS and macOS
+- **Zero Breaking Changes**: Pure bug fix that maintains existing API compatibility
+
+### **Technical Implementation**
+- **DatePicker Controls**: Empty titles with `.labelsHidden()` to prevent "Date/Select date" duplication
+- **ColorPicker**: Empty title with `.labelsHidden()` to prevent label duplication
+- **Toggle/Checkbox**: Empty titles with `.labelsHidden()` for consistent wrapper label ownership
+- **Accessibility Preservation**: All controls maintain proper accessibility labels for screen readers
 
 ## 🆕 What's New in v2.8.1
 

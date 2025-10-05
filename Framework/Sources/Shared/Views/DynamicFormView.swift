@@ -462,7 +462,7 @@ public struct DynamicSelectField: View {
     
     public var body: some View {
         Picker(
-            field.label,
+            "",
             selection: Binding(
                 get: { formState.getValue(for: field.id) ?? "" },
                 set: { formState.setValue($0, for: field.id) }
@@ -474,6 +474,8 @@ public struct DynamicSelectField: View {
             }
         }
         .pickerStyle(.menu)
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
@@ -538,10 +540,12 @@ public struct DynamicCheckboxField: View {
     @ObservedObject var formState: DynamicFormState
     
     public var body: some View {
-        Toggle(field.label, isOn: Binding(
+        Toggle("", isOn: Binding(
             get: { formState.getValue(for: field.id) ?? false },
             set: { formState.setValue($0, for: field.id) }
         ))
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
@@ -551,10 +555,12 @@ public struct DynamicToggleField: View {
     @ObservedObject var formState: DynamicFormState
     
     public var body: some View {
-        Toggle(field.label, isOn: Binding(
+        Toggle("", isOn: Binding(
             get: { formState.getValue(for: field.id) ?? false },
             set: { formState.setValue($0, for: field.id) }
         ))
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
@@ -565,13 +571,15 @@ public struct DynamicDateField: View {
     
     public var body: some View {
         DatePicker(
-            field.label,
+            "",
             selection: Binding(
                 get: { formState.getValue(for: field.id) ?? Date() },
                 set: { formState.setValue($0, for: field.id) }
             ),
             displayedComponents: .date
         )
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
@@ -582,13 +590,15 @@ public struct DynamicTimeField: View {
     
     public var body: some View {
         DatePicker(
-            field.label,
+            "",
             selection: Binding(
                 get: { formState.getValue(for: field.id) ?? Date() },
                 set: { formState.setValue($0, for: field.id) }
             ),
             displayedComponents: .hourAndMinute
         )
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
@@ -599,13 +609,15 @@ public struct DynamicDateTimeField: View {
     
     public var body: some View {
         DatePicker(
-            field.label,
+            "",
             selection: Binding(
                 get: { formState.getValue(for: field.id) ?? Date() },
                 set: { formState.setValue($0, for: field.id) }
             ),
             displayedComponents: [.date, .hourAndMinute]
         )
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
@@ -616,12 +628,14 @@ public struct DynamicColorField: View {
     
     public var body: some View {
         ColorPicker(
-            field.label,
+            "",
             selection: Binding(
                 get: { formState.getValue(for: field.id) ?? Color.blue },
                 set: { formState.setValue($0, for: field.id) }
             )
         )
+        .labelsHidden()
+        .accessibilityLabel(Text(field.label))
     }
 }
 
