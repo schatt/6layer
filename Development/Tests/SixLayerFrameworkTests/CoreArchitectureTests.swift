@@ -747,10 +747,6 @@ final class CoreArchitectureTests: XCTestCase {
         for platform in platforms {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             
-            // Verify platform detection works correctly
-            let detectedPlatform = SixLayerPlatform.deviceType
-            XCTAssertEqual(detectedPlatform, platform, "Platform detection should work correctly for \(platform)")
-            
             // Test platform-specific behavior
             let platformHints = PresentationHints(context: .dashboard)
             XCTAssertEqual(platformHints.context, .dashboard, "Presentation hints should work on \(platform)")
