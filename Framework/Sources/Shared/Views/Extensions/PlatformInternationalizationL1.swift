@@ -20,14 +20,14 @@ import SwiftUI
 public func platformPresentLocalizedContent_L1<Content: View>(
     content: Content,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return content
+    return AnyView(content
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized text with automatic formatting
@@ -39,16 +39,16 @@ public func platformPresentLocalizedContent_L1<Content: View>(
 public func platformPresentLocalizedText_L1(
     text: String,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let direction = i18n.textDirection(for: text)
     let alignment = i18n.textAlignment(for: text)
     
-    return Text(text)
+    return AnyView(Text(text)
         .multilineTextAlignment(alignment == .leading ? .leading : .trailing)
         .environment(\.layoutDirection, direction == .rightToLeft ? .rightToLeft : .leftToRight)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized number with proper formatting
@@ -60,13 +60,13 @@ public func platformPresentLocalizedText_L1(
 public func platformPresentLocalizedNumber_L1(
     number: Double,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let formatted = i18n.formatNumber(number, decimalPlaces: hints.decimalPlaces)
     
-    return Text(formatted)
+    return AnyView(Text(formatted)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized currency with proper formatting
@@ -78,13 +78,13 @@ public func platformPresentLocalizedNumber_L1(
 public func platformPresentLocalizedCurrency_L1(
     amount: Double,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let formatted = i18n.formatCurrency(amount, currencyCode: hints.currencyCode)
     
-    return Text(formatted)
+    return AnyView(Text(formatted)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized date with proper formatting
@@ -96,13 +96,13 @@ public func platformPresentLocalizedCurrency_L1(
 public func platformPresentLocalizedDate_L1(
     date: Date,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let formatted = i18n.formatDate(date, style: hints.dateStyle)
     
-    return Text(formatted)
+    return AnyView(Text(formatted)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized time with proper formatting
@@ -114,13 +114,13 @@ public func platformPresentLocalizedDate_L1(
 public func platformPresentLocalizedTime_L1(
     date: Date,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let formatted = i18n.formatTime(date, style: hints.timeStyle)
     
-    return Text(formatted)
+    return AnyView(Text(formatted)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized percentage with proper formatting
@@ -132,13 +132,13 @@ public func platformPresentLocalizedTime_L1(
 public func platformPresentLocalizedPercentage_L1(
     value: Double,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let formatted = i18n.formatPercentage(value)
     
-    return Text(formatted)
+    return AnyView(Text(formatted)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized pluralized text
@@ -152,13 +152,13 @@ public func platformPresentLocalizedPlural_L1(
     word: String,
     count: Int,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let pluralized = i18n.pluralize(word, count: count)
     
-    return Text(pluralized)
+    return AnyView(Text(pluralized)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// Present localized string with arguments
@@ -172,13 +172,13 @@ public func platformPresentLocalizedString_L1(
     key: String,
     arguments: [String] = [],
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let localized = i18n.localizedString(for: key, arguments: arguments)
     
-    return Text(localized)
+    return AnyView(Text(localized)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 // MARK: - Internationalization Hints
@@ -223,14 +223,14 @@ public struct InternationalizationHints {
 public func platformRTLContainer_L1<Content: View>(
     content: Content,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return content
+    return AnyView(content
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// RTL-aware HStack that automatically adjusts alignment
@@ -246,14 +246,14 @@ public func platformRTLHStack_L1<Content: View>(
     spacing: CGFloat? = nil,
     @ViewBuilder content: () -> Content,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return HStack(alignment: alignment, spacing: spacing, content: content)
+    return AnyView(HStack(alignment: alignment, spacing: spacing, content: content)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// RTL-aware VStack that automatically adjusts alignment
@@ -269,14 +269,14 @@ public func platformRTLVStack_L1<Content: View>(
     spacing: CGFloat? = nil,
     @ViewBuilder content: () -> Content,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return VStack(alignment: alignment, spacing: spacing, content: content)
+    return AnyView(VStack(alignment: alignment, spacing: spacing, content: content)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// RTL-aware ZStack that automatically adjusts alignment
@@ -290,14 +290,14 @@ public func platformRTLZStack_L1<Content: View>(
     alignment: Alignment = .center,
     @ViewBuilder content: () -> Content,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return ZStack(alignment: alignment, content: content)
+    return AnyView(ZStack(alignment: alignment, content: content)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 // MARK: - Localized Form Fields
@@ -313,14 +313,14 @@ public func platformLocalizedTextField_L1(
     title: String,
     text: Binding<String>,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return TextField(title, text: text)
+    return AnyView(TextField(title, text: text)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// RTL-aware secure field with proper localization
@@ -334,14 +334,14 @@ public func platformLocalizedSecureField_L1(
     title: String,
     text: Binding<String>,
     hints: InternationalizationHints = InternationalizationHints()
-) -> some View {
+) -> AnyView {
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return SecureField(title, text: text)
+    return AnyView(SecureField(title, text: text)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
-        .environmentObject(i18n)
+        .environmentObject(i18n))
 }
 
 /// RTL-aware text editor with proper localization
