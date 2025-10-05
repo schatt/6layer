@@ -11,6 +11,7 @@ The automatic accessibility identifier system provides:
 - **Manual override support** - explicit identifiers always take precedence
 - **View-level opt-out** for specific views that shouldn't have automatic IDs
 - **Collision detection** in DEBUG builds to identify potential conflicts
+- **Debug logging** for inspecting generated IDs during development
 - **Integration with HIG compliance** - automatic IDs are included in `.appleHIGCompliant()`
 
 ## Quick Start
@@ -65,6 +66,7 @@ Button("Decorative") { }
 | `namespace` | `String` | `"app"` | Global namespace for all generated IDs |
 | `mode` | `AccessibilityIdentifierMode` | `.automatic` | ID generation strategy |
 | `enableCollisionDetection` | `Bool` | `true` | DEBUG collision detection |
+| `enableDebugLogging` | `Bool` | `false` | DEBUG logging of generated IDs |
 
 ### Generation Modes
 
@@ -140,6 +142,64 @@ All Layer 1 functions automatically include accessibility identifiers:
 - ✅ Views that don't need testing
 - ✅ Performance-critical rendering paths
 
+## Debugging and Inspection
+
+### Debug Logging
+
+Enable debug logging to inspect generated accessibility identifiers during development:
+
+```swift
+// Enable debug logging
+AccessibilityIdentifierConfig.shared.enableDebugLogging = true
+
+// Generate some IDs (will be logged automatically)
+let view = platformPresentItemCollection_L1(items: users, hints: hints)
+
+// Inspect the generated IDs
+let log = AccessibilityIdentifierConfig.shared.getDebugLog()
+print(log)
+
+// Or print directly to console
+AccessibilityIdentifierConfig.shared.printDebugLog()
+
+// Clear the log when done
+AccessibilityIdentifierConfig.shared.clearDebugLog()
+```
+
+### Console Output
+
+When debug logging is enabled, generated IDs are logged to the console with timestamps:
+
+```
+🔍 Accessibility ID Generated: 'app.list.item.user-1' for Identifiable(user-1)
+🔍 Accessibility ID Generated: 'app.ui.button.save' for Any(String)
+🔍 Accessibility ID Generated: 'app.form.field.email' for ViewModifier
+```
+
+### Debug Methods
+
+| Method | Description |
+|--------|-------------|
+| `getDebugLog()` | Returns formatted string with all generated IDs and timestamps |
+| `printDebugLog()` | Prints debug log directly to console |
+| `clearDebugLog()` | Clears the debug log history |
+| `logGeneratedID(_:context:)` | Manually log an ID with context |
+
+### Debug Log Format
+
+The debug log includes:
+- **Timestamp** (HH:mm:ss.SSS format)
+- **Generated ID** (the actual accessibility identifier)
+- **Context** (source of the ID generation)
+
+Example output:
+```
+Generated Accessibility Identifiers:
+10:30:45.123 - app.list.item.user-1 (Identifiable(user-1))
+10:30:45.124 - app.ui.button.save (Any(String))
+10:30:45.125 - app.form.field.email (ViewModifier)
+```
+
 ## Collision Detection
 
 In DEBUG builds, the system tracks generated IDs to detect potential conflicts:
@@ -171,15 +231,27 @@ let hasCollision = generator.checkForCollision(id)
 
 ## Examples
 
-See `AutomaticAccessibilityIdentifiersExample.swift` for comprehensive examples including:
+See the following example files for comprehensive usage:
+
+### `AutomaticAccessibilityIdentifiersExample.swift`
+Basic usage examples including:
 - Basic automatic identifier usage
 - Layer 1 function integration
 - Manual override patterns
 - Opt-out scenarios
 - Global configuration management
 
+### `AccessibilityIdentifierDebuggingExample.swift`
+Debugging and inspection examples including:
+- Debug logging controls
+- Real-time ID inspection
+- Console output examples
+- Advanced debugging scenarios
+- Collision detection testing
+
 ## Version History
 
+- **v4.0.1**: Added debugging capabilities for inspecting generated IDs
 - **v4.0.0**: Initial implementation with automatic identifiers enabled by default
 
 ## Related Documentation
