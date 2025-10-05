@@ -1,12 +1,66 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.1.1 - Critical Bug Fix Release** 🚨
+## 📍 **Current Release: v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6** 🚨
 
-**Release Date**: October 2025  
+**Release Date**: October 5, 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.0.1 - Automatic Accessibility Identifiers with Debugging  
-**Note**: Critical bug fix for automatic accessibility identifier generation  
+**Previous Release**: v4.1.1 - Critical Bug Fix Release  
+**Note**: Fixed automatic accessibility identifiers for Layers 2-6 functions  
 **Next Release**: TBD
+
+---
+
+## 🚨 **v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6** ✅ **COMPLETE**
+
+**Release Date**: October 5, 2025  
+**Type**: Patch Release (Bug Fix)  
+**Priority**: Critical  
+**Scope**: Fix automatic accessibility identifiers for Layers 2-6 functions  
+**Note**: Critical bug fix - automatic accessibility identifiers now work for all SixLayer framework elements
+
+### 🐛 **Critical Bug Fixed**
+- **Problem**: Automatic accessibility identifiers were only working for Layer 1 functions, not Layers 2-6
+- **Impact**: UI testing was unreliable, accessibility compliance was incomplete
+- **Solution**: Added `.automaticAccessibilityIdentifiers()` to all Layer 4-6 functions
+
+### 🔧 **Changes Made**
+- **Layer 4**: Photo components now apply automatic accessibility identifiers
+- **Layer 5**: Performance extensions now apply automatic accessibility identifiers  
+- **Layer 6**: Haptic feedback extensions now apply automatic accessibility identifiers
+- **Testing**: Comprehensive test coverage added for all layers
+- **Documentation**: Mandatory testing rules established
+
+### 📊 **Release Statistics**
+- **Files Changed**: 11
+- **Lines Added**: 990
+- **Lines Removed**: 2
+- **Tests Passing**: 1,662/1,662 (100%)
+- **Test Failures**: 0
+- **Breaking Changes**: 0
+
+### 🎯 **Impact**
+- ✅ **Better accessibility compliance** for users with disabilities
+- ✅ **Improved UI testing reliability** for developers
+- ✅ **Consistent behavior** across all framework layers
+- ✅ **No migration required** - fully backward compatible
+
+### 📋 **Files Modified**
+- `Framework/Sources/Shared/Views/Extensions/PlatformPhotoComponentsLayer4.swift`
+- `Framework/Sources/Shared/Views/Extensions/PlatformPerformanceExtensionsLayer5.swift`
+- `Framework/Sources/Shared/Views/Extensions/PlatformHapticFeedbackExtensions.swift`
+- `Development/Tests/SixLayerFrameworkTests/AccessibilityTestUtilities.swift` (new)
+- `Development/Tests/SixLayerFrameworkTests/PhotoComponentsLayer4Tests.swift` (new)
+- `Development/Tests/SixLayerFrameworkTests/AccessibilityFeaturesLayer5Tests.swift`
+- `Development/Tests/SixLayerFrameworkTests/InputHandlingInteractionsTests.swift`
+- `Development/Tests/SixLayerFrameworkTests/L3StrategySelectionTests.swift`
+- `Development/Tests/SixLayerFrameworkTests/PlatformLayoutDecisionLayer2Tests.swift`
+- `CRITICAL_TEST_AUDIT_FINDINGS.md` (new)
+- `MANDATORY_TESTING_RULES.md` (new)
+
+### 🔗 **Release Links**
+- **GitHub Tag**: [v4.1.2](https://github.com/schatt/6layer/releases/tag/v4.1.2)
+- **Release Notes**: `Development/RELEASE_v4.1.2.md`
+- **Changelog**: [v4.1.1...v4.1.2](https://github.com/schatt/6layer/compare/v4.1.1...v4.1.2)
 
 ---
 
