@@ -319,10 +319,17 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         // Test accessibility functions that are available
         // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
+        // Set test overrides for accessibility capabilities
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        
         // Test that accessibility behavior can be tested
         let config = getCardExpansionPlatformConfig()
         XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported")
         XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported")
+        
+        // Clean up
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Color Encoding-Dependent Function Tests
