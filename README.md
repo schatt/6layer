@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "3.4.4")
+    .package(url: "https://github.com/schatt/6layer.git", from: "3.5.0")
 ]
 ```
 
@@ -41,7 +41,7 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v3.4.4
+## 🆕 Latest Release: v3.5.0
 
 ### **DynamicFormView Label Duplication Fix**
 Resolved duplicate labels where both the wrapper and control labels were visible for DatePicker, ColorPicker, and Toggle/Checkbox. Controls now use empty titles with `.labelsHidden()` and explicit accessibility labels; wrapper retains visual label. Zero breaking changes.
@@ -69,12 +69,12 @@ platformPresentItemCollection_L1(
 - **[Project Status](Development/PROJECT_STATUS.md)** - Current development status
 - **[Roadmap](Development/todo.md)** - Development phases and progress
 - **[Documentation](Framework/docs/)** - Technical implementation details
-- **[Release Notes v3.4.4](Development/RELEASE_v3.4.4.md)** - DynamicFormView label duplication fix
+- **[Release Notes v3.5.0](Development/RELEASE_v3.5.0.md)** - Dynamic Form Grid Layout & Label Fix
 - **[OCR Overlay Guide](Framework/docs/OCROverlayGuide.md)** - Interactive visual text correction
 
 ## 📋 Current Status
 
-**Version**: v3.4.4 (DynamicFormView Label Duplication Fix)  
+**Version**: v3.5.0 (Dynamic Form Grid Layout & Label Fix)  
 **Phase**: Bug Fix Release  
 **Next**: Continue test suite rewrite and stability improvements
 

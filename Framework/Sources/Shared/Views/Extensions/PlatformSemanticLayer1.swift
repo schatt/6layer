@@ -633,17 +633,14 @@ private func createSimpleFieldView(for field: DynamicFormField) -> some View {
             case .date:
                 DatePicker("", selection: .constant(Date()))
                     .datePickerStyle(.compact)
-                    .labelsHidden()
-                    .accessibilityLabel(Text(field.placeholder ?? "Select date"))
+                    .selfLabelingControl(label: field.placeholder ?? "Select date")
             case .time:
                 DatePicker("", selection: .constant(Date()), displayedComponents: .hourAndMinute)
                     .datePickerStyle(.compact)
-                    .labelsHidden()
-                    .accessibilityLabel(Text(field.placeholder ?? "Select time"))
+                    .selfLabelingControl(label: field.placeholder ?? "Select time")
             case .color:
                 ColorPicker("", selection: .constant(.blue))
-                    .labelsHidden()
-                    .accessibilityLabel(Text(field.label))
+                    .selfLabelingControl(label: field.label)
             case .range:
                 Slider(value: .constant(0.5), in: 0...1)
             case .multiselect, .radio, .checkbox, .file, .image, .datetime, .array, .data, .custom, .text, .email, .password, .phone, .url, .autocomplete, .enum:
@@ -1527,8 +1524,7 @@ public struct ModalFormView: View {
                 case .date:
                     DatePicker("", selection: .constant(Date()))
                         .datePickerStyle(.compact)
-                        .labelsHidden()
-                        .accessibilityLabel(Text(field.placeholder ?? "Select date"))
+                        .selfLabelingControl(label: field.placeholder ?? "Select date")
                 case .select:
                     Picker(field.placeholder ?? "Select option", selection: .constant("")) {
                         Text("Select an option").tag("")
@@ -1574,13 +1570,11 @@ public struct ModalFormView: View {
                 case .time:
                     DatePicker("", selection: .constant(Date()), displayedComponents: .hourAndMinute)
                         .datePickerStyle(.compact)
-                        .labelsHidden()
-                        .accessibilityLabel(Text(field.placeholder ?? "Select time"))
+                        .selfLabelingControl(label: field.placeholder ?? "Select time")
                 case .datetime:
                     DatePicker("", selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
-                        .labelsHidden()
-                        .accessibilityLabel(Text(field.placeholder ?? "Select date and time"))
+                        .selfLabelingControl(label: field.placeholder ?? "Select date and time")
                 case .multiselect:
                     Text("Multi-select field: \(field.label)")
                         .foregroundColor(.secondary)
@@ -1903,8 +1897,7 @@ public struct SimpleFormView: View {
                         displayedComponents: .date
                     )
                     .datePickerStyle(.compact)
-                    .labelsHidden()
-                    .accessibilityLabel(Text(field.placeholder ?? "Select date"))
+                    .selfLabelingControl(label: field.placeholder ?? "Select date")
                     
                 case .select:
                     Picker(field.placeholder ?? "Select option", selection: field.$value) {
@@ -1972,8 +1965,7 @@ public struct SimpleFormView: View {
                         displayedComponents: .hourAndMinute
                     )
                     .datePickerStyle(.compact)
-                    .labelsHidden()
-                    .accessibilityLabel(Text(field.placeholder ?? "Select time"))
+                    .selfLabelingControl(label: field.placeholder ?? "Select time")
                     
                 case .datetime:
                     DatePicker(
@@ -1985,8 +1977,7 @@ public struct SimpleFormView: View {
                         displayedComponents: [.date, .hourAndMinute]
                     )
                     .datePickerStyle(.compact)
-                    .labelsHidden()
-                    .accessibilityLabel(Text(field.placeholder ?? "Select date and time"))
+                    .selfLabelingControl(label: field.placeholder ?? "Select date and time")
                     
                 case .multiselect:
                     VStack(alignment: .leading, spacing: 4) {

@@ -552,13 +552,12 @@ public struct DatePickerField: View {
                 .font(.headline)
             
             DatePicker(
-                field.placeholder ?? "Select date",
+                "",
                 selection: $selectedDate,
                 displayedComponents: .date
             )
             .datePickerStyle(.compact)
-            .accessibilityLabel("Date picker for \(field.label)")
-            .accessibilityHint("Tap to select a date")
+            .selfLabelingControl(label: field.label)
             .onChange(of: selectedDate) { newDate in
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
@@ -592,13 +591,12 @@ public struct TimePickerField: View {
                 .font(.headline)
             
             DatePicker(
-                field.placeholder ?? "Select time",
+                "",
                 selection: $selectedTime,
                 displayedComponents: .hourAndMinute
             )
             .datePickerStyle(.compact)
-            .accessibilityLabel("Time picker for \(field.label)")
-            .accessibilityHint("Tap to select a time")
+            .selfLabelingControl(label: field.label)
             .onChange(of: selectedTime) { newTime in
                 let formatter = DateFormatter()
                 formatter.timeStyle = .short
@@ -632,13 +630,12 @@ public struct DateTimePickerField: View {
                 .font(.headline)
             
             DatePicker(
-                field.placeholder ?? "Select date and time",
+                "",
                 selection: $selectedDateTime,
                 displayedComponents: [.date, .hourAndMinute]
             )
             .datePickerStyle(.compact)
-            .accessibilityLabel("Date and time picker for \(field.label)")
-            .accessibilityHint("Tap to select date and time")
+            .selfLabelingControl(label: field.label)
             .onChange(of: selectedDateTime) { newDateTime in
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
