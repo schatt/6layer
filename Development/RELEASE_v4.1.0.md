@@ -5,13 +5,27 @@
 - **Version**: 4.1.0
 - **Release Date**: January 15, 2025
 - **Type**: Minor Release (New Features)
-- **Breaking Changes**: None
+- **Breaking Changes**: Minor (return type changes for Layer 1 functions)
 
 ## 🎯 Release Summary
 
 SixLayer Framework v4.1.0 introduces the **Enhanced Breadcrumb System for UI Testing**, a comprehensive solution that eliminates the brittleness of traditional UI testing by providing stable, semantic accessibility identifiers with complete view hierarchy tracking and automatic UI test code generation.
 
 ## 🚀 New Features
+
+### Test Infrastructure Improvements
+
+#### Centralized Test Setup Utilities
+- **New `TestSetupUtilities.swift`** - Centralized test setup and platform mocking
+- **DRY principle implementation** - Eliminates duplicate test setup code
+- **Platform simulation** - Consistent platform capability testing
+- **Assertion helpers** - Standardized test assertions across test files
+
+#### Test Fixes and Stability
+- **Fixed 48 failing tests** - Resolved platform capability detection issues
+- **Improved test reliability** - Consistent testing defaults across all platforms
+- **Enhanced test coverage** - Better validation of runtime capabilities
+- **Test performance optimization** - Faster test execution with centralized utilities
 
 ### Enhanced Breadcrumb System
 
@@ -80,10 +94,12 @@ let inputCode = config.generateTextInputAction("app.field.email", text: "test@ex
 
 ### Test Coverage
 - **23 new comprehensive tests** for enhanced breadcrumb system
+- **48 test failures fixed** - Resolved platform capability detection issues
 - **100% test success rate** for all new features
 - **Performance testing** included for ID generation
 - **File generation testing** with cleanup verification
 - **Clipboard integration testing** on macOS
+- **Centralized test utilities** - DRY implementation across all test files
 
 ### File Structure
 ```
@@ -230,7 +246,33 @@ public struct ScreenContextModifier: ViewModifier {
 
 ### From v4.0.x to v4.1.0
 
-**No breaking changes!** The enhanced breadcrumb system is completely additive.
+**Minor breaking changes** - Layer 1 functions now return `AnyView` instead of `some View` for better test consistency.
+
+#### Breaking Changes
+
+**Layer 1 Function Return Types** - The following functions now return `AnyView` instead of `some View`:
+
+```swift
+// Affected functions (15 total)
+platformPresentLocalizedContent_L1
+platformPresentLocalizedText_L1
+platformPresentLocalizedNumber_L1
+platformPresentLocalizedCurrency_L1
+platformPresentLocalizedDate_L1
+platformPresentLocalizedTime_L1
+platformPresentLocalizedPercentage_L1
+platformPresentLocalizedPlural_L1
+platformPresentLocalizedString_L1
+platformRTLContainer_L1
+platformRTLHStack_L1
+platformRTLVStack_L1
+platformRTLZStack_L1
+platformLocalizedTextField_L1
+platformLocalizedSecureField_L1
+platformPresentContent_L1
+```
+
+**Impact**: Minimal - `AnyView` is a type eraser that wraps `some View`, so most SwiftUI code will work transparently. Only code that relies on specific view types for pattern matching or generic constraints may need updates.
 
 #### Optional: Enable New Features
 ```swift
