@@ -66,13 +66,13 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     public var enhancedDebugLog: [AccessibilityDebugEntry] = []
     
     /// Current view hierarchy for breadcrumb tracking
-    private var currentViewHierarchy: [String] = []
+    public var currentViewHierarchy: [String] = []
     
     /// Current screen context for breadcrumb tracking
-    private var currentScreenContext: String?
+    public var currentScreenContext: String?
     
     /// Current navigation state for breadcrumb tracking
-    private var currentNavigationState: String?
+    public var currentNavigationState: String?
     
     // MARK: - Initialization
     
@@ -509,12 +509,28 @@ public extension View {
     func disableAutomaticAccessibilityIdentifiers() -> some View {
         self.modifier(DisableAutomaticAccessibilityIdentifierModifier())
     }
+    
+    /// Apply automatic accessibility identifiers globally to all views in this hierarchy
+    /// This should be called once at the app level (e.g., in your main App struct)
+    func enableGlobalAutomaticAccessibilityIdentifiers() -> some View {
+        self.modifier(GlobalAutomaticAccessibilityIdentifierModifier())
+    }
 }
 
 // MARK: - Automatic Accessibility Identifier Modifier
 
 /// Modifier that automatically applies accessibility identifiers to views
 public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
+    
+    public func body(content: Content) -> some View {
+        content
+            .modifier(AccessibilityIdentifierAssignmentModifier())
+    }
+}
+
+/// Global modifier that automatically applies accessibility identifiers to all views
+/// This should be applied once at the app level
+public struct GlobalAutomaticAccessibilityIdentifierModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
@@ -540,12 +556,14 @@ public struct DisableAutomaticAccessibilityIdentifierModifier: ViewModifier {
 public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     
     @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
+    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutoIDs
     
     public func body(content: Content) -> some View {
-        if !disableAutoIDs && AccessibilityIdentifierConfig.shared.enableAutoIDs {
+        let config = AccessibilityIdentifierConfig.shared
+        let shouldApplyAutoIDs = !disableAutoIDs && config.enableAutoIDs
+        
+        if shouldApplyAutoIDs {
             // Apply automatic identifier based on view context
-            // This is a simplified implementation - in practice, we'd need to
-            // analyze the view hierarchy and content to generate appropriate IDs
             content
                 .accessibilityIdentifier(generateAutomaticID())
         } else {
@@ -555,24 +573,46 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     
     private func generateAutomaticID() -> String {
         let generator = AccessibilityIdentifierGenerator()
+        let config = AccessibilityIdentifierConfig.shared
+        
+        // Use view hierarchy context if available
+        let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+        let screenContext = config.currentScreenContext ?? "main"
+        let role = "element"
+        
+        // Generate a unique object ID based on view type and hierarchy
+        let objectID = generateViewObjectID(context: context, screenContext: screenContext)
+        
         let id = generator.generateID(
-            for: "view",
-            role: "element",
-            context: "ui"
+            for: objectID,
+            role: role,
+            context: screenContext
         )
         
         // Additional logging for view-level assignment
-        let config = AccessibilityIdentifierConfig.shared
-        config.logGeneratedID(id, context: "ViewModifier")
+        config.logGeneratedID(id, context: "ViewModifier(\(context))")
         
         return id
     }
+    
+    private func generateViewObjectID(context: String, screenContext: String) -> String {
+        // Create a more meaningful object ID based on context
+        let timestamp = Int(Date().timeIntervalSince1970 * 1000) % 10000 // Last 4 digits of timestamp
+        let contextHash = abs(context.hashValue) % 1000 // Last 3 digits of context hash
+        
+        return "\(screenContext.lowercased())-\(context.lowercased())-\(timestamp)-\(contextHash)"
+    }
 }
 
-// MARK: - Environment Key
+// MARK: - Environment Keys
 
 /// Environment key for disabling automatic accessibility identifiers
 public struct DisableAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
+    public static let defaultValue: Bool = false
+}
+
+/// Environment key for enabling global automatic accessibility identifiers
+public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
     public static let defaultValue: Bool = false
 }
 
@@ -580,6 +620,11 @@ public extension EnvironmentValues {
     var disableAutomaticAccessibilityIdentifiers: Bool {
         get { self[DisableAutomaticAccessibilityIdentifiersKey.self] }
         set { self[DisableAutomaticAccessibilityIdentifiersKey.self] = newValue }
+    }
+    
+    var globalAutomaticAccessibilityIdentifiers: Bool {
+        get { self[GlobalAutomaticAccessibilityIdentifiersKey.self] }
+        set { self[GlobalAutomaticAccessibilityIdentifiersKey.self] = newValue }
     }
 }
 
@@ -597,6 +642,7 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
             .onDisappear {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
+            .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
     }
 }
 
@@ -609,6 +655,7 @@ public struct ScreenContextModifier: ViewModifier {
             .onAppear {
                 AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
             }
+            .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
     }
 }
 
@@ -621,6 +668,7 @@ public struct NavigationStateModifier: ViewModifier {
             .onAppear {
                 AccessibilityIdentifierConfig.shared.setNavigationState(navigationState)
             }
+            .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
     }
 }
 
