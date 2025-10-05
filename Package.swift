@@ -18,7 +18,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        // Removed unused dependencies: ZIPFoundation and ViewInspector
+        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7")
     ],
     targets: [
         // Main framework target - includes only the essential framework code
@@ -50,7 +50,7 @@ let package = Package(
         // Test targets
         .testTarget(
             name: "SixLayerFrameworkTests",
-            dependencies: ["SixLayerFramework"],
+            dependencies: ["SixLayerFramework", "ViewInspector"],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
                 // Function index moved to docs directory
