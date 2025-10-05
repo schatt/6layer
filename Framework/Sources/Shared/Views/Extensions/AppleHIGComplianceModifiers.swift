@@ -29,6 +29,7 @@ public struct AppleHIGComplianceModifier: ViewModifier {
                 platform: manager.currentPlatform,
                 accessibilityState: manager.accessibilityState
             ))
+            .automaticAccessibilityIdentifiers()
     }
 }
 

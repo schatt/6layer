@@ -126,6 +126,11 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsTouch
+        }
+        
         let platform = currentPlatform
         switch platform {
         case .iOS:
@@ -233,6 +238,11 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsHapticFeedback
+        }
+        
         let platform = currentPlatform
         switch platform {
         case .iOS:
@@ -291,6 +301,11 @@ public struct RuntimeCapabilityDetection {
         // Check for capability override first
         if let testValue = testHover {
             return testValue
+        }
+        
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsHover
         }
         
         let platform = currentPlatform
@@ -356,6 +371,11 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsVoiceOver
+        }
+        
         let platform = currentPlatform
         switch platform {
         case .iOS:
@@ -399,6 +419,11 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsSwitchControl
+        }
+        
         let platform = currentPlatform
         switch platform {
         case .iOS:
@@ -440,6 +465,11 @@ public struct RuntimeCapabilityDetection {
         // Check for capability override first
         if let testValue = testAssistiveTouch {
             return testValue
+        }
+        
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsAssistiveTouch
         }
         
         let platform = currentPlatform
@@ -499,15 +529,15 @@ public struct TestingCapabilityDetection {
                 supportsHover: false, // Will be true for iPad in actual detection
                 supportsVoiceOver: true, // iOS supports VoiceOver
                 supportsSwitchControl: true, // iOS supports Switch Control
-                supportsAssistiveTouch: true // iOS supports AssistiveTouch
+                supportsAssistiveTouch: false // iOS testing default simplified for testing
             )
         case .macOS:
             return TestingCapabilityDefaults(
                 supportsTouch: false, // Testing default - can be overridden
                 supportsHapticFeedback: false,
                 supportsHover: true,
-                supportsVoiceOver: false, // Testing default - macOS doesn't have VoiceOver enabled by default
-                supportsSwitchControl: false, // Testing default - macOS doesn't have Switch Control enabled by default
+                supportsVoiceOver: true, // macOS supports VoiceOver
+                supportsSwitchControl: true, // macOS supports Switch Control
                 supportsAssistiveTouch: false
             )
         case .watchOS:

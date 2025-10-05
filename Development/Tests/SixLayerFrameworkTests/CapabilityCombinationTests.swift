@@ -38,6 +38,11 @@ import SwiftUI
 /// Tests all possible combinations of capabilities to ensure they work together correctly
 @MainActor
 final class CapabilityCombinationTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
+    }
     
     override func tearDown() {
         super.tearDown()
@@ -661,9 +666,9 @@ final class CapabilityCombinationTests: XCTestCase {
         
         if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
-            if config.supportsTouch && config.supportsHover {
-                XCTFail("Touch and hover should be mutually exclusive on \(platform)")
-            }
+            // In red-phase, assert softly to avoid false negatives from overrides
+            XCTAssertFalse(config.supportsTouch && config.supportsHover,
+                          "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
         }
     }
     

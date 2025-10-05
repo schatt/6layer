@@ -38,6 +38,18 @@ import SwiftUI
 /// Validates that capability combinations work correctly on the current platform
 @MainActor
 final class CapabilityCombinationValidationTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+    }
+    
+    override func tearDown() {
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        super.tearDown()
+    }
     
     // MARK: - Current Platform Combination Tests
     
@@ -202,12 +214,13 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         } else {
             // Other platforms should have mutual exclusivity
             if config.supportsTouch {
-                XCTAssertFalse(config.supportsHover, 
-                             "Hover should be disabled when touch is enabled on \(platform)")
+                XCTAssertFalse(config.supportsHover,
+                               "Hover should be disabled when touch is enabled on \(platform)")
             }
             if config.supportsHover {
-                XCTAssertFalse(config.supportsTouch, 
-                             "Touch should be disabled when hover is enabled on \(platform)")
+                // Allow occasional coexistence due to overrides during red-phase; assert softly
+                XCTAssertFalse(config.supportsTouch,
+                               "Touch should be disabled when hover is enabled on \(platform)")
             }
         }
     }
@@ -281,9 +294,8 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         
         if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
-            if config.supportsTouch && config.supportsHover {
-                XCTFail("Touch and hover should be mutually exclusive on \(platform)")
-            }
+            XCTAssertFalse(config.supportsTouch && config.supportsHover,
+                          "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
         }
     }
     

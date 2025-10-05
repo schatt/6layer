@@ -39,6 +39,46 @@ import SwiftUI
 /// AND that capabilities work when supported and are disabled when not supported
 @MainActor
 final class CapabilityMatrixTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        // Establish deterministic baseline for current platform
+        let platform = SixLayerPlatform.current
+        RuntimeCapabilityDetection.setTestPlatform(platform)
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        switch platform {
+        case .macOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+            RuntimeCapabilityDetection.setTestHover(true)
+        case .iOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .watchOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .tvOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .visionOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+            RuntimeCapabilityDetection.setTestHover(true)
+        }
+    }
+
+    override func tearDown() {
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        super.tearDown()
+    }
     
     // MARK: - Capability Test Matrix
     
