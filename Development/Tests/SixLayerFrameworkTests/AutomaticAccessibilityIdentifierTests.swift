@@ -301,6 +301,103 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
         }
     }
     
+    // MARK: - Debug Logging Tests
+    
+    /// BUSINESS PURPOSE: Debug logging should capture generated IDs for inspection
+    /// TESTING SCOPE: Tests that debug logging works correctly
+    /// METHODOLOGY: Unit tests for debug logging functionality
+    func testDebugLoggingCapturesGeneratedIDs() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            let generator = AccessibilityIdentifierGenerator()
+            
+            // Enable debug logging
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Generate some IDs
+            let id1 = generator.generateID(for: "test1", role: "button", context: "ui")
+            let id2 = generator.generateID(for: "test2", role: "text", context: "form")
+            
+            // Check that IDs were logged
+            XCTAssertEqual(config.generatedIDsLog.count, 2)
+            XCTAssertEqual(config.generatedIDsLog[0].id, id1)
+            XCTAssertEqual(config.generatedIDsLog[1].id, id2)
+            XCTAssertTrue(config.generatedIDsLog[0].context.contains("String"))
+            XCTAssertTrue(config.generatedIDsLog[1].context.contains("String"))
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Debug logging should be controllable
+    /// TESTING SCOPE: Tests that debug logging can be disabled
+    /// METHODOLOGY: Unit tests for debug logging control
+    func testDebugLoggingDisabledWhenTurnedOff() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            let generator = AccessibilityIdentifierGenerator()
+            
+            // Disable debug logging
+            config.enableDebugLogging = false
+            config.clearDebugLog()
+            
+            // Generate some IDs
+            let _ = generator.generateID(for: "test1", role: "button", context: "ui")
+            let _ = generator.generateID(for: "test2", role: "text", context: "form")
+            
+            // Check that IDs were not logged
+            XCTAssertEqual(config.generatedIDsLog.count, 0)
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Debug log should be formatted for readability
+    /// TESTING SCOPE: Tests that debug log formatting works correctly
+    /// METHODOLOGY: Unit tests for debug log formatting
+    func testDebugLogFormatting() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            let generator = AccessibilityIdentifierGenerator()
+            
+            // Enable debug logging
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Generate an ID
+            let id = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            // Get debug log
+            let log = config.getDebugLog()
+            
+            // Check log format
+            XCTAssertTrue(log.contains("Generated Accessibility Identifiers:"))
+            XCTAssertTrue(log.contains(id))
+            XCTAssertTrue(log.contains("String"))
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Debug log should be clearable
+    /// TESTING SCOPE: Tests that debug log can be cleared
+    /// METHODOLOGY: Unit tests for debug log clearing
+    func testDebugLogClearing() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            let generator = AccessibilityIdentifierGenerator()
+            
+            // Enable debug logging and generate some IDs
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let _ = generator.generateID(for: "test1", role: "button", context: "ui")
+            let _ = generator.generateID(for: "test2", role: "text", context: "form")
+            
+            XCTAssertEqual(config.generatedIDsLog.count, 2)
+            
+            // Clear log
+            config.clearDebugLog()
+            
+            XCTAssertEqual(config.generatedIDsLog.count, 0)
+        }
+    }
+    
     // MARK: - Performance Tests
     
     /// BUSINESS PURPOSE: Automatic ID generation should be performant

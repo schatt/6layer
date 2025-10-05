@@ -25,9 +25,15 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Whether to enable DEBUG collision detection
     @Published public var enableCollisionDetection: Bool = true
     
+    /// Whether to enable DEBUG logging of generated IDs
+    @Published public var enableDebugLogging: Bool = false
+    
     // MARK: - Private Properties
     
     private var generatedIDs: Set<String> = []
+    
+    /// DEBUG: Log of all generated IDs with context
+    public var generatedIDsLog: [(id: String, context: String, timestamp: Date)] = []
     
     // MARK: - Initialization
     
@@ -43,7 +49,9 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         namespace = "app"
         mode = .automatic
         enableCollisionDetection = true
+        enableDebugLogging = false
         generatedIDs.removeAll()
+        generatedIDsLog.removeAll()
     }
     
     /// Check if an ID has been generated before (collision detection)
@@ -64,6 +72,46 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Clear all registered IDs (useful for testing)
     public func clearRegisteredIDs() {
         generatedIDs.removeAll()
+    }
+    
+    // MARK: - DEBUG Methods
+    
+    /// Log a generated ID with context for debugging
+    public func logGeneratedID(_ id: String, context: String) {
+        guard enableDebugLogging else { return }
+        
+        let logEntry = (id: id, context: context, timestamp: Date())
+        generatedIDsLog.append(logEntry)
+        
+        #if DEBUG
+        print("🔍 Accessibility ID Generated: '\(id)' for \(context)")
+        #endif
+    }
+    
+    /// Get all generated IDs as a formatted string for debugging
+    public func getDebugLog() -> String {
+        guard !generatedIDsLog.isEmpty else {
+            return "No accessibility identifiers generated yet."
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        
+        let logEntries = generatedIDsLog.map { entry in
+            "\(formatter.string(from: entry.timestamp)) - \(entry.id) (\(entry.context))"
+        }
+        
+        return "Generated Accessibility Identifiers:\n" + logEntries.joined(separator: "\n")
+    }
+    
+    /// Print debug log to console
+    public func printDebugLog() {
+        print(getDebugLog())
+    }
+    
+    /// Clear debug log
+    public func clearDebugLog() {
+        generatedIDsLog.removeAll()
     }
 }
 
@@ -117,6 +165,9 @@ public struct AccessibilityIdentifierGenerator {
         // Register for collision detection
         config.registerGeneratedID(identifier)
         
+        // Log for debugging
+        config.logGeneratedID(identifier, context: "Identifiable(\(String(describing: object.id)))")
+        
         return identifier
     }
     
@@ -142,6 +193,9 @@ public struct AccessibilityIdentifierGenerator {
         
         // Register for collision detection
         config.registerGeneratedID(identifier)
+        
+        // Log for debugging
+        config.logGeneratedID(identifier, context: "Any(\(String(describing: type(of: object))))")
         
         return identifier
     }
@@ -262,11 +316,17 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     
     private func generateAutomaticID() -> String {
         let generator = AccessibilityIdentifierGenerator()
-        return generator.generateID(
+        let id = generator.generateID(
             for: "view",
             role: "element",
             context: "ui"
         )
+        
+        // Additional logging for view-level assignment
+        let config = AccessibilityIdentifierConfig.shared
+        config.logGeneratedID(id, context: "ViewModifier")
+        
+        return id
     }
 }
 
