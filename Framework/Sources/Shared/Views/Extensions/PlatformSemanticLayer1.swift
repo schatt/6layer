@@ -299,8 +299,8 @@ public func platformPresentTemporalData_L1(
 public func platformPresentContent_L1(
     content: Any,
     hints: PresentationHints
-) -> some View {
-    return GenericContentView(content: content, hints: hints)
+) -> AnyView {
+    return AnyView(GenericContentView(content: content, hints: hints))
 }
 
 /// Generic function for presenting settings interface
