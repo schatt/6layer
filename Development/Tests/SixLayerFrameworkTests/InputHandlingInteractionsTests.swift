@@ -689,6 +689,30 @@ final class InputHandlingInteractionsTests: XCTestCase {
             XCTAssertTrue(behavior.dropIndicator == .none || behavior.dropIndicator == .platform || behavior.dropIndicator == .custom)
         }
     }
+    
+    // MARK: - Automatic Accessibility Identifier Tests
+    
+    /// BUSINESS PURPOSE: Layer 6 view modifiers should apply automatic accessibility identifiers
+    /// TESTING SCOPE: Tests that platformHapticFeedback applies automatic accessibility identifiers
+    /// METHODOLOGY: Tests Layer 6 functionality and modifier application with platform mocking
+    func testPlatformHapticFeedback_L6_AppliesAutomaticAccessibilityIdentifiers() async {
+        await MainActor.run {
+            // Given: Layer 6 function with test view and platform mocking
+            let testView = Button("Test") { }
+            
+            // When: Call Layer 6 function
+            let result = testView.platformHapticFeedback(PlatformHapticFeedback.light)
+            
+            // Then: Should have automatic accessibility identifiers
+            // This test will FAIL initially because Layer 6 doesn't have automatic accessibility identifiers
+            // After the fix, it should PASS
+            XCTAssertNotNil(result, "Layer 6 function should return a result")
+            
+            // CRITICAL: These assertions will FAIL until we implement automatic accessibility identifiers for Layer 6
+            // This is the true Red phase - testing functionality that doesn't exist yet
+            XCTAssertTrue(result.hasAutomaticAccessibilityIdentifiers, "Layer 6 should apply automatic accessibility identifiers")
+            XCTAssertTrue(result.isHIGCompliant, "Layer 6 should apply HIG compliance")
+            XCTAssertTrue(result.hasPerformanceOptimizations, "Layer 6 should apply performance optimizations")
+        }
+    }
 }
-
-// MARK: - Test Extensions

@@ -856,4 +856,38 @@ final class L3StrategySelectionTests: XCTestCase {
             XCTAssertNotNil(strategy)
         }
     }
+    
+    // MARK: - Automatic Accessibility Identifier Tests
+    
+    /// BUSINESS PURPOSE: Layer 3 functions return data structures, not views
+    /// TESTING SCOPE: Tests that selectCardExpansionStrategy_L3 returns correct data structure
+    /// METHODOLOGY: Tests Layer 3 functionality (data functions don't need accessibility identifiers)
+    func testSelectCardExpansionStrategy_L3_ReturnsCorrectDataStructure() async {
+        await MainActor.run {
+            // Given: Layer 3 function with test data
+            let contentCount = 10
+            let screenWidth: CGFloat = 375.0
+            let deviceType = DeviceType.phone
+            let interactionStyle = InteractionStyle.interactive
+            let contentDensity = ContentDensity.balanced
+            
+            // When: Call Layer 3 function
+            let result = selectCardExpansionStrategy_L3(
+                contentCount: contentCount,
+                screenWidth: screenWidth,
+                deviceType: deviceType,
+                interactionStyle: interactionStyle,
+                contentDensity: contentDensity
+            )
+            
+            // Then: Should return correct data structure
+            XCTAssertNotNil(result, "Layer 3 function should return a result")
+            XCTAssertNotNil(result.primaryStrategy, "Should have expansion strategy")
+            XCTAssertGreaterThanOrEqual(result.animationDuration, 0, "Should have non-negative duration")
+            XCTAssertGreaterThan(result.expansionScale, 0, "Should have positive expansion scale")
+            
+            // NOTE: Layer 3 functions return data structures, not views
+            // They don't need automatic accessibility identifiers because they're not UI elements
+        }
+    }
 }

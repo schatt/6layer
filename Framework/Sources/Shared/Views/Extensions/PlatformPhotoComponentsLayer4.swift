@@ -23,13 +23,16 @@ public func platformCameraInterface_L4(
 ) -> some View {
     #if os(iOS)
     return CameraView(onImageCaptured: onImageCaptured)
+        .automaticAccessibilityIdentifiers()
     #elseif os(macOS)
     // macOS doesn't have built-in camera UI, return a placeholder
     return Text("Camera not available on macOS")
         .foregroundColor(.secondary)
+        .automaticAccessibilityIdentifiers()
     #else
     return Text("Camera not available")
         .foregroundColor(.secondary)
+        .automaticAccessibilityIdentifiers()
     #endif
 }
 
@@ -39,11 +42,14 @@ public func platformPhotoPicker_L4(
 ) -> some View {
     #if os(iOS)
     return PhotoPickerView(onImageSelected: onImageSelected)
+        .automaticAccessibilityIdentifiers()
     #elseif os(macOS)
     return MacOSPhotoPickerView(onImageSelected: onImageSelected)
+        .automaticAccessibilityIdentifiers()
     #else
     return Text("Photo picker not available")
         .foregroundColor(.secondary)
+        .automaticAccessibilityIdentifiers()
     #endif
 }
 

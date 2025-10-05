@@ -73,6 +73,7 @@ public extension View {
         #endif
 
         return self
+            .automaticAccessibilityIdentifiers()
     }
 
     /// Platform haptic feedback trigger with custom action
@@ -133,5 +134,6 @@ public extension View {
         }
 
         return self
+            .automaticAccessibilityIdentifiers()
     }
 }

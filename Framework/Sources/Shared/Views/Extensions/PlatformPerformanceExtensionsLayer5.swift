@@ -14,11 +14,14 @@ public extension View {
         #if os(iOS)
         return self
             .drawingGroup() // Enable Metal rendering
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self
             .drawingGroup() // Enable Metal rendering
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -31,14 +34,17 @@ public extension View {
         return LazyVStack {
             content()
         }
+        .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return LazyVStack {
             content()
         }
+        .automaticAccessibilityIdentifiers()
         #else
         return VStack {
             content()
         }
+        .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -48,11 +54,14 @@ public extension View {
         #if os(iOS)
         return self
             .drawingGroup() // Enable Metal rendering
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self
             .drawingGroup() // Enable Metal rendering
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -62,11 +71,14 @@ public extension View {
         #if os(iOS)
         return self
             .animation(.easeInOut(duration: 0.3), value: true)
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self
             .animation(.easeInOut(duration: 0.3), value: true)
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -76,11 +88,14 @@ public extension View {
         #if os(iOS)
         return self
             .id(UUID()) // Force view recreation for caching
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self
             .id(UUID()) // Force view recreation for caching
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
 }

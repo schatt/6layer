@@ -251,4 +251,45 @@ final class PlatformLayoutDecisionLayer2Tests: XCTestCase {
         XCTAssertEqual(decision.approach, .dynamic, "Very complex content should use dynamic layout for performance")
         XCTAssertLessThanOrEqual(decision.columns, 3, "Should limit columns for performance")
     }
+    
+    // MARK: - Automatic Accessibility Identifier Tests
+    
+    /// BUSINESS PURPOSE: Layer 2 functions return data structures, not views
+    /// TESTING SCOPE: Tests that determineOptimalLayout_L2 returns correct data structure
+    /// METHODOLOGY: Tests Layer 2 functionality (data functions don't need accessibility identifiers)
+    func testDetermineOptimalLayout_L2_ReturnsCorrectDataStructure() async {
+        await MainActor.run {
+            // Given: Layer 2 function with test data
+            let items = [
+                TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
+                TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
+            ]
+            let hints = PresentationHints(
+                dataType: .generic,
+                presentationPreference: .grid,
+                complexity: .moderate,
+                context: .list,
+                customPreferences: [:]
+            )
+            
+            // When: Call Layer 2 function
+            let result = determineOptimalLayout_L2(
+                items: items,
+                hints: hints,
+                screenWidth: 375.0,
+                deviceType: .phone
+            )
+            
+            // Then: Should return correct data structure
+            XCTAssertNotNil(result, "Layer 2 function should return a result")
+            XCTAssertNotNil(result.approach, "Should have layout approach")
+            XCTAssertGreaterThan(result.columns, 0, "Should have positive column count")
+            XCTAssertGreaterThanOrEqual(result.spacing, 0, "Should have non-negative spacing")
+            XCTAssertNotNil(result.performance, "Should have performance strategy")
+            XCTAssertFalse(result.reasoning.isEmpty, "Should have reasoning")
+            
+            // NOTE: Layer 2 functions return data structures, not views
+            // They don't need automatic accessibility identifiers because they're not UI elements
+        }
+    }
 }

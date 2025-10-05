@@ -579,4 +579,30 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         // Relax threshold to reduce flakiness in CI/red phase
         XCTAssertLessThan(timeElapsed, 5.0, "Should handle 1000 color requests in less than 5 seconds")
     }
+    
+    // MARK: - Automatic Accessibility Identifier Tests
+    
+    /// BUSINESS PURPOSE: Layer 5 view modifiers should apply automatic accessibility identifiers
+    /// TESTING SCOPE: Tests that platformMemoryOptimization applies automatic accessibility identifiers
+    /// METHODOLOGY: Tests Layer 5 functionality and modifier application
+    func testPlatformMemoryOptimization_L5_AppliesAutomaticAccessibilityIdentifiers() async {
+        await MainActor.run {
+            // Given: Layer 5 function with test view
+            let testView = Button("Test") { }
+            
+            // When: Call Layer 5 function
+            let result = testView.platformMemoryOptimization()
+            
+            // Then: Should have automatic accessibility identifiers
+            // This test will FAIL initially because Layer 5 doesn't have automatic accessibility identifiers
+            // After the fix, it should PASS
+            XCTAssertNotNil(result, "Layer 5 function should return a result")
+            
+            // CRITICAL: These assertions will FAIL until we implement automatic accessibility identifiers for Layer 5
+            // This is the true Red phase - testing functionality that doesn't exist yet
+            XCTAssertTrue(result.hasAutomaticAccessibilityIdentifiers, "Layer 5 should apply automatic accessibility identifiers")
+            XCTAssertTrue(result.isHIGCompliant, "Layer 5 should apply HIG compliance")
+            XCTAssertTrue(result.hasPerformanceOptimizations, "Layer 5 should apply performance optimizations")
+        }
+    }
 }
