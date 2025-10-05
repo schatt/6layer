@@ -1,311 +1,334 @@
-# SixLayer Framework v4.0.1 - AI Agent Documentation
+# SixLayer Framework v3.5.0 - AI Agent Documentation
 
 ## 🎯 **Critical Information for AI Agents**
 
-This document provides essential information for AI agents working with SixLayer Framework v4.0.1.
+This document provides essential information for AI agents working with SixLayer Framework v3.5.0.
 
 ---
 
-## 🚀 **Major Changes in v4.0.1**
+## 🚀 **Major Changes in v3.5.0**
 
-### **1. Automatic Accessibility Identifiers (v4.0.0)**
+### **1. Dynamic Form Grid Layout**
 
-**BREAKING CHANGE**: Automatic accessibility identifiers are now enabled by default.
+**NEW FEATURE**: Horizontal grid layout for form fields using `LazyVGrid`.
 
-**Before v4.0.0**:
+**Before v3.5.0**:
 ```swift
-// Manual accessibility identifier assignment required
-Button("Save") { }
-    .platformAccessibilityIdentifier("save-button")
+// Only vertical stack layout available
+let fields = [
+    DynamicFormField(id: "amount", label: "Amount", contentType: .text),
+    DynamicFormField(id: "price", label: "Price", contentType: .text),
+    DynamicFormField(id: "total", label: "Total", contentType: .text)
+]
+// Result: Vertical stack (one field per row)
 ```
 
-**After v4.0.0**:
+**After v3.5.0**:
 ```swift
-// Automatic accessibility identifiers enabled by default
-Button("Save") { }
-// Gets automatic identifier: "app.ui.element.view"
-
-// Manual identifiers still override automatic ones
-Button("Save") { }
-    .platformAccessibilityIdentifier("custom-save-button")
-// Uses: "custom-save-button"
+// Horizontal grid layout with metadata
+let fields = [
+    DynamicFormField(
+        id: "amount",
+        label: "Amount",
+        contentType: .text,
+        metadata: ["gridColumn": "1"]
+    ),
+    DynamicFormField(
+        id: "price",
+        label: "Price",
+        contentType: .text,
+        metadata: ["gridColumn": "2"]
+    ),
+    DynamicFormField(
+        id: "total",
+        label: "Total",
+        contentType: .text,
+        metadata: ["gridColumn": "3"]
+    )
+]
+// Result: Horizontal grid (three fields per row)
 ```
 
-**Automatic ID Generation**:
-- ✅ **Deterministic IDs** based on object identity and context
-- ✅ **Global configuration** with namespace and generation modes
-- ✅ **Manual override precedence** - explicit identifiers always take precedence
-- ✅ **View-level opt-out** for specific views that shouldn't have automatic IDs
-- ✅ **Integration with HIG compliance** - automatic IDs included in `.appleHIGCompliant()`
+**Key Features**:
+- ✅ **Automatic grid detection** based on field metadata presence
+- ✅ **Dynamic column calculation** based on maximum `gridColumn` value
+- ✅ **Backward compatible** - existing forms continue to work unchanged
+- ✅ **Mixed layouts** - can mix grid and non-grid fields in same form section
 
-### **2. Debugging Capabilities (v4.0.1)**
+### **2. Label Duplication Fix**
 
-**NEW FEATURE**: Comprehensive debugging system for inspecting generated accessibility identifiers.
+**CRITICAL BUG FIX**: Fixed duplicate labels where both wrapper and control labels were visible.
 
-**Usage**:
-```swift
-// Enable debug logging
-AccessibilityIdentifierConfig.shared.enableDebugLogging = true
+**Problem Resolved**:
+- Fixed duplicate labels in DatePicker, ColorPicker, Toggle, TextEditor
+- Example: "Date" label appeared twice (wrapper + control)
 
-// Generate some IDs (will be logged automatically)
-let view = platformPresentItemCollection_L1(items: users, hints: hints)
-
-// Inspect the generated IDs
-let log = AccessibilityIdentifierConfig.shared.getDebugLog()
-print(log)
-
-// Or print directly to console
-AccessibilityIdentifierConfig.shared.printDebugLog()
-
-// Clear the log when done
-AccessibilityIdentifierConfig.shared.clearDebugLog()
-```
-
-**Console Output**:
-```
-🔍 Accessibility ID Generated: 'app.list.item.user-1' for Identifiable(user-1)
-🔍 Accessibility ID Generated: 'app.ui.button.save' for Any(String)
-🔍 Accessibility ID Generated: 'app.form.field.email' for ViewModifier
-```
+**Solution Implemented**:
+- **Self-Labeling Control Policy**: Controls now use empty titles with `.labelsHidden()`
+- **Accessibility Preservation**: Explicit `.accessibilityLabel()` maintains screen reader support
+- **DRY Compliance**: Created shared `SelfLabelingControlModifier` to eliminate code duplication
 
 ---
 
 ## 🔧 **Configuration System Details**
 
-### **AccessibilityIdentifierConfig Structure**
+### **Grid Layout Implementation**
 
+**Technical Implementation**:
 ```swift
-@MainActor
-public class AccessibilityIdentifierConfig: ObservableObject {
-    public static let shared = AccessibilityIdentifierConfig()
+// Added hasGridFields computed property
+var hasGridFields: Bool {
+    fields.contains { field in
+        field.metadata["gridColumn"] != nil
+    }
+}
+
+// Implemented gridFieldsView using LazyVGrid
+var gridFieldsView: some View {
+    LazyVGrid(columns: gridColumns, spacing: 16) {
+        ForEach(gridFields) { field in
+            DynamicFormFieldView(field: field)
+        }
+    }
+}
+
+// Dynamic gridColumns calculation
+var gridColumns: [GridItem] {
+    let maxColumn = fields.compactMap { field in
+        Int(field.metadata["gridColumn"] ?? "")
+    }.max() ?? 1
     
-    @Published public var enableAutoIDs: Bool = true
-    @Published public var namespace: String = "app"
-    @Published public var mode: AccessibilityIdentifierMode = .automatic
-    @Published public var enableCollisionDetection: Bool = true
-    @Published public var enableDebugLogging: Bool = false
-    
-    // Debug methods
-    public func getDebugLog() -> String
-    public func printDebugLog()
-    public func clearDebugLog()
-    public func logGeneratedID(_ id: String, context: String)
+    return Array(repeating: GridItem(.flexible()), count: maxColumn)
 }
 ```
 
-### **Generation Modes**
+### **Self-Labeling Control Modifier**
 
+**Shared Component**:
 ```swift
-public enum AccessibilityIdentifierMode {
-    case automatic  // namespace.context.role.objectID
-    case semantic   // namespace.role.objectID
-    case minimal    // objectID
+public struct SelfLabelingControlModifier: ViewModifier {
+    let accessibilityText: String
+
+    public func body(content: Content) -> some View {
+        content
+            .labelsHidden()
+            .accessibilityLabel(Text(accessibilityText))
+    }
+}
+
+public extension View {
+    func selfLabelingControl(label: String) -> some View {
+        modifier(SelfLabelingControlModifier(accessibilityText: label))
+    }
 }
 ```
 
-**Examples**:
-- **Automatic**: `"myapp.list.item.user-1"`
-- **Semantic**: `"myapp.item.user-1"`
-- **Minimal**: `"user-1"`
-
-### **ID Generation Rules**
-
-**For Identifiable Objects**:
-- Uses `object.id` as the object identifier
-- Stable across reordering and data changes
-- Example: `User(id: "user-1", ...)` → `"myapp.list.item.user-1"`
-
-**For Non-Identifiable Objects**:
-- Extracts meaningful identifier from content
-- Falls back to type name and hash for complex objects
-- Example: `"Hello World"` → `"myapp.display.text.hello-world"`
+**Applied to**:
+- `DynamicFormView`
+- `PlatformSemanticLayer1`
+- `AdvancedFieldTypes`
 
 ---
 
-## 📊 **Configuration Options**
+## 📊 **Grid Layout Usage**
 
-| Setting | Type | Default | Description |
-|---------|------|---------|-------------|
-| `enableAutoIDs` | `Bool` | `true` | Whether to generate automatic identifiers |
-| `namespace` | `String` | `"app"` | Global namespace for all generated IDs |
-| `mode` | `AccessibilityIdentifierMode` | `.automatic` | ID generation strategy |
-| `enableCollisionDetection` | `Bool` | `true` | DEBUG collision detection |
-| `enableDebugLogging` | `Bool` | `false` | DEBUG logging of generated IDs |
+| Scenario | Implementation | Result |
+|----------|----------------|---------|
+| **Vertical Layout** | No `gridColumn` metadata | Traditional vertical stack |
+| **Horizontal Grid** | `gridColumn: "1"`, `gridColumn: "2"`, `gridColumn: "3"` | Three fields per row |
+| **Mixed Layout** | Some fields with `gridColumn`, others without | Grid fields in grid, others vertical |
+| **Dynamic Columns** | Fields with `gridColumn: "1"` through `gridColumn: "5"` | Five-column grid |
 
 ---
 
 ## 🧪 **Testing Information**
 
-### **New Test Files**
+### **New Test Coverage**
 
-1. **`AutomaticAccessibilityIdentifierTests.swift`** - Tests for automatic accessibility identifiers
-   - `testGlobalConfigControlsAutomaticIdentifiers()` - Tests global configuration
-   - `testAutomaticIDGeneratorCreatesStableIdentifiers()` - Tests ID stability
-   - `testManualAccessibilityIdentifiersOverrideAutomatic()` - Tests manual override precedence
-   - `testViewLevelOptOutDisablesAutomaticIDs()` - Tests view-level opt-out
-   - `testDebugLoggingCapturesGeneratedIDs()` - Tests debug logging
-   - `testDebugLogFormatting()` - Tests debug log formatting
-   - And 10 more comprehensive tests
+1. **`DynamicFormGridLayoutTests.swift`** - 10 comprehensive tests:
+   - `testGridDetection()` - Tests automatic grid detection
+   - `testGridRendering()` - Tests grid field rendering
+   - `testFallbackToVertical()` - Tests fallback for non-grid fields
+   - `testColumnCalculation()` - Tests dynamic column calculation
+   - `testMixedLayout()` - Tests mixed grid and vertical layouts
 
-2. **`AccessibilityIdentifierDebuggingExample.swift`** - Debugging example with UI controls
+2. **`DynamicFormLabelTests.swift`** - 14 tests:
+   - `testFieldCreation()` - Tests field creation with proper labels
+   - `testLabelPolicy()` - Tests self-labeling control policy
+   - `testAccessibility()` - Tests accessibility label preservation
+   - `testEdgeCases()` - Tests edge cases and error handling
 
 ### **Test Results**
-- ✅ **16/16 automatic accessibility identifier tests passing**
-- ✅ **All existing tests still passing**
-- ✅ **Debug logging verified in test output**
+- ✅ **24 new tests** added for grid layout and label functionality
+- ✅ **All tests passing** - Comprehensive coverage of new features
+- ✅ **Backward compatibility verified** - Existing code continues to work
+- ✅ **Integration tests** - Cross-component testing for form field behavior
 
 ---
 
 ## 🔄 **Migration Guide for AI Agents**
 
-### **When Generating Code**
+### **When Creating Grid Layouts**
 
 **DO**:
 ```swift
-// Use Layer 1 functions - they automatically get accessibility identifiers
-let view = platformPresentItemCollection_L1(items: items, hints: hints)
-// Each item gets an ID like: "app.list.item.user-1"
-
-// Configure accessibility identifiers if needed
-AccessibilityIdentifierConfig.shared.namespace = "myapp"
-AccessibilityIdentifierConfig.shared.mode = .semantic
+// Use gridColumn metadata for horizontal layouts
+let fields = [
+    DynamicFormField(
+        id: "firstName",
+        label: "First Name",
+        contentType: .text,
+        metadata: ["gridColumn": "1"]
+    ),
+    DynamicFormField(
+        id: "lastName",
+        label: "Last Name",
+        contentType: .text,
+        metadata: ["gridColumn": "2"]
+    ),
+    DynamicFormField(
+        id: "email",
+        label: "Email",
+        contentType: .email,
+        metadata: ["gridColumn": "1"] // New row
+    )
+]
+// Result: First Name | Last Name
+//         Email
 ```
 
 **DON'T**:
 ```swift
-// Don't manually assign accessibility identifiers unless necessary
-Button("Save") { }
-    .platformAccessibilityIdentifier("save-button")  // ❌ Usually unnecessary now
+// Don't manually create grid layouts
+VStack {
+    HStack {
+        TextField("First Name", text: $firstName)
+        TextField("Last Name", text: $lastName)
+    }
+    TextField("Email", text: $email)
+} // ❌ Loses framework benefits and accessibility
 ```
 
-### **When Debugging Accessibility Issues**
+### **When Creating Standard Forms**
 
-**Recommended approach**:
+**DO**:
 ```swift
-// Enable debug logging to see what IDs are generated
-#if DEBUG
-AccessibilityIdentifierConfig.shared.enableDebugLogging = true
-#endif
-
-// Generate your views
-let view = platformPresentItemCollection_L1(items: items, hints: hints)
-
-// Check what IDs were generated
-AccessibilityIdentifierConfig.shared.printDebugLog()
+// Use standard field creation - now has better labels
+DynamicFormField(
+    id: "preferences",
+    contentType: .toggle,
+    label: "Enable Notifications"
+)
+// ✅ Single, clean label
+// ✅ Proper accessibility support
+// ✅ Consistent styling
 ```
 
-### **When Manual IDs Are Needed**
+### **When Mixing Layouts**
 
-**Use manual override**:
+**DO**:
 ```swift
-// For critical test targets that need specific names
-Button("Critical Action") { }
-    .platformAccessibilityIdentifier("critical-action-button")
-
-// For performance-sensitive views
-Button("High Performance") { }
-    .platformAccessibilityIdentifier("high-perf-button")
-```
-
-### **When Opting Out**
-
-**Disable for specific views**:
-```swift
-// For purely decorative elements
-Button("Decorative") { }
-    .disableAutomaticAccessibilityIdentifiers()
-
-// For views that don't need testing
-Image("background")
-    .disableAutomaticAccessibilityIdentifiers()
+// Mix grid and vertical fields in same form
+let fields = [
+    // Grid fields
+    DynamicFormField(id: "amount", label: "Amount", contentType: .text, metadata: ["gridColumn": "1"]),
+    DynamicFormField(id: "price", label: "Price", contentType: .text, metadata: ["gridColumn": "2"]),
+    
+    // Vertical field
+    DynamicFormField(id: "description", label: "Description", contentType: .text)
+]
+// Result: Amount | Price
+//         Description (full width)
 ```
 
 ---
 
 ## 🎯 **Key Benefits for AI Agents**
 
-### **Simplified Code Generation**
-- **Less boilerplate**: No need to manually assign accessibility identifiers
-- **Consistent behavior**: All views automatically get accessibility identifiers
-- **Deterministic IDs**: Stable identifiers for reliable UI testing
+### **Enhanced Form Layouts**
+- **Horizontal arrangements** for related data (amount, price, total)
+- **Flexible column counts** based on field metadata
+- **Mixed layouts** - grid and vertical fields in same form
+- **Automatic detection** - framework handles grid vs. vertical decisions
 
-### **Better Debugging Support**
-- **Easy inspection**: Can see what IDs are generated during development
-- **Real-time logging**: Console output shows ID generation as it happens
-- **Programmatic access**: Can get formatted logs for analysis
+### **Improved Label Management**
+- **Single, clean labels** - no more duplicate labels
+- **Consistent styling** - wrapper labels provide uniform appearance
+- **Accessibility preserved** - screen reader support maintained
+- **DRY compliance** - shared modifier eliminates code duplication
 
-### **Future-Proof Architecture**
-- **Extensible**: Easy to add new ID generation strategies
-- **Backward compatible**: Existing manual identifiers continue to work
-- **Testable**: Comprehensive test coverage for all features
+### **Better Developer Experience**
+- **No breaking changes** - existing code continues to work
+- **Simple API** - just add `gridColumn` metadata for horizontal layout
+- **Comprehensive testing** - extensive test coverage for new features
+- **Better architecture** - cleaner separation of concerns
 
 ---
 
 ## ⚠️ **Important Notes for AI Agents**
 
 ### **Breaking Changes**
-**v4.0.0**: Automatic accessibility identifiers are now enabled by default
-- **Existing manual identifiers**: Continue to work and take precedence
-- **No code changes required**: Existing code continues to work
-- **Opt-in to disable**: Can disable globally or per-view if needed
+**None** - This is a backward-compatible enhancement.
 
-### **Performance Considerations**
-- **Minimal overhead**: ID generation is lightweight
-- **Collision detection**: Only enabled in DEBUG builds
-- **Debug logging**: Only active when explicitly enabled
+### **Grid Layout Behavior**
+- **Automatic detection** - framework detects grid fields by metadata presence
+- **Dynamic columns** - column count calculated from maximum `gridColumn` value
+- **Fallback support** - fields without `gridColumn` render vertically
+- **Mixed layouts** - can combine grid and vertical fields
 
-### **Memory Management**
-- **@MainActor**: `AccessibilityIdentifierConfig` is `@MainActor` isolated
-- **Thread safety**: All configuration access must be on main thread
-- **Debug log**: Cleared automatically on app restart
+### **Label Management**
+- **Wrapper labels** - own visual presentation and styling
+- **Control labels** - hidden but accessibility preserved
+- **Consistent behavior** - all form controls follow same label pattern
 
 ---
 
 ## 🔮 **Future Enhancements**
 
 ### **Planned Features**
-1. **Custom ID generators** - User-defined ID generation strategies
-2. **ID validation** - Automatic validation of generated IDs
-3. **Performance profiling** - Automatic optimization based on ID usage
-4. **Cloud configuration** - Remote configuration updates
+1. **Enhanced grid customization** - More control over grid appearance
+2. **Responsive grid layouts** - Adaptive columns based on screen size
+3. **Grid validation** - Automatic validation of grid field configurations
+4. **Custom grid components** - Reusable grid layout components
 
-### **Extensibility**
-The accessibility identifier system is designed to be easily extensible for future features.
+### **Quality Improvements**
+The framework continues to focus on clean, accessible forms with flexible layouts.
 
 ---
 
 ## 📝 **Summary for AI Agents**
 
-**v4.0.1 represents a major enhancement** in SixLayer Framework accessibility:
+**v3.5.0 represents a major enhancement** in form layout capabilities:
 
-### **Before v4.0.0**
-- Manual accessibility identifier assignment required
-- Inconsistent accessibility support
-- No debugging capabilities for accessibility
+### **Before v3.5.0**
+- Only vertical stack layout available
+- Duplicate labels in form controls
+- Limited layout flexibility
+- Code duplication in label management
 
-### **After v4.0.1**
-- **Automatic accessibility identifiers** - Zero configuration required
-- **Comprehensive debugging** - Easy inspection of generated IDs
-- **Deterministic behavior** - Stable IDs for reliable UI testing
+### **After v3.5.0**
+- **Grid layout support** - Horizontal arrangements for related fields
+- **Clean label management** - Single, professional labels
+- **Flexible layouts** - Mix grid and vertical fields
+- **Better architecture** - Shared components and DRY compliance
 
 ### **Key Takeaways**
-1. **Use Layer 1 functions** - They automatically get accessibility identifiers
-2. **Enable debug logging** - Use `enableDebugLogging = true` for development
-3. **Trust the defaults** - Automatic IDs work well for most cases
-4. **Override when needed** - Manual identifiers still take precedence
-5. **Opt out for decoration** - Use `disableAutomaticAccessibilityIdentifiers()` for decorative elements
+1. **Use gridColumn metadata** - Add `["gridColumn": "1"]` for horizontal layout
+2. **Automatic detection** - Framework handles grid vs. vertical decisions
+3. **Mixed layouts** - Can combine grid and vertical fields in same form
+4. **Clean labels** - Single, professional labels for all form controls
+5. **No migration needed** - Existing code automatically benefits
 
-This release makes the SixLayer framework **truly accessible by default** while giving developers the control they need when they need it.
+This release makes forms **more flexible and professional** while maintaining accessibility and backward compatibility.
 
 ---
 
 ## 📚 **Related Documentation**
 
-- **User Documentation**: `Framework/docs/AutomaticAccessibilityIdentifiers.md`
-- **Examples**: `Framework/Examples/AutomaticAccessibilityIdentifiersExample.swift`
-- **Debugging Examples**: `Framework/Examples/AccessibilityIdentifierDebuggingExample.swift`
-- **Tests**: `Development/Tests/SixLayerFrameworkTests/AutomaticAccessibilityIdentifierTests.swift`
+- **User Documentation**: `Framework/README.md`
+- **Release Notes**: `Development/RELEASE_v3.5.0.md`
+- **Technical Details**: Grid layout and label management documentation
 
 ---
 
-*This documentation is specifically designed for AI agents working with SixLayer Framework v4.0.1. For user-facing documentation, see the related documentation files listed above.*
+*This documentation is specifically designed for AI agents working with SixLayer Framework v3.5.0. For user-facing documentation, see the related documentation files listed above.*

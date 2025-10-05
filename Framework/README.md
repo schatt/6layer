@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v3.5.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v3.5.0)
+[![Version](https://img.shields.io/badge/version-v4.1.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v4.1.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -31,18 +31,20 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Intelligent Layout**: AI-driven layout decisions based on content and context
 - **Layout Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
 - **Performance Optimized**: Native performance with intelligent caching
-- **Accessibility First**: Built-in accessibility enhancements
+- **Accessibility First**: Built-in accessibility enhancements with automatic identifier generation
+- **Enhanced Breadcrumb System**: Comprehensive UI testing with view hierarchy tracking and automatic test code generation
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
-- **Comprehensively Tested**: 790+ tests with platform-aware testing and mandatory TDD implementation
+- **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
 
 ## 🧪 Comprehensive Testing Framework
 
 ### **Test Coverage Statistics**
-- **Total Tests**: 790+ comprehensive tests
+- **Total Tests**: 800+ comprehensive tests
 - **Test Success Rate**: 99.6% (3 minor failures in OCR async tests)
 - **Platform Coverage**: iOS, macOS, watchOS, tvOS, visionOS
 - **Device Coverage**: iPhone, iPad, Mac, Apple Watch, Apple TV, Vision Pro
+- **Accessibility Tests**: 23 comprehensive tests for automatic accessibility identifiers
 
 ### **Testing Architecture**
 - **Platform-Aware Testing**: Tests all platform combinations from a single test environment

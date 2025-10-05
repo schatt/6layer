@@ -398,6 +398,251 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
         }
     }
     
+    // MARK: - Enhanced Breadcrumb System Tests
+    
+    /// BUSINESS PURPOSE: View hierarchy tracking should work correctly
+    /// TESTING SCOPE: Tests that view hierarchy is properly tracked
+    /// METHODOLOGY: Unit tests for view hierarchy management
+    func testViewHierarchyTracking() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Enable view hierarchy tracking and UI test integration
+            config.enableViewHierarchyTracking = true
+            config.enableUITestIntegration = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Push some views onto the hierarchy
+            config.pushViewHierarchy("NavigationView")
+            config.pushViewHierarchy("ProfileSection")
+            config.pushViewHierarchy("EditButton")
+            
+            // Generate an ID
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            // Check that the enhanced log contains hierarchy information
+            XCTAssertFalse(config.enhancedDebugLog.isEmpty)
+            let entry = config.enhancedDebugLog.first!
+            XCTAssertEqual(entry.viewHierarchy, ["NavigationView", "ProfileSection", "EditButton"])
+            
+            // Pop views
+            config.popViewHierarchy()
+            config.popViewHierarchy()
+            config.popViewHierarchy()
+            
+            XCTAssertTrue(config.isViewHierarchyEmpty())
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Screen context should be tracked correctly
+    /// TESTING SCOPE: Tests that screen context is properly set and tracked
+    /// METHODOLOGY: Unit tests for screen context management
+    func testScreenContextTracking() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Enable UI test integration and debug logging
+            config.enableUITestIntegration = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Set screen context
+            config.setScreenContext("UserProfile")
+            config.setNavigationState("ProfileEditMode")
+            
+            // Generate an ID
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            // Check that the enhanced log contains screen context
+            XCTAssertFalse(config.enhancedDebugLog.isEmpty)
+            let entry = config.enhancedDebugLog.first!
+            XCTAssertEqual(entry.screenContext, "UserProfile")
+            XCTAssertEqual(entry.navigationState, "ProfileEditMode")
+        }
+    }
+    
+    /// BUSINESS PURPOSE: UI test code generation should work correctly
+    /// TESTING SCOPE: Tests that UI test code is generated properly
+    /// METHODOLOGY: Unit tests for UI test code generation
+    func testUITestCodeGeneration() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Enable UI test integration and view hierarchy tracking
+            config.enableUITestIntegration = true
+            config.enableViewHierarchyTracking = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Set up context
+            config.setScreenContext("UserProfile")
+            config.pushViewHierarchy("NavigationView")
+            config.pushViewHierarchy("ProfileSection")
+            
+            // Generate some IDs
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test1", role: "button", context: "ui")
+            let _ = generator.generateID(for: "test2", role: "text", context: "form")
+            
+            // Generate UI test code
+            let testCode = config.generateUITestCode()
+            
+            // Check that test code contains expected elements
+            XCTAssertTrue(testCode.contains("// Generated UI Test Code"))
+            XCTAssertTrue(testCode.contains("// Screen: UserProfile"))
+            XCTAssertTrue(testCode.contains("func test_"))
+            XCTAssertTrue(testCode.contains("app.otherElements"))
+            XCTAssertTrue(testCode.contains("XCTAssertTrue"))
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Breadcrumb trail should be generated correctly
+    /// TESTING SCOPE: Tests that breadcrumb trail is formatted properly
+    /// METHODOLOGY: Unit tests for breadcrumb trail generation
+    func testBreadcrumbTrailGeneration() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Enable enhanced features
+            config.enableUITestIntegration = true
+            config.enableViewHierarchyTracking = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Set up context
+            config.setScreenContext("UserProfile")
+            config.setNavigationState("ProfileEditMode")
+            config.pushViewHierarchy("NavigationView")
+            config.pushViewHierarchy("ProfileSection")
+            
+            // Generate an ID
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            // Generate breadcrumb trail
+            let breadcrumb = config.generateBreadcrumbTrail()
+            
+            // Check that breadcrumb contains expected elements
+            XCTAssertTrue(breadcrumb.contains("🍞 Accessibility ID Breadcrumb Trail:"))
+            XCTAssertTrue(breadcrumb.contains("📱 Screen: UserProfile"))
+            XCTAssertTrue(breadcrumb.contains("📍 Path: NavigationView → ProfileSection"))
+            XCTAssertTrue(breadcrumb.contains("🧭 Navigation: ProfileEditMode"))
+        }
+    }
+    
+    /// BUSINESS PURPOSE: UI test helpers should generate correct code
+    /// TESTING SCOPE: Tests that UI test helper methods work correctly
+    /// METHODOLOGY: Unit tests for UI test helper methods
+    func testUITestHelpers() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Test element reference generation
+            let elementRef = config.getElementByID("app.test.button")
+            XCTAssertEqual(elementRef, "app.otherElements[\"app.test.button\"]")
+            
+            // Test tap action generation
+            let tapAction = config.generateTapAction("app.test.button")
+            XCTAssertTrue(tapAction.contains("app.otherElements[\"app.test.button\"]"))
+            XCTAssertTrue(tapAction.contains("element.tap()"))
+            XCTAssertTrue(tapAction.contains("XCTAssertTrue"))
+            
+            // Test text input action generation
+            let textAction = config.generateTextInputAction("app.test.field", text: "test text")
+            XCTAssertTrue(textAction.contains("app.textFields[\"app.test.field\"]"))
+            XCTAssertTrue(textAction.contains("element.typeText(\"test text\")"))
+            XCTAssertTrue(textAction.contains("XCTAssertTrue"))
+        }
+    }
+    
+    /// BUSINESS PURPOSE: UI test code should be generated and saved to file
+    /// TESTING SCOPE: Tests that UI test code can be saved to autoGeneratedTests folder
+    /// METHODOLOGY: Unit tests for file generation functionality
+    func testUITestCodeFileGeneration() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Enable UI test integration and view hierarchy tracking
+            config.enableUITestIntegration = true
+            config.enableViewHierarchyTracking = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Set up context
+            config.setScreenContext("UserProfile")
+            config.pushViewHierarchy("NavigationView")
+            config.pushViewHierarchy("ProfileSection")
+            
+            // Generate some IDs
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test1", role: "button", context: "ui")
+            let _ = generator.generateID(for: "test2", role: "text", context: "form")
+            
+            // Generate UI test code and save to file
+            do {
+                let filePath = try config.generateUITestCodeToFile()
+                
+                // Check that file was created
+                XCTAssertTrue(FileManager.default.fileExists(atPath: filePath))
+                
+                // Check that filename contains PID and timestamp
+                let filename = URL(fileURLWithPath: filePath).lastPathComponent
+                XCTAssertTrue(filename.hasPrefix("GeneratedUITests_"))
+                XCTAssertTrue(filename.contains("_"))
+                XCTAssertTrue(filename.hasSuffix(".swift"))
+                
+                // Read file content and verify it contains expected elements
+                let fileContent = try String(contentsOfFile: filePath)
+                XCTAssertTrue(fileContent.contains("// Generated UI Test Code"))
+                XCTAssertTrue(fileContent.contains("// Screen: UserProfile"))
+                XCTAssertTrue(fileContent.contains("func test_"))
+                XCTAssertTrue(fileContent.contains("app.otherElements"))
+                XCTAssertTrue(fileContent.contains("XCTAssertTrue"))
+                
+                // Clean up - remove the generated file
+                try FileManager.default.removeItem(atPath: filePath)
+                
+            } catch {
+                XCTFail("Failed to generate UI test code file: \(error)")
+            }
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Clipboard integration should work on macOS
+    /// TESTING SCOPE: Tests that UI test code can be copied to clipboard
+    /// METHODOLOGY: Unit tests for clipboard functionality
+    func testUITestCodeClipboardGeneration() async {
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            
+            // Enable UI test integration
+            config.enableUITestIntegration = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // Set up context
+            config.setScreenContext("UserProfile")
+            
+            // Generate some IDs
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            // Generate UI test code and copy to clipboard
+            config.generateUITestCodeToClipboard()
+            
+            // On macOS, verify clipboard contains test code
+            #if os(macOS)
+            let clipboardContent = NSPasteboard.general.string(forType: .string) ?? ""
+            XCTAssertTrue(clipboardContent.contains("// Generated UI Test Code"))
+            XCTAssertTrue(clipboardContent.contains("func test_"))
+            XCTAssertTrue(clipboardContent.contains("app.otherElements"))
+            #endif
+        }
+    }
+    
     // MARK: - Performance Tests
     
     /// BUSINESS PURPOSE: Automatic ID generation should be performant

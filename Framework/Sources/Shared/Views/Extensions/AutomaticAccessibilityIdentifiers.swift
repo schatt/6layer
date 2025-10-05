@@ -1,6 +1,27 @@
 import Foundation
 import SwiftUI
 
+// MARK: - Enhanced Debug Entry
+
+/// Enhanced debug entry with view hierarchy and screen context for UI testing
+public struct AccessibilityDebugEntry {
+    public let id: String
+    public let context: String
+    public let timestamp: Date
+    public let viewHierarchy: [String]
+    public let screenContext: String?
+    public let navigationState: String?
+    
+    public init(id: String, context: String, timestamp: Date, viewHierarchy: [String], screenContext: String? = nil, navigationState: String? = nil) {
+        self.id = id
+        self.context = context
+        self.timestamp = timestamp
+        self.viewHierarchy = viewHierarchy
+        self.screenContext = screenContext
+        self.navigationState = navigationState
+    }
+}
+
 // MARK: - Accessibility Identifier Configuration
 
 /// Global configuration for automatic accessibility identifier generation
@@ -28,12 +49,30 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Whether to enable DEBUG logging of generated IDs
     @Published public var enableDebugLogging: Bool = false
     
+    /// Whether to enable enhanced debugging with view hierarchy tracking
+    @Published public var enableViewHierarchyTracking: Bool = false
+    
+    /// Whether to enable UI test integration features
+    @Published public var enableUITestIntegration: Bool = false
+    
     // MARK: - Private Properties
     
     private var generatedIDs: Set<String> = []
     
     /// DEBUG: Log of all generated IDs with context
     public var generatedIDsLog: [(id: String, context: String, timestamp: Date)] = []
+    
+    /// DEBUG: Enhanced log entries with view hierarchy and screen context
+    public var enhancedDebugLog: [AccessibilityDebugEntry] = []
+    
+    /// Current view hierarchy for breadcrumb tracking
+    private var currentViewHierarchy: [String] = []
+    
+    /// Current screen context for breadcrumb tracking
+    private var currentScreenContext: String?
+    
+    /// Current navigation state for breadcrumb tracking
+    private var currentNavigationState: String?
     
     // MARK: - Initialization
     
@@ -50,8 +89,14 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         mode = .automatic
         enableCollisionDetection = true
         enableDebugLogging = false
+        enableViewHierarchyTracking = false
+        enableUITestIntegration = false
         generatedIDs.removeAll()
         generatedIDsLog.removeAll()
+        enhancedDebugLog.removeAll()
+        currentViewHierarchy.removeAll()
+        currentScreenContext = nil
+        currentNavigationState = nil
     }
     
     /// Check if an ID has been generated before (collision detection)
@@ -83,8 +128,30 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         let logEntry = (id: id, context: context, timestamp: Date())
         generatedIDsLog.append(logEntry)
         
+        // Enhanced logging with view hierarchy and screen context
+        if enableViewHierarchyTracking || enableUITestIntegration {
+            let enhancedEntry = AccessibilityDebugEntry(
+                id: id,
+                context: context,
+                timestamp: Date(),
+                viewHierarchy: currentViewHierarchy,
+                screenContext: currentScreenContext,
+                navigationState: currentNavigationState
+            )
+            enhancedDebugLog.append(enhancedEntry)
+        }
+        
         #if DEBUG
         print("🔍 Accessibility ID Generated: '\(id)' for \(context)")
+        if enableViewHierarchyTracking && !currentViewHierarchy.isEmpty {
+            print("   📍 View Hierarchy: \(currentViewHierarchy.joined(separator: " → "))")
+        }
+        if let screen = currentScreenContext {
+            print("   📱 Screen: \(screen)")
+        }
+        if let navState = currentNavigationState {
+            print("   🧭 Navigation: \(navState)")
+        }
         #endif
     }
     
@@ -112,6 +179,178 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Clear debug log
     public func clearDebugLog() {
         generatedIDsLog.removeAll()
+        enhancedDebugLog.removeAll()
+        currentViewHierarchy.removeAll()
+        currentScreenContext = nil
+        currentNavigationState = nil
+    }
+    
+    // MARK: - View Hierarchy Management
+    
+    /// Push a view name onto the current view hierarchy
+    public func pushViewHierarchy(_ viewName: String) {
+        currentViewHierarchy.append(viewName)
+    }
+    
+    /// Pop the last view name from the current view hierarchy
+    public func popViewHierarchy() {
+        if !currentViewHierarchy.isEmpty {
+            currentViewHierarchy.removeLast()
+        }
+    }
+    
+    /// Check if the current view hierarchy is empty
+    public func isViewHierarchyEmpty() -> Bool {
+        return currentViewHierarchy.isEmpty
+    }
+    
+    /// Set the current screen context for breadcrumb tracking
+    public func setScreenContext(_ screen: String) {
+        currentScreenContext = screen
+    }
+    
+    /// Set the current navigation state for breadcrumb tracking
+    public func setNavigationState(_ state: String) {
+        currentNavigationState = state
+    }
+    
+    // MARK: - UI Test Integration
+    
+    /// Generate UI test code from the enhanced debug log
+    public func generateUITestCode() -> String {
+        guard !enhancedDebugLog.isEmpty else {
+            return "// No accessibility identifiers generated yet"
+        }
+        
+        var testCode = "// Generated UI Test Code\n"
+        testCode += "// Generated at: \(Date())\n\n"
+        
+        // Group by screen context
+        let groupedByScreen = Dictionary(grouping: enhancedDebugLog) { $0.screenContext ?? "Unknown" }
+        
+        for (screen, entries) in groupedByScreen.sorted(by: { $0.key < $1.key }) {
+            testCode += "// Screen: \(screen)\n"
+            for entry in entries.sorted(by: { $0.timestamp < $1.timestamp }) {
+                let testMethod = generateTestMethod(for: entry)
+                testCode += testMethod + "\n"
+            }
+            testCode += "\n"
+        }
+        
+        return testCode
+    }
+    
+    private func generateTestMethod(for entry: AccessibilityDebugEntry) -> String {
+        let methodName = entry.id.replacingOccurrences(of: ".", with: "_").replacingOccurrences(of: "-", with: "_")
+        let hierarchy = entry.viewHierarchy.isEmpty ? "" : " // Hierarchy: \(entry.viewHierarchy.joined(separator: " → "))"
+        
+        return """
+        func test_\(methodName)() {
+            let element = app.otherElements["\(entry.id)"]
+            XCTAssertTrue(element.exists, "Element '\(entry.id)' should exist")\(hierarchy)
+        }
+        """
+    }
+    
+    /// Generate breadcrumb trail from enhanced debug log
+    public func generateBreadcrumbTrail() -> String {
+        guard !enhancedDebugLog.isEmpty else {
+            return "No accessibility identifiers generated yet."
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        
+        var breadcrumb = "🍞 Accessibility ID Breadcrumb Trail:\n\n"
+        
+        // Group by screen context
+        let groupedByScreen = Dictionary(grouping: enhancedDebugLog) { $0.screenContext ?? "Unknown" }
+        
+        for (screen, entries) in groupedByScreen.sorted(by: { $0.key < $1.key }) {
+            breadcrumb += "📱 Screen: \(screen)\n"
+            
+            for entry in entries.sorted(by: { $0.timestamp < $1.timestamp }) {
+                breadcrumb += "  \(formatter.string(from: entry.timestamp)) - \(entry.id)\n"
+                
+                if !entry.viewHierarchy.isEmpty {
+                    breadcrumb += "    📍 Path: \(entry.viewHierarchy.joined(separator: " → "))\n"
+                }
+                
+                if let navState = entry.navigationState {
+                    breadcrumb += "    🧭 Navigation: \(navState)\n"
+                }
+            }
+            breadcrumb += "\n"
+        }
+        
+        return breadcrumb
+    }
+    
+    /// Print UI test code to console
+    public func printUITestCode() {
+        print(generateUITestCode())
+    }
+    
+    /// Generate UI test code and save to file in autoGeneratedTests folder
+    public func generateUITestCodeToFile() throws -> String {
+        let testCode = generateUITestCode()
+        
+        // Create autoGeneratedTests directory if it doesn't exist
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let autoGeneratedTestsPath = documentsPath.appendingPathComponent("autoGeneratedTests")
+        
+        try FileManager.default.createDirectory(at: autoGeneratedTestsPath, withIntermediateDirectories: true, attributes: nil)
+        
+        // Generate unique filename with PID and timestamp
+        let pid = ProcessInfo.processInfo.processIdentifier
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let filename = "GeneratedUITests_\(pid)_\(timestamp).swift"
+        let filePath = autoGeneratedTestsPath.appendingPathComponent(filename)
+        
+        // Write test code to file
+        try testCode.write(to: filePath, atomically: true, encoding: .utf8)
+        
+        return filePath.path
+    }
+    
+    /// Generate UI test code and copy to clipboard (macOS only)
+    public func generateUITestCodeToClipboard() {
+        let testCode = generateUITestCode()
+        #if os(macOS)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(testCode, forType: .string)
+        #endif
+    }
+    
+    /// Print breadcrumb trail to console
+    public func printBreadcrumbTrail() {
+        print(generateBreadcrumbTrail())
+    }
+    
+    // MARK: - UI Test Helpers
+    
+    /// Get XCTest element reference for an accessibility ID
+    public func getElementByID(_ id: String) -> String {
+        return "app.otherElements[\"\(id)\"]"
+    }
+    
+    /// Generate tap action code for UI testing
+    public func generateTapAction(_ id: String) -> String {
+        return """
+        let element = app.otherElements["\(id)"]
+        XCTAssertTrue(element.exists, "Element '\(id)' should exist")
+        element.tap()
+        """
+    }
+    
+    /// Generate text input action code for UI testing
+    public func generateTextInputAction(_ id: String, text: String) -> String {
+        return """
+        let element = app.textFields["\(id)"]
+        XCTAssertTrue(element.exists, "Text field '\(id)' should exist")
+        element.tap()
+        element.typeText("\(text)")
+        """
     }
 }
 
@@ -341,5 +580,71 @@ public extension EnvironmentValues {
     var disableAutomaticAccessibilityIdentifiers: Bool {
         get { self[DisableAutomaticAccessibilityIdentifiersKey.self] }
         set { self[DisableAutomaticAccessibilityIdentifiersKey.self] = newValue }
+    }
+}
+
+// MARK: - View Hierarchy Tracking Modifiers
+
+/// View modifier for tracking view hierarchy in breadcrumb system
+public struct ViewHierarchyTrackingModifier: ViewModifier {
+    let viewName: String
+    
+    public func body(content: Content) -> some View {
+        content
+            .onAppear {
+                AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
+            }
+            .onDisappear {
+                AccessibilityIdentifierConfig.shared.popViewHierarchy()
+            }
+    }
+}
+
+/// View modifier for setting screen context in breadcrumb system
+public struct ScreenContextModifier: ViewModifier {
+    let screenName: String
+    
+    public func body(content: Content) -> some View {
+        content
+            .onAppear {
+                AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
+            }
+    }
+}
+
+/// View modifier for setting navigation state in breadcrumb system
+public struct NavigationStateModifier: ViewModifier {
+    let navigationState: String
+    
+    public func body(content: Content) -> some View {
+        content
+            .onAppear {
+                AccessibilityIdentifierConfig.shared.setNavigationState(navigationState)
+            }
+    }
+}
+
+// MARK: - View Extensions for Breadcrumb Tracking
+
+public extension View {
+    /// Track this view in the hierarchy for breadcrumb debugging
+    /// - Parameter name: The name to use for this view in the hierarchy
+    /// - Returns: A view that tracks its presence in the view hierarchy
+    func trackViewHierarchy(_ name: String) -> some View {
+        modifier(ViewHierarchyTrackingModifier(viewName: name))
+    }
+    
+    /// Set the screen context for breadcrumb debugging
+    /// - Parameter name: The screen name to use for breadcrumb grouping
+    /// - Returns: A view that sets the screen context
+    func screenContext(_ name: String) -> some View {
+        modifier(ScreenContextModifier(screenName: name))
+    }
+    
+    /// Set the navigation state for breadcrumb debugging
+    /// - Parameter state: The navigation state to track
+    /// - Returns: A view that sets the navigation state
+    func navigationState(_ state: String) -> some View {
+        modifier(NavigationStateModifier(navigationState: state))
     }
 }

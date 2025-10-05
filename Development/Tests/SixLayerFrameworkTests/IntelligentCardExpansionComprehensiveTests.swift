@@ -14,6 +14,18 @@ import SwiftUI
 @MainActor
 final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        // Use centralized test setup
+        setupTestEnvironment()
+    }
+    
+    override func tearDown() {
+        // Use centralized test cleanup
+        cleanupTestEnvironment()
+        super.tearDown()
+    }
+    
     // MARK: - Test Data
     
     private var sampleMenuItems: [MenuItem] {
@@ -453,45 +465,75 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     // MARK: - Layer 5 Tests: Platform Optimization
     
     func testGetCardExpansionPlatformConfig() {
-        // Test platform configuration
-        let config = getCardExpansionPlatformConfig()
-        
+        // Test iOS platform configuration
+        simulatePlatform(.iOS)
+        var config = getCardExpansionPlatformConfig()
         XCTAssertNotNil(config)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: true,
+            haptic: true,
+            hover: false,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: false
+        )
         
-        // Test platform-specific features based on actual platform
-        #if os(iOS)
-        // iOS should support touch
-        XCTAssertTrue(config.supportsTouch, "iOS should support touch")
-        XCTAssertTrue(config.supportsHapticFeedback, "iOS should support haptic feedback")
-        #elseif os(macOS)
-        // macOS should not support touch
-        XCTAssertFalse(config.supportsTouch, "macOS should not support touch")
-        XCTAssertFalse(config.supportsHapticFeedback, "macOS should not support haptic feedback")
-        XCTAssertTrue(config.supportsHover, "macOS should support hover")
-        #elseif os(watchOS)
-        // watchOS should support touch
-        XCTAssertTrue(config.supportsTouch, "watchOS should support touch")
-        XCTAssertTrue(config.supportsHapticFeedback, "watchOS should support haptic feedback")
-        #elseif os(tvOS)
-        // tvOS should not support touch
-        XCTAssertFalse(config.supportsTouch, "tvOS should not support touch")
-        XCTAssertFalse(config.supportsHapticFeedback, "tvOS should not support haptic feedback")
-        #elseif os(visionOS)
-        // visionOS should not support touch
-        XCTAssertFalse(config.supportsTouch, "visionOS should not support touch")
-        XCTAssertFalse(config.supportsHapticFeedback, "visionOS should not support haptic feedback")
-        #endif
+        // Test macOS platform configuration
+        simulatePlatform(.macOS)
+        config = getCardExpansionPlatformConfig()
+        XCTAssertNotNil(config)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: false,
+            haptic: false,
+            hover: true,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: false
+        )
         
-        // These should be supported on all platforms
-        XCTAssertTrue(config.supportsVoiceOver, "All platforms should support VoiceOver")
-        XCTAssertTrue(config.supportsSwitchControl, "All platforms should support Switch Control")
+        // Test watchOS platform configuration
+        simulatePlatform(.watchOS)
+        config = getCardExpansionPlatformConfig()
+        XCTAssertNotNil(config)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: true,
+            haptic: true,
+            hover: false,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: true
+        )
         
-        // AssistiveTouch is only available on iOS and watchOS
-        #if os(iOS) || os(watchOS)
-        XCTAssertTrue(config.supportsAssistiveTouch, "iOS and watchOS should support AssistiveTouch")
-        #else
-        XCTAssertFalse(config.supportsAssistiveTouch, "Non-iOS/watchOS platforms should not support AssistiveTouch")
-        #endif
+        // Test tvOS platform configuration
+        simulatePlatform(.tvOS)
+        config = getCardExpansionPlatformConfig()
+        XCTAssertNotNil(config)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: false,
+            haptic: false,
+            hover: false,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: false
+        )
+        
+        // Test visionOS platform configuration
+        simulatePlatform(.visionOS)
+        config = getCardExpansionPlatformConfig()
+        XCTAssertNotNil(config)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: true,
+            haptic: true,
+            hover: true,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: true
+        )
         
         XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44)
     }

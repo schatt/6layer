@@ -1,15 +1,61 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v3.4.3 - Critical TextContentType Bug Fix** 🚀
+## 📍 **Current Status: v4.1.0 - Enhanced Breadcrumb System for UI Testing** 🚀
 
-**Last Release**: v3.4.3 - Critical TextContentType Bug Fix
-**Current Phase**: Critical Bug Fixes and Framework Stability
-**Next Phase**: Continue with comprehensive test audit fixes
-**Note**: v3.4.1 and v3.4.2 were removed due to critical bugs. v3.4.3 fixes broken textContentType functionality.
+**Last Release**: v4.1.0 - Enhanced Breadcrumb System for UI Testing
+**Current Phase**: Enhanced UI Testing and Debugging Capabilities
+**Next Phase**: Continue framework evolution and feature development
+**Note**: v4.1.0 introduces comprehensive breadcrumb system with view hierarchy tracking, screen context awareness, and automatic UI test code generation.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
-## 📋 **Recent Release Summary (v2.8.0 - v3.4.3)**
+## 📋 **Recent Release Summary (v2.8.0 - v4.1.0)**
+
+### **v4.1.0 - Enhanced Breadcrumb System for UI Testing** ✅ **COMPLETED**
+- **View Hierarchy Tracking**: Automatic tracking of view hierarchy for UI testing
+- **Screen Context Awareness**: Track current screen and navigation state
+- **UI Test Code Generation**: Automatic generation of XCTest code for UI testing
+- **File Generation**: Save generated UI test code to files with unique names
+- **Clipboard Integration**: Copy generated UI test code to clipboard (macOS)
+- **Breadcrumb Trail Generation**: Generate formatted breadcrumb trails for debugging
+- **Enhanced Debug Output**: Comprehensive debugging with view hierarchy and context
+- **UI Test Helpers**: Helper methods for common UI test operations
+- **Comprehensive Testing**: 5 new tests covering enhanced breadcrumb system
+- **Documentation**: Complete documentation and examples for new features
+- **Key Benefits**:
+  - Automatic UI test code generation reduces manual test writing
+  - View hierarchy tracking provides context for debugging
+  - Screen context awareness improves test reliability
+  - File generation enables test code persistence and sharing
+  - Enhanced debugging capabilities improve development workflow
+
+### **v4.0.1 - Automatic Accessibility Identifiers with Debugging** ✅ **COMPLETED**
+- **Automatic Accessibility Identifiers**: Deterministic ID generation for UI testing
+- **Debug Logging**: Runtime inspection of generated accessibility identifiers
+- **Global Configuration**: Centralized control over automatic ID generation
+- **Manual Override Support**: Manual identifiers always override automatic ones
+- **Collision Detection**: Prevents duplicate accessibility identifiers
+- **Comprehensive Testing**: 23 tests covering all aspects of automatic ID generation
+- **Documentation**: Complete documentation and examples
+- **Key Benefits**:
+  - Eliminates manual accessibility identifier assignment
+  - Provides deterministic, stable IDs for UI testing
+  - Enables runtime debugging of accessibility features
+  - Maintains backward compatibility with existing code
+
+### **v4.0.0 - Automatic Accessibility Identifiers** ✅ **COMPLETED**
+- **Automatic Accessibility Identifiers**: Deterministic ID generation for UI testing
+- **Global Configuration**: Centralized control over automatic ID generation
+- **Manual Override Support**: Manual identifiers always override automatic ones
+- **Collision Detection**: Prevents duplicate accessibility identifiers
+- **Comprehensive Testing**: 23 tests covering all aspects of automatic ID generation
+- **Documentation**: Complete documentation and examples
+- **Key Benefits**:
+  - Eliminates manual accessibility identifier assignment
+  - Provides deterministic, stable IDs for UI testing
+  - Maintains backward compatibility with existing code
+
+## 📋 **Historical Release Summary (v2.8.0 - v3.4.3)**
 
 ### **v3.4.3 - Critical TextContentType Bug Fix** ✅ **COMPLETED**
 - **Fixed TextContentType Application**: Text fields now properly receive semantic hints

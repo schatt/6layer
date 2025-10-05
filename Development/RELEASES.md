@@ -1,22 +1,326 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v3.4.3 - Critical TextContentType Bug Fix** 🚀
+## 📍 **Current Release: v4.1.0 - Enhanced Breadcrumb System for UI Testing** 🚀
 
-**Release Date**: January 2025  
+**Release Date**: October 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v3.4.0 - Cross-Platform Text Content Type Improvements  
-**Note**: v3.4.1 and v3.4.2 were removed due to critical bugs  
+**Previous Release**: v4.0.1 - Automatic Accessibility Identifiers with Debugging  
+**Note**: Major enhancement with comprehensive UI testing capabilities  
 **Next Release**: TBD
 
 ---
 
-## 🎯 **v3.4.3 - Critical TextContentType Bug Fix** ✅ **COMPLETE**
+## 🎯 **v4.1.0 - Enhanced Breadcrumb System for UI Testing** ✅ **COMPLETE**
 
-**Release Date**: January 2025  
-**Type**: Critical Bug Fix  
-**Priority**: Critical  
-**Scope**: Fix broken text content type functionality  
-**Note**: v3.4.1 and v3.4.2 were removed due to critical bugs
+**Release Date**: October 2025  
+**Type**: Feature Enhancement  
+**Priority**: High  
+**Scope**: Enhanced UI testing capabilities with breadcrumb system  
+**Note**: Major enhancement building on v4.0.1 automatic accessibility identifiers
+
+### **🔍 Enhanced Breadcrumb System**
+
+- **View Hierarchy Tracking**: Automatic tracking of view hierarchy for UI testing
+- **Screen Context Awareness**: Track current screen and navigation state
+- **UI Test Code Generation**: Automatic generation of XCTest code for UI testing
+- **File Generation**: Save generated UI test code to files with unique names
+- **Clipboard Integration**: Copy generated UI test code to clipboard (macOS)
+- **Breadcrumb Trail Generation**: Generate formatted breadcrumb trails for debugging
+- **Enhanced Debug Output**: Comprehensive debugging with view hierarchy and context
+- **UI Test Helpers**: Helper methods for common UI test operations
+
+### **✅ Key Features**
+
+- Automatic UI test code generation reduces manual test writing
+- View hierarchy tracking provides context for debugging
+- Screen context awareness improves test reliability
+- File generation enables test code persistence and sharing
+- Enhanced debugging capabilities improve development workflow
+- Comprehensive testing with 5 new tests covering enhanced breadcrumb system
+- Complete documentation and examples for new features
+
+### **📁 New Files**
+
+- `Framework/Examples/EnhancedBreadcrumbExample.swift` - Comprehensive example
+- `Development/AI_AGENT_v4.1.0.md` - AI agent documentation
+- `Development/RELEASE_v4.1.0.md` - Detailed release notes
+
+### **🔧 Technical Implementation**
+
+- `AccessibilityDebugEntry` struct for enhanced debug information
+- `ViewHierarchyTrackingModifier` for declarative hierarchy tracking
+- `ScreenContextModifier` and `NavigationStateModifier` for context awareness
+- `generateUITestCodeToFile()` and `generateUITestCodeToClipboard()` methods
+- Enhanced `logGeneratedID()` with view hierarchy and context information
+
+---
+
+## 🎯 **v4.0.1 - Automatic Accessibility Identifiers with Debugging** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Feature Enhancement  
+**Priority**: High  
+**Scope**: Debugging capabilities for automatic accessibility identifiers  
+**Note**: Builds on v4.0.0 automatic accessibility identifiers
+
+### **🔍 Debugging Capabilities**
+
+- **Debug Logging**: Runtime inspection of generated accessibility identifiers
+- **Generated IDs Log**: History of all generated accessibility identifiers
+- **Debug Methods**: `getDebugLog()`, `printDebugLog()`, `clearDebugLog()`
+- **Enhanced Console Output**: Detailed logging with context information
+- **Configuration Control**: `enableDebugLogging` setting for debug output
+
+### **✅ Key Features**
+
+- Runtime inspection of generated accessibility identifiers
+- Comprehensive logging with timestamps and context
+- Easy debugging and troubleshooting of accessibility features
+- Maintains all v4.0.0 functionality
+- Complete documentation and examples
+
+---
+
+## 🎯 **v4.0.0 - Automatic Accessibility Identifiers** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Major Feature  
+**Priority**: High  
+**Scope**: Automatic accessibility identifier generation  
+**Note**: Major enhancement for UI testing capabilities
+
+### **🔍 Automatic Accessibility Identifiers**
+
+- **Deterministic ID Generation**: Stable, predictable accessibility identifiers
+- **Global Configuration**: Centralized control via `AccessibilityIdentifierConfig`
+- **Manual Override Support**: Manual identifiers always override automatic ones
+- **Collision Detection**: Prevents duplicate accessibility identifiers
+- **Multiple Generation Modes**: Automatic, semantic, and minimal modes
+- **Namespace Support**: Organized identifier namespacing
+- **View-Level Opt-Out**: Granular control over automatic ID generation
+
+### **✅ Key Features**
+
+- Eliminates manual accessibility identifier assignment
+- Provides deterministic, stable IDs for UI testing
+- Maintains backward compatibility with existing code
+- Comprehensive testing with 23 tests covering all aspects
+- Complete documentation and examples
+
+---
+
+## 🎯 **v3.5.0 - Dynamic Form Grid Layout** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Minor Release (New Feature + Bug Fixes)  
+**Priority**: Medium  
+**Scope**: Dynamic form grid layout support  
+**Note**: New feature for horizontal grid layout in forms
+
+### **🔍 Dynamic Form Grid Layout**
+
+- **Grid Layout Support**: Horizontal grid layout for form fields using `LazyVGrid`
+- **Automatic Grid Detection**: Fields with `gridColumn` metadata automatically render in grid
+- **Dynamic Column Calculation**: Based on maximum `gridColumn` value
+- **Backward Compatible**: Existing forms continue to work unchanged
+- **Metadata-Driven**: Uses `gridColumn` metadata to determine grid position
+
+### **✅ Key Features**
+
+- Horizontal grid layout for form fields
+- Automatic grid detection based on field metadata
+- Dynamic column calculation
+- Backward compatible implementation
+- Enhanced form layout capabilities
+
+---
+
+## 🎯 **v3.4.4 - DynamicFormView Label Duplication Fix** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Bug Fix Release  
+**Priority**: Medium  
+**Scope**: Fix duplicate labels in form controls  
+**Note**: Resolves label duplication issue in form controls
+
+### **🐛 Bug Fixes**
+
+- **DynamicFormView Label Duplication Fix**: Form controls no longer display duplicate labels
+- **Control Label Hiding**: Applied `.labelsHidden()` modifier to prevent control labels from displaying
+- **Accessibility Preservation**: Added explicit `.accessibilityLabel()` to maintain screen reader support
+- **Affected Controls**: DatePickerField, DynamicColorField, DynamicToggleField, DynamicCheckboxField, DynamicSelectField
+
+### **✅ Key Features**
+
+- Eliminates duplicate labels in form controls
+- Maintains accessibility support
+- Cleaner visual presentation
+- Backward compatible fix
+
+---
+
+## 🎯 **v3.4.0 - Cross-Platform Text Content Type Improvements** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Minor Release  
+**Priority**: Medium  
+**Scope**: Cross-platform text content type system  
+**Note**: Unified API for text content types across platforms
+
+### **🔍 Cross-Platform Text Content Type System**
+
+- **SixLayerTextContentType Enum**: New cross-platform enum that mirrors all UITextContentType values
+- **Unified API**: App developers use a single enum across all platforms
+- **Platform-Aware Conversion**: Automatically converts to UITextContentType on iOS/Catalyst
+- **Future-Proof**: Handles unknown future UITextContentType cases gracefully
+- **Enhanced Field Definition**: DynamicFormField now uses SixLayerTextContentType
+
+### **✅ Key Features**
+
+- Single API for text content types across all platforms
+- No more platform-specific conditional compilation in app code
+- Identical behavior across all supported platforms
+- Future-proof handling of new UITextContentType cases
+- Compile-time verification of text content type usage
+
+---
+
+## 🎯 **v3.2.3 - Image Picker Fix and TDD Mandate** ✅ **COMPLETE**
+
+**Release Date**: October 1, 2025  
+**Type**: Bugfix Release  
+**Priority**: High  
+**Scope**: Critical fixes for layout conflicts and development methodology  
+**Note**: Critical fixes for macOS image picker and TDD enforcement
+
+### **🚨 Critical Bug Fixes**
+
+- **PlatformImagePicker Layout Conflicts**: macOS image picker caused SwiftUI layout conflicts
+- **Root Cause**: NSOpenPanel.runModal() blocking main thread interfered with SwiftUI layout system
+- **Solution**: Implemented SwiftUI-native fileImporter for macOS 11.0+ with legacy fallback
+- **Impact**: Eliminates visual diagnostic overlays and improves user experience
+
+### **✅ Key Features**
+
+- Fixed macOS image picker layout conflicts
+- Improved user experience with SwiftUI-native fileImporter
+- Maintained backward compatibility
+- Enhanced development methodology with TDD mandate
+
+---
+
+## 🎯 **v3.2.2 - Custom View Support for All L1 Functions** ✅ **COMPLETE**
+
+**Release Date**: October 2025  
+**Type**: Bug Fix & Enhancement Release  
+**Priority**: High  
+**Scope**: Custom view support and compilation fixes  
+**Note**: Comprehensive custom view support across all Layer 1 functions
+
+### **🐛 Bug Fixes**
+
+- **Critical Compilation Issues Resolved**: Fixed @ViewBuilder to AnyView conversion errors
+- **Navigation Bug Fix**: Fixed ListCollectionView navigation - list items are now properly tappable
+- **Duplicate Definition Fix**: Resolved duplicate CollectionEmptyStateView definition
+- **Generic Parameter Fix**: Fixed generic parameter type inference issues
+
+### **✨ New Features**
+
+- **Comprehensive Custom View Support**: All Layer 1 functions now support custom views
+- **Enhanced Developer Flexibility**: Custom views can be passed to all presentation functions
+- **Backward Compatibility**: 100% backward compatible implementation
+- **Improved Accessibility**: Better accessibility support for custom views
+
+### **✅ Key Features**
+
+- All Layer 1 functions support custom views
+- Fixed compilation errors and navigation issues
+- Enhanced developer flexibility
+- Maintained backward compatibility
+- Improved accessibility support
+
+---
+
+## 🎯 **v3.1.0 - Automatic Compliance & Configuration System** ✅ **COMPLETE**
+
+**Release Date**: October 2, 2025  
+**Type**: Major Feature Release  
+**Priority**: High  
+**Scope**: Automatic Apple HIG compliance and configuration system  
+**Note**: Zero-configuration compliance system
+
+### **🚀 Major Features**
+
+- **Automatic Apple HIG Compliance**: All Layer 1 functions now automatically apply Apple Human Interface Guidelines compliance
+- **Zero Configuration Required**: Compliance is automatic, no setup needed
+- **Consistent Experience**: All views get the same compliance treatment
+- **Reduced Boilerplate**: Cleaner, simpler code with automatic compliance
+- **Future-Proof**: New compliance features automatically applied
+
+### **✅ Key Features**
+
+- Automatic accessibility features, platform patterns, and visual consistency
+- Centralized configuration system with UserDefaults persistence
+- Platform-specific intelligent defaults
+- Backward compatible implementation
+- Comprehensive testing and documentation
+
+---
+
+## 🎯 **v3.0.1 - iOS Compilation Fixes** ✅ **COMPLETE**
+
+**Release Date**: September 19, 2025  
+**Type**: Bug Fix Release  
+**Priority**: High  
+**Scope**: iOS compilation errors and platform compatibility  
+**Note**: Critical fixes for iOS platform support
+
+### **🐛 Critical Bug Fixes**
+
+- **iOS Compilation Errors Fixed**: Fixed Metal API availability issues on iOS platforms
+- **Platform-Specific Checks**: Added proper checks for `isLowPower` and `isRemovable` properties
+- **Cross-Platform Compatibility**: Maintained compatibility while respecting API availability
+- **Metal API Handling**: Proper platform-specific Metal API usage
+
+### **✅ Key Features**
+
+- Fixed iOS compilation errors
+- Enhanced cross-platform compatibility
+- Proper API availability handling
+- Maintained framework functionality across platforms
+
+---
+
+## 🎯 **v2.9.3 - UI Binding Issues Fix** ✅ **COMPLETE**
+
+**Release Date**: September 19, 2025  
+**Type**: Bug Fix Release  
+**Priority**: High  
+**Scope**: UI binding and interaction fixes  
+**Note**: Critical fixes for user interaction and callbacks
+
+### **🐛 Critical Bug Fixes**
+
+- **Collection View Callbacks**: Added missing callback parameters to all collection view components
+- **Select Field Implementation**: Replaced non-interactive text display with proper Picker components
+- **Radio Button Implementation**: Implemented proper radio button groups with selection state management
+- **Thread Safety Test**: Resolved timeout issues in thread safety tests
+
+### **🔧 Technical Improvements**
+
+- Enhanced collection views with proper user interaction handling
+- Fixed accessibility test methods and actor isolation issues
+- Improved data binding and state management
+- Maintained backward compatibility with optional parameters
+
+### **✅ Key Features**
+
+- Fixed UI binding and interaction issues
+- Enhanced collection view callbacks
+- Improved form field implementations
+- Better thread safety and async/await patterns
+
+---
 
 ### **🚨 Critical Bug Fix**
 

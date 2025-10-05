@@ -13,6 +13,31 @@ Example types showing how to create custom data structures that work with the fr
 - **GenericDataItem**: Generic container for any identifiable data
 - **VehicleType**: Enumeration for vehicle categorization
 
+### **AutomaticAccessibilityIdentifiersExample.swift**
+Demonstrates the automatic accessibility identifier system:
+
+- **Basic automatic identifier usage** with Layer 1 functions
+- **Manual override patterns** showing precedence
+- **Opt-out scenarios** for specific views
+- **Global configuration management** examples
+
+### **AccessibilityIdentifierDebuggingExample.swift**
+Shows debugging and inspection capabilities:
+
+- **Debug logging controls** for development
+- **Real-time ID inspection** with console output
+- **Collision detection testing** examples
+- **Advanced debugging scenarios**
+
+### **EnhancedBreadcrumbExample.swift** (v4.1.0)
+Comprehensive example of the enhanced breadcrumb system:
+
+- **View hierarchy tracking** with `.trackViewHierarchy()`
+- **Screen context management** with `.screenContext()`
+- **UI test code generation** with file saving and clipboard
+- **Breadcrumb trail generation** with complete navigation paths
+- **UI test helper methods** for common actions
+
 ## How to Use Examples
 
 1. **Copy the example files** you need into your project
