@@ -39,6 +39,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - Business Purpose Tests
     
+    /// BUSINESS PURPOSE: Validate semantic layer hint-driven layout decision functionality
+    /// TESTING SCOPE: Ensures semantic hints influence layout approach selection correctly
+    /// METHODOLOGY: Compare layouts generated from different semantic hints with identical data
     /// Test: Does the semantic layer actually guide intelligent UI decisions?
     func testSemanticHintsGuideLayoutDecisions() {
         // Given: Same data with different semantic hints
@@ -74,6 +77,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         XCTAssertEqual(detailLayout.approach, .responsive, "15 items should use responsive approach (complex)")
     }
     
+    /// BUSINESS PURPOSE: Validate platform-agnostic semantic intent functionality
+    /// TESTING SCOPE: Ensures Layer 1 conveys intent independent of specific platform
+    /// METHODOLOGY: Create intent for collection presentation and verify it remains platform-agnostic
     func testSemanticLayerProvidesPlatformAgnosticIntent() {
         // Given: User wants to present a collection
         let collectionHints = createTestHints(
@@ -95,6 +101,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - Data Type Recognition Business Purpose Tests
     
+    /// BUSINESS PURPOSE: Validate data-type hint driven presentation strategy functionality
+    /// TESTING SCOPE: Ensures data type hints inform strategy selection at Layer 2/3
+    /// METHODOLOGY: Provide different data type hints and verify resulting strategies align
     func testDataTypeHintsGuidePresentationStrategy() {
         // Given: Different data types
         let textHints = createTestHints(
@@ -138,6 +147,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         XCTAssertEqual(chartLayout.approach, .responsive, "20 items should use responsive approach")
     }
     
+    /// BUSINESS PURPOSE: Validate context hint influence on layout decision functionality
+    /// TESTING SCOPE: Ensures context (dashboard/detail) adjusts layout decisions
+    /// METHODOLOGY: Compare results for dashboard vs detail contexts with same data
     func testContextHintsInfluenceLayoutDecisions() {
         // Given: Same data in different contexts
         let browseHints = createTestHints(
@@ -183,6 +195,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - Complexity Recognition Business Purpose Tests
     
+    /// BUSINESS PURPOSE: Validate complexity hint driven performance decision functionality
+    /// TESTING SCOPE: Ensures complexity hints adjust performance-related decisions
+    /// METHODOLOGY: Use item counts across thresholds and verify responsive/performance settings
     func testComplexityHintsDrivePerformanceDecisions() {
         // Given: Same data with different complexity hints
         let simpleHints = createTestHints(
@@ -216,6 +231,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - Custom Preferences Business Purpose Tests
     
+    /// BUSINESS PURPOSE: Validate custom preference override functionality
+    /// TESTING SCOPE: Ensures user preferences override default semantic decisions when allowed
+    /// METHODOLOGY: Apply custom preferences and confirm they override defaults in results
     func testCustomPreferencesOverrideDefaultBehavior() {
         // Given: Custom preferences that override defaults
         let customHints = createTestHints(
@@ -239,6 +257,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - Platform Independence Business Purpose Tests
     
+    /// BUSINESS PURPOSE: Validate cross-platform semantic layer functionality
+    /// TESTING SCOPE: Ensures semantic layer behavior remains consistent across platforms
+    /// METHODOLOGY: Iterate all platforms via RuntimeCapabilityDetection and validate outcomes
     func testSemanticLayerWorksAcrossAllPlatforms() {
         // Given: Platform-agnostic semantic hints
         let universalHints = createTestHints(
@@ -262,6 +283,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - Semantic Intent Validation Tests
     
+    /// BUSINESS PURPOSE: Validate semantic hints reflect user intent functionality
+    /// TESTING SCOPE: Ensures hints preserve and propagate stated user goals
+    /// METHODOLOGY: Construct hints from user goals and verify propagation through the pipeline
     func testSemanticHintsReflectUserIntent() {
         // Given: User wants to browse images in a grid
         let imageBrowseHints = createTestHints(
@@ -283,6 +307,9 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         // Note: GenericLayoutDecision doesn't have a context property, so we test the approach
     }
     
+    /// BUSINESS PURPOSE: Validate intent preservation across layers functionality
+    /// TESTING SCOPE: Ensures semantic intent persists through L2/L3 layout/strategy
+    /// METHODOLOGY: Track intent across transformations and verify invariants are retained
     func testSemanticLayerPreservesIntentThroughLayers() {
         // Given: User wants detailed form editing
         let detailedFormHints = createTestHints(
