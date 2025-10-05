@@ -135,12 +135,16 @@ public struct DynamicFormSectionView: View {
             
             // Section fields
             if !isCollapsed {
-                LazyVStack(spacing: 16) {
-                    ForEach(section.fields) { field in
-                        DynamicFormFieldView(
-                            field: field,
-                            formState: formState
-                        )
+                if hasGridFields {
+                    gridFieldsView
+                } else {
+                    LazyVStack(spacing: 16) {
+                        ForEach(section.fields) { field in
+                            DynamicFormFieldView(
+                                field: field,
+                                formState: formState
+                            )
+                        }
                     }
                 }
             }
@@ -155,6 +159,36 @@ public struct DynamicFormSectionView: View {
     
     private func toggleSection() {
         isCollapsed.toggle()
+    }
+    
+    // MARK: - Grid Layout Support
+    
+    private var hasGridFields: Bool {
+        section.fields.contains { field in
+            field.metadata?["gridColumn"] != nil
+        }
+    }
+    
+    @ViewBuilder
+    private var gridFieldsView: some View {
+        LazyVGrid(columns: gridColumns, spacing: 16) {
+            ForEach(section.fields) { field in
+                DynamicFormFieldView(
+                    field: field,
+                    formState: formState
+                )
+            }
+        }
+    }
+    
+    private var gridColumns: [GridItem] {
+        let maxColumns = section.fields.compactMap { field in
+            Int(field.metadata?["gridColumn"] ?? "")
+        }.max() ?? 1
+        
+        return Array(0..<maxColumns).map { _ in
+            GridItem(.flexible(), spacing: 16)
+        }
     }
 }
 
@@ -474,8 +508,7 @@ public struct DynamicSelectField: View {
             }
         }
         .pickerStyle(.menu)
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
@@ -544,8 +577,7 @@ public struct DynamicCheckboxField: View {
             get: { formState.getValue(for: field.id) ?? false },
             set: { formState.setValue($0, for: field.id) }
         ))
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
@@ -559,8 +591,7 @@ public struct DynamicToggleField: View {
             get: { formState.getValue(for: field.id) ?? false },
             set: { formState.setValue($0, for: field.id) }
         ))
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
@@ -578,8 +609,7 @@ public struct DynamicDateField: View {
             ),
             displayedComponents: .date
         )
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
@@ -597,8 +627,7 @@ public struct DynamicTimeField: View {
             ),
             displayedComponents: .hourAndMinute
         )
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
@@ -616,8 +645,7 @@ public struct DynamicDateTimeField: View {
             ),
             displayedComponents: [.date, .hourAndMinute]
         )
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
@@ -634,8 +662,7 @@ public struct DynamicColorField: View {
                 set: { formState.setValue($0, for: field.id) }
             )
         )
-        .labelsHidden()
-        .accessibilityLabel(Text(field.label))
+        .selfLabelingControl(label: field.label)
     }
 }
 
