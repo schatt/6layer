@@ -285,12 +285,12 @@ final class CoreArchitectureTests: XCTestCase {
                 case .dashboard:
                     XCTAssertEqual(platformFields.count, 2, "Dashboard should have 2 fields on \(platform)")
                     XCTAssertTrue(platformFields.contains { $0.label == "Dashboard Name" }, "Dashboard should have Dashboard Name field on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Dashboard Status" }, "Dashboard should have Dashboard Status field on \(platform)")
+                    XCTAssertTrue(platformFields.contains { $0.label == "Auto Refresh" }, "Dashboard should have Auto Refresh field on \(platform)")
                     
                 case .detail:
-                    XCTAssertEqual(platformFields.count, 4, "Detail should have 4 fields on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Detail Title" }, "Detail should have Detail Title field on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Detail Description" }, "Detail should have Detail Description field on \(platform)")
+                    XCTAssertEqual(platformFields.count, 5, "Detail should have 5 fields on \(platform)")
+                    XCTAssertTrue(platformFields.contains { $0.label == "Title" }, "Detail should have Title field on \(platform)")
+                    XCTAssertTrue(platformFields.contains { $0.label == "Description" }, "Detail should have Description field on \(platform)")
                     
                 case .list:
                     XCTAssertTrue(platformFields.contains { $0.id.contains("list") || $0.id.contains("item") }, 
