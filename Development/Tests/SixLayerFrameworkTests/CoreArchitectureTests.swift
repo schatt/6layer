@@ -36,6 +36,7 @@
 import XCTest
 @testable import SixLayerFramework
 
+@MainActor
 final class CoreArchitectureTests: XCTestCase {
     
     // MARK: - Test Helpers
@@ -301,6 +302,24 @@ final class CoreArchitectureTests: XCTestCase {
                 case .navigation:
                     XCTAssertTrue(platformFields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
                                 "Navigation context should have navigation/route fields on \(platform)")
+                case .browse:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .edit:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .create:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .search:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .settings:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .profile:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .summary:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .form:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .modal:
+                    XCTAssertTrue(platformFields.count >= 1)
                 }
             }
         }

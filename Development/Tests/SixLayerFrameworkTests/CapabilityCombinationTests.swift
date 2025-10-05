@@ -261,7 +261,7 @@ final class CapabilityCombinationTests: XCTestCase {
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             RuntimeCapabilityDetection.setTestTouchSupport(true)
-            RuntimeCapabilityDetection.setTestHoverSupport(true)
+            RuntimeCapabilityDetection.setTestHover(true)
             RuntimeCapabilityDetection.setTestHapticFeedback(true)
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
@@ -373,7 +373,7 @@ final class CapabilityCombinationTests: XCTestCase {
             RuntimeCapabilityDetection.setTestTouchSupport(true)
             RuntimeCapabilityDetection.setTestHapticFeedback(true)
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            RuntimeCapabilityDetection.setTestHoverSupport(false)
+            RuntimeCapabilityDetection.setTestHover(false)
             
             XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
             XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")

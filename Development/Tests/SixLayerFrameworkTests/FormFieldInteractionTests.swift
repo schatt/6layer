@@ -94,8 +94,8 @@ final class FormFieldInteractionTests: XCTestCase {
         ]
     }
     
-    private var basicHints: PresentationHints {
-        PresentationHints(
+    private var basicHints: EnhancedPresentationHints {
+        EnhancedPresentationHints(
             dataType: .form,
             presentationPreference: .form,
             complexity: .simple,
@@ -341,7 +341,7 @@ final class FormFieldInteractionTests: XCTestCase {
         resetCallbacks()
         
         // When: Creating simple form view
-        let view = SimpleFormView(
+        let view = platformPresentFormData_L1(
             fields: sampleFormFields,
             hints: basicHints
         )
