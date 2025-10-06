@@ -22,14 +22,21 @@ The automatic accessibility identifier system provides:
 ### Enable Automatic Identifiers
 
 ```swift
-// Enable automatic identifiers globally
+// 1. Configure the global settings
 AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-
-// Set custom namespace
 AccessibilityIdentifierConfig.shared.namespace = "myapp"
-
-// Choose generation mode
 AccessibilityIdentifierConfig.shared.mode = .automatic
+
+// 2. Apply the global modifier to your app's root view
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .enableGlobalAutomaticAccessibilityIdentifiers()
+        }
+    }
+}
 ```
 
 ### Use with Layer 1 Functions

@@ -534,6 +534,7 @@ public struct GlobalAutomaticAccessibilityIdentifierModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true)
             .modifier(AccessibilityIdentifierAssignmentModifier())
     }
 }

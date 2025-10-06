@@ -7,6 +7,31 @@ import SixLayerFramework
  * This example demonstrates how SixLayer framework automatically generates
  * accessibility identifiers for views, making UI testing easier without
  * requiring manual identifier assignment.
+ * 
+ * IMPORTANT: To use automatic accessibility identifiers, you must:
+ * 1. Configure AccessibilityIdentifierConfig.shared
+ * 2. Apply .enableGlobalAutomaticAccessibilityIdentifiers() to your app's root view
+ * 
+ * Example App setup:
+ * ```swift
+ * @main
+ * struct MyApp: App {
+ *     init() {
+ *         // Configure automatic accessibility identifiers
+ *         let config = AccessibilityIdentifierConfig.shared
+ *         config.enableAutoIDs = true
+ *         config.namespace = "MyApp"
+ *         config.mode = .automatic
+ *     }
+ *     
+ *     var body: some Scene {
+ *         WindowGroup {
+ *             ContentView()
+ *                 .enableGlobalAutomaticAccessibilityIdentifiers()
+ *         }
+ *     }
+ * }
+ * ```
  */
 
 struct AutomaticAccessibilityIdentifiersExample: View {
