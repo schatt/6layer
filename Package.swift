@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.1.4 - Fix Critical Accessibility Identifier Bug
+// SixLayerFramework v4.2.0 - UI Testing Refactoring and Test Suite Improvements
 
 import PackageDescription
 
@@ -55,6 +55,13 @@ let package = Package(
             exclude: [
                 // Function index moved to docs directory
             ]
+        ),
+        
+        // UI Test target for XCUITest
+        .testTarget(
+            name: "SixLayerFrameworkUITests",
+            dependencies: ["SixLayerFramework"],
+            path: "Development/Tests/SixLayerFrameworkUITests"
         )
     ]
 )
