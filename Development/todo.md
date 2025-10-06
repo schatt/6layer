@@ -1,15 +1,21 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6** 🚨
+## 📍 **Current Status: v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** 🚨
 
-**Last Release**: v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6
-**Current Phase**: Patch Release (Bug Fix)
+**Last Release**: v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug
+**Current Phase**: Patch Release (Critical Bug Fix)
 **Next Phase**: Continue framework evolution and feature development
-**Note**: v4.1.2 fixes critical bug in automatic accessibility identifier generation for Layers 2-6 functions. All SixLayer framework elements now properly generate accessibility identifiers for UI testing and accessibility compliance.
+**Note**: v4.1.3 fixes critical bug where GlobalAutomaticAccessibilityIdentifierModifier wasn't setting environment value. Automatic accessibility identifiers now work properly with the global modifier.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
-## 📋 **Recent Release Summary (v2.8.0 - v4.1.2)**
+## 📋 **Recent Release Summary (v2.8.0 - v4.1.3)**
+
+### **v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** ✅ **COMPLETED**
+- **Critical Bug Fix**: Fixed GlobalAutomaticAccessibilityIdentifierModifier environment value bug
+- **Environment Value**: Added missing `.environment(\.globalAutomaticAccessibilityIdentifiers, true)`
+- **Documentation Updated**: Enhanced usage examples with global modifier
+- **User Action Required**: Users must add `.enableGlobalAutomaticAccessibilityIdentifiers()` to app root view
 
 ### **v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6** ✅ **COMPLETED**
 - **Critical Bug Fix**: Fixed automatic accessibility identifier generation for Layers 2-6 functions

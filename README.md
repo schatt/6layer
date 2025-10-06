@@ -41,10 +41,10 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v4.1.2
+## 🆕 Latest Release: v4.1.3
 
-### **Automatic Accessibility Identifiers Fix for Layers 2-6**
-🚨 **Critical Bug Fix**: Fixed automatic accessibility identifiers for Layers 2-6 functions. All SixLayer framework elements now properly generate accessibility identifiers for UI testing and accessibility compliance.
+### **Fix Critical Automatic Accessibility Identifier Bug**
+🚨 **Critical Bug Fix**: Fixed critical bug where GlobalAutomaticAccessibilityIdentifierModifier wasn't setting environment value. Automatic accessibility identifiers now work properly with the global modifier.
 
 **Highlights:**
 - ✅ **Complete Automatic Accessibility Identifiers** - Now works for all Layers 1-6
@@ -73,7 +73,7 @@ platformPresentItemCollection_L1(
 - **[Project Status](Development/PROJECT_STATUS.md)** - Current development status
 - **[Roadmap](Development/todo.md)** - Development phases and progress
 - **[Documentation](Framework/docs/)** - Technical implementation details
-- **[Release Notes v4.1.2](Development/RELEASE_v4.1.2.md)** - Automatic Accessibility Identifiers Fix for Layers 2-6
+- **[Release Notes v4.1.3](Development/RELEASE_v4.1.3.md)** - Fix Critical Automatic Accessibility Identifier Bug
 - **[OCR Overlay Guide](Framework/docs/OCROverlayGuide.md)** - Interactive visual text correction
 
 ## 🤖 For AI Assistants

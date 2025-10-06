@@ -29,7 +29,7 @@ Shows debugging and inspection capabilities:
 - **Collision detection testing** examples
 - **Advanced debugging scenarios**
 
-### **EnhancedBreadcrumbExample.swift** (v4.1.2)
+### **EnhancedBreadcrumbExample.swift** (v4.1.3)
 Comprehensive example of the enhanced breadcrumb system:
 
 - **View hierarchy tracking** with `.trackViewHierarchy()`
@@ -37,7 +37,7 @@ Comprehensive example of the enhanced breadcrumb system:
 - **UI test code generation** with file saving and clipboard
 - **Breadcrumb trail generation** with complete navigation paths
 - **UI test helper methods** for common actions
-- **Complete automatic accessibility identifiers** (fixed in v4.1.2)
+- **Complete automatic accessibility identifiers** (fixed in v4.1.3)
 
 ## How to Use Examples
 

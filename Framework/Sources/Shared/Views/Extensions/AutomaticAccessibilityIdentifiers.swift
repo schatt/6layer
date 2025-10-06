@@ -561,7 +561,7 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        let shouldApplyAutoIDs = !disableAutoIDs && config.enableAutoIDs
+        let shouldApplyAutoIDs = !disableAutoIDs && config.enableAutoIDs && globalAutoIDs
         
         if shouldApplyAutoIDs {
             // Apply automatic identifier based on view context

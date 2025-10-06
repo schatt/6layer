@@ -1,12 +1,69 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6** 🚨
+## 📍 **Current Release: v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** 🚨
 
-**Release Date**: October 5, 2025  
+**Release Date**: October 6, 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.1.1 - Critical Bug Fix Release  
-**Note**: Fixed automatic accessibility identifiers for Layers 2-6 functions  
+**Previous Release**: v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6  
+**Note**: Fixed critical bug where GlobalAutomaticAccessibilityIdentifierModifier wasn't setting environment value  
 **Next Release**: TBD
+
+---
+
+## 🚨 **v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** ✅ **COMPLETE**
+
+**Release Date**: October 6, 2025  
+**Type**: Patch Release (Critical Bug Fix)  
+**Priority**: Critical  
+**Scope**: Fix GlobalAutomaticAccessibilityIdentifierModifier environment value bug  
+**Note**: Critical bug fix - automatic accessibility identifiers now work properly with global modifier
+
+### 🐛 **Critical Bug Fixed**
+- **Problem**: GlobalAutomaticAccessibilityIdentifierModifier wasn't setting the required environment value
+- **Impact**: Automatic accessibility identifiers were completely non-functional even with proper configuration
+- **Solution**: Added missing `.environment(\.globalAutomaticAccessibilityIdentifiers, true)` to global modifier
+
+### 🔧 **Changes Made**
+- **Fixed GlobalAutomaticAccessibilityIdentifierModifier**: Now properly sets environment value
+- **Updated Documentation**: Added proper usage examples with global modifier
+- **Updated Example Code**: Included complete app setup with global modifier
+- **Enhanced Documentation**: Made it clear that both configuration AND global modifier are required
+
+### ✅ **Testing & Quality Assurance**
+- **All Tests Pass**: 1,662 tests pass with 0 failures
+- **Documentation Updated**: Proper usage examples added
+- **Example Code Updated**: Complete app setup shown
+- **Release Process Validated**: All release requirements met
+
+### 🚀 **Compatibility**
+- **Backward Compatible**: This release introduces no breaking changes
+- **Configuration Required**: Users must add `.enableGlobalAutomaticAccessibilityIdentifiers()` to their app's root view
+
+### 📋 **User Action Required**
+Users need to update their app code to include the global modifier:
+
+```swift
+@main
+struct MyApp: App {
+    init() {
+        // Configure automatic accessibility identifiers
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "MyApp"
+        config.mode = .automatic
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .enableGlobalAutomaticAccessibilityIdentifiers()  // ← ADD THIS!
+        }
+    }
+}
+```
+
+### 🤝 **Contributors**
+- Drew Schatt
 
 ---
 
