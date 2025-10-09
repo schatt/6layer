@@ -129,7 +129,7 @@ public struct OCROverlayView: View {
     let onTextEdit: (String, CGRect) -> Void
     let onTextDelete: (CGRect) -> Void
     
-    @StateObject private var state = OCROverlayState()
+    @StateObject private var state: OCROverlayState
     
     // MARK: - Initialization
     
@@ -145,8 +145,7 @@ public struct OCROverlayView: View {
         self.configuration = configuration
         self.onTextEdit = onTextEdit
         self.onTextDelete = onTextDelete
-        
-        // State will be initialized in onAppear
+        self._state = StateObject(wrappedValue: OCROverlayState())
     }
     
     // MARK: - Body

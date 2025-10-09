@@ -614,7 +614,7 @@ public struct DisableAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
 
 /// Environment key for enabling global automatic accessibility identifiers
 public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
-    public static let defaultValue: Bool = false
+    public static let defaultValue: Bool = true  // ✅ Changed from false to true
 }
 
 public extension EnvironmentValues {
@@ -643,6 +643,7 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
             .onDisappear {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
             .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
     }
 }
@@ -656,6 +657,7 @@ public struct ScreenContextModifier: ViewModifier {
             .onAppear {
                 AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
             }
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
             .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
     }
 }
@@ -669,6 +671,7 @@ public struct NavigationStateModifier: ViewModifier {
             .onAppear {
                 AccessibilityIdentifierConfig.shared.setNavigationState(navigationState)
             }
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
             .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
     }
 }

@@ -53,8 +53,13 @@ final class L3StrategySelectionTests: XCTestCase {
             contentComplexity: complexity
         )
         
-        // Then
+        // Then: Should return a strategy that can be used functionally
         XCTAssertNotNil(strategy, "selectCardLayoutStrategy_L3 should return a strategy")
+        
+        // Test that the strategy can be used to create a functional view
+        let testView = createTestViewWithCardLayoutStrategy(strategy)
+        XCTAssertNotNil(testView, "Should be able to create view with card layout strategy")
+        
         XCTAssertGreaterThan(strategy.columns, 0, "Should have at least 1 column")
         XCTAssertGreaterThan(strategy.spacing, 0, "Should have positive spacing")
         XCTAssertFalse(strategy.reasoning.isEmpty, "Should provide reasoning")
@@ -75,8 +80,13 @@ final class L3StrategySelectionTests: XCTestCase {
             contentComplexity: complexity
         )
         
-        // Then
+        // Then: Should return a strategy that can be used functionally
         XCTAssertNotNil(strategy, "selectCardLayoutStrategy_L3 should return a strategy")
+        
+        // Test that the strategy can be used to create a functional view
+        let testView = createTestViewWithCardLayoutStrategy(strategy)
+        XCTAssertNotNil(testView, "Should be able to create view with large content card layout strategy")
+        
         XCTAssertGreaterThan(strategy.columns, 1, "Should have multiple columns for large content")
         XCTAssertGreaterThan(strategy.spacing, 0, "Should have positive spacing")
         XCTAssertFalse(strategy.reasoning.isEmpty, "Should provide reasoning")
@@ -93,7 +103,9 @@ final class L3StrategySelectionTests: XCTestCase {
             deviceType: .phone,
             contentComplexity: complexity
         )
-        XCTAssertNotNil(phoneStrategy, "Phone device type should return a strategy")
+        // Test that the strategy can be used to create a functional view
+        let phoneTestView = createTestViewWithCardLayoutStrategy(phoneStrategy)
+        XCTAssertNotNil(phoneTestView, "Should be able to create view with phone card layout strategy")
         
         // Test pad
         let padStrategy = selectCardLayoutStrategy_L3(
@@ -102,7 +114,9 @@ final class L3StrategySelectionTests: XCTestCase {
             deviceType: .pad,
             contentComplexity: complexity
         )
-        XCTAssertNotNil(padStrategy, "Pad device type should return a strategy")
+        // Test that the strategy can be used to create a functional view
+        let padTestView = createTestViewWithCardLayoutStrategy(padStrategy)
+        XCTAssertNotNil(padTestView, "Should be able to create view with pad card layout strategy")
         
         // Test mac
         let macStrategy = selectCardLayoutStrategy_L3(
@@ -111,7 +125,9 @@ final class L3StrategySelectionTests: XCTestCase {
             deviceType: .mac,
             contentComplexity: complexity
         )
-        XCTAssertNotNil(macStrategy, "Mac device type should return a strategy")
+        // Test that the strategy can be used to create a functional view
+        let macTestView = createTestViewWithCardLayoutStrategy(macStrategy)
+        XCTAssertNotNil(macTestView, "Should be able to create view with mac card layout strategy")
     }
     
     func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
@@ -889,5 +905,19 @@ final class L3StrategySelectionTests: XCTestCase {
             // NOTE: Layer 3 functions return data structures, not views
             // They don't need automatic accessibility identifiers because they're not UI elements
         }
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Create a test view using the card layout strategy to verify it works
+    private func createTestViewWithCardLayoutStrategy(_ strategy: LayoutStrategy) -> some View {
+        return VStack(spacing: 8) {
+            ForEach(0..<strategy.columns, id: \.self) { _ in
+                Text("Test Card")
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .accessibilityLabel("Test view for card layout strategy")
+        .accessibilityHint("Strategy: \(strategy.columns) columns, approach: \(strategy.approach.rawValue)")
     }
 }

@@ -19,21 +19,27 @@ The automatic accessibility identifier system provides:
 
 ## Quick Start
 
-### Enable Automatic Identifiers
+### ✅ Automatic Identifiers Now Work by Default!
+
+As of SixLayerFramework 4.2.0, automatic accessibility identifiers are **enabled by default**. You no longer need to explicitly call `.enableGlobalAutomaticAccessibilityIdentifiers()` unless you want to be explicit about it.
+
+### Enable Automatic Identifiers (Optional Configuration)
 
 ```swift
-// 1. Configure the global settings
-AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-AccessibilityIdentifierConfig.shared.namespace = "myapp"
-AccessibilityIdentifierConfig.shared.mode = .automatic
+// 1. Configure the global settings (optional - defaults are already good)
+AccessibilityIdentifierConfig.shared.enableAutoIDs = true  // ✅ Already true by default
+AccessibilityIdentifierConfig.shared.namespace = "myapp"   // ✅ Default is "app"
+AccessibilityIdentifierConfig.shared.mode = .automatic     // ✅ Already automatic by default
 
-// 2. Apply the global modifier to your app's root view
+// 2. Automatic identifiers are now enabled by default!
+// No need to add .enableGlobalAutomaticAccessibilityIdentifiers() unless you want to be explicit
 @main
 struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                // ✅ Automatic identifiers work by default now!
+                // .enableGlobalAutomaticAccessibilityIdentifiers() // Optional - no longer required
         }
     }
 }
@@ -79,6 +85,7 @@ Button("Decorative") { }
 | `enableDebugLogging` | `Bool` | `false` | DEBUG logging of generated IDs |
 | `enableViewHierarchyTracking` | `Bool` | `false` | Track view hierarchy for breadcrumbs |
 | `enableUITestIntegration` | `Bool` | `false` | Enable UI test code generation |
+| `globalAutomaticAccessibilityIdentifiers` | `Bool` | `true` | ✅ **NEW**: Environment variable now defaults to true |
 
 ### Generation Modes
 

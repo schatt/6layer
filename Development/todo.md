@@ -1,15 +1,25 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** 🚨
+## 📍 **Current Status: v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults** 🚨
 
-**Last Release**: v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug
-**Current Phase**: Patch Release (Critical Bug Fix)
+**Last Release**: v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults
+**Current Phase**: Patch Release (Critical Bug Fix + Enhancement)
 **Next Phase**: Continue framework evolution and feature development
-**Note**: v4.1.3 fixes critical bug where GlobalAutomaticAccessibilityIdentifierModifier wasn't setting environment value. Automatic accessibility identifiers now work properly with the global modifier.
+**Note**: v4.2.1 fixes critical accessibility identifier bug and improves default behavior. Automatic accessibility identifiers now work by default.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
-## 📋 **Recent Release Summary (v2.8.0 - v4.1.3)**
+## 📋 **Recent Release Summary (v2.8.0 - v4.2.1)**
+
+### **v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults** ✅ **COMPLETED**
+- **Critical Bug Fix**: Fixed automatic accessibility identifier generation that was completely non-functional in v4.2.0
+- **Enhanced Breadcrumb System**: `.trackViewHierarchy()`, `.screenContext()`, `.navigationState()` now work correctly
+- **Improved Default Behavior**: Automatic accessibility identifiers now work by default (no explicit enabling required)
+- **Better Developer Experience**: No need to remember to enable automatic identifiers
+- **Backward Compatibility**: Existing code with explicit enabling still works perfectly
+- **Comprehensive Testing**: 40 accessibility identifier tests (28 original + 8 bug fix + 4 default behavior)
+- **All Tests Pass**: 1,571 tests pass with 0 failures
+- **Release Date**: October 9, 2025
 
 ### **v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** ✅ **COMPLETED**
 - **Critical Bug Fix**: Fixed GlobalAutomaticAccessibilityIdentifierModifier environment value bug

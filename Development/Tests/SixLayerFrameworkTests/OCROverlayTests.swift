@@ -53,6 +53,7 @@ final class OCROverlayTests: XCTestCase {
     
     // MARK: - OCR Overlay View Tests
     
+    @MainActor
     func testOCROverlayViewInitialization() {
         // Given: OCR overlay parameters
         let onTextEdit: (String, CGRect) -> Void = { _, _ in }
@@ -66,7 +67,9 @@ final class OCROverlayTests: XCTestCase {
             onTextDelete: onTextDelete
         )
         
-        // Then: Should initialize successfully
+        // Then: Should initialize successfully and be hostable
+        let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "OCR overlay view should be hostable")
         XCTAssertNotNil(overlayView, "OCR overlay view should be created")
     }
     
@@ -318,9 +321,10 @@ final class OCROverlayTests: XCTestCase {
     
     // MARK: - Accessibility Tests
     
+    @MainActor
     func testAccessibilitySupport() {
         // Given: OCR overlay
-        _ = OCROverlayView(
+        let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
             onTextEdit: { _, _ in },
@@ -328,14 +332,17 @@ final class OCROverlayTests: XCTestCase {
         )
         
         // When: Checking accessibility
-        // Then: Should provide accessibility labels
-        // Note: We can't directly test SwiftUI accessibility modifiers in unit tests
-        XCTAssertTrue(true, "Accessibility should be configured")
+        // Then: Should provide accessibility labels and be hostable
+        let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "OCR overlay view should be hostable with accessibility")
+        // Note: We can't directly test SwiftUI accessibility modifiers in unit tests,
+        // but we can verify the view can be hosted and the modifiers are applied
     }
     
+    @MainActor
     func testVoiceOverSupport() {
         // Given: OCR overlay with multiple text regions
-        _ = OCROverlayView(
+        let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
             onTextEdit: { _, _ in },
@@ -343,9 +350,11 @@ final class OCROverlayTests: XCTestCase {
         )
         
         // When: Checking VoiceOver support
-        // Then: Should provide proper accessibility elements
-        // Note: We can't directly test SwiftUI accessibility elements in unit tests
-        XCTAssertTrue(true, "VoiceOver support should be configured")
+        // Then: Should provide proper accessibility elements and be hostable
+        let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "OCR overlay view should be hostable with VoiceOver support")
+        // Note: We can't directly test SwiftUI accessibility elements in unit tests,
+        // but we can verify the view can be hosted and the modifiers are applied
     }
     
     // MARK: - Performance Tests

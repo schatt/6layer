@@ -156,7 +156,9 @@ final class AutomaticHIGComplianceTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(collectionView, "Collection view should be created")
+            // Test that collection view can be hosted and has proper structure
+            let collectionHostingView = hostRootPlatformView(collectionView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(collectionHostingView, "Collection view should be hostable")
             
             // Test platformPresentNumericData_L1
             let numericData = [
@@ -166,11 +168,15 @@ final class AutomaticHIGComplianceTests: XCTestCase {
                 data: numericData,
                 hints: testHints!
             )
-            XCTAssertNotNil(numericView, "Numeric view should be created")
             
-            // Verify that automatic HIG compliance is applied to all Layer 1 views
-            // Both collection and numeric views should have automatic compliance
-            XCTAssertTrue(true, "Automatic HIG compliance should be applied to all Layer 1 functions")
+            // Test that numeric view can be hosted and has proper structure
+            let numericHostingView = hostRootPlatformView(numericView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(numericHostingView, "Numeric view should be hostable")
+            
+            // Verify that both views are created successfully and can be hosted
+            // This tests that the HIG compliance modifiers are applied without compilation errors
+            XCTAssertNotNil(collectionView, "Collection view should be created")
+            XCTAssertNotNil(numericView, "Numeric view should be created")
         }
     }
     
@@ -188,7 +194,9 @@ final class AutomaticHIGComplianceTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(viewWithVoiceOver, "View should be created with VoiceOver enabled")
+            // Test that VoiceOver-enabled view can be hosted
+            let voiceOverHostingView = hostRootPlatformView(viewWithVoiceOver.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(voiceOverHostingView, "VoiceOver view should be hostable")
             
             // Test with Switch Control enabled
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -199,7 +207,10 @@ final class AutomaticHIGComplianceTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(viewWithSwitchControl, "View should be created with Switch Control enabled")
+            
+            // Test that Switch Control-enabled view can be hosted
+            let switchControlHostingView = hostRootPlatformView(viewWithSwitchControl.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(switchControlHostingView, "Switch Control view should be hostable")
             
             // Test with AssistiveTouch enabled
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -210,7 +221,10 @@ final class AutomaticHIGComplianceTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(viewWithAssistiveTouch, "View should be created with AssistiveTouch enabled")
+            
+            // Test that AssistiveTouch-enabled view can be hosted
+            let assistiveTouchHostingView = hostRootPlatformView(viewWithAssistiveTouch.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(assistiveTouchHostingView, "AssistiveTouch view should be hostable")
             
             // Test with all accessibility features enabled
             RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -221,11 +235,17 @@ final class AutomaticHIGComplianceTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(viewWithAllAccessibility, "View should be created with all accessibility features")
             
-            // Verify that automatic compliance adapts to different accessibility capabilities
-            // The views should automatically adapt based on which capabilities are enabled
-            XCTAssertTrue(true, "Automatic compliance should adapt to different accessibility capabilities")
+            // Test that all-accessibility view can be hosted
+            let allAccessibilityHostingView = hostRootPlatformView(viewWithAllAccessibility.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(allAccessibilityHostingView, "All accessibility view should be hostable")
+            
+            // Verify that all views are created successfully and can be hosted
+            // This tests that the HIG compliance modifiers adapt to different accessibility capabilities
+            XCTAssertNotNil(viewWithVoiceOver, "VoiceOver view should be created")
+            XCTAssertNotNil(viewWithSwitchControl, "Switch Control view should be created")
+            XCTAssertNotNil(viewWithAssistiveTouch, "AssistiveTouch view should be created")
+            XCTAssertNotNil(viewWithAllAccessibility, "All accessibility view should be created")
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestVoiceOver(false)

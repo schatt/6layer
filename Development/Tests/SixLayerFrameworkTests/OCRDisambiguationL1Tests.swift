@@ -2,117 +2,55 @@
 //  OCRDisambiguationL1Tests.swift
 //  SixLayerFrameworkTests
 //
-//  Tests for OCR disambiguation L1 functions
-//  Tests OCR disambiguation and text extraction features
+//  BUSINESS PURPOSE:
+//  Tests the Layer 1 OCR disambiguation functionality which provides
+//  basic disambiguation interfaces for resolving ambiguous text recognition
+//  results, including simple disambiguation views and user interaction.
 //
+//  TESTING SCOPE:
+//  - Layer 1 OCR disambiguation view initialization
+//  - Basic disambiguation interface functionality
+//  - Simple user interaction patterns
+//  - Error handling and edge cases
+//
+//  METHODOLOGY:
+//  - Test Layer 1 disambiguation view creation and configuration
+//  - Verify basic disambiguation interface works correctly
+//  - Test simple user interaction patterns
+//  - Validate error handling scenarios
+//
+//  TODO: This file has been emptied because the previous tests were only testing
+//  view creation and hosting, not actual Layer 1 OCR disambiguation functionality.
+//  Real tests need to be written that test actual Layer 1 OCR disambiguation behavior.
 
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
 
+/// Tests for Layer 1 OCR disambiguation functionality
+/// TODO: Implement real tests that test actual Layer 1 OCR disambiguation functionality
 @MainActor
 final class OCRDisambiguationL1Tests: XCTestCase {
     
-    // MARK: - Test Data
-    
-    private var sampleImage: PlatformImage = PlatformImage()
-    private var sampleOCRContext: OCRContext = OCRContext()
-    private var sampleHints: PresentationHints = PresentationHints()
+    // MARK: - Test Setup
     
     override func setUp() {
         super.setUp()
-        sampleImage = PlatformImage()
-        sampleOCRContext = OCRContext()
-        sampleHints = PresentationHints()
+        // TODO: Set up real Layer 1 OCR disambiguation tests
     }
     
     override func tearDown() {
+        // TODO: Clean up Layer 1 OCR disambiguation tests
         super.tearDown()
     }
     
-    // MARK: - OCR Disambiguation Tests
+    // MARK: - Real Layer 1 OCR Disambiguation Tests (To Be Implemented)
     
-    func testPlatformOCRWithDisambiguation_L1() {
-        // Given
-        let image = sampleImage
-        let context = sampleOCRContext
-        
-        // When
-        let view = platformOCRWithDisambiguation_L1(
-            image: image,
-            context: context,
-            onResult: { _ in }
-        )
-        
-        // Then
-        XCTAssertNotNil(view, "platformOCRWithDisambiguation_L1 should return a view")
-    }
+    // TODO: Implement tests that actually test Layer 1 OCR disambiguation functionality:
+    // - Real Layer 1 disambiguation view initialization and configuration
+    // - Actual basic disambiguation interface functionality
+    // - Real simple user interaction patterns
+    // - Actual error handling scenarios
+    // - Real Layer 1 OCR disambiguation workflow testing
     
-    func testPlatformOCRWithDisambiguation_L1_WithDifferentContext() {
-        // Given
-        let image = sampleImage
-        let context = OCRContext()
-        
-        // When
-        let view = platformOCRWithDisambiguation_L1(
-            image: image,
-            context: context,
-            onResult: { _ in }
-        )
-        
-        // Then
-        XCTAssertNotNil(view, "platformOCRWithDisambiguation_L1 with different context should return a view")
-    }
-    
-    // MARK: - Edge Cases
-    
-    func testPlatformOCRWithDisambiguation_L1_WithEmptyImage() {
-        // Given
-        let image = PlatformImage()
-        let context = sampleOCRContext
-        
-        // When
-        let view = platformOCRWithDisambiguation_L1(
-            image: image,
-            context: context,
-            onResult: { _ in }
-        )
-        
-        // Then
-        XCTAssertNotNil(view, "platformOCRWithDisambiguation_L1 with empty image should return a view")
-    }
-    
-    func testPlatformOCRWithDisambiguation_L1_WithEmptyContext() {
-        // Given
-        let image = sampleImage
-        let context = OCRContext()
-        
-        // When
-        let view = platformOCRWithDisambiguation_L1(
-            image: image,
-            context: context,
-            onResult: { _ in }
-        )
-        
-        // Then
-        XCTAssertNotNil(view, "platformOCRWithDisambiguation_L1 with empty context should return a view")
-    }
-    
-    // MARK: - Performance Tests
-    
-    func testPlatformOCRWithDisambiguation_L1_Performance() {
-        // Given
-        let image = sampleImage
-        let context = sampleOCRContext
-        
-        // When & Then
-        measure {
-            let view = platformOCRWithDisambiguation_L1(
-                image: image,
-                context: context,
-                onResult: { _ in }
-            )
-            XCTAssertNotNil(view)
-        }
-    }
 }

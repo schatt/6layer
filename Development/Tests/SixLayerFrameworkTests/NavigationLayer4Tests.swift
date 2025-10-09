@@ -8,6 +8,7 @@
 
 import XCTest
 import SwiftUI
+import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
@@ -32,8 +33,50 @@ final class NavigationLayer4Tests: XCTestCase {
             Text("Label")
         }
         
-        // Then: Should create valid navigation link
+        // Then: Test the two critical aspects
+        
+        // 1. Does it return a valid structure of the kind it's supposed to?
         XCTAssertNotNil(link, "Navigation link should be created successfully")
+        
+        // 2. Does that structure contain what it should?
+        do {
+            // The navigation link should contain text elements
+            let viewText = try link.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Navigation link should contain text elements")
+            
+            // Should contain the label text
+            let hasLabelText = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Label")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasLabelText, "Navigation link should contain the label text 'Label'")
+            
+        } catch {
+            XCTFail("Failed to inspect navigation link structure: \(error)")
+        }
+        
+        // 3. Platform-specific implementation verification (REQUIRED)
+        #if os(iOS)
+        // iOS: Should contain NavigationLink structure
+        do {
+            let _ = try link.inspect().find(ViewType.NavigationLink.self)
+            // NavigationLink found - this is correct for iOS
+        } catch {
+            XCTFail("iOS navigation link should contain NavigationLink structure")
+        }
+        #elseif os(macOS)
+        // macOS: Should contain the content directly (no NavigationLink wrapper)
+        do {
+            let _ = try link.inspect()
+            // Direct content inspection works - this is correct for macOS
+        } catch {
+            XCTFail("macOS navigation link should be inspectable directly")
+        }
+        #endif
     }
     
     func testPlatformNavigationLink_L4_WithTitleAndSystemImage() {
@@ -52,7 +95,9 @@ final class NavigationLayer4Tests: XCTestCase {
                 Text("Settings View")
             }
         
-        // Then: Should create valid navigation link
+        // Then: Should create valid navigation link that can be hosted
+        let hostingView = hostRootPlatformView(link.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Navigation link with title and system image should be hostable")
         XCTAssertNotNil(link, "Navigation link with title and system image should be created")
     }
     
@@ -195,6 +240,32 @@ final class NavigationLayer4Tests: XCTestCase {
         
         // Then: Should create navigation container
         XCTAssertNotNil(container, "Navigation container should be created")
+        
+        // 3. Platform-specific implementation verification (REQUIRED)
+        #if os(iOS)
+        // iOS: Should contain NavigationStack structure (iOS 16+) or direct content (iOS 15-)
+        do {
+            // Try to find NavigationStack first (iOS 16+)
+            let _ = try container.inspect().find(ViewType.NavigationStack.self)
+            // NavigationStack found - this is correct for iOS 16+
+        } catch {
+            // Fallback: direct content inspection (iOS 15-)
+            do {
+                let _ = try container.inspect()
+                // Direct content inspection works - this is correct for iOS 15-
+            } catch {
+                XCTFail("iOS platform navigation container should be inspectable")
+            }
+        }
+        #elseif os(macOS)
+        // macOS: Should contain the content directly (no NavigationStack wrapper)
+        do {
+            let _ = try container.inspect()
+            // Direct content inspection works - this is correct for macOS
+        } catch {
+            XCTFail("macOS platform navigation container should be inspectable directly")
+        }
+        #endif
     }
     
     func testPlatformNavigationContainer_WithComplexContent() {
@@ -286,6 +357,25 @@ final class NavigationLayer4Tests: XCTestCase {
         
         // Then: Should create platform navigation
         XCTAssertNotNil(navigation, "Platform navigation should be created")
+        
+        // 3. Platform-specific implementation verification (REQUIRED)
+        #if os(iOS)
+        // iOS: Should contain NavigationView structure
+        do {
+            let _ = try navigation.inspect().find(ViewType.NavigationView.self)
+            // NavigationView found - this is correct for iOS
+        } catch {
+            XCTFail("iOS platform navigation should contain NavigationView structure")
+        }
+        #elseif os(macOS)
+        // macOS: Should contain the content directly (no NavigationView wrapper)
+        do {
+            let _ = try navigation.inspect()
+            // Direct content inspection works - this is correct for macOS
+        } catch {
+            XCTFail("macOS platform navigation should be inspectable directly")
+        }
+        #endif
     }
     
     func testPlatformNavigation_WithComplexContent() {

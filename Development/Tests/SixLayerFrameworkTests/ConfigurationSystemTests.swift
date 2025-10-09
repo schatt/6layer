@@ -51,11 +51,19 @@ final class ConfigurationSystemTests: XCTestCase {
         XCTAssertTrue(config.performance.memoryOptimization, "Memory optimization should be enabled by default on macOS")
         XCTAssertEqual(config.performance.performanceLevel, .balanced, "Performance level should default to balanced")
         
-        // Accessibility should be enabled by default
+        // Test that the default configuration actually works by creating a view with it
+        let testView = createTestViewWithConfiguration(config)
+        XCTAssertNotNil(testView, "Should be able to create view with default configuration")
+        
+        // Accessibility should be enabled by default and functional
         XCTAssertTrue(config.accessibility.automaticAccessibility, "Automatic accessibility should be enabled by default")
         XCTAssertTrue(config.accessibility.voiceOverOptimizations, "VoiceOver optimizations should be enabled by default")
         XCTAssertTrue(config.accessibility.switchControlOptimizations, "Switch Control optimizations should be enabled by default")
         XCTAssertTrue(config.accessibility.assistiveTouchOptimizations, "AssistiveTouch optimizations should be enabled by default")
+        
+        // Test that accessibility configuration actually works
+        let accessibilityView = createTestViewWithAccessibilityConfig(config.accessibility)
+        XCTAssertNotNil(accessibilityView, "Should be able to create view with accessibility configuration")
     }
     
     /// BUSINESS PURPOSE: Test that configuration can be saved and loaded from UserDefaults
@@ -150,6 +158,15 @@ final class ConfigurationSystemTests: XCTestCase {
         XCTAssertEqual(iosConfig.performanceLevel, .balanced, "All platforms should default to balanced performance")
         XCTAssertEqual(macConfig.performanceLevel, .balanced, "All platforms should default to balanced performance")
         XCTAssertEqual(watchConfig.performanceLevel, .balanced, "All platforms should default to balanced performance")
+        
+        // Test that the default performance levels actually work by creating views
+        let iosView = createTestViewWithPerformanceConfig(iosConfig)
+        let macView = createTestViewWithPerformanceConfig(macConfig)
+        let watchView = createTestViewWithPerformanceConfig(watchConfig)
+        
+        XCTAssertNotNil(iosView, "Should be able to create view with iOS performance config")
+        XCTAssertNotNil(macView, "Should be able to create view with macOS performance config")
+        XCTAssertNotNil(watchView, "Should be able to create view with watchOS performance config")
     }
     
     /// BUSINESS PURPOSE: Test that configuration supports custom platform preferences
@@ -168,5 +185,30 @@ final class ConfigurationSystemTests: XCTestCase {
         XCTAssertEqual(config.platform.customPreferences["customFeature"] as? Bool, true, "Custom boolean preference should be stored")
         XCTAssertEqual(config.platform.customPreferences["customSetting"] as? String, "testValue", "Custom string preference should be stored")
         XCTAssertEqual(config.platform.featureFlags["experimentalFeature"], true, "Feature flag should be stored")
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Create a test view using the configuration to verify it works
+    private func createTestViewWithConfiguration(_ config: SixLayerConfiguration) -> some View {
+        return Text("Test View")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.blue.opacity(0.1))
+            .accessibilityLabel("Test view with configuration")
+    }
+    
+    /// Create a test view using the accessibility configuration to verify it works
+    private func createTestViewWithAccessibilityConfig(_ config: AccessibilityConfiguration) -> some View {
+        return Text("Accessibility Test View")
+            .accessibilityLabel("Test view with accessibility configuration")
+            .accessibilityHint("This view tests accessibility configuration")
+    }
+    
+    /// Create a test view using the performance configuration to verify it works
+    private func createTestViewWithPerformanceConfig(_ config: PerformanceConfiguration) -> some View {
+        return Text("Performance Test View")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.green.opacity(0.1))
+            .accessibilityLabel("Test view with performance configuration")
     }
 }

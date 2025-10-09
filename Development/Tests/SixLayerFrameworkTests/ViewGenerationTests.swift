@@ -1,5 +1,6 @@
 import XCTest
 import SwiftUI
+import ViewInspector
 @testable import SixLayerFramework
 
 /// View Generation Tests
@@ -49,10 +50,35 @@ final class ViewGenerationTests: XCTestCase {
         // WHEN: Generating an intelligent detail view
         let detailView = IntelligentDetailView.platformDetailView(for: item)
         
-        // THEN: Should generate a valid SwiftUI view (struct, not reference type)
-        // SwiftUI views are structs, so we can't use XCTAssertNotNil
-        // Instead, we verify the view can be created without crashing
-        _ = detailView
+        // THEN: Test the two critical aspects
+        
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(detailView, "IntelligentDetailView should be created successfully")
+        
+        // 2. Contains what it needs to contain - The view has the expected structure and content
+        do {
+            // The view is wrapped in AnyView, so we need to inspect it differently
+            let anyView = try detailView.inspect().anyView()
+            XCTAssertNotNil(anyView, "Detail view should be wrapped in AnyView")
+            
+            // Try to find text elements within the AnyView
+            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            
+            // Should contain field names from our test data
+            let hasTitleField = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Title") || textContent.contains("title")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasTitleField, "Detail view should contain title field")
+            
+        } catch {
+            XCTFail("Failed to inspect detail view structure: \(error)")
+        }
     }
     
     func testIntelligentDetailViewWithCustomFieldView() {
@@ -67,10 +93,35 @@ final class ViewGenerationTests: XCTestCase {
             }
         )
         
-        // THEN: Should generate a valid SwiftUI view (struct, not reference type)
-        // SwiftUI views are structs, so we can't use XCTAssertNotNil
-        // Instead, we verify the view can be created without crashing
-        _ = detailView
+        // THEN: Test the two critical aspects
+        
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(detailView, "IntelligentDetailView with custom field view should be created successfully")
+        
+        // 2. Contains what it needs to contain - The view should contain custom field content
+        do {
+            // The view is wrapped in AnyView
+            let anyView = try detailView.inspect().anyView()
+            XCTAssertNotNil(anyView, "Detail view should be wrapped in AnyView")
+            
+            // The view should contain text elements with our custom format
+            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            
+            // Should contain custom field content in the format "fieldName: value"
+            let hasCustomFieldContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains(": ") && textContent.contains("Item 1")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasCustomFieldContent, "Detail view should contain custom field content")
+            
+        } catch {
+            XCTFail("Failed to inspect detail view with custom field view: \(error)")
+        }
     }
     
     func testIntelligentDetailViewWithHints() {
@@ -86,10 +137,35 @@ final class ViewGenerationTests: XCTestCase {
         // WHEN: Generating an intelligent detail view with hints
         let detailView = IntelligentDetailView.platformDetailView(for: item, hints: hints)
         
-        // THEN: Should generate a valid SwiftUI view (struct, not reference type)
-        // SwiftUI views are structs, so we can't use XCTAssertNotNil
-        // Instead, we verify the view can be created without crashing
-        _ = detailView
+        // THEN: Test the two critical aspects
+        
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(detailView, "IntelligentDetailView with hints should be created successfully")
+        
+        // 2. Contains what it needs to contain - The view should respect the hints
+        do {
+            // The view is wrapped in AnyView
+            let anyView = try detailView.inspect().anyView()
+            XCTAssertNotNil(anyView, "Detail view should be wrapped in AnyView")
+            
+            // The view should contain text elements
+            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            
+            // Should contain field content from our test data
+            let hasFieldContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Item 1") || textContent.contains("Subtitle 1")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasFieldContent, "Detail view should contain field content from test data")
+            
+        } catch {
+            XCTFail("Failed to inspect detail view with hints: \(error)")
+        }
     }
     
     // MARK: - Layout Strategy Tests

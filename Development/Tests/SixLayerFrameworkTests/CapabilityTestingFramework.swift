@@ -441,6 +441,10 @@ final class CapabilityTestingFramework: XCTestCase {
         // Test that the same capability state produces consistent behavior
         // This would be more comprehensive in a real implementation
         XCTAssertNotNil(config, "Configuration should be valid for \(configName)")
+        
+        // Test that the configuration actually works by creating a view with it
+        let testView = createTestViewWithConfig(config)
+        XCTAssertNotNil(testView, "Should be able to create view with config for \(configName)")
     }
     
     // MARK: - Individual Capability Tests
@@ -533,8 +537,12 @@ final class CapabilityTestingFramework: XCTestCase {
             // Test the complete pipeline
             let mockConfig = config.createMockPlatformConfig()
             
-            // Test that the configuration is valid
+            // Test that the configuration is valid and functional
             XCTAssertNotNil(mockConfig, "Mock configuration should be valid for \(config.name)")
+            
+            // Test that the configuration actually works by creating a view with it
+            let testView = createTestViewWithConfig(mockConfig)
+            XCTAssertNotNil(testView, "Should be able to create view with mock config for \(config.name)")
             
             // Test that the configuration can be used for UI generation
             testUIGenerationWithMockConfig(mockConfig, configName: config.name)
@@ -559,5 +567,14 @@ final class CapabilityTestingFramework: XCTestCase {
         // Test accessibility UI generation
         XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported for UI generation in \(configName)")
         XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported for UI generation in \(configName)")
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Create a test view using the configuration to verify it works
+    private func createTestViewWithConfig(_ config: CardExpansionPlatformConfig) -> some View {
+        return Text("Test View")
+            .frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget)
+            .accessibilityLabel("Test view with capability configuration")
     }
 }

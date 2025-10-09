@@ -1,12 +1,56 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.1.3 - Fix Critical Automatic Accessibility Identifier Bug** 🚨
+## 📍 **Current Release: v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults** 🚨
 
-**Release Date**: October 6, 2025  
+**Release Date**: October 9, 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.1.2 - Automatic Accessibility Identifiers Fix for Layers 2-6  
-**Note**: Fixed critical bug where GlobalAutomaticAccessibilityIdentifierModifier wasn't setting environment value  
+**Previous Release**: v4.2.0 - UI Testing Refactoring and Test Suite Improvements  
+**Note**: Fixed critical accessibility identifier bug and improved default behavior  
 **Next Release**: TBD
+
+---
+
+## 🚨 **v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults** ✅ **COMPLETE**
+
+**Release Date**: October 9, 2025  
+**Type**: Patch Release (Critical Bug Fix + Enhancement)  
+**Priority**: Critical  
+**Scope**: Fix automatic accessibility identifier generation and improve default behavior  
+**Note**: Critical bug fix - automatic accessibility identifiers now work by default
+
+### 🐛 **Critical Bug Fixed**
+- **Problem**: Automatic accessibility identifier generation was completely non-functional in v4.2.0
+- **Impact**: All custom UI elements showed empty identifiers (`identifier=''`) instead of proper identifiers
+- **Root Cause**: Enhanced Breadcrumb System modifiers didn't set `globalAutomaticAccessibilityIdentifiers` environment variable
+- **Solution**: Fixed breadcrumb modifiers to properly enable automatic identifier generation
+
+### 🎉 **Enhancement: Improved Default Behavior**
+- **Change**: Automatic accessibility identifiers now work by default (no explicit enabling required)
+- **Benefit**: Better developer experience - no need to remember to enable automatic identifiers
+- **Backward Compatibility**: Existing code with explicit enabling still works perfectly
+
+### 🔧 **Changes Made**
+- **Fixed Breadcrumb Modifiers**: `.trackViewHierarchy()`, `.screenContext()`, `.navigationState()` now work correctly
+- **Changed Default Behavior**: `globalAutomaticAccessibilityIdentifiers` now defaults to `true`
+- **Updated Documentation**: Reflects new default behavior and simplified setup
+- **Added Comprehensive Tests**: 12 new tests verify bug fix and default behavior
+
+### ✅ **Testing & Quality Assurance**
+- **All Tests Pass**: 1,571 tests pass with 0 failures
+- **40 Accessibility Tests**: Comprehensive test coverage for accessibility identifier functionality
+- **Performance Validated**: Minimal performance impact from identifier generation
+- **Backward Compatibility**: All existing functionality preserved
+
+### 🚀 **Compatibility**
+- **Backward Compatible**: This release introduces no breaking changes
+- **Enhanced Experience**: Automatic identifiers work out of the box
+- **Optional Configuration**: Only configure if you want custom settings
+
+### 📋 **User Benefits**
+- **No Setup Required**: Automatic identifiers work by default
+- **UI Testing Fixed**: Can now locate custom UI elements using generated identifiers
+- **Enhanced Breadcrumb System**: Proper context tracking and identifier generation
+- **Better Developer Experience**: Sensible defaults reduce configuration overhead
 
 ---
 

@@ -456,6 +456,8 @@ public class OCRService: OCRServiceProtocol {
 // MARK: - Mock OCR Service
 
 /// Mock OCR service for testing
+/// COMMENTED OUT: Force tests to use real Vision framework
+/*
 public class MockOCRService: OCRServiceProtocol {
     
     public var isAvailable: Bool = true
@@ -488,6 +490,16 @@ public class MockOCRService: OCRServiceProtocol {
         context: OCRContext,
         strategy: OCRStrategy
     ) async throws -> OCRResult {
+        // Simulate validation for testing
+        guard let cgImage = getCGImage(from: image) else {
+            throw OCRError.invalidImage
+        }
+        
+        // Check if image is too small (simulate invalid image)
+        if cgImage.width < 10 || cgImage.height < 10 {
+            throw OCRError.invalidImage
+        }
+        
         // Return immediately for testing - no sleep needed
         // Create a new result with the language from the context
         let result = OCRResult(
@@ -500,6 +512,18 @@ public class MockOCRService: OCRServiceProtocol {
         )
         
         return result
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func getCGImage(from image: PlatformImage) -> CGImage? {
+        #if os(iOS)
+        return image.uiImage.cgImage
+        #elseif os(macOS)
+        return image.nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        #else
+        return nil
+        #endif
     }
     
     // MARK: - Structured Extraction Helper Methods
@@ -568,6 +592,7 @@ public class MockOCRService: OCRServiceProtocol {
         return context.requiredFields.filter { structuredData[$0] == nil }
     }
 }
+*/
 
 // MARK: - OCR Service Factory
 
@@ -580,7 +605,10 @@ public class OCRServiceFactory {
     }
     
     /// Create a mock OCR service for testing
+    /// COMMENTED OUT: Force tests to use real Vision framework
+    /*
     public static func createMock(result: OCRResult? = nil) -> OCRServiceProtocol {
         return MockOCRService(mockResult: result)
     }
+    */
 }

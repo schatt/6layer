@@ -1,5 +1,6 @@
 import XCTest
 import SwiftUI
+import ViewInspector
 @testable import SixLayerFramework
 
 /// DRY Test Patterns
@@ -294,8 +295,66 @@ final class DRYTestPatterns {
     
     // MARK: - Verification Factory
     
+    /// BUSINESS PURPOSE: Verify that a view is created and contains expected content
+    /// TESTING SCOPE: Tests the two critical aspects: view creation + content verification
+    /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
     static func verifyViewGeneration(_ view: some View, testName: String) {
+        // 1. View created - The view can be instantiated successfully
         XCTAssertNotNil(view, "Should generate view for \(testName)")
+        
+        // 2. Contains what it needs to contain - The view has proper structure
+        do {
+            // Try to inspect the view structure
+            let _ = try view.inspect()
+            // If we can inspect it, the view structure is valid
+            
+        } catch {
+            XCTFail("Failed to inspect view structure for \(testName): \(error)")
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Verify that a view contains specific text content
+    /// TESTING SCOPE: Tests that views contain expected text elements
+    /// METHODOLOGY: Uses ViewInspector to find and verify text content
+    static func verifyViewContainsText(_ view: some View, expectedText: String, testName: String) {
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(view, "Should generate view for \(testName)")
+        
+        // 2. Contains what it needs to contain - The view should contain expected text
+        do {
+            let viewText = try view.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "View should contain text elements for \(testName)")
+            
+            let hasExpectedText = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains(expectedText)
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasExpectedText, "View should contain text '\(expectedText)' for \(testName)")
+            
+        } catch {
+            XCTFail("Failed to inspect view text content for \(testName): \(error)")
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Verify that a view contains specific image elements
+    /// TESTING SCOPE: Tests that views contain expected image elements
+    /// METHODOLOGY: Uses ViewInspector to find and verify image content
+    static func verifyViewContainsImage(_ view: some View, testName: String) {
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(view, "Should generate view for \(testName)")
+        
+        // 2. Contains what it needs to contain - The view should contain image elements
+        do {
+            let viewImages = try view.inspect().findAll(ViewType.Image.self)
+            XCTAssertFalse(viewImages.isEmpty, "View should contain image elements for \(testName)")
+            
+        } catch {
+            XCTFail("Failed to inspect view image content for \(testName): \(error)")
+        }
     }
     
     static func verifyPlatformProperties(

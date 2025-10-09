@@ -34,6 +34,16 @@ public func platformPresentNumericData_L1(
     return GenericNumericDataView(data: data, hints: hints)
 }
 
+/// Present a single numeric data item
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentNumericData_L1(
+    data: GenericNumericData,
+    hints: PresentationHints
+) -> some View {
+    return platformPresentNumericData_L1(data: [data], hints: hints)
+}
+
 /// Generic function for presenting numeric data with custom views
 /// Allows specifying custom views for individual numeric data items
 @MainActor
@@ -108,6 +118,24 @@ public func platformPresentFormData_L1(
 }
 */
 
+/// Present a single form field
+/// Internally wraps the single field in an array and delegates to the array version
+@MainActor
+public func platformPresentFormData_L1(
+    field: DynamicFormField,
+    hints: PresentationHints
+) -> some View {
+    let enhancedHints = EnhancedPresentationHints(
+        dataType: hints.dataType,
+        presentationPreference: hints.presentationPreference,
+        complexity: hints.complexity,
+        context: hints.context,
+        customPreferences: hints.customPreferences,
+        extensibleHints: []
+    )
+    return platformPresentFormData_L1(fields: [field], hints: enhancedHints)
+}
+
 /// Generic function for presenting modal forms
 /// Uses hints to determine optimal modal presentation strategy
 @MainActor
@@ -137,6 +165,16 @@ public func platformPresentMediaData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericMediaView(media: media, hints: hints)
+}
+
+/// Present a single media item
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentMediaData_L1(
+    media: GenericMediaItem,
+    hints: PresentationHints
+) -> some View {
+    return platformPresentMediaData_L1(media: [media], hints: hints)
 }
 
 /// Generic function for presenting media data with custom views
@@ -190,6 +228,16 @@ public func platformPresentHierarchicalData_L1(
     return GenericHierarchicalView(items: items, hints: hints)
 }
 
+/// Present a single hierarchical item
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentHierarchicalData_L1(
+    item: GenericHierarchicalItem,
+    hints: PresentationHints
+) -> some View {
+    return platformPresentHierarchicalData_L1(items: [item], hints: hints)
+}
+
 /// Generic function for presenting hierarchical data with custom views
 /// Allows specifying custom views for individual hierarchical items
 @MainActor
@@ -239,6 +287,16 @@ public func platformPresentTemporalData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericTemporalView(items: items, hints: hints)
+}
+
+/// Present a single temporal item
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentTemporalData_L1(
+    item: GenericTemporalItem,
+    hints: PresentationHints
+) -> some View {
+    return platformPresentTemporalData_L1(items: [item], hints: hints)
 }
 
 /// Generic function for presenting temporal data with custom views
@@ -301,6 +359,24 @@ public func platformPresentContent_L1(
     hints: PresentationHints
 ) -> AnyView {
     return AnyView(GenericContentView(content: content, hints: hints))
+}
+
+/// Present basic numeric values (Int, Float, Double, Bool) with appropriate formatting
+@MainActor
+public func platformPresentBasicValue_L1(
+    value: Any,
+    hints: PresentationHints
+) -> AnyView {
+    return AnyView(BasicValueView(value: value, hints: hints))
+}
+
+/// Present basic arrays with appropriate formatting
+@MainActor
+public func platformPresentBasicArray_L1(
+    array: Any,
+    hints: PresentationHints
+) -> AnyView {
+    return AnyView(BasicArrayView(array: array, hints: hints))
 }
 
 /// Generic function for presenting settings interface
@@ -2590,6 +2666,7 @@ public struct GenericContentView: View {
     
     public var body: some View {
         // Analyze content type and delegate to appropriate function
+        
         if let formFields = content as? [DynamicFormField] {
             // Delegate to form function
             return AnyView(platformPresentFormData_L1(fields: formFields, hints: EnhancedPresentationHints(
@@ -2616,8 +2693,17 @@ public struct GenericContentView: View {
             // Handle any identifiable array by converting to GenericDataItem
             let items = convertToGenericDataItems(content)
             return AnyView(platformPresentItemCollection_L1(items: items, hints: hints))
+        } else if isBasicNumericType(content) {
+            // Handle basic numeric types with dedicated function
+            return AnyView(platformPresentBasicValue_L1(value: content, hints: hints))
+        } else if isBasicArray(content) {
+            // Handle basic arrays with dedicated function
+            return AnyView(platformPresentBasicArray_L1(array: content, hints: hints))
+        } else if content is String {
+            // Handle String content with dedicated function
+            return AnyView(platformPresentBasicValue_L1(value: content, hints: hints))
         } else {
-            // Fallback to generic presentation
+            // Fallback to generic presentation for truly unknown types
             return AnyView(GenericFallbackView(content: content, hints: hints))
         }
     }
@@ -2629,6 +2715,17 @@ public struct GenericContentView: View {
             return array.first is any Identifiable
         }
         return false
+    }
+    
+    /// Check if content is a basic numeric type
+    private func isBasicNumericType(_ content: Any) -> Bool {
+        let result = content is Int || content is Float || content is Double || content is Bool
+        return result
+    }
+    
+    /// Check if content is a basic array
+    private func isBasicArray(_ content: Any) -> Bool {
+        return content is [Any] && !isIdentifiableArray(content)
     }
     
     /// Convert any identifiable array to GenericDataItem array
@@ -2667,6 +2764,96 @@ public struct GenericContentView: View {
     }
 }
 
+/// View for presenting basic numeric values
+private struct BasicValueView: View {
+    let value: Any
+    let hints: PresentationHints
+    
+    var body: some View {
+        VStack {
+            Image(systemName: "number")
+                .font(.largeTitle)
+                .foregroundColor(.blue)
+            
+            Text("Value")
+                .font(.headline)
+            
+            if let intValue = value as? Int {
+                Text("\(intValue)")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+            } else if let floatValue = value as? Float {
+                Text("\(floatValue)")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+            } else if let doubleValue = value as? Double {
+                Text("\(doubleValue)")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+            } else if let boolValue = value as? Bool {
+                Text(boolValue ? "True" : "False")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(boolValue ? .green : .red)
+            }
+        }
+        .padding()
+        .background(Color.blue.opacity(0.1))
+        .cornerRadius(12)
+    }
+}
+
+/// View for presenting basic arrays
+private struct BasicArrayView: View {
+    let array: Any
+    let hints: PresentationHints
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Image(systemName: "list.bullet")
+                .font(.largeTitle)
+                .foregroundColor(.orange)
+            
+            Text("Array")
+                .font(.headline)
+            
+            if let arrayContent = array as? [Any] {
+                Text("\(arrayContent.count) items")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                if arrayContent.isEmpty {
+                    Text("Empty array")
+                        .foregroundColor(.secondary)
+                        .italic()
+                } else {
+                    ForEach(0..<min(arrayContent.count, 5), id: \.self) { index in
+                        HStack {
+                            Text("[\(index)]:")
+                                .fontWeight(.medium)
+                                .foregroundColor(.secondary)
+                            Text("\(String(describing: arrayContent[index]))")
+                                .foregroundColor(.primary)
+                        }
+                    }
+                    
+                    if arrayContent.count > 5 {
+                        Text("... and \(arrayContent.count - 5) more items")
+                            .foregroundColor(.secondary)
+                            .italic()
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color.orange.opacity(0.1))
+        .cornerRadius(12)
+    }
+}
+
 /// Fallback view for unknown content types
 private struct GenericFallbackView: View {
     let content: Any
@@ -2674,43 +2861,36 @@ private struct GenericFallbackView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "doc.text")
+            Image(systemName: "questionmark.circle")
                 .font(.largeTitle)
                 .foregroundColor(.secondary)
             
-            Text("Content")
+            Text("Unknown Content")
                 .font(.headline)
+                .foregroundColor(.secondary)
             
             Text("Type: \(String(describing: type(of: content)))")
                 .font(.caption)
                 .foregroundColor(.secondary)
             
+            // Show basic introspection for debugging
             if let stringContent = content as? String {
-                Text(stringContent)
-                    .padding()
-                    .background(Color.secondary.opacity(0.1))
-                    .cornerRadius(8)
-            } else if let dictContent = content as? [String: Any] {
-                VStack(alignment: .leading) {
-                    ForEach(Array(dictContent.keys.sorted()), id: \.self) { key in
-                        HStack {
-                            Text("\(key):")
-                                .fontWeight(.medium)
-                            Text("\(String(describing: dictContent[key] ?? "nil"))")
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-                .padding()
-                .background(Color.secondary.opacity(0.1))
-                .cornerRadius(8)
-            } else {
-                Text("Unknown content type")
+                Text("String: \(stringContent)")
+                    .font(.caption)
                     .foregroundColor(.secondary)
+            } else if let dictContent = content as? [String: Any] {
+                Text("Dictionary with \(dictContent.count) keys")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("Value: \(String(describing: content))")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(3)
             }
         }
         .padding()
-        .background(Color.primary.opacity(0.05))
+        .background(Color.secondary.opacity(0.1))
         .cornerRadius(12)
     }
 }

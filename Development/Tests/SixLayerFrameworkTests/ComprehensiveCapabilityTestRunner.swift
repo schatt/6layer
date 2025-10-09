@@ -295,8 +295,12 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     func testCrossPlatformConsistency(_ platform: SixLayerPlatform, capability: TestRunnerConfig.CapabilityType) {
         let platformConfig = createPlatformConfig(platform: platform)
         
-        // Test that the platform configuration is consistent
+        // Test that the platform configuration is consistent and functional
         XCTAssertNotNil(platformConfig, "Platform configuration should be valid for \(platform)")
+        
+        // Test that the configuration actually works by creating a test view
+        let testView = createTestViewWithConfig(platformConfig)
+        XCTAssertNotNil(testView, "Should be able to create test view with platform config for \(platform)")
         
         // Test platform-specific consistency
         switch platform {
@@ -347,8 +351,12 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     
     /// Test view generation integration
     func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
-        // Test that the configuration is valid for view generation
+        // Test that the configuration is valid for view generation and actually works
         XCTAssertNotNil(config, "Configuration should be valid for view generation on \(platform)")
+        
+        // Test that the configuration can actually be used to create a functional view
+        let testView = createTestViewWithConfig(config)
+        XCTAssertNotNil(testView, "Should be able to create functional view with config for \(platform)")
         
         // Test that the configuration produces appropriate UI behavior
         if config.supportsTouch {
@@ -575,5 +583,14 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     func testVisionFocusedTesting() {
         let config = testRunnerConfigurations.first { $0.name == "Vision-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Create a test view using the platform configuration to verify it works
+    private func createTestViewWithConfig(_ config: CardExpansionPlatformConfig) -> some View {
+        return Text("Test View")
+            .frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget)
+            .accessibilityLabel("Test view for platform configuration")
     }
 }

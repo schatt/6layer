@@ -351,8 +351,10 @@ final class EyeTrackingTests: XCTestCase {
         let testView = Text("Test")
         let modifiedView = testView.eyeTrackingEnabled()
         
-        // Test that the modifier can be applied
-        XCTAssertNotNil(modifiedView)
+        // Test that the modifier can be applied and the view can be hosted
+        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Eye tracking enabled view should be hostable")
+        XCTAssertNotNil(modifiedView, "Eye tracking enabled view should be created")
     }
     
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled with config functionality
@@ -363,7 +365,10 @@ final class EyeTrackingTests: XCTestCase {
         let config = EyeTrackingConfig(sensitivity: .low)
         let modifiedView = testView.eyeTrackingEnabled(config: config)
         
-        XCTAssertNotNil(modifiedView)
+        // Test that the modifier with config can be applied and the view can be hosted
+        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Eye tracking enabled view with config should be hostable")
+        XCTAssertNotNil(modifiedView, "Eye tracking enabled view with config should be created")
     }
     
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled with callbacks functionality
@@ -376,7 +381,10 @@ final class EyeTrackingTests: XCTestCase {
             onDwell: { _ in }
         )
         
-        XCTAssertNotNil(modifiedView)
+        // Test that the modifier with callbacks can be applied and the view can be hosted
+        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Eye tracking enabled view with callbacks should be hostable")
+        XCTAssertNotNil(modifiedView, "Eye tracking enabled view with callbacks should be created")
     }
     
     // MARK: - Performance Tests

@@ -128,7 +128,9 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should have edit button available and callback should be properly configured
-        XCTAssertNotNil(card, "ExpandableCardComponent should be created successfully")
+        // Test that the card can be hosted and has proper structure
+        let hostingView = hostRootPlatformView(card.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "ExpandableCardComponent should be hostable")
         
         // Test business logic: Edit callback should be properly stored
         // This tests the actual behavior rather than just existence
@@ -607,7 +609,9 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should have proper accessibility labels and be created successfully
-        XCTAssertNotNil(expandableCard, "ExpandableCardComponent should be created successfully")
+        // Test that the card can be hosted and has proper structure
+        let hostingView = hostRootPlatformView(expandableCard.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "ExpandableCardComponent should be hostable")
         
         // Test business logic: Accessibility should be properly configured
         XCTAssertTrue(expandableCard.isExpanded, "Card should be expanded for accessibility testing")

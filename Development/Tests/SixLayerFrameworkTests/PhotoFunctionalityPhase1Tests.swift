@@ -19,6 +19,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     
     // MARK: - Enhanced PlatformImage Tests
     
+    @MainActor
     func testPlatformImageInitialization() {
         // Given: Sample image data
         let sampleData = createSampleImageData()
@@ -26,8 +27,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Creating PlatformImage from data
         let platformImage = PlatformImage(data: sampleData)
         
-        // Then: PlatformImage should be created successfully
+        // Then: PlatformImage should be created successfully and be usable
         XCTAssertNotNil(platformImage, "PlatformImage should be created from valid data")
+        
+        // Test that the PlatformImage can actually be used in a view
+        if let platformImage = platformImage {
+            let testView = createTestViewWithPlatformImage(platformImage)
+            let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(hostingView, "PlatformImage should work in actual views")
+        }
     }
     
     func testPlatformImageInitializationWithInvalidData() {
@@ -41,6 +49,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         XCTAssertNil(platformImage, "PlatformImage should be nil for invalid data")
     }
     
+    @MainActor
     func testPlatformImageResize() {
         // Given: A PlatformImage
         let originalImage = createTestPlatformImage()
@@ -49,10 +58,16 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Resizing the image
         let resizedImage = originalImage.resized(to: targetSize)
         
-        // Then: Image should be resized to target size
+        // Then: Image should be resized to target size and be usable
         XCTAssertEqual(resizedImage.size, targetSize, "Image should be resized to target size")
+        
+        // Test that the resized image can actually be used in a view
+        let testView = createTestViewWithPlatformImage(resizedImage)
+        let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Resized image should work in actual views")
     }
     
+    @MainActor
     func testPlatformImageCrop() {
         // Given: A PlatformImage and crop rectangle
         let originalImage = createTestPlatformImage()
@@ -61,8 +76,13 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Cropping the image
         let croppedImage = originalImage.cropped(to: cropRect)
         
-        // Then: Image should be cropped to specified rectangle
+        // Then: Image should be cropped to specified rectangle and be usable
         XCTAssertEqual(croppedImage.size, cropRect.size, "Image should be cropped to specified size")
+        
+        // Test that the cropped image can actually be used in a view
+        let testView = createTestViewWithPlatformImage(croppedImage)
+        let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Cropped image should work in actual views")
     }
     
     func testPlatformImageCompression() {
@@ -216,6 +236,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     
     // MARK: - Layer 4 Photo Components Tests
     
+    @MainActor
     func testPlatformCameraInterfaceL4() {
         // Given: Image capture callback
         var _: PlatformImage?
@@ -224,10 +245,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Creating camera interface
         let cameraInterface = platformCameraInterface_L4(onImageCaptured: onImageCaptured)
         
-        // Then: Camera interface should be created
+        // Then: Camera interface should be created and be hostable
         XCTAssertNotNil(cameraInterface, "Camera interface should be created")
+        
+        // Test that the camera interface can actually be hosted
+        let hostingView = hostRootPlatformView(cameraInterface.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Camera interface should be hostable")
     }
     
+    @MainActor
     func testPlatformPhotoPickerL4() {
         // Given: Image selection callback
         var _: PlatformImage?
@@ -236,10 +262,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Creating photo picker
         let photoPicker = platformPhotoPicker_L4(onImageSelected: onImageSelected)
         
-        // Then: Photo picker should be created
+        // Then: Photo picker should be created and be hostable
         XCTAssertNotNil(photoPicker, "Photo picker should be created")
+        
+        // Test that the photo picker can actually be hosted
+        let hostingView = hostRootPlatformView(photoPicker.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Photo picker should be hostable")
     }
     
+    @MainActor
     func testPlatformPhotoDisplayL4() {
         // Given: A PlatformImage and display style
         let testImage = createTestPlatformImage()
@@ -248,10 +279,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Creating photo display
         let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: style)
         
-        // Then: Photo display should be created
+        // Then: Photo display should be created and be hostable
         XCTAssertNotNil(photoDisplay, "Photo display should be created")
+        
+        // Test that the photo display can actually be hosted
+        let hostingView = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Photo display should be hostable")
     }
     
+    @MainActor
     func testPlatformPhotoEditorL4() {
         // Given: A PlatformImage and edit callback
         let testImage = createTestPlatformImage()
@@ -261,29 +297,28 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Creating photo editor
         let photoEditor = platformPhotoEditor_L4(image: testImage, onImageEdited: onImageEdited)
         
-        // Then: Photo editor should be created
+        // Then: Photo editor should be created and be hostable
         XCTAssertNotNil(photoEditor, "Photo editor should be created")
+        
+        // Test that the photo editor can actually be hosted
+        let hostingView = hostRootPlatformView(photoEditor.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Photo editor should be hostable")
     }
     
     // MARK: - Cross-Platform Color Tests
     
+    @MainActor
     func testPlatformSystemColors() {
-        // Then: Platform system colors should be available
-        XCTAssertNotNil(Color.platformSystemBackground, "Platform system background color should be available")
-        XCTAssertNotNil(Color.platformSystemGray6, "Platform system gray6 color should be available")
-        XCTAssertNotNil(Color.platformSystemGray5, "Platform system gray5 color should be available")
-        XCTAssertNotNil(Color.platformSystemGray4, "Platform system gray4 color should be available")
-        XCTAssertNotNil(Color.platformSystemGray3, "Platform system gray3 color should be available")
-        XCTAssertNotNil(Color.platformSystemGray2, "Platform system gray2 color should be available")
-        XCTAssertNotNil(Color.platformSystemGray, "Platform system gray color should be available")
-        XCTAssertNotNil(Color.platformLabel, "Platform label color should be available")
-        XCTAssertNotNil(Color.platformSecondaryLabel, "Platform secondary label color should be available")
-        XCTAssertNotNil(Color.platformTertiaryLabel, "Platform tertiary label color should be available")
-        XCTAssertNotNil(Color.platformQuaternaryLabel, "Platform quaternary label color should be available")
+        // Then: Platform system colors should be available and usable
+        // Test that platform colors can actually be used in views
+        let testView = createTestViewWithPlatformSystemColors()
+        let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Platform system colors should work in actual views")
     }
     
     // MARK: - Cross-Platform Keyboard Tests
     
+    @MainActor
     func testPlatformKeyboardTypeModifier() {
         // Given: A view and keyboard type
         let testView = Text("Test")
@@ -292,10 +327,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Applying keyboard type modifier
         let modifiedView = testView.platformKeyboardType(keyboardType)
         
-        // Then: Modified view should be created
+        // Then: Modified view should be created and be hostable
         XCTAssertNotNil(modifiedView, "Modified view with keyboard type should be created")
+        
+        // Test that the modified view can actually be hosted
+        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Modified view with keyboard type should be hostable")
     }
     
+    @MainActor
     func testPlatformTextFieldStyleModifier() {
         // Given: A view and text field style
         let testView = Text("Test")
@@ -304,8 +344,12 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         // When: Applying text field style modifier
         let modifiedView = testView.platformTextFieldStyle(style)
         
-        // Then: Modified view should be created
+        // Then: Modified view should be created and be hostable
         XCTAssertNotNil(modifiedView, "Modified view with text field style should be created")
+        
+        // Test that the modified view can actually be hosted
+        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        XCTAssertNotNil(hostingView, "Modified view with text field style should be hostable")
     }
     
     // MARK: - Cross-Platform Location Tests
@@ -362,5 +406,28 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         nsImage.unlockFocus()
         return PlatformImage(nsImage: nsImage)
         #endif
+    }
+    
+    /// Create a test view using a PlatformImage to verify it works functionally
+    private func createTestViewWithPlatformImage(_ image: PlatformImage) -> some View {
+        return Image(platformImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .accessibilityLabel("Test view using PlatformImage")
+            .accessibilityHint("Tests that PlatformImage can be used in actual views")
+    }
+    
+    /// Create a test view using platform system colors to verify they work functionally
+    private func createTestViewWithPlatformSystemColors() -> some View {
+        return VStack {
+            Text("System Background")
+                .foregroundColor(Color.platformLabel)
+                .background(Color.platformSystemBackground)
+            Text("System Gray")
+                .foregroundColor(Color.platformSecondaryLabel)
+                .background(Color.platformSystemGray)
+        }
+        .accessibilityLabel("Test view using platform system colors")
+        .accessibilityHint("Tests that platform system colors can be used in actual views")
     }
 }

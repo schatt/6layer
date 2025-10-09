@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.2.0 - UI Testing Refactoring and Test Suite Improvements
+// SixLayerFramework v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults
 
 import PackageDescription
 

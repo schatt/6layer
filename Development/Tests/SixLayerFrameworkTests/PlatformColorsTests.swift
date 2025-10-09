@@ -47,6 +47,7 @@ final class PlatformColorsTests: XCTestCase {
     
     // MARK: - Platform-Specific Business Logic Tests
     
+    @MainActor
     func testPlatformColorsAcrossPlatforms() {
         // Given: Platform-specific color expectations
         let platform = SixLayerPlatform.current
@@ -55,63 +56,34 @@ final class PlatformColorsTests: XCTestCase {
         // Then: Test platform-specific business logic
         switch platform {
         case .iOS:
-            // iOS should support comprehensive color system
-            XCTAssertNotNil(Color.platformPrimaryLabel, "iOS should support primary label color")
-            XCTAssertNotNil(Color.platformSecondaryLabel, "iOS should support secondary label color")
-            XCTAssertNotNil(Color.platformTertiaryLabel, "iOS should support tertiary label color")
-            XCTAssertNotNil(Color.platformBackground, "iOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "iOS should support secondary background color")
-            
-            // Test iOS-specific color behavior
-            XCTAssertNotNil(Color.platformBackground, "iOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "iOS should support secondary background color")
-            XCTAssertNotNil(Color.platformGroupedBackground, "iOS should support grouped background color")
+            // Test that iOS colors can actually be used in views
+            let iosView = createTestViewWithPlatformColors()
+            let iosHostingView = hostRootPlatformView(iosView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(iosHostingView, "iOS colors should work in actual views")
             
         case .macOS:
-            // macOS should support comprehensive color system
-            XCTAssertNotNil(Color.platformPrimaryLabel, "macOS should support primary label color")
-            XCTAssertNotNil(Color.platformSecondaryLabel, "macOS should support secondary label color")
-            XCTAssertNotNil(Color.platformTertiaryLabel, "macOS should support tertiary label color")
-            XCTAssertNotNil(Color.platformBackground, "macOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "macOS should support secondary background color")
-            
-            // Test macOS-specific color behavior
-            XCTAssertNotNil(Color.platformBackground, "macOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "macOS should support secondary background color")
-            XCTAssertNotNil(Color.platformGroupedBackground, "macOS should support grouped background color")
+            // Test that macOS colors can actually be used in views
+            let macosView = createTestViewWithPlatformColors()
+            let macosHostingView = hostRootPlatformView(macosView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(macosHostingView, "macOS colors should work in actual views")
             
         case .watchOS:
-            // watchOS should support simplified color system
-            XCTAssertNotNil(Color.platformPrimaryLabel, "watchOS should support primary label color")
-            XCTAssertNotNil(Color.platformSecondaryLabel, "watchOS should support secondary label color")
-            XCTAssertNotNil(Color.platformBackground, "watchOS should support background color")
-            
-            // Test watchOS-specific color behavior
-            XCTAssertNotNil(Color.platformBackground, "watchOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "watchOS should support secondary background color")
+            // Test that watchOS colors can actually be used in views
+            let watchosView = createTestViewWithPlatformColors()
+            let watchosHostingView = hostRootPlatformView(watchosView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(watchosHostingView, "watchOS colors should work in actual views")
             
         case .tvOS:
-            // tvOS should support focus-based color system
-            XCTAssertNotNil(Color.platformPrimaryLabel, "tvOS should support primary label color")
-            XCTAssertNotNil(Color.platformSecondaryLabel, "tvOS should support secondary label color")
-            XCTAssertNotNil(Color.platformBackground, "tvOS should support background color")
-            
-            // Test tvOS-specific color behavior
-            XCTAssertNotNil(Color.platformBackground, "tvOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "tvOS should support secondary background color")
+            // Test that tvOS colors can actually be used in views
+            let tvosView = createTestViewWithPlatformColors()
+            let tvosHostingView = hostRootPlatformView(tvosView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(tvosHostingView, "tvOS colors should work in actual views")
             
         case .visionOS:
-            // visionOS should support spatial color system
-            XCTAssertNotNil(Color.platformPrimaryLabel, "visionOS should support primary label color")
-            XCTAssertNotNil(Color.platformSecondaryLabel, "visionOS should support secondary label color")
-            XCTAssertNotNil(Color.platformTertiaryLabel, "visionOS should support tertiary label color")
-            XCTAssertNotNil(Color.platformBackground, "visionOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "visionOS should support secondary background color")
-            
-            // Test visionOS-specific color behavior
-            XCTAssertNotNil(Color.platformBackground, "visionOS should support background color")
-            XCTAssertNotNil(Color.platformSecondaryBackground, "visionOS should support secondary background color")
-            XCTAssertNotNil(Color.platformGroupedBackground, "visionOS should support grouped background color")
+            // Test that visionOS colors can actually be used in views
+            let visionosView = createTestViewWithPlatformColors()
+            let visionosHostingView = hostRootPlatformView(visionosView.withGlobalAutoIDsEnabled())
+            XCTAssertNotNil(visionosHostingView, "visionOS colors should work in actual views")
         }
     }
     
@@ -531,5 +503,22 @@ final class PlatformColorsTests: XCTestCase {
                 _ = color
             }, "Color should handle errors gracefully: \(color)")
         }
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Create a test view using platform colors to verify they work functionally
+    private func createTestViewWithPlatformColors() -> some View {
+        return VStack {
+            Text("Primary Label")
+                .foregroundColor(Color.platformPrimaryLabel)
+            Text("Secondary Label")
+                .foregroundColor(Color.platformSecondaryLabel)
+            Text("Tertiary Label")
+                .foregroundColor(Color.platformTertiaryLabel)
+        }
+        .background(Color.platformBackground)
+        .accessibilityLabel("Test view using platform colors")
+        .accessibilityHint("Tests that platform colors can be used in actual views")
     }
 }

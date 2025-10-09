@@ -8,6 +8,7 @@
 
 import XCTest
 import SwiftUI
+import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
@@ -32,12 +33,52 @@ final class Layer4FormContainerTests: XCTestCase {
             self.testContent
         }
         
-        // Then: Should return a view with Form container
-        XCTAssertNotNil(view)
+        // Then: Test the two critical aspects
         
-        // Verify the view type using Mirror reflection
-        let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        // 1. Does it return a valid structure of the kind it's supposed to?
+        XCTAssertNotNil(view, "Form container should return a valid SwiftUI view")
+        
+        // 2. Does that structure contain what it should?
+        do {
+            // The form container should contain the test content
+            let viewText = try view.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Form container should contain text elements")
+            
+            // Should contain the test content
+            let hasTestContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Test Form Content")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasTestContent, "Form container should contain the test content")
+            
+        } catch {
+            XCTFail("Failed to inspect form container structure: \(error)")
+        }
+        
+        // 3. Platform-specific implementation verification (REQUIRED)
+        #if os(iOS)
+        // iOS: Should contain Form structure with iOS-specific background color
+        do {
+            let formView = try view.inspect().find(ViewType.Form.self)
+            // Form found - this is correct for iOS
+            // Note: iOS uses Color(.systemGroupedBackground) for form backgrounds
+        } catch {
+            XCTFail("iOS form container should contain Form structure")
+        }
+        #elseif os(macOS)
+        // macOS: Should contain Form structure with macOS-specific background color
+        do {
+            let formView = try view.inspect().find(ViewType.Form.self)
+            // Form found - this is correct for macOS
+            // Note: macOS uses Color(.controlBackgroundColor) for form backgrounds
+        } catch {
+            XCTFail("macOS form container should contain Form structure")
+        }
+        #endif
     }
     
     func testPlatformFormContainer_L4_StandardContainer() {
@@ -53,11 +94,52 @@ final class Layer4FormContainerTests: XCTestCase {
             self.testContent
         }
         
-        // Then: Should return a view with VStack container
-        XCTAssertNotNil(view)
+        // Then: Test the two critical aspects
         
-        let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        // 1. Does it return a valid structure of the kind it's supposed to?
+        XCTAssertNotNil(view, "Standard container should return a valid SwiftUI view")
+        
+        // 2. Does that structure contain what it should?
+        do {
+            // The standard container should contain the test content
+            let viewText = try view.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Standard container should contain text elements")
+            
+            // Should contain the test content
+            let hasTestContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Test Form Content")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasTestContent, "Standard container should contain the test content")
+            
+        } catch {
+            XCTFail("Failed to inspect standard container structure: \(error)")
+        }
+        
+        // 3. Platform-specific implementation verification (REQUIRED)
+        #if os(iOS)
+        // iOS: Should contain VStack structure with iOS-specific background color
+        do {
+            let vStack = try view.inspect().find(ViewType.VStack.self)
+            // VStack found - this is correct for iOS
+            // Note: iOS uses Color(.secondarySystemBackground) for standard container backgrounds
+        } catch {
+            XCTFail("iOS standard container should contain VStack structure")
+        }
+        #elseif os(macOS)
+        // macOS: Should contain VStack structure with macOS-specific background color
+        do {
+            let vStack = try view.inspect().find(ViewType.VStack.self)
+            // VStack found - this is correct for macOS
+            // Note: macOS uses Color(.controlBackgroundColor) for standard container backgrounds
+        } catch {
+            XCTFail("macOS standard container should contain VStack structure")
+        }
+        #endif
     }
     
     func testPlatformFormContainer_L4_ScrollViewContainer() {
@@ -76,8 +158,26 @@ final class Layer4FormContainerTests: XCTestCase {
         // Then: Should return a view with ScrollView container
         XCTAssertNotNil(view)
         
-        let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        // 3. Platform-specific implementation verification (REQUIRED)
+        #if os(iOS)
+        // iOS: Should contain ScrollView structure with iOS-specific background color
+        do {
+            let scrollView = try view.inspect().find(ViewType.ScrollView.self)
+            // ScrollView found - this is correct for iOS
+            // Note: iOS uses Color(.systemGroupedBackground) for scroll view backgrounds
+        } catch {
+            XCTFail("iOS scroll view container should contain ScrollView structure")
+        }
+        #elseif os(macOS)
+        // macOS: Should contain ScrollView structure with macOS-specific background color
+        do {
+            let scrollView = try view.inspect().find(ViewType.ScrollView.self)
+            // ScrollView found - this is correct for macOS
+            // Note: macOS uses Color(.controlBackgroundColor) for scroll view backgrounds
+        } catch {
+            XCTFail("macOS scroll view container should contain ScrollView structure")
+        }
+        #endif
     }
     
     func testPlatformFormContainer_L4_CustomContainer() {

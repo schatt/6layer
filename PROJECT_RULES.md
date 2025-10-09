@@ -78,6 +78,25 @@ This script will:
 - **No implementation without tests**: Code must not be written before corresponding tests exist
 - **Comprehensive test coverage**: Every code path, edge case, and integration point must be tested
 
+### SwiftUI Testing Requirements
+**MANDATORY**: SwiftUI functionality must be tested with the appropriate testing method.
+
+#### Critical Distinction: `swift test` vs `xcodebuild test`
+- **`swift test`**: Only tests object creation and method calls - does NOT test SwiftUI rendering
+- **`xcodebuild test`**: Tests actual SwiftUI rendering and catches SwiftUI-specific crashes
+- **SwiftUI rendering issues**: Only caught by `xcodebuild test`, not `swift test`
+
+#### When to Use Each Method
+- **`swift test`**: For pure business logic, data processing, utility functions
+- **`xcodebuild test`**: For SwiftUI views, UI components, view modifiers, accessibility features
+- **UI testing**: Must use `xcodebuild test` to catch rendering crashes and visual issues
+
+#### SwiftUI Test Validation
+- **All SwiftUI tests must pass with `xcodebuild test`**: This is the only way to validate actual UI rendering
+- **Command line validation**: Use `xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=macOS"`
+- **No false positives**: `swift test` passing does not guarantee SwiftUI rendering works
+- **Real UI testing**: `xcodebuild test` provides the same testing as Xcode GUI testing
+
 ### Code Quality
 - All new code must include appropriate tests (redundant with TDD requirement above)
 - Deprecated APIs should be properly marked and documented

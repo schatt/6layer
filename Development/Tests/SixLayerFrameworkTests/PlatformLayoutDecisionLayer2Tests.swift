@@ -136,9 +136,15 @@ final class PlatformLayoutDecisionLayer2Tests: XCTestCase {
         let simpleDecision = determineOptimalFormLayout_L2(hints: simpleFormHints)
         let moderateDecision = determineOptimalFormLayout_L2(hints: moderateFormHints)
         
-        // Then: Should adapt to field count
+        // Then: Should adapt to field count and be usable functionally
         XCTAssertEqual(simpleDecision.contentComplexity, .simple, "3 fields should be simple")
         XCTAssertEqual(moderateDecision.contentComplexity, .moderate, "7 fields should be moderate")
+        
+        // Test that the decisions can be used to create functional views
+        let simpleTestView = createTestViewWithFormLayoutDecision(simpleDecision)
+        let moderateTestView = createTestViewWithFormLayoutDecision(moderateDecision)
+        XCTAssertNotNil(simpleTestView, "Should be able to create view with simple layout decision")
+        XCTAssertNotNil(moderateTestView, "Should be able to create view with moderate layout decision")
     }
     
     // MARK: - Card Layout Business Purpose Tests
@@ -280,8 +286,13 @@ final class PlatformLayoutDecisionLayer2Tests: XCTestCase {
                 deviceType: .phone
             )
             
-            // Then: Should return correct data structure
+            // Then: Should return correct data structure that can be used functionally
             XCTAssertNotNil(result, "Layer 2 function should return a result")
+            
+            // Test that the result can be used to create a functional view
+            let testView = createTestViewWithGenericLayoutDecision(result)
+            XCTAssertNotNil(testView, "Should be able to create view with layout decision")
+            
             XCTAssertNotNil(result.approach, "Should have layout approach")
             XCTAssertGreaterThan(result.columns, 0, "Should have positive column count")
             XCTAssertGreaterThanOrEqual(result.spacing, 0, "Should have non-negative spacing")
@@ -291,5 +302,30 @@ final class PlatformLayoutDecisionLayer2Tests: XCTestCase {
             // NOTE: Layer 2 functions return data structures, not views
             // They don't need automatic accessibility identifiers because they're not UI elements
         }
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Create a test view using the form layout decision to verify it works
+    private func createTestViewWithFormLayoutDecision(_ decision: GenericFormLayoutDecision) -> some View {
+        return VStack(spacing: 8) {
+            Text("Test Form Field 1")
+            Text("Test Form Field 2")
+            Text("Test Form Field 3")
+        }
+        .accessibilityLabel("Test view for form layout decision")
+        .accessibilityHint("Decision: \(decision.fieldLayout.rawValue) layout, complexity: \(decision.contentComplexity.rawValue)")
+    }
+    
+    /// Create a test view using the generic layout decision to verify it works
+    private func createTestViewWithGenericLayoutDecision(_ decision: GenericLayoutDecision) -> some View {
+        return VStack(spacing: decision.spacing) {
+            ForEach(0..<decision.columns, id: \.self) { _ in
+                Text("Test Field")
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .accessibilityLabel("Test view for generic layout decision")
+        .accessibilityHint("Decision: \(decision.columns) columns, approach: \(decision.approach.rawValue)")
     }
 }

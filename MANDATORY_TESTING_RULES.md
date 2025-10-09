@@ -458,6 +458,95 @@ func testFunction_DoesWhatItsSupposedToDo() {
 - **MANDATORY**: All modifiers must be tested for all functions
 - **MANDATORY**: No release can proceed without meeting all quality gates
 
+## Rule 7: Cosmetic vs Functional Testing
+
+### 7.1 Cosmetic Testing (FORBIDDEN)
+**MANDATORY**: The following testing patterns are FORBIDDEN as they don't catch bugs:
+
+#### 7.1.1 View Creation Tests
+```swift
+// ❌ FORBIDDEN: Only tests that view exists
+let enhancedView = testView.accessibilityEnhanced()
+XCTAssertNotNil(enhancedView, "Enhanced view should be created")
+```
+
+#### 7.1.2 Configuration Tests
+```swift
+// ❌ FORBIDDEN: Only tests that config exists
+XCTAssertNotNil(platformConfig, "Platform configuration should be valid")
+```
+
+#### 7.1.3 Default Value Tests
+```swift
+// ❌ FORBIDDEN: Only tests that default is set
+XCTAssertTrue(config.performance.metalRendering, "Metal rendering should be enabled by default")
+```
+
+### 7.2 Functional Testing (REQUIRED)
+**MANDATORY**: All tests must validate actual behavior and functionality:
+
+#### 7.2.1 View Creation Tests
+```swift
+// ✅ REQUIRED: Tests actual functionality
+let enhancedView = testView.accessibilityEnhanced()
+let hostingController = UIHostingController(rootView: enhancedView)
+hostingController.view.layoutIfNeeded()
+
+// Test that accessibility features are actually applied
+XCTAssertTrue(hostingController.view.isAccessibilityElement, "View should be accessibility element")
+XCTAssertNotNil(hostingController.view.accessibilityLabel, "View should have accessibility label")
+XCTAssertNotNil(hostingController.view.accessibilityHint, "View should have accessibility hint")
+```
+
+#### 7.2.2 Configuration Tests
+```swift
+// ✅ REQUIRED: Tests that configuration actually affects behavior
+let config = CardExpansionPlatformConfig()
+config.supportsTouch = true
+
+let view = createTestView(with: config)
+let hostingController = UIHostingController(rootView: view)
+hostingController.view.layoutIfNeeded()
+
+// Verify touch behavior is actually enabled
+XCTAssertTrue(hostingController.view.gestureRecognizers?.contains { $0 is UITapGestureRecognizer } ?? false, 
+              "Touch configuration should enable tap gestures")
+```
+
+#### 7.2.3 Default Value Tests
+```swift
+// ✅ REQUIRED: Tests that default values actually work
+let config = SixLayerConfiguration()
+XCTAssertTrue(config.performance.metalRendering, "Metal rendering should be enabled by default")
+
+// Test that the default actually enables metal rendering
+let view = createTestView()
+let hostingController = UIHostingController(rootView: view)
+hostingController.view.layoutIfNeeded()
+
+// Verify metal rendering is actually active
+#if os(macOS)
+XCTAssertTrue(hostingController.view.layer?.isKind(of: CAMetalLayer.self) ?? false, 
+              "Metal rendering default should enable Metal layer")
+#endif
+```
+
+### 7.3 Test Quality Validation
+**MANDATORY**: Every test must meet these criteria:
+- ✅ Tests actual behavior, not just existence
+- ✅ Verifies that modifiers are actually applied
+- ✅ Confirms that configurations actually affect behavior
+- ✅ Tests platform-specific behavior when applicable
+- ✅ Uses hosting controllers to test real view behavior
+- ✅ Would catch bugs if the functionality was broken
+
+**MANDATORY**: A test is cosmetic if it:
+- ❌ Only checks that objects exist
+- ❌ Only verifies configuration values are set
+- ❌ Only tests default values without testing they work
+- ❌ Doesn't test actual functionality
+- ❌ Wouldn't catch bugs if the functionality was broken
+
 ## Summary
 
 **MANDATORY**: Every function must be tested to ensure:
@@ -467,6 +556,7 @@ func testFunction_DoesWhatItsSupposedToDo() {
 4. ✅ Each layer is tested independently (L5 doesn't test L6 behavior)
 5. ✅ Real-world usage scenarios are covered
 6. ✅ Tests actually validate behavior, not just existence
+7. ✅ Tests are functional, not cosmetic
 
 **MANDATORY**: This ensures that bugs like the automatic accessibility identifier failure cannot go undetected.
 

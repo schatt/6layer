@@ -18,29 +18,130 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
+#if canImport(AppKit)
+import AppKit
+#endif
+@testable import SixLayerFramework
 
 // MARK: - Test Extensions for Accessibility Identifier Testing
 
 extension View {
-    /// Test helper to check if a view has automatic accessibility identifiers
-    var hasAutomaticAccessibilityIdentifiers: Bool {
-        // This is a test helper - in real implementation, we'd check the actual accessibility identifier
-        // For now, we'll use a simple heuristic: if the view has been modified by our framework
-        // TODO: Implement proper accessibility identifier checking
-        return true // Placeholder - will be implemented properly
+    /// Wrap the view with the global automatic accessibility identifier modifier so
+    /// that auto-ID assignment is enabled in hosted test environments.
+    func withGlobalAutoIDsEnabled() -> some View {
+        self
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true)
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+// MARK: - Cross-platform hosting and accessibility utilities
+
+/// Host a SwiftUI view and return the platform root view for inspection.
+@MainActor
+public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
+    #if canImport(UIKit)
+    let hosting = UIHostingController(rootView: view)
+    let root = hosting.view
+    root?.setNeedsLayout()
+    root?.layoutIfNeeded()
+    print("DEBUG: Created UIHostingController with root view: \(type(of: root))")
+    return root
+    #elseif canImport(AppKit)
+    let hosting = NSHostingController(rootView: view)
+    let root = hosting.view
+    root.layoutSubtreeIfNeeded()
+    print("DEBUG: Created NSHostingController with root view: \(type(of: root))")
+    return root
+    #else
+    print("DEBUG: No hosting controller available")
+    return nil
+    #endif
+}
+
+/// Depth-first search for the first non-empty accessibility identifier in the platform view hierarchy.
+@MainActor
+public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
+    #if canImport(UIKit)
+    guard let rootView = root as? UIView else { return nil }
+    
+    // Check root view first
+    if let id = rootView.accessibilityIdentifier, !id.isEmpty { 
+        print("DEBUG: Found accessibility identifier on root view: \(id)")
+        return id 
     }
     
-    /// Test helper to check if a view is HIG compliant
-    var isHIGCompliant: Bool {
-        // This is a test helper - in real implementation, we'd check the actual HIG compliance
-        // TODO: Implement proper HIG compliance checking
-        return true // Placeholder - will be implemented properly
+    // Debug: Print all views and their identifiers
+    print("DEBUG: Root view type: \(type(of: rootView))")
+    print("DEBUG: Root view accessibility identifier: \(rootView.accessibilityIdentifier ?? "nil")")
+    print("DEBUG: Root view subviews count: \(rootView.subviews.count)")
+    
+    // Search through all subviews
+    var stack: [UIView] = rootView.subviews
+    var depth = 0
+    while let next = stack.popLast(), depth < 10 { // Limit depth to avoid infinite loops
+        print("DEBUG: Checking view at depth \(depth): \(type(of: next))")
+        print("DEBUG: View accessibility identifier: \(next.accessibilityIdentifier ?? "nil")")
+        
+        if let id = next.accessibilityIdentifier, !id.isEmpty { 
+            print("DEBUG: Found accessibility identifier on subview: \(id)")
+            return id 
+        }
+        stack.append(contentsOf: next.subviews)
+        depth += 1
+    }
+    return nil
+    #elseif canImport(AppKit)
+    guard let rootView = root as? NSView else { 
+        print("DEBUG: Root is not an NSView")
+        return nil 
     }
     
-    /// Test helper to check if a view has performance optimizations
-    var hasPerformanceOptimizations: Bool {
-        // This is a test helper - in real implementation, we'd check the actual performance optimizations
-        // TODO: Implement proper performance optimization checking
-        return true // Placeholder - will be implemented properly
+    // Check root view first
+    let rootId = rootView.accessibilityIdentifier()
+    print("DEBUG: Root NSView type: \(type(of: rootView))")
+    print("DEBUG: Root NSView accessibility identifier: '\(rootId)'")
+    print("DEBUG: Root NSView subviews count: \(rootView.subviews.count)")
+    
+    if !rootId.isEmpty { 
+        print("DEBUG: Found accessibility identifier on root NSView: \(rootId)")
+        return rootId 
     }
+    
+    // Search through all subviews
+    var stack: [NSView] = rootView.subviews
+    var depth = 0
+    while let next = stack.popLast(), depth < 10 { // Limit depth to avoid infinite loops
+        let id = next.accessibilityIdentifier()
+        print("DEBUG: Checking NSView at depth \(depth): \(type(of: next))")
+        print("DEBUG: NSView accessibility identifier: '\(id)'")
+        
+        if !id.isEmpty { 
+            print("DEBUG: Found accessibility identifier on NSView subview: \(id)")
+            return id 
+        }
+        stack.append(contentsOf: next.subviews)
+        depth += 1
+    }
+    return nil
+    #else
+    return nil
+    #endif
+}
+
+/// Convenience: Return the first non-empty accessibilityIdentifier from a SwiftUI view
+/// after enabling global auto-IDs and hosting it for inspection.
+@MainActor
+public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
+    // Ensure config is enabled for tests
+    AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+    if AccessibilityIdentifierConfig.shared.namespace.isEmpty {
+        AccessibilityIdentifierConfig.shared.namespace = "test"
+    }
+    let wrapped = view.withGlobalAutoIDsEnabled()
+    let root = hostRootPlatformView(wrapped)
+    return firstAccessibilityIdentifier(inHosted: root)
 }

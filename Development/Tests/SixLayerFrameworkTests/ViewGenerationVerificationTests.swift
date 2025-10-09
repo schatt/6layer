@@ -1,10 +1,11 @@
 import XCTest
 import SwiftUI
+import ViewInspector
 @testable import SixLayerFramework
 
 /// View Generation Verification Tests
 /// Tests that the actual SwiftUI views are generated correctly with the right properties and modifiers
-/// This verifies the view structure, not just the capability logic
+/// This verifies the view structure using the new testing pattern: view created + contains expected content
 @MainActor
 final class ViewGenerationVerificationTests: XCTestCase {
     
@@ -31,493 +32,288 @@ final class ViewGenerationVerificationTests: XCTestCase {
         ]
     }
     
-    // MARK: - View Structure Verification Tests
+    // MARK: - Real Framework Tests
     
-    /*func testTouchPlatformViewGeneration_DISABLED() {
-        // GIVEN: Touch platform capabilities
-        let capabilities = createTouchCapabilities()
+    /// BUSINESS PURPOSE: Verify that IntelligentDetailView actually generates views with proper structure
+    /// TESTING SCOPE: Tests that the framework returns views with expected content and layout
+    /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
+    func testIntelligentDetailViewGeneratesProperStructure() {
+        // GIVEN: Test data
         let item = sampleData[0]
         
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities)
+        // WHEN: Generating an intelligent detail view
+        let detailView = IntelligentDetailView.platformDetailView(for: item)
         
-        // THEN: Should generate a view with touch-appropriate properties
-        let viewInfo = extractViewInfo(view)
+        // THEN: Test the two critical aspects
         
-        XCTAssertEqual(viewInfo.viewType, "ExpandableCardComponent")
-        XCTAssertTrue(viewInfo.hasTouchTarget)
-        XCTAssertTrue(viewInfo.hasHapticFeedback)
-        XCTAssertTrue(viewInfo.hasAssistiveTouch)
-        XCTAssertFalse(viewInfo.hasHover)
-        XCTAssertEqual(viewInfo.minTouchTarget, 44)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.0)
-    }*/
-    
-    /*func testHoverPlatformViewGeneration_DISABLED() {
-        // GIVEN: Hover platform capabilities
-        let capabilities = createHoverCapabilities()
-        let item = sampleData[0]
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(detailView, "IntelligentDetailView should be created successfully")
         
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities)
-        
-        // THEN: Should generate a view with hover-appropriate properties
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertEqual(viewInfo.viewType, "ExpandableCardComponent")
-        XCTAssertFalse(viewInfo.hasTouchTarget)
-        XCTAssertFalse(viewInfo.hasHapticFeedback)
-        XCTAssertFalse(viewInfo.hasAssistiveTouch)
-        XCTAssertTrue(viewInfo.hasHover)
-        XCTAssertEqual(viewInfo.minTouchTarget, 0)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.1)
-    }*/
-    
-    /*func testTouchHoverPlatformViewGeneration_DISABLED() {
-        // GIVEN: Touch + Hover platform capabilities (iPad)
-        let capabilities = createTouchHoverCapabilities()
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities)
-        
-        // THEN: Should generate a view with both touch and hover properties
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertEqual(viewInfo.viewType, "ExpandableCardComponent")
-        XCTAssertTrue(viewInfo.hasTouchTarget)
-        XCTAssertTrue(viewInfo.hasHapticFeedback)
-        XCTAssertTrue(viewInfo.hasAssistiveTouch)
-        XCTAssertTrue(viewInfo.hasHover)
-        XCTAssertEqual(viewInfo.minTouchTarget, 44)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.1)
-    }
-    
-    func testAccessibilityOnlyPlatformViewGeneration_DISABLED() {
-        // GIVEN: Accessibility-only platform capabilities (tvOS)
-        let capabilities = createAccessibilityOnlyCapabilities()
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities)
-        
-        // THEN: Should generate a view with accessibility-only properties
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertEqual(viewInfo.viewType, "SimpleCardComponent")
-        XCTAssertFalse(viewInfo.hasTouchTarget)
-        XCTAssertFalse(viewInfo.hasHapticFeedback)
-        XCTAssertFalse(viewInfo.hasAssistiveTouch)
-        XCTAssertFalse(viewInfo.hasHover)
-        XCTAssertEqual(viewInfo.minTouchTarget, 0)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.0)
-        XCTAssertTrue(viewInfo.hasVoiceOver)
-        XCTAssertTrue(viewInfo.hasSwitchControl)
-    }
-    
-    func testVisionPlatformViewGeneration_DISABLED() {
-        // GIVEN: Vision platform capabilities
-        let capabilities = createVisionCapabilities()
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities)
-        
-        // THEN: Should generate a view with vision-appropriate properties
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertEqual(viewInfo.viewType, "ExpandableCardComponent")
-        XCTAssertFalse(viewInfo.hasTouchTarget)
-        XCTAssertTrue(viewInfo.hasHover)
-        XCTAssertTrue(viewInfo.hasVision)
-        XCTAssertTrue(viewInfo.hasOCR)
-        XCTAssertEqual(viewInfo.minTouchTarget, 0)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.1)
-    }
-    
-    // MARK: - Accessibility Feature View Generation Tests
-    
-    func testReduceMotionViewGeneration_DISABLED() {
-        // GIVEN: Platform with reduce motion enabled
-        let capabilities = createTouchCapabilities()
-        let accessibilityFeatures = [AccessibilityFeature.reduceMotion]
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
-        
-        // THEN: Should generate a view with reduced motion
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertTrue(viewInfo.hasReduceMotion)
-        XCTAssertEqual(viewInfo.animationDuration, 0.0) // No animation with reduce motion
-    }
-    
-    func testIncreaseContrastViewGeneration_DISABLED() {
-        // GIVEN: Platform with increase contrast enabled
-        let capabilities = createTouchCapabilities()
-        let accessibilityFeatures = [AccessibilityFeature.increaseContrast]
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
-        
-        // THEN: Should generate a view with increased contrast
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertTrue(viewInfo.hasIncreaseContrast)
-        XCTAssertTrue(viewInfo.hasHighContrastColors)
-    }
-    
-    func testBoldTextViewGeneration_DISABLED() {
-        // GIVEN: Platform with bold text enabled
-        let capabilities = createTouchCapabilities()
-        let accessibilityFeatures = [AccessibilityFeature.boldText]
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
-        
-        // THEN: Should generate a view with bold text
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertTrue(viewInfo.hasBoldText)
-        XCTAssertTrue(viewInfo.hasBoldFonts)
-    }
-    
-    func testLargerTextViewGeneration_DISABLED() {
-        // GIVEN: Platform with larger text enabled
-        let capabilities = createTouchCapabilities()
-        let accessibilityFeatures = [AccessibilityFeature.largerText]
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
-        
-        // THEN: Should generate a view with larger text
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertTrue(viewInfo.hasLargerText)
-        XCTAssertTrue(viewInfo.hasLargerFonts)
-    }
-    
-    // MARK: - Complex Combination Tests
-    
-    func testMacWithTouchDisplayAndAllAccessibility_DISABLED() {
-        // GIVEN: Mac with touch display and all accessibility features
-        let capabilities = createMacWithTouchCapabilities()
-        let accessibilityFeatures = AccessibilityFeature.allCases
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
-        
-        // THEN: Should generate a view with all capabilities
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertEqual(viewInfo.viewType, "ExpandableCardComponent")
-        XCTAssertTrue(viewInfo.hasTouchTarget)
-        XCTAssertTrue(viewInfo.hasHover)
-        XCTAssertTrue(viewInfo.hasHapticFeedback)
-        XCTAssertTrue(viewInfo.hasAssistiveTouch)
-        XCTAssertTrue(viewInfo.hasVoiceOver)
-        XCTAssertTrue(viewInfo.hasSwitchControl)
-        XCTAssertTrue(viewInfo.hasVision)
-        XCTAssertTrue(viewInfo.hasOCR)
-        XCTAssertTrue(viewInfo.hasReduceMotion)
-        XCTAssertTrue(viewInfo.hasIncreaseContrast)
-        XCTAssertTrue(viewInfo.hasBoldText)
-        XCTAssertTrue(viewInfo.hasLargerText)
-        XCTAssertEqual(viewInfo.minTouchTarget, 44)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.1)
-    }
-    
-    func testIPhoneWithNoAccessibility_DISABLED() {
-        // GIVEN: iPhone with no accessibility features
-        let capabilities = createTouchCapabilities()
-        let accessibilityFeatures: [AccessibilityFeature] = []
-        let item = sampleData[0]
-        
-        // WHEN: Generating a view
-        let view = generateViewWithCapabilities(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures)
-        
-        // THEN: Should generate a view with no accessibility features
-        let viewInfo = extractViewInfo(view)
-        
-        XCTAssertEqual(viewInfo.viewType, "ExpandableCardComponent")
-        XCTAssertTrue(viewInfo.hasTouchTarget)
-        XCTAssertTrue(viewInfo.hasHapticFeedback)
-        XCTAssertTrue(viewInfo.hasAssistiveTouch)
-        XCTAssertFalse(viewInfo.hasReduceMotion)
-        XCTAssertFalse(viewInfo.hasIncreaseContrast)
-        XCTAssertFalse(viewInfo.hasBoldText)
-        XCTAssertFalse(viewInfo.hasLargerText)
-        XCTAssertEqual(viewInfo.minTouchTarget, 44)
-        XCTAssertEqual(viewInfo.hoverDelay, 0.0)
-    }*/
-    
-    // MARK: - Helper Methods
-    
-    private func createTouchCapabilities() -> PlatformCapabilities {
-        return PlatformCapabilities(
-            supportsTouch: true,
-            supportsHover: false,
-            supportsHapticFeedback: true,
-            supportsAssistiveTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsVision: true,
-            supportsOCR: true
-        )
-    }
-    
-    private func createHoverCapabilities() -> PlatformCapabilities {
-        return PlatformCapabilities(
-            supportsTouch: false,
-            supportsHover: true,
-            supportsHapticFeedback: false,
-            supportsAssistiveTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsVision: true,
-            supportsOCR: true
-        )
-    }
-    
-    private func createTouchHoverCapabilities() -> PlatformCapabilities {
-        return PlatformCapabilities(
-            supportsTouch: true,
-            supportsHover: true,
-            supportsHapticFeedback: true,
-            supportsAssistiveTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsVision: true,
-            supportsOCR: true
-        )
-    }
-    
-    private func createAccessibilityOnlyCapabilities() -> PlatformCapabilities {
-        return PlatformCapabilities(
-            supportsTouch: false,
-            supportsHover: false,
-            supportsHapticFeedback: false,
-            supportsAssistiveTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsVision: false,
-            supportsOCR: false
-        )
-    }
-    
-    private func createVisionCapabilities() -> PlatformCapabilities {
-        return PlatformCapabilities(
-            supportsTouch: false,
-            supportsHover: true,
-            supportsHapticFeedback: false,
-            supportsAssistiveTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsVision: true,
-            supportsOCR: true
-        )
-    }
-    
-    private func createMacWithTouchCapabilities() -> PlatformCapabilities {
-        return PlatformCapabilities(
-            supportsTouch: true,
-            supportsHover: true,
-            supportsHapticFeedback: true,
-            supportsAssistiveTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsVision: true,
-            supportsOCR: true
-        )
-    }
-    
-    private func generateViewWithCapabilities(
-        item: TestDataItem,
-        capabilities: PlatformCapabilities,
-        accessibilityFeatures: [AccessibilityFeature] = []
-    ) -> AnyView {
-        // This would call your actual framework method that generates views
-        // For now, we'll create a mock view that represents what should be generated
-        
-        if capabilities.supportsTouch || capabilities.supportsHover {
-            return AnyView(createExpandableCardView(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures))
-        } else {
-            return AnyView(createSimpleCardView(item: item, capabilities: capabilities, accessibilityFeatures: accessibilityFeatures))
-        }
-    }
-    
-    private func createExpandableCardView(
-        item: TestDataItem,
-        capabilities: PlatformCapabilities,
-        accessibilityFeatures: [AccessibilityFeature]
-    ) -> some View {
-        // This would be your actual ExpandableCardComponent
-        // For testing, we create a view that represents the expected structure
-        return MockExpandableCardView(
-            item: item,
-            capabilities: capabilities,
-            accessibilityFeatures: accessibilityFeatures
-        )
-    }
-    
-    private func createSimpleCardView(
-        item: TestDataItem,
-        capabilities: PlatformCapabilities,
-        accessibilityFeatures: [AccessibilityFeature]
-    ) -> some View {
-        // This would be your actual SimpleCardComponent
-        // For testing, we create a view that represents the expected structure
-        return MockSimpleCardView(
-            item: item,
-            capabilities: capabilities,
-            accessibilityFeatures: accessibilityFeatures
-        )
-    }
-    
-    private func extractViewInfo(_ view: some View) -> ViewInfo {
-        // This would extract information from the actual generated view
-        // For now, we'll return mock information based on the view type
-        if view is MockExpandableCardView {
-            return ViewInfo(
-                viewType: "ExpandableCardComponent",
-                hasTouchTarget: true,
-                hasHover: true,
-                hasHapticFeedback: true,
-                hasAssistiveTouch: true,
-                hasVoiceOver: true,
-                hasSwitchControl: true,
-                hasVision: true,
-                hasOCR: true,
-                hasReduceMotion: false,
-                hasIncreaseContrast: false,
-                hasBoldText: false,
-                hasLargerText: false,
-                hasHighContrastColors: false,
-                hasBoldFonts: false,
-                hasLargerFonts: false,
-                minTouchTarget: 44,
-                hoverDelay: 0.1,
-                animationDuration: 0.3
-            )
-        } else {
-            return ViewInfo(
-                viewType: "SimpleCardComponent",
-                hasTouchTarget: false,
-                hasHover: false,
-                hasHapticFeedback: false,
-                hasAssistiveTouch: false,
-                hasVoiceOver: true,
-                hasSwitchControl: true,
-                hasVision: false,
-                hasOCR: false,
-                hasReduceMotion: false,
-                hasIncreaseContrast: false,
-                hasBoldText: false,
-                hasLargerText: false,
-                hasHighContrastColors: false,
-                hasBoldFonts: false,
-                hasLargerFonts: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.0,
-                animationDuration: 0.0
-            )
-        }
-    }
-    
-    // MARK: - Helper Types
-    
-    struct PlatformCapabilities {
-        let supportsTouch: Bool
-        let supportsHover: Bool
-        let supportsHapticFeedback: Bool
-        let supportsAssistiveTouch: Bool
-        let supportsVoiceOver: Bool
-        let supportsSwitchControl: Bool
-        let supportsVision: Bool
-        let supportsOCR: Bool
-    }
-    
-    enum AccessibilityFeature: CaseIterable {
-        case reduceMotion
-        case increaseContrast
-        case reduceTransparency
-        case boldText
-        case largerText
-        case buttonShapes
-        case onOffLabels
-        case grayscale
-        case invertColors
-        case smartInvert
-        case differentiateWithoutColor
-    }
-    
-    struct ViewInfo {
-        let viewType: String
-        let hasTouchTarget: Bool
-        let hasHover: Bool
-        let hasHapticFeedback: Bool
-        let hasAssistiveTouch: Bool
-        let hasVoiceOver: Bool
-        let hasSwitchControl: Bool
-        let hasVision: Bool
-        let hasOCR: Bool
-        let hasReduceMotion: Bool
-        let hasIncreaseContrast: Bool
-        let hasBoldText: Bool
-        let hasLargerText: Bool
-        let hasHighContrastColors: Bool
-        let hasBoldFonts: Bool
-        let hasLargerFonts: Bool
-        let minTouchTarget: CGFloat
-        let hoverDelay: TimeInterval
-        let animationDuration: TimeInterval
-    }
-    
-    // MARK: - Mock Views for Testing
-    
-    struct MockExpandableCardView: View {
-        let item: TestDataItem
-        let capabilities: PlatformCapabilities
-        let accessibilityFeatures: [AccessibilityFeature]
-        
-        var body: some View {
-            VStack {
-                Text(item.title)
-                if let subtitle = item.subtitle {
-                    Text(subtitle)
-                }
-                if let description = item.description {
-                    Text(description)
+        // 2. Contains what it needs to contain - The view has the expected structure and content
+        do {
+            // The view should be wrapped in AnyView
+            let anyView = try detailView.inspect().anyView()
+            XCTAssertNotNil(anyView, "Detail view should be wrapped in AnyView")
+            
+            // The view should contain text elements with our data
+            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            
+            // Should contain the title from our test data
+            let hasTitleContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Item 1")
+                } catch {
+                    return false
                 }
             }
-            .frame(minWidth: capabilities.supportsTouch ? 44 : 0, minHeight: capabilities.supportsTouch ? 44 : 0)
-            .onHover { _ in
-                // Hover behavior
+            XCTAssertTrue(hasTitleContent, "Detail view should contain the title 'Item 1'")
+            
+            // Should contain the subtitle from our test data
+            let hasSubtitleContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Subtitle 1")
+                } catch {
+                    return false
+                }
             }
-            .onTapGesture {
-                // Touch behavior
-            }
+            XCTAssertTrue(hasSubtitleContent, "Detail view should contain the subtitle 'Subtitle 1'")
+            
+        } catch {
+            XCTFail("Failed to inspect detail view structure: \(error)")
         }
     }
     
-    struct MockSimpleCardView: View {
-        let item: TestDataItem
-        let capabilities: PlatformCapabilities
-        let accessibilityFeatures: [AccessibilityFeature]
+    /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles different layout strategies
+    /// TESTING SCOPE: Tests that different presentation hints result in different view structures
+    /// METHODOLOGY: Tests actual framework behavior with different hints
+    func testIntelligentDetailViewWithDifferentHints() {
+        // GIVEN: Test data and different presentation hints
+        let item = sampleData[0]
         
-        var body: some View {
-            VStack {
-                Text(item.title)
-                if let subtitle = item.subtitle {
-                    Text(subtitle)
+        // Test compact layout
+        let compactHints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .compact,
+            complexity: .simple,
+            context: .dashboard
+        )
+        
+        // Test detailed layout
+        let detailedHints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .detail,
+            complexity: .complex,
+            context: .dashboard
+        )
+        
+        // WHEN: Generating views with different hints
+        let compactView = IntelligentDetailView.platformDetailView(for: item, hints: compactHints)
+        let detailedView = IntelligentDetailView.platformDetailView(for: item, hints: detailedHints)
+        
+        // THEN: Test the two critical aspects for both views
+        
+        // 1. Views created - Both views can be instantiated successfully
+        XCTAssertNotNil(compactView, "Compact view should be created successfully")
+        XCTAssertNotNil(detailedView, "Detailed view should be created successfully")
+        
+        // 2. Contains what it needs to contain - Both views should contain our data
+        do {
+            // Both views should contain our test data
+            let compactText = try compactView.inspect().findAll(ViewType.Text.self)
+            let detailedText = try detailedView.inspect().findAll(ViewType.Text.self)
+            
+            XCTAssertFalse(compactText.isEmpty, "Compact view should contain text elements")
+            XCTAssertFalse(detailedText.isEmpty, "Detailed view should contain text elements")
+            
+            // Both should contain the title
+            let compactHasTitle = compactText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Item 1")
+                } catch {
+                    return false
                 }
             }
-            .frame(minWidth: capabilities.supportsTouch ? 44 : 0, minHeight: capabilities.supportsTouch ? 44 : 0)
+            let detailedHasTitle = detailedText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Item 1")
+                } catch {
+                    return false
+                }
+            }
+            
+            XCTAssertTrue(compactHasTitle, "Compact view should contain the title")
+            XCTAssertTrue(detailedHasTitle, "Detailed view should contain the title")
+            
+        } catch {
+            XCTFail("Failed to inspect views with different hints: \(error)")
         }
+    }
+    
+    /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles custom field views
+    /// TESTING SCOPE: Tests that custom field views are actually used in the generated view
+    /// METHODOLOGY: Tests that custom content appears in the final view
+    func testIntelligentDetailViewWithCustomFieldView() {
+        // GIVEN: Test data and custom field view
+        let item = sampleData[0]
+        
+        // WHEN: Generating view with custom field view
+        let detailView = IntelligentDetailView.platformDetailView(
+            for: item,
+            customFieldView: { fieldName, value, fieldType in
+                Text("Custom: \(fieldName) = \(value)")
+            }
+        )
+        
+        // THEN: Test the two critical aspects
+        
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(detailView, "Detail view with custom field view should be created successfully")
+        
+        // 2. Contains what it needs to contain - The view should contain custom field content
+        do {
+            // The view should contain text elements
+            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            
+            // Should contain custom field content
+            let hasCustomContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Custom:") && textContent.contains("=")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasCustomContent, "Detail view should contain custom field content")
+            
+        } catch {
+            XCTFail("Failed to inspect detail view with custom field view: \(error)")
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles nil values gracefully
+    /// TESTING SCOPE: Tests that views with nil values still generate properly
+    /// METHODOLOGY: Tests actual framework behavior with nil data
+    func testIntelligentDetailViewWithNilValues() {
+        // GIVEN: Test data with nil values
+        let item = sampleData[1] // This has nil subtitle
+        
+        // WHEN: Generating an intelligent detail view
+        let detailView = IntelligentDetailView.platformDetailView(for: item)
+        
+        // THEN: Test the two critical aspects
+        
+        // 1. View created - The view can be instantiated successfully
+        XCTAssertNotNil(detailView, "Detail view with nil values should be created successfully")
+        
+        // 2. Contains what it needs to contain - The view should contain available data
+        do {
+            // The view should contain text elements
+            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            
+            // Should contain the title (which is not nil)
+            let hasTitleContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Item 2")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasTitleContent, "Detail view should contain the title 'Item 2'")
+            
+            // Should contain the description (which is not nil)
+            let hasDescriptionContent = viewText.contains { text in
+                do {
+                    let textContent = try text.string()
+                    return textContent.contains("Description 2")
+                } catch {
+                    return false
+                }
+            }
+            XCTAssertTrue(hasDescriptionContent, "Detail view should contain the description 'Description 2'")
+            
+        } catch {
+            XCTFail("Failed to inspect detail view with nil values: \(error)")
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Verify that DataIntrospectionEngine actually analyzes data correctly
+    /// TESTING SCOPE: Tests that the data analysis returns expected results
+    /// METHODOLOGY: Tests actual analysis results, not just that analysis runs
+    func testDataIntrospectionEngineAnalyzesDataCorrectly() {
+        // GIVEN: Test data
+        let item = sampleData[0]
+        
+        // WHEN: Analyzing the data
+        let analysis = DataIntrospectionEngine.analyze(item)
+        
+        // THEN: Test the two critical aspects
+        
+        // 1. Analysis created - The analysis should be created successfully
+        XCTAssertNotNil(analysis, "Data analysis should be created successfully")
+        
+        // 2. Contains what it needs to contain - The analysis should contain expected data
+        XCTAssertFalse(analysis.fields.isEmpty, "Analysis should contain fields")
+        XCTAssertNotNil(analysis.complexity, "Analysis should have complexity assessment")
+        XCTAssertNotNil(analysis.patterns, "Analysis should have pattern detection")
+        
+        // Should contain fields for our test data properties
+        let fieldNames = analysis.fields.map { $0.name }
+        XCTAssertTrue(fieldNames.contains("title"), "Analysis should contain 'title' field")
+        XCTAssertTrue(fieldNames.contains("subtitle"), "Analysis should contain 'subtitle' field")
+        XCTAssertTrue(fieldNames.contains("description"), "Analysis should contain 'description' field")
+        XCTAssertTrue(fieldNames.contains("value"), "Analysis should contain 'value' field")
+        XCTAssertTrue(fieldNames.contains("isActive"), "Analysis should contain 'isActive' field")
+    }
+    
+    /// BUSINESS PURPOSE: Verify that layout strategy determination works correctly
+    /// TESTING SCOPE: Tests that different data complexities result in appropriate layout strategies
+    /// METHODOLOGY: Tests actual strategy selection based on data analysis
+    func testLayoutStrategyDeterminationWorksCorrectly() {
+        // GIVEN: Different data complexities
+        let simpleData = TestDataItem(
+            title: "Simple",
+            subtitle: nil,
+            description: nil,
+            value: 1,
+            isActive: true
+        )
+        
+        let complexData = TestDataItem(
+            title: "Complex Item with Very Long Title That Should Impact Layout Decisions",
+            subtitle: "This is a very detailed subtitle that provides extensive context",
+            description: "This is an extremely detailed and comprehensive description that contains a lot of information and should trigger a more sophisticated layout strategy.",
+            value: 999,
+            isActive: true
+        )
+        
+        // WHEN: Analyzing data and determining layout strategies
+        let simpleAnalysis = DataIntrospectionEngine.analyze(simpleData)
+        let complexAnalysis = DataIntrospectionEngine.analyze(complexData)
+        
+        let simpleStrategy = IntelligentDetailView.determineLayoutStrategy(analysis: simpleAnalysis, hints: nil)
+        let complexStrategy = IntelligentDetailView.determineLayoutStrategy(analysis: complexAnalysis, hints: nil)
+        
+        // THEN: Test the two critical aspects
+        
+        // 1. Strategies created - Both strategies should be determined successfully
+        XCTAssertNotNil(simpleStrategy, "Simple data should have a layout strategy")
+        XCTAssertNotNil(complexStrategy, "Complex data should have a layout strategy")
+        
+        // 2. Contains what it needs to contain - Strategies should be appropriate for data complexity
+        // Simple data should get compact or standard layout
+        XCTAssertTrue([DetailLayoutStrategy.compact, DetailLayoutStrategy.standard].contains(simpleStrategy),
+                     "Simple data should get compact or standard layout")
+        
+        // Complex data should get detailed or tabbed layout
+        XCTAssertTrue([DetailLayoutStrategy.detailed, DetailLayoutStrategy.tabbed].contains(complexStrategy),
+                     "Complex data should get detailed or tabbed layout")
     }
 }
