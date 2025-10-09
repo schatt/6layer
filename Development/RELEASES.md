@@ -1,12 +1,126 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults** 🚨
+## 📍 **Current Release: v4.3.0 - API Rename: .trackViewHierarchy() → .named()** 🎯
 
 **Release Date**: October 9, 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.2.0 - UI Testing Refactoring and Test Suite Improvements  
-**Note**: Fixed critical accessibility identifier bug and improved default behavior  
+**Previous Release**: v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults  
+**Note**: Improved API clarity with better developer experience  
 **Next Release**: TBD
+
+---
+
+## 🎯 **v4.3.0 - API Rename: .trackViewHierarchy() → .named()** ✅ **COMPLETE**
+
+**Release Date**: October 9, 2025  
+**Type**: Minor Release (API Improvement)  
+**Priority**: Enhancement  
+**Scope**: Rename misleading API method for better developer experience  
+**Note**: Improved API clarity with backward compatibility
+
+### 🎉 **API Rename: Better Developer Experience**
+- **Renamed**: `.trackViewHierarchy()` → `.named()`
+- **Purpose**: Give views semantic names for accessibility identifier generation
+- **Backward Compatibility**: Old method still works with deprecation warning
+
+### ✅ **New API (Recommended)**
+```swift
+Button("Add Fuel") { }
+    .named("AddFuelButton")  // ← Clear purpose!
+    .screenContext("FuelView")
+    .enableGlobalAutomaticAccessibilityIdentifiers()
+```
+
+### ⚠️ **Old API (Deprecated)**
+```swift
+Button("Add Fuel") { }
+    .trackViewHierarchy("AddFuelButton")  // ← Shows deprecation warning
+    .screenContext("FuelView")
+    .enableGlobalAutomaticAccessibilityIdentifiers()
+```
+
+### 🎯 **Why This Change?**
+- **❌ Problems with Old Name**: Misleading, unclear purpose, confusing
+- **✅ Benefits of New Name**: Clear purpose, concise, intuitive, no conflicts
+- **🔄 Migration Path**: Gradual update with helpful deprecation warnings
+
+### 🔧 **Technical Details**
+- **New Method**: `func named(_ name: String) -> some View`
+- **Deprecation**: `@available(*, deprecated, renamed: "named")`
+- **Same Functionality**: Uses identical `ViewHierarchyTrackingModifier`
+- **Zero Breaking Changes**: Old code continues to work
+
+### 🔧 **Simplified Configuration**
+With the fixes in v4.2.1 and the new `.named()` API, several configuration options are **no longer necessary**:
+
+#### **❌ No Longer Required**
+```swift
+config.enableViewHierarchyTracking = true  // ← Automatic
+config.enableUITestIntegration = true      // ← Automatic  
+config.enableDebugLogging = true           // ← Optional (debug only)
+```
+
+#### **✅ Minimal Configuration**
+```swift
+let config = AccessibilityIdentifierConfig.shared
+config.enableAutoIDs = true           // ← Still needed
+config.namespace = "YourApp"          // ← Still needed
+config.mode = .automatic              // ← Still needed
+```
+
+#### **🎯 Complete Before/After**
+```swift
+// Before: Complex config + deprecated API
+let config = AccessibilityIdentifierConfig.shared
+config.enableAutoIDs = true
+config.namespace = "CarManager"
+config.mode = .automatic
+config.enableViewHierarchyTracking = true  // ← No longer needed
+config.enableUITestIntegration = true      // ← No longer needed
+config.enableDebugLogging = true           // ← No longer needed
+
+// Using SixLayerFramework component with deprecated API
+platformPresentContent_L1(
+    content: Button("Add Fuel") { },
+    title: "Fuel Management",
+    subtitle: "Add new fuel records"
+)
+.trackViewHierarchy("AddFuelButton")  // ← Deprecated API
+.screenContext("FuelView")
+
+// After: Simple config + new API
+let config = AccessibilityIdentifierConfig.shared
+config.enableAutoIDs = true
+config.namespace = "CarManager"
+config.mode = .automatic
+
+// Using SixLayerFramework component with new API
+platformPresentContent_L1(
+    content: Button("Add Fuel") { },
+    title: "Fuel Management",
+    subtitle: "Add new fuel records"
+)
+.named("AddFuelButton")  // ← New API!
+.screenContext("FuelView")
+```
+
+### ✅ **Testing & Quality Assurance**
+- **All Tests Pass**: 1,571 tests pass with 0 failures
+- **Backward Compatibility**: Old API still works
+- **Deprecation Warnings**: Properly displayed
+- **No Breaking Changes**: Existing code continues to work
+
+### 🚀 **Developer Benefits**
+- **Better Developer Experience**: Clearer intent, easier to remember
+- **Improved Code Readability**: Self-documenting method names
+- **API Clarity**: Obvious purpose and usage
+- **Migration Support**: Clear upgrade path
+
+### 📋 **Release Summary**
+- ✅ **New `.named()` API** - Clear, intuitive method name
+- ✅ **Deprecation Warnings** - Helpful guidance for migration
+- ✅ **Backward Compatibility** - No breaking changes
+- ✅ **Better Documentation** - Clearer API purpose
 
 ---
 

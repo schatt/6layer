@@ -61,7 +61,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
                 XCTAssertNotNil(accessibilityIdentifier, "View should have an accessibility identifier assigned")
                 XCTAssertFalse(accessibilityIdentifier.isEmpty, "Accessibility identifier should not be empty")
                 XCTAssertTrue(accessibilityIdentifier.hasPrefix("test"), "Generated ID should start with namespace")
-                // Note: The actual format is "test.main.element.main-ui-XXXX-649" based on debug output
+                // Note: The actual format is "test.main.element.main-ui-XXXX-XXX" based on debug output
                 XCTAssertTrue(accessibilityIdentifier.contains("element"), "Generated ID should contain role")
                 XCTAssertTrue(accessibilityIdentifier.contains("main-ui"), "Generated ID should contain context")
             } catch {
@@ -70,10 +70,10 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that .trackViewHierarchy() actually triggers identifier generation
+    /// BUSINESS PURPOSE: Verify that .named() actually triggers identifier generation
     /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifier works end-to-end
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    func testTrackViewHierarchyActuallyGeneratesIdentifiers() async {
+    func testNamedActuallyGeneratesIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -84,26 +84,27 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            // When: Using .trackViewHierarchy() modifier (the failing case from bug report)
+            // When: Using .named() modifier (the new API)
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
-            .trackViewHierarchy("AddFuelButton")
+            .named("AddFuelButton")
             
             // Then: Test the two critical aspects
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView, "View with trackViewHierarchy should be created successfully")
+            XCTAssertNotNil(testView, "View with .named() should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
             do {
                 let accessibilityIdentifier = try testView.inspect().button().accessibilityIdentifier()
+                print("🔍 DEBUG: Generated ID: '\(accessibilityIdentifier)'")
                 XCTAssertNotNil(accessibilityIdentifier, "View should have an accessibility identifier assigned")
                 XCTAssertFalse(accessibilityIdentifier.isEmpty, "Accessibility identifier should not be empty")
                 XCTAssertTrue(accessibilityIdentifier.hasPrefix("CarManager"), "Generated ID should start with namespace")
-                // Note: The actual format is "CarManager.main.element.main-ui-XXXX-649" based on debug output
+                // Note: The actual format is "CarManager.main.element.main-addfuelbutton-XXXX-XXX" based on debug output
                 XCTAssertTrue(accessibilityIdentifier.contains("element"), "Generated ID should contain role")
-                XCTAssertTrue(accessibilityIdentifier.contains("main-ui"), "Generated ID should contain context")
+                XCTAssertTrue(accessibilityIdentifier.contains("main-addfuelbutton"), "Generated ID should contain context")
             } catch {
                 XCTFail("Failed to inspect accessibility identifier: \(error)")
             }
@@ -128,7 +129,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
-            .trackViewHierarchy("AddFuelButton")
+            .named("AddFuelButton")
             .screenContext("FuelView")
             
             // Then: Test the two critical aspects
@@ -142,9 +143,9 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
                 XCTAssertNotNil(accessibilityIdentifier, "View should have an accessibility identifier assigned")
                 XCTAssertFalse(accessibilityIdentifier.isEmpty, "Accessibility identifier should not be empty")
                 XCTAssertTrue(accessibilityIdentifier.hasPrefix("CarManager"), "Generated ID should start with namespace")
-                // Note: The actual format is "CarManager.main.element.main-ui-XXXX-649" based on debug output
+                // Note: The actual format is "CarManager.FuelView.element.fuelview-addfuelbutton-XXXX-XXX" based on debug output
                 XCTAssertTrue(accessibilityIdentifier.contains("element"), "Generated ID should contain role")
-                XCTAssertTrue(accessibilityIdentifier.contains("main-ui"), "Generated ID should contain context")
+                XCTAssertTrue(accessibilityIdentifier.contains("fuelview-addfuelbutton"), "Generated ID should contain context")
             } catch {
                 XCTFail("Failed to inspect accessibility identifier: \(error)")
             }

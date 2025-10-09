@@ -675,10 +675,10 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
     let viewName: String
     
     public func body(content: Content) -> some View {
-        content
-            .onAppear {
-                AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
-            }
+        // Push hierarchy immediately (synchronously) so it's available for ID generation
+        AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
+        
+        return content
             .onDisappear {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
@@ -693,10 +693,10 @@ public struct ScreenContextModifier: ViewModifier {
     let screenName: String
     
     public func body(content: Content) -> some View {
-        content
-            .onAppear {
-                AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
-            }
+        // Set screen context immediately (synchronously) so it's available for ID generation
+        AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
+        
+        return content
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
             .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
@@ -721,9 +721,17 @@ public struct NavigationStateModifier: ViewModifier {
 // MARK: - View Extensions for Breadcrumb Tracking
 
 public extension View {
+    /// Give this view a semantic name for accessibility identifier generation
+    /// - Parameter name: The semantic name to use for this view
+    /// - Returns: A view with a semantic name for accessibility identifiers
+    func named(_ name: String) -> some View {
+        modifier(ViewHierarchyTrackingModifier(viewName: name))
+    }
+    
     /// Track this view in the hierarchy for breadcrumb debugging
     /// - Parameter name: The name to use for this view in the hierarchy
     /// - Returns: A view that tracks its presence in the view hierarchy
+    @available(*, deprecated, renamed: "named", message: "Use .named() instead for clearer intent")
     func trackViewHierarchy(_ name: String) -> some View {
         modifier(ViewHierarchyTrackingModifier(viewName: name))
     }
