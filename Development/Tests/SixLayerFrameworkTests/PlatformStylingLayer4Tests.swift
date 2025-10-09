@@ -3,13 +3,13 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 
-/// Tests for IntelligentDetailView.swift
+/// Tests for PlatformStylingLayer4.swift
 /// 
-/// BUSINESS PURPOSE: Ensure IntelligentDetailView generates proper accessibility identifiers
-/// TESTING SCOPE: All components in IntelligentDetailView.swift
+/// BUSINESS PURPOSE: Ensure all styling Layer 4 components generate proper accessibility identifiers
+/// TESTING SCOPE: All components in PlatformStylingLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class IntelligentDetailViewTests: XCTestCase {
+final class PlatformStylingLayer4Tests: XCTestCase {
     
     // MARK: - Test Setup
     
@@ -31,11 +31,10 @@ final class IntelligentDetailViewTests: XCTestCase {
         config.resetToDefaults()
     }
     
-    // MARK: - IntelligentDetailView Tests
+    // MARK: - platformStyledContainer_L4 Tests
     
-    func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = IntelligentDetailView(
-            title: "Test Detail",
+    func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnIOS() async {
+        let view = platformStyledContainer_L4(
             content: {
                 Text("Test Content")
             }
@@ -43,17 +42,16 @@ final class IntelligentDetailViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*intelligentdetailview", 
+            expectedPattern: "SixLayer.*element.*platformstyledcontainer_l4", 
             platform: .iOS,
-            componentName: "IntelligentDetailView"
+            componentName: "platformStyledContainer_L4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers on iOS")
+        XCTAssertTrue(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on iOS")
     }
     
-    func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = IntelligentDetailView(
-            title: "Test Detail",
+    func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let view = platformStyledContainer_L4(
             content: {
                 Text("Test Content")
             }
@@ -61,11 +59,12 @@ final class IntelligentDetailViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*intelligentdetailview", 
+            expectedPattern: "SixLayer.*element.*platformstyledcontainer_l4", 
             platform: .macOS,
-            componentName: "IntelligentDetailView"
+            componentName: "platformStyledContainer_L4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers on macOS")
+        XCTAssertTrue(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on macOS")
     }
 }
+
