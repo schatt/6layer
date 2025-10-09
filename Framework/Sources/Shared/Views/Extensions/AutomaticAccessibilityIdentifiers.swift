@@ -714,6 +714,11 @@ public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
     public static let defaultValue: Bool = true  // ✅ Changed from false to true
 }
 
+/// Environment key for tracking manual accessibility identifiers
+public struct ManualAccessibilityIdentifierKey: EnvironmentKey {
+    public static let defaultValue: Bool = false
+}
+
 public extension EnvironmentValues {
     var disableAutomaticAccessibilityIdentifiers: Bool {
         get { self[DisableAutomaticAccessibilityIdentifiersKey.self] }
@@ -723,6 +728,11 @@ public extension EnvironmentValues {
     var globalAutomaticAccessibilityIdentifiers: Bool {
         get { self[GlobalAutomaticAccessibilityIdentifiersKey.self] }
         set { self[GlobalAutomaticAccessibilityIdentifiersKey.self] = newValue }
+    }
+    
+    var manualAccessibilityIdentifier: Bool {
+        get { self[ManualAccessibilityIdentifierKey.self] }
+        set { self[ManualAccessibilityIdentifierKey.self] = newValue }
     }
 }
 
