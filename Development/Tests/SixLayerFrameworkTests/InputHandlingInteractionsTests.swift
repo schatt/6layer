@@ -34,6 +34,7 @@
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
+import ViewInspector
 
 /// Comprehensive test suite for Input Handling & Interactions system
 /// Tests platform-specific input handling, keyboard shortcuts, haptic feedback, and drag & drop
@@ -43,12 +44,20 @@ final class InputHandlingInteractionsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Reset any state before each test
+        setupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = false
     }
     
     override func tearDown() {
-        // Clean up after each test
         super.tearDown()
+        cleanupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
     }
     
     // MARK: - InputHandlingManager Tests
@@ -688,6 +697,46 @@ final class InputHandlingInteractionsTests: XCTestCase {
             XCTAssertTrue(behavior.dragPreview == .none || behavior.dragPreview == .platform || behavior.dragPreview == .custom)
             XCTAssertTrue(behavior.dropIndicator == .none || behavior.dropIndicator == .platform || behavior.dropIndicator == .custom)
         }
+    }
+    
+    // MARK: - Accessibility Tests
+    
+    /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
+    /// for automated testing and accessibility tools compliance
+    func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnIOS() async {
+        // Given
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            Text("Test Button")
+        }
+        
+        // When & Then
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platforminteractionbutton", 
+            platform: .iOS,
+            componentName: "PlatformInteractionButton"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on iOS")
+    }
+    
+    /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
+    /// for automated testing and accessibility tools compliance on macOS
+    func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnMacOS() async {
+        // Given
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            Text("Test Button")
+        }
+        
+        // When & Then
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platforminteractionbutton", 
+            platform: .macOS,
+            componentName: "PlatformInteractionButton"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS")
     }
 }
 
