@@ -503,6 +503,7 @@ public extension View {
     /// Apply automatic accessibility identifiers to this view
     func automaticAccessibilityIdentifiers() -> some View {
         self.modifier(AutomaticAccessibilityIdentifierModifier())
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
     
     /// Disable automatic accessibility identifiers for this specific view
@@ -558,17 +559,34 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     
     @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutoIDs
+    @Environment(\.automaticAccessibilityIdentifiersEnabled) private var autoIDsEnabled
     
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        let shouldApplyAutoIDs = !disableAutoIDs && config.enableAutoIDs && globalAutoIDs
+        let shouldApplyAutoIDs = !disableAutoIDs && config.enableAutoIDs && (globalAutoIDs || autoIDsEnabled)
+        
+        // DEBUG: Log the conditions to understand what's happening
+        if config.enableDebugLogging {
+            print("🔍 AccessibilityIdentifierAssignmentModifier DEBUG:")
+            print("   disableAutoIDs: \(disableAutoIDs)")
+            print("   config.enableAutoIDs: \(config.enableAutoIDs)")
+            print("   globalAutoIDs: \(globalAutoIDs)")
+            print("   autoIDsEnabled: \(autoIDsEnabled)")
+            print("   shouldApplyAutoIDs: \(shouldApplyAutoIDs)")
+        }
         
         if shouldApplyAutoIDs {
             // Apply automatic identifier based on view context
-            content
-                .accessibilityIdentifier(generateAutomaticID())
+            let generatedID = generateAutomaticID()
+            if config.enableDebugLogging {
+                print("🔍 Applying automatic ID: '\(generatedID)'")
+            }
+            return AnyView(content.accessibilityIdentifier(generatedID))
         } else {
-            content
+            if config.enableDebugLogging {
+                print("🔍 NOT applying automatic ID - conditions not met")
+            }
+            return AnyView(content)
         }
     }
     
@@ -607,6 +625,18 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
 
 // MARK: - Environment Keys
 
+/// Environment key for enabling automatic accessibility identifiers for all child views
+public struct AutomaticAccessibilityIdentifiersEnabledKey: EnvironmentKey {
+    public static let defaultValue: Bool = false
+}
+
+public extension EnvironmentValues {
+    var automaticAccessibilityIdentifiersEnabled: Bool {
+        get { self[AutomaticAccessibilityIdentifiersEnabledKey.self] }
+        set { self[AutomaticAccessibilityIdentifiersEnabledKey.self] = newValue }
+    }
+}
+
 /// Environment key for disabling automatic accessibility identifiers
 public struct DisableAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
     public static let defaultValue: Bool = false
@@ -644,7 +674,8 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
+            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
 }
 
@@ -658,7 +689,8 @@ public struct ScreenContextModifier: ViewModifier {
                 AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
+            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
 }
 
@@ -672,7 +704,8 @@ public struct NavigationStateModifier: ViewModifier {
                 AccessibilityIdentifierConfig.shared.setNavigationState(navigationState)
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .automaticAccessibilityIdentifiers() // Automatically apply accessibility identifiers
+            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
 }
 
