@@ -37,8 +37,8 @@ final class ModalFormViewTests: XCTestCase {
         let testFields = [
             DynamicFormField(
                 id: "field1",
-                label: "Test Field 1",
                 contentType: .text,
+                label: "Test Field 1",
                 placeholder: "Enter text",
                 isRequired: true,
                 validationRules: [:]
@@ -72,8 +72,8 @@ final class ModalFormViewTests: XCTestCase {
         let testFields = [
             DynamicFormField(
                 id: "field1",
-                label: "Test Field 1",
                 contentType: .text,
+                label: "Test Field 1",
                 placeholder: "Enter text",
                 isRequired: true,
                 validationRules: [:]
