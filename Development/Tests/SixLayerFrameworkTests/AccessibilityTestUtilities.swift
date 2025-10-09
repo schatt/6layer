@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import XCTest
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -144,6 +145,88 @@ public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
     let wrapped = view.withGlobalAutoIDsEnabled()
     let root = hostRootPlatformView(wrapped)
     return firstAccessibilityIdentifier(inHosted: root)
+}
+
+// MARK: - Platform Mocking for Accessibility Tests
+
+/// MANDATORY: Test accessibility identifiers with platform mocking as required by testing guidelines
+/// This function REQUIRES platform mocking for any function that contains platform-dependent behavior
+/// 
+/// - Parameters:
+///   - view: The SwiftUI view to test
+///   - expectedPattern: The regex pattern to match against (use * for wildcards)
+///   - platform: The platform to mock for testing
+///   - componentName: Name of the component being tested (for debugging)
+/// - Returns: True if the view has an identifier matching the pattern on the specified platform
+@MainActor
+public func hasAccessibilityIdentifier<T: View>(
+    _ view: T, 
+    expectedPattern: String,
+    platform: SixLayerPlatform,
+    componentName: String = "Component"
+) -> Bool {
+    // Set up platform mocking as required by mandatory testing guidelines
+    TestSetupUtilities.shared.simulatePlatform(platform)
+    
+    // Get the actual accessibility identifier from the view
+    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
+        return false
+    }
+    
+    // Convert pattern to regex (replace * with .*)
+    let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
+    
+    do {
+        let regex = try NSRegularExpression(pattern: regexPattern)
+        let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
+        
+        if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
+            print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match on \(platform): '\(actualIdentifier)' matches '\(expectedPattern)'")
+            return true
+        } else {
+            print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern on \(platform). Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
+            return false
+        }
+    } catch {
+        print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)' on \(platform): \(error)")
+        return false
+    }
+}
+
+/// MANDATORY: Test accessibility identifiers with platform mocking for exact match
+/// This function REQUIRES platform mocking for any function that contains platform-dependent behavior
+/// 
+/// - Parameters:
+///   - view: The SwiftUI view to test
+///   - expectedIdentifier: The exact accessibility identifier to look for
+///   - platform: The platform to mock for testing
+///   - componentName: Name of the component being tested (for debugging)
+/// - Returns: True if the view has the exact expected identifier on the specified platform
+@MainActor
+public func hasAccessibilityIdentifier<T: View>(
+    _ view: T, 
+    expectedIdentifier: String,
+    platform: SixLayerPlatform,
+    componentName: String = "Component"
+) -> Bool {
+    // Set up platform mocking as required by mandatory testing guidelines
+    TestSetupUtilities.shared.simulatePlatform(platform)
+    
+    // Get the actual accessibility identifier from the view
+    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
+        return false
+    }
+    
+    // Check if it matches exactly
+    if actualIdentifier == expectedIdentifier {
+        print("✅ DISCOVERY: \(componentName) generates CORRECT accessibility identifier on \(platform): '\(actualIdentifier)'")
+        return true
+    } else {
+        print("⚠️ DISCOVERY: \(componentName) generates WRONG accessibility identifier on \(platform). Expected: '\(expectedIdentifier)', Got: '\(actualIdentifier)'")
+        return false
+    }
 }
 
 /// CRITICAL: Test if a view has the SPECIFIC accessibility identifier
