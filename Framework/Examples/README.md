@@ -32,7 +32,7 @@ Shows debugging and inspection capabilities:
 ### **EnhancedBreadcrumbExample.swift** (v4.1.3)
 Comprehensive example of the enhanced breadcrumb system:
 
-- **View hierarchy tracking** with `.trackViewHierarchy()`
+- **View hierarchy tracking** with `.named()`
 - **Screen context management** with `.screenContext()`
 - **UI test code generation** with file saving and clipboard
 - **Breadcrumb trail generation** with complete navigation paths

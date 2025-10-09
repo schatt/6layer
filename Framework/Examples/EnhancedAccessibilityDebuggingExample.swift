@@ -272,15 +272,15 @@ struct EnhancedDebuggingExample: View {
                 // View hierarchy tracking
                 VStack {
                     Text("Profile Information")
-                        .trackViewHierarchy("ProfileInfo")
+                        .named("ProfileInfo")
                     
                     Button("Edit Profile") { }
-                        .trackViewHierarchy("EditButton")
+                        .named("EditButton")
                     
                     Button("Save Changes") { }
-                        .trackViewHierarchy("SaveButton")
+                        .named("SaveButton")
                 }
-                .trackViewHierarchy("ProfileSection")
+                .named("ProfileSection")
                 
                 // Debug controls
                 VStack {
@@ -295,7 +295,7 @@ struct EnhancedDebuggingExample: View {
             }
             .navigationTitle("Enhanced Debugging")
         }
-        .trackViewHierarchy("NavigationView")
+        .named("NavigationView")
     }
 }
 

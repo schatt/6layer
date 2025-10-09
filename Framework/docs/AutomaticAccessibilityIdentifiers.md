@@ -175,11 +175,11 @@ AccessibilityIdentifierConfig.shared.enableViewHierarchyTracking = true
 NavigationView {
     VStack {
         Button("Save") { }
-            .trackViewHierarchy("SaveButton")
+            .named("SaveButton")
     }
-    .trackViewHierarchy("MainContent")
+    .named("MainContent")
 }
-.trackViewHierarchy("NavigationView")
+.named("NavigationView")
 ```
 
 ### Screen Context Awareness

@@ -91,33 +91,33 @@ struct EnhancedBreadcrumbExample: View {
                 .padding()
                 .background(Color.blue.opacity(0.1))
                 .cornerRadius(8)
-                .trackViewHierarchy("DebugControls")
+                .named("DebugControls")
                 
                 // Profile information section with hierarchy tracking
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Profile Information")
                         .font(.headline)
-                        .trackViewHierarchy("ProfileInfoHeader")
+                        .named("ProfileInfoHeader")
                     
                     Button("Edit Profile") { }
-                        .trackViewHierarchy("EditButton")
+                        .named("EditButton")
                     
                     Button("Save Changes") { }
-                        .trackViewHierarchy("SaveButton")
+                        .named("SaveButton")
                     
                     Button("Cancel") { }
-                        .trackViewHierarchy("CancelButton")
+                        .named("CancelButton")
                 }
                 .padding()
                 .background(Color.green.opacity(0.1))
                 .cornerRadius(8)
-                .trackViewHierarchy("ProfileSection")
+                .named("ProfileSection")
                 
                 // User list with hierarchy tracking
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Team Members")
                         .font(.headline)
-                        .trackViewHierarchy("TeamHeader")
+                        .named("TeamHeader")
                     
                     // This will generate accessibility IDs with hierarchy context
                     platformPresentItemCollection_L1(
@@ -130,39 +130,39 @@ struct EnhancedBreadcrumbExample: View {
                             customPreferences: [:]
                         )
                     )
-                    .trackViewHierarchy("UserList")
+                    .named("UserList")
                 }
                 .padding()
                 .background(Color.orange.opacity(0.1))
                 .cornerRadius(8)
-                .trackViewHierarchy("TeamSection")
+                .named("TeamSection")
                 
                 // Form with hierarchy tracking
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Settings")
                         .font(.headline)
-                        .trackViewHierarchy("SettingsHeader")
+                        .named("SettingsHeader")
                     
                     Button("Notifications") { }
-                        .trackViewHierarchy("NotificationsButton")
+                        .named("NotificationsButton")
                     
                     Button("Privacy") { }
-                        .trackViewHierarchy("PrivacyButton")
+                        .named("PrivacyButton")
                     
                     Button("Account") { }
-                        .trackViewHierarchy("AccountButton")
+                        .named("AccountButton")
                 }
                 .padding()
                 .background(Color.purple.opacity(0.1))
                 .cornerRadius(8)
-                .trackViewHierarchy("SettingsSection")
+                .named("SettingsSection")
                 
                 Spacer()
             }
             .padding()
             .navigationTitle("Enhanced Breadcrumb Demo")
         }
-        .trackViewHierarchy("NavigationView")
+        .named("NavigationView")
         .onAppear {
             // Enable enhanced debugging
             AccessibilityIdentifierConfig.shared.enableDebugLogging = true
