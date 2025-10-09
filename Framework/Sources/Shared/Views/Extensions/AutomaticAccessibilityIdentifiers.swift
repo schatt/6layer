@@ -545,7 +545,7 @@ public struct GlobalAutomaticAccessibilityIdentifierModifier: ViewModifier {
         content
             .environment(\.globalAutomaticAccessibilityIdentifiers, true)
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for ALL views
-            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
+            .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to this view
     }
 }
 
@@ -600,7 +600,6 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     }
     
     private func generateAutomaticID() -> String {
-        let generator = AccessibilityIdentifierGenerator()
         let config = AccessibilityIdentifierConfig.shared
         
         // Use view hierarchy context if available
@@ -611,16 +610,39 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
         // Generate a unique object ID based on view type and hierarchy
         let objectID = generateViewObjectID(context: context, screenContext: screenContext)
         
-        let id = generator.generateID(
-            for: objectID,
+        // Build identifier directly instead of going through generateID method
+        let identifier = buildIdentifier(
+            namespace: config.namespace,
+            context: screenContext,
             role: role,
-            context: screenContext
+            objectID: objectID
         )
         
-        // Additional logging for view-level assignment
-        config.logGeneratedID(id, context: "ViewModifier(\(context))")
+        // Register for collision detection
+        config.registerGeneratedID(identifier)
         
-        return id
+        // Log for debugging
+        config.logGeneratedID(identifier, context: "ViewModifier(\(context))")
+        
+        return identifier
+    }
+    
+    private func buildIdentifier(
+        namespace: String,
+        context: String,
+        role: String,
+        objectID: String
+    ) -> String {
+        let config = AccessibilityIdentifierConfig.shared
+        
+        switch config.mode {
+        case .automatic:
+            return "\(namespace).\(context).\(role).\(objectID)"
+        case .semantic:
+            return "\(namespace).\(role).\(objectID)"
+        case .minimal:
+            return "\(objectID)"
+        }
     }
     
     private func generateViewObjectID(context: String, screenContext: String) -> String {
@@ -683,8 +705,8 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
+            .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }
 
@@ -698,8 +720,8 @@ public struct ScreenContextModifier: ViewModifier {
         
         return content
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
+            .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }
 
@@ -713,8 +735,8 @@ public struct NavigationStateModifier: ViewModifier {
                 AccessibilityIdentifierConfig.shared.setNavigationState(navigationState)
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
+            .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }
 
