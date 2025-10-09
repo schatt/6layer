@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.3.0 - Framework Components Respect Global Config + Persistent IDs
+// SixLayerFramework v4.3.1 - Metal Rendering Crash Fix + Performance Layer Removal
 
 import PackageDescription
 
