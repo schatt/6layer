@@ -502,7 +502,7 @@ public extension View {
     
     /// Apply automatic accessibility identifiers to this view
     func automaticAccessibilityIdentifiers() -> some View {
-        self.modifier(AutomaticAccessibilityIdentifierModifier())
+        return self.modifier(AutomaticAccessibilityIdentifierModifier())
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
     
@@ -528,12 +528,15 @@ public extension View {
 // MARK: - Automatic Accessibility Identifier Modifier
 
 /// Modifier that automatically applies accessibility identifiers to views
+/// This modifier enables automatic IDs for this specific view, overriding global config
 public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
-        content
-            .modifier(AccessibilityIdentifierAssignmentModifier())
-            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
+        // Always apply automatic IDs when this modifier is used (local enable)
+        // This overrides global configuration by directly applying the assignment modifier
+        // We don't rely on environment variables - this modifier always works
+        return content
+            .modifier(AccessibilityIdentifierAssignmentModifier(isDirectApplication: true)) // Apply ID generation directly
     }
 }
 
@@ -570,9 +573,31 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutoIDs
     @Environment(\.automaticAccessibilityIdentifiersEnabled) private var autoIDsEnabled
     
+    // Flag to indicate this modifier was applied directly (not through environment)
+    let isDirectApplication: Bool
+    
+    public init(isDirectApplication: Bool = false) {
+        self.isDirectApplication = isDirectApplication
+    }
+    
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        let shouldApplyAutoIDs = !disableAutoIDs && config.enableAutoIDs && (globalAutoIDs || autoIDsEnabled)
+        
+        // Priority order: Local disable > Direct application > Local enable > Global config
+        let shouldApplyAutoIDs: Bool
+        if disableAutoIDs {
+            // Local disable takes highest priority
+            shouldApplyAutoIDs = false
+        } else if isDirectApplication {
+            // Direct application takes second priority (always works)
+            shouldApplyAutoIDs = true
+        } else if autoIDsEnabled {
+            // Local enable takes third priority (overrides global config)
+            shouldApplyAutoIDs = true
+        } else {
+            // Fall back to global config
+            shouldApplyAutoIDs = config.enableAutoIDs && globalAutoIDs
+        }
         
         // DEBUG: Log the conditions to understand what's happening
         if config.enableDebugLogging {
@@ -581,19 +606,29 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
             print("   config.enableAutoIDs: \(config.enableAutoIDs)")
             print("   globalAutoIDs: \(globalAutoIDs)")
             print("   autoIDsEnabled: \(autoIDsEnabled)")
+            print("   isDirectApplication: \(isDirectApplication)")
             print("   shouldApplyAutoIDs: \(shouldApplyAutoIDs)")
         }
         
         if shouldApplyAutoIDs {
             // Apply automatic identifier based on view context
             let generatedID = generateAutomaticID()
+            
+            // Warn about problematic characters
+            if generatedID.contains("@") || generatedID.contains("#") || generatedID.contains(" ") {
+                print("⚠️ WARNING: Generated accessibility ID contains characters that may cause UI testing issues")
+                print("   ID: '\(generatedID)'")
+                print("   Consider using alphanumeric characters and dashes/underscores only")
+            }
+            
             if config.enableDebugLogging {
                 print("🔍 Applying automatic ID: '\(generatedID)'")
             }
             return AnyView(content.accessibilityIdentifier(generatedID))
         } else {
+            // Don't apply any modifier - let user-specified accessibility identifiers work naturally
             if config.enableDebugLogging {
-                print("🔍 NOT applying automatic ID - conditions not met")
+                print("🔍 Not applying automatic ID - returning content unchanged")
             }
             return AnyView(content)
         }
@@ -646,11 +681,12 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     }
     
     private func generateViewObjectID(context: String, screenContext: String) -> String {
-        // Create a more meaningful object ID based on context
-        let timestamp = Int(Date().timeIntervalSince1970 * 1000) % 10000 // Last 4 digits of timestamp
-        let contextHash = abs(context.hashValue) % 1000 // Last 3 digits of context hash
+        // Create deterministic object ID based on context only (no timestamps)
+        // This ensures IDs are persistent across app launches
+        let contextHash = abs(context.hashValue) % 10000
+        let screenHash = abs(screenContext.hashValue) % 1000
         
-        return "\(screenContext.lowercased())-\(context.lowercased())-\(timestamp)-\(contextHash)"
+        return "\(screenContext.lowercased())-\(context.lowercased())-\(contextHash)-\(screenHash)"
     }
 }
 
@@ -696,6 +732,8 @@ public extension EnvironmentValues {
 public struct ViewHierarchyTrackingModifier: ViewModifier {
     let viewName: String
     
+    @Environment(\.automaticAccessibilityIdentifiersEnabled) private var autoIDsEnabled
+    
     public func body(content: Content) -> some View {
         // Push hierarchy immediately (synchronously) so it's available for ID generation
         AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
@@ -705,7 +743,6 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
             .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }
@@ -720,7 +757,6 @@ public struct ScreenContextModifier: ViewModifier {
         
         return content
             .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
             .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }

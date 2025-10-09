@@ -107,8 +107,9 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                     onItemEdited: onItemEdited
                 )
             }
+            .padding(layoutDecision.padding)
+            .automaticAccessibility()
         }
-        .padding(layoutDecision.padding)
     }
 }
 

@@ -56,6 +56,7 @@ public struct AutomaticAccessibilityModifier: ViewModifier {
                 isEnabled: accessibilityState.isReducedMotionEnabled
             ))
             .modifier(DynamicTypeModifier())
+            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
     }
 }
 

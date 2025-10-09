@@ -127,7 +127,7 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
     
     private var cardBackground: some View {
         RoundedRectangle(cornerRadius: 12)
-            .fill(.regularMaterial)
+            .fill(Color.platformSecondaryBackground)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(borderColor, lineWidth: borderWidth)

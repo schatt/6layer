@@ -21,29 +21,46 @@ The automatic accessibility identifier system provides:
 
 ### ✅ Automatic Identifiers Now Work by Default!
 
-As of SixLayerFramework 4.2.2, automatic accessibility identifiers are **enabled by default** and work automatically. You only need to call `.enableGlobalAutomaticAccessibilityIdentifiers()` once at your app level.
+As of SixLayerFramework 4.3.0, automatic accessibility identifiers are **enabled by default** and work automatically. **No setup required!**
 
-### Enable Automatic Identifiers (Required - One Time Setup)
+### Framework Components vs Custom Views
+
+**Framework Components (L1-L6) automatically get accessibility identifiers:**
+```swift
+// ✅ These automatically get accessibility identifiers (no setup needed!)
+platformPresentContent_L1(content: Button("Add Fuel") { })
+platformFormContainer_L4(content: VStack { })
+platformNavigationLink_L4_BasicDestination(destination: Text("Next"))
+```
+
+**Custom Views need explicit enablement:**
+```swift
+// ❌ Plain SwiftUI views don't get automatic IDs
+Button("Custom Button") { }
+    .named("CustomButton")  // ← Only tracks hierarchy
+
+// ✅ Enable automatic IDs for custom views
+Button("Custom Button") { }
+    .named("CustomButton")
+    .enableGlobalAutomaticAccessibilityIdentifiers()  // ← Gets automatic ID
+```
+
+### Global Configuration (Optional)
 
 ```swift
-// 1. Configure the global settings (optional - defaults are already good)
+// Configure global settings (optional - defaults are already good)
 AccessibilityIdentifierConfig.shared.enableAutoIDs = true  // ✅ Already true by default
 AccessibilityIdentifierConfig.shared.namespace = "myapp"   // ✅ Default is "app"
 AccessibilityIdentifierConfig.shared.mode = .automatic     // ✅ Already automatic by default
-
-// 2. Enable automatic identifiers globally (REQUIRED - call once at app level)
-@main
-struct MyApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .enableGlobalAutomaticAccessibilityIdentifiers() // ✅ REQUIRED - enables automatic IDs for ALL views
-        }
-    }
-}
 ```
 
-**That's it!** All your views will now automatically get accessibility identifiers without any additional code.
+**That's it!** Framework components automatically get accessibility identifiers without any additional code.
+
+### ⚠️ Important: GlobalAutomaticAccessibilityIdentifierModifier is Unnecessary
+
+**For Framework Components:** The `GlobalAutomaticAccessibilityIdentifierModifier` is **not needed** because framework components automatically check the global configuration and apply accessibility identifiers when appropriate.
+
+**For Custom Views:** You still need `.enableGlobalAutomaticAccessibilityIdentifiers()` to enable automatic IDs for plain SwiftUI views.
 
 ### Use with Layer 1 Functions
 
@@ -58,10 +75,41 @@ let view = platformPresentItemCollection_L1(
 
 ### Manual Override
 
+**Manual accessibility identifiers always override automatic ones:**
+
 ```swift
-// Manual identifiers always override automatic ones
+// ✅ Correct usage - manual ID overrides automatic
 Button("Save") { }
-    .platformAccessibilityIdentifier("custom-save-button")
+    .named("SaveButton")
+    .accessibilityIdentifier("custom-save-button")  // ← Manual ID wins
+
+// ❌ Incorrect usage - automatic ID overwrites manual
+Button("Save") { }
+    .accessibilityIdentifier("custom-save-button")  // ← Gets overwritten
+    .named("SaveButton")
+```
+
+**Important:** Apply `.accessibilityIdentifier()` AFTER framework modifiers to ensure manual IDs take precedence.
+
+### Enabling Automatic IDs for Custom Views
+
+**For complex custom views, enable automatic IDs:**
+
+```swift
+// Custom view with automatic IDs
+struct CustomFuelView: View {
+    var body: some View {
+        VStack {
+            Button("Add Fuel") { }
+                .named("AddFuelButton")
+            
+            Button("Remove Fuel") { }
+                .named("RemoveFuelButton")
+        }
+        .named("FuelManagement")
+        .enableGlobalAutomaticAccessibilityIdentifiers()  // ← Enables automatic IDs
+    }
+}
 ```
 
 ### Opt-out for Specific Views
@@ -402,9 +450,67 @@ Enhanced breadcrumb system examples including:
 
 ## Version History
 
+- **v4.3.0**: **BREAKING CHANGE** - Framework components now automatically respect global configuration. `GlobalAutomaticAccessibilityIdentifierModifier` is no longer needed for framework components. Added deterministic ID generation for persistence across app launches.
 - **v4.1.0**: Enhanced breadcrumb system with view hierarchy tracking, screen context awareness, and UI test code generation
 - **v4.0.1**: Added debugging capabilities for inspecting generated IDs
 - **v4.0.0**: Initial implementation with automatic identifiers enabled by default
+
+## Architectural Changes (v4.3.0)
+
+### Framework Components Now Respect Global Config
+
+**Before v4.3.0:**
+```swift
+// Framework components always generated IDs regardless of global config
+platformPresentContent_L1(content: Button("Test") { })
+// Always generated ID, even if global config was disabled
+```
+
+**After v4.3.0:**
+```swift
+// Framework components check global config automatically
+AccessibilityIdentifierConfig.shared.enableAutoIDs = false
+platformPresentContent_L1(content: Button("Test") { })
+// No ID generated - respects global config
+
+AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+platformPresentContent_L1(content: Button("Test") { })
+// ID generated - respects global config
+```
+
+### GlobalAutomaticAccessibilityIdentifierModifier is Unnecessary
+
+**For Framework Components:**
+- ✅ **No longer needed** - framework components automatically check global config
+- ✅ **Cleaner API** - no redundant modifier calls required
+- ✅ **Better separation** - framework vs custom view behavior is clear
+
+**For Custom Views:**
+- ⚠️ **Still required** - plain SwiftUI views need explicit enabling
+- ✅ **Explicit control** - developers choose when to enable automatic IDs
+
+### Migration Guide
+
+**If you were using `.enableGlobalAutomaticAccessibilityIdentifiers()` with framework components:**
+
+```swift
+// ❌ Before v4.3.0 (redundant)
+platformPresentContent_L1(content: Button("Test") { })
+    .enableGlobalAutomaticAccessibilityIdentifiers()
+
+// ✅ After v4.3.0 (automatic)
+platformPresentContent_L1(content: Button("Test") { })
+// No modifier needed - framework components handle this automatically
+```
+
+**If you were using `.enableGlobalAutomaticAccessibilityIdentifiers()` with custom views:**
+
+```swift
+// ✅ Still needed for custom views
+Button("Custom") { }
+    .named("CustomButton")
+    .enableGlobalAutomaticAccessibilityIdentifiers()
+```
 
 ## Related Documentation
 

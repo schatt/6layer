@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.3.0 - API Rename: .trackViewHierarchy() → .named()
+// SixLayerFramework v4.3.0 - Framework Components Respect Global Config + Persistent IDs
 
 import PackageDescription
 
@@ -57,11 +57,5 @@ let package = Package(
             ]
         ),
         
-        // UI Test target for XCUITest
-        .testTarget(
-            name: "SixLayerFrameworkUITests",
-            dependencies: ["SixLayerFramework"],
-            path: "Development/Tests/SixLayerFrameworkUITests"
-        )
     ]
 )

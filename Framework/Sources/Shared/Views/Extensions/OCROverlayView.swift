@@ -199,6 +199,7 @@ public struct OCROverlayView: View {
         }
         .accessibilityLabel("OCR Text Overlay")
         .accessibilityHint("Tap text regions to edit")
+        .automaticAccessibility()
     }
     
     // MARK: - Public Methods

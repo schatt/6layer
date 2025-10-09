@@ -41,13 +41,17 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v4.1.3
+## 🆕 Latest Release: v4.3.0
 
-### **Fix Critical Automatic Accessibility Identifier Bug**
-🚨 **Critical Bug Fix**: Fixed critical bug where GlobalAutomaticAccessibilityIdentifierModifier wasn't setting environment value. Automatic accessibility identifiers now work properly with the global modifier.
+### **Major Architectural Improvement: Framework Components Now Respect Global Config**
+🎯 **Breaking Change**: Framework components now automatically check the global accessibility configuration. `GlobalAutomaticAccessibilityIdentifierModifier` is no longer needed for framework components.
 
 **Highlights:**
-- ✅ **Complete Automatic Accessibility Identifiers** - Now works for all Layers 1-6
+- ✅ **Cleaner API** - Framework components automatically respect global config
+- ✅ **Better Separation** - Clear distinction between framework and custom view behavior  
+- ✅ **Persistent IDs** - Accessibility identifiers now persist across app launches
+- ✅ **Deterministic Generation** - IDs based on view structure, not timestamps
+- ✅ **Complete Automatic Accessibility Identifiers** - Works for all Layers 1-6
 - ✅ **Comprehensive Test Coverage** - 1,662 tests passing with 0 failures
 - ✅ **Mandatory Testing Rules** - Established TDD methodology for future development
 - ✅ **Layer 4-6 Functions Fixed** - Photo components, performance extensions, haptic feedback

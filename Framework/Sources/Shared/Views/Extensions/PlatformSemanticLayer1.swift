@@ -357,8 +357,11 @@ public func platformPresentTemporalData_L1(
 public func platformPresentContent_L1(
     content: Any,
     hints: PresentationHints
-) -> AnyView {
-    return AnyView(GenericContentView(content: content, hints: hints))
+) -> some View {
+        return GenericContentView(content: content, hints: hints)
+            .automaticAccessibility()
+            .platformPatterns()
+            .visualConsistency()
 }
 
 /// Present basic numeric values (Int, Float, Double, Bool) with appropriate formatting
@@ -367,7 +370,10 @@ public func platformPresentBasicValue_L1(
     value: Any,
     hints: PresentationHints
 ) -> AnyView {
-    return AnyView(BasicValueView(value: value, hints: hints))
+    return AnyView(BasicValueView(value: value, hints: hints)
+        .automaticAccessibility()
+        .platformPatterns()
+        .visualConsistency())
 }
 
 /// Present basic arrays with appropriate formatting
@@ -376,7 +382,10 @@ public func platformPresentBasicArray_L1(
     array: Any,
     hints: PresentationHints
 ) -> AnyView {
-    return AnyView(BasicArrayView(array: array, hints: hints))
+    return AnyView(BasicArrayView(array: array, hints: hints)
+        .automaticAccessibility()
+        .platformPatterns()
+        .visualConsistency())
 }
 
 /// Generic function for presenting settings interface
@@ -926,9 +935,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
                 .appleHIGCompliant()
                 .automaticAccessibility()
                 .platformPatterns()
-                .visualConsistency()
-                .platformPerformanceOptimized(for: SixLayerPlatform.currentPlatform)
-                .platformMemoryOptimized(for: SixLayerPlatform.currentPlatform))
+                .visualConsistency())
         }
         
         // Layer 1: Intelligent presentation decision based on hints and platform
@@ -996,9 +1003,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
             .appleHIGCompliant()
             .automaticAccessibility()
             .platformPatterns()
-            .visualConsistency()
-            .platformPerformanceOptimized(for: SixLayerPlatform.currentPlatform)
-            .platformMemoryOptimized(for: SixLayerPlatform.currentPlatform))
+            .visualConsistency())
     }
     
     /// Determine the optimal presentation strategy based on hints and platform
@@ -1400,8 +1405,6 @@ public struct GenericNumericDataView: View {
             .automaticAccessibility()
             .platformPatterns()
             .visualConsistency()
-            .platformPerformanceOptimized(for: SixLayerPlatform.current)
-            .platformMemoryOptimized(for: SixLayerPlatform.current)
     }
 }
 

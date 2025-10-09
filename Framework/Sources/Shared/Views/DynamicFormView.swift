@@ -48,6 +48,9 @@ public struct DynamicFormView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
         #endif
+        .automaticAccessibility()
+        .platformPatterns()
+        .visualConsistency()
     }
     
     // MARK: - Action Handlers
