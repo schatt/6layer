@@ -35,10 +35,21 @@ final class OCRViewTests: XCTestCase {
     
     func testOCRViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
+        let context = OCRContext()
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
+        )
         
         let view = OCRView(
             image: testImage,
-            onResult: { _ in }
+            context: context,
+            strategy: strategy,
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -53,10 +64,21 @@ final class OCRViewTests: XCTestCase {
     
     func testOCRViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
+        let context = OCRContext()
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
+        )
         
         let view = OCRView(
             image: testImage,
-            onResult: { _ in }
+            context: context,
+            strategy: strategy,
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
