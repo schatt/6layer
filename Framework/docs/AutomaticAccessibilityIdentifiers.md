@@ -21,9 +21,9 @@ The automatic accessibility identifier system provides:
 
 ### ✅ Automatic Identifiers Now Work by Default!
 
-As of SixLayerFramework 4.2.0, automatic accessibility identifiers are **enabled by default**. You no longer need to explicitly call `.enableGlobalAutomaticAccessibilityIdentifiers()` unless you want to be explicit about it.
+As of SixLayerFramework 4.2.2, automatic accessibility identifiers are **enabled by default** and work automatically. You only need to call `.enableGlobalAutomaticAccessibilityIdentifiers()` once at your app level.
 
-### Enable Automatic Identifiers (Optional Configuration)
+### Enable Automatic Identifiers (Required - One Time Setup)
 
 ```swift
 // 1. Configure the global settings (optional - defaults are already good)
@@ -31,19 +31,19 @@ AccessibilityIdentifierConfig.shared.enableAutoIDs = true  // ✅ Already true b
 AccessibilityIdentifierConfig.shared.namespace = "myapp"   // ✅ Default is "app"
 AccessibilityIdentifierConfig.shared.mode = .automatic     // ✅ Already automatic by default
 
-// 2. Automatic identifiers are now enabled by default!
-// No need to add .enableGlobalAutomaticAccessibilityIdentifiers() unless you want to be explicit
+// 2. Enable automatic identifiers globally (REQUIRED - call once at app level)
 @main
 struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                // ✅ Automatic identifiers work by default now!
-                // .enableGlobalAutomaticAccessibilityIdentifiers() // Optional - no longer required
+                .enableGlobalAutomaticAccessibilityIdentifiers() // ✅ REQUIRED - enables automatic IDs for ALL views
         }
     }
 }
 ```
+
+**That's it!** All your views will now automatically get accessibility identifiers without any additional code.
 
 ### Use with Layer 1 Functions
 

@@ -516,6 +516,13 @@ public extension View {
     func enableGlobalAutomaticAccessibilityIdentifiers() -> some View {
         self.modifier(GlobalAutomaticAccessibilityIdentifierModifier())
     }
+    
+    /// Automatically apply accessibility identifiers to ALL views globally
+    /// This is the default behavior - no need to call this manually
+    func automaticAccessibilityIdentifiersGlobal() -> some View {
+        self.modifier(AutomaticAccessibilityIdentifierModifier())
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
+    }
 }
 
 // MARK: - Automatic Accessibility Identifier Modifier
@@ -526,6 +533,7 @@ public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .modifier(AccessibilityIdentifierAssignmentModifier())
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
 }
 
@@ -536,7 +544,8 @@ public struct GlobalAutomaticAccessibilityIdentifierModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .environment(\.globalAutomaticAccessibilityIdentifiers, true)
-            .modifier(AccessibilityIdentifierAssignmentModifier())
+            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for ALL views
+            .modifier(AutomaticAccessibilityIdentifierModifier()) // Apply to this view
     }
 }
 
