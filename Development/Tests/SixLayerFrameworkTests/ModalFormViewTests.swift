@@ -38,7 +38,7 @@ final class ModalFormViewTests: XCTestCase {
             DynamicFormField(
                 id: "field1",
                 label: "Test Field 1",
-                type: .text,
+                contentType: .text,
                 placeholder: "Enter text",
                 isRequired: true,
                 validationRules: [:]
@@ -46,10 +46,16 @@ final class ModalFormViewTests: XCTestCase {
         ]
         
         let view = ModalFormView(
-            title: "Test Modal",
             fields: testFields,
-            onSubmit: { _ in },
-            onCancel: {}
+            formType: .generic,
+            context: .modal,
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -67,7 +73,7 @@ final class ModalFormViewTests: XCTestCase {
             DynamicFormField(
                 id: "field1",
                 label: "Test Field 1",
-                type: .text,
+                contentType: .text,
                 placeholder: "Enter text",
                 isRequired: true,
                 validationRules: [:]
@@ -75,10 +81,16 @@ final class ModalFormViewTests: XCTestCase {
         ]
         
         let view = ModalFormView(
-            title: "Test Modal",
             fields: testFields,
-            onSubmit: { _ in },
-            onCancel: {}
+            formType: .generic,
+            context: .modal,
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

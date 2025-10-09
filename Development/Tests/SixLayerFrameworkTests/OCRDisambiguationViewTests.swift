@@ -34,11 +34,24 @@ final class OCRDisambiguationViewTests: XCTestCase {
     // MARK: - OCRDisambiguationView Tests
     
     func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let alternatives = ["Option 1", "Option 2", "Option 3"]
+        let candidates = [
+            OCRDataCandidate(
+                text: "Test Text",
+                boundingBox: CGRect(x: 0, y: 0, width: 100, height: 20),
+                confidence: 0.95,
+                suggestedType: .general,
+                alternativeTypes: [.email, .phone]
+            )
+        ]
+        
+        let result = OCRDisambiguationResult(
+            candidates: candidates,
+            confidence: 0.95,
+            requiresUserSelection: true
+        )
         
         let view = OCRDisambiguationView(
-            recognizedText: "Test Text",
-            alternatives: alternatives,
+            result: result,
             onSelection: { _ in }
         )
         
@@ -53,11 +66,24 @@ final class OCRDisambiguationViewTests: XCTestCase {
     }
     
     func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let alternatives = ["Option 1", "Option 2", "Option 3"]
+        let candidates = [
+            OCRDataCandidate(
+                text: "Test Text",
+                boundingBox: CGRect(x: 0, y: 0, width: 100, height: 20),
+                confidence: 0.95,
+                suggestedType: .general,
+                alternativeTypes: [.email, .phone]
+            )
+        ]
+        
+        let result = OCRDisambiguationResult(
+            candidates: candidates,
+            confidence: 0.95,
+            requiresUserSelection: true
+        )
         
         let view = OCRDisambiguationView(
-            recognizedText: "Test Text",
-            alternatives: alternatives,
+            result: result,
             onSelection: { _ in }
         )
         

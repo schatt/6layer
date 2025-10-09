@@ -34,10 +34,22 @@ final class OCROverlayViewTests: XCTestCase {
     // MARK: - OCROverlayView Tests
     
     func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = OCROverlayView(
-            text: "Test OCR Text",
+        let testImage = PlatformImage()
+        let testResult = OCRResult(
+            extractedText: "Test OCR Text",
             confidence: 0.95,
-            onTap: {}
+            boundingBoxes: [],
+            textTypes: [:],
+            processingTime: 1.0,
+            language: .english
+        )
+        
+        let view = OCROverlayView(
+            image: testImage,
+            result: testResult,
+            configuration: OCROverlayConfiguration(),
+            onTextEdit: { _, _ in },
+            onTextDelete: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -51,10 +63,22 @@ final class OCROverlayViewTests: XCTestCase {
     }
     
     func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = OCROverlayView(
-            text: "Test OCR Text",
+        let testImage = PlatformImage()
+        let testResult = OCRResult(
+            extractedText: "Test OCR Text",
             confidence: 0.95,
-            onTap: {}
+            boundingBoxes: [],
+            textTypes: [:],
+            processingTime: 1.0,
+            language: .english
+        )
+        
+        let view = OCROverlayView(
+            image: testImage,
+            result: testResult,
+            configuration: OCROverlayConfiguration(),
+            onTextEdit: { _, _ in },
+            onTextDelete: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
