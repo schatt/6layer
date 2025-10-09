@@ -3,33 +3,19 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 
-/// Comprehensive Accessibility Tests for ALL SixLayer Layer 1 Functions
+/// Comprehensive Accessibility Tests for ALL Layer 1 Functions
 /// 
 /// BUSINESS PURPOSE: Ensure every Layer 1 function generates proper accessibility identifiers
-/// TESTING SCOPE: All public Layer 1 presentation functions
-/// METHODOLOGY: Test each Layer 1 function to verify accessibility identifier generation
+/// TESTING SCOPE: All Layer 1 presentation functions with platform mocking as required by mandatory testing guidelines
+/// METHODOLOGY: Test each function on both iOS and macOS platforms to verify accessibility identifier generation
 @MainActor
 final class AllLayer1FunctionsAccessibilityTests: XCTestCase {
     
     // MARK: - Test Setup
     
-    private var testItems: [Layer1TestItem]!
-    private var testHints: PresentationHints!
-    
     override func setUp() {
         super.setUp()
-        testItems = [
-            Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
-            Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
-        ]
-        testHints = PresentationHints(
-            dataType: .generic,
-            presentationPreference: .grid,
-            complexity: .moderate,
-            context: .list,
-            customPreferences: [:]
-        )
-        
+        setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -39,328 +25,652 @@ final class AllLayer1FunctionsAccessibilityTests: XCTestCase {
     }
     
     override func tearDown() {
-        testItems = nil
-        testHints = nil
         super.tearDown()
+        cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
-    // MARK: - platformResponsiveCard_L1 Tests
-    
-    func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformResponsiveCard_L1(
-            content: AnyView(Text("Test Content")),
-            hints: testHints!
-        )
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformresponsivecard", 
-            componentName: "platformResponsiveCard_L1"
-        )
-        
-        XCTAssertTrue(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers")
-    }
-    
     // MARK: - platformPresentItemCollection_L1 Tests
     
-    func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentItemCollection_L1<Layer1TestItem>(
-            items: testItems!,
-            hints: testHints!
+    func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testItems = [
+            Layer1TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+            Layer1TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+        ]
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .grid,
+            complexity: .moderate,
+            context: .list,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentItemCollection_L1(items: testItems, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentitemcollection", 
+            expectedPattern: "SixLayer.*element.*platformpresentitemcollection_l1", 
+            platform: .iOS,
             componentName: "platformPresentItemCollection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on iOS")
     }
     
-    // MARK: - platformPresentFormData_L1 Tests
-    
-    func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentFormData_L1(
-            field: DynamicFormField(id: "test", contentType: .text, label: "Test Field"),
-            hints: PresentationHints()
+    func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testItems = [
+            Layer1TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+            Layer1TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+        ]
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .grid,
+            complexity: .moderate,
+            context: .list,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentItemCollection_L1(items: testItems, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentformdata", 
-            componentName: "platformPresentFormData_L1"
+            expectedPattern: "SixLayer.*element.*platformpresentitemcollection_l1", 
+            platform: .macOS,
+            componentName: "platformPresentItemCollection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentNumericData_L1 Tests
     
-    func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentNumericData_L1(
-            data: GenericNumericData(value: 123.45, label: "Test Value", unit: "units"),
-            hints: PresentationHints()
+    func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testData = GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
+        let hints = PresentationHints(
+            dataType: .numeric,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .detail,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentNumericData_L1(data: testData, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentnumericdata", 
+            expectedPattern: "SixLayer.*element.*platformpresentnumericdata_l1", 
+            platform: .iOS,
             componentName: "platformPresentNumericData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testData = GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
+        let hints = PresentationHints(
+            dataType: .numeric,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .detail,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentNumericData_L1(data: testData, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentnumericdata_l1", 
+            platform: .macOS,
+            componentName: "platformPresentNumericData_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - platformPresentFormData_L1 Tests
+    
+    func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testField = DynamicFormField(
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text",
+            isRequired: true,
+            validationRules: []
+        )
+        let hints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .list,
+            complexity: .moderate,
+            context: .form,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentFormData_L1(field: testField, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentformdata_l1", 
+            platform: .iOS,
+            componentName: "platformPresentFormData_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testField = DynamicFormField(
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text",
+            isRequired: true,
+            validationRules: []
+        )
+        let hints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .list,
+            complexity: .moderate,
+            context: .form,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentFormData_L1(field: testField, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentformdata_l1", 
+            platform: .macOS,
+            componentName: "platformPresentFormData_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentMediaData_L1 Tests
     
-    func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentMediaData_L1(
-            media: GenericMediaItem(title: "Test Media", url: "https://example.com"),
-            hints: PresentationHints()
+    func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testMedia = GenericMediaItem(title: "Test Media", url: "https://example.com")
+        let hints = PresentationHints(
+            dataType: .media,
+            presentationPreference: .grid,
+            complexity: .simple,
+            context: .gallery,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentMediaData_L1(media: testMedia, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentmediadata", 
+            expectedPattern: "SixLayer.*element.*platformpresentmediadata_l1", 
+            platform: .iOS,
             componentName: "platformPresentMediaData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testMedia = GenericMediaItem(title: "Test Media", url: "https://example.com")
+        let hints = PresentationHints(
+            dataType: .media,
+            presentationPreference: .grid,
+            complexity: .simple,
+            context: .gallery,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentMediaData_L1(media: testMedia, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentmediadata_l1", 
+            platform: .macOS,
+            componentName: "platformPresentMediaData_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentSettings_L1 Tests
     
-    func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentSettings_L1(
-            settings: [
-                SettingsSectionData(
-                    title: "General",
-                    items: [
-                        SettingsItemData(key: "theme", title: "Theme", type: .toggle, value: "dark"),
-                        SettingsItemData(key: "notifications", title: "Notifications", type: .toggle, value: "enabled")
-                    ]
-                )
-            ],
-            hints: PresentationHints()
+    func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testSettings = [
+            SettingsSectionData(
+                title: "Test Section",
+                items: [
+                    SettingsItemData(
+                        id: "testItem",
+                        title: "Test Item",
+                        type: .toggle,
+                        value: true
+                    )
+                ]
+            )
+        ]
+        let hints = PresentationHints(
+            dataType: .settings,
+            presentationPreference: .list,
+            complexity: .simple,
+            context: .settings,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentSettings_L1(settings: testSettings, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentsettings", 
+            expectedPattern: "SixLayer.*element.*platformpresentsettings_l1", 
+            platform: .iOS,
             componentName: "platformPresentSettings_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testSettings = [
+            SettingsSectionData(
+                title: "Test Section",
+                items: [
+                    SettingsItemData(
+                        id: "testItem",
+                        title: "Test Item",
+                        type: .toggle,
+                        value: true
+                    )
+                ]
+            )
+        ]
+        let hints = PresentationHints(
+            dataType: .settings,
+            presentationPreference: .list,
+            complexity: .simple,
+            context: .settings,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentSettings_L1(settings: testSettings, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentsettings_l1", 
+            platform: .macOS,
+            componentName: "platformPresentSettings_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentContent_L1 Tests
     
-    func testPlatformPresentContentL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentContent_L1(
-            content: AnyView(Text("Test Content")),
-            hints: PresentationHints()
+    func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testContent = "Test Content"
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .detail,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentContent_L1(content: testContent, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentcontent", 
+            expectedPattern: "SixLayer.*element.*platformpresentcontent_l1", 
+            platform: .iOS,
             componentName: "platformPresentContent_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testContent = "Test Content"
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .detail,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentContent_L1(content: testContent, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentcontent_l1", 
+            platform: .macOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentBasicValue_L1 Tests
     
-    func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentBasicValue_L1(
-            value: "Test Value",
-            hints: PresentationHints()
+    func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testValue = 42
+        let hints = PresentationHints(
+            dataType: .numeric,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .detail,
+            customPreferences: [:]
         )
+        
+        let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentbasicvalue", 
+            expectedPattern: "SixLayer.*element.*platformpresentbasicvalue_l1", 
+            platform: .iOS,
             componentName: "platformPresentBasicValue_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on iOS")
     }
     
-    // MARK: - platformPresentHierarchicalData_L1 Tests
+    func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testValue = 42
+        let hints = PresentationHints(
+            dataType: .numeric,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .detail,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentbasicvalue_l1", 
+            platform: .macOS,
+            componentName: "platformPresentBasicValue_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on macOS")
+    }
     
-    func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentHierarchicalData_L1(
-            data: HierarchicalData(title: "Test Hierarchy", children: []),
-            hints: PresentationHints()
+    // MARK: - platformPresentBasicArray_L1 Tests
+    
+    func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testArray = [1, 2, 3, 4, 5]
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .list,
+            complexity: .simple,
+            context: .list,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentbasicarray_l1", 
+            platform: .iOS,
+            componentName: "platformPresentBasicArray_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testArray = [1, 2, 3, 4, 5]
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .list,
+            complexity: .simple,
+            context: .list,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentbasicarray_l1", 
+            platform: .macOS,
+            componentName: "platformPresentBasicArray_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - platformResponsiveCard_L1 Tests
+    
+    func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .card,
+            customPreferences: [:]
+        )
+        
+        let view = platformResponsiveCard_L1(content: {
+            Text("Test Card Content")
+        }, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformresponsivecard_l1", 
+            platform: .iOS,
+            componentName: "platformResponsiveCard_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .card,
+            complexity: .simple,
+            context: .card,
+            customPreferences: [:]
+        )
+        
+        let view = platformResponsiveCard_L1(content: {
+            Text("Test Card Content")
+        }, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformresponsivecard_l1", 
+            platform: .macOS,
+            componentName: "platformResponsiveCard_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - platformPresentLocalizedContent_L1 Tests
+    
+    func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let hints = InternationalizationHints()
+        
+        let view = platformPresentLocalizedContent_L1(content: {
+            Text("Test Localized Content")
+        }, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentlocalizedcontent_l1", 
+            platform: .iOS,
+            componentName: "platformPresentLocalizedContent_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let hints = InternationalizationHints()
+        
+        let view = platformPresentLocalizedContent_L1(content: {
+            Text("Test Localized Content")
+        }, hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentlocalizedcontent_l1", 
+            platform: .macOS,
+            componentName: "platformPresentLocalizedContent_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - platformPresentLocalizedText_L1 Tests
+    
+    func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let hints = InternationalizationHints()
+        
+        let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentlocalizedtext_l1", 
+            platform: .iOS,
+            componentName: "platformPresentLocalizedText_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let hints = InternationalizationHints()
+        
+        let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformpresentlocalizedtext_l1", 
+            platform: .macOS,
+            componentName: "platformPresentLocalizedText_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - platformOCRWithVisualCorrection_L1 Tests
+    
+    func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
+        )
+        
+        let view = platformOCRWithVisualCorrection_L1(
+            image: testImage,
+            context: context,
+            onResult: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresenthierarchicaldata", 
-            componentName: "platformPresentHierarchicalData_L1"
+            expectedPattern: "SixLayer.*element.*platformocrwithvisualcorrection_l1", 
+            platform: .iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
     }
     
-    // MARK: - platformPresentTemporalData_L1 Tests
-    
-    func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentTemporalData_L1(
-            data: TemporalData(title: "Test Temporal", timestamp: Date()),
-            hints: PresentationHints()
+    func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
+        )
+        
+        let view = platformOCRWithVisualCorrection_L1(
+            image: testImage,
+            context: context,
+            onResult: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresenttemporaldata", 
-            componentName: "platformPresentTemporalData_L1"
+            expectedPattern: "SixLayer.*element.*platformocrwithvisualcorrection_l1", 
+            platform: .macOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
     }
     
-    // MARK: - platformPresentNavigation_L1 Tests
+    // MARK: - platformExtractStructuredData_L1 Tests
     
-    func testPlatformPresentNavigationL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentNavigation_L1(
-            items: [
-                NavigationItem(id: "nav1", title: "Home", destination: AnyView(Text("Home"))),
-                NavigationItem(id: "nav2", title: "Settings", destination: AnyView(Text("Settings")))
-            ],
-            hints: PresentationHints()
+    func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
+        )
+        
+        let view = platformExtractStructuredData_L1(
+            image: testImage,
+            context: context,
+            onResult: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentnavigation", 
-            componentName: "platformPresentNavigation_L1"
+            expectedPattern: "SixLayer.*element.*platformextractstructureddata_l1", 
+            platform: .iOS,
+            componentName: "platformExtractStructuredData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentNavigation_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on iOS")
     }
     
-    // MARK: - platformPresentAction_L1 Tests
-    
-    func testPlatformPresentActionL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentAction_L1(
-            action: ActionData(title: "Test Action", action: {}),
-            hints: PresentationHints()
+    func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
+        )
+        
+        let view = platformExtractStructuredData_L1(
+            image: testImage,
+            context: context,
+            onResult: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentaction", 
-            componentName: "platformPresentAction_L1"
+            expectedPattern: "SixLayer.*element.*platformextractstructureddata_l1", 
+            platform: .macOS,
+            componentName: "platformExtractStructuredData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentAction_L1 should generate accessibility identifiers")
-    }
-    
-    // MARK: - platformPresentFeedback_L1 Tests
-    
-    func testPlatformPresentFeedbackL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentFeedback_L1(
-            feedback: FeedbackData(message: "Test Feedback", type: .info),
-            hints: PresentationHints()
-        )
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformpresentfeedback", 
-            componentName: "platformPresentFeedback_L1"
-        )
-        
-        XCTAssertTrue(hasAccessibilityID, "platformPresentFeedback_L1 should generate accessibility identifiers")
-    }
-    
-    // MARK: - platformPresentError_L1 Tests
-    
-    func testPlatformPresentErrorL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentError_L1(
-            error: ErrorData(message: "Test Error", code: "TEST_ERROR"),
-            hints: PresentationHints()
-        )
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformpresenterror", 
-            componentName: "platformPresentError_L1"
-        )
-        
-        XCTAssertTrue(hasAccessibilityID, "platformPresentError_L1 should generate accessibility identifiers")
-    }
-    
-    // MARK: - platformPresentLoading_L1 Tests
-    
-    func testPlatformPresentLoadingL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentLoading_L1(
-            message: "Loading...",
-            hints: PresentationHints()
-        )
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformpresentloading", 
-            componentName: "platformPresentLoading_L1"
-        )
-        
-        XCTAssertTrue(hasAccessibilityID, "platformPresentLoading_L1 should generate accessibility identifiers")
-    }
-    
-    // MARK: - platformPresentEmpty_L1 Tests
-    
-    func testPlatformPresentEmptyL1GeneratesAccessibilityIdentifiers() async {
-        let view = platformPresentEmpty_L1(
-            message: "No data available",
-            actionTitle: "Refresh",
-            action: {},
-            hints: PresentationHints()
-        )
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformpresentempty", 
-            componentName: "platformPresentEmpty_L1"
-        )
-        
-        XCTAssertTrue(hasAccessibilityID, "platformPresentEmpty_L1 should generate accessibility identifiers")
+        XCTAssertTrue(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on macOS")
     }
 }
 
 // MARK: - Test Support Types
 
+/// Test item for Layer 1 accessibility testing
 struct Layer1TestItem: Identifiable {
     let id: String
     let title: String
     let subtitle: String
-}
-
-struct NavigationItem: Identifiable {
-    let id: String
-    let title: String
-    let destination: AnyView
-}
-
-struct ActionData {
-    let title: String
-    let action: () -> Void
-}
-
-struct FeedbackData {
-    let message: String
-    let type: FeedbackType
-}
-
-enum FeedbackType {
-    case info, warning, error, success
-}
-
-struct ErrorData {
-    let message: String
-    let code: String
+    
+    init(id: String, title: String, subtitle: String) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+    }
 }
