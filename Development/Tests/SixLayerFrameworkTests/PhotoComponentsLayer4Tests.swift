@@ -85,22 +85,11 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             XCTAssertNotNil(result, "Layer 4 camera interface should return a valid SwiftUI view")
             
             // 2. Does that structure contain what it should?
-            do {
-                // The camera interface should contain some content (text or interactive elements)
-                let viewText = try result.inspect().findAll(ViewType.Text.self)
-                let viewButtons = try result.inspect().findAll(ViewType.Button.self)
-                let viewImages = try result.inspect().findAll(ViewType.Image.self)
-                
-                // Camera interface should have some content (text, buttons, or images)
-                XCTAssertTrue(!viewText.isEmpty || !viewButtons.isEmpty || !viewImages.isEmpty, 
-                             "Camera interface should contain some content (text, buttons, or images)")
-                
-                // Verify the view structure is inspectable (meaning it's properly constructed)
-                let _ = try result.inspect() // This will fail if the view structure is malformed
-                
-            } catch {
-                XCTFail("Failed to inspect camera interface structure: \(error)")
-            }
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                result, 
+                expectedPattern: "PhotoTest.*camera.*interface", 
+                componentName: "PlatformCameraInterface_L4"
+            ), "Camera interface should have accessibility identifier")
             
             // 3. Platform-specific implementation verification (REQUIRED)
             #if os(macOS)

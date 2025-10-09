@@ -191,7 +191,11 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             XCTAssertNotNil(testView, "View with manual accessibility identifier should be created successfully")
             
             // Verify that manual identifiers continue to work
-            // This was the only working solution in the bug report
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedIdentifier: "manual-add-fuel-button", 
+                componentName: "ManualAccessibilityIdentifier"
+            ), "Manual accessibility identifier should work")
         }
     }
     
@@ -216,7 +220,11 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             XCTAssertNotNil(testView, "View with breadcrumb modifiers should be created successfully")
             
             // The fix ensures that breadcrumb modifiers now set globalAutomaticAccessibilityIdentifiers = true
-            // This was the root cause of the bug - the environment variable wasn't being set
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.*element.*testbutton", 
+                componentName: "TrackViewHierarchy"
+            ), "TrackViewHierarchy should generate accessibility identifier")
         }
     }
     

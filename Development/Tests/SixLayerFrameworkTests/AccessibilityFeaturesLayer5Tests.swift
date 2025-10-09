@@ -416,8 +416,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         // WHEN: Applying accessibility enhanced modifier
         let enhancedView = testView.accessibilityEnhanced(config: config)
         
-        // THEN: Should return modified view
+        // THEN: Should return modified view with accessibility identifier
         XCTAssertNotNil(enhancedView, "Should return accessibility enhanced view")
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            enhancedView, 
+            expectedPattern: "Layer5Test.*enhanced.*test", 
+            componentName: "AccessibilityEnhancedViewModifier"
+        ), "Enhanced view should have accessibility identifier")
     }
     
     /**
@@ -433,8 +438,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         // WHEN: Applying accessibility enhanced modifier with default config
         let enhancedView = testView.accessibilityEnhanced()
         
-        // THEN: Should return modified view
+        // THEN: Should return modified view with accessibility identifier
         XCTAssertNotNil(enhancedView, "Should return accessibility enhanced view with default config")
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            enhancedView, 
+            expectedPattern: "Layer5Test.*enhanced.*test", 
+            componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
+        ), "Enhanced view with default config should have accessibility identifier")
     }
     
     /**
@@ -505,8 +515,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
             .keyboardNavigable()
             .highContrastEnabled()
         
-        // THEN: Should return modified view
+        // THEN: Should return modified view with accessibility identifier
         XCTAssertNotNil(integratedView, "Should return integrated accessibility view")
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            integratedView, 
+            expectedPattern: "Layer5Test.*integrated.*test", 
+            componentName: "AccessibilityViewModifiersIntegration"
+        ), "Integrated accessibility view should have accessibility identifier")
     }
     
     // MARK: - Performance Tests

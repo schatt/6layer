@@ -145,3 +145,73 @@ public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
     let root = hostRootPlatformView(wrapped)
     return firstAccessibilityIdentifier(inHosted: root)
 }
+
+/// CRITICAL: Test if a view has the SPECIFIC accessibility identifier
+/// This function REQUIRES an expected identifier - no more generic testing!
+/// 
+/// - Parameters:
+///   - view: The SwiftUI view to test
+///   - expectedIdentifier: The exact accessibility identifier to look for
+///   - componentName: Name of the component being tested (for debugging)
+/// - Returns: True if the view has the exact expected identifier
+@MainActor
+public func hasAccessibilityIdentifier<T: View>(
+    _ view: T, 
+    expectedIdentifier: String,
+    componentName: String = "Component"
+) -> Bool {
+    // Get the actual accessibility identifier from the view
+    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
+        return false
+    }
+    
+    // Check if it matches exactly
+    if actualIdentifier == expectedIdentifier {
+        print("✅ DISCOVERY: \(componentName) generates CORRECT accessibility identifier: '\(actualIdentifier)'")
+        return true
+    } else {
+        print("⚠️ DISCOVERY: \(componentName) generates WRONG accessibility identifier. Expected: '\(expectedIdentifier)', Got: '\(actualIdentifier)'")
+        return false
+    }
+}
+
+/// CRITICAL: Test if a view has an accessibility identifier matching a pattern
+/// This function REQUIRES an expected pattern - no more generic testing!
+/// 
+/// - Parameters:
+///   - view: The SwiftUI view to test
+///   - expectedPattern: The regex pattern to match against (use * for wildcards)
+///   - componentName: Name of the component being tested (for debugging)
+/// - Returns: True if the view has an identifier matching the pattern
+@MainActor
+public func hasAccessibilityIdentifier<T: View>(
+    _ view: T, 
+    expectedPattern: String,
+    componentName: String = "Component"
+) -> Bool {
+    // Get the actual accessibility identifier from the view
+    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
+        return false
+    }
+    
+    // Convert pattern to regex (replace * with .*)
+    let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
+    
+    do {
+        let regex = try NSRegularExpression(pattern: regexPattern)
+        let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
+        
+        if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
+            print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match: '\(actualIdentifier)' matches '\(expectedPattern)'")
+            return true
+        } else {
+            print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern. Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
+            return false
+        }
+    } catch {
+        print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)': \(error)")
+        return false
+    }
+}

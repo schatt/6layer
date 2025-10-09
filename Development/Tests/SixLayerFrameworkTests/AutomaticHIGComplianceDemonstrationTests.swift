@@ -16,14 +16,14 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
     
     // MARK: - Test Data Setup
     
-    private var testItems: [TestItem]!
+    private var testItems: [AutomaticHIGComplianceTestItem]!
     private var testHints: PresentationHints!
     
     override func setUp() {
         super.setUp()
         testItems = [
-            TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-            TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+            AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+            AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
         ]
         testHints = PresentationHints(
             dataType: .generic,
@@ -56,7 +56,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
             
             // NEW WAY (what developers do now):
             let view = platformPresentItemCollection_L1(
-                items: testItems! as [TestItem],
+                items: testItems!,
                 hints: testHints!
             )
             // That's it! HIG compliance is automatically applied.
@@ -77,7 +77,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
             // Test with VoiceOver enabled
             RuntimeCapabilityDetection.setTestVoiceOver(true)
             let voiceOverView = platformPresentItemCollection_L1(
-                items: testItems! as [TestItem],
+                items: testItems!,
                 hints: testHints!
             )
             XCTAssertNotNil(voiceOverView, "View should work with VoiceOver enabled")
@@ -120,7 +120,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
                 RuntimeCapabilityDetection.setTestPlatform(platform)
                 
                 let view = platformPresentItemCollection_L1(
-                    items: testItems! as [TestItem],
+                    items: testItems!,
                     hints: testHints!
                 )
                 
@@ -137,7 +137,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
         await MainActor.run {
             // Test platformPresentItemCollection_L1
             let collectionView = platformPresentItemCollection_L1(
-                items: testItems! as [TestItem],
+                items: testItems!,
                 hints: testHints!
             )
             XCTAssertNotNil(collectionView, "Collection view should have automatic compliance")

@@ -20,15 +20,15 @@ final class AutomaticHIGComplianceTests: XCTestCase {
     
     // MARK: - Test Data Setup
     
-    private var testItems: [TestItem]!
+    private var testItems: [AutomaticHIGComplianceTestItem]!
     private var testHints: PresentationHints!
     
     override func setUp() {
         super.setUp()
         testItems = [
-            TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-            TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2"),
-            TestItem(id: "3", title: "Test Item 3", subtitle: "Subtitle 3")
+            AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+            AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2"),
+            AutomaticHIGComplianceTestItem(id: "3", title: "Test Item 3", subtitle: "Subtitle 3")
         ]
         testHints = PresentationHints(
             dataType: .generic,
@@ -258,7 +258,7 @@ final class AutomaticHIGComplianceTests: XCTestCase {
 // MARK: - Test Support Types
 
 /// Test item for testing purposes
-struct TestItem: Identifiable {
+struct AutomaticHIGComplianceTestItem: Identifiable {
     let id: String
     let title: String
     let subtitle: String

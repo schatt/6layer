@@ -104,7 +104,7 @@ final class FrameworkComponentIntegrationTests: XCTestCase {
         }
         
         XCTAssertNotNil(testView, "platformPresentItemCollection_L1 should work in view hierarchy")
-        print("🔴 TDD Red Phase: platformPresentItemCollection_L1 can be created but may lack accessibility IDs")
+        print("Testing platformPresentItemCollection_L1 integration with accessibility")
     }
     
     // MARK: - Integration Test: Test Components in Real View Hierarchy

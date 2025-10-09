@@ -28,7 +28,11 @@ final class SimpleAccessibilityTest: XCTestCase {
         let testView = Button("Test") { }
             .accessibilityIdentifier("manual-test-id")
         
-        XCTAssertTrue(hasAccessibilityIdentifier(testView), "Manual accessibility identifier should work")
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            testView, 
+            expectedIdentifier: "manual-test-id", 
+            componentName: "ManualAccessibilityIdentifier"
+        ), "Manual accessibility identifier should work")
         print("✅ Manual accessibility identifier works")
     }
     
@@ -36,6 +40,13 @@ final class SimpleAccessibilityTest: XCTestCase {
         // Test if the modifier is applied at all
         let testView = Button("Test") { }
             .automaticAccessibilityIdentifiers()
+        
+        // Should look for automatic accessibility identifier: "SimpleTest.button.Test"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            testView, 
+            expectedPattern: "SimpleTest.*button.*Test", 
+            componentName: "AutomaticAccessibilityIdentifierModifier"
+        ), "Should have some accessibility identifier")
         
         // Check if ANY accessibility identifier modifier is present
         do {
@@ -51,13 +62,5 @@ final class SimpleAccessibilityTest: XCTestCase {
     
     // MARK: - Helper Methods
     
-    private func hasAccessibilityIdentifier<T: View>(_ view: T) -> Bool {
-        do {
-            let inspectedView = try view.inspect()
-            // Try to find any accessibility identifier modifier
-            return try inspectedView.accessibilityIdentifier() != ""
-        } catch {
-            return false
-        }
-    }
+    // No longer needed - using shared hasAccessibilityIdentifier function
 }

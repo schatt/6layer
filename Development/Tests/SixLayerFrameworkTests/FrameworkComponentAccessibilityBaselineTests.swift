@@ -50,7 +50,7 @@ final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
     // MARK: - TDD Red Phase: Components That SHOULD FAIL (Missing .automaticAccessibility())
     
     func testPlatformPresentItemCollectionL1GeneratesAccessibilityID() {
-        // TDD Red Phase: This SHOULD FAIL - missing .automaticAccessibility()
+        // Test that platformPresentItemCollection_L1 generates accessibility identifiers
         let mockItems = [
             MockTaskItemBaseline(id: "task1", title: "Test Task 1"),
             MockTaskItemBaseline(id: "task2", title: "Test Task 2")
@@ -69,23 +69,18 @@ final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
         )
         
         assertComponentGeneratesAccessibilityID(collectionView, name: "platformPresentItemCollection_L1")
-        print("🔴 TDD Red Phase: platformPresentItemCollection_L1 should FAIL - missing .automaticAccessibility()")
+        print("Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
     
     // MARK: - Helper Methods
     
     private func assertComponentGeneratesAccessibilityID<T: View>(_ component: T, name: String) {
-        XCTAssertTrue(hasAccessibilityIdentifier(component), "\(name) should generate accessibility ID")
-    }
-    
-    private func hasAccessibilityIdentifier<T: View>(_ view: T) -> Bool {
-        do {
-            let inspectedView = try view.inspect()
-            // Try to find any accessibility identifier modifier
-            return try inspectedView.accessibilityIdentifier() != ""
-        } catch {
-            return false
-        }
+        // Look for component-specific accessibility identifier pattern
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            component, 
+            expectedPattern: "FrameworkTest.*\(name.lowercased()).*", 
+            componentName: name
+        ), "\(name) should generate accessibility ID")
     }
 }
 

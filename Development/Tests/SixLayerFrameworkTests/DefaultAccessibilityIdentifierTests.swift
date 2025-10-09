@@ -42,8 +42,13 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             }
             .automaticAccessibilityIdentifiers()
             
-            // Then: The view should be created successfully
+            // Then: The view should be created successfully with accessibility identifier
             XCTAssertNotNil(testView, "View with automatic accessibility identifiers should be created successfully")
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "app.*button.*Test Button", 
+                componentName: "AutomaticIdentifiersWorkByDefault"
+            ), "View should have accessibility identifier by default")
             
             // Verify default configuration
             XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled by default")
@@ -91,10 +96,13 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             }
             .accessibilityIdentifier("manual-test-button")
             
-            // Then: The view should be created successfully
+            // Then: The view should be created successfully with manual accessibility identifier
             XCTAssertNotNil(testView, "View with manual accessibility identifier should be created successfully")
-            
-            // Manual identifiers should always work regardless of automatic settings
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedIdentifier: "manual-test-button", 
+                componentName: "ManualIdentifiersWorkByDefault"
+            ), "Manual accessibility identifier should work by default")
         }
     }
     

@@ -54,7 +54,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         // This assertion SHOULD FAIL initially
         XCTAssertEqual(id1, id2, "Accessibility IDs should be persistent across app launches")
         
-        print("🔴 TDD Red Phase: ID1='\(id1)', ID2='\(id2)' - These should be equal but aren't")
+        print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
     }
     
     func testAccessibilityIdentifiersAreDeterministicForSameView() {
@@ -77,7 +77,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         // This assertion SHOULD FAIL initially (timestamps differ)
         XCTAssertEqual(id1, id2, "Identical views should generate identical IDs")
         
-        print("🔴 TDD Red Phase: ID1='\(id1)', ID2='\(id2)' - These should be equal but aren't")
+        print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
     }
     
     func testAccessibilityIdentifiersDontContainTimestamps() {
@@ -148,7 +148,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
             // This assertion SHOULD FAIL initially
             XCTAssertEqual(originalID, newID, "ID for \(buttonName) should be stable across sessions")
             
-            print("🔴 TDD Red Phase: \(buttonName) - Original='\(originalID)', New='\(newID)' - Should be equal")
+            print("Testing accessibility identifier persistence: \(buttonName) - Original='\(originalID)', New='\(newID)'")
         }
     }
     
@@ -176,7 +176,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         // This assertion SHOULD FAIL initially
         XCTAssertEqual(id1, id2, "Same view structure should generate same ID regardless of timing")
         
-        print("🔴 TDD Red Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
+        print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
     }
     
     func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {

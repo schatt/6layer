@@ -68,7 +68,7 @@ final class GlobalDisableLocalEnableTDDTests: XCTestCase {
         // This assertion SHOULD FAIL initially
         XCTAssertTrue(id.isEmpty, "Local disable should override global enable and not generate ID")
         
-        print("🔴 TDD Red Phase: Generated ID='\(id)' - Should be empty")
+        print("Testing global disable with local enable: Generated ID='\(id)'")
     }
     
     func testFrameworkComponentsRespectGlobalConfig() {

@@ -53,7 +53,12 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         XCTAssertNotNil(collectionView, "ExpandableCardCollectionView should be creatable")
         
         // MANDATORY: Test that accessibility identifiers are applied
-        XCTAssertTrue(hasAccessibilityIdentifier(collectionView), "ExpandableCardCollectionView should generate accessibility ID")
+        // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            collectionView, 
+            expectedPattern: "TDDTest.*collection.*item.*task1", 
+            componentName: "ExpandableCardCollectionView"
+        ), "ExpandableCardCollectionView should generate collection-specific accessibility ID")
         
         // MANDATORY: Test iOS-specific behavior by inspecting the view structure
         let viewDescription = String(describing: collectionView)
@@ -93,7 +98,12 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         XCTAssertNotNil(collectionView, "ExpandableCardCollectionView should be creatable")
         
         // MANDATORY: Test that accessibility identifiers are applied
-        XCTAssertTrue(hasAccessibilityIdentifier(collectionView), "ExpandableCardCollectionView should generate accessibility ID")
+        // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            collectionView, 
+            expectedPattern: "TDDTest.*collection.*item.*task1", 
+            componentName: "ExpandableCardCollectionView"
+        ), "ExpandableCardCollectionView should generate collection-specific accessibility ID")
         
         // MANDATORY: Test macOS-specific behavior by inspecting the view structure
         let viewDescription = String(describing: collectionView)
@@ -143,41 +153,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
     
     // MARK: - Helper Methods
     
-    private func hasAccessibilityIdentifier<T: View>(_ view: T) -> Bool {
-        // Simple approach: Render the view and check if it has an accessibility identifier
-        // This is much more direct than using ViewInspector
-        let hostingController = NSHostingController(rootView: AnyView(view))
-        hostingController.view.layout()
-        
-        // Check if the root view has an accessibility identifier
-        let rootIdentifier = hostingController.view.accessibilityIdentifier()
-        print("🔍 DEBUG: Root view accessibility identifier: '\(rootIdentifier)'")
-        
-        if !rootIdentifier.isEmpty {
-            return true
-        }
-        
-        // Check child views recursively
-        return checkChildViewsForAccessibilityIdentifier(hostingController.view)
-    }
-    
-    private func checkChildViewsForAccessibilityIdentifier(_ view: NSView) -> Bool {
-        // Check this view
-        let identifier = view.accessibilityIdentifier()
-        if !identifier.isEmpty {
-            print("🔍 DEBUG: Found accessibility identifier in child view: '\(identifier)'")
-            return true
-        }
-        
-        // Check all subviews
-        for subview in view.subviews {
-            if checkChildViewsForAccessibilityIdentifier(subview) {
-                return true
-            }
-        }
-        
-        return false
-    }
+    // No longer needed - using shared hasAccessibilityIdentifier function
 }
 
 // MARK: - Mock Data

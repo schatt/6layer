@@ -267,7 +267,7 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Layer 1 functions should automatically apply identifier generation
     /// TESTING SCOPE: Tests that platformPresentItemCollection_L1 includes automatic IDs
-    /// METHODOLOGY: Tests Layer 1 function integration
+    /// METHODOLOGY: TDD RED PHASE - This test SHOULD FAIL because accessibility IDs aren't actually generated
     func testLayer1FunctionsIncludeAutomaticIdentifiers() async {
         await MainActor.run {
             // Given: Automatic IDs enabled
@@ -282,6 +282,13 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             
             // Then: View should be created with automatic identifiers
             XCTAssertNotNil(view, "Layer 1 function should include automatic identifiers")
+            
+            // Test that Layer 1 functions generate accessibility identifiers
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "AutoTest.*item.*collection", 
+                componentName: "Layer1Functions"
+            ), "Layer 1 function should generate accessibility identifiers matching pattern 'AutoTest.*item.*collection'")
             
             // Test that the view can be created with accessibility identifier configuration
             XCTAssertTrue(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
@@ -669,8 +676,9 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
     
     // MARK: - Integration Tests (TDD for Bug Fix)
     
-    /// TDD Test: Reproduces the user's bug report
+    /// TDD RED PHASE: Reproduces the user's bug report
     /// Tests that .trackViewHierarchy() automatically applies accessibility identifiers
+    /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
     func testTrackViewHierarchyAutomaticallyAppliesAccessibilityIdentifiers() async {
         await MainActor.run {
             // Given: Configuration is enabled (as per user's bug report)
@@ -688,9 +696,12 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             }
             .trackViewHierarchy("AddFuelButton")
             
-            // Then: The view should have automatic accessibility identifier configuration
-            XCTAssertTrue(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
-            XCTAssertTrue(testViewWithGlobalModifier(testView), "View with trackViewHierarchy should work with global modifier")
+            // Test that trackViewHierarchy generates accessibility identifiers
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.*track.*addfuelbutton", 
+                componentName: "TrackViewHierarchy"
+            ), "View with trackViewHierarchy should generate accessibility identifiers matching pattern 'CarManager.*track.*addfuelbutton'")
             
             // Also verify configuration is correct
             XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled")
@@ -699,7 +710,8 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
         }
     }
     
-    /// TDD Test: Tests that .screenContext() automatically applies accessibility identifiers
+    /// TDD RED PHASE: Tests that .screenContext() automatically applies accessibility identifiers
+    /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
     func testScreenContextAutomaticallyAppliesAccessibilityIdentifiers() async {
         await MainActor.run {
             // Given: Configuration is enabled
@@ -714,9 +726,12 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             }
             .screenContext("UserProfile")
             
-            // Then: The view should have automatic accessibility identifier configuration
-            XCTAssertTrue(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
-            XCTAssertTrue(testViewWithGlobalModifier(testView), "View with screenContext should work with global modifier")
+            // Test that screenContext generates accessibility identifiers
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.*screen.*userprofile", 
+                componentName: "ScreenContext"
+            ), "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.*screen.*userprofile'")
             
             // Also verify configuration is correct
             XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled")
@@ -834,4 +849,16 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
 }
 
 // MARK: - Test Support Types
-// Note: TestItem is already defined in AutomaticHIGComplianceTests.swift
+
+/// Test item for testing purposes
+struct TestItem: Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String
+    
+    init(id: String, title: String, subtitle: String) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+    }
+}

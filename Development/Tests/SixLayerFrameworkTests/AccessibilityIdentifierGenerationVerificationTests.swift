@@ -56,17 +56,11 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             XCTAssertNotNil(testView, "View with automatic accessibility identifiers should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            do {
-                let accessibilityIdentifier = try testView.inspect().button().accessibilityIdentifier()
-                XCTAssertNotNil(accessibilityIdentifier, "View should have an accessibility identifier assigned")
-                XCTAssertFalse(accessibilityIdentifier.isEmpty, "Accessibility identifier should not be empty")
-                XCTAssertTrue(accessibilityIdentifier.hasPrefix("test"), "Generated ID should start with namespace")
-                // Note: The actual format is "test.main.element.main-ui-XXXX-XXX" based on debug output
-                XCTAssertTrue(accessibilityIdentifier.contains("element"), "Generated ID should contain role")
-                XCTAssertTrue(accessibilityIdentifier.contains("main-ui"), "Generated ID should contain context")
-            } catch {
-                XCTFail("Failed to inspect accessibility identifier: \(error)")
-            }
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "test.*element.*main-ui", 
+                componentName: "AutomaticAccessibilityIdentifiers"
+            ), "View should have an accessibility identifier assigned")
         }
     }
     
@@ -96,18 +90,11 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             XCTAssertNotNil(testView, "View with .named() should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            do {
-                let accessibilityIdentifier = try testView.inspect().button().accessibilityIdentifier()
-                print("🔍 DEBUG: Generated ID: '\(accessibilityIdentifier)'")
-                XCTAssertNotNil(accessibilityIdentifier, "View should have an accessibility identifier assigned")
-                XCTAssertFalse(accessibilityIdentifier.isEmpty, "Accessibility identifier should not be empty")
-                XCTAssertTrue(accessibilityIdentifier.hasPrefix("CarManager"), "Generated ID should start with namespace")
-                // Note: The actual format is "CarManager.main.element.main-addfuelbutton-XXXX-XXX" based on debug output
-                XCTAssertTrue(accessibilityIdentifier.contains("element"), "Generated ID should contain role")
-                XCTAssertTrue(accessibilityIdentifier.contains("main-addfuelbutton"), "Generated ID should contain context")
-            } catch {
-                XCTFail("Failed to inspect accessibility identifier: \(error)")
-            }
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.*element.*main-addfuelbutton", 
+                componentName: "NamedModifier"
+            ), "View should have an accessibility identifier assigned")
         }
     }
     
@@ -138,17 +125,11 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             XCTAssertNotNil(testView, "Combined breadcrumb modifiers should create view successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            do {
-                let accessibilityIdentifier = try testView.inspect().button().accessibilityIdentifier()
-                XCTAssertNotNil(accessibilityIdentifier, "View should have an accessibility identifier assigned")
-                XCTAssertFalse(accessibilityIdentifier.isEmpty, "Accessibility identifier should not be empty")
-                XCTAssertTrue(accessibilityIdentifier.hasPrefix("CarManager"), "Generated ID should start with namespace")
-                // Note: The actual format is "CarManager.FuelView.element.fuelview-addfuelbutton-XXXX-XXX" based on debug output
-                XCTAssertTrue(accessibilityIdentifier.contains("element"), "Generated ID should contain role")
-                XCTAssertTrue(accessibilityIdentifier.contains("fuelview-addfuelbutton"), "Generated ID should contain context")
-            } catch {
-                XCTFail("Failed to inspect accessibility identifier: \(error)")
-            }
+            XCTAssertTrue(hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.*element.*fuelview-addfuelbutton", 
+                componentName: "CombinedBreadcrumbModifiers"
+            ), "View should have an accessibility identifier assigned")
         }
     }
     

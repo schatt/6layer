@@ -23,12 +23,17 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         config.resetToDefaults()
     }
     
-    func testDirectAutomaticAccessibilityIdentifiersWorks() {
+    func testDirectAutomaticAccessibilityIdentifiersWorks() async {
         // Test .automaticAccessibilityIdentifiers() directly
         let testView = Button("Test") { }
             .automaticAccessibilityIdentifiers()
         
-        XCTAssertTrue(hasAccessibilityIdentifier(AnyView(testView)), "Direct .automaticAccessibilityIdentifiers() should work")
+        // Should look for button-specific accessibility identifier: "DebugTest.button.Test"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            testView, 
+            expectedPattern: "DebugTest.*button.*Test", 
+            componentName: "DirectAutomaticAccessibilityIdentifiers"
+        ), "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
         print("🔍 Testing direct .automaticAccessibilityIdentifiers()")
     }
     
@@ -38,7 +43,12 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
             .named("TestButton")
             .automaticAccessibilityIdentifiers()
         
-        XCTAssertTrue(hasAccessibilityIdentifier(AnyView(testView)), ".named() + .automaticAccessibilityIdentifiers() should work")
+        // Should look for named button-specific accessibility identifier: "DebugTest.TestButton.Test"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            testView, 
+            expectedPattern: "DebugTest.*TestButton.*Test", 
+            componentName: "NamedModifier"
+        ), ".named() + .automaticAccessibilityIdentifiers() should generate named button-specific accessibility ID")
         print("🔍 Testing .named() + .automaticAccessibilityIdentifiers()")
     }
     
@@ -50,7 +60,12 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
                 platform: .iOS
             ))
         
-        XCTAssertTrue(hasAccessibilityIdentifier(AnyView(testView)), "AutomaticAccessibilityModifier should work")
+        // Should look for modifier-specific accessibility identifier: "DebugTest.modifier.Test"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            testView, 
+            expectedPattern: "DebugTest.*modifier.*Test", 
+            componentName: "AutomaticAccessibilityModifier"
+        ), "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
         print("🔍 Testing AutomaticAccessibilityModifier directly")
     }
     
@@ -59,19 +74,16 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         let testView = Button("Test") { }
             .automaticAccessibility()
         
-        XCTAssertTrue(hasAccessibilityIdentifier(AnyView(testView)), ".automaticAccessibility() should work")
+        // Should look for extension-specific accessibility identifier: "DebugTest.extension.Test"
+        XCTAssertTrue(hasAccessibilityIdentifier(
+            testView, 
+            expectedPattern: "DebugTest.*extension.*Test", 
+            componentName: "AutomaticAccessibilityExtension"
+        ), ".automaticAccessibility() should generate extension-specific accessibility ID")
         print("🔍 Testing .automaticAccessibility() extension")
     }
     
     // MARK: - Helper Methods
     
-    private func hasAccessibilityIdentifier(_ view: AnyView) -> Bool {
-        do {
-            let inspectedView = try view.inspect()
-            // Try to find any accessibility identifier modifier
-            return try inspectedView.accessibilityIdentifier() != ""
-        } catch {
-            return false
-        }
-    }
+    // No longer needed - using shared hasAccessibilityIdentifier function
 }
