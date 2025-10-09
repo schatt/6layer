@@ -1,24 +1,13 @@
-//
-//  PlatformOCRSemanticLayer1Tests.swift
-//  SixLayerFrameworkTests
-//
-//  Tests for PlatformOCRSemanticLayer1.swift
-//  Tests L1 OCR semantic functions with proper business logic testing
-//
-
 import XCTest
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
+import ViewInspector
 
-#if os(iOS)
-import UIKit
-#elseif os(macOS)
-import AppKit
-#endif
-
-/// Tests for L1 OCR semantic functions using the new testing pattern
-/// Tests actual OCR L1 functionality and behavior, not just view creation
+/// Tests for PlatformOCRSemanticLayer1.swift
+/// 
+/// BUSINESS PURPOSE: Ensure all OCR Layer 1 semantic functions generate proper accessibility identifiers
+/// TESTING SCOPE: All functions in PlatformOCRSemanticLayer1.swift
+/// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
 final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     
@@ -26,98 +15,119 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Set up OCR L1 tests
+        setupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = false
     }
     
     override func tearDown() {
-        // Clean up OCR L1 tests
         super.tearDown()
+        cleanupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
     }
     
-    // MARK: - L1 OCR Semantic Tests
+    // MARK: - platformOCRWithVisualCorrection_L1 Tests
     
-    /// BUSINESS PURPOSE: Verify that platformOCRWithVisualCorrection_L1 actually returns a view
-    /// TESTING SCOPE: Tests that the L1 OCR function returns a valid SwiftUI view
-    /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
-    func testPlatformOCRWithVisualCorrection_L1ReturnsView() {
-        // GIVEN: A test image and OCR context
-        let testImage = createTestImage()
-        let ocrContext = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8
+    func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
         )
         
-        // WHEN: Call the L1 OCR function
-        let ocrView = platformOCRWithVisualCorrection_L1(
+        let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            context: ocrContext,
+            context: context,
             onResult: { _ in }
         )
         
-        // THEN: Test the two critical aspects
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformocrwithvisualcorrection_l1", 
+            platform: .iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
+        )
         
-        // 1. View created - The view can be instantiated successfully
-        XCTAssertNotNil(ocrView, "platformOCRWithVisualCorrection_L1 should return a view")
-        
-        // 2. Contains what it needs to contain - The view has the expected structure and content
-        do {
-            // The view should be inspectable (meaning it's properly constructed)
-            let _ = try ocrView.inspect()
-            
-        } catch {
-            XCTFail("Failed to inspect platformOCRWithVisualCorrection_L1 view: \(error)")
-        }
+        XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
     }
     
-    /// BUSINESS PURPOSE: Verify that platformOCRWithVisualCorrection_L1 handles different contexts
-    /// TESTING SCOPE: Tests that the L1 OCR function works with different OCR contexts
-    /// METHODOLOGY: Tests different input scenarios
-    func testPlatformOCRWithVisualCorrection_L1HandlesDifferentContexts() {
-        // GIVEN: Different OCR contexts
-        let testImage = createTestImage()
-        
-        let englishContext = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8
+    func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
         )
         
-        let spanishContext = OCRContext(
-            textTypes: [.general],
-            language: .spanish,
-            confidenceThreshold: 0.9
-        )
-        
-        // WHEN: Call the L1 OCR function with different contexts
-        let englishView = platformOCRWithVisualCorrection_L1(
+        let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
-            context: englishContext,
+            context: context,
             onResult: { _ in }
         )
         
-        let spanishView = platformOCRWithVisualCorrection_L1(
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformocrwithvisualcorrection_l1", 
+            platform: .macOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - platformExtractStructuredData_L1 Tests
+    
+    func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
+        )
+        
+        let view = platformExtractStructuredData_L1(
             image: testImage,
-            context: spanishContext,
+            context: context,
             onResult: { _ in }
         )
         
-        // THEN: Both should return valid views
-        XCTAssertNotNil(englishView, "Should handle English OCR context")
-        XCTAssertNotNil(spanishView, "Should handle Spanish OCR context")
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformextractstructureddata_l1", 
+            platform: .iOS,
+            componentName: "platformExtractStructuredData_L1"
+        )
         
-        // Both views should be inspectable
-        do {
-            let _ = try englishView.inspect()
-            let _ = try spanishView.inspect()
-        } catch {
-            XCTFail("Failed to inspect OCR views with different contexts: \(error)")
-        }
+        XCTAssertTrue(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on iOS")
     }
     
-    // MARK: - Helper Methods
-    
-    private func createTestImage() -> PlatformImage {
-        return PlatformImage()
+    func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let testImage = PlatformImage()
+        let context = OCRContext(
+            textRecognitionLevel: .accurate,
+            languageCorrection: true,
+            customWords: []
+        )
+        
+        let view = platformExtractStructuredData_L1(
+            image: testImage,
+            context: context,
+            onResult: { _ in }
+        )
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*platformextractstructureddata_l1", 
+            platform: .macOS,
+            componentName: "platformExtractStructuredData_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on macOS")
     }
 }
