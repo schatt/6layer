@@ -40,7 +40,7 @@ final class DynamicFormViewTests: XCTestCase {
             label: "Test Field",
             placeholder: "Enter text",
             isRequired: true,
-            validationRules: []
+            validationRules: [:]
         )
         let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
         
@@ -66,7 +66,7 @@ final class DynamicFormViewTests: XCTestCase {
             label: "Test Field",
             placeholder: "Enter text",
             isRequired: true,
-            validationRules: []
+            validationRules: [:]
         )
         let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
         
