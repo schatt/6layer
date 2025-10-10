@@ -33,13 +33,13 @@ final class AccessibilityTestingSuiteTests: XCTestCase {
     var testingSuite: AccessibilityTestingSuite!
     
     override func setUp() async throws {
-        try await super.setUp()
+        try await try await super.setUp()
         testingSuite = AccessibilityTestingSuite()
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         testingSuite = nil
-        try await super.tearDown()
+        try await try await super.tearDown()
     }
     
     // MARK: - Initialization Tests

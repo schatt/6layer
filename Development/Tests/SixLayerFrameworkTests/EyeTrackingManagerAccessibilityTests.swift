@@ -9,8 +9,8 @@ import ViewInspector
 final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
+        try await try await super.setUp()
+        await await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -20,10 +20,10 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     }
     
     override func tearDown() async throws {
-        await cleanupTestEnvironment()
+        await await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
-        try await super.tearDown()
+        try await try await super.tearDown()
     }
     
     // MARK: - EyeTrackingManager Tests
@@ -63,11 +63,11 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension EyeTrackingManagerAccessibilityTests {
-    override func setupTestEnvironment() {
+    override func await setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func cleanupTestEnvironment() {
+    override func await cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

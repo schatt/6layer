@@ -9,8 +9,8 @@ import ViewInspector
 final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
+        try await try await super.setUp()
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -19,9 +19,9 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        try await super.tearDown()
-        cleanupTestEnvironment()
+    override func tearDown() async throws {
+        try await try await super.tearDown()
+        await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
@@ -85,11 +85,11 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRStrategySelectionLayer3AccessibilityTests {
-    override func setupTestEnvironment() {
+    override func await setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func cleanupTestEnvironment() {
+    override func await cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

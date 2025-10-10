@@ -42,18 +42,18 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     private var highContrastManager: HighContrastManager!
     private var cancellables: Set<AnyCancellable>!
     
-    override func setUp() {
-        try await super.setUp()
+    override func setUp() async throws {
+        try await try await super.setUp()
         keyboardManager = KeyboardNavigationManager()
         highContrastManager = HighContrastManager()
         cancellables = Set<AnyCancellable>()
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         cancellables = nil
         highContrastManager = nil
         keyboardManager = nil
-        try await super.tearDown()
+        try await try await super.tearDown()
     }
     
     // MARK: - KeyboardNavigationManager Focus Management Tests

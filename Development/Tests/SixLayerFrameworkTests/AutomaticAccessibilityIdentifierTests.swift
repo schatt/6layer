@@ -43,7 +43,7 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
     private var testHints: PresentationHints!
     
     override func setUp() async throws {
-        try await super.setUp()
+        try await try await super.setUp()
         testItems = [
             TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
@@ -62,13 +62,13 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
         }
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         testItems = nil
         testHints = nil
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
-        try await super.tearDown()
+        try await try await super.tearDown()
     }
     
     // MARK: - Global Configuration Tests

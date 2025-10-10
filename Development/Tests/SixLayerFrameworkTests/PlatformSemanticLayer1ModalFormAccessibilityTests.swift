@@ -10,8 +10,8 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     
     @MainActor
     override func setUp() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
+        try await try await super.setUp()
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -21,9 +21,9 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     }
     
     @MainActor
-    override func tearDown() {
-        try await super.tearDown()
-        cleanupTestEnvironment()
+    override func tearDown() async throws {
+        try await try await super.tearDown()
+        await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
@@ -100,11 +100,11 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformSemanticLayer1ModalFormAccessibilityTests {
-    override func setupTestEnvironment() {
+    override func await setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func cleanupTestEnvironment() {
+    override func await cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

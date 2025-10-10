@@ -10,7 +10,7 @@ import ViewInspector
 final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
     
     override func setUp() async throws {
-        try await super.setUp()
+        try await try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TDDTest"
@@ -19,8 +19,8 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         config.enableAutoIDs = true
     }
     
-    override func tearDown() {
-        try await super.tearDown()
+    override func tearDown() async throws {
+        try await try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }

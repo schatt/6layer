@@ -9,7 +9,7 @@ import ViewInspector
 final class AccessibilityIdentifierTDDTests: XCTestCase {
     
     override func setUp() async throws {
-        try await super.setUp()
+        try await try await super.setUp()
         // Reset configuration to known state
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -19,8 +19,8 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
         config.enableDebugLogging = false // Disable spam for TDD
     }
     
-    override func tearDown() {
-        try await super.tearDown()
+    override func tearDown() async throws {
+        try await try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }

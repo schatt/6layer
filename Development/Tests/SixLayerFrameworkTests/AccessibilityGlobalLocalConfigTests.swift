@@ -7,8 +7,8 @@ import ViewInspector
 @MainActor
 final class AccessibilityGlobalLocalConfigTests: XCTestCase {
     
-    override func setUp() {
-        try await super.setUp()
+    override func setUp() async throws {
+        try await try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -17,8 +17,8 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        try await super.tearDown()
+    override func tearDown() async throws {
+        try await try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }

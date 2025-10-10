@@ -14,8 +14,8 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
     // MARK: - Test Setup
     
     override func setUp() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
+        try await try await super.setUp()
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -24,9 +24,9 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        try await super.tearDown()
-        cleanupTestEnvironment()
+    override func tearDown() async throws {
+        try await try await super.tearDown()
+        await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
