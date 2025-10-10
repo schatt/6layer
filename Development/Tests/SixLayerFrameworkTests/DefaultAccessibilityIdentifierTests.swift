@@ -13,16 +13,11 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        // Reset global config to default state
-        Task { @MainActor in
-            AccessibilityIdentifierConfig.shared.resetToDefaults()
-        }
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
     override func tearDown() async throws {
-        Task { @MainActor in
-            AccessibilityIdentifierConfig.shared.resetToDefaults()
-        }
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
         try await super.tearDown()
     }
     
