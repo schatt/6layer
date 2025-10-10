@@ -44,6 +44,7 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         testItems = [
             TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
@@ -55,19 +56,12 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             context: .list,
             customPreferences: [:]
         )
-        
-        // Reset global config to default state
-        Task { @MainActor in
-            AccessibilityIdentifierConfig.shared.resetToDefaults()
-        }
     }
     
     override func tearDown() async throws {
         testItems = nil
         testHints = nil
-        Task { @MainActor in
-            AccessibilityIdentifierConfig.shared.resetToDefaults()
-        }
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
         try await super.tearDown()
     }
     
