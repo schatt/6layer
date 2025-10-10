@@ -8,6 +8,7 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class SwitchControlManagerAccessibilityTests: XCTestCase {
     
+    @MainActor
     override func setUp() {
         super.setUp()
         setupTestEnvironment()
@@ -19,6 +20,7 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
+    @MainActor
     override func tearDown() {
         super.tearDown()
         cleanupTestEnvironment()
@@ -32,7 +34,15 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let manager = SwitchControlManager()
+        let config = SwitchControlConfig(
+            enableNavigation: true,
+            enableSelection: true,
+            enableActivation: true,
+            scanInterval: 1.0,
+            autoScanEnabled: true,
+            customActions: []
+        )
+        let manager = SwitchControlManager(config: config)
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -48,7 +58,15 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let manager = SwitchControlManager()
+        let config = SwitchControlConfig(
+            enableNavigation: true,
+            enableSelection: true,
+            enableActivation: true,
+            scanInterval: 1.0,
+            autoScanEnabled: true,
+            customActions: []
+        )
+        let manager = SwitchControlManager(config: config)
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -64,10 +82,10 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
 // MARK: - Test Extensions
 extension SwitchControlManagerAccessibilityTests {
     private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
     private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+        TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

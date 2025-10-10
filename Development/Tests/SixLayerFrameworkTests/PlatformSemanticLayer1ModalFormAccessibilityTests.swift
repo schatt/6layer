@@ -8,6 +8,7 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     
+    @MainActor
     override func setUp() {
         super.setUp()
         setupTestEnvironment()
@@ -19,6 +20,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
+    @MainActor
     override func tearDown() {
         super.tearDown()
         cleanupTestEnvironment()
@@ -50,10 +52,8 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         )
         
         let view = platformPresentModalForm_L1(
-            data: testData,
-            hints: hints,
-            onSubmit: { _ in },
-            onCancel: { }
+            formType: .form,
+            context: .modal
         )
         
         // When & Then
@@ -82,10 +82,8 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         )
         
         let view = platformPresentModalForm_L1(
-            data: testData,
-            hints: hints,
-            onSubmit: { _ in },
-            onCancel: { }
+            formType: .form,
+            context: .modal
         )
         
         // When & Then
@@ -103,10 +101,10 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
 // MARK: - Test Extensions
 extension PlatformSemanticLayer1ModalFormAccessibilityTests {
     private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
     private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+        TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }
