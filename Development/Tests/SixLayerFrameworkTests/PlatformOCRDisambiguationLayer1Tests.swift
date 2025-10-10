@@ -39,9 +39,10 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
         let view = platformOCRWithDisambiguation_L1(
             image: PlatformImage(),
             context: OCRContext(
-                processingMode: .standard,
-                requiresNeuralEngine: false,
-                estimatedProcessingTime: 1.0
+                textTypes: [.general],
+                language: .english,
+                confidenceThreshold: 0.8,
+                allowsEditing: true
             ),
             onResult: { _ in }
         )
@@ -62,9 +63,10 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
         let view = platformOCRWithDisambiguation_L1(
             image: PlatformImage(),
             context: OCRContext(
-                processingMode: .standard,
-                requiresNeuralEngine: false,
-                estimatedProcessingTime: 1.0
+                textTypes: [.general],
+                language: .english,
+                confidenceThreshold: 0.8,
+                allowsEditing: true
             ),
             onResult: { _ in }
         )

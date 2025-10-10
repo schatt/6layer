@@ -35,10 +35,11 @@ final class FormInsightsDashboardTests: XCTestCase {
     
     func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnIOS() async {
         let insights = FormInsights(
-            totalSubmissions: 100,
-            averageCompletionTime: 120,
-            fieldErrors: [:],
-            abandonmentRate: 0.1
+            formId: "test-form",
+            analytics: nil,
+            performance: nil,
+            errors: [],
+            recommendations: []
         )
         
         let view = FormInsightsDashboard(insights: insights)
@@ -55,10 +56,11 @@ final class FormInsightsDashboardTests: XCTestCase {
     
     func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnMacOS() async {
         let insights = FormInsights(
-            totalSubmissions: 100,
-            averageCompletionTime: 120,
-            fieldErrors: [:],
-            abandonmentRate: 0.1
+            formId: "test-form",
+            analytics: nil,
+            performance: nil,
+            errors: [],
+            recommendations: []
         )
         
         let view = FormInsightsDashboard(insights: insights)

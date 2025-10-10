@@ -36,9 +36,10 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
-            textRecognitionLevel: .accurate,
-            languageCorrection: true,
-            customWords: []
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformOCRWithVisualCorrection_L1(
@@ -60,9 +61,10 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
-            textRecognitionLevel: .accurate,
-            languageCorrection: true,
-            customWords: []
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformOCRWithVisualCorrection_L1(
@@ -86,9 +88,10 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
-            textRecognitionLevel: .accurate,
-            languageCorrection: true,
-            customWords: []
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformExtractStructuredData_L1(
@@ -110,9 +113,10 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
-            textRecognitionLevel: .accurate,
-            languageCorrection: true,
-            customWords: []
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformExtractStructuredData_L1(

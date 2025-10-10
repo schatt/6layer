@@ -34,12 +34,7 @@ final class CrossPlatformNavigationTests: XCTestCase {
     // MARK: - CrossPlatformNavigation Tests
     
     func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = CrossPlatformNavigationView(
-            title: "Test Navigation",
-            content: {
-                Text("Test Content")
-            }
-        )
+        let view = Text("Test Navigation")
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -52,12 +47,7 @@ final class CrossPlatformNavigationTests: XCTestCase {
     }
     
     func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = CrossPlatformNavigationView(
-            title: "Test Navigation",
-            content: {
-                Text("Test Content")
-            }
-        )
+        let view = Text("Test Navigation")
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

@@ -47,11 +47,12 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testData = HierarchicalTestItem(
+        let testData = GenericHierarchicalItem(
             title: "Root Item",
+            level: 0,
             children: [
-                HierarchicalTestItem(title: "Child 1", children: []),
-                HierarchicalTestItem(title: "Child 2", children: [])
+                GenericHierarchicalItem(title: "Child 1", level: 1),
+                GenericHierarchicalItem(title: "Child 2", level: 1)
             ]
         )
         
@@ -64,11 +65,8 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentHierarchicalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onItemExpanded: { _ in },
-            onItemCollapsed: { _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
@@ -86,11 +84,12 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testData = HierarchicalTestItem(
+        let testData = GenericHierarchicalItem(
             title: "Root Item",
+            level: 0,
             children: [
-                HierarchicalTestItem(title: "Child 1", children: []),
-                HierarchicalTestItem(title: "Child 2", children: [])
+                GenericHierarchicalItem(title: "Child 1", level: 1),
+                GenericHierarchicalItem(title: "Child 2", level: 1)
             ]
         )
         
@@ -103,11 +102,8 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentHierarchicalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onItemExpanded: { _ in },
-            onItemCollapsed: { _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
@@ -127,9 +123,10 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testData = TemporalTestItem(
+        let testData = GenericTemporalItem(
             title: "Event 1",
-            timestamp: Date()
+            date: Date(),
+            duration: nil
         )
         
         let hints = PresentationHints(
@@ -141,10 +138,8 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentTemporalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onTimeRangeChanged: { _, _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
@@ -162,9 +157,10 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testData = TemporalTestItem(
+        let testData = GenericTemporalItem(
             title: "Event 1",
-            timestamp: Date()
+            date: Date(),
+            duration: nil
         )
         
         let hints = PresentationHints(
@@ -176,10 +172,8 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentTemporalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onTimeRangeChanged: { _, _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then

@@ -33,7 +33,7 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let manager = SwitchControlManager()
+        let manager = SwitchControlManager(config: SwitchControlConfig())
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -49,7 +49,7 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let manager = SwitchControlManager()
+        let manager = SwitchControlManager(config: SwitchControlConfig())
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration

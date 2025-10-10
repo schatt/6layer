@@ -35,11 +35,10 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let result = platformOCRLayout_L2(
@@ -63,11 +62,10 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let result = platformOCRLayout_L2(
