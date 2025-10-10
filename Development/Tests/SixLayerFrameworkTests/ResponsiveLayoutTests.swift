@@ -34,7 +34,7 @@ final class ResponsiveLayoutTests: XCTestCase {
     // MARK: - ResponsiveLayout Tests
     
     func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = ResponsiveLayout {
+        let view = ResponsiveLayout.adaptiveGrid {
             Text("Test Content")
         }
         
@@ -49,7 +49,7 @@ final class ResponsiveLayoutTests: XCTestCase {
     }
     
     func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = ResponsiveLayout {
+        let view = ResponsiveLayout.adaptiveGrid {
             Text("Test Content")
         }
         

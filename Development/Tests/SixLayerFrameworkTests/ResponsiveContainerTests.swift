@@ -34,7 +34,7 @@ final class ResponsiveContainerTests: XCTestCase {
     // MARK: - ResponsiveContainer Tests
     
     func testResponsiveContainerGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = ResponsiveContainer {
+        let view = ResponsiveContainer { isHorizontal, isVertical in
             Text("Test Content")
         }
         
@@ -49,7 +49,7 @@ final class ResponsiveContainerTests: XCTestCase {
     }
     
     func testResponsiveContainerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = ResponsiveContainer {
+        let view = ResponsiveContainer { isHorizontal, isVertical in
             Text("Test Content")
         }
         
