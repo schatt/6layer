@@ -47,8 +47,8 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand, .hoverExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand, .contentReveal],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.2,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -93,8 +93,8 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand, .hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.hoverExpand, .contentReveal],
+            primaryStrategy: .contentReveal,
             expansionScale: 1.3,
             animationDuration: 0.4,
             hapticFeedback: false,
