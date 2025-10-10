@@ -119,10 +119,19 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
+        let photoPreferences = PhotoPreferences()
+        let deviceCapabilities = PhotoDeviceCapabilities()
+        let photoContext = PhotoContext(
+            screenSize: CGSize(width: 375, height: 667),
+            availableSpace: CGSize(width: 375, height: 600),
+            userPreferences: photoPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+        
         let view = platformPhotoSelection_L1(
-            hints: hints,
-            onPhotosSelected: { _ in },
-            onError: { _ in }
+            purpose: .document,
+            context: photoContext,
+            onImageSelected: { _ in }
         )
         
         // When & Then
@@ -148,10 +157,19 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
+        let photoPreferences = PhotoPreferences()
+        let deviceCapabilities = PhotoDeviceCapabilities()
+        let photoContext = PhotoContext(
+            screenSize: CGSize(width: 375, height: 667),
+            availableSpace: CGSize(width: 375, height: 600),
+            userPreferences: photoPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+        
         let view = platformPhotoSelection_L1(
-            hints: hints,
-            onPhotosSelected: { _ in },
-            onError: { _ in }
+            purpose: .document,
+            context: photoContext,
+            onImageSelected: { _ in }
         )
         
         // When & Then
@@ -180,11 +198,19 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
+        let photoPreferences = PhotoPreferences()
+        let deviceCapabilities = PhotoDeviceCapabilities()
+        let photoContext = PhotoContext(
+            screenSize: CGSize(width: 375, height: 667),
+            availableSpace: CGSize(width: 375, height: 600),
+            userPreferences: photoPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+        
         let view = platformPhotoDisplay_L1(
-            photos: testPhotos,
-            hints: hints,
-            onPhotoSelected: { _ in },
-            onPhotoDeleted: { _ in }
+            purpose: .document,
+            context: photoContext,
+            image: PlatformImage()
         )
         
         // When & Then
@@ -211,11 +237,19 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
+        let photoPreferences = PhotoPreferences()
+        let deviceCapabilities = PhotoDeviceCapabilities()
+        let photoContext = PhotoContext(
+            screenSize: CGSize(width: 375, height: 667),
+            availableSpace: CGSize(width: 375, height: 600),
+            userPreferences: photoPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+        
         let view = platformPhotoDisplay_L1(
-            photos: testPhotos,
-            hints: hints,
-            onPhotoSelected: { _ in },
-            onPhotoDeleted: { _ in }
+            purpose: .document,
+            context: photoContext,
+            image: PlatformImage()
         )
         
         // When & Then
