@@ -87,7 +87,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
             RuntimeCapabilityDetection.setTestVoiceOver(false)
             RuntimeCapabilityDetection.setTestSwitchControl(true)
             let switchControlView = platformPresentItemCollection_L1(
-                items: testItems! as [TestItem],
+                items: testItems!,
                 hints: testHints!
             )
             XCTAssertNotNil(switchControlView, "View should work with Switch Control enabled")
@@ -97,7 +97,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
             RuntimeCapabilityDetection.setTestSwitchControl(false)
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             let assistiveTouchView = platformPresentItemCollection_L1(
-                items: testItems! as [TestItem],
+                items: testItems!,
                 hints: testHints!
             )
             XCTAssertNotNil(assistiveTouchView, "View should work with AssistiveTouch enabled")
