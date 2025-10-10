@@ -6,25 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for MaterialAccessibilityManager.swift classes
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class MaterialAccessibilityManagerAccessibilityTests: XCTestCase {
-    
-    override func setUp() async throws {
-        try await try await super.setUp()
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
-    
-    override func tearDown() async throws {
-        try await try await super.tearDown()
-        await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-    }
+final class MaterialAccessibilityManagerAccessibilityTests: AccessibilityTestBase {
     
     // MARK: - MaterialAccessibilityManager Tests
     
