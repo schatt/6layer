@@ -51,10 +51,8 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         )
         
         let view = platformPresentModalForm_L1(
-            data: testData,
-            hints: hints,
-            onSubmit: { _ in },
-            onCancel: { }
+            formType: .generic,
+            context: .modal
         )
         
         // When & Then
@@ -83,10 +81,8 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         )
         
         let view = platformPresentModalForm_L1(
-            data: testData,
-            hints: hints,
-            onSubmit: { _ in },
-            onCancel: { }
+            formType: .generic,
+            context: .modal
         )
         
         // When & Then

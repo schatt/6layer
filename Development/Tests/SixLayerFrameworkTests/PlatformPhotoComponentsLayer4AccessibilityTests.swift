@@ -52,8 +52,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -61,11 +61,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoPicker_L4(
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotosSelected: { _ in },
-            onError: { _ in }
+            onImageSelected: { _ in }
         )
         
         // When & Then
@@ -102,8 +98,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -111,11 +107,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoPicker_L4(
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotosSelected: { _ in },
-            onError: { _ in }
+            onImageSelected: { _ in }
         )
         
         // When & Then
@@ -155,8 +147,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -207,8 +199,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -261,8 +253,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -313,8 +305,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.hoverExpand],
+            primaryStrategy: .hoverExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,

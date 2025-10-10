@@ -105,10 +105,9 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         )
         
         let view = platformOCRWithVisualCorrection_L1(
-            images: testImages,
+            image: testImages[0],
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
@@ -136,10 +135,9 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         )
         
         let view = platformOCRWithVisualCorrection_L1(
-            images: testImages,
+            image: testImages[0],
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then

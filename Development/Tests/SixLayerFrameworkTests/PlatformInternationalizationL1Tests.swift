@@ -36,9 +36,10 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
     func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let hints = InternationalizationHints()
         
-        let view = platformPresentLocalizedContent_L1(content: {
-            Text("Test Localized Content")
-        }, hints: hints)
+        let view = platformPresentLocalizedContent_L1(
+            content: Text("Test Localized Content"),
+            hints: hints
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -53,9 +54,10 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
     func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let hints = InternationalizationHints()
         
-        let view = platformPresentLocalizedContent_L1(content: {
-            Text("Test Localized Content")
-        }, hints: hints)
+        let view = platformPresentLocalizedContent_L1(
+            content: Text("Test Localized Content"),
+            hints: hints
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

@@ -35,11 +35,10 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -52,22 +51,19 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
-            layoutDecision: layoutDecision,
             strategy: strategy,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
@@ -87,11 +83,10 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -104,22 +99,19 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
-            layoutDecision: layoutDecision,
             strategy: strategy,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
