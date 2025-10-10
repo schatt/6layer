@@ -9,7 +9,7 @@ import ViewInspector
 final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
-        try await try await super.setUp()
+        try await super.setUp()
         await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -20,7 +20,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     }
     
     override func tearDown() async throws {
-        try await try await super.tearDown()
+        try await super.tearDown()
         await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

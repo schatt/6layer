@@ -18,7 +18,7 @@ import SwiftUI
 final class AccessibilityIdentifierLogicVerificationTests: XCTestCase {
     
     override func setUp() async throws {
-        try await try await super.setUp()
+        try await super.setUp()
         // Reset global config to default state
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
@@ -29,7 +29,7 @@ final class AccessibilityIdentifierLogicVerificationTests: XCTestCase {
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
-        try await try await super.tearDown()
+        try await super.tearDown()
     }
     
     /// BUSINESS PURPOSE: Verify that the identifier generation logic correctly evaluates conditions

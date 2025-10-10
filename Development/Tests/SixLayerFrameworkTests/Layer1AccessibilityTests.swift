@@ -17,7 +17,7 @@ final class Layer1AccessibilityTests: XCTestCase {
     private var testHints: PresentationHints!
     
     override func setUp() async throws {
-        try await try await super.setUp()
+        try await super.setUp()
         testItems = [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
@@ -39,7 +39,7 @@ final class Layer1AccessibilityTests: XCTestCase {
     override func tearDown() async throws {
         testItems = nil
         testHints = nil
-        try await try await super.tearDown()
+        try await super.tearDown()
     }
     
     // MARK: - Layer 1 Function Tests

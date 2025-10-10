@@ -9,7 +9,7 @@ import ViewInspector
 final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
-        try await try await super.setUp()
+        try await super.setUp()
         await await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -23,7 +23,7 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
         await await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
-        try await try await super.tearDown()
+        try await super.tearDown()
     }
     
     // MARK: - EyeTrackingManager Tests
