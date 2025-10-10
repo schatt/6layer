@@ -34,12 +34,9 @@ final class IntelligentDetailViewTests: XCTestCase {
     // MARK: - IntelligentDetailView Tests
     
     func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = IntelligentDetailView(
-            title: "Test Detail",
-            content: {
-                Text("Test Content")
-            }
-        )
+        let testData = TestDataModel(name: "Test Name", value: 42)
+        
+        let view = IntelligentDetailView.platformDetailView(for: testData)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -52,12 +49,9 @@ final class IntelligentDetailViewTests: XCTestCase {
     }
     
     func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = IntelligentDetailView(
-            title: "Test Detail",
-            content: {
-                Text("Test Content")
-            }
-        )
+        let testData = TestDataModel(name: "Test Name", value: 42)
+        
+        let view = IntelligentDetailView.platformDetailView(for: testData)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -68,4 +62,12 @@ final class IntelligentDetailViewTests: XCTestCase {
         
         XCTAssertTrue(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers on macOS")
     }
+}
+
+// MARK: - Test Support Types
+
+/// Test data model for IntelligentDetailView testing
+struct TestDataModel {
+    let name: String
+    let value: Int
 }

@@ -41,9 +41,13 @@ final class IntelligentCardExpansionLayer4Tests: XCTestCase {
         
         let view = ExpandableCardCollectionView(
             items: testItems,
-            cardContent: { item in
-                Text(item.title)
-            }
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -64,9 +68,13 @@ final class IntelligentCardExpansionLayer4Tests: XCTestCase {
         
         let view = ExpandableCardCollectionView(
             items: testItems,
-            cardContent: { item in
-                Text(item.title)
-            }
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

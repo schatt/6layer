@@ -34,19 +34,11 @@ final class IntelligentFormViewTests: XCTestCase {
     // MARK: - IntelligentFormView Tests
     
     func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let testField = DynamicFormField(
-            id: "testField",
-            contentType: .text,
-            label: "Test Field",
-            placeholder: "Enter text",
-            isRequired: true,
-            validationRules: []
-        )
-        let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
+        let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
-        let view = IntelligentFormView(
-            configuration: configuration,
-            fields: [testField]
+        let view = IntelligentFormView.generateForm(
+            for: TestFormDataModel.self,
+            initialData: testData
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -60,19 +52,11 @@ final class IntelligentFormViewTests: XCTestCase {
     }
     
     func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testField = DynamicFormField(
-            id: "testField",
-            contentType: .text,
-            label: "Test Field",
-            placeholder: "Enter text",
-            isRequired: true,
-            validationRules: []
-        )
-        let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
+        let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
-        let view = IntelligentFormView(
-            configuration: configuration,
-            fields: [testField]
+        let view = IntelligentFormView.generateForm(
+            for: TestFormDataModel.self,
+            initialData: testData
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -84,4 +68,12 @@ final class IntelligentFormViewTests: XCTestCase {
         
         XCTAssertTrue(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers on macOS")
     }
+}
+
+// MARK: - Test Support Types
+
+/// Test form data model for IntelligentFormView testing
+struct TestFormDataModel {
+    let name: String
+    let email: String
 }

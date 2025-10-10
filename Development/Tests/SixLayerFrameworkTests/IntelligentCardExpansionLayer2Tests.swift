@@ -38,8 +38,7 @@ final class IntelligentCardExpansionLayer2Tests: XCTestCase {
             contentCount: 5,
             screenWidth: 375,
             deviceType: .phone,
-            interactionStyle: .touch,
-            contentDensity: .comfortable
+            contentComplexity: .moderate
         )
         
         // Layer 2 functions return data structures, not views
@@ -51,9 +50,8 @@ final class IntelligentCardExpansionLayer2Tests: XCTestCase {
         let result = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 1920,
-            deviceType: .desktop,
-            interactionStyle: .cursor,
-            contentDensity: .comfortable
+            deviceType: .mac,
+            contentComplexity: .moderate
         )
         
         // Layer 2 functions return data structures, not views

@@ -34,18 +34,12 @@ final class IntelligentCardExpansionLayer3Tests: XCTestCase {
     // MARK: - selectCardExpansionStrategy_L3 Tests
     
     func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
-        let decision = CardLayoutDecision(
-            suggestedColumns: 2,
-            suggestedSpacing: 16,
-            suggestedCardSize: CGSize(width: 150, height: 200),
-            animationDuration: 0.3,
-            reasoning: "Test reasoning"
-        )
-        
         let result = selectCardExpansionStrategy_L3(
-            decision: decision,
-            deviceCapabilities: DeviceCapabilities(supportsHaptics: true, supportsHover: false),
-            userPreferences: UserPreferences()
+            contentCount: 5,
+            screenWidth: 375,
+            deviceType: .phone,
+            interactionStyle: .interactive,
+            contentDensity: .balanced
         )
         
         // Layer 3 functions return strategy data structures, not views
@@ -54,18 +48,12 @@ final class IntelligentCardExpansionLayer3Tests: XCTestCase {
     }
     
     func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let decision = CardLayoutDecision(
-            suggestedColumns: 3,
-            suggestedSpacing: 20,
-            suggestedCardSize: CGSize(width: 200, height: 250),
-            animationDuration: 0.3,
-            reasoning: "Test reasoning"
-        )
-        
         let result = selectCardExpansionStrategy_L3(
-            decision: decision,
-            deviceCapabilities: DeviceCapabilities(supportsHaptics: false, supportsHover: true),
-            userPreferences: UserPreferences()
+            contentCount: 5,
+            screenWidth: 1920,
+            deviceType: .mac,
+            interactionStyle: .interactive,
+            contentDensity: .balanced
         )
         
         // Layer 3 functions return strategy data structures, not views
