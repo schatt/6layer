@@ -106,7 +106,7 @@ public func calculateOptimalImageSize(
     for purpose: PhotoPurpose,
     in availableSpace: CGSize,
     maxResolution: CGSize = CGSize(width: 4096, height: 4096)
-) -> CGSize {
+) -> PlatformSize {
     let layout = determineOptimalPhotoLayout_L2(
         purpose: purpose,
         context: PhotoContext(
@@ -118,8 +118,8 @@ public func calculateOptimalImageSize(
     )
     
     // Ensure we don't exceed maximum resolution
-    let finalWidth = min(layout.width, maxResolution.width)
-    let finalHeight = min(layout.height, maxResolution.height)
+    let finalWidth = min(layout.width, Double(maxResolution.width))
+    let finalHeight = min(layout.height, Double(maxResolution.height))
     
     return PlatformSize(width: finalWidth, height: finalHeight)
 }

@@ -35,18 +35,16 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
@@ -66,18 +64,16 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
@@ -97,11 +93,10 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImages = [PlatformImage(), PlatformImage()]
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformOCRWithVisualCorrection_L1(
@@ -127,11 +122,10 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImages = [PlatformImage(), PlatformImage()]
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let view = platformOCRWithVisualCorrection_L1(

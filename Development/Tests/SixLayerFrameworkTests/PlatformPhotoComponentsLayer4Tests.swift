@@ -35,8 +35,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
     
     func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
         let view = platformCameraInterface_L4(
-            onCapture: { _ in },
-            onCancel: {}
+            onImageCaptured: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -51,8 +50,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
     
     func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = platformCameraInterface_L4(
-            onCapture: { _ in },
-            onCancel: {}
+            onImageCaptured: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

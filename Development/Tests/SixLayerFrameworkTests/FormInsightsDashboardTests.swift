@@ -42,7 +42,7 @@ final class FormInsightsDashboardTests: XCTestCase {
             recommendations: []
         )
         
-        let view = FormInsightsDashboard(insights: insights)
+        let view = FormInsightsDashboard()
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -63,7 +63,7 @@ final class FormInsightsDashboardTests: XCTestCase {
             recommendations: []
         )
         
-        let view = FormInsightsDashboard(insights: insights)
+        let view = FormInsightsDashboard()
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

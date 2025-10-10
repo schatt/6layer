@@ -42,18 +42,14 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         )
         
         let result = platformOCRLayout_L2(
-            image: testImage,
-            context: context,
-            screenWidth: 375,
-            deviceType: .phone,
-            contentComplexity: .moderate
+            context: context
         )
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.columns > 0, "Layout decision should have valid columns")
-        XCTAssertTrue(result.spacing >= 0, "Layout decision should have valid spacing")
+        XCTAssertTrue(result.maxImageSize.width > 0, "Layout decision should have valid max image width")
+        XCTAssertTrue(result.maxImageSize.height > 0, "Layout decision should have valid max image height")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRLayout_L2 generates proper accessibility identifiers
@@ -69,18 +65,14 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         )
         
         let result = platformOCRLayout_L2(
-            image: testImage,
-            context: context,
-            screenWidth: 1024,
-            deviceType: .desktop,
-            contentComplexity: .moderate
+            context: context
         )
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.columns > 0, "Layout decision should have valid columns")
-        XCTAssertTrue(result.spacing >= 0, "Layout decision should have valid spacing")
+        XCTAssertTrue(result.maxImageSize.width > 0, "Layout decision should have valid max image width")
+        XCTAssertTrue(result.maxImageSize.height > 0, "Layout decision should have valid max image height")
     }
 }
 

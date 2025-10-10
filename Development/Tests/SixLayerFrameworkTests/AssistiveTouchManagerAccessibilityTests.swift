@@ -33,7 +33,7 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let manager = AssistiveTouchManager()
+        let manager = AssistiveTouchManager(config: AssistiveTouchConfig())
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -49,7 +49,7 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let manager = AssistiveTouchManager()
+        let manager = AssistiveTouchManager(config: AssistiveTouchConfig())
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration

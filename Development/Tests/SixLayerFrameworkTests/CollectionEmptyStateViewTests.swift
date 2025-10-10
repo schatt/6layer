@@ -35,10 +35,12 @@ final class CollectionEmptyStateViewTests: XCTestCase {
     
     func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = CollectionEmptyStateView(
-            title: "No Items",
-            message: "No items to display",
-            actionTitle: "Add Item",
-            action: {}
+            hints: PresentationHints(
+                dataType: .collection,
+                presentationPreference: .automatic
+            ),
+            onCreateItem: {},
+            customCreateView: nil
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -53,10 +55,12 @@ final class CollectionEmptyStateViewTests: XCTestCase {
     
     func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = CollectionEmptyStateView(
-            title: "No Items",
-            message: "No items to display",
-            actionTitle: "Add Item",
-            action: {}
+            hints: PresentationHints(
+                dataType: .collection,
+                presentationPreference: .automatic
+            ),
+            onCreateItem: {},
+            customCreateView: nil
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

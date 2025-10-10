@@ -34,26 +34,21 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let result = platformOCRStrategy_L3(
-            context: context,
-            screenWidth: 375,
-            deviceType: .phone,
-            interactionStyle: .touch,
-            contentDensity: .moderate
+            textTypes: [.general]
         )
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
-        XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
+        XCTAssertFalse(result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
+        XCTAssertTrue(result.estimatedProcessingTime > 0, "Strategy should have valid processing time")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
@@ -61,26 +56,21 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8,
+            allowsEditing: true
         )
         
         let result = platformOCRStrategy_L3(
-            context: context,
-            screenWidth: 1024,
-            deviceType: .desktop,
-            interactionStyle: .mouse,
-            contentDensity: .moderate
+            textTypes: [.general]
         )
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
-        XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
+        XCTAssertFalse(result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
+        XCTAssertTrue(result.estimatedProcessingTime > 0, "Strategy should have valid processing time")
     }
 }
 

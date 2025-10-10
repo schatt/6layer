@@ -46,7 +46,7 @@ final class DynamicFormViewTests: XCTestCase {
         
         let view = DynamicFormView(
             configuration: configuration,
-            fields: [testField]
+            onSubmit: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -72,7 +72,7 @@ final class DynamicFormViewTests: XCTestCase {
         
         let view = DynamicFormView(
             configuration: configuration,
-            fields: [testField]
+            onSubmit: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

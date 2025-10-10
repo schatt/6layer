@@ -156,12 +156,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoDisplay_L4(
-            photos: testPhotos,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoSelected: { _ in },
-            onPhotoDeleted: { _ in }
+            image: PlatformImage(),
+            style: .grid
         )
         
         // When & Then
@@ -208,12 +204,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoDisplay_L4(
-            photos: testPhotos,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoSelected: { _ in },
-            onPhotoDeleted: { _ in }
+            image: PlatformImage(),
+            style: .grid
         )
         
         // When & Then
