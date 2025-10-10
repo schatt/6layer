@@ -39,15 +39,13 @@ final class CustomItemCollectionViewTests: XCTestCase {
             CustomItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
         ]
         
-        let view = CustomItemCollectionView<CustomItemCollectionViewTestItem>(
+        let view = GenericItemCollectionView<CustomItemCollectionViewTestItem>(
             items: testItems,
             hints: PresentationHints(
                 dataType: .collection,
                 presentationPreference: .automatic
             )
-        ) { item in
-            Text(item.title)
-        }
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -65,15 +63,13 @@ final class CustomItemCollectionViewTests: XCTestCase {
             CustomItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
         ]
         
-        let view = CustomItemCollectionView<CustomItemCollectionViewTestItem>(
+        let view = GenericItemCollectionView<CustomItemCollectionViewTestItem>(
             items: testItems,
             hints: PresentationHints(
                 dataType: .collection,
                 presentationPreference: .automatic
             )
-        ) { item in
-            Text(item.title)
-        }
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

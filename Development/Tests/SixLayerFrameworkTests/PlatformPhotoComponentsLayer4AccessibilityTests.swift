@@ -157,7 +157,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         
         let view = platformPhotoDisplay_L4(
             image: PlatformImage(),
-            style: .grid
+            style: .thumbnail
         )
         
         // When & Then
@@ -205,7 +205,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         
         let view = platformPhotoDisplay_L4(
             image: PlatformImage(),
-            style: .grid
+            style: .thumbnail
         )
         
         // When & Then
@@ -254,12 +254,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoEditor_L4(
-            photo: testPhoto,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoEdited: { _ in },
-            onError: { _ in }
+            image: PlatformImage(),
+            onImageEdited: { _ in }
         )
         
         // When & Then
@@ -306,12 +302,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoEditor_L4(
-            photo: testPhoto,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoEdited: { _ in },
-            onError: { _ in }
+            image: PlatformImage(),
+            onImageEdited: { _ in }
         )
         
         // When & Then
