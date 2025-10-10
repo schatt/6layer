@@ -706,6 +706,13 @@ final class InputHandlingInteractionsTests: XCTestCase {
     /// for automated testing and accessibility tools compliance
     func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = true  // Enable debug logging
+        
         let view = PlatformInteractionButton(style: .primary, action: {}) {
             Text("Test Button")
         }

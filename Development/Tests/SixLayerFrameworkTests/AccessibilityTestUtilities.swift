@@ -142,8 +142,8 @@ public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
     if AccessibilityIdentifierConfig.shared.namespace.isEmpty {
         AccessibilityIdentifierConfig.shared.namespace = "test"
     }
-    let wrapped = view.withGlobalAutoIDsEnabled()
-    let root = hostRootPlatformView(wrapped)
+    // Don't wrap with global auto IDs - let the component's own modifiers work
+    let root = hostRootPlatformView(view)
     return firstAccessibilityIdentifier(inHosted: root)
 }
 
