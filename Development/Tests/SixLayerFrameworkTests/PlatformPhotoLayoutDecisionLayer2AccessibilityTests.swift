@@ -8,9 +8,9 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        setupTestEnvironment()
+    override func setUp() async {
+        await super.setUp()
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -19,11 +19,11 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
-        cleanupTestEnvironment()
+    override func tearDown() async {
+        await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
+        await super.tearDown()
     }
     
     // MARK: - Photo Layout Decision Tests
@@ -71,11 +71,11 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func setupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }
