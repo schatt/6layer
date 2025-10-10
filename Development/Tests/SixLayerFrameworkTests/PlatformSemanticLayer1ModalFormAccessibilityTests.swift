@@ -1,0 +1,112 @@
+import XCTest
+import SwiftUI
+import ViewInspector
+@testable import SixLayerFramework
+
+/// BUSINESS PURPOSE: Accessibility tests for PlatformSemanticLayer1.swift modal form functions
+/// Ensures modal form presentation functions generate proper accessibility identifiers
+/// for automated testing and accessibility tools compliance
+final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        setupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = false
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        cleanupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+    }
+    
+    // MARK: - Test Data Models
+    
+    struct ModalFormTestData {
+        let name: String
+        let email: String
+    }
+    
+    // MARK: - Modal Form Presentation Tests
+    
+    /// BUSINESS PURPOSE: Validates that platformPresentModalForm_L1 generates proper accessibility identifiers
+    /// for automated testing and accessibility tools compliance on iOS
+    func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        // Given
+        let testData = ModalFormTestData(name: "Test Name", email: "test@example.com")
+        
+        let hints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .modal,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentModalForm_L1(
+            data: testData,
+            hints: hints,
+            onSubmit: { _ in },
+            onCancel: { }
+        )
+        
+        // When & Then
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*modalform", 
+            platform: .iOS,
+            componentName: "platformPresentModalForm_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on iOS")
+    }
+    
+    /// BUSINESS PURPOSE: Validates that platformPresentModalForm_L1 generates proper accessibility identifiers
+    /// for automated testing and accessibility tools compliance on macOS
+    func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        // Given
+        let testData = ModalFormTestData(name: "Test Name", email: "test@example.com")
+        
+        let hints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .modal,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentModalForm_L1(
+            data: testData,
+            hints: hints,
+            onSubmit: { _ in },
+            onCancel: { }
+        )
+        
+        // When & Then
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*modalform", 
+            platform: .macOS,
+            componentName: "platformPresentModalForm_L1"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on macOS")
+    }
+}
+
+// MARK: - Test Extensions
+extension PlatformSemanticLayer1ModalFormAccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}
