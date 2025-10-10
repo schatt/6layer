@@ -15,9 +15,80 @@ final class AutomaticAccessibilityIdentifiersTests: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+        await setupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = false
     }
     
     override func tearDown() async throws {
         try await super.tearDown()
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+        await cleanupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+    }
+    
+    // MARK: - automaticAccessibilityIdentifiers() Modifier Tests
+    
+    func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnIOS() async {
+        let view = Text("Test")
+            .automaticAccessibilityIdentifiers()
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*", 
+            platform: .iOS,
+            componentName: "automaticAccessibilityIdentifiers modifier"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "automaticAccessibilityIdentifiers modifier should generate accessibility identifiers on iOS")
+    }
+    
+    func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnMacOS() async {
+        let view = Text("Test")
+            .automaticAccessibilityIdentifiers()
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*element.*", 
+            platform: .macOS,
+            componentName: "automaticAccessibilityIdentifiers modifier"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "automaticAccessibilityIdentifiers modifier should generate accessibility identifiers on macOS")
+    }
+    
+    // MARK: - named() Modifier Tests
+    
+    func testNamedModifierGeneratesIdentifiersOnIOS() async {
+        let view = Text("Test")
+            .named("TestElement")
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*TestElement.*", 
+            platform: .iOS,
+            componentName: "named modifier"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "named modifier should generate accessibility identifiers on iOS")
+    }
+    
+    func testNamedModifierGeneratesIdentifiersOnMacOS() async {
+        let view = Text("Test")
+            .named("TestElement")
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.*TestElement.*", 
+            platform: .macOS,
+            componentName: "named modifier"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "named modifier should generate accessibility identifiers on macOS")
+    }
+}
+
