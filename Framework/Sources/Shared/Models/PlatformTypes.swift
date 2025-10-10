@@ -686,6 +686,46 @@ public enum ResponsiveType: String, CaseIterable {
 // MARK: - Cross-Platform Image Types
 
 /// Cross-platform image type for consistent image handling
+public struct PlatformSize: @unchecked Sendable {
+    #if os(iOS)
+    public let cgSize: CGSize
+    #elseif os(macOS)
+    public let nsSize: NSSize
+    #endif
+    
+    public init(width: Double, height: Double) {
+        #if os(iOS)
+        self.cgSize = CGSize(width: width, height: height)
+        #elseif os(macOS)
+        self.nsSize = NSSize(width: width, height: height)
+        #endif
+    }
+    
+    public init(_ cgSize: CGSize) {
+        #if os(iOS)
+        self.cgSize = cgSize
+        #elseif os(macOS)
+        self.nsSize = NSSize(width: cgSize.width, height: cgSize.height)
+        #endif
+    }
+    
+    public var width: Double {
+        #if os(iOS)
+        return Double(cgSize.width)
+        #elseif os(macOS)
+        return Double(nsSize.width)
+        #endif
+    }
+    
+    public var height: Double {
+        #if os(iOS)
+        return Double(cgSize.height)
+        #elseif os(macOS)
+        return Double(nsSize.height)
+        #endif
+    }
+}
+
 public struct PlatformImage: @unchecked Sendable {
     #if os(iOS)
     private let _uiImage: UIImage

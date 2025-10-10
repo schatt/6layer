@@ -6,7 +6,7 @@ import SwiftUI
 public func determineOptimalPhotoLayout_L2(
     purpose: PhotoPurpose,
     context: PhotoContext
-) -> CGSize {
+) -> PlatformSize {
     let availableSpace = context.availableSpace
     let screenSize = context.screenSize
     let _ = context.deviceCapabilities
@@ -19,14 +19,14 @@ public func determineOptimalPhotoLayout_L2(
     switch purpose {
     case .vehiclePhoto:
         // Vehicle photos benefit from wider aspect ratio
-        return CGSize(
+        return PlatformSize(
             width: baseWidth,
             height: baseWidth * 0.6 // 5:3 aspect ratio
         )
         
     case .fuelReceipt, .pumpDisplay:
         // Receipts and displays are typically portrait
-        return CGSize(
+        return PlatformSize(
             width: baseWidth * 0.7,
             height: baseHeight
         )
@@ -34,21 +34,21 @@ public func determineOptimalPhotoLayout_L2(
     case .odometer:
         // Odometer photos are typically square or slightly rectangular
         let size = min(baseWidth, baseHeight) * 0.8
-        return CGSize(width: size, height: size)
+        return PlatformSize(width: size, height: size)
         
     case .maintenance, .expense:
         // Maintenance and expense photos are typically square thumbnails
         let size = min(baseWidth, baseHeight) * 0.6
-        return CGSize(width: size, height: size)
+        return PlatformSize(width: size, height: size)
         
     case .profile:
         // Profile photos are typically square
         let size = min(baseWidth, baseHeight) * 0.5
-        return CGSize(width: size, height: size)
+        return PlatformSize(width: size, height: size)
         
     case .document:
         // Documents can vary, but typically portrait
-        return CGSize(
+        return PlatformSize(
             width: baseWidth * 0.6,
             height: baseHeight * 0.8
         )
@@ -121,7 +121,7 @@ public func calculateOptimalImageSize(
     let finalWidth = min(layout.width, maxResolution.width)
     let finalHeight = min(layout.height, maxResolution.height)
     
-    return CGSize(width: finalWidth, height: finalHeight)
+    return PlatformSize(width: finalWidth, height: finalHeight)
 }
 
 /// Determine if image should be cropped for purpose
