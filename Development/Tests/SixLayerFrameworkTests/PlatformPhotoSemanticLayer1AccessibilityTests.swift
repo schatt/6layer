@@ -41,7 +41,20 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = Text("Photo Capture Test")
+        let photoPreferences = PhotoPreferences()
+        let deviceCapabilities = PhotoDeviceCapabilities()
+        let photoContext = PhotoContext(
+            screenSize: CGSize(width: 375, height: 667),
+            availableSpace: CGSize(width: 375, height: 600),
+            userPreferences: photoPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+        
+        let view = platformPhotoCapture_L1(
+            purpose: .document,
+            context: photoContext,
+            onImageCaptured: { _ in }
+        )
         
         // When & Then
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -66,7 +79,20 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = Text("Photo Capture Test")
+        let photoPreferences = PhotoPreferences()
+        let deviceCapabilities = PhotoDeviceCapabilities()
+        let photoContext = PhotoContext(
+            screenSize: CGSize(width: 375, height: 667),
+            availableSpace: CGSize(width: 375, height: 600),
+            userPreferences: photoPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+        
+        let view = platformPhotoCapture_L1(
+            purpose: .document,
+            context: photoContext,
+            onImageCaptured: { _ in }
+        )
         
         // When & Then
         let hasAccessibilityID = hasAccessibilityIdentifier(
