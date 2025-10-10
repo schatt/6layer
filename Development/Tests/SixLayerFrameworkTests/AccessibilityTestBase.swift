@@ -2,30 +2,30 @@ import XCTest
 import SwiftUI
 @testable import SixLayerFramework
 
-/// Base class for all accessibility tests with shared setup/teardown
-/// DRY PRINCIPLE: Centralizes common test setup logic
+/// Shared utilities for accessibility tests
+/// DRY PRINCIPLE: Centralizes common test setup logic without inheritance
 /// DTRT PRINCIPLE: Ensures consistent test environment across all accessibility tests
 @MainActor
-open class AccessibilityTestBase: XCTestCase {
+public enum AccessibilityTestUtilities {
     
-    // MARK: - Shared Setup/Teardown
+    // MARK: - Shared Setup/Teardown Methods
     
-    override open func setUp() async throws {
-        try await super.setUp()
+    /// Sets up the testing environment for accessibility tests
+    public static func setupAccessibilityTestEnvironment() async {
         await setupTestEnvironment()
         configureAccessibilitySettings()
     }
     
-    override open func tearDown() async throws {
+    /// Cleans up the testing environment for accessibility tests
+    public static func cleanupAccessibilityTestEnvironment() async {
         await cleanupTestEnvironment()
         resetAccessibilitySettings()
-        try await super.tearDown()
     }
     
     // MARK: - Shared Configuration Methods
     
     /// Configures accessibility settings for tests
-    private func configureAccessibilitySettings() {
+    private static func configureAccessibilitySettings() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -35,7 +35,7 @@ open class AccessibilityTestBase: XCTestCase {
     }
     
     /// Resets accessibility settings after tests
-    private func resetAccessibilitySettings() {
+    private static func resetAccessibilitySettings() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
