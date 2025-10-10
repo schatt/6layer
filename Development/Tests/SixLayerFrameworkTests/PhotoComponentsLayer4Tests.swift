@@ -35,8 +35,9 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
     
     private var testImage: PlatformImage!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         // Create a test image (placeholder for now)
         #if os(iOS)
         testImage = PlatformImage(uiImage: UIImage(systemName: "photo") ?? UIImage())
@@ -45,21 +46,12 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
         #else
         testImage = PlatformImage()
         #endif
-        
-        // Reset global config to default state
-        Task { @MainActor in
-            AccessibilityIdentifierConfig.shared.resetToDefaults()
-            AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-            AccessibilityIdentifierConfig.shared.namespace = "test"
-        }
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         testImage = nil
-        Task { @MainActor in
-            AccessibilityIdentifierConfig.shared.resetToDefaults()
-        }
-        super.tearDown()
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+        try await super.tearDown()
     }
     
     // MARK: - Layer 4 Photo Component Tests
