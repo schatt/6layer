@@ -537,6 +537,10 @@ public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
         // We don't rely on environment variables - this modifier always works
         return content
             .modifier(AccessibilityIdentifierAssignmentModifier(isDirectApplication: true)) // Apply ID generation directly
+            .modifier(AccessibilityLabelAssignmentModifier())      // Generate VoiceOver labels
+            .modifier(AccessibilityHintAssignmentModifier())        // Generate user guidance hints
+            .modifier(AccessibilityTraitsAssignmentModifier())      // Generate behavioral traits
+            .modifier(AccessibilityValueAssignmentModifier())       // Generate state values
     }
 }
 
@@ -816,5 +820,143 @@ public extension View {
     /// - Returns: A view that sets the navigation state
     func navigationState(_ state: String) -> some View {
         modifier(NavigationStateModifier(navigationState: state))
+    }
+}
+
+// MARK: - Enhanced Accessibility Modifiers
+
+/// Modifier that automatically generates accessibility labels for VoiceOver
+public struct AccessibilityLabelAssignmentModifier: ViewModifier {
+    
+    public func body(content: Content) -> some View {
+        let config = AccessibilityIdentifierConfig.shared
+        let label = generateAccessibilityLabel()
+        
+        if config.enableDebugLogging {
+            print("🔍 Applying accessibility label: '\(label)'")
+        }
+        
+        return content.accessibilityLabel(label)
+    }
+    
+    private func generateAccessibilityLabel() -> String {
+        let config = AccessibilityIdentifierConfig.shared
+        let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: " ")
+        
+        // Convert technical context to human-readable labels
+        let humanReadable = context
+            .replacingOccurrences(of: "platforminteractionbutton", with: "interactive button")
+            .replacingOccurrences(of: "platformcamerainterface", with: "camera interface")
+            .replacingOccurrences(of: "platformphotopicker", with: "photo picker")
+            .replacingOccurrences(of: "platformphotoeditor", with: "photo editor")
+            .replacingOccurrences(of: "platformphotodisplay", with: "photo display")
+            .replacingOccurrences(of: "platformhapticfeedback", with: "haptic feedback")
+            .replacingOccurrences(of: "platform", with: "")
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: "-", with: " ")
+            .capitalized
+        
+        return humanReadable.isEmpty ? "Interactive element" : humanReadable
+    }
+}
+
+/// Modifier that automatically generates accessibility hints for user guidance
+public struct AccessibilityHintAssignmentModifier: ViewModifier {
+    
+    public func body(content: Content) -> some View {
+        let config = AccessibilityIdentifierConfig.shared
+        let hint = generateAccessibilityHint()
+        
+        if config.enableDebugLogging {
+            print("🔍 Applying accessibility hint: '\(hint)'")
+        }
+        
+        return content.accessibilityHint(hint)
+    }
+    
+    private func generateAccessibilityHint() -> String {
+        let config = AccessibilityIdentifierConfig.shared
+        let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: " ")
+        
+        // Generate contextual hints based on component type
+        if context.contains("button") || context.contains("interaction") {
+            return "Tap to activate"
+        } else if context.contains("picker") || context.contains("camera") {
+            return "Tap to select or capture"
+        } else if context.contains("editor") {
+            return "Tap to edit"
+        } else if context.contains("display") || context.contains("view") {
+            return "View content"
+        } else if context.contains("feedback") {
+            return "Provides tactile feedback"
+        } else {
+            return "Tap to interact"
+        }
+    }
+}
+
+/// Modifier that automatically generates accessibility traits for behavior
+public struct AccessibilityTraitsAssignmentModifier: ViewModifier {
+    
+    public func body(content: Content) -> some View {
+        let config = AccessibilityIdentifierConfig.shared
+        let traits = generateAccessibilityTraits()
+        
+        if config.enableDebugLogging {
+            print("🔍 Applying accessibility traits: \(traits)")
+        }
+        
+        return content.accessibilityAddTraits(traits)
+    }
+    
+    private func generateAccessibilityTraits() -> AccessibilityTraits {
+        let config = AccessibilityIdentifierConfig.shared
+        let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: " ")
+        
+        // Generate appropriate traits based on component type
+        if context.contains("button") || context.contains("interaction") {
+            return .isButton
+        } else if context.contains("header") || context.contains("title") {
+            return .isHeader
+        } else if context.contains("image") || context.contains("photo") {
+            return .isImage
+        } else if context.contains("text") || context.contains("label") {
+            return .isStaticText
+        } else {
+            return []
+        }
+    }
+}
+
+/// Modifier that automatically generates accessibility values for state
+public struct AccessibilityValueAssignmentModifier: ViewModifier {
+    
+    public func body(content: Content) -> some View {
+        let config = AccessibilityIdentifierConfig.shared
+        let value = generateAccessibilityValue()
+        
+        if config.enableDebugLogging && !value.isEmpty {
+            print("🔍 Applying accessibility value: '\(value)'")
+        }
+        
+        return value.isEmpty ? content : content.accessibilityValue(value)
+    }
+    
+    private func generateAccessibilityValue() -> String {
+        let config = AccessibilityIdentifierConfig.shared
+        let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: " ")
+        
+        // Generate values for components that have state
+        if context.contains("picker") {
+            return "Ready to select"
+        } else if context.contains("camera") {
+            return "Ready to capture"
+        } else if context.contains("editor") {
+            return "Ready to edit"
+        } else if context.contains("feedback") {
+            return "Enabled"
+        } else {
+            return "" // No value for most components
+        }
     }
 }
