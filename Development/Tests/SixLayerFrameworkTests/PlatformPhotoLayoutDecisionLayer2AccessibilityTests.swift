@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoLayoutDecisionLayer2.swift functions
 /// Ensures Photo layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -69,13 +70,3 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

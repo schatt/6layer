@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for MaterialAccessibilityManager.swift classes
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class MaterialAccessibilityManagerAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -61,13 +62,3 @@ final class MaterialAccessibilityManagerAccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension MaterialAccessibilityManagerAccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

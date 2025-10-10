@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for InternationalizationService.swift classes
 /// Ensures InternationalizationService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class InternationalizationServiceAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -61,13 +62,3 @@ final class InternationalizationServiceAccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension InternationalizationServiceAccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -341,13 +342,3 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformPhotoComponentsLayer4AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

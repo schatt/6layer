@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoSemanticLayer1.swift functions
 /// Ensures Photo semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -211,13 +212,3 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformPhotoSemanticLayer1AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

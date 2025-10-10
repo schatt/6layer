@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRComponentsLayer4.swift functions
 /// Ensures OCR components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -133,13 +134,3 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformOCRComponentsLayer4AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

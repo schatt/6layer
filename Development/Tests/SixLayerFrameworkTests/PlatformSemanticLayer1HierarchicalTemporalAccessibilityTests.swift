@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for hierarchical and temporal data functions in PlatformSemanticLayer1.swift
 /// Ensures hierarchical and temporal data presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -193,13 +194,3 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

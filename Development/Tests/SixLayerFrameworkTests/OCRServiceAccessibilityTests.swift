@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for OCRService.swift classes
 /// Ensures OCRService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class OCRServiceAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -129,13 +130,3 @@ final class OCRServiceAccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension OCRServiceAccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

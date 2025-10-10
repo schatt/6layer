@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRSemanticLayer1.swift functions
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -153,13 +154,3 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformOCRSemanticLayer1AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

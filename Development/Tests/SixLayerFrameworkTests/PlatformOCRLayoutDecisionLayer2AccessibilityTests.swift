@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRLayoutDecisionLayer2.swift functions
 /// Ensures OCR layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -85,13 +86,3 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformOCRLayoutDecisionLayer2AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

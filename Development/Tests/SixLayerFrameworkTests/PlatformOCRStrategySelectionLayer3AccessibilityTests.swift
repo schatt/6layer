@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRStrategySelectionLayer3.swift functions
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -83,13 +84,3 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformOCRStrategySelectionLayer3AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}

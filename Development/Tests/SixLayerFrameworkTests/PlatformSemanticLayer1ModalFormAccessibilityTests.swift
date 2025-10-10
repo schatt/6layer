@@ -6,6 +6,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformSemanticLayer1.swift modal form functions
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@MainActor
 final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -100,13 +101,3 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     }
 }
 
-// MARK: - Test Extensions
-extension PlatformSemanticLayer1ModalFormAccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-    
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
-    }
-}
