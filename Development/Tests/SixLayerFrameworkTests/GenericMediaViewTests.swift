@@ -35,7 +35,14 @@ final class GenericMediaViewTests: XCTestCase {
     
     func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = GenericMediaView(
-            media: GenericMediaItem(title: "Test Media", url: "https://example.com")
+            media: [GenericMediaItem(title: "Test Media", url: "https://example.com")],
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -50,7 +57,14 @@ final class GenericMediaViewTests: XCTestCase {
     
     func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = GenericMediaView(
-            media: GenericMediaItem(title: "Test Media", url: "https://example.com")
+            media: [GenericMediaItem(title: "Test Media", url: "https://example.com")],
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
