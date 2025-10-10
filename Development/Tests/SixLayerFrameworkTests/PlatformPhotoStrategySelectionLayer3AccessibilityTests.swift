@@ -14,5 +14,6 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
     }
     
     override func tearDown() async throws {
-        try await super.tearDown()
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+        try await super.tearDown()
+    }
