@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AppleHIGComplianceManager.swift classes
 /// Ensures AppleHIGComplianceManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -62,3 +61,13 @@ final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension AppleHIGComplianceManagerAccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

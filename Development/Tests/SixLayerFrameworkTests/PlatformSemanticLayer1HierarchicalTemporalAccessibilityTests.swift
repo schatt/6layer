@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for hierarchical and temporal data functions in PlatformSemanticLayer1.swift
 /// Ensures hierarchical and temporal data presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -47,12 +46,11 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testData = GenericHierarchicalItem(
+        let testData = HierarchicalTestItem(
             title: "Root Item",
-            level: 0,
             children: [
-                GenericHierarchicalItem(title: "Child 1", level: 1),
-                GenericHierarchicalItem(title: "Child 2", level: 1)
+                HierarchicalTestItem(title: "Child 1", children: []),
+                HierarchicalTestItem(title: "Child 2", children: [])
             ]
         )
         
@@ -65,8 +63,11 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentHierarchicalData_L1(
-            items: [testData],
-            hints: hints
+            data: testData,
+            hints: hints,
+            onItemSelected: { _ in },
+            onItemExpanded: { _ in },
+            onItemCollapsed: { _ in }
         )
         
         // When & Then
@@ -84,12 +85,11 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testData = GenericHierarchicalItem(
+        let testData = HierarchicalTestItem(
             title: "Root Item",
-            level: 0,
             children: [
-                GenericHierarchicalItem(title: "Child 1", level: 1),
-                GenericHierarchicalItem(title: "Child 2", level: 1)
+                HierarchicalTestItem(title: "Child 1", children: []),
+                HierarchicalTestItem(title: "Child 2", children: [])
             ]
         )
         
@@ -102,8 +102,11 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentHierarchicalData_L1(
-            items: [testData],
-            hints: hints
+            data: testData,
+            hints: hints,
+            onItemSelected: { _ in },
+            onItemExpanded: { _ in },
+            onItemCollapsed: { _ in }
         )
         
         // When & Then
@@ -123,10 +126,9 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testData = GenericTemporalItem(
+        let testData = TemporalTestItem(
             title: "Event 1",
-            date: Date(),
-            duration: nil
+            timestamp: Date()
         )
         
         let hints = PresentationHints(
@@ -138,8 +140,10 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentTemporalData_L1(
-            items: [testData],
-            hints: hints
+            data: testData,
+            hints: hints,
+            onItemSelected: { _ in },
+            onTimeRangeChanged: { _, _ in }
         )
         
         // When & Then
@@ -157,10 +161,9 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testData = GenericTemporalItem(
+        let testData = TemporalTestItem(
             title: "Event 1",
-            date: Date(),
-            duration: nil
+            timestamp: Date()
         )
         
         let hints = PresentationHints(
@@ -172,8 +175,10 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentTemporalData_L1(
-            items: [testData],
-            hints: hints
+            data: testData,
+            hints: hints,
+            onItemSelected: { _ in },
+            onTimeRangeChanged: { _, _ in }
         )
         
         // When & Then
@@ -188,3 +193,13 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     }
 }
 
+// MARK: - Test Extensions
+extension PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

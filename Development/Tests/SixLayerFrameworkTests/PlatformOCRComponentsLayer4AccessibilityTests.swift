@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRComponentsLayer4.swift functions
 /// Ensures OCR components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -35,10 +34,11 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -51,19 +51,22 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
-        let strategy = OCRStrategy(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+        let strategy = CardExpansionStrategy(
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
+            expansionScale: 1.0,
+            animationDuration: 0.3,
+            hapticFeedback: true,
+            accessibilitySupport: true
         )
         
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
+            layoutDecision: layoutDecision,
             strategy: strategy,
-            onResult: { _ in }
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -83,10 +86,11 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -99,19 +103,22 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
-        let strategy = OCRStrategy(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+        let strategy = CardExpansionStrategy(
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
+            expansionScale: 1.0,
+            animationDuration: 0.3,
+            hapticFeedback: true,
+            accessibilitySupport: true
         )
         
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
+            layoutDecision: layoutDecision,
             strategy: strategy,
-            onResult: { _ in }
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -126,3 +133,13 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension PlatformOCRComponentsLayer4AccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

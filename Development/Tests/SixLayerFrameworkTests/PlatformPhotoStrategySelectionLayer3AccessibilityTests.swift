@@ -3,10 +3,10 @@ import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
-/// BUSINESS PURPOSE: Accessibility tests for PlatformOCRStrategySelectionLayer3.swift functions
-/// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
+/// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoStrategySelectionLayer3.swift functions
+/// Ensures Photo strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
+final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -26,22 +26,16 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         config.resetToDefaults()
     }
     
-    // MARK: - OCR Strategy Selection Tests
+    // MARK: - Photo Strategy Selection Tests
     
-    /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
+    /// BUSINESS PURPOSE: Validates that platformPhotoStrategy_L3 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
+    func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
-        )
+        let testPhotos = [PlatformImage(), PlatformImage()]
         
-        let result = platformOCRStrategy_L3(
-            context: context,
+        let result = platformPhotoStrategy_L3(
+            photos: testPhotos,
             screenWidth: 375,
             deviceType: .phone,
             interactionStyle: .touch,
@@ -50,25 +44,19 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
+        XCTAssertNotNil(result, "platformPhotoStrategy_L3 should return a valid strategy")
         XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
         XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
     }
     
-    /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
+    /// BUSINESS PURPOSE: Validates that platformPhotoStrategy_L3 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
+    func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
-        )
+        let testPhotos = [PlatformImage(), PlatformImage()]
         
-        let result = platformOCRStrategy_L3(
-            context: context,
+        let result = platformPhotoStrategy_L3(
+            photos: testPhotos,
             screenWidth: 1024,
             deviceType: .desktop,
             interactionStyle: .mouse,
@@ -77,14 +65,14 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
+        XCTAssertNotNil(result, "platformPhotoStrategy_L3 should return a valid strategy")
         XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
         XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
     }
 }
 
 // MARK: - Test Extensions
-extension PlatformOCRStrategySelectionLayer3AccessibilityTests {
+extension PlatformPhotoStrategySelectionLayer3AccessibilityTests {
     private func setupTestEnvironment() {
         TestSetupUtilities.shared.reset()
     }

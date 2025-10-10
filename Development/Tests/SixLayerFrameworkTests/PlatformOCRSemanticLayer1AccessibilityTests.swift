@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRSemanticLayer1.swift functions
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -35,16 +34,18 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context,
-            onResult: { _ in }
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -64,16 +65,18 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context,
-            onResult: { _ in }
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -93,16 +96,18 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImages = [PlatformImage(), PlatformImage()]
         let context = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRWithVisualCorrection_L1(
-            image: testImages[0],
+            images: testImages,
             context: context,
-            onResult: { _ in }
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -122,16 +127,18 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImages = [PlatformImage(), PlatformImage()]
         let context = OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRWithVisualCorrection_L1(
-            image: testImages[0],
+            images: testImages,
             context: context,
-            onResult: { _ in }
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -146,3 +153,13 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension PlatformOCRSemanticLayer1AccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

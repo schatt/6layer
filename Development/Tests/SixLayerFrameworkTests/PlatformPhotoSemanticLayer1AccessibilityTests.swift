@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoSemanticLayer1.swift functions
 /// Ensures Photo semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -41,19 +40,10 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let photoPreferences = PhotoPreferences()
-        let deviceCapabilities = PhotoDeviceCapabilities()
-        let photoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 600),
-            userPreferences: photoPreferences,
-            deviceCapabilities: deviceCapabilities
-        )
-        
         let view = platformPhotoCapture_L1(
-            purpose: .document,
-            context: photoContext,
-            onImageCaptured: { _ in }
+            hints: hints,
+            onPhotoCaptured: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -79,19 +69,10 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let photoPreferences = PhotoPreferences()
-        let deviceCapabilities = PhotoDeviceCapabilities()
-        let photoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 600),
-            userPreferences: photoPreferences,
-            deviceCapabilities: deviceCapabilities
-        )
-        
         let view = platformPhotoCapture_L1(
-            purpose: .document,
-            context: photoContext,
-            onImageCaptured: { _ in }
+            hints: hints,
+            onPhotoCaptured: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -119,19 +100,10 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let photoPreferences = PhotoPreferences()
-        let deviceCapabilities = PhotoDeviceCapabilities()
-        let photoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 600),
-            userPreferences: photoPreferences,
-            deviceCapabilities: deviceCapabilities
-        )
-        
         let view = platformPhotoSelection_L1(
-            purpose: .document,
-            context: photoContext,
-            onImageSelected: { _ in }
+            hints: hints,
+            onPhotosSelected: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -157,19 +129,10 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let photoPreferences = PhotoPreferences()
-        let deviceCapabilities = PhotoDeviceCapabilities()
-        let photoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 600),
-            userPreferences: photoPreferences,
-            deviceCapabilities: deviceCapabilities
-        )
-        
         let view = platformPhotoSelection_L1(
-            purpose: .document,
-            context: photoContext,
-            onImageSelected: { _ in }
+            hints: hints,
+            onPhotosSelected: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -198,19 +161,11 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let photoPreferences = PhotoPreferences()
-        let deviceCapabilities = PhotoDeviceCapabilities()
-        let photoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 600),
-            userPreferences: photoPreferences,
-            deviceCapabilities: deviceCapabilities
-        )
-        
         let view = platformPhotoDisplay_L1(
-            purpose: .document,
-            context: photoContext,
-            image: PlatformImage()
+            photos: testPhotos,
+            hints: hints,
+            onPhotoSelected: { _ in },
+            onPhotoDeleted: { _ in }
         )
         
         // When & Then
@@ -237,19 +192,11 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let photoPreferences = PhotoPreferences()
-        let deviceCapabilities = PhotoDeviceCapabilities()
-        let photoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 600),
-            userPreferences: photoPreferences,
-            deviceCapabilities: deviceCapabilities
-        )
-        
         let view = platformPhotoDisplay_L1(
-            purpose: .document,
-            context: photoContext,
-            image: PlatformImage()
+            photos: testPhotos,
+            hints: hints,
+            onPhotoSelected: { _ in },
+            onPhotoDeleted: { _ in }
         )
         
         // When & Then
@@ -264,3 +211,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension PlatformPhotoSemanticLayer1AccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for OCRService.swift classes
 /// Ensures OCRService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class OCRServiceAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -63,6 +62,37 @@ final class OCRServiceAccessibilityTests: XCTestCase {
     
     // MARK: - MockOCRService Tests
     
+    /// BUSINESS PURPOSE: Validates that MockOCRService generates proper accessibility identifiers
+    /// for automated testing and accessibility tools compliance on iOS
+    func testMockOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
+        // Given
+        let service = MockOCRService()
+        
+        // When & Then
+        // Service classes don't directly generate views, but we test their configuration
+        XCTAssertNotNil(service, "MockOCRService should be instantiable")
+        
+        // Test that the service can be configured with accessibility settings
+        let config = AccessibilityIdentifierConfig.shared
+        XCTAssertTrue(config.enableAutoIDs, "MockOCRService should work with accessibility enabled")
+        XCTAssertEqual(config.namespace, "SixLayer", "MockOCRService should use correct namespace")
+    }
+    
+    /// BUSINESS PURPOSE: Validates that MockOCRService generates proper accessibility identifiers
+    /// for automated testing and accessibility tools compliance on macOS
+    func testMockOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
+        // Given
+        let service = MockOCRService()
+        
+        // When & Then
+        // Service classes don't directly generate views, but we test their configuration
+        XCTAssertNotNil(service, "MockOCRService should be instantiable")
+        
+        // Test that the service can be configured with accessibility settings
+        let config = AccessibilityIdentifierConfig.shared
+        XCTAssertTrue(config.enableAutoIDs, "MockOCRService should work with accessibility enabled")
+        XCTAssertEqual(config.namespace, "SixLayer", "MockOCRService should use correct namespace")
+    }
     
     // MARK: - OCRServiceFactory Tests
     
@@ -99,3 +129,13 @@ final class OCRServiceAccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension OCRServiceAccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

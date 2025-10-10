@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AssistiveTouchManager.swift classes
 /// Ensures AssistiveTouchManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -33,7 +32,7 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let manager = AssistiveTouchManager(config: AssistiveTouchConfig())
+        let manager = AssistiveTouchManager()
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -49,7 +48,7 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let manager = AssistiveTouchManager(config: AssistiveTouchConfig())
+        let manager = AssistiveTouchManager()
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -62,3 +61,13 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension AssistiveTouchManagerAccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

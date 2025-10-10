@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -52,8 +51,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -61,7 +60,11 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoPicker_L4(
-            onImageSelected: { _ in }
+            hints: hints,
+            layoutDecision: layoutDecision,
+            strategy: strategy,
+            onPhotosSelected: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -98,8 +101,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -107,7 +110,11 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoPicker_L4(
-            onImageSelected: { _ in }
+            hints: hints,
+            layoutDecision: layoutDecision,
+            strategy: strategy,
+            onPhotosSelected: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -147,8 +154,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -156,8 +163,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoDisplay_L4(
-            image: PlatformImage(),
-            style: .thumbnail
+            photos: testPhotos,
+            hints: hints,
+            layoutDecision: layoutDecision,
+            strategy: strategy,
+            onPhotoSelected: { _ in },
+            onPhotoDeleted: { _ in }
         )
         
         // When & Then
@@ -195,8 +206,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -204,8 +215,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoDisplay_L4(
-            image: PlatformImage(),
-            style: .thumbnail
+            photos: testPhotos,
+            hints: hints,
+            layoutDecision: layoutDecision,
+            strategy: strategy,
+            onPhotoSelected: { _ in },
+            onPhotoDeleted: { _ in }
         )
         
         // When & Then
@@ -245,8 +260,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -254,8 +269,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoEditor_L4(
-            image: PlatformImage(),
-            onImageEdited: { _ in }
+            photo: testPhoto,
+            hints: hints,
+            layoutDecision: layoutDecision,
+            strategy: strategy,
+            onPhotoEdited: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -293,8 +312,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.hoverExpand],
-            primaryStrategy: .hoverExpand,
+            supportedStrategies: [.tapExpand],
+            primaryStrategy: .tapExpand,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -302,8 +321,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let view = platformPhotoEditor_L4(
-            image: PlatformImage(),
-            onImageEdited: { _ in }
+            photo: testPhoto,
+            hints: hints,
+            layoutDecision: layoutDecision,
+            strategy: strategy,
+            onPhotoEdited: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -318,3 +341,13 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension PlatformPhotoComponentsLayer4AccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}

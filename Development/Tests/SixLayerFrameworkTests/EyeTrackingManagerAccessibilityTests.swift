@@ -6,7 +6,6 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for EyeTrackingManager.swift classes
 /// Ensures EyeTrackingManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
 final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     
     override func setUp() {
@@ -62,3 +61,13 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     }
 }
 
+// MARK: - Test Extensions
+extension EyeTrackingManagerAccessibilityTests {
+    private func setupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+    
+    private func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.reset()
+    }
+}
