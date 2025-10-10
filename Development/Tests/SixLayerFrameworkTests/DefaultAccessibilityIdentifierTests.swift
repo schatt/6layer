@@ -19,7 +19,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
         }
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
