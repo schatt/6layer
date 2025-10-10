@@ -55,7 +55,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
     func testAutomaticAccessibilityModifierWorks() {
         // Test AutomaticAccessibilityModifier directly
         let testView = Button("Test") { }
-            .modifier(AutomaticAccessibilityModifier(
+            .modifier(SystemAccessibilityModifier(
                 accessibilityState: AccessibilitySystemState(),
                 platform: .iOS
             ))
