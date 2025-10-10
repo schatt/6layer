@@ -8,8 +8,8 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -87,11 +87,11 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRLayoutDecisionLayer2AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func setupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

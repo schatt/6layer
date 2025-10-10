@@ -7,8 +7,8 @@ import ViewInspector
 @MainActor
 final class AccessibilityIdentifierDisabledTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = false  // ← DISABLED

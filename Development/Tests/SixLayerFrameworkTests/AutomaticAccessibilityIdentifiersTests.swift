@@ -13,8 +13,8 @@ final class AutomaticAccessibilityIdentifiersTests: XCTestCase {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

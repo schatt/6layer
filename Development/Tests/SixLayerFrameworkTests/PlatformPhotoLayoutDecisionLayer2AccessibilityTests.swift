@@ -8,8 +8,8 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
-    override func setUp() async {
-        await super.setUp()
+    override func setUp() async throws {
+        await try await super.setUp()
         await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

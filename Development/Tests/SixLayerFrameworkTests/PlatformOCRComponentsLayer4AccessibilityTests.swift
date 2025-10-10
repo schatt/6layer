@@ -8,8 +8,8 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -51,22 +51,19 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
-            layoutDecision: layoutDecision,
             strategy: strategy,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
@@ -103,22 +100,19 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
         )
         
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
-            layoutDecision: layoutDecision,
             strategy: strategy,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
@@ -135,11 +129,11 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRComponentsLayer4AccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func setupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

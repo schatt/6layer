@@ -17,8 +17,8 @@ import SwiftUI
  */
 final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         // Reset global config to default state
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()

@@ -8,8 +8,8 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class OCRServiceAccessibilityTests: XCTestCase {
     
-    override func setUp() async {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

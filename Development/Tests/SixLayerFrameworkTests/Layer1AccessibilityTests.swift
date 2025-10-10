@@ -16,8 +16,8 @@ final class Layer1AccessibilityTests: XCTestCase {
     private var testItems: [Layer1TestItem]!
     private var testHints: PresentationHints!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         testItems = [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")

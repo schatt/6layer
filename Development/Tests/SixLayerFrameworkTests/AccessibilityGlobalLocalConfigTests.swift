@@ -8,7 +8,7 @@ import ViewInspector
 final class AccessibilityGlobalLocalConfigTests: XCTestCase {
     
     override func setUp() {
-        super.setUp()
+        try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true

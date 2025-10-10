@@ -8,8 +8,8 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -63,11 +63,11 @@ final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension AppleHIGComplianceManagerAccessibilityTests {
-    private func setupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func setupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    private func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.reset()
+    override func cleanupTestEnvironment() {
+        TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

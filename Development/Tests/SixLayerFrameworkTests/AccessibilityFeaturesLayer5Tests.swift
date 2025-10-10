@@ -43,7 +43,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     private var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
-        super.setUp()
+        try await super.setUp()
         keyboardManager = KeyboardNavigationManager()
         highContrastManager = HighContrastManager()
         cancellables = Set<AnyCancellable>()

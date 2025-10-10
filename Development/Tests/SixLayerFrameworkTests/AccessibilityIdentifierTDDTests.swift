@@ -8,8 +8,8 @@ import ViewInspector
 @MainActor
 final class AccessibilityIdentifierTDDTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         // Reset configuration to known state
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

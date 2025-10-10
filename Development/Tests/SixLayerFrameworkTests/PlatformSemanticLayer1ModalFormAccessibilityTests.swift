@@ -9,8 +9,8 @@ import ViewInspector
 final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     
     @MainActor
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -100,11 +100,11 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformSemanticLayer1ModalFormAccessibilityTests {
-    private func setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    private func cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }
