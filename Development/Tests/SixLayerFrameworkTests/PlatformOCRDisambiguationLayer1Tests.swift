@@ -36,10 +36,14 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
     func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
-        let view = platformOCRDisambiguation_L1(
-            recognizedText: "Test Text",
-            alternatives: alternatives,
-            onSelection: { _ in }
+        let view = platformOCRWithDisambiguation_L1(
+            image: PlatformImage(),
+            context: OCRContext(
+                processingMode: .standard,
+                requiresNeuralEngine: false,
+                estimatedProcessingTime: 1.0
+            ),
+            onResult: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -55,10 +59,14 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
     func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
-        let view = platformOCRDisambiguation_L1(
-            recognizedText: "Test Text",
-            alternatives: alternatives,
-            onSelection: { _ in }
+        let view = platformOCRWithDisambiguation_L1(
+            image: PlatformImage(),
+            context: OCRContext(
+                processingMode: .standard,
+                requiresNeuralEngine: false,
+                estimatedProcessingTime: 1.0
+            ),
+            onResult: { _ in }
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
