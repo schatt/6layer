@@ -10,7 +10,7 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        setupTestEnvironment()
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -19,11 +19,11 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        try await super.tearDown()
-        cleanupTestEnvironment()
+    override func tearDown() async throws {
+        await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
+        try await super.tearDown()
     }
     
     // MARK: - EyeTrackingManager Tests
