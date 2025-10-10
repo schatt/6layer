@@ -31,56 +31,73 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         config.resetToDefaults()
     }
     
-    // MARK: - platformPresentPhotoGallery_L1 Tests
+    // MARK: - platformPhotoDisplay_L1 Tests
     
-    func testPlatformPresentPhotoGalleryL1GeneratesAccessibilityIdentifiersOnIOS() async {
-        let testPhotos = [
-            PhotoItem(id: "1", url: "https://example.com/1.jpg", caption: "Photo 1"),
-            PhotoItem(id: "2", url: "https://example.com/2.jpg", caption: "Photo 2")
-        ]
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .grid,
-            complexity: .moderate,
-            context: .gallery,
-            customPreferences: [:]
+    func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        // Given
+        let preferences = PhotoPreferences(
+            preferredSource: .camera,
+            allowEditing: true,
+            compressionQuality: 0.8
+        )
+        let capabilities = PhotoDeviceCapabilities(
+            hasCamera: true,
+            hasPhotoLibrary: true,
+            supportsEditing: true
+        )
+        let context = PhotoContext(
+            screenSize: CGSize(width: 375, height: 812),
+            availableSpace: CGSize(width: 375, height: 400),
+            userPreferences: preferences,
+            deviceCapabilities: capabilities
         )
         
-        let view = platformPresentPhotoGallery_L1(photos: testPhotos, hints: hints)
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformpresentphotogallery_l1", 
-            platform: .iOS,
-            componentName: "platformPresentPhotoGallery_L1"
+        // When
+        let view = platformPhotoDisplay_L1(
+            purpose: .document,
+            context: context,
+            image: nil
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentPhotoGallery_L1 should generate accessibility identifiers on iOS")
+        // Then
+        XCTAssertNotNil(view, "platformPhotoDisplay_L1 should create a view")
+        
+        // Test accessibility identifier generation
+        let hasAccessibilityID = hasAccessibilityIdentifier(view: view, platform: .iOS)
+        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on iOS")
     }
     
-    func testPlatformPresentPhotoGalleryL1GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testPhotos = [
-            PhotoItem(id: "1", url: "https://example.com/1.jpg", caption: "Photo 1"),
-            PhotoItem(id: "2", url: "https://example.com/2.jpg", caption: "Photo 2")
-        ]
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .grid,
-            complexity: .moderate,
-            context: .gallery,
-            customPreferences: [:]
+    func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        // Given
+        let preferences = PhotoPreferences(
+            preferredSource: .camera,
+            allowEditing: true,
+            compressionQuality: 0.8
+        )
+        let capabilities = PhotoDeviceCapabilities(
+            hasCamera: true,
+            hasPhotoLibrary: true,
+            supportsEditing: true
+        )
+        let context = PhotoContext(
+            screenSize: CGSize(width: 1024, height: 768),
+            availableSpace: CGSize(width: 1024, height: 400),
+            userPreferences: preferences,
+            deviceCapabilities: capabilities
         )
         
-        let view = platformPresentPhotoGallery_L1(photos: testPhotos, hints: hints)
-        
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*platformpresentphotogallery_l1", 
-            platform: .macOS,
-            componentName: "platformPresentPhotoGallery_L1"
+        // When
+        let view = platformPhotoDisplay_L1(
+            purpose: .document,
+            context: context,
+            image: nil
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentPhotoGallery_L1 should generate accessibility identifiers on macOS")
+        // Then
+        XCTAssertNotNil(view, "platformPhotoDisplay_L1 should create a view")
+        
+        // Test accessibility identifier generation
+        let hasAccessibilityID = hasAccessibilityIdentifier(view: view, platform: .macOS)
+        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on macOS")
     }
 }
-
