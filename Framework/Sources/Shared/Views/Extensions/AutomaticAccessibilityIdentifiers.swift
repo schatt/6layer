@@ -500,9 +500,11 @@ public struct AccessibilityIdentifierGenerator {
 
 public extension View {
     
-    /// Apply automatic accessibility identifiers to this view
+    /// Apply comprehensive automatic accessibility features (IDs, labels, hints, traits, values)
+    /// This modifier enables automatic accessibility for this specific view, overriding global config
+    /// - Returns: A view with comprehensive accessibility features applied
     func automaticAccessibilityIdentifiers() -> some View {
-        return self.modifier(AutomaticAccessibilityIdentifierModifier())
+        return self.modifier(ComprehensiveAccessibilityModifier())
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
     
@@ -520,16 +522,16 @@ public extension View {
     /// Automatically apply accessibility identifiers to ALL views globally
     /// This is the default behavior - no need to call this manually
     func automaticAccessibilityIdentifiersGlobal() -> some View {
-        self.modifier(AutomaticAccessibilityIdentifierModifier())
+        self.modifier(ComprehensiveAccessibilityModifier())
             .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
     }
 }
 
 // MARK: - Automatic Accessibility Identifier Modifier
 
-/// Modifier that automatically applies accessibility identifiers to views
-/// This modifier enables automatic IDs for this specific view, overriding global config
-public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
+/// Modifier that automatically applies comprehensive accessibility features to views
+/// This modifier enables automatic IDs, labels, hints, traits, and values for this specific view, overriding global config
+public struct ComprehensiveAccessibilityModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         // Always apply automatic IDs when this modifier is used (local enable)
@@ -939,7 +941,11 @@ public struct AccessibilityValueAssignmentModifier: ViewModifier {
             print("🔍 Applying accessibility value: '\(value)'")
         }
         
-        return value.isEmpty ? content : content.accessibilityValue(value)
+        if value.isEmpty {
+            return AnyView(content)
+        } else {
+            return AnyView(content.accessibilityValue(value))
+        }
     }
     
     private func generateAccessibilityValue() -> String {

@@ -13,7 +13,7 @@ public struct AppleHIGComplianceModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
-            .modifier(AutomaticAccessibilityModifier(
+            .modifier(AppleHIGComplianceModifier(
                 accessibilityState: manager.accessibilityState,
                 platform: manager.currentPlatform
             ))
@@ -35,8 +35,8 @@ public struct AppleHIGComplianceModifier: ViewModifier {
 
 // MARK: - Automatic Accessibility Modifier
 
-/// Automatically applies accessibility features based on system state
-public struct AutomaticAccessibilityModifier: ViewModifier {
+/// Automatically applies Apple HIG compliance features based on system state
+public struct AppleHIGComplianceModifier: ViewModifier {
     let accessibilityState: AccessibilitySystemState
     let platform: SixLayerPlatform
     
@@ -382,7 +382,7 @@ public extension View {
     
     /// Apply automatic accessibility features
     func automaticAccessibility() -> some View {
-        self.modifier(AutomaticAccessibilityModifier(
+        self.modifier(AppleHIGComplianceModifier(
             accessibilityState: AccessibilitySystemState(),
             platform: .iOS // This would be detected automatically
         ))

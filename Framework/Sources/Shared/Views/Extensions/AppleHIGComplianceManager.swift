@@ -81,7 +81,7 @@ public class AppleHIGComplianceManager: ObservableObject {
     /// Apply automatic accessibility features
     public func applyAutomaticAccessibility<Content: View>(to content: Content) -> some View {
         return content
-            .modifier(AutomaticAccessibilityModifier(
+            .modifier(AppleHIGComplianceModifier(
                 accessibilityState: accessibilityState,
                 platform: currentPlatform
             ))
