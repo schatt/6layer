@@ -39,7 +39,7 @@ final class Layer1AccessibilityTests: XCTestCase {
     override func tearDown() {
         testItems = nil
         testHints = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     // MARK: - Layer 1 Function Tests

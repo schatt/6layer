@@ -29,7 +29,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
-        super.tearDown()
+        try await super.tearDown()
     }
     
     /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers

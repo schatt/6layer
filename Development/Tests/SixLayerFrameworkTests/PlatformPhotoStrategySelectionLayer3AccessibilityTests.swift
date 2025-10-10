@@ -20,7 +20,7 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
+        try await super.tearDown()
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

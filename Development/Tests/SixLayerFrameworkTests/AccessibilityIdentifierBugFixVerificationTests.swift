@@ -29,7 +29,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
-        super.tearDown()
+        try await super.tearDown()
     }
     
     /// BUSINESS PURPOSE: Verify the exact bug scenario from the user's report is now fixed

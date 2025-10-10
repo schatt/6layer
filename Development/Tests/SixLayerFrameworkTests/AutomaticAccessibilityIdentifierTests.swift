@@ -68,7 +68,7 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
-        super.tearDown()
+        try await super.tearDown()
     }
     
     // MARK: - Global Configuration Tests

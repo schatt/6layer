@@ -9,7 +9,7 @@ import ViewInspector
 final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
-        await try await super.setUp()
+        try await super.setUp()
         await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -19,11 +19,11 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() async {
+    override func tearDown() async throws {
         await cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
-        await super.tearDown()
+        await try await super.tearDown()
     }
     
     // MARK: - Photo Layout Decision Tests

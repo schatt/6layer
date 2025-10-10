@@ -23,7 +23,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
         Task { @MainActor in
             AccessibilityIdentifierConfig.shared.resetToDefaults()
         }
-        super.tearDown()
+        try await super.tearDown()
     }
     
     /// BUSINESS PURPOSE: Verify that automatic identifiers work by default

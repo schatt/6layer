@@ -53,7 +53,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         cancellables = nil
         highContrastManager = nil
         keyboardManager = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     // MARK: - KeyboardNavigationManager Focus Management Tests

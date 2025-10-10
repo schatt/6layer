@@ -20,7 +20,7 @@ final class OCRServiceAccessibilityTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
+        try await super.tearDown()
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

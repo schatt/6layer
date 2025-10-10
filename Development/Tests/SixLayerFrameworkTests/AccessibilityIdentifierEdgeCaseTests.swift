@@ -19,7 +19,7 @@ final class AccessibilityIdentifierEdgeCaseTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
+        try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }

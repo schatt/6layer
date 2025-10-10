@@ -22,7 +22,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     
     @MainActor
     override func tearDown() {
-        super.tearDown()
+        try await super.tearDown()
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

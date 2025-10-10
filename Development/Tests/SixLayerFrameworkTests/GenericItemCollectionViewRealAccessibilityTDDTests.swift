@@ -20,7 +20,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
+        try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }

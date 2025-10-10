@@ -39,7 +39,7 @@ final class AccessibilityTestingSuiteTests: XCTestCase {
     
     override func tearDown() {
         testingSuite = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     // MARK: - Initialization Tests
