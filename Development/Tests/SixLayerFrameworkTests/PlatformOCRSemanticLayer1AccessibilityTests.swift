@@ -11,19 +11,23 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
         try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
     }
     
     // MARK: - OCR Visual Correction Tests
@@ -34,27 +38,25 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
-            platform: .iOS,
-            componentName: "platformOCRWithVisualCorrection_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
+                platform: .iOS,
+                componentName: "platformOCRWithVisualCorrection_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
     }
@@ -65,27 +67,25 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let view = platformOCRWithVisualCorrection_L1(
             image: testImage,
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
-            platform: .macOS,
-            componentName: "platformOCRWithVisualCorrection_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
+                platform: .macOS,
+                componentName: "platformOCRWithVisualCorrection_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
     }
@@ -94,29 +94,27 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformOCRWithVisualCorrectionArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testImages = [PlatformImage(), PlatformImage()]
+        let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let view = platformOCRWithVisualCorrection_L1(
-            images: testImages,
+            image: testImage,
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
-            platform: .iOS,
-            componentName: "platformOCRWithVisualCorrection_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
+                platform: .iOS,
+                componentName: "platformOCRWithVisualCorrection_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS")
     }
@@ -125,41 +123,28 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformOCRWithVisualCorrectionArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testImages = [PlatformImage(), PlatformImage()]
+        let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let view = platformOCRWithVisualCorrection_L1(
-            images: testImages,
+            image: testImage,
             context: context,
-            onResult: { _ in },
-            onError: { _ in }
+            onResult: { _ in }
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
-            platform: .macOS,
-            componentName: "platformOCRWithVisualCorrection_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*ocrvisualcorrection", 
+                platform: .macOS,
+                componentName: "platformOCRWithVisualCorrection_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS")
-    }
-}
-
-// MARK: - Test Extensions
-extension PlatformOCRSemanticLayer1AccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }
