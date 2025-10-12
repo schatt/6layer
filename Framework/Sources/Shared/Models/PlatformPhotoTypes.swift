@@ -26,19 +26,32 @@ public enum PhotoPurpose: String, CaseIterable {
 
 /// Context information for photo operations
 public struct PhotoContext {
-    public let screenSize: CGSize
-    public let availableSpace: CGSize
+    public let screenSize: PlatformSize
+    public let availableSpace: PlatformSize
     public let userPreferences: PhotoPreferences
     public let deviceCapabilities: PhotoDeviceCapabilities
     
+    public init(
+        screenSize: PlatformSize,
+        availableSpace: PlatformSize,
+        userPreferences: PhotoPreferences,
+        deviceCapabilities: PhotoDeviceCapabilities
+    ) {
+        self.screenSize = screenSize
+        self.availableSpace = availableSpace
+        self.userPreferences = userPreferences
+        self.deviceCapabilities = deviceCapabilities
+    }
+    
+    /// Convenience initializer that accepts CGSize and converts to PlatformSize
     public init(
         screenSize: CGSize,
         availableSpace: CGSize,
         userPreferences: PhotoPreferences,
         deviceCapabilities: PhotoDeviceCapabilities
     ) {
-        self.screenSize = screenSize
-        self.availableSpace = availableSpace
+        self.screenSize = PlatformSize(screenSize)
+        self.availableSpace = PlatformSize(availableSpace)
         self.userPreferences = userPreferences
         self.deviceCapabilities = deviceCapabilities
     }
@@ -51,13 +64,13 @@ public struct PhotoPreferences {
     public let preferredSource: PhotoSource
     public let allowEditing: Bool
     public let compressionQuality: Double
-    public let maxImageSize: CGSize?
+    public let maxImageSize: PlatformSize?
     
     public init(
         preferredSource: PhotoSource = .both,
         allowEditing: Bool = true,
         compressionQuality: Double = 0.8,
-        maxImageSize: CGSize? = nil
+        maxImageSize: PlatformSize? = nil
     ) {
         self.preferredSource = preferredSource
         self.allowEditing = allowEditing
@@ -102,13 +115,13 @@ public struct PhotoDeviceCapabilities {
     public let hasCamera: Bool
     public let hasPhotoLibrary: Bool
     public let supportsEditing: Bool
-    public let maxImageResolution: CGSize
+    public let maxImageResolution: PlatformSize
     
     public init(
         hasCamera: Bool = true,
         hasPhotoLibrary: Bool = true,
         supportsEditing: Bool = true,
-        maxImageResolution: CGSize = CGSize(width: 4096, height: 4096)
+        maxImageResolution: PlatformSize = PlatformSize(width: 4096, height: 4096)
     ) {
         self.hasCamera = hasCamera
         self.hasPhotoLibrary = hasPhotoLibrary
@@ -121,14 +134,14 @@ public struct PhotoDeviceCapabilities {
 
 /// Metadata information about an image
 public struct ImageMetadata {
-    public let size: CGSize
+    public let size: PlatformSize
     public let fileSize: Int
     public let format: ImageFormat
     public let hasAlpha: Bool
     public let colorSpace: String?
     
     public init(
-        size: CGSize,
+        size: PlatformSize,
         fileSize: Int,
         format: ImageFormat,
         hasAlpha: Bool,

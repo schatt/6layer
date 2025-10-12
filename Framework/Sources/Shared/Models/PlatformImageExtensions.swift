@@ -85,7 +85,7 @@ public extension PlatformImage {
         let data = self.uiImage.pngData() ?? Data()
         let format: ImageFormat = data.count > 0 ? .png : .unknown
         return ImageMetadata(
-            size: size,
+            size: PlatformSize(size),
             fileSize: data.count,
             format: format,
             hasAlpha: true
@@ -95,7 +95,7 @@ public extension PlatformImage {
         let data = self.nsImage.tiffRepresentation ?? Data()
         let format: ImageFormat = data.count > 0 ? .tiff : .unknown
         return ImageMetadata(
-            size: size,
+            size: PlatformSize(size),
             fileSize: data.count,
             format: format,
             hasAlpha: true

@@ -38,8 +38,8 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
-            screenSize: CGSize(width: 375, height: 812),
-            availableSpace: CGSize(width: 375, height: 400),
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
             userPreferences: PhotoPreferences(),
             deviceCapabilities: PhotoDeviceCapabilities()
         )
@@ -62,8 +62,8 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
-            screenSize: CGSize(width: 1024, height: 768),
-            availableSpace: CGSize(width: 1024, height: 400),
+            screenSize: PlatformSize(width: 1024, height: 768),
+            availableSpace: PlatformSize(width: 1024, height: 400),
             userPreferences: PhotoPreferences(),
             deviceCapabilities: PhotoDeviceCapabilities()
         )

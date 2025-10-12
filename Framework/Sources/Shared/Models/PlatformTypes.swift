@@ -724,6 +724,26 @@ public struct PlatformSize: @unchecked Sendable {
         return Double(nsSize.height)
         #endif
     }
+    
+    /// Convert to CGSize (iOS) or NSSize (macOS)
+    #if os(iOS)
+    public var asCGSize: CGSize {
+        return self.cgSize
+    }
+    #elseif os(macOS)
+    public var asNSSize: NSSize {
+        return self.nsSize
+    }
+    #endif
+    
+    /// Convert to CGSize for cross-platform compatibility
+    public var asCGSize: CGSize {
+        #if os(iOS)
+        return self.cgSize
+        #elseif os(macOS)
+        return CGSize(width: nsSize.width, height: nsSize.height)
+        #endif
+    }
 }
 
 public struct PlatformImage: @unchecked Sendable {
