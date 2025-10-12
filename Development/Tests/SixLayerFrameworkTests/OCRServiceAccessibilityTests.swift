@@ -11,19 +11,23 @@ final class OCRServiceAccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
         try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
     }
     
     // MARK: - OCRService Tests
@@ -39,9 +43,11 @@ final class OCRServiceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(service, "OCRService should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "OCRService should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "OCRService should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "OCRService should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "OCRService should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
@@ -55,9 +61,11 @@ final class OCRServiceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(service, "OCRService should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "OCRService should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "OCRService should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "OCRService should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "OCRService should use correct namespace")
+        }
     }
     
     // MARK: - MockOCRService Tests
@@ -77,9 +85,11 @@ final class OCRServiceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(factory, "OCRServiceFactory should be instantiable")
         
         // Test that the factory can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "OCRServiceFactory should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "OCRServiceFactory should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "OCRServiceFactory should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "OCRServiceFactory should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that OCRServiceFactory generates proper accessibility identifiers
@@ -93,9 +103,11 @@ final class OCRServiceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(factory, "OCRServiceFactory should be instantiable")
         
         // Test that the factory can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "OCRServiceFactory should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "OCRServiceFactory should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "OCRServiceFactory should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "OCRServiceFactory should use correct namespace")
+        }
     }
 }
 
