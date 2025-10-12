@@ -52,6 +52,15 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
+        // Verify layout decision is properly configured
+        XCTAssertEqual(layoutDecision.columns, 2, "Layout decision should have correct columns")
+        XCTAssertEqual(layoutDecision.spacing, 16, "Layout decision should have correct spacing")
+        XCTAssertEqual(layoutDecision.cardWidth, 150, "Layout decision should have correct card width")
+        XCTAssertEqual(layoutDecision.cardHeight, 200, "Layout decision should have correct card height")
+        XCTAssertEqual(layoutDecision.padding, 16, "Layout decision should have correct padding")
+        XCTAssertEqual(layoutDecision.expansionScale, 1.0, "Layout decision should have correct expansion scale")
+        XCTAssertEqual(layoutDecision.animationDuration, 0.3, "Layout decision should have correct animation duration")
+        
         let strategy = OCRStrategy(
             supportedTextTypes: [.general],
             supportedLanguages: [.english],
@@ -60,7 +69,9 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        let view = platformOCRImplementation_L4(
+        // Use the recommended OCRService instead of deprecated platformOCRImplementation_L4
+        let ocrService = OCRService()
+        let view = ocrService.processImage(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -100,6 +111,15 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             animationDuration: 0.3
         )
         
+        // Verify layout decision is properly configured
+        XCTAssertEqual(layoutDecision.columns, 2, "Layout decision should have correct columns")
+        XCTAssertEqual(layoutDecision.spacing, 16, "Layout decision should have correct spacing")
+        XCTAssertEqual(layoutDecision.cardWidth, 150, "Layout decision should have correct card width")
+        XCTAssertEqual(layoutDecision.cardHeight, 200, "Layout decision should have correct card height")
+        XCTAssertEqual(layoutDecision.padding, 16, "Layout decision should have correct padding")
+        XCTAssertEqual(layoutDecision.expansionScale, 1.0, "Layout decision should have correct expansion scale")
+        XCTAssertEqual(layoutDecision.animationDuration, 0.3, "Layout decision should have correct animation duration")
+        
         let strategy = OCRStrategy(
             supportedTextTypes: [.general],
             supportedLanguages: [.english],
@@ -108,7 +128,9 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        let view = platformOCRImplementation_L4(
+        // Use the recommended OCRService instead of deprecated platformOCRImplementation_L4
+        let ocrService = OCRService()
+        let view = ocrService.processImage(
             image: testImage,
             context: context,
             strategy: strategy,
