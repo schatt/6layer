@@ -69,9 +69,9 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        // Use the recommended OCRService instead of deprecated platformOCRImplementation_L4
-        let ocrService = OCRService()
-        let view = ocrService.processImage(
+        // Use deprecated function for view-based accessibility testing
+        // Note: This function is deprecated but needed for view accessibility testing
+        let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -128,9 +128,9 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        // Use the recommended OCRService instead of deprecated platformOCRImplementation_L4
-        let ocrService = OCRService()
-        let view = ocrService.processImage(
+        // Use deprecated function for view-based accessibility testing
+        // Note: This function is deprecated but needed for view accessibility testing
+        let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
             strategy: strategy,

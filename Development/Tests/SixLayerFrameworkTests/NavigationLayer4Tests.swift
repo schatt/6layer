@@ -442,7 +442,7 @@ final class NavigationLayer4Tests: XCTestCase {
         let item = Binding<TestItem?>(get: { nil }, set: { _ in })
         
         // Verify bindings are properly configured
-        XCTAssertFalse(selection.wrappedValue ?? true, "Selection binding should return nil")
+        XCTAssertNil(selection.wrappedValue, "Selection binding should return nil")
         XCTAssertNil(item.wrappedValue, "Item binding should return nil")
         XCTAssertFalse(isActive.wrappedValue, "IsActive binding should return false")
         
