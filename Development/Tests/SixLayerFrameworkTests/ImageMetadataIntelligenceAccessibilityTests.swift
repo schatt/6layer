@@ -11,19 +11,23 @@ final class ImageMetadataIntelligenceAccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
         try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
     }
     
     // MARK: - ImageMetadataIntelligence Tests
@@ -39,9 +43,11 @@ final class ImageMetadataIntelligenceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(intelligence, "ImageMetadataIntelligence should be instantiable")
         
         // Test that the intelligence service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "ImageMetadataIntelligence should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "ImageMetadataIntelligence should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that ImageMetadataIntelligence generates proper accessibility identifiers
@@ -55,9 +61,11 @@ final class ImageMetadataIntelligenceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(intelligence, "ImageMetadataIntelligence should be instantiable")
         
         // Test that the intelligence service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "ImageMetadataIntelligence should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "ImageMetadataIntelligence should use correct namespace")
+        }
     }
 }
 
