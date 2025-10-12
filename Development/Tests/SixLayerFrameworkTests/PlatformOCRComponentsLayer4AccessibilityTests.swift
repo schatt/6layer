@@ -11,19 +11,23 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
         try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
     }
     
     // MARK: - OCR Implementation Tests
@@ -34,11 +38,8 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -83,11 +84,8 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let layoutDecision = IntelligentCardLayoutDecision(
