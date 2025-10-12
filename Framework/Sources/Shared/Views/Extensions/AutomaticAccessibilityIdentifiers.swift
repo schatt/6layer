@@ -244,10 +244,14 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         let methodName = entry.id.replacingOccurrences(of: ".", with: "_").replacingOccurrences(of: "-", with: "_")
         let hierarchy = entry.viewHierarchy.isEmpty ? "" : " // Hierarchy: \(entry.viewHierarchy.joined(separator: " → "))"
         
+        // Determine the containing view name
+        let containingView = entry.viewHierarchy.isEmpty ? "UnknownView" : entry.viewHierarchy.first ?? "UnknownView"
+        
         return """
         func test_\(methodName)() {
+            // Element is in: \(containingView)
             let element = app.otherElements["\(entry.id)"]
-            XCTAssertTrue(element.exists, "Element '\(entry.id)' should exist")\(hierarchy)
+            XCTAssertTrue(element.exists, "Element '\(entry.id)' should exist in \(containingView)")\(hierarchy)
         }
         """
     }
