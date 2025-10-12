@@ -10,20 +10,24 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        await await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await setupTestEnvironment()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
-        await await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        await try await super.tearDown()
+        await cleanupTestEnvironment()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
+        try await super.tearDown()
     }
     
     // MARK: - Photo Layout Decision Tests
@@ -32,50 +36,47 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testPhotos = [PlatformImage(), PlatformImage()]
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = PhotoContext(
+            screenSize: CGSize(width: 375, height: 812),
+            availableSpace: CGSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
+        )
         
-        let result = platformPhotoLayout_L2(
-            photos: testPhotos,
-            screenWidth: 375,
-            deviceType: .phone,
-            contentComplexity: .moderate
+        let result = determineOptimalPhotoLayout_L2(
+            purpose: purpose,
+            context: context
         )
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformPhotoLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.columns > 0, "Layout decision should have valid columns")
-        XCTAssertTrue(result.spacing >= 0, "Layout decision should have valid spacing")
+        XCTAssertNotNil(result, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
+        XCTAssertTrue(result.width > 0, "Layout decision should have valid width")
+        XCTAssertTrue(result.height > 0, "Layout decision should have valid height")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testPhotos = [PlatformImage(), PlatformImage()]
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = PhotoContext(
+            screenSize: CGSize(width: 1024, height: 768),
+            availableSpace: CGSize(width: 1024, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
+        )
         
-        let result = platformPhotoLayout_L2(
-            photos: testPhotos,
-            screenWidth: 1024,
-            deviceType: .desktop,
-            contentComplexity: .moderate
+        let result = determineOptimalPhotoLayout_L2(
+            purpose: purpose,
+            context: context
         )
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformPhotoLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.columns > 0, "Layout decision should have valid columns")
-        XCTAssertTrue(result.spacing >= 0, "Layout decision should have valid spacing")
-    }
-}
-
-// MARK: - Test Extensions
-extension PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
+        XCTAssertNotNil(result, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
+        XCTAssertTrue(result.width > 0, "Layout decision should have valid width")
+        XCTAssertTrue(result.height > 0, "Layout decision should have valid height")
     }
 }

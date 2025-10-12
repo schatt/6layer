@@ -50,11 +50,12 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testData = HierarchicalTestItem(
+        let testData = GenericHierarchicalItem(
             title: "Root Item",
+            level: 0,
             children: [
-                HierarchicalTestItem(title: "Child 1", children: []),
-                HierarchicalTestItem(title: "Child 2", children: [])
+                GenericHierarchicalItem(title: "Child 1", level: 1),
+                GenericHierarchicalItem(title: "Child 2", level: 1)
             ]
         )
         
@@ -67,20 +68,19 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentHierarchicalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onItemExpanded: { _ in },
-            onItemCollapsed: { _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*hierarchicaldata", 
-            platform: .iOS,
-            componentName: "platformPresentHierarchicalData_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*hierarchicaldata", 
+                platform: .iOS,
+                componentName: "platformPresentHierarchicalData_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on iOS")
     }
@@ -89,11 +89,12 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testData = HierarchicalTestItem(
+        let testData = GenericHierarchicalItem(
             title: "Root Item",
+            level: 0,
             children: [
-                HierarchicalTestItem(title: "Child 1", children: []),
-                HierarchicalTestItem(title: "Child 2", children: [])
+                GenericHierarchicalItem(title: "Child 1", level: 1),
+                GenericHierarchicalItem(title: "Child 2", level: 1)
             ]
         )
         
@@ -106,20 +107,19 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentHierarchicalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onItemExpanded: { _ in },
-            onItemCollapsed: { _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*hierarchicaldata", 
-            platform: .macOS,
-            componentName: "platformPresentHierarchicalData_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*hierarchicaldata", 
+                platform: .macOS,
+                componentName: "platformPresentHierarchicalData_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on macOS")
     }
@@ -130,9 +130,10 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testData = TemporalTestItem(
+        let testData = GenericTemporalItem(
             title: "Event 1",
-            timestamp: Date()
+            date: Date(),
+            duration: 3600
         )
         
         let hints = PresentationHints(
@@ -144,19 +145,19 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentTemporalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onTimeRangeChanged: { _, _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*temporaldata", 
-            platform: .iOS,
-            componentName: "platformPresentTemporalData_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*temporaldata", 
+                platform: .iOS,
+                componentName: "platformPresentTemporalData_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on iOS")
     }
@@ -165,9 +166,10 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testData = TemporalTestItem(
+        let testData = GenericTemporalItem(
             title: "Event 1",
-            timestamp: Date()
+            date: Date(),
+            duration: 3600
         )
         
         let hints = PresentationHints(
@@ -179,19 +181,19 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         )
         
         let view = platformPresentTemporalData_L1(
-            data: testData,
-            hints: hints,
-            onItemSelected: { _ in },
-            onTimeRangeChanged: { _, _ in }
+            items: [testData],
+            hints: hints
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*temporaldata", 
-            platform: .macOS,
-            componentName: "platformPresentTemporalData_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*temporaldata", 
+                platform: .macOS,
+                componentName: "platformPresentTemporalData_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on macOS")
     }

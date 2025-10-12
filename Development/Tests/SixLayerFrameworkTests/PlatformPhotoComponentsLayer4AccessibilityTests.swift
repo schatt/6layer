@@ -41,12 +41,14 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*photopicker", 
-            platform: .iOS,
-            componentName: "platformPhotoPicker_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photopicker", 
+                platform: .iOS,
+                componentName: "platformPhotoPicker_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers on iOS")
     }
@@ -60,12 +62,14 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*photopicker", 
-            platform: .macOS,
-            componentName: "platformPhotoPicker_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photopicker", 
+                platform: .macOS,
+                componentName: "platformPhotoPicker_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers on macOS")
     }
@@ -76,50 +80,20 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testPhotos = [PlatformImage(), PlatformImage()]
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .modal,
-            customPreferences: [:]
-        )
-        
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 2,
-            spacing: 16,
-            cardWidth: 150,
-            cardHeight: 200,
-            padding: 16,
-            expansionScale: 1.0,
-            animationDuration: 0.3
-        )
-        
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.contentReveal],
-            primaryStrategy: .contentReveal,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
-        )
-        
         let view = platformPhotoDisplay_L4(
-            photos: testPhotos,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoSelected: { _ in },
-            onPhotoDeleted: { _ in }
+            image: PlatformImage(),
+            style: .thumbnail
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*photodisplay", 
-            platform: .iOS,
-            componentName: "platformPhotoDisplay_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photodisplay", 
+                platform: .iOS,
+                componentName: "platformPhotoDisplay_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on iOS")
     }
@@ -128,50 +102,20 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testPhotos = [PlatformImage(), PlatformImage()]
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .modal,
-            customPreferences: [:]
-        )
-        
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 2,
-            spacing: 16,
-            cardWidth: 150,
-            cardHeight: 200,
-            padding: 16,
-            expansionScale: 1.0,
-            animationDuration: 0.3
-        )
-        
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.contentReveal],
-            primaryStrategy: .contentReveal,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
-        )
-        
         let view = platformPhotoDisplay_L4(
-            photos: testPhotos,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoSelected: { _ in },
-            onPhotoDeleted: { _ in }
+            image: PlatformImage(),
+            style: .thumbnail
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*photodisplay", 
-            platform: .macOS,
-            componentName: "platformPhotoDisplay_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photodisplay", 
+                platform: .macOS,
+                componentName: "platformPhotoDisplay_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on macOS")
     }
@@ -183,49 +127,21 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testPhoto = PlatformImage()
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .modal,
-            customPreferences: [:]
-        )
-        
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 1,
-            spacing: 16,
-            cardWidth: 300,
-            cardHeight: 400,
-            padding: 16,
-            expansionScale: 1.0,
-            animationDuration: 0.3
-        )
-        
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.contentReveal],
-            primaryStrategy: .contentReveal,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
-        )
         
         let view = platformPhotoEditor_L4(
-            photo: testPhoto,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoEdited: { _ in },
-            onError: { _ in }
+            image: testPhoto,
+            onImageEdited: { _ in }
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*photoeditor", 
-            platform: .iOS,
-            componentName: "platformPhotoEditor_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photoeditor", 
+                platform: .iOS,
+                componentName: "platformPhotoEditor_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on iOS")
     }
@@ -235,49 +151,21 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testPhoto = PlatformImage()
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .modal,
-            customPreferences: [:]
-        )
-        
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 1,
-            spacing: 16,
-            cardWidth: 300,
-            cardHeight: 400,
-            padding: 16,
-            expansionScale: 1.0,
-            animationDuration: 0.3
-        )
-        
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.contentReveal],
-            primaryStrategy: .contentReveal,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
-        )
         
         let view = platformPhotoEditor_L4(
-            photo: testPhoto,
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotoEdited: { _ in },
-            onError: { _ in }
+            image: testPhoto,
+            onImageEdited: { _ in }
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*photoeditor", 
-            platform: .macOS,
-            componentName: "platformPhotoEditor_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photoeditor", 
+                platform: .macOS,
+                componentName: "platformPhotoEditor_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS")
     }
