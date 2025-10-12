@@ -36,6 +36,12 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
     func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
+        // Verify alternatives are properly configured
+        XCTAssertEqual(alternatives.count, 3, "Should have 3 alternatives")
+        XCTAssertEqual(alternatives[0], "Option 1", "First alternative should be correct")
+        XCTAssertEqual(alternatives[1], "Option 2", "Second alternative should be correct")
+        XCTAssertEqual(alternatives[2], "Option 3", "Third alternative should be correct")
+        
         let view = platformOCRWithDisambiguation_L1(
             image: PlatformImage(),
             context: OCRContext(
@@ -59,6 +65,12 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
     
     func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
+        
+        // Verify alternatives are properly configured
+        XCTAssertEqual(alternatives.count, 3, "Should have 3 alternatives")
+        XCTAssertEqual(alternatives[0], "Option 1", "First alternative should be correct")
+        XCTAssertEqual(alternatives[1], "Option 2", "Second alternative should be correct")
+        XCTAssertEqual(alternatives[2], "Option 3", "Third alternative should be correct")
         
         let view = platformOCRWithDisambiguation_L1(
             image: PlatformImage(),
