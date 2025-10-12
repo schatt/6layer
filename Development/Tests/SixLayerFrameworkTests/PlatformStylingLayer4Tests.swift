@@ -34,11 +34,12 @@ final class PlatformStylingLayer4Tests: XCTestCase {
     // MARK: - platformStyledContainer_L4 Tests
     
     func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = platformStyledContainer_L4(
-            content: {
-                Text("Test Content")
-            }
-        )
+        let view = Text("Test Content")
+            .platformStyledContainer_L4(
+                content: {
+                    Text("Test Content")
+                }
+            )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -51,11 +52,12 @@ final class PlatformStylingLayer4Tests: XCTestCase {
     }
     
     func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = platformStyledContainer_L4(
-            content: {
-                Text("Test Content")
-            }
-        )
+        let view = Text("Test Content")
+            .platformStyledContainer_L4(
+                content: {
+                    Text("Test Content")
+                }
+            )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

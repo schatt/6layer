@@ -11,7 +11,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     @MainActor
     override func setUp() async throws {
         try await super.setUp()
-        await setupTestEnvironment()
+        setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -23,7 +23,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     @MainActor
     override func tearDown() async throws {
         try await super.tearDown()
-        await cleanupTestEnvironment()
+        cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
@@ -51,18 +51,22 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = platformPresentModalForm_L1(
-            formType: .form,
-            context: .modal
-        )
+        let view = await MainActor.run {
+            platformPresentModalForm_L1(
+                formType: .form,
+                context: .modal
+            )
+        }
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*modalform", 
-            platform: .iOS,
-            componentName: "platformPresentModalForm_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*modalform", 
+                platform: .iOS,
+                componentName: "platformPresentModalForm_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on iOS")
     }
@@ -81,30 +85,23 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = platformPresentModalForm_L1(
-            formType: .form,
-            context: .modal
-        )
+        let view = await MainActor.run {
+            platformPresentModalForm_L1(
+                formType: .form,
+                context: .modal
+            )
+        }
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*modalform", 
-            platform: .macOS,
-            componentName: "platformPresentModalForm_L1"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*modalform", 
+                platform: .macOS,
+                componentName: "platformPresentModalForm_L1"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on macOS")
-    }
-}
-
-// MARK: - Test Extensions
-extension PlatformSemanticLayer1ModalFormAccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

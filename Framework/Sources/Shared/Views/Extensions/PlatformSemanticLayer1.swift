@@ -1297,6 +1297,8 @@ public struct CollectionEmptyStateView: View {
             return "No settings available."
         case .profile:
             return "No profile information available."
+        case .gallery:
+            return "No items in this gallery."
         }
     }
     
@@ -2589,6 +2591,21 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 label: "Route Type",
                 placeholder: "Select route type",
                 options: ["Fastest", "Shortest", "Scenic"]
+            )
+        ]
+    case .gallery:
+        return [
+            DynamicFormField(
+                id: "gallery_title",
+                contentType: .text,
+                label: "Gallery Title",
+                placeholder: "Enter gallery title"
+            ),
+            DynamicFormField(
+                id: "gallery_description",
+                contentType: .textarea,
+                label: "Description",
+                placeholder: "Enter gallery description"
             )
         ]
     }

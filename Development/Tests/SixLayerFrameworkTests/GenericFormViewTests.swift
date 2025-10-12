@@ -37,8 +37,8 @@ final class GenericFormViewTests: XCTestCase {
         let testFields = [
             DynamicFormField(
                 id: "field1",
+                contentType: .text,
                 label: "Test Field 1",
-                type: .text,
                 placeholder: "Enter text",
                 isRequired: true,
                 validationRules: [:]
@@ -47,7 +47,7 @@ final class GenericFormViewTests: XCTestCase {
         
         let view = GenericFormView(
             fields: testFields,
-            onSubmit: { _ in }
+            hints: PresentationHints()
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -64,8 +64,8 @@ final class GenericFormViewTests: XCTestCase {
         let testFields = [
             DynamicFormField(
                 id: "field1",
+                contentType: .text,
                 label: "Test Field 1",
-                type: .text,
                 placeholder: "Enter text",
                 isRequired: true,
                 validationRules: [:]
@@ -74,7 +74,7 @@ final class GenericFormViewTests: XCTestCase {
         
         let view = GenericFormView(
             fields: testFields,
-            onSubmit: { _ in }
+            hints: PresentationHints()
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

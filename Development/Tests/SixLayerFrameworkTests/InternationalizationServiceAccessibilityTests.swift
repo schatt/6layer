@@ -11,19 +11,23 @@ final class InternationalizationServiceAccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
-        try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
+        try await super.tearDown()
     }
     
     // MARK: - InternationalizationService Tests
@@ -39,9 +43,11 @@ final class InternationalizationServiceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(service, "InternationalizationService should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "InternationalizationService should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "InternationalizationService should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
@@ -55,19 +61,10 @@ final class InternationalizationServiceAccessibilityTests: XCTestCase {
         XCTAssertNotNil(service, "InternationalizationService should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "InternationalizationService should use correct namespace")
-    }
-}
-
-// MARK: - Test Extensions
-extension InternationalizationServiceAccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "InternationalizationService should use correct namespace")
+        }
     }
 }

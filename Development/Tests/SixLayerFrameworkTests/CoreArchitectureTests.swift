@@ -270,6 +270,11 @@ final class CoreArchitectureTests: XCTestCase {
                 // Navigation should have navigation-specific fields
                 XCTAssertTrue(fields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
                             "Navigation context should have navigation/route fields")
+                
+            case .gallery:
+                // Gallery should have gallery-specific fields
+                XCTAssertTrue(fields.contains { $0.id.contains("gallery") || $0.id.contains("title") || $0.id.contains("description") }, 
+                            "Gallery context should have gallery/title/description fields")
             }
         }
         
@@ -319,6 +324,8 @@ final class CoreArchitectureTests: XCTestCase {
                 case .form:
                     XCTAssertTrue(platformFields.count >= 1)
                 case .modal:
+                    XCTAssertTrue(platformFields.count >= 1)
+                case .gallery:
                     XCTAssertTrue(platformFields.count >= 1)
                 }
             }

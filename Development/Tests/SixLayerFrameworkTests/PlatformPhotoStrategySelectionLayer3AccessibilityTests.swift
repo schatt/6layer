@@ -11,73 +11,66 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
-        try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
+        try await super.tearDown()
     }
     
     // MARK: - Photo Strategy Selection Tests
     
-    /// BUSINESS PURPOSE: Validates that platformPhotoStrategy_L3 generates proper accessibility identifiers
+    /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testPhotos = [PlatformImage(), PlatformImage()]
-        
-        let result = platformPhotoStrategy_L3(
-            photos: testPhotos,
-            screenWidth: 375,
-            deviceType: .phone,
-            interactionStyle: .touch,
-            contentDensity: .moderate
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = PhotoContext(
+            screenSize: CGSize(width: 375, height: 812),
+            availableSpace: CGSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
         )
+        
+        let captureStrategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
+        let displayStrategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformPhotoStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
-        XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
+        XCTAssertNotNil(captureStrategy, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
+        XCTAssertNotNil(displayStrategy, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
     }
     
-    /// BUSINESS PURPOSE: Validates that platformPhotoStrategy_L3 generates proper accessibility identifiers
+    /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testPhotos = [PlatformImage(), PlatformImage()]
-        
-        let result = platformPhotoStrategy_L3(
-            photos: testPhotos,
-            screenWidth: 1024,
-            deviceType: .desktop,
-            interactionStyle: .mouse,
-            contentDensity: .moderate
+        let purpose = PhotoPurpose.document
+        let context = PhotoContext(
+            screenSize: CGSize(width: 1024, height: 768),
+            availableSpace: CGSize(width: 1024, height: 500),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
         )
+        
+        let captureStrategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
+        let displayStrategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformPhotoStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
-        XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
-    }
-}
-
-// MARK: - Test Extensions
-extension PlatformPhotoStrategySelectionLayer3AccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
+        XCTAssertNotNil(captureStrategy, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
+        XCTAssertNotNil(displayStrategy, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
     }
 }

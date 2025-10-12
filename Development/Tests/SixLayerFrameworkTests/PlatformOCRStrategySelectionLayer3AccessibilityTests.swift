@@ -11,19 +11,23 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
-        try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
+        try await super.tearDown()
     }
     
     // MARK: - OCR Strategy Selection Tests
@@ -33,26 +37,19 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let result = platformOCRStrategy_L3(
-            context: context,
-            screenWidth: 375,
-            deviceType: .phone,
-            interactionStyle: .touch,
-            contentDensity: .moderate
+            textTypes: [TextType.general]
         )
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
-        XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
+        XCTAssertFalse(result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
+        XCTAssertFalse(result.supportedLanguages.isEmpty, "Strategy should have supported languages")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
@@ -60,36 +57,18 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let result = platformOCRStrategy_L3(
-            context: context,
-            screenWidth: 1024,
-            deviceType: .desktop,
-            interactionStyle: .mouse,
-            contentDensity: .moderate
+            textTypes: [TextType.general]
         )
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedStrategies.isEmpty, "Strategy should have supported strategies")
-        XCTAssertNotNil(result.primaryStrategy, "Strategy should have a primary strategy")
-    }
-}
-
-// MARK: - Test Extensions
-extension PlatformOCRStrategySelectionLayer3AccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
+        XCTAssertFalse(result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
+        XCTAssertFalse(result.supportedLanguages.isEmpty, "Strategy should have supported languages")
     }
 }

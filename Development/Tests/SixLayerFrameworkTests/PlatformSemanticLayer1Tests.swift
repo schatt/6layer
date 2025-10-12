@@ -138,7 +138,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             label: "Test Field",
             placeholder: "Enter text",
             isRequired: true,
-            validationRules: []
+            validationRules: [:]
         )
         let hints = PresentationHints(
             dataType: .form,
@@ -167,7 +167,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             label: "Test Field",
             placeholder: "Enter text",
             isRequired: true,
-            validationRules: []
+            validationRules: [:]
         )
         let hints = PresentationHints(
             dataType: .form,
@@ -243,7 +243,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
                 title: "Test Section",
                 items: [
                     SettingsItemData(
-                        id: "testItem",
+                        key: "testItem",
                         title: "Test Item",
                         type: .toggle,
                         value: true
@@ -252,7 +252,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             )
         ]
         let hints = PresentationHints(
-            dataType: .settings,
+            dataType: .generic,
             presentationPreference: .list,
             complexity: .simple,
             context: .settings,
@@ -277,7 +277,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
                 title: "Test Section",
                 items: [
                     SettingsItemData(
-                        id: "testItem",
+                        key: "testItem",
                         title: "Test Item",
                         type: .toggle,
                         value: true
@@ -286,7 +286,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             )
         ]
         let hints = PresentationHints(
-            dataType: .settings,
+            dataType: .generic,
             presentationPreference: .list,
             complexity: .simple,
             context: .settings,
@@ -450,7 +450,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             dataType: .generic,
             presentationPreference: .card,
             complexity: .simple,
-            context: .card,
+            context: .standard,
             customPreferences: [:]
         )
         
@@ -473,7 +473,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             dataType: .generic,
             presentationPreference: .card,
             complexity: .simple,
-            context: .card,
+            context: .standard,
             customPreferences: [:]
         )
         

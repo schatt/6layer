@@ -63,7 +63,14 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         XCTAssertNotNil(view, "platformPhotoDisplay_L1 should create a view")
         
         // Test accessibility identifier generation
-        let hasAccessibilityID = hasAccessibilityIdentifier(view: view, platform: .iOS)
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photodisplay", 
+                platform: .iOS,
+                componentName: "platformPhotoDisplay_L1"
+            )
+        }
         XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on iOS")
     }
     
@@ -97,7 +104,14 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         XCTAssertNotNil(view, "platformPhotoDisplay_L1 should create a view")
         
         // Test accessibility identifier generation
-        let hasAccessibilityID = hasAccessibilityIdentifier(view: view, platform: .macOS)
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*photodisplay", 
+                platform: .macOS,
+                componentName: "platformPhotoDisplay_L1"
+            )
+        }
         XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on macOS")
     }
 }

@@ -11,19 +11,23 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
-        try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
+        try await super.tearDown()
     }
     
     // MARK: - Photo Picker Tests
@@ -32,39 +36,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .modal,
-            customPreferences: [:]
-        )
-        
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 2,
-            spacing: 16,
-            cardWidth: 150,
-            cardHeight: 200,
-            padding: 16,
-            expansionScale: 1.0,
-            animationDuration: 0.3
-        )
-        
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
-        )
-        
         let view = platformPhotoPicker_L4(
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotosSelected: { _ in },
-            onError: { _ in }
+            onImageSelected: { _ in }
         )
         
         // When & Then
@@ -82,39 +55,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let hints = PresentationHints(
-            dataType: .media,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .modal,
-            customPreferences: [:]
-        )
-        
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 2,
-            spacing: 16,
-            cardWidth: 150,
-            cardHeight: 200,
-            padding: 16,
-            expansionScale: 1.0,
-            animationDuration: 0.3
-        )
-        
-        let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
-            expansionScale: 1.0,
-            animationDuration: 0.3,
-            hapticFeedback: true,
-            accessibilitySupport: true
-        )
-        
         let view = platformPhotoPicker_L4(
-            hints: hints,
-            layoutDecision: layoutDecision,
-            strategy: strategy,
-            onPhotosSelected: { _ in },
-            onError: { _ in }
+            onImageSelected: { _ in }
         )
         
         // When & Then
@@ -154,8 +96,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.contentReveal],
+            primaryStrategy: .contentReveal,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -206,8 +148,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.contentReveal],
+            primaryStrategy: .contentReveal,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -260,8 +202,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.contentReveal],
+            primaryStrategy: .contentReveal,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,
@@ -312,8 +254,8 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.tapExpand],
-            primaryStrategy: .tapExpand,
+            supportedStrategies: [.contentReveal],
+            primaryStrategy: .contentReveal,
             expansionScale: 1.0,
             animationDuration: 0.3,
             hapticFeedback: true,

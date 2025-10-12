@@ -3,6 +3,14 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 
+// MARK: - Test Helper Types
+
+struct PlatformResponsiveCardsTestItem: Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String
+}
+
 /// Tests for PlatformResponsiveCardsLayer4.swift
 /// 
 /// BUSINESS PURPOSE: Ensure Layer 4 responsive card components generate proper accessibility identifiers
@@ -201,7 +209,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
                 title: "Test Section",
                 items: [
                     SettingsItemData(
-                        id: "testItem",
+                        key: "testItem",
                         title: "Test Item",
                         type: .toggle,
                         value: true
@@ -210,7 +218,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             )
         ]
         let hints = PresentationHints(
-            dataType: .settings,
+            dataType: .generic,
             presentationPreference: .list,
             complexity: .simple,
             context: .settings,
@@ -238,7 +246,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
                 title: "Test Section",
                 items: [
                     SettingsItemData(
-                        id: "testItem",
+                        key: "testItem",
                         title: "Test Item",
                         type: .toggle,
                         value: true
@@ -247,7 +255,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             )
         ]
         let hints = PresentationHints(
-            dataType: .settings,
+            dataType: .generic,
             presentationPreference: .list,
             complexity: .simple,
             context: .settings,
@@ -315,7 +323,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         XCTAssertTrue(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on macOS")
     }
     
-    // MARK: - BasicValueView Tests
+    // MARK: - GenericNumericDataView Tests
     
     func testBasicValueViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testValue = 42
@@ -327,16 +335,19 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = BasicValueView(value: testValue, hints: hints)
+        let view = GenericNumericDataView(
+            data: [GenericNumericData(value: Double(testValue), label: "Test Value", unit: "units")],
+            hints: hints
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
             expectedPattern: "SixLayer.*element.*basicvalueview", 
             platform: .iOS,
-            componentName: "BasicValueView"
+            componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "BasicValueView should generate accessibility identifiers on iOS")
+        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
     }
     
     func testBasicValueViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -349,19 +360,22 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = BasicValueView(value: testValue, hints: hints)
+        let view = GenericNumericDataView(
+            data: [GenericNumericData(value: Double(testValue), label: "Test Value", unit: "units")],
+            hints: hints
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
             expectedPattern: "SixLayer.*element.*basicvalueview", 
             platform: .macOS,
-            componentName: "BasicValueView"
+            componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "BasicValueView should generate accessibility identifiers on macOS")
+        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
     }
     
-    // MARK: - BasicArrayView Tests
+    // MARK: - GenericItemCollectionView Tests
     
     func testBasicArrayViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testArray = [1, 2, 3, 4, 5]
@@ -373,16 +387,19 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = BasicArrayView(array: testArray, hints: hints)
+        let view = GenericItemCollectionView(
+            items: testArray.map { PlatformResponsiveCardsTestItem(id: "\($0)", title: "Item \($0)", subtitle: "Subtitle \($0)") },
+            hints: hints
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
             expectedPattern: "SixLayer.*element.*basicarrayview", 
             platform: .iOS,
-            componentName: "BasicArrayView"
+            componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "BasicArrayView should generate accessibility identifiers on iOS")
+        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
     }
     
     func testBasicArrayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -395,16 +412,19 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             customPreferences: [:]
         )
         
-        let view = BasicArrayView(array: testArray, hints: hints)
+        let view = GenericItemCollectionView(
+            items: testArray.map { PlatformResponsiveCardsTestItem(id: "\($0)", title: "Item \($0)", subtitle: "Subtitle \($0)") },
+            hints: hints
+        )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
             expectedPattern: "SixLayer.*element.*basicarrayview", 
             platform: .macOS,
-            componentName: "BasicArrayView"
+            componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "BasicArrayView should generate accessibility identifiers on macOS")
+        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
     }
 }
 

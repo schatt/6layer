@@ -64,11 +64,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         )
         
         let result = platformOCRLayout_L2(
-            image: testImage,
-            context: context,
-            screenWidth: 1024,
-            deviceType: .desktop,
-            contentComplexity: .moderate
+            context: context
         )
         
         // When & Then

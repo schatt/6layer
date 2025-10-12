@@ -890,6 +890,7 @@ public enum PresentationContext: String, CaseIterable, Sendable {
     case form = "form"
     case modal = "modal"
     case navigation = "navigation"
+    case gallery = "gallery"
 }
 
 /// Content complexity levels

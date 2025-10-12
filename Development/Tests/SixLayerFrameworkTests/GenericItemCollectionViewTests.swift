@@ -41,9 +41,7 @@ final class GenericItemCollectionViewTests: XCTestCase {
         
         let view = GenericItemCollectionView(
             items: testItems,
-            itemContent: { item in
-                Text(item.title)
-            }
+            hints: PresentationHints()
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -64,9 +62,7 @@ final class GenericItemCollectionViewTests: XCTestCase {
         
         let view = GenericItemCollectionView(
             items: testItems,
-            itemContent: { item in
-                Text(item.title)
-            }
+            hints: PresentationHints()
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

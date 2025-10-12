@@ -160,7 +160,7 @@ final class PhotoSemanticLayerTests: XCTestCase {
     
     private func createTestPlatformImage() -> PlatformImage {
         // Use existing sample image instead of generating one
-        guard let imagePath = Bundle.module.path(forResource: "IMG_3002", ofType: "jpeg"),
+        guard let imagePath = Bundle.main.path(forResource: "IMG_3002", ofType: "jpeg"),
               let imageData = NSData(contentsOfFile: imagePath) else {
             // Fallback to a simple colored image if sample image not found
             #if os(iOS)

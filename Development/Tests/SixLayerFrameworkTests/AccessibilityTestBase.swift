@@ -12,13 +12,13 @@ public enum AccessibilityTestUtilities {
     
     /// Sets up the testing environment for accessibility tests
     public static func setupAccessibilityTestEnvironment() async {
-        await setupTestEnvironment()
+        TestSetupUtilities.shared.setupTestingEnvironment()
         configureAccessibilitySettings()
     }
     
     /// Cleans up the testing environment for accessibility tests
     public static func cleanupAccessibilityTestEnvironment() async {
-        await cleanupTestEnvironment()
+        TestSetupUtilities.shared.cleanupTestingEnvironment()
         resetAccessibilitySettings()
     }
     
