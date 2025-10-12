@@ -142,6 +142,11 @@ final class CardActionButtonTests: XCTestCase {
         // Test business logic: Strategy should support the required expansion type
         XCTAssertTrue(strategy.supportedStrategies.contains(.contentReveal), 
                     "Strategy should support contentReveal for edit button visibility")
+        
+        // Test callback functionality: Call the callback and verify it works
+        card.onItemEdited?(item)
+        XCTAssertTrue(editCallbackCalled, "Edit callback should be called when invoked")
+        XCTAssertEqual(editCallbackItem?.id, item.id, "Edit callback should receive the correct item")
     }
     
     func testExpandableCardComponentDeleteButtonCallback() {
@@ -170,18 +175,25 @@ final class CardActionButtonTests: XCTestCase {
             onItemEdited: nil
         )
         
-        // THEN: Should have delete button available
-        XCTAssertNotNil(card)
+        // THEN: Should have delete button available and callback should be properly configured
+        XCTAssertNotNil(card, "ExpandableCardComponent should be created")
+        XCTAssertTrue(card.onItemDeleted != nil, "Delete callback should be stored when provided")
+        
+        // Test callback functionality: Call the callback and verify it works
+        card.onItemDeleted?(item)
+        XCTAssertTrue(deleteCallbackCalled, "Delete callback should be called when invoked")
+        XCTAssertEqual(deleteCallbackItem?.id, item.id, "Delete callback should receive the correct item")
     }
     
     func testExpandableCardComponentBothActionButtons() {
         // GIVEN: A test item and both callbacks
         let item = sampleItems[0]
-        var editCallbackCalled = false
-        var deleteCallbackCalled = false
-        
-        let editCallback: (TestItem) -> Void = { _ in editCallbackCalled = true }
-        let deleteCallback: (TestItem) -> Void = { _ in deleteCallbackCalled = true }
+        let editCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
+        let deleteCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
         
         // WHEN: Creating an ExpandableCardComponent with both callbacks
         let card = ExpandableCardComponent(
@@ -255,13 +267,15 @@ final class CardActionButtonTests: XCTestCase {
     func testSimpleCardComponentActionCallbacks() {
         // GIVEN: A test item and callbacks
         let item = sampleItems[0]
-        var selectedCallbackCalled = false
-        var editCallbackCalled = false
-        var deleteCallbackCalled = false
-        
-        let selectedCallback: (TestItem) -> Void = { _ in selectedCallbackCalled = true }
-        let editCallback: (TestItem) -> Void = { _ in editCallbackCalled = true }
-        let deleteCallback: (TestItem) -> Void = { _ in deleteCallbackCalled = true }
+        let selectedCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
+        let editCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
+        let deleteCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
         
         // WHEN: Creating a SimpleCardComponent with callbacks
         let card = SimpleCardComponent(
@@ -294,13 +308,15 @@ final class CardActionButtonTests: XCTestCase {
     func testCoverFlowCardComponentActionCallbacks() {
         // GIVEN: A test item and callbacks
         let item = sampleItems[0]
-        var selectedCallbackCalled = false
-        var editCallbackCalled = false
-        var deleteCallbackCalled = false
-        
-        let selectedCallback: (TestItem) -> Void = { _ in selectedCallbackCalled = true }
-        let editCallback: (TestItem) -> Void = { _ in editCallbackCalled = true }
-        let deleteCallback: (TestItem) -> Void = { _ in deleteCallbackCalled = true }
+        let selectedCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
+        let editCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
+        let deleteCallback: (TestItem) -> Void = { _ in
+            // Callback implementation - not tested in this unit test
+        }
         
         // WHEN: Creating a CoverFlowCardComponent with callbacks
         let card = CoverFlowCardComponent(
