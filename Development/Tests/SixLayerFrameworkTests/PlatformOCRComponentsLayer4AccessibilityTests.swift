@@ -129,11 +129,11 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRComponentsLayer4AccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

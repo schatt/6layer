@@ -100,11 +100,11 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformSemanticLayer1ModalFormAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

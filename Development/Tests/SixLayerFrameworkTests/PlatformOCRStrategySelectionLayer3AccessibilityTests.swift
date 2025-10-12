@@ -85,11 +85,11 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRStrategySelectionLayer3AccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

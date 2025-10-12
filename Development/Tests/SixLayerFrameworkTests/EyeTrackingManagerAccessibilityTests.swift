@@ -63,11 +63,11 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension EyeTrackingManagerAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

@@ -224,6 +224,21 @@ public extension View {
         #endif
     }
     
+    // MARK: - Container Styling
+    
+    /// Platform-specific styled container
+    /// Applies comprehensive platform-specific styling to create a consistent container
+    func platformStyledContainer_L4<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        return VStack {
+            content()
+        }
+        .platformBackground()
+        .platformPadding()
+        .platformCornerRadius()
+        .platformShadow()
+        .platformBorder()
+    }
+    
     // MARK: - Hover Effects
     
     // Platform-specific hover effect function moved to PlatformSpecificViewExtensions.swift

@@ -87,11 +87,11 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRLayoutDecisionLayer2AccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

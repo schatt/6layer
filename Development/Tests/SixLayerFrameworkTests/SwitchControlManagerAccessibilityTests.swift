@@ -81,11 +81,11 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension SwitchControlManagerAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

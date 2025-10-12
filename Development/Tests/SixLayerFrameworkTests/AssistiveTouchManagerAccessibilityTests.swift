@@ -63,11 +63,11 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension AssistiveTouchManagerAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

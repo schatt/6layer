@@ -155,11 +155,11 @@ final class PlatformOCRSemanticLayer1AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformOCRSemanticLayer1AccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

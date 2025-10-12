@@ -159,26 +159,36 @@ final class PhotoSemanticLayerTests: XCTestCase {
     // MARK: - Helper Methods
     
     private func createTestPlatformImage() -> PlatformImage {
+        // Use existing sample image instead of generating one
+        guard let imagePath = Bundle.module.path(forResource: "IMG_3002", ofType: "jpeg"),
+              let imageData = NSData(contentsOfFile: imagePath) else {
+            // Fallback to a simple colored image if sample image not found
+            #if os(iOS)
+            let size = CGSize(width: 100, height: 100)
+            let renderer = UIGraphicsImageRenderer(size: size)
+            let uiImage = renderer.image { context in
+                UIColor.red.setFill()
+                context.fill(CGRect(origin: .zero, size: size))
+            }
+            return PlatformImage(uiImage: uiImage)
+            #elseif os(macOS)
+            let size = NSSize(width: 100, height: 100)
+            let nsImage = NSImage(size: size)
+            nsImage.lockFocus()
+            NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
+            nsImage.unlockFocus()
+            return PlatformImage(nsImage: nsImage)
+            #else
+            return PlatformImage()
+            #endif
+        }
+        
         #if os(iOS)
-        let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let uiImage = renderer.image { context in
-            UIColor.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return PlatformImage(uiImage: uiImage)
+        return PlatformImage(data: imageData as Data) ?? PlatformImage()
         #elseif os(macOS)
-        let size = NSSize(width: 100, height: 100)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        guard let tiffData = nsImage.tiffRepresentation else {
-            fatalError("Failed to create NSImage data")
-        }
-        return PlatformImage(data: tiffData)!
+        return PlatformImage(data: imageData as Data) ?? PlatformImage()
         #else
-        fatalError("Platform not supported for test image creation")
+        return PlatformImage()
         #endif
     }
 }

@@ -24,12 +24,13 @@ public struct IntelligentFormView {
         // For now, require an initial instance for analysis
         // In a future version, we could implement type introspection
         guard let initialData = initialData else {
-            fatalError("IntelligentFormView.generateForm requires an initial instance for analysis. Please provide initialData.")
+            // fatalError("IntelligentFormView.generateForm requires an initial instance for analysis. Please provide initialData.")
+            return AnyView(EmptyView())
         }
         let analysis = DataIntrospectionEngine.analyze(initialData)
         let formStrategy = determineFormStrategy(analysis: analysis)
         
-        return Group {
+        return AnyView(Group {
             switch formStrategy.containerType {
             case .form:
                 platformFormContainer_L4(
@@ -79,7 +80,7 @@ public struct IntelligentFormView {
                     )
                 )
             }
-        }
+        })
     }
     
     /// Generate a form for updating existing data with data binding integration

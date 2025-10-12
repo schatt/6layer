@@ -213,11 +213,11 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformPhotoSemanticLayer1AccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

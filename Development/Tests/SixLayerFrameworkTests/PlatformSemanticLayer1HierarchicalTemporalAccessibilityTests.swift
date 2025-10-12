@@ -195,11 +195,11 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
 
 // MARK: - Test Extensions
 extension PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

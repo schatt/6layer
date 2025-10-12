@@ -63,11 +63,11 @@ final class InternationalizationServiceAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension InternationalizationServiceAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

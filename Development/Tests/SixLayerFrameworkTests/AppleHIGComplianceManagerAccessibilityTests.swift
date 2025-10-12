@@ -63,11 +63,11 @@ final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension AppleHIGComplianceManagerAccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

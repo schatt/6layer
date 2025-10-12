@@ -73,11 +73,11 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
 
 // MARK: - Test Extensions
 extension PlatformPhotoStrategySelectionLayer3AccessibilityTests {
-    override func await setupTestEnvironment() {
+    override func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }
