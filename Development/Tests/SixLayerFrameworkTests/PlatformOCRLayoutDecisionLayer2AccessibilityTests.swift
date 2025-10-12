@@ -42,6 +42,9 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
             language: OCRLanguage.english
         )
         
+        // Verify test image is properly configured
+        XCTAssertNotNil(testImage, "Test image should be created")
+        
         let result = platformOCRLayout_L2(
             context: context
         )
@@ -62,6 +65,9 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
             textTypes: [TextType.general],
             language: OCRLanguage.english
         )
+        
+        // Verify test image is properly configured
+        XCTAssertNotNil(testImage, "Test image should be created")
         
         let result = platformOCRLayout_L2(
             context: context
