@@ -8,6 +8,7 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
     
+    @MainActor
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
@@ -19,6 +20,7 @@ final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
+    @MainActor
     override func tearDown() async throws {
         try await super.tearDown()
         await cleanupTestEnvironment()
@@ -30,6 +32,7 @@ final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that AppleHIGComplianceManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
+    @MainActor
     func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let manager = AppleHIGComplianceManager()
@@ -46,6 +49,7 @@ final class AppleHIGComplianceManagerAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that AppleHIGComplianceManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
+    @MainActor
     func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let manager = AppleHIGComplianceManager()

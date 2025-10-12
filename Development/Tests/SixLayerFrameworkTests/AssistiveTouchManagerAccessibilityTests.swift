@@ -36,7 +36,15 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on iOS
     func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let manager = await MainActor.run { AssistiveTouchManager() }
+        let assistiveConfig = AssistiveTouchConfig(
+            enableIntegration: true,
+            enableCustomActions: true,
+            enableMenuSupport: true,
+            enableGestureRecognition: true,
+            gestureSensitivity: .medium,
+            menuStyle: .floating
+        )
+        let manager = await MainActor.run { AssistiveTouchManager(config: assistiveConfig) }
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -54,7 +62,15 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     /// for automated testing and accessibility tools compliance on macOS
     func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let manager = await MainActor.run { AssistiveTouchManager() }
+        let assistiveConfig = AssistiveTouchConfig(
+            enableIntegration: true,
+            enableCustomActions: true,
+            enableMenuSupport: true,
+            enableGestureRecognition: true,
+            gestureSensitivity: .medium,
+            menuStyle: .floating
+        )
+        let manager = await MainActor.run { AssistiveTouchManager(config: assistiveConfig) }
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration

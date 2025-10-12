@@ -168,8 +168,8 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
     
     func testPhotoContextInitialization() {
         // Given: PhotoContext parameters
-        let screenSize = CGSize(width: 1024, height: 768)
-        let availableSpace = CGSize(width: 800, height: 600)
+        let screenSize = PlatformSize(width: 1024, height: 768)
+        let availableSpace = PlatformSize(width: 800, height: 600)
         let preferences = PhotoPreferences()
         let capabilities = PhotoDeviceCapabilities()
         
@@ -182,8 +182,10 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         )
         
         // Then: Context should be created with correct values
-        XCTAssertEqual(context.screenSize, screenSize, "Context should have correct screen size")
-        XCTAssertEqual(context.availableSpace, availableSpace, "Context should have correct available space")
+        XCTAssertEqual(context.screenSize.width, screenSize.width, "Context should have correct screen size width")
+        XCTAssertEqual(context.screenSize.height, screenSize.height, "Context should have correct screen size height")
+        XCTAssertEqual(context.availableSpace.width, availableSpace.width, "Context should have correct available space width")
+        XCTAssertEqual(context.availableSpace.height, availableSpace.height, "Context should have correct available space height")
     }
     
     // MARK: - Photo Preferences Tests
@@ -193,7 +195,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let source = PhotoSource.camera
         let allowEditing = true
         let compressionQuality = 0.8
-        let maxImageSize = CGSize(width: 1920, height: 1080)
+        let maxImageSize = PlatformSize(width: 1920, height: 1080)
         
         // When: Creating PhotoPreferences
         let preferences = PhotoPreferences(
@@ -207,7 +209,8 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         XCTAssertEqual(preferences.preferredSource, source, "Preferences should have correct source")
         XCTAssertEqual(preferences.allowEditing, allowEditing, "Preferences should have correct editing setting")
         XCTAssertEqual(preferences.compressionQuality, compressionQuality, "Preferences should have correct quality")
-        XCTAssertEqual(preferences.maxImageSize, maxImageSize, "Preferences should have correct max size")
+        XCTAssertEqual(preferences.maxImageSize?.width, maxImageSize.width, "Preferences should have correct max size width")
+        XCTAssertEqual(preferences.maxImageSize?.height, maxImageSize.height, "Preferences should have correct max size height")
     }
     
     // MARK: - Device Capabilities Tests
@@ -217,7 +220,7 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let hasCamera = true
         let hasPhotoLibrary = true
         let supportsEditing = true
-        let maxImageResolution = CGSize(width: 4096, height: 4096)
+        let maxImageResolution = PlatformSize(width: 4096, height: 4096)
         
         // When: Creating PhotoDeviceCapabilities
         let capabilities = PhotoDeviceCapabilities(
@@ -231,7 +234,8 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         XCTAssertEqual(capabilities.hasCamera, hasCamera, "Capabilities should have correct camera setting")
         XCTAssertEqual(capabilities.hasPhotoLibrary, hasPhotoLibrary, "Capabilities should have correct photo library setting")
         XCTAssertEqual(capabilities.supportsEditing, supportsEditing, "Capabilities should have correct editing setting")
-        XCTAssertEqual(capabilities.maxImageResolution, maxImageResolution, "Capabilities should have correct max resolution")
+        XCTAssertEqual(capabilities.maxImageResolution.width, maxImageResolution.width, "Capabilities should have correct max resolution width")
+        XCTAssertEqual(capabilities.maxImageResolution.height, maxImageResolution.height, "Capabilities should have correct max resolution height")
     }
     
     // MARK: - Layer 4 Photo Components Tests
