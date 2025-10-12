@@ -239,13 +239,13 @@ public extension XCTestCase {
     
     /// Sets up the testing environment using centralized utilities
     @MainActor
-    override func setupTestEnvironment() {
+    func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
     /// Cleans up the testing environment using centralized utilities
     @MainActor
-    override func cleanupTestEnvironment() {
+    func cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
     
