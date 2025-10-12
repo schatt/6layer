@@ -34,10 +34,17 @@ final class FormWizardViewTests: XCTestCase {
     // MARK: - FormWizardView Tests
     
     func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let step1 = WizardStep(id: "step1", title: "Step 1", fields: [])
-        let step2 = WizardStep(id: "step2", title: "Step 2", fields: [])
+        let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
+        let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         
-        let view = FormWizardView(steps: [step1, step2])
+        let view = FormWizardView(steps: [step1, step2]) { step, state in
+            Text("Step content for \(step.title)")
+        } navigation: { state, onNext, onPrevious, onComplete in
+            HStack {
+                Button("Previous") { onPrevious() }
+                Button("Next") { onNext() }
+            }
+        }
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -50,10 +57,17 @@ final class FormWizardViewTests: XCTestCase {
     }
     
     func testFormWizardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let step1 = WizardStep(id: "step1", title: "Step 1", fields: [])
-        let step2 = WizardStep(id: "step2", title: "Step 2", fields: [])
+        let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
+        let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         
-        let view = FormWizardView(steps: [step1, step2])
+        let view = FormWizardView(steps: [step1, step2]) { step, state in
+            Text("Step content for \(step.title)")
+        } navigation: { state, onNext, onPrevious, onComplete in
+            HStack {
+                Button("Previous") { onPrevious() }
+                Button("Next") { onNext() }
+            }
+        }
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
