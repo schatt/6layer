@@ -8,7 +8,7 @@ import SwiftUI
  * scenario described in the bug report and verifies that identifiers are now generated
  * correctly.
  * 
- * TESTING SCOPE: Tests the specific bug scenario where .trackViewHierarchy() and
+ * TESTING SCOPE: Tests the specific bug scenario where .named() and
  * .screenContext() modifiers were not generating accessibility identifiers due to
  * missing globalAutomaticAccessibilityIdentifiers environment variable.
  * 
@@ -56,14 +56,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .platformNavigationTitle("Fuel")
             .platformNavigationTitleDisplayMode(.inline)
             .screenContext("FuelView")           // ✅ Applied
-            .trackViewHierarchy("FuelView")      // ✅ Applied
+            .named("FuelView")      // ✅ Applied
             
             .platformToolbarWithTrailingActions {
                 HStack(spacing: 16) {
                     Button(action: { /* add fuel action */ }) {
                         Label("Add Fuel", systemImage: "plus")
                     }
-                    .trackViewHierarchy("AddFuelButton")  // ✅ Applied
+                    .named("AddFuelButton")  // ✅ Applied
                     .accessibilityIdentifier("manual-add-fuel-button")  // ✅ Manual ID works
                 }
             }
@@ -80,7 +80,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that .trackViewHierarchy() now generates accessibility identifiers
+    /// BUSINESS PURPOSE: Verify that .named() now generates accessibility identifiers
     /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
     func testTrackViewHierarchyGeneratesIdentifiers() async {
@@ -94,14 +94,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            // When: Using .trackViewHierarchy() modifier (the failing case from bug report)
+            // When: Using .named() modifier (the failing case from bug report)
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
-            .trackViewHierarchy("AddFuelButton")
+            .named("AddFuelButton")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with trackViewHierarchy should be created successfully")
+            XCTAssertNotNil(testView, "View with .named() should be created successfully")
             
             // Verify that the modifier chain compiles and works
             // In a real scenario, this would generate an accessibility identifier
@@ -209,7 +209,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             let testView = Button(action: {}) {
                 Label("Test", systemImage: "plus")
             }
-            .trackViewHierarchy("TestButton")
+            .named("TestButton")
             
             // Then: The view should be created successfully
             XCTAssertNotNil(testView, "View with breadcrumb modifiers should be created successfully")
