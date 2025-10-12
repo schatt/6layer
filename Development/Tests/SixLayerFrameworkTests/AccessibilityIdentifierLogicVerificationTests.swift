@@ -87,7 +87,7 @@ final class AccessibilityIdentifierLogicVerificationTests: XCTestCase {
             let testView1 = Button(action: {}) {
                 Label("Test", systemImage: "plus")
             }
-            .trackViewHierarchy("TestButton")
+            .named("TestButton")
             
             let testView2 = Button(action: {}) {
                 Label("Test", systemImage: "plus")
@@ -173,7 +173,7 @@ final class AccessibilityIdentifierLogicVerificationTests: XCTestCase {
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
-            .trackViewHierarchy("AddFuelButton")
+            .named("AddFuelButton")
             .screenContext("FuelView")
             
             // Then: The view should be created successfully
