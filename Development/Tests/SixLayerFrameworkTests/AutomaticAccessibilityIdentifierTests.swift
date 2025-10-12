@@ -521,6 +521,10 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             XCTAssertTrue(testCode.contains("func test_"))
             XCTAssertTrue(testCode.contains("app.otherElements"))
             XCTAssertTrue(testCode.contains("XCTAssertTrue"))
+            
+            // Check that test code includes view context information
+            XCTAssertTrue(testCode.contains("// Element is in:"), "Generated code should include view context comment")
+            XCTAssertTrue(testCode.contains("should exist in"), "Assertion message should include containing view name")
         }
     }
     
