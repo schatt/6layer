@@ -14,20 +14,8 @@ final class WindowDetectionTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Implementation doesn't exist yet - this will fail initially (RED phase)
-        // Temporarily disabled to avoid fatalError in test environment
-        // windowDetection = UnifiedWindowDetection()
-        windowDetection = nil
-    }
-    
-    // MARK: - Helper Methods
-    
-    /// Skip test if WindowDetection implementation is not available
-    private func skipIfImplementationNotAvailable() {
-        guard windowDetection != nil else {
-            XCTSkip("WindowDetection implementation not available yet - TDD phase")
-            return
-        }
+        // Implementation exists and is ready for testing
+        windowDetection = UnifiedWindowDetection()
     }
     
     override func tearDown() {
@@ -42,7 +30,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A new window detection instance
         // WHEN: Initialized
         // THEN: Should have default values
-        skipIfImplementationNotAvailable()
         XCTAssertNotNil(windowDetection)
         XCTAssertEqual(windowDetection.windowSize, CGSize(width: 375, height: 667))
         XCTAssertEqual(windowDetection.screenSize, CGSize(width: 375, height: 667))
@@ -58,7 +45,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A window detection instance
         // WHEN: Start monitoring is called
         // THEN: Should start monitoring without crashing
-        skipIfImplementationNotAvailable()
         XCTAssertNoThrow(windowDetection.startMonitoring())
         XCTAssertNotNil(windowDetection.platformDetection)
     }
@@ -67,7 +53,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A window detection instance that's monitoring
         // WHEN: Stop monitoring is called
         // THEN: Should stop monitoring without crashing
-        skipIfImplementationNotAvailable()
         windowDetection.startMonitoring()
         XCTAssertNoThrow(windowDetection.stopMonitoring())
     }
@@ -76,7 +61,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A window detection instance
         // WHEN: Update window info is called
         // THEN: Should update without crashing
-        skipIfImplementationNotAvailable()
         XCTAssertNoThrow(windowDetection.updateWindowInfo())
     }
     
@@ -202,10 +186,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A window detection instance
         // WHEN: Start monitoring is called multiple times
         // THEN: Should not crash or create multiple observers
-        guard windowDetection != nil else {
-            XCTSkip("WindowDetection implementation not available yet - TDD phase")
-            return
-        }
         XCTAssertNoThrow(windowDetection.startMonitoring())
         XCTAssertNoThrow(windowDetection.startMonitoring())
         XCTAssertNoThrow(windowDetection.startMonitoring())
@@ -215,7 +195,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A window detection instance that hasn't started monitoring
         // WHEN: Stop monitoring is called
         // THEN: Should not crash
-        skipIfImplementationNotAvailable()
         XCTAssertNoThrow(windowDetection.stopMonitoring())
     }
     
@@ -223,7 +202,6 @@ final class WindowDetectionTests: XCTestCase {
         // GIVEN: A window detection instance that's monitoring
         // WHEN: Stop monitoring is called multiple times
         // THEN: Should not crash
-        skipIfImplementationNotAvailable()
         windowDetection.startMonitoring()
         XCTAssertNoThrow(windowDetection.stopMonitoring())
         XCTAssertNoThrow(windowDetection.stopMonitoring())
