@@ -441,6 +441,11 @@ final class NavigationLayer4Tests: XCTestCase {
         let selection = Binding<String?>(get: { nil }, set: { _ in })
         let item = Binding<TestItem?>(get: { nil }, set: { _ in })
         
+        // Verify bindings are properly configured
+        XCTAssertFalse(selection.wrappedValue ?? true, "Selection binding should return nil")
+        XCTAssertNil(item.wrappedValue, "Item binding should return nil")
+        XCTAssertFalse(isActive.wrappedValue, "IsActive binding should return false")
+        
         // When: Creating navigation components with state
         let statefulView = Text("Content")
             .platformNavigationContainer {
@@ -493,6 +498,11 @@ final class NavigationLayer4Tests: XCTestCase {
         let nilIsActive = Binding<Bool>(get: { false }, set: { _ in })
         let nilSelection = Binding<String?>(get: { nil }, set: { _ in })
         let nilItem = Binding<TestItem?>(get: { nil }, set: { _ in })
+        
+        // Verify nil bindings are properly configured
+        XCTAssertNil(nilSelection.wrappedValue, "Nil selection binding should return nil")
+        XCTAssertNil(nilItem.wrappedValue, "Nil item binding should return nil")
+        XCTAssertFalse(nilIsActive.wrappedValue, "Nil isActive binding should return false")
         
         // When: Using nil bindings with navigation components
         let nilLink = Text("Nil Link")

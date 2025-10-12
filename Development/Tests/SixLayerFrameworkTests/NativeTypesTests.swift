@@ -301,6 +301,20 @@ final class NativeTypesTests: XCTestCase {
         formState.setValue(MockImage(id: "profile", data: "image-data".data(using: .utf8)!), for: "profilePhoto")
         
         // Then
+        // Verify fields are properly configured
+        XCTAssertEqual(fields.count, 5, "Should have 5 form fields")
+        XCTAssertEqual(fields[0].id, "name", "First field should have correct ID")
+        XCTAssertEqual(fields[0].contentType, .text, "First field should be text type")
+        XCTAssertEqual(fields[1].id, "age", "Second field should have correct ID")
+        XCTAssertEqual(fields[1].contentType, .integer, "Second field should be integer type")
+        XCTAssertEqual(fields[2].id, "website", "Third field should have correct ID")
+        XCTAssertEqual(fields[2].contentType, .url, "Third field should be URL type")
+        XCTAssertEqual(fields[3].id, "tags", "Fourth field should have correct ID")
+        XCTAssertEqual(fields[3].contentType, .array, "Fourth field should be array type")
+        XCTAssertEqual(fields[4].id, "profilePhoto", "Fifth field should have correct ID")
+        XCTAssertEqual(fields[4].contentType, .image, "Fifth field should be image type")
+        
+        // Verify form state values
         let name: String? = formState.getValue(for: "name")
         let age: Int? = formState.getValue(for: "age")
         let website: MockURL? = formState.getValue(for: "website")
