@@ -68,12 +68,14 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*ocrimplementation", 
-            platform: .iOS,
-            componentName: "platformOCRImplementation_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*ocrimplementation", 
+                platform: .iOS,
+                componentName: "platformOCRImplementation_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers on iOS")
     }
@@ -114,12 +116,14 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         // When & Then
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view, 
-            expectedPattern: "SixLayer.*element.*ocrimplementation", 
-            platform: .macOS,
-            componentName: "platformOCRImplementation_L4"
-        )
+        let hasAccessibilityID = await MainActor.run {
+            hasAccessibilityIdentifier(
+                view, 
+                expectedPattern: "SixLayer.*element.*ocrimplementation", 
+                platform: .macOS,
+                componentName: "platformOCRImplementation_L4"
+            )
+        }
         
         XCTAssertTrue(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers on macOS")
     }
