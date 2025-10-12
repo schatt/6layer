@@ -41,6 +41,10 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
             language: OCRLanguage.english
         )
         
+        // Verify context is properly configured
+        XCTAssertEqual(context.textTypes, [TextType.general], "Context should have correct text types")
+        XCTAssertEqual(context.language, OCRLanguage.english, "Context should have correct language")
+        
         let result = platformOCRStrategy_L3(
             textTypes: [TextType.general]
         )
@@ -60,6 +64,10 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
             textTypes: [TextType.general],
             language: OCRLanguage.english
         )
+        
+        // Verify context is properly configured
+        XCTAssertEqual(context.textTypes, [TextType.general], "Context should have correct text types")
+        XCTAssertEqual(context.language, OCRLanguage.english, "Context should have correct language")
         
         let result = platformOCRStrategy_L3(
             textTypes: [TextType.general]
