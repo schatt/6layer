@@ -71,6 +71,10 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 }
             )
             
+            // Verify callback is properly configured
+            XCTAssertNotNil(result, "Camera interface should be created")
+            XCTAssertNil(capturedImage, "Captured image should be nil initially")
+            
             // Then: Test the two critical aspects
             
             // 1. Does it return a valid structure of the kind it's supposed to?
@@ -129,6 +133,10 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                     selectedImage = image
                 }
             )
+            
+            // Verify callback is properly configured
+            XCTAssertNotNil(result, "Photo picker should be created")
+            XCTAssertNil(selectedImage, "Selected image should be nil initially")
             
             // Then: Test the two critical aspects
             
@@ -241,6 +249,10 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 }
             )
             
+            // Verify callback is properly configured
+            XCTAssertNotNil(result, "Photo editor should be created")
+            XCTAssertNil(editedImage, "Edited image should be nil initially")
+            
             // Then: Test the two critical aspects
             
             // 1. Does it return a valid structure of the kind it's supposed to?
@@ -252,6 +264,11 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 let viewText = try result.inspect().findAll(ViewType.Text.self)
                 let viewButtons = try result.inspect().findAll(ViewType.Button.self)
                 let viewImages = try result.inspect().findAll(ViewType.Image.self)
+                
+                // Verify view inspection results
+                XCTAssertNotNil(viewText, "View text inspection should succeed")
+                XCTAssertNotNil(viewButtons, "View buttons inspection should succeed")
+                XCTAssertNotNil(viewImages, "View images inspection should succeed")
                 
                 // NOTE: Currently MacOSPhotoEditorView has a framework bug - it's missing the image parameter
                 // in its struct definition, so it doesn't contain the expected content
