@@ -35,7 +35,8 @@ final class GenericNumericDataViewTests: XCTestCase {
     
     func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = GenericNumericDataView(
-            data: GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
+            data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
+            hints: PresentationHints()
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -50,7 +51,8 @@ final class GenericNumericDataViewTests: XCTestCase {
     
     func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = GenericNumericDataView(
-            data: GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
+            data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
+            hints: PresentationHints()
         )
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
