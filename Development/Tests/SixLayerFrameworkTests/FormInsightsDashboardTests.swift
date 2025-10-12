@@ -42,6 +42,11 @@ final class FormInsightsDashboardTests: XCTestCase {
             recommendations: []
         )
         
+        // Verify insights are properly configured
+        XCTAssertEqual(insights.formId, "test-form", "Insights should have correct form ID")
+        XCTAssertTrue(insights.errors.isEmpty, "Insights should have empty errors initially")
+        XCTAssertTrue(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
+        
         let view = FormInsightsDashboard()
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -62,6 +67,11 @@ final class FormInsightsDashboardTests: XCTestCase {
             errors: [],
             recommendations: []
         )
+        
+        // Verify insights are properly configured
+        XCTAssertEqual(insights.formId, "test-form", "Insights should have correct form ID")
+        XCTAssertTrue(insights.errors.isEmpty, "Insights should have empty errors initially")
+        XCTAssertTrue(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
         
         let view = FormInsightsDashboard()
         

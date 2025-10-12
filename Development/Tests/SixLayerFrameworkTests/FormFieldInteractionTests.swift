@@ -444,7 +444,7 @@ final class FormFieldInteractionTests: XCTestCase {
         resetCallbacks()
         let textField = sampleFormFields[0]
         var textValue = ""
-        var isFocused = false
+        let isFocused = false
         
         // When: Creating field with focus management
         let view = TextField(
@@ -457,7 +457,7 @@ final class FormFieldInteractionTests: XCTestCase {
                 }
             )
         )
-        .onChange(of: isFocused) { focused in
+        .onChange(of: isFocused) { _, focused in
             self.fieldFocusChanges[textField.label] = focused
         }
         

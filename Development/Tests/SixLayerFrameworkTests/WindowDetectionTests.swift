@@ -388,11 +388,14 @@ final class WindowDetectionTests: XCTestCase {
         // This is a simplified test that doesn't use async/await to avoid hanging
         let expectation = XCTestExpectation(description: "Thread safety test")
 
+        // Capture the windowDetection property before entering the closure
+        let windowDetection = self.windowDetection
+        
         DispatchQueue.global(qos: .background).async {
             // Test that we can call updateWindowInfo from a background queue
             // The method should handle this gracefully
             Task { @MainActor in
-                XCTAssertNoThrow(self.windowDetection?.updateWindowInfo())
+                XCTAssertNoThrow(windowDetection?.updateWindowInfo())
                 expectation.fulfill()
             }
         }

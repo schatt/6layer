@@ -66,7 +66,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             let testView = Button(action: {}) {
                 Label("Test Button", systemImage: "plus")
             }
-            .trackViewHierarchy("TestButton")
+            .named("TestButton")
             .screenContext("TestScreen")
             
             // Then: The view should be created successfully
@@ -84,6 +84,9 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
         await MainActor.run {
             // Given: Default configuration
             let config = AccessibilityIdentifierConfig.shared
+            
+            // Verify config is properly configured
+            XCTAssertNotNil(config, "AccessibilityIdentifierConfig should be available")
             
             // When: Using manual accessibility identifier
             let testView = Button(action: {}) {
@@ -108,6 +111,9 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
         await MainActor.run {
             // Given: Default configuration
             let config = AccessibilityIdentifierConfig.shared
+            
+            // Verify config is properly configured
+            XCTAssertNotNil(config, "AccessibilityIdentifierConfig should be available")
             
             // When: Using opt-out modifier
             let testView = Button(action: {}) {

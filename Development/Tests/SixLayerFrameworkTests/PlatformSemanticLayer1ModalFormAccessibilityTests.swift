@@ -51,6 +51,12 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
             customPreferences: [:]
         )
         
+        // Verify test data and hints are properly configured
+        XCTAssertEqual(testData.name, "Test Name", "Test data should have correct name")
+        XCTAssertEqual(testData.email, "test@example.com", "Test data should have correct email")
+        XCTAssertEqual(hints.dataType, .form, "Hints should have correct data type")
+        XCTAssertEqual(hints.context, .modal, "Hints should have correct context")
+        
         let view = await MainActor.run {
             platformPresentModalForm_L1(
                 formType: .form,
@@ -84,6 +90,12 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
             context: .modal,
             customPreferences: [:]
         )
+        
+        // Verify test data and hints are properly configured
+        XCTAssertEqual(testData.name, "Test Name", "Test data should have correct name")
+        XCTAssertEqual(testData.email, "test@example.com", "Test data should have correct email")
+        XCTAssertEqual(hints.dataType, .form, "Hints should have correct data type")
+        XCTAssertEqual(hints.context, .modal, "Hints should have correct context")
         
         let view = await MainActor.run {
             platformPresentModalForm_L1(

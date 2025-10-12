@@ -52,7 +52,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         AccessibilityIdentifierConfig.shared.namespace = "layer1"
         
         // When: Creating view using platformPresentItemCollection_L1
-        let view = platformPresentItemCollection_L1<Layer1TestItem>(
+        let view = platformPresentItemCollection_L1(
             items: testItems!,
             hints: testHints!
         )

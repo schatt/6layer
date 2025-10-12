@@ -15,7 +15,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        await setupTestEnvironment()
+        setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,7 +26,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
     
     override func tearDown() async throws {
         try await super.tearDown()
-        await cleanupTestEnvironment()
+        cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }

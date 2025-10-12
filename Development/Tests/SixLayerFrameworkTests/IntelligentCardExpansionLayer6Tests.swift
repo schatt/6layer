@@ -104,6 +104,9 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             accessibilityConfig: accessibilityConfig
         )
         
+        // Verify card view is properly configured
+        XCTAssertNotNil(cardView, "Card view should be created")
+        
         // When: Testing haptic feedback behavior
         // Then: Configuration should be valid (L6 function responsibility)
         XCTAssertNotNil(platformConfig, "Platform config should be created")

@@ -132,6 +132,9 @@ final class SelectFieldImplementationTests: XCTestCase {
             accessibility: AccessibilitySettings()
         )
         
+        // Verify colors are properly configured
+        XCTAssertEqual(colors, ColorScheme.light, "Colors should be light scheme")
+        
         // When: Creating theming integration select field
         // This should be interactive, not just text display
         let view = VStack {

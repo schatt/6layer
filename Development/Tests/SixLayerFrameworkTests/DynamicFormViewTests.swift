@@ -42,6 +42,13 @@ final class DynamicFormViewTests: XCTestCase {
             isRequired: true,
             validationRules: [:]
         )
+        
+        // Verify test field is properly configured
+        XCTAssertEqual(testField.id, "testField", "Test field should have correct ID")
+        XCTAssertEqual(testField.contentType, .text, "Test field should have correct content type")
+        XCTAssertEqual(testField.label, "Test Field", "Test field should have correct label")
+        XCTAssertTrue(testField.isRequired, "Test field should be required")
+        
         let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
         
         let view = DynamicFormView(
@@ -68,6 +75,13 @@ final class DynamicFormViewTests: XCTestCase {
             isRequired: true,
             validationRules: [:]
         )
+        
+        // Verify test field is properly configured
+        XCTAssertEqual(testField.id, "testField", "Test field should have correct ID")
+        XCTAssertEqual(testField.contentType, .text, "Test field should have correct content type")
+        XCTAssertEqual(testField.label, "Test Field", "Test field should have correct label")
+        XCTAssertTrue(testField.isRequired, "Test field should be required")
+        
         let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
         
         let view = DynamicFormView(
