@@ -11,19 +11,23 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
     }
     
     override func tearDown() async throws {
         try await super.tearDown()
         await cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.resetToDefaults()
+        }
     }
     
     // MARK: - OCR Layout Decision Tests
@@ -34,26 +38,19 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let result = platformOCRLayout_L2(
-            image: testImage,
-            context: context,
-            screenWidth: 375,
-            deviceType: .phone,
-            contentComplexity: .moderate
+            context: context
         )
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.columns > 0, "Layout decision should have valid columns")
-        XCTAssertTrue(result.spacing >= 0, "Layout decision should have valid spacing")
+        XCTAssertTrue(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
+        XCTAssertTrue(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRLayout_L2 generates proper accessibility identifiers
@@ -62,11 +59,8 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard,
-            requiresNeuralEngine: false,
-            estimatedProcessingTime: 1.0
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
         )
         
         let result = platformOCRLayout_L2(
@@ -80,8 +74,8 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
         XCTAssertNotNil(result, "platformOCRLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.columns > 0, "Layout decision should have valid columns")
-        XCTAssertTrue(result.spacing >= 0, "Layout decision should have valid spacing")
+        XCTAssertTrue(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
+        XCTAssertTrue(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
     }
 }
 
