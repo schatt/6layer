@@ -46,6 +46,7 @@ public func platformOCRImplementation_L4(
             )
             onResult(fallbackResult)
         }
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Cross-platform text extraction implementation

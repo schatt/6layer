@@ -23,6 +23,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemDeleted: onItemDeleted,
         onItemEdited: onItemEdited
     )
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting numeric data
@@ -156,6 +157,7 @@ public func platformPresentModalForm_L1(
     
     // Return a modal form with the generated fields
     return ModalFormView(fields: fields, formType: formType, context: context, hints: hints)
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting media data

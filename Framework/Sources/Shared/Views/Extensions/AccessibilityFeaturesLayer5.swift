@@ -286,6 +286,7 @@ public struct AccessibilityEnhancedView<Content: View>: View {
             .environmentObject(keyboardManager)
             .environmentObject(highContrastManager)
             .environmentObject(testingManager)
+            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
             .onAppear {
                 if config.enableVoiceOver {
                     voiceOverManager.announce("View loaded", priority: .normal)
@@ -311,6 +312,7 @@ public struct VoiceOverEnabledView<Content: View>: View {
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Enhanced accessibility view")
             .accessibilityHint("This view has enhanced VoiceOver support")
+            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
     }
 }
 
@@ -338,9 +340,11 @@ public struct KeyboardNavigableView<Content: View>: View {
                         keyboardManager.moveFocus(direction: .previous)
                         return .handled
                     }
+                    .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
             } else {
                 content()
                     .environmentObject(keyboardManager)
+                    .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
             }
         }
     }
@@ -361,6 +365,7 @@ public struct HighContrastEnabledView<Content: View>: View {
         content()
             .environmentObject(highContrastManager)
             .preferredColorScheme(highContrastManager.isHighContrastEnabled ? .dark : nil)
+            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
     }
 }
 

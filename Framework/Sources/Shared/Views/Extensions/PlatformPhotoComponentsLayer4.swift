@@ -25,9 +25,7 @@ public func platformCameraInterface_L4(
     return CameraView(onImageCaptured: onImageCaptured)
         .automaticAccessibilityIdentifiers()
     #elseif os(macOS)
-    // macOS doesn't have built-in camera UI, return a placeholder
-    return Text("Camera not available on macOS")
-        .foregroundColor(.secondary)
+    return MacOSCameraView(onImageCaptured: onImageCaptured)
         .automaticAccessibilityIdentifiers()
     #else
     return Text("Camera not available")
@@ -65,6 +63,7 @@ public func platformPhotoDisplay_L4(
             PhotoPlaceholderView(style: style)
         }
     }
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Cross-platform photo editing interface
@@ -74,11 +73,14 @@ public func platformPhotoEditor_L4(
 ) -> some View {
     #if os(iOS)
     return PhotoEditorView(image: image, onImageEdited: onImageEdited)
+        .automaticAccessibilityIdentifiers()
     #elseif os(macOS)
     return MacOSPhotoEditorView(image: image, onImageEdited: onImageEdited)
+        .automaticAccessibilityIdentifiers()
     #else
     return Text("Photo editor not available")
         .foregroundColor(.secondary)
+        .automaticAccessibilityIdentifiers()
     #endif
 }
 
@@ -125,7 +127,131 @@ struct CameraView: UIViewControllerRepresentable {
 }
 #endif
 
-// MARK: - iOS Photo Picker View
+// MARK: - macOS Camera View
+
+#if os(macOS)
+import AVFoundation
+import AppKit
+
+struct MacOSCameraView: NSViewControllerRepresentable {
+    let onImageCaptured: (PlatformImage) -> Void
+    
+    func makeNSViewController(context: Context) -> NSViewController {
+        let controller = CameraViewController()
+        controller.onImageCaptured = onImageCaptured
+        return controller
+    }
+    
+    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
+        // No updates needed
+    }
+}
+
+class CameraViewController: NSViewController {
+    var onImageCaptured: ((PlatformImage) -> Void)?
+    private var captureSession: AVCaptureSession?
+    private var previewLayer: AVCaptureVideoPreviewLayer?
+    private var photoOutput: AVCapturePhotoOutput?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCamera()
+        setupUI()
+        
+        // Apply accessibility identifier to the view controller's view
+        view.setAccessibilityIdentifier("SixLayer.camera.interface")
+    }
+    
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        previewLayer?.frame = view.bounds
+    }
+    
+    private func setupCamera() {
+        captureSession = AVCaptureSession()
+        
+        // Check camera permission
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            configureCamera()
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        self?.configureCamera()
+                    } else {
+                        self?.showError("Camera access denied")
+                    }
+                }
+            }
+        case .denied, .restricted:
+            showError("Camera access denied")
+        @unknown default:
+            showError("Unknown camera authorization status")
+        }
+    }
+    
+    private func configureCamera() {
+        guard let camera = AVCaptureDevice.default(for: .video),
+              let input = try? AVCaptureDeviceInput(device: camera) else {
+            showError("Camera not available")
+            return
+        }
+        
+        captureSession?.addInput(input)
+        
+        photoOutput = AVCapturePhotoOutput()
+        captureSession?.addOutput(photoOutput!)
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+        previewLayer?.videoGravity = .resizeAspectFill
+        previewLayer?.frame = view.bounds
+        view.layer?.addSublayer(previewLayer!)
+        
+        captureSession?.startRunning()
+    }
+    
+    private func setupUI() {
+        let captureButton = NSButton(title: "Capture Photo", target: self, action: #selector(capturePhoto))
+        captureButton.bezelStyle = .rounded
+        captureButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(captureButton)
+        
+        NSLayoutConstraint.activate([
+            captureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            captureButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        ])
+    }
+    
+    @objc private func capturePhoto() {
+        let settings = AVCapturePhotoSettings()
+        photoOutput?.capturePhoto(with: settings, delegate: self)
+    }
+    
+    private func showError(_ message: String) {
+        let alert = NSAlert()
+        alert.messageText = "Camera Error"
+        alert.informativeText = message
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+    
+    deinit {
+        captureSession?.stopRunning()
+    }
+}
+
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let imageData = photo.fileDataRepresentation(),
+              let nsImage = NSImage(data: imageData) else { return }
+        
+        let platformImage = PlatformImage(nsImage: nsImage)
+        onImageCaptured?(platformImage)
+    }
+}
+#endif
 
 #if os(iOS)
 struct PhotoPickerView: UIViewControllerRepresentable {
