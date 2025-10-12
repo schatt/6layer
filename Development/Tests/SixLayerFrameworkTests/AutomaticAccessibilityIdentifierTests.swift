@@ -684,18 +684,18 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             config.enableUITestIntegration = true
             config.enableDebugLogging = true
             
-            // When: A view uses .trackViewHierarchy() modifier (as per user's bug report)
+            // When: A view uses .named() modifier (as per user's bug report)
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
-            .trackViewHierarchy("AddFuelButton")
+            .named("AddFuelButton")
             
-            // Test that trackViewHierarchy generates accessibility identifiers
+            // Test that .named() generates accessibility identifiers
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: "CarManager.*track.*addfuelbutton", 
-                componentName: "TrackViewHierarchy"
-            ), "View with trackViewHierarchy should generate accessibility identifiers matching pattern 'CarManager.*track.*addfuelbutton'")
+                expectedPattern: "CarManager.*named.*addfuelbutton", 
+                componentName: "NamedModifier"
+            ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.*named.*addfuelbutton'")
             
             // Also verify configuration is correct
             XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled")
