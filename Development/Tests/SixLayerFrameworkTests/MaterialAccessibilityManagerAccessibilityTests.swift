@@ -31,9 +31,11 @@ final class MaterialAccessibilityManagerAccessibilityTests: XCTestCase {
         XCTAssertNotNil(manager, "MaterialAccessibilityManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
@@ -47,9 +49,11 @@ final class MaterialAccessibilityManagerAccessibilityTests: XCTestCase {
         XCTAssertNotNil(manager, "MaterialAccessibilityManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
-        XCTAssertEqual(config.namespace, "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            XCTAssertTrue(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
+            XCTAssertEqual(config.namespace, "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+        }
     }
 }
 
