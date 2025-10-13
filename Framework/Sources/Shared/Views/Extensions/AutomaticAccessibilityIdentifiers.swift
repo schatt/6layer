@@ -687,7 +687,7 @@ public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
             if config.enableDebugLogging {
                 print("🔍 Applying automatic ID: '\(generatedID)'")
             }
-            return AnyView(content.accessibilityIdentifier(generatedID))
+            return AnyView(content.modifier(WorkingAccessibilityIdentifierModifier(identifier: generatedID)))
         } else {
             // Don't apply any modifier - let user-specified accessibility identifiers work naturally
             if config.enableDebugLogging {
@@ -863,6 +863,78 @@ public struct NavigationStateModifier: ViewModifier {
             .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }
+
+// MARK: - Working Accessibility Identifier Modifier
+
+/// Modifier that applies accessibility identifiers and ensures they transfer to platform views
+/// This works around SwiftUI's broken accessibility identifier transfer mechanism
+public struct WorkingAccessibilityIdentifierModifier: ViewModifier {
+    let identifier: String
+    
+    public init(identifier: String) {
+        self.identifier = identifier
+    }
+    
+    public func body(content: Content) -> some View {
+        #if os(macOS)
+        return AnyView(
+            WorkingAccessibilityHostingControllerWrapper(identifier: identifier) {
+                content
+            }
+        )
+        #else
+        return AnyView(content.accessibilityIdentifier(identifier))
+        #endif
+    }
+}
+
+#if os(macOS)
+import AppKit
+
+/// macOS-specific wrapper that ensures accessibility identifiers transfer properly
+struct WorkingAccessibilityHostingControllerWrapper<Content: View>: NSViewControllerRepresentable {
+    let identifier: String
+    let content: () -> Content
+    
+    init(identifier: String, @ViewBuilder content: @escaping () -> Content) {
+        self.identifier = identifier
+        self.content = content
+    }
+    
+    func makeNSViewController(context: Context) -> NSViewController {
+        let hostingController = NSHostingController(rootView: content())
+        return hostingController
+    }
+    
+    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
+        guard let hostingController = nsViewController as? NSHostingController<Content> else { return }
+        
+        // Update the root view
+        hostingController.rootView = content()
+        
+        // Force accessibility identifier transfer
+        transferAccessibilityIdentifier(to: nsViewController.view, identifier: identifier)
+    }
+    
+    private func transferAccessibilityIdentifier(to view: NSView, identifier: String) {
+        // Apply the identifier to the root view
+        view.setAccessibilityIdentifier(identifier)
+        
+        // Also apply to any NSHostingView subviews
+        findAndUpdateHostingViews(in: view, identifier: identifier)
+    }
+    
+    private func findAndUpdateHostingViews(in view: NSView, identifier: String) {
+        // Recursively search for NSHostingView instances and apply the identifier
+        for subview in view.subviews {
+            if subview is NSHostingView<Content> {
+                subview.setAccessibilityIdentifier(identifier)
+            }
+            findAndUpdateHostingViews(in: subview, identifier: identifier)
+        }
+    }
+}
+#endif
 
 // MARK: - Exact Accessibility Identifier Modifier
 
