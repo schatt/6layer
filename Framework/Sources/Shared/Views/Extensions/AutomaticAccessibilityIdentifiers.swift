@@ -1008,6 +1008,59 @@ struct ExactAccessibilityHostingControllerWrapper<Content: View>: NSViewControll
 }
 #endif
 
+// MARK: - Hierarchical Named Modifier
+
+/// Modifier that applies hierarchical naming and generates accessibility identifiers
+/// This replaces the current level in the hierarchy with the provided name
+public struct HierarchicalNamedModifier: ViewModifier {
+    let viewName: String
+    
+    public init(viewName: String) {
+        self.viewName = viewName
+    }
+    
+    public func body(content: Content) -> some View {
+        // Push the name to the hierarchy (replaces current level)
+        AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
+        
+        // Check if global config is enabled - if so, automatically apply accessibility identifier
+        let config = AccessibilityIdentifierConfig.shared
+        if config.enableAutoIDs {
+            // Generate and apply accessibility identifier based on the modified hierarchy
+            let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+            let screenContext = config.currentScreenContext ?? "main"
+            let role = "element"
+            
+            // Generate object ID based on the named context
+            let objectID = generateNamedObjectID(context: context, screenContext: screenContext, viewName: viewName)
+            
+            // Build hierarchical identifier manually
+            let identifier = "\(config.namespace).\(screenContext).\(role).\(objectID)"
+            
+            return AnyView(content
+                .onDisappear {
+                    AccessibilityIdentifierConfig.shared.popViewHierarchy()
+                }
+                .modifier(WorkingAccessibilityIdentifierModifier(identifier: identifier)))
+        } else {
+            // Global config is disabled - just track hierarchy without applying identifier
+            return AnyView(content
+                .onDisappear {
+                    AccessibilityIdentifierConfig.shared.popViewHierarchy()
+                })
+        }
+    }
+    
+    private func generateNamedObjectID(context: String, screenContext: String, viewName: String) -> String {
+        // Create deterministic object ID based on context and view name
+        let contextHash = abs(context.hashValue) % 10000
+        let screenHash = abs(screenContext.hashValue) % 1000
+        let nameHash = abs(viewName.hashValue) % 1000
+        
+        return "\(screenContext.lowercased())-\(viewName.lowercased())-\(contextHash)-\(screenHash)-\(nameHash)"
+    }
+}
+
 // MARK: - View Extensions for Breadcrumb Tracking
 
 public extension View {
@@ -1015,7 +1068,7 @@ public extension View {
     /// - Parameter name: The semantic name to use for this view
     /// - Returns: A view with a semantic name for accessibility identifiers
     func named(_ name: String) -> some View {
-        modifier(ViewHierarchyTrackingModifier(viewName: name))
+        modifier(HierarchicalNamedModifier(viewName: name))
     }
     
     /// Apply an exact accessibility identifier without hierarchy modification
