@@ -121,21 +121,17 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             .named("TestButton")
             .automaticAccessibilityIdentifiers()  // ← Local enable
         
-        // Try to inspect for accessibility identifier
-        do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            let accessibilityID = try button.accessibilityIdentifier()
-            
-            // Should have an ID when local enable is applied (even with global disabled)
-            XCTAssertFalse(accessibilityID.isEmpty, "Accessibility functions should generate ID when local enable modifier is applied")
-            XCTAssertTrue(accessibilityID.contains("SixLayer"), "ID should contain automatically detected namespace")
-            
-            print("✅ Accessibility functions correctly respect local enable modifier: '\(accessibilityID)'")
-            
-        } catch {
-            XCTFail("Failed to inspect accessibility function with local enable: \(error)")
-        }
+        // Test that the view has an accessibility identifier using the same method as working tests
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.main.element.*", 
+            componentName: "AccessibilityFunctionsRespectLocalEnableModifier"
+        )
+        
+        // Should have an ID when local enable is applied (even with global disabled)
+        XCTAssertTrue(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied")
+        
+        print("✅ Accessibility functions correctly respect local enable modifier")
     }
     
     // MARK: - Priority Tests
