@@ -281,17 +281,19 @@ public struct AccessibilityEnhancedView<Content: View>: View {
     }
     
     public var body: some View {
-        content()
-            .environmentObject(voiceOverManager)
-            .environmentObject(keyboardManager)
-            .environmentObject(highContrastManager)
-            .environmentObject(testingManager)
-            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
-            .onAppear {
-                if config.enableVoiceOver {
-                    voiceOverManager.announce("View loaded", priority: .normal)
+        AccessibilityHostingView {
+            content()
+                .environmentObject(voiceOverManager)
+                .environmentObject(keyboardManager)
+                .environmentObject(highContrastManager)
+                .environmentObject(testingManager)
+                .onAppear {
+                    if config.enableVoiceOver {
+                        voiceOverManager.announce("View loaded", priority: .normal)
+                    }
                 }
-            }
+                .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
+        }
     }
 }
 
@@ -312,7 +314,7 @@ public struct VoiceOverEnabledView<Content: View>: View {
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Enhanced accessibility view")
             .accessibilityHint("This view has enhanced VoiceOver support")
-            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
+            .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
     }
 }
 
@@ -340,13 +342,12 @@ public struct KeyboardNavigableView<Content: View>: View {
                         keyboardManager.moveFocus(direction: .previous)
                         return .handled
                     }
-                    .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
             } else {
                 content()
                     .environmentObject(keyboardManager)
-                    .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
             }
         }
+        .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
     }
 }
 
@@ -365,9 +366,85 @@ public struct HighContrastEnabledView<Content: View>: View {
         content()
             .environmentObject(highContrastManager)
             .preferredColorScheme(highContrastManager.isHighContrastEnabled ? .dark : nil)
-            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
+            .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
     }
 }
+
+// MARK: - Accessibility Hosting View
+
+/// Custom hosting view that properly transfers SwiftUI accessibility identifiers to platform views
+public struct AccessibilityHostingView<Content: View>: View {
+    let content: () -> Content
+    
+    public init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
+    
+    public var body: some View {
+        #if os(macOS)
+        AccessibilityHostingControllerWrapper {
+            content()
+        }
+        #else
+        content()
+        #endif
+    }
+}
+
+#if os(macOS)
+import AppKit
+
+/// macOS-specific wrapper that ensures accessibility identifiers transfer properly
+struct AccessibilityHostingControllerWrapper<Content: View>: NSViewControllerRepresentable {
+    let content: () -> Content
+    
+    func makeNSViewController(context: Context) -> NSViewController {
+        let hostingController = NSHostingController(rootView: content())
+        return hostingController
+    }
+    
+    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
+        guard let hostingController = nsViewController as? NSHostingController<Content> else { return }
+        
+        // Update the root view
+        hostingController.rootView = content()
+        
+        // Force accessibility identifier transfer immediately
+        transferAccessibilityIdentifier(to: nsViewController.view)
+    }
+    
+    private func transferAccessibilityIdentifier(to view: NSView) {
+        // Get the generated accessibility identifier from the automatic system
+        let config = AccessibilityIdentifierConfig.shared
+        if config.enableAutoIDs {
+            // Use the configured namespace (respect user settings)
+            let namespace = config.namespace.isEmpty ? "SixLayer" : config.namespace
+            
+            // Generate the same identifier that the automatic system would generate
+            let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+            let screenContext = config.currentScreenContext ?? "main"
+            let role = "element"
+            let objectID = "accessibility-enhanced-\(Int.random(in: 1000...9999))"
+            
+            let generatedID = "\(namespace).\(screenContext).\(role).\(objectID)"
+            view.setAccessibilityIdentifier(generatedID)
+            
+            // Also try to find and update any NSHostingView subviews
+            findAndUpdateHostingViews(in: view, identifier: generatedID)
+        }
+    }
+    
+    private func findAndUpdateHostingViews(in view: NSView, identifier: String) {
+        // Recursively search for NSHostingView instances and apply the identifier
+        for subview in view.subviews {
+            if subview is NSHostingView<Content> {
+                subview.setAccessibilityIdentifier(identifier)
+            }
+            findAndUpdateHostingViews(in: subview, identifier: identifier)
+        }
+    }
+}
+#endif
 
 // MARK: - Accessibility Testing View
 

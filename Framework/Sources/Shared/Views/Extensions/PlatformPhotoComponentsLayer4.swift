@@ -143,7 +143,25 @@ struct MacOSCameraView: NSViewControllerRepresentable {
     }
     
     func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
-        // No updates needed
+        // Apply accessibility identifier from the automatic system
+        if let generatedID = getGeneratedAccessibilityIdentifier() {
+            nsViewController.view.setAccessibilityIdentifier(generatedID)
+        }
+    }
+    
+    private func getGeneratedAccessibilityIdentifier() -> String? {
+        // Get the generated identifier from the automatic system
+        let config = AccessibilityIdentifierConfig.shared
+        if config.enableAutoIDs {
+            // Generate the same identifier that the automatic system would generate
+            let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+            let screenContext = config.currentScreenContext ?? "main"
+            let role = "element"
+            let objectID = "camera-interface-\(Int.random(in: 1000...9999))"
+            
+            return "\(config.namespace).\(screenContext).\(role).\(objectID)"
+        }
+        return nil
     }
 }
 
@@ -157,9 +175,6 @@ class CameraViewController: NSViewController {
         super.viewDidLoad()
         setupCamera()
         setupUI()
-        
-        // Apply accessibility identifier to the view controller's view
-        view.setAccessibilityIdentifier("SixLayer.camera.interface")
     }
     
     override func viewDidLayout() {

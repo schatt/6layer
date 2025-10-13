@@ -1,6 +1,52 @@
 import Foundation
 import SwiftUI
 
+// MARK: - App Namespace Detection
+
+/// Automatically detects the app namespace from Bundle.main
+/// - Returns: App name for real apps, "SixLayer" for tests, "app" as fallback
+private func detectAppNamespace() -> String {
+    // Check if we're running in a test environment
+    // Multiple ways to detect test environment
+    let isTestEnvironment = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil ||
+                           ProcessInfo.processInfo.environment["XCTestBundlePath"] != nil ||
+                           Bundle.main.bundleIdentifier?.contains("xctest") == true ||
+                           Bundle.main.bundleIdentifier?.contains("test") == true
+    
+    if isTestEnvironment {
+        return "SixLayer" // Use framework name for tests
+    }
+    
+    // Try to get the app name from Bundle.main
+    if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String,
+       !appName.isEmpty {
+        // Clean up the app name for use as namespace
+        return cleanNamespace(appName)
+    }
+    
+    // Fallback to bundle identifier if CFBundleName is not available
+    if let bundleId = Bundle.main.bundleIdentifier {
+        // Extract the last component (app name) from bundle identifier
+        let components = bundleId.components(separatedBy: ".")
+        if let lastComponent = components.last, !lastComponent.isEmpty {
+            return cleanNamespace(lastComponent)
+        }
+    }
+    
+    // Final fallback
+    return "app"
+}
+
+/// Cleans app name for use as namespace (removes spaces, special chars, etc.)
+private func cleanNamespace(_ name: String) -> String {
+    return name
+        .replacingOccurrences(of: " ", with: "")
+        .replacingOccurrences(of: "-", with: "")
+        .replacingOccurrences(of: "_", with: "")
+        .replacingOccurrences(of: ".", with: "")
+        .lowercased()
+}
+
 // MARK: - Enhanced Debug Entry
 
 /// Enhanced debug entry with view hierarchy and screen context for UI testing
@@ -38,7 +84,7 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     @Published public var enableAutoIDs: Bool = true
     
     /// Global namespace for generated identifiers
-    @Published public var namespace: String = "app"
+    @Published public var namespace: String = detectAppNamespace()
     
     /// Generation mode for identifiers
     @Published public var mode: AccessibilityIdentifierMode = .automatic
@@ -85,7 +131,7 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Reset configuration to defaults
     public func resetToDefaults() {
         enableAutoIDs = true
-        namespace = "app"
+        namespace = detectAppNamespace()
         mode = .automatic
         enableCollisionDetection = true
         enableDebugLogging = false
@@ -579,19 +625,26 @@ public struct DisableAutomaticAccessibilityIdentifierModifier: ViewModifier {
 @MainActor
 public struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
     
-    @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
+    @Environment(\.disableAutomaticAccessibilityIdentifiers) private var environmentDisableAutoIDs
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutoIDs
     @Environment(\.automaticAccessibilityIdentifiersEnabled) private var autoIDsEnabled
     
     // Flag to indicate this modifier was applied directly (not through environment)
     let isDirectApplication: Bool
     
-    public init(isDirectApplication: Bool = false) {
+    // Optional override for disable flag (passed from parent modifiers)
+    let disableAutoIDsOverride: Bool?
+    
+    public init(isDirectApplication: Bool = false, disableAutoIDs: Bool? = nil) {
         self.isDirectApplication = isDirectApplication
+        self.disableAutoIDsOverride = disableAutoIDs
     }
     
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
+        
+        // Use override if provided, otherwise use environment
+        let disableAutoIDs = disableAutoIDsOverride ?? environmentDisableAutoIDs
         
         // Priority order: Local disable > Direct application > Local enable > Global config
         let shouldApplyAutoIDs: Bool
@@ -753,17 +806,23 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
     let viewName: String
     
     @Environment(\.automaticAccessibilityIdentifiersEnabled) private var autoIDsEnabled
+    @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
     
     public func body(content: Content) -> some View {
         // Push hierarchy immediately (synchronously) so it's available for ID generation
         AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
         
+        // DEBUG: Check environment variable
+        if AccessibilityIdentifierConfig.shared.enableDebugLogging {
+            print("🔍 ViewHierarchyTrackingModifier DEBUG: disableAutoIDs = \(disableAutoIDs)")
+        }
+        
         return content
             .onDisappear {
                 AccessibilityIdentifierConfig.shared.popViewHierarchy()
             }
-            .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
+            .environment(\.globalAutomaticAccessibilityIdentifiers, !disableAutoIDs) // Respect disable flag
+            .modifier(AccessibilityIdentifierAssignmentModifier(disableAutoIDs: disableAutoIDs)) // Pass disable flag directly
     }
 }
 
@@ -771,13 +830,20 @@ public struct ViewHierarchyTrackingModifier: ViewModifier {
 public struct ScreenContextModifier: ViewModifier {
     let screenName: String
     
+    @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
+    
     public func body(content: Content) -> some View {
         // Set screen context immediately (synchronously) so it's available for ID generation
         AccessibilityIdentifierConfig.shared.setScreenContext(screenName)
         
+        // DEBUG: Check environment variable
+        if AccessibilityIdentifierConfig.shared.enableDebugLogging {
+            print("🔍 ScreenContextModifier DEBUG: disableAutoIDs = \(disableAutoIDs)")
+        }
+        
         return content
-            .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
+            .environment(\.globalAutomaticAccessibilityIdentifiers, !disableAutoIDs) // Respect disable flag
+            .modifier(AccessibilityIdentifierAssignmentModifier(disableAutoIDs: disableAutoIDs)) // Pass disable flag directly
     }
 }
 
@@ -785,13 +851,15 @@ public struct ScreenContextModifier: ViewModifier {
 public struct NavigationStateModifier: ViewModifier {
     let navigationState: String
     
+    @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
+    
     public func body(content: Content) -> some View {
         content
             .onAppear {
                 AccessibilityIdentifierConfig.shared.setNavigationState(navigationState)
             }
-            .environment(\.globalAutomaticAccessibilityIdentifiers, true) // Enable global auto IDs for breadcrumb system
-            .environment(\.automaticAccessibilityIdentifiersEnabled, true) // Enable for all child views
+            .environment(\.globalAutomaticAccessibilityIdentifiers, !disableAutoIDs) // Respect disable flag
+            .environment(\.automaticAccessibilityIdentifiersEnabled, !disableAutoIDs) // Respect disable flag
             .modifier(AccessibilityIdentifierAssignmentModifier()) // Apply to THIS view only
     }
 }

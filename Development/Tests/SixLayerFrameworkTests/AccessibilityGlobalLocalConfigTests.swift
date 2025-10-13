@@ -12,7 +12,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
-        config.namespace = "TestApp"
+        // namespace is automatically detected as "SixLayer" for tests
         config.mode = .automatic
         config.enableDebugLogging = false
     }
@@ -72,7 +72,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             
             // Should have an ID when global config is enabled
             XCTAssertFalse(accessibilityID.isEmpty, "Accessibility functions should generate ID when global config is enabled")
-            XCTAssertTrue(accessibilityID.contains("TestApp"), "ID should contain namespace")
+            XCTAssertTrue(accessibilityID.contains("SixLayer"), "ID should contain automatically detected namespace")
             XCTAssertTrue(accessibilityID.contains("testscreen"), "ID should contain screen context")
             XCTAssertTrue(accessibilityID.contains("testbutton"), "ID should contain view name")
             
@@ -135,7 +135,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             
             // Should have an ID when local enable is applied (even with global disabled)
             XCTAssertFalse(accessibilityID.isEmpty, "Accessibility functions should generate ID when local enable modifier is applied")
-            XCTAssertTrue(accessibilityID.contains("TestApp"), "ID should contain namespace")
+            XCTAssertTrue(accessibilityID.contains("SixLayer"), "ID should contain automatically detected namespace")
             
             print("✅ Accessibility functions correctly respect local enable modifier: '\(accessibilityID)'")
             

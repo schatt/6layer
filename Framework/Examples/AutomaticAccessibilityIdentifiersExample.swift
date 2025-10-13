@@ -8,19 +8,18 @@ import SixLayerFramework
  * accessibility identifiers for views, making UI testing easier without
  * requiring manual identifier assignment.
  * 
- * IMPORTANT: To use automatic accessibility identifiers, you must:
- * 1. Configure AccessibilityIdentifierConfig.shared
- * 2. Apply .enableGlobalAutomaticAccessibilityIdentifiers() to your app's root view
+ * IMPORTANT: The framework now automatically detects your app's namespace!
+ * No manual configuration required in most cases.
  * 
- * Example App setup:
+ * Example App setup (minimal):
  * ```swift
  * @main
  * struct MyApp: App {
  *     init() {
- *         // Configure automatic accessibility identifiers
+ *         // Optional: Only configure if you want to override defaults
  *         let config = AccessibilityIdentifierConfig.shared
  *         config.enableAutoIDs = true
- *         config.namespace = "MyApp"
+ *         // config.namespace = "MyApp" // Now optional - auto-detected!
  *         config.mode = .automatic
  *     }
  *     
@@ -32,6 +31,12 @@ import SixLayerFramework
  *     }
  * }
  * ```
+ * 
+ * Automatic Namespace Detection:
+ * - Real Apps: Detects app name from Bundle.main (e.g., "MyApp")
+ * - Test Environment: Uses "SixLayer" for framework tests
+ * - Fallback: Uses "app" if detection fails
+ * - Override: You can still set custom namespace if needed
  */
 
 struct AutomaticAccessibilityIdentifiersExample: View {
@@ -53,7 +58,8 @@ struct AutomaticAccessibilityIdentifiersExample: View {
                         .font(.headline)
                     
                     Text("These buttons will automatically get identifiers like:")
-                    Text("• app.ui.element.view")
+                    Text("• MyApp.main.element.save-1234")
+                    Text("• MyApp.main.element.cancel-5678")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -70,9 +76,9 @@ struct AutomaticAccessibilityIdentifiersExample: View {
                         .font(.headline)
                     
                     Text("Layer 1 functions automatically include accessibility identifiers:")
-                    Text("• app.list.item.user-1")
-                    Text("• app.list.item.user-2")
-                    Text("• app.list.item.user-3")
+                    Text("• MyApp.list.item.user-1")
+                    Text("• MyApp.list.item.user-2")
+                    Text("• MyApp.list.item.user-3")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -145,7 +151,7 @@ struct AutomaticAccessibilityIdentifiersExample: View {
 struct AccessibilityIdentifierConfigurationExample: View {
     
     @State private var enableAutoIDs = true
-    @State private var namespace = "myapp"
+    @State private var namespace = "" // Empty means use auto-detection
     @State private var mode: AccessibilityIdentifierMode = .automatic
     
     var body: some View {
@@ -163,12 +169,17 @@ struct AccessibilityIdentifierConfigurationExample: View {
                     }
                 
                 VStack(alignment: .leading) {
-                    Text("Namespace: \(namespace)")
-                    TextField("Namespace", text: $namespace)
+                    Text("Namespace: \(namespace.isEmpty ? "Auto-detected" : namespace)")
+                    TextField("Namespace (leave empty for auto-detection)", text: $namespace)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .onChange(of: namespace) { newValue in
                             Task { @MainActor in
-                                AccessibilityIdentifierConfig.shared.namespace = newValue
+                                if newValue.isEmpty {
+                                    // Reset to auto-detection
+                                    AccessibilityIdentifierConfig.shared.resetToDefaults()
+                                } else {
+                                    AccessibilityIdentifierConfig.shared.namespace = newValue
+                                }
                             }
                         }
                 }
@@ -194,7 +205,7 @@ struct AccessibilityIdentifierConfigurationExample: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text("• Enable Auto IDs: \(enableAutoIDs ? "Yes" : "No")")
-                Text("• Namespace: \(namespace)")
+                Text("• Namespace: \(namespace.isEmpty ? "Auto-detected" : namespace)")
                 Text("• Mode: \(mode.rawValue)")
                 Text("• Description: \(mode.description)")
             }

@@ -40,7 +40,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformcamerainterface_l4", 
+            expectedPattern: "SixLayer.*element.*camera-interface", 
             platform: .iOS,
             componentName: "platformCameraInterface_L4"
         )
@@ -55,7 +55,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformcamerainterface_l4", 
+            expectedPattern: "SixLayer.*element.*camera-interface", 
             platform: .macOS,
             componentName: "platformCameraInterface_L4"
         )
