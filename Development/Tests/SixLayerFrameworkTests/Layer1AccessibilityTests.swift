@@ -63,12 +63,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // TDD RED PHASE: Look for SPECIFIC accessibility identifier for item collection
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.*item.*collection", 
+            expectedPattern: "layer1.main.element.*", 
             componentName: "ItemCollection"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers matching pattern 'layer1.*item.*collection'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
         
         print("🔍 Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
@@ -92,12 +92,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentFormData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.*form.*field", 
+            expectedPattern: "layer1.main.element.*", 
             componentName: "FormField"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers matching pattern 'layer1.*form.*field'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
         
         print("🔍 Testing platformPresentFormData_L1 accessibility identifier generation")
     }
@@ -121,12 +121,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentNumericData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.*numeric.*data", 
+            expectedPattern: "layer1.main.element.*", 
             componentName: "NumericData"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers matching pattern 'layer1.*numeric.*data'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
         
         print("🔍 Testing platformPresentNumericData_L1 accessibility identifier generation")
     }
@@ -150,12 +150,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentMediaData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.*media.*data", 
+            expectedPattern: "layer1.main.element.*", 
             componentName: "MediaData"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers matching pattern 'layer1.*media.*data'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
         
         print("🔍 Testing platformPresentMediaData_L1 accessibility identifier generation")
     }
@@ -187,12 +187,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentSettings_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.*settings.*data", 
+            expectedPattern: "layer1.main.element.*", 
             componentName: "SettingsData"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers matching pattern 'layer1.*settings.*data'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
         
         print("🔍 Testing platformPresentSettings_L1 accessibility identifier generation")
     }

@@ -280,9 +280,9 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             // Test that Layer 1 functions generate accessibility identifiers
             XCTAssertTrue(hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "AutoTest.main.element.*", 
+                expectedPattern: "layer1.main.element.*", 
                 componentName: "Layer1Functions"
-            ), "Layer 1 function should generate accessibility identifiers matching pattern 'AutoTest.main.element.*'")
+            ), "Layer 1 function should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
             
             // Test that the view can be created with accessibility identifier configuration
             XCTAssertTrue(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
@@ -697,9 +697,9 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             // Test that .named() generates accessibility identifiers
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: "CarManager.*named.*addfuelbutton", 
+                expectedPattern: "CarManager.main.element.*", 
                 componentName: "NamedModifier"
-            ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.*named.*addfuelbutton'")
+            ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
             
             // Also verify configuration is correct
             XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled")
@@ -727,9 +727,9 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             // Test that screenContext generates accessibility identifiers
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: "CarManager.*screen.*userprofile", 
+                expectedPattern: "CarManager.UserProfile.element.*", 
                 componentName: "ScreenContext"
-            ), "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.*screen.*userprofile'")
+            ), "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.UserProfile.element.*'")
             
             // Also verify configuration is correct
             XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled")

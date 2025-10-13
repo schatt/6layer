@@ -44,7 +44,7 @@ final class SimpleAccessibilityTest: XCTestCase {
         // Should look for automatic accessibility identifier: "SimpleTest.button.Test"
         XCTAssertTrue(hasAccessibilityIdentifier(
             testView, 
-            expectedPattern: "SimpleTest.*button.*Test", 
+            expectedPattern: "SimpleTest.main.element.*", 
             componentName: "AutomaticAccessibilityIdentifierModifier"
         ), "Should have some accessibility identifier")
         

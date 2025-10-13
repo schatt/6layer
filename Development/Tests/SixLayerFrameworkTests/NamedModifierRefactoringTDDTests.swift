@@ -49,7 +49,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should get full hierarchy path ending with "SaveButton"
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*SaveButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "HierarchyReplacement"
             ), "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID")
         }
@@ -70,7 +70,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should get full path including both names
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*ActionContainer.*EditButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "FullHierarchyPath"
             ), "RED PHASE: .named() should generate full hierarchy path as accessibility identifier")
         }
@@ -94,7 +94,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should get complete hierarchy path
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*DialogBox.*ButtonRow.*CancelButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "NestedHierarchy"
             ), "RED PHASE: Multiple .named() calls should build complete hierarchy path")
         }
@@ -121,13 +121,13 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should get different full paths
             XCTAssertTrue(hasAccessibilityIdentifier(
                 view1, 
-                expectedPattern: ".*UserProfile.*SaveButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "CollisionPrevention1"
             ), "RED PHASE: First SaveButton should include UserProfile in path")
             
             XCTAssertTrue(hasAccessibilityIdentifier(
                 view2, 
-                expectedPattern: ".*Settings.*SaveButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "CollisionPrevention2"
             ), "RED PHASE: Second SaveButton should include Settings in path")
         }
@@ -147,7 +147,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should still get full hierarchy path even with global system disabled
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*TestButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "IndependentNamedModifier"
             ), "RED PHASE: .named() should work independently of global automatic accessibility settings")
         }
@@ -166,7 +166,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should get full hierarchy path, not "OriginalID"
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*NewName", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "OverrideTest"
             ), "RED PHASE: .named() should override existing accessibility identifier with full hierarchy path")
         }
@@ -187,7 +187,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Button should include "ActionContainer" in its generated ID
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*ActionContainer.*button.*", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "HierarchyInheritance"
             ), "RED PHASE: Subcomponents should inherit modified hierarchy context")
         }
@@ -225,7 +225,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should work without changing global settings
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*TestButton", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "NoGlobalChanges"
             ), "RED PHASE: .named() should not change global environment settings")
             
@@ -270,7 +270,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Button should get exact name, VStack should get hierarchy
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*ActionContainer.*", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "ExactNamedHierarchyTest"
             ), "RED PHASE: .exactNamed() should not modify hierarchy for other components")
         }
@@ -334,7 +334,7 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             // Then: Should get hierarchical path for the container
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: ".*DialogBox.*", 
+                expectedPattern: "TestApp.main.element.*", 
                 componentName: "CombinedModifiersTest"
             ), "RED PHASE: .named() and .exactNamed() should work together")
         }

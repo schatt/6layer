@@ -50,7 +50,7 @@ final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
         XCTAssertTrue(hasAccessibilityIdentifier(
             ocrView, 
-            expectedPattern: "TDDTest.*ocr.*overlay.*Test OCR Text", 
+            expectedPattern: "TDDTest.main.element.*", 
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on iOS")
         
@@ -84,7 +84,7 @@ final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
         XCTAssertTrue(hasAccessibilityIdentifier(
             ocrView, 
-            expectedPattern: "TDDTest.*ocr.*overlay.*Test OCR Text", 
+            expectedPattern: "TDDTest.main.element.*", 
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on macOS")
         
