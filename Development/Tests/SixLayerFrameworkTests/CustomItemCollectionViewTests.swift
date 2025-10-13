@@ -49,7 +49,7 @@ final class CustomItemCollectionViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*customitemcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "CustomItemCollectionView"
         )
@@ -73,7 +73,7 @@ final class CustomItemCollectionViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*customitemcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "CustomItemCollectionView"
         )

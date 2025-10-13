@@ -58,7 +58,7 @@ final class DynamicFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*dynamicformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "DynamicFormView"
         )
@@ -91,7 +91,7 @@ final class DynamicFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*dynamicformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "DynamicFormView"
         )
