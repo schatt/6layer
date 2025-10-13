@@ -874,6 +874,13 @@ public extension View {
         modifier(ViewHierarchyTrackingModifier(viewName: name))
     }
     
+    /// Apply an exact accessibility identifier without hierarchy modification
+    /// - Parameter name: The exact accessibility identifier to apply
+    /// - Returns: A view with the exact accessibility identifier
+    func exactNamed(_ name: String) -> some View {
+        self.accessibilityIdentifier(name)
+    }
+    
     /// Track this view in the hierarchy for breadcrumb debugging
     /// - Parameter name: The name to use for this view in the hierarchy
     /// - Returns: A view that tracks its presence in the view hierarchy
