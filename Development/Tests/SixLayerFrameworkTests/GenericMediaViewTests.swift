@@ -47,7 +47,7 @@ final class GenericMediaViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericmediaview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericMediaView"
         )
@@ -69,7 +69,7 @@ final class GenericMediaViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericmediaview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericMediaView"
         )

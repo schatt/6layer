@@ -44,7 +44,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photopicker", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPhotoPicker_L4"
             )
@@ -65,7 +65,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photopicker", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPhotoPicker_L4"
             )
@@ -89,7 +89,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photodisplay", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPhotoDisplay_L4"
             )
@@ -111,7 +111,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photodisplay", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPhotoDisplay_L4"
             )
@@ -137,7 +137,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photoeditor", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPhotoEditor_L4"
             )
@@ -161,7 +161,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photoeditor", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPhotoEditor_L4"
             )

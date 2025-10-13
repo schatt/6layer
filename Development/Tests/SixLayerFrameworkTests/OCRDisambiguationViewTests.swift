@@ -57,7 +57,7 @@ final class OCRDisambiguationViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*ocrdisambiguationview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "OCRDisambiguationView"
         )
@@ -89,7 +89,7 @@ final class OCRDisambiguationViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*ocrdisambiguationview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "OCRDisambiguationView"
         )

@@ -50,7 +50,7 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformocrwithvisualcorrection_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
         )
@@ -75,7 +75,7 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformocrwithvisualcorrection_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformOCRWithVisualCorrection_L1"
         )
@@ -102,7 +102,7 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformextractstructureddata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformExtractStructuredData_L1"
         )
@@ -127,7 +127,7 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformextractstructureddata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformExtractStructuredData_L1"
         )

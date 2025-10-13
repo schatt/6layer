@@ -52,7 +52,7 @@ final class GenericFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericFormView"
         )
@@ -79,7 +79,7 @@ final class GenericFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericFormView"
         )

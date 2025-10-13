@@ -51,7 +51,7 @@ final class FormInsightsDashboardTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*forminsightsdashboard", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "FormInsightsDashboard"
         )
@@ -77,7 +77,7 @@ final class FormInsightsDashboardTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*forminsightsdashboard", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "FormInsightsDashboard"
         )

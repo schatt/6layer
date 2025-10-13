@@ -82,7 +82,7 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*ocrimplementation", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformOCRImplementation_L4"
             )
@@ -141,7 +141,7 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*ocrimplementation", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformOCRImplementation_L4"
             )

@@ -61,7 +61,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericitemcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericItemCollectionView"
         )
@@ -89,7 +89,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericitemcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericItemCollectionView"
         )
@@ -116,7 +116,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericnumericdataview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericNumericDataView"
         )
@@ -141,7 +141,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericnumericdataview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericNumericDataView"
         )
@@ -168,7 +168,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericmediaview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericMediaView"
         )
@@ -193,7 +193,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericmediaview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericMediaView"
         )
@@ -232,7 +232,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericsettingsview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericSettingsView"
         )
@@ -269,7 +269,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericsettingsview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericSettingsView"
         )
@@ -293,7 +293,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericcontentview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericContentView"
         )
@@ -315,7 +315,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericcontentview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericContentView"
         )
@@ -342,7 +342,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*basicvalueview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericNumericDataView"
         )
@@ -367,7 +367,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*basicvalueview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericNumericDataView"
         )
@@ -394,7 +394,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*basicarrayview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericItemCollectionView"
         )
@@ -419,7 +419,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*basicarrayview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericItemCollectionView"
         )

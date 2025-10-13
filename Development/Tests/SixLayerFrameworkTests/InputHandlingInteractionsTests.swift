@@ -720,7 +720,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
         // When & Then
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platforminteractionbutton", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "PlatformInteractionButton"
         )
@@ -739,7 +739,7 @@ final class InputHandlingInteractionsTests: XCTestCase {
         // When & Then
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platforminteractionbutton", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "PlatformInteractionButton"
         )

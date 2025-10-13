@@ -68,7 +68,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*modalform", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPresentModalForm_L1"
             )
@@ -108,7 +108,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*modalform", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPresentModalForm_L1"
             )

@@ -40,7 +40,7 @@ final class ResponsiveLayoutTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*responsivelayout", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ResponsiveLayout"
         )
@@ -55,7 +55,7 @@ final class ResponsiveLayoutTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*responsivelayout", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ResponsiveLayout"
         )

@@ -76,7 +76,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*hierarchicaldata", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPresentHierarchicalData_L1"
             )
@@ -115,7 +115,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*hierarchicaldata", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPresentHierarchicalData_L1"
             )
@@ -153,7 +153,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*temporaldata", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPresentTemporalData_L1"
             )
@@ -189,7 +189,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*temporaldata", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPresentTemporalData_L1"
             )

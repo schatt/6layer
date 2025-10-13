@@ -41,7 +41,7 @@ final class GenericNumericDataViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericnumericdataview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GenericNumericDataView"
         )
@@ -57,7 +57,7 @@ final class GenericNumericDataViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*genericnumericdataview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GenericNumericDataView"
         )

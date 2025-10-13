@@ -54,7 +54,7 @@ final class OCRViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*ocrview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "OCRView"
         )
@@ -83,7 +83,7 @@ final class OCRViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*ocrview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "OCRView"
         )

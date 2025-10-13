@@ -71,7 +71,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*expandablecardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ExpandableCardComponent"
         )
@@ -117,7 +117,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*expandablecardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ExpandableCardComponent"
         )
@@ -146,7 +146,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*coverflowcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "CoverFlowCollectionView"
         )
@@ -173,7 +173,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*coverflowcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "CoverFlowCollectionView"
         )
@@ -195,7 +195,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*coverflowcardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "CoverFlowCardComponent"
         )
@@ -215,7 +215,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*coverflowcardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "CoverFlowCardComponent"
         )
@@ -244,7 +244,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*gridcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "GridCollectionView"
         )
@@ -271,7 +271,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*gridcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "GridCollectionView"
         )
@@ -300,7 +300,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*listcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ListCollectionView"
         )
@@ -327,7 +327,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*listcollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ListCollectionView"
         )
@@ -356,7 +356,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*masonrycollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "MasonryCollectionView"
         )
@@ -383,7 +383,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*masonrycollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "MasonryCollectionView"
         )
@@ -412,7 +412,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*adaptivecollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "AdaptiveCollectionView"
         )
@@ -439,7 +439,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*adaptivecollectionview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "AdaptiveCollectionView"
         )
@@ -472,7 +472,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*simplecardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "SimpleCardComponent"
         )
@@ -503,7 +503,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*simplecardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "SimpleCardComponent"
         )
@@ -525,7 +525,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*listcardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ListCardComponent"
         )
@@ -545,7 +545,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*listcardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ListCardComponent"
         )
@@ -562,7 +562,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*masonrycardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "MasonryCardComponent"
         )
@@ -577,7 +577,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*masonrycardcomponent", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "MasonryCardComponent"
         )

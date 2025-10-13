@@ -40,7 +40,7 @@ final class ResponsiveContainerTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*responsivecontainer", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ResponsiveContainer"
         )
@@ -55,7 +55,7 @@ final class ResponsiveContainerTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*responsivecontainer", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ResponsiveContainer"
         )

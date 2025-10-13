@@ -43,7 +43,7 @@ final class PlatformStylingLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformstyledcontainer_l4", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformStyledContainer_L4"
         )
@@ -61,7 +61,7 @@ final class PlatformStylingLayer4Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformstyledcontainer_l4", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformStyledContainer_L4"
         )

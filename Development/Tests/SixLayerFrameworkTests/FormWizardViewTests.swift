@@ -48,7 +48,7 @@ final class FormWizardViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*formwizardview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "FormWizardView"
         )
@@ -71,7 +71,7 @@ final class FormWizardViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*formwizardview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "FormWizardView"
         )

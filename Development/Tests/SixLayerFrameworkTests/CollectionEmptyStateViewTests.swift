@@ -45,7 +45,7 @@ final class CollectionEmptyStateViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*collectionemptystateview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "CollectionEmptyStateView"
         )
@@ -65,7 +65,7 @@ final class CollectionEmptyStateViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*collectionemptystateview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "CollectionEmptyStateView"
         )

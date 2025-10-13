@@ -43,7 +43,7 @@ final class IntelligentFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*intelligentformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "IntelligentFormView"
         )
@@ -61,7 +61,7 @@ final class IntelligentFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*intelligentformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "IntelligentFormView"
         )

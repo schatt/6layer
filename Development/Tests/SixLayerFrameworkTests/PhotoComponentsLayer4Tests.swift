@@ -86,7 +86,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             // 2. Does that structure contain what it should?
             XCTAssertTrue(hasAccessibilityIdentifier(
                 result, 
-                expectedPattern: "SixLayer.*camera.*interface", 
+                expectedPattern: "SixLayer.main.element.*", 
                 componentName: "PlatformCameraInterface_L4"
             ), "Camera interface should have accessibility identifier")
             

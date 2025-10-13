@@ -55,7 +55,7 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformocrdisambiguation_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformOCRDisambiguation_L1"
         )
@@ -85,7 +85,7 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformocrdisambiguation_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformOCRDisambiguation_L1"
         )

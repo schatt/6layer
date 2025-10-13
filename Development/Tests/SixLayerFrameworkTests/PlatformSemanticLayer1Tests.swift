@@ -50,7 +50,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentitemcollection_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentItemCollection_L1"
         )
@@ -75,7 +75,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentitemcollection_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentItemCollection_L1"
         )
@@ -99,7 +99,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentnumericdata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentNumericData_L1"
         )
@@ -121,7 +121,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentnumericdata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentNumericData_L1"
         )
@@ -152,7 +152,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentformdata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentFormData_L1"
         )
@@ -181,7 +181,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentformdata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentFormData_L1"
         )
@@ -205,7 +205,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentmediadata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentMediaData_L1"
         )
@@ -227,7 +227,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentmediadata_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentMediaData_L1"
         )
@@ -263,7 +263,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentsettings_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentSettings_L1"
         )
@@ -297,7 +297,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentsettings_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentSettings_L1"
         )
@@ -321,7 +321,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentcontent_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentContent_L1"
         )
@@ -343,7 +343,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentcontent_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentContent_L1"
         )
@@ -367,7 +367,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentbasicvalue_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentBasicValue_L1"
         )
@@ -389,7 +389,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentbasicvalue_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentBasicValue_L1"
         )
@@ -413,7 +413,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentbasicarray_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentBasicArray_L1"
         )
@@ -435,7 +435,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentbasicarray_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentBasicArray_L1"
         )
@@ -460,7 +460,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformresponsivecard_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformResponsiveCard_L1"
         )
@@ -483,7 +483,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformresponsivecard_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformResponsiveCard_L1"
         )

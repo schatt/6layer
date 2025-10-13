@@ -46,7 +46,7 @@ final class ResponsiveCardsViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*responsivecardview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ResponsiveCardView"
         )
@@ -67,7 +67,7 @@ final class ResponsiveCardsViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*responsivecardview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ResponsiveCardView"
         )

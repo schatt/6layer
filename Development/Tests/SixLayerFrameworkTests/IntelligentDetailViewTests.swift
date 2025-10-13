@@ -40,7 +40,7 @@ final class IntelligentDetailViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*intelligentdetailview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "IntelligentDetailView"
         )
@@ -55,7 +55,7 @@ final class IntelligentDetailViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*intelligentdetailview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "IntelligentDetailView"
         )

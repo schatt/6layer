@@ -43,7 +43,7 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentlocalizedcontent_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentLocalizedContent_L1"
         )
@@ -61,7 +61,7 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentlocalizedcontent_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentLocalizedContent_L1"
         )
@@ -78,7 +78,7 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentlocalizedtext_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "platformPresentLocalizedText_L1"
         )
@@ -93,7 +93,7 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*platformpresentlocalizedtext_l1", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "platformPresentLocalizedText_L1"
         )

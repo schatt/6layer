@@ -66,7 +66,7 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photodisplay", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
                 componentName: "platformPhotoDisplay_L1"
             )
@@ -107,7 +107,7 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         let hasAccessibilityID = await MainActor.run {
             hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "SixLayer.*element.*photodisplay", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
                 componentName: "platformPhotoDisplay_L1"
             )

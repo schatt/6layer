@@ -60,7 +60,7 @@ final class ModalFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*modalformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "ModalFormView"
         )
@@ -95,7 +95,7 @@ final class ModalFormViewTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*modalformview", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "ModalFormView"
         )
