@@ -73,16 +73,6 @@ final class SafetyComponentAccessibilityTests: XCTestCase {
 
 // MARK: - Mock Safety Components (Placeholder implementations)
 
-struct VisionSafety: View {
-    var body: some View {
-        VStack {
-            Text("Vision Safety")
-            Button("Check Safety") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
 struct PlatformSafety: View {
     var body: some View {
         VStack {

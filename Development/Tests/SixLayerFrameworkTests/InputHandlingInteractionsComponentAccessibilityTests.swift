@@ -124,3 +124,5 @@ final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
         XCTAssertTrue(hasAccessibilityID, "DragDropManager should generate accessibility identifiers")
     }
 }
+
+

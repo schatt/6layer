@@ -576,7 +576,7 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
         let field = DynamicFormField(
             id: "enum-field",
             label: "Enum Field",
-            type: .enum,
+            type: .select,
             value: "",
             options: ["Option 1", "Option 2", "Option 3"]
         )

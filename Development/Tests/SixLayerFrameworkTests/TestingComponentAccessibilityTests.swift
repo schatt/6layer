@@ -125,25 +125,6 @@ struct PlatformTesting: View {
     }
 }
 
-struct PlatformSimulation: View {
-    var body: some View {
-        VStack {
-            Text("Platform Simulation")
-            Button("Simulate") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct PlatformBenchmarking: View {
-    var body: some View {
-        VStack {
-            Text("Platform Benchmarking")
-            Button("Benchmark") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
 
 struct PlatformAnalytics: View {
     var body: some View {

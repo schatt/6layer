@@ -135,6 +135,7 @@ public func platformPresentFormData_L1(
         extensibleHints: []
     )
     return platformPresentFormData_L1(fields: [field], hints: enhancedHints)
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting modal forms
@@ -167,6 +168,7 @@ public func platformPresentMediaData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericMediaView(media: media, hints: hints)
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Present a single media item

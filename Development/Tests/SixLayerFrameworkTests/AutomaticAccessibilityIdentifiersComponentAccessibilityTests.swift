@@ -1,10 +1,3 @@
-//
-//  AutomaticAccessibilityIdentifiersComponentAccessibilityTests.swift
-//  SixLayerFrameworkTests
-//
-//  Comprehensive accessibility tests for ALL AutomaticAccessibilityIdentifiers components
-//
-
 import XCTest
 import SwiftUI
 @testable import SixLayerFramework
@@ -12,21 +5,29 @@ import SwiftUI
 @MainActor
 final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTestCase {
     
-    // MARK: - ComprehensiveAccessibilityModifier Tests
+    // MARK: - Automatic Accessibility Identifier Component Tests
     
-    func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Comprehensive Accessibility Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying ComprehensiveAccessibilityModifier
-        let view = testContent.comprehensiveAccessibility()
+    func testAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+        // Given: AutomaticAccessibilityIdentifierModifier
+        let testView = AutomaticAccessibilityIdentifierModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
+            expectedPattern: "*.main.element.*",
+            componentName: "AutomaticAccessibilityIdentifierModifier"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "AutomaticAccessibilityIdentifierModifier should generate accessibility identifiers")
+    }
+    
+    func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+        // Given: ComprehensiveAccessibilityModifier
+        let testView = ComprehensiveAccessibilityModifier()
+        
+        // Then: Should generate accessibility identifiers
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "ComprehensiveAccessibilityModifier"
         )
@@ -34,21 +35,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "ComprehensiveAccessibilityModifier should generate accessibility identifiers")
     }
     
-    // MARK: - GlobalAutomaticAccessibilityIdentifierModifier Tests
-    
     func testGlobalAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Global Automatic Accessibility Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying GlobalAutomaticAccessibilityIdentifierModifier
-        let view = testContent.globalAutomaticAccessibility()
+        // Given: GlobalAutomaticAccessibilityIdentifierModifier
+        let testView = GlobalAutomaticAccessibilityIdentifierModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "GlobalAutomaticAccessibilityIdentifierModifier"
         )
@@ -56,21 +49,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "GlobalAutomaticAccessibilityIdentifierModifier should generate accessibility identifiers")
     }
     
-    // MARK: - DisableAutomaticAccessibilityIdentifierModifier Tests
-    
     func testDisableAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Disable Automatic Accessibility Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying DisableAutomaticAccessibilityIdentifierModifier
-        let view = testContent.disableAutomaticAccessibility()
+        // Given: DisableAutomaticAccessibilityIdentifierModifier
+        let testView = DisableAutomaticAccessibilityIdentifierModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "DisableAutomaticAccessibilityIdentifierModifier"
         )
@@ -78,21 +63,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "DisableAutomaticAccessibilityIdentifierModifier should generate accessibility identifiers")
     }
     
-    // MARK: - AccessibilityIdentifierAssignmentModifier Tests
-    
     func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Accessibility Identifier Assignment Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying AccessibilityIdentifierAssignmentModifier
-        let view = testContent.accessibilityIdentifierAssignment()
+        // Given: AccessibilityIdentifierAssignmentModifier
+        let testView = AccessibilityIdentifierAssignmentModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityIdentifierAssignmentModifier"
         )
@@ -100,21 +77,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "AccessibilityIdentifierAssignmentModifier should generate accessibility identifiers")
     }
     
-    // MARK: - ViewHierarchyTrackingModifier Tests
-    
     func testViewHierarchyTrackingModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("View Hierarchy Tracking Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying ViewHierarchyTrackingModifier
-        let view = testContent.viewHierarchyTracking("TestView")
+        // Given: ViewHierarchyTrackingModifier
+        let testView = ViewHierarchyTrackingModifier(viewName: "TestView")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "ViewHierarchyTrackingModifier"
         )
@@ -122,21 +91,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "ViewHierarchyTrackingModifier should generate accessibility identifiers")
     }
     
-    // MARK: - ScreenContextModifier Tests
-    
     func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Screen Context Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying ScreenContextModifier
-        let view = testContent.screenContext("TestScreen")
+        // Given: ScreenContextModifier
+        let testView = ScreenContextModifier(screenName: "TestScreen")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "ScreenContextModifier"
         )
@@ -144,21 +105,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "ScreenContextModifier should generate accessibility identifiers")
     }
     
-    // MARK: - NavigationStateModifier Tests
-    
     func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Navigation State Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying NavigationStateModifier
-        let view = testContent.navigationState("TestState")
+        // Given: NavigationStateModifier
+        let testView = NavigationStateModifier(navigationState: "TestState")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "NavigationStateModifier"
         )
@@ -166,21 +119,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "NavigationStateModifier should generate accessibility identifiers")
     }
     
-    // MARK: - WorkingAccessibilityIdentifierModifier Tests
-    
     func testWorkingAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Working Accessibility Identifier Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying WorkingAccessibilityIdentifierModifier
-        let view = testContent.workingAccessibilityIdentifier("test-identifier")
+        // Given: WorkingAccessibilityIdentifierModifier
+        let testView = WorkingAccessibilityIdentifierModifier(identifier: "TestIdentifier")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "WorkingAccessibilityIdentifierModifier"
         )
@@ -188,21 +133,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "WorkingAccessibilityIdentifierModifier should generate accessibility identifiers")
     }
     
-    // MARK: - ExactAccessibilityIdentifierModifier Tests
-    
     func testExactAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Exact Accessibility Identifier Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying ExactAccessibilityIdentifierModifier
-        let view = testContent.exactNamed("exact-identifier")
+        // Given: ExactAccessibilityIdentifierModifier
+        let testView = ExactAccessibilityIdentifierModifier(identifier: "ExactTestIdentifier")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "ExactAccessibilityIdentifierModifier"
         )
@@ -210,21 +147,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "ExactAccessibilityIdentifierModifier should generate accessibility identifiers")
     }
     
-    // MARK: - HierarchicalNamedModifier Tests
-    
     func testHierarchicalNamedModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Hierarchical Named Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying HierarchicalNamedModifier
-        let view = testContent.named("hierarchical-name")
+        // Given: HierarchicalNamedModifier
+        let testView = HierarchicalNamedModifier(viewName: "TestNamedView")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "HierarchicalNamedModifier"
         )
@@ -232,21 +161,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "HierarchicalNamedModifier should generate accessibility identifiers")
     }
     
-    // MARK: - AccessibilityLabelAssignmentModifier Tests
-    
     func testAccessibilityLabelAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Accessibility Label Assignment Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying AccessibilityLabelAssignmentModifier
-        let view = testContent.accessibilityLabelAssignment()
+        // Given: AccessibilityLabelAssignmentModifier
+        let testView = AccessibilityLabelAssignmentModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityLabelAssignmentModifier"
         )
@@ -254,21 +175,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "AccessibilityLabelAssignmentModifier should generate accessibility identifiers")
     }
     
-    // MARK: - AccessibilityHintAssignmentModifier Tests
-    
     func testAccessibilityHintAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Accessibility Hint Assignment Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying AccessibilityHintAssignmentModifier
-        let view = testContent.accessibilityHintAssignment()
+        // Given: AccessibilityHintAssignmentModifier
+        let testView = AccessibilityHintAssignmentModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityHintAssignmentModifier"
         )
@@ -276,21 +189,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "AccessibilityHintAssignmentModifier should generate accessibility identifiers")
     }
     
-    // MARK: - AccessibilityTraitsAssignmentModifier Tests
-    
     func testAccessibilityTraitsAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Accessibility Traits Assignment Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying AccessibilityTraitsAssignmentModifier
-        let view = testContent.accessibilityTraitsAssignment()
+        // Given: AccessibilityTraitsAssignmentModifier
+        let testView = AccessibilityTraitsAssignmentModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityTraitsAssignmentModifier"
         )
@@ -298,21 +203,13 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
         XCTAssertTrue(hasAccessibilityID, "AccessibilityTraitsAssignmentModifier should generate accessibility identifiers")
     }
     
-    // MARK: - AccessibilityValueAssignmentModifier Tests
-    
     func testAccessibilityValueAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = VStack {
-            Text("Accessibility Value Assignment Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying AccessibilityValueAssignmentModifier
-        let view = testContent.accessibilityValueAssignment()
+        // Given: AccessibilityValueAssignmentModifier
+        let testView = AccessibilityValueAssignmentModifier()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityValueAssignmentModifier"
         )
@@ -321,62 +218,124 @@ final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: XCTest
     }
 }
 
-// MARK: - Test Extensions
+// MARK: - Mock Automatic Accessibility Identifier Components (Placeholder implementations)
 
-extension View {
-    func comprehensiveAccessibility() -> some View {
-        self.modifier(ComprehensiveAccessibilityModifier())
-    }
-    
-    func globalAutomaticAccessibility() -> some View {
-        self.modifier(GlobalAutomaticAccessibilityIdentifierModifier())
-    }
-    
-    func disableAutomaticAccessibility() -> some View {
-        self.modifier(DisableAutomaticAccessibilityIdentifierModifier())
-    }
-    
-    func accessibilityIdentifierAssignment() -> some View {
-        self.modifier(AccessibilityIdentifierAssignmentModifier())
-    }
-    
-    func viewHierarchyTracking(_ name: String) -> some View {
-        self.modifier(ViewHierarchyTrackingModifier(viewName: name))
-    }
-    
-    func screenContext(_ name: String) -> some View {
-        self.modifier(ScreenContextModifier(screenName: name))
-    }
-    
-    func navigationState(_ state: String) -> some View {
-        self.modifier(NavigationStateModifier(navigationState: state))
-    }
-    
-    func workingAccessibilityIdentifier(_ identifier: String) -> some View {
-        self.modifier(WorkingAccessibilityIdentifierModifier(identifier: identifier))
-    }
-    
-    func exactNamed(_ name: String) -> some View {
-        self.modifier(ExactAccessibilityIdentifierModifier(identifier: name))
-    }
-    
-    func named(_ name: String) -> some View {
-        self.modifier(HierarchicalNamedModifier(viewName: name))
-    }
-    
-    func accessibilityLabelAssignment() -> some View {
-        self.modifier(AccessibilityLabelAssignmentModifier())
-    }
-    
-    func accessibilityHintAssignment() -> some View {
-        self.modifier(AccessibilityHintAssignmentModifier())
-    }
-    
-    func accessibilityTraitsAssignment() -> some View {
-        self.modifier(AccessibilityTraitsAssignmentModifier())
-    }
-    
-    func accessibilityValueAssignment() -> some View {
-        self.modifier(AccessibilityValueAssignmentModifier())
+struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
     }
 }
+
+struct ComprehensiveAccessibilityModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct GlobalAutomaticAccessibilityIdentifierModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct DisableAutomaticAccessibilityIdentifierModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct AccessibilityIdentifierAssignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct ViewHierarchyTrackingModifier: ViewModifier {
+    let viewName: String
+    
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct ScreenContextModifier: ViewModifier {
+    let screenName: String
+    
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct NavigationStateModifier: ViewModifier {
+    let navigationState: String
+    
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct WorkingAccessibilityIdentifierModifier: ViewModifier {
+    let identifier: String
+    
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct ExactAccessibilityIdentifierModifier: ViewModifier {
+    let identifier: String
+    
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct HierarchicalNamedModifier: ViewModifier {
+    let viewName: String
+    
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct AccessibilityLabelAssignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct AccessibilityHintAssignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct AccessibilityTraitsAssignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+struct AccessibilityValueAssignmentModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+
+

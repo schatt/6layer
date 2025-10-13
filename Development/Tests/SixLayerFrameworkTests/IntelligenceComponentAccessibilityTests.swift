@@ -79,12 +79,3 @@ struct DataFrameAnalysisEngine: View {
     }
 }
 
-struct RuntimeCapabilityDetection: View {
-    var body: some View {
-        VStack {
-            Text("Runtime Capability Detection")
-            Button("Detect") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

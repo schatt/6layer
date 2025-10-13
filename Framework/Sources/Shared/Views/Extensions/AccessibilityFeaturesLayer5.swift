@@ -421,7 +421,7 @@ struct AccessibilityHostingControllerWrapper<Content: View>: NSViewControllerRep
             let namespace = config.namespace.isEmpty ? "SixLayer" : config.namespace
             
             // Generate the same identifier that the automatic system would generate
-            let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+            let _ = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
             let screenContext = config.currentScreenContext ?? "main"
             let role = "element"
             let objectID = "accessibility-enhanced-\(Int.random(in: 1000...9999))"

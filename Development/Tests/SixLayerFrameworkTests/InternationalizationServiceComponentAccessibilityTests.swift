@@ -34,3 +34,6 @@ final class InternationalizationServiceComponentAccessibilityTests: XCTestCase {
         XCTAssertTrue(hasAccessibilityID, "InternationalizationService should generate accessibility identifiers")
     }
 }
+
+
+

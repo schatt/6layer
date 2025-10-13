@@ -69,13 +69,13 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        // Use deprecated function for view-based accessibility testing
-        // Note: This function is deprecated but needed for view accessibility testing
-        let view = platformOCRImplementation_L4(
+        // Use new OCRService approach for view-based accessibility testing
+        let service = OCRServiceFactory.create()
+        let view = OCRView(
             image: testImage,
             context: context,
             strategy: strategy,
-            onResult: { _ in }
+            service: service
         )
         
         // When & Then
@@ -128,13 +128,13 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             estimatedProcessingTime: 1.0
         )
         
-        // Use deprecated function for view-based accessibility testing
-        // Note: This function is deprecated but needed for view accessibility testing
-        let view = platformOCRImplementation_L4(
+        // Use new OCRService approach for view-based accessibility testing
+        let service = OCRServiceFactory.create()
+        let view = OCRView(
             image: testImage,
             context: context,
             strategy: strategy,
-            onResult: { _ in }
+            service: service
         )
         
         // When & Then

@@ -9,6 +9,13 @@ import XCTest
 import SwiftUI
 @testable import SixLayerFramework
 
+// MARK: - Test Types
+
+// Placeholder image type for testing
+struct TestImage {
+    let name: String
+}
+
 @MainActor
 final class SharedComponentAccessibilityTests: XCTestCase {
     
@@ -92,7 +99,7 @@ final class SharedComponentAccessibilityTests: XCTestCase {
     
     func testGenericPhotoCaptureViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericPhotoCaptureView
-        let testCallback: (UIImage?) -> Void = { _ in }
+        let testCallback: (TestImage?) -> Void = { _ in }
         let testView = GenericPhotoCaptureView(onCapture: testCallback)
         
         // Then: Should generate accessibility identifiers
@@ -107,7 +114,7 @@ final class SharedComponentAccessibilityTests: XCTestCase {
     
     func testGenericPhotoDisplayViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericPhotoDisplayView
-        let testImage = UIImage(systemName: "photo")
+        let testImage = TestImage(name: "photo")
         let testView = GenericPhotoDisplayView(image: testImage)
         
         // Then: Should generate accessibility identifiers
@@ -122,7 +129,7 @@ final class SharedComponentAccessibilityTests: XCTestCase {
     
     func testGenericPhotoSelectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericPhotoSelectionView
-        let testCallback: ([UIImage]) -> Void = { _ in }
+        let testCallback: ([TestImage]) -> Void = { _ in }
         let testView = GenericPhotoSelectionView(onSelection: testCallback)
         
         // Then: Should generate accessibility identifiers
@@ -137,7 +144,7 @@ final class SharedComponentAccessibilityTests: XCTestCase {
     
     func testGenericOCRViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericOCRView
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage = TestImage(name: "doc.text")
         let testCallback: (String) -> Void = { _ in }
         let testView = GenericOCRView(image: testImage, onResult: testCallback)
         
@@ -260,7 +267,7 @@ final class SharedComponentAccessibilityTests: XCTestCase {
     
     func testGenericOCRWithDisambiguationViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericOCRWithDisambiguationView
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage = TestImage(name: "doc.text")
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         let testView = GenericOCRWithDisambiguationView(image: testImage, options: testOptions, onResult: testCallback)
@@ -408,13 +415,13 @@ struct GenericItemCollectionView: View {
 }
 
 struct GenericPhotoCaptureView: View {
-    let onCapture: (UIImage?) -> Void
+    let onCapture: (TestImage?) -> Void
     
     var body: some View {
         VStack {
             Text("Photo Capture")
             Button("Capture") {
-                onCapture(nil)
+                onCapture(nil as TestImage?)
             }
         }
         .automaticAccessibilityIdentifiers()
@@ -422,12 +429,12 @@ struct GenericPhotoCaptureView: View {
 }
 
 struct GenericPhotoDisplayView: View {
-    let image: UIImage?
+    let image: TestImage?
     
     var body: some View {
         VStack {
             if let image = image {
-                Image(uiImage: image)
+                Image(systemName: image.name)
             } else {
                 Text("No Image")
             }
@@ -437,7 +444,7 @@ struct GenericPhotoDisplayView: View {
 }
 
 struct GenericPhotoSelectionView: View {
-    let onSelection: ([UIImage]) -> Void
+    let onSelection: ([TestImage]) -> Void
     
     var body: some View {
         VStack {
@@ -451,7 +458,7 @@ struct GenericPhotoSelectionView: View {
 }
 
 struct GenericOCRView: View {
-    let image: UIImage?
+    let image: TestImage?
     let onResult: (String) -> Void
     
     var body: some View {
@@ -557,7 +564,7 @@ struct GenericResponsiveCardView: View {
 }
 
 struct GenericOCRWithDisambiguationView: View {
-    let image: UIImage?
+    let image: TestImage?
     let options: [String]
     let onResult: (String) -> Void
     

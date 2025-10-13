@@ -79,12 +79,3 @@ struct AccessibilityManager: View {
     }
 }
 
-struct AccessibilityTestingSuite: View {
-    var body: some View {
-        VStack {
-            Text("Accessibility Testing Suite")
-            Button("Test") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

@@ -106,3 +106,6 @@ struct IntelligentDetailData {
     let content: String
     let metadata: [String: String]
 }
+
+
+

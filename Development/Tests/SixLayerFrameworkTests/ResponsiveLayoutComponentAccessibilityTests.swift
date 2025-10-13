@@ -17,13 +17,20 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
     func testResponsiveGridGeneratesAccessibilityIdentifiers() async {
         // Given: Test grid items
         let gridItems = [
-            GridItemData(id: "1", content: Text("Grid Item 1")),
-            GridItemData(id: "2", content: Text("Grid Item 2")),
-            GridItemData(id: "3", content: Text("Grid Item 3"))
+            GridItemData(title: "Grid Item 1", subtitle: "Subtitle 1", icon: "star", color: .blue),
+            GridItemData(title: "Grid Item 2", subtitle: "Subtitle 2", icon: "heart", color: .red),
+            GridItemData(title: "Grid Item 3", subtitle: "Subtitle 3", icon: "circle", color: .green)
         ]
         
         // When: Creating ResponsiveGrid
-        let view = ResponsiveGrid(items: gridItems)
+        let view = ResponsiveGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+            ForEach(gridItems) { item in
+                VStack {
+                    Text(item.title)
+                    Text(item.subtitle)
+                }
+            }
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -39,9 +46,11 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
     
     func testResponsiveNavigationGeneratesAccessibilityIdentifiers() async {
         // Given: Test navigation content
-        let navigationContent = VStack {
-            Text("Navigation Content")
-            Button("Test Button") { }
+        let navigationContent: (Bool) -> some View = { _ in
+            VStack {
+                Text("Navigation Content")
+                Button("Test Button") { }
+            }
         }
         
         // When: Creating ResponsiveNavigation
@@ -61,10 +70,12 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
     
     func testResponsiveStackGeneratesAccessibilityIdentifiers() async {
         // Given: Test stack content
-        let stackContent = VStack {
-            Text("Stack Item 1")
-            Text("Stack Item 2")
-            Text("Stack Item 3")
+        let stackContent = {
+            VStack {
+                Text("Stack Item 1")
+                Text("Stack Item 2")
+                Text("Stack Item 3")
+            }
         }
         
         // When: Creating ResponsiveStack
@@ -119,7 +130,7 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
         let testContent = Text("Test Content")
         
         // When: Applying ResponsivePadding modifier
-        let view = testContent.responsivePadding()
+        let view = testContent.modifier(ResponsivePadding())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -129,13 +140,5 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
         )
         
         XCTAssertTrue(hasAccessibilityID, "ResponsivePadding modifier should generate accessibility identifiers")
-    }
-}
-
-// MARK: - Test Extensions
-
-extension View {
-    func responsivePadding() -> some View {
-        self.modifier(ResponsivePadding())
     }
 }
