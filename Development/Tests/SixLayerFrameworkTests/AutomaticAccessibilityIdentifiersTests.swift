@@ -66,7 +66,7 @@ final class AutomaticAccessibilityIdentifiersTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
@@ -80,7 +80,7 @@ final class AutomaticAccessibilityIdentifiersTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*element.*", 
+            expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
@@ -96,7 +96,7 @@ final class AutomaticAccessibilityIdentifiersTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*TestElement.*", 
+            expectedPattern: "SixLayer.main.element.*testelement.*", 
             platform: .iOS,
             componentName: "named modifier"
         )
@@ -110,7 +110,7 @@ final class AutomaticAccessibilityIdentifiersTests: XCTestCase {
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "SixLayer.*TestElement.*", 
+            expectedPattern: "SixLayer.main.element.*testelement.*", 
             platform: .macOS,
             componentName: "named modifier"
         )

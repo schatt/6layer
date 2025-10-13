@@ -420,7 +420,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         XCTAssertNotNil(enhancedView, "Should return accessibility enhanced view")
         XCTAssertTrue(hasAccessibilityIdentifier(
             enhancedView, 
-            expectedPattern: "app.*element.*accessibility-enhanced", 
+            expectedPattern: "SixLayer.main.element.*accessibility-enhanced", 
             componentName: "AccessibilityEnhancedViewModifier"
         ), "Enhanced view should have accessibility identifier")
     }
@@ -442,7 +442,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         XCTAssertNotNil(enhancedView, "Should return accessibility enhanced view with default config")
         XCTAssertTrue(hasAccessibilityIdentifier(
             enhancedView, 
-            expectedPattern: "app.*element.*accessibility-enhanced", 
+            expectedPattern: "SixLayer.main.element.*accessibility-enhanced", 
             componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
         ), "Enhanced view with default config should have accessibility identifier")
     }
@@ -519,7 +519,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         XCTAssertNotNil(integratedView, "Should return integrated accessibility view")
         XCTAssertTrue(hasAccessibilityIdentifier(
             integratedView, 
-            expectedPattern: "app.*element.*accessibility-enhanced", 
+            expectedPattern: "SixLayer.main.element.*accessibility-enhanced", 
             componentName: "AccessibilityViewModifiersIntegration"
         ), "Integrated accessibility view should have accessibility identifier")
     }

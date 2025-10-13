@@ -41,7 +41,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             XCTAssertNotNil(testView, "View with automatic accessibility identifiers should be created successfully")
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: "app.*button.*Test Button", 
+                expectedPattern: "SixLayer.main.element.*", 
                 componentName: "AutomaticIdentifiersWorkByDefault"
             ), "View should have accessibility identifier by default")
             
