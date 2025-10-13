@@ -80,10 +80,10 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that .named() now generates accessibility identifiers
-    /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifiers work correctly
-    /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    func testTrackViewHierarchyGeneratesIdentifiers() async {
+    /// BUSINESS PURPOSE: Verify that .named() modifier generates accessibility identifiers
+    /// TESTING SCOPE: Tests ONLY the .named() modifier functionality (without screen context)
+    /// METHODOLOGY: Tests the .named() modifier in isolation
+    func testNamedModifierGeneratesIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -94,7 +94,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            // When: Using .named() modifier (the failing case from bug report)
+            // When: Using ONLY .named() modifier (no screen context)
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
@@ -103,9 +103,49 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             // Then: The view should be created successfully
             XCTAssertNotNil(testView, "View with .named() should be created successfully")
             
-            // Verify that the modifier chain compiles and works
-            // In a real scenario, this would generate an accessibility identifier
-            // like "CarManager.FuelView.AddFuelButton.element.timestamp-hash"
+            // Test actual accessibility identifier generation (should use default "main" screen context)
+            let hasAccessibilityID = hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.main.element.*", 
+                componentName: "AddFuelButton"
+            )
+            
+            XCTAssertTrue(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Verify that .named() modifier respects screen context when combined
+    /// TESTING SCOPE: Tests the COMBINATION of .screenContext() and .named() modifiers
+    /// METHODOLOGY: Tests that .named() modifier respects previously set screen context
+    func testNamedModifierWithScreenContext() async {
+        await MainActor.run {
+            // Given: Configuration matching the bug report
+            let config = AccessibilityIdentifierConfig.shared
+            config.enableAutoIDs = true
+            config.namespace = "CarManager"
+            config.mode = .automatic
+            config.enableViewHierarchyTracking = true
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            // When: Using BOTH .screenContext() and .named() modifiers
+            let testView = Button(action: {}) {
+                Label("Add Fuel", systemImage: "plus")
+            }
+            .screenContext("FuelView")
+            .named("AddFuelButton")
+            
+            // Then: The view should be created successfully
+            XCTAssertNotNil(testView, "View with .screenContext() and .named() should be created successfully")
+            
+            // Test actual accessibility identifier generation (should use "FuelView" screen context)
+            let hasAccessibilityID = hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.FuelView.element.*", 
+                componentName: "AddFuelButton"
+            )
+            
+            XCTAssertTrue(hasAccessibilityID, "View with .screenContext() and .named() should generate accessibility identifiers matching pattern 'CarManager.FuelView.element.*'")
         }
     }
     
@@ -131,9 +171,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             // Then: The view should be created successfully
             XCTAssertNotNil(testView, "View with screenContext should be created successfully")
             
-            // Verify that the modifier chain compiles and works
-            // In a real scenario, this would generate an accessibility identifier
-            // like "CarManager.FuelView.element.timestamp-hash"
+            // Test actual accessibility identifier generation
+            let hasAccessibilityID = hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.FuelView.*", 
+                componentName: "ScreenContext"
+            )
+            
+            XCTAssertTrue(hasAccessibilityID, "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
         }
     }
     
@@ -159,9 +204,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             // Then: The view should be created successfully
             XCTAssertNotNil(testView, "View with navigationState should be created successfully")
             
-            // Verify that the modifier chain compiles and works
-            // In a real scenario, this would generate an accessibility identifier
-            // like "CarManager.main.element.timestamp-hash"
+            // Test actual accessibility identifier generation
+            let hasAccessibilityID = hasAccessibilityIdentifier(
+                testView, 
+                expectedPattern: "CarManager.*", 
+                componentName: "NavigationState"
+            )
+            
+            XCTAssertTrue(hasAccessibilityID, "View with navigationState should generate accessibility identifiers matching pattern 'CarManager.*'")
         }
     }
     

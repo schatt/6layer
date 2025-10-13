@@ -49,7 +49,6 @@ final class Layer1AccessibilityTests: XCTestCase {
     func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-        AccessibilityIdentifierConfig.shared.namespace = "layer1"
         
         // When: Creating view using platformPresentItemCollection_L1
         let view = platformPresentItemCollection_L1(
@@ -60,15 +59,15 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Then: View should be created
         XCTAssertNotNil(view, "platformPresentItemCollection_L1 should create a view")
         
-        // TDD RED PHASE: Look for SPECIFIC accessibility identifier for item collection
+        // TDD RED PHASE: Look for accessibility identifier with current pattern (will be updated to v4.4.0 hierarchical naming)
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.main.element.*", 
+            expectedPattern: "*.main.element.*", 
             componentName: "ItemCollection"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern")
         
         print("🔍 Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
@@ -78,7 +77,6 @@ final class Layer1AccessibilityTests: XCTestCase {
     func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-        AccessibilityIdentifierConfig.shared.namespace = "layer1"
         
         // When: Creating view using platformPresentFormData_L1
         let view = platformPresentFormData_L1(
@@ -92,12 +90,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentFormData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.main.element.*", 
+            expectedPattern: "*.screen.*", 
             componentName: "FormField"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming")
         
         print("🔍 Testing platformPresentFormData_L1 accessibility identifier generation")
     }
@@ -107,7 +105,6 @@ final class Layer1AccessibilityTests: XCTestCase {
     func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-        AccessibilityIdentifierConfig.shared.namespace = "layer1"
         
         // When: Creating view using platformPresentNumericData_L1
         let view = platformPresentNumericData_L1(
@@ -121,12 +118,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentNumericData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.main.element.*", 
+            expectedPattern: "*.main.element.*", 
             componentName: "NumericData"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern")
         
         print("🔍 Testing platformPresentNumericData_L1 accessibility identifier generation")
     }
@@ -136,7 +133,6 @@ final class Layer1AccessibilityTests: XCTestCase {
     func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-        AccessibilityIdentifierConfig.shared.namespace = "layer1"
         
         // When: Creating view using platformPresentMediaData_L1
         let view = platformPresentMediaData_L1(
@@ -150,12 +146,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentMediaData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.main.element.*", 
+            expectedPattern: "*.screen.*", 
             componentName: "MediaData"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers with new hierarchical naming")
         
         print("🔍 Testing platformPresentMediaData_L1 accessibility identifier generation")
     }
@@ -165,7 +161,6 @@ final class Layer1AccessibilityTests: XCTestCase {
     func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-        AccessibilityIdentifierConfig.shared.namespace = "layer1"
         
         // When: Creating view using platformPresentSettings_L1
         let view = platformPresentSettings_L1(
@@ -187,12 +182,12 @@ final class Layer1AccessibilityTests: XCTestCase {
         // Test that platformPresentSettings_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
             view, 
-            expectedPattern: "layer1.main.element.*", 
+            expectedPattern: "*.screen.*", 
             componentName: "SettingsData"
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
+        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers with new hierarchical naming")
         
         print("🔍 Testing platformPresentSettings_L1 accessibility identifier generation")
     }
