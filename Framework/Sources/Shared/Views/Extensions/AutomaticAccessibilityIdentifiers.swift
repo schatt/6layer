@@ -1015,6 +1015,8 @@ struct ExactAccessibilityHostingControllerWrapper<Content: View>: NSViewControll
 public struct HierarchicalNamedModifier: ViewModifier {
     let viewName: String
     
+    @Environment(\.disableAutomaticAccessibilityIdentifiers) private var disableAutoIDs
+    
     public init(viewName: String) {
         self.viewName = viewName
     }
@@ -1023,9 +1025,9 @@ public struct HierarchicalNamedModifier: ViewModifier {
         // Push the name to the hierarchy (replaces current level)
         AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
         
-        // Check if global config is enabled - if so, automatically apply accessibility identifier
+        // Check if global config is enabled AND local disable is not set
         let config = AccessibilityIdentifierConfig.shared
-        if config.enableAutoIDs {
+        if config.enableAutoIDs && !disableAutoIDs {
             // Generate and apply accessibility identifier based on the modified hierarchy
             let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
             let screenContext = config.currentScreenContext ?? "main"
