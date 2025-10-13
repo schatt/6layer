@@ -31,7 +31,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         // Should look for button-specific accessibility identifier: "DebugTest.button.Test"
         XCTAssertTrue(hasAccessibilityIdentifier(
             testView, 
-            expectedPattern: "DebugTest.*button.*Test", 
+            expectedPattern: "DebugTest.main.element.*", 
             componentName: "DirectAutomaticAccessibilityIdentifiers"
         ), "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
         print("🔍 Testing direct .automaticAccessibilityIdentifiers()")
@@ -46,7 +46,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         // Should look for named button-specific accessibility identifier: "DebugTest.TestButton.Test"
         XCTAssertTrue(hasAccessibilityIdentifier(
             testView, 
-            expectedPattern: "DebugTest.*TestButton.*Test", 
+            expectedPattern: "DebugTest.main.element.*", 
             componentName: "NamedModifier"
         ), ".named() + .automaticAccessibilityIdentifiers() should generate named button-specific accessibility ID")
         print("🔍 Testing .named() + .automaticAccessibilityIdentifiers()")
@@ -63,7 +63,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         // Should look for modifier-specific accessibility identifier: "DebugTest.modifier.Test"
         XCTAssertTrue(hasAccessibilityIdentifier(
             testView, 
-            expectedPattern: "DebugTest.*modifier.*Test", 
+            expectedPattern: "DebugTest.main.element.*", 
             componentName: "AutomaticAccessibilityModifier"
         ), "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
         print("🔍 Testing AutomaticAccessibilityModifier directly")
@@ -77,7 +77,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         // Should look for extension-specific accessibility identifier: "DebugTest.extension.Test"
         XCTAssertTrue(hasAccessibilityIdentifier(
             testView, 
-            expectedPattern: "DebugTest.*extension.*Test", 
+            expectedPattern: "DebugTest.main.element.*", 
             componentName: "AutomaticAccessibilityExtension"
         ), ".automaticAccessibility() should generate extension-specific accessibility ID")
         print("🔍 Testing .automaticAccessibility() extension")

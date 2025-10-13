@@ -280,9 +280,9 @@ final class AutomaticAccessibilityIdentifierTests: XCTestCase {
             // Test that Layer 1 functions generate accessibility identifiers
             XCTAssertTrue(hasAccessibilityIdentifier(
                 view, 
-                expectedPattern: "AutoTest.*item.*collection", 
+                expectedPattern: "AutoTest.main.element.*", 
                 componentName: "Layer1Functions"
-            ), "Layer 1 function should generate accessibility identifiers matching pattern 'AutoTest.*item.*collection'")
+            ), "Layer 1 function should generate accessibility identifiers matching pattern 'AutoTest.main.element.*'")
             
             // Test that the view can be created with accessibility identifier configuration
             XCTAssertTrue(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")

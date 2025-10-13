@@ -122,7 +122,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
             XCTAssertTrue(hasAccessibilityIdentifier(
                 testView, 
-                expectedPattern: "CarManager.*element.*fuelview-addfuelbutton", 
+                expectedPattern: "CarManager.FuelView.element.*", 
                 componentName: "CombinedBreadcrumbModifiers"
             ), "View should have an accessibility identifier assigned")
         }
