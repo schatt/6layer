@@ -864,6 +864,78 @@ public struct NavigationStateModifier: ViewModifier {
     }
 }
 
+// MARK: - Exact Accessibility Identifier Modifier
+
+/// Modifier that applies an exact accessibility identifier and ensures it transfers to platform views
+/// This works around SwiftUI's broken accessibility identifier transfer mechanism
+public struct ExactAccessibilityIdentifierModifier: ViewModifier {
+    let identifier: String
+    
+    public init(identifier: String) {
+        self.identifier = identifier
+    }
+    
+    public func body(content: Content) -> some View {
+        #if os(macOS)
+        return AnyView(
+            ExactAccessibilityHostingControllerWrapper(identifier: identifier) {
+                content
+            }
+        )
+        #else
+        return AnyView(content.accessibilityIdentifier(identifier))
+        #endif
+    }
+}
+
+#if os(macOS)
+import AppKit
+
+/// macOS-specific wrapper that ensures exact accessibility identifiers transfer properly
+struct ExactAccessibilityHostingControllerWrapper<Content: View>: NSViewControllerRepresentable {
+    let identifier: String
+    let content: () -> Content
+    
+    init(identifier: String, @ViewBuilder content: @escaping () -> Content) {
+        self.identifier = identifier
+        self.content = content
+    }
+    
+    func makeNSViewController(context: Context) -> NSViewController {
+        let hostingController = NSHostingController(rootView: content())
+        return hostingController
+    }
+    
+    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
+        guard let hostingController = nsViewController as? NSHostingController<Content> else { return }
+        
+        // Update the root view
+        hostingController.rootView = content()
+        
+        // Force exact accessibility identifier transfer
+        transferExactAccessibilityIdentifier(to: nsViewController.view, identifier: identifier)
+    }
+    
+    private func transferExactAccessibilityIdentifier(to view: NSView, identifier: String) {
+        // Apply the exact identifier to the root view
+        view.setAccessibilityIdentifier(identifier)
+        
+        // Also apply to any NSHostingView subviews
+        findAndUpdateHostingViews(in: view, identifier: identifier)
+    }
+    
+    private func findAndUpdateHostingViews(in view: NSView, identifier: String) {
+        // Recursively search for NSHostingView instances and apply the identifier
+        for subview in view.subviews {
+            if subview is NSHostingView<Content> {
+                subview.setAccessibilityIdentifier(identifier)
+            }
+            findAndUpdateHostingViews(in: subview, identifier: identifier)
+        }
+    }
+}
+#endif
+
 // MARK: - View Extensions for Breadcrumb Tracking
 
 public extension View {
@@ -878,7 +950,7 @@ public extension View {
     /// - Parameter name: The exact accessibility identifier to apply
     /// - Returns: A view with the exact accessibility identifier
     func exactNamed(_ name: String) -> some View {
-        self.accessibilityIdentifier(name)
+        modifier(ExactAccessibilityIdentifierModifier(identifier: name))
     }
     
     /// Track this view in the hierarchy for breadcrumb debugging
