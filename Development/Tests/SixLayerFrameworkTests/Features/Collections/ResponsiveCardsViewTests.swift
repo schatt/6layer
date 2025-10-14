@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in ResponsiveCardsView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class ResponsiveCardsViewTests: XCTestCase {
+final class ResponsiveCardsViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class ResponsiveCardsViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class ResponsiveCardsViewTests: XCTestCase {
     
     // MARK: - ResponsiveCardView Tests
     
-    func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testData = ResponsiveCardData(
             title: "Test Card",
             subtitle: "Test Subtitle",
@@ -51,10 +49,10 @@ final class ResponsiveCardsViewTests: XCTestCase {
             componentName: "ResponsiveCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveCardView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "ResponsiveCardView should generate accessibility identifiers on iOS")
     }
     
-    func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testData = ResponsiveCardData(
             title: "Test Card",
             subtitle: "Test Subtitle",
@@ -72,7 +70,7 @@ final class ResponsiveCardsViewTests: XCTestCase {
             componentName: "ResponsiveCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveCardView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "ResponsiveCardView should generate accessibility identifiers on macOS")
     }
 }
 

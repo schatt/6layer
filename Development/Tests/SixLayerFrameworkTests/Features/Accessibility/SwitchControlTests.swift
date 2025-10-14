@@ -1,13 +1,13 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Switch Control accessibility features
-final class SwitchControlTests: XCTestCase {
+final class SwitchControlTests {
     
     // MARK: - Switch Control Manager Tests
     
-    func testSwitchControlManagerInitialization() {
+    @Test func testSwitchControlManagerInitialization() {
         // Given: Switch Control configuration
         let config = SwitchControlConfig(
             enableNavigation: true,
@@ -20,13 +20,13 @@ final class SwitchControlTests: XCTestCase {
         let manager = SwitchControlManager(config: config)
         
         // Then: Manager should be properly initialized
-        XCTAssertTrue(manager.isNavigationEnabled)
-        XCTAssertTrue(manager.areCustomActionsEnabled)
-        XCTAssertTrue(manager.isGestureSupportEnabled)
-        XCTAssertEqual(manager.focusManagement, .automatic)
+        #expect(manager.isNavigationEnabled)
+        #expect(manager.areCustomActionsEnabled)
+        #expect(manager.isGestureSupportEnabled)
+        #expect(manager.focusManagement == .automatic)
     }
     
-    func testSwitchControlNavigationSupport() {
+    @Test func testSwitchControlNavigationSupport() {
         // Given: Switch Control Manager with navigation enabled
         let config = SwitchControlConfig(enableNavigation: true)
         let manager = SwitchControlManager(config: config)
@@ -35,10 +35,10 @@ final class SwitchControlTests: XCTestCase {
         let isSupported = manager.supportsNavigation()
         
         // Then: Navigation should be supported
-        XCTAssertTrue(isSupported)
+        #expect(isSupported)
     }
     
-    func testSwitchControlCustomActions() {
+    @Test func testSwitchControlCustomActions() {
         // Given: Switch Control Manager with custom actions enabled
         let config = SwitchControlConfig(enableCustomActions: true)
         let manager = SwitchControlManager(config: config)
@@ -59,12 +59,12 @@ final class SwitchControlTests: XCTestCase {
         manager.addCustomAction(action2)
         
         // Then: Actions should be registered
-        XCTAssertEqual(manager.customActions.count, 2)
-        XCTAssertTrue(manager.hasAction(named: "Select Item"))
-        XCTAssertTrue(manager.hasAction(named: "Next Item"))
+        #expect(manager.customActions.count == 2)
+        #expect(manager.hasAction(named: "Select Item"))
+        #expect(manager.hasAction(named: "Next Item"))
     }
     
-    func testSwitchControlFocusManagement() {
+    @Test func testSwitchControlFocusManagement() {
         // Given: Switch Control Manager with focus management
         let config = SwitchControlConfig(focusManagement: .automatic)
         let manager = SwitchControlManager(config: config)
@@ -73,11 +73,11 @@ final class SwitchControlTests: XCTestCase {
         let focusResult = manager.manageFocus(for: .next)
         
         // Then: Focus should be managed appropriately
-        XCTAssertTrue(focusResult.success)
-        XCTAssertNotNil(focusResult.focusedElement)
+        #expect(focusResult.success)
+        #expect(focusResult.focusedElement != nil)
     }
     
-    func testSwitchControlGestureSupport() {
+    @Test func testSwitchControlGestureSupport() {
         // Given: Switch Control Manager with gesture support
         let config = SwitchControlConfig(enableGestureSupport: true)
         let manager = SwitchControlManager(config: config)
@@ -87,13 +87,13 @@ final class SwitchControlTests: XCTestCase {
         let result = manager.processGesture(gesture)
         
         // Then: Gesture should be processed
-        XCTAssertTrue(result.success)
-        XCTAssertNotNil(result.action)
+        #expect(result.success)
+        #expect(result.action != nil)
     }
     
     // MARK: - Switch Control Configuration Tests
     
-    func testSwitchControlConfiguration() {
+    @Test func testSwitchControlConfiguration() {
         // Given: Switch Control configuration
         let config = SwitchControlConfig(
             enableNavigation: true,
@@ -105,17 +105,17 @@ final class SwitchControlTests: XCTestCase {
         )
         
         // Then: Configuration should be properly set
-        XCTAssertTrue(config.enableNavigation)
-        XCTAssertTrue(config.enableCustomActions)
-        XCTAssertTrue(config.enableGestureSupport)
-        XCTAssertEqual(config.focusManagement, .manual)
-        XCTAssertEqual(config.gestureSensitivity, .high)
-        XCTAssertEqual(config.navigationSpeed, .fast)
+        #expect(config.enableNavigation)
+        #expect(config.enableCustomActions)
+        #expect(config.enableGestureSupport)
+        #expect(config.focusManagement == .manual)
+        #expect(config.gestureSensitivity == .high)
+        #expect(config.navigationSpeed == .fast)
     }
     
     // MARK: - Switch Control Actions Tests
     
-    func testSwitchControlActionCreation() {
+    @Test func testSwitchControlActionCreation() {
         // Given: Switch Control action parameters
         let action = SwitchControlAction(
             name: "Test Action",
@@ -124,12 +124,12 @@ final class SwitchControlTests: XCTestCase {
         )
         
         // Then: Action should be properly created
-        XCTAssertEqual(action.name, "Test Action")
-        XCTAssertEqual(action.gesture, .doubleTap)
-        XCTAssertNotNil(action.action)
+        #expect(action.name == "Test Action")
+        #expect(action.gesture == .doubleTap)
+        #expect(action.action != nil)
     }
     
-    func testSwitchControlGestureTypes() {
+    @Test func testSwitchControlGestureTypes() {
         // Given: Different gesture types
         let singleTap = SwitchControlGesture(type: .singleTap, intensity: .light)
         let doubleTap = SwitchControlGesture(type: .doubleTap, intensity: .medium)
@@ -137,15 +137,15 @@ final class SwitchControlTests: XCTestCase {
         let swipeRight = SwitchControlGesture(type: .swipeRight, intensity: .light)
         
         // Then: Gestures should have correct types
-        XCTAssertEqual(singleTap.type, .singleTap)
-        XCTAssertEqual(doubleTap.type, .doubleTap)
-        XCTAssertEqual(swipeLeft.type, .swipeLeft)
-        XCTAssertEqual(swipeRight.type, .swipeRight)
+        #expect(singleTap.type == .singleTap)
+        #expect(doubleTap.type == .doubleTap)
+        #expect(swipeLeft.type == .swipeLeft)
+        #expect(swipeRight.type == .swipeRight)
     }
     
     // MARK: - Switch Control Focus Management Tests
     
-    func testSwitchControlFocusDirection() {
+    @Test func testSwitchControlFocusDirection() {
         // Given: Different focus directions
         let nextFocus = SwitchControlFocusDirection.next
         let previousFocus = SwitchControlFocusDirection.previous
@@ -153,48 +153,48 @@ final class SwitchControlTests: XCTestCase {
         let lastFocus = SwitchControlFocusDirection.last
         
         // Then: Directions should be properly defined
-        XCTAssertEqual(nextFocus, .next)
-        XCTAssertEqual(previousFocus, .previous)
-        XCTAssertEqual(firstFocus, .first)
-        XCTAssertEqual(lastFocus, .last)
+        #expect(nextFocus == .next)
+        #expect(previousFocus == .previous)
+        #expect(firstFocus == .first)
+        #expect(lastFocus == .last)
     }
     
-    func testSwitchControlFocusManagementMode() {
+    @Test func testSwitchControlFocusManagementMode() {
         // Given: Different focus management modes
         let automatic = SwitchControlFocusManagement.automatic
         let manual = SwitchControlFocusManagement.manual
         let hybrid = SwitchControlFocusManagement.hybrid
         
         // Then: Modes should be properly defined
-        XCTAssertEqual(automatic, .automatic)
-        XCTAssertEqual(manual, .manual)
-        XCTAssertEqual(hybrid, .hybrid)
+        #expect(automatic == .automatic)
+        #expect(manual == .manual)
+        #expect(hybrid == .hybrid)
     }
     
     // MARK: - Switch Control View Modifier Tests
     
-    func testSwitchControlViewModifier() {
+    @Test func testSwitchControlViewModifier() {
         // Given: A view with Switch Control support
         let view = Text("Test")
             .switchControlEnabled()
         
         // Then: View should support Switch Control
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testSwitchControlViewModifierWithConfiguration() {
+    @Test func testSwitchControlViewModifierWithConfiguration() {
         // Given: A view with Switch Control configuration
         let config = SwitchControlConfig(enableNavigation: true)
         let view = Text("Test")
             .switchControlEnabled(config: config)
         
         // Then: View should support Switch Control with configuration
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Switch Control Compliance Tests
     
-    func testSwitchControlCompliance() {
+    @Test func testSwitchControlCompliance() {
         // Given: A view with Switch Control support
         let view = VStack {
             Text("Title")
@@ -206,11 +206,11 @@ final class SwitchControlTests: XCTestCase {
         let compliance = SwitchControlManager.checkCompliance(for: view)
         
         // Then: View should be compliant
-        XCTAssertTrue(compliance.isCompliant)
-        XCTAssertEqual(compliance.issues.count, 0)
+        #expect(compliance.isCompliant)
+        #expect(compliance.issues.count == 0)
     }
     
-    func testSwitchControlComplianceWithIssues() {
+    @Test func testSwitchControlComplianceWithIssues() {
         // Given: A view without proper Switch Control support
         let view = Text("No Switch Control support")
         
@@ -218,13 +218,13 @@ final class SwitchControlTests: XCTestCase {
         let compliance = SwitchControlManager.checkCompliance(for: view)
         
         // Then: View should have compliance issues
-        XCTAssertFalse(compliance.isCompliant)
-        XCTAssertGreaterThan(compliance.issues.count, 0)
+        #expect(!compliance.isCompliant)
+        #expect(compliance.issues.count > 0)
     }
     
     // MARK: - Switch Control Performance Tests
     
-    func testSwitchControlPerformance() {
+    @Test func testSwitchControlPerformance() {
         // Given: Switch Control Manager
         let config = SwitchControlConfig(enableNavigation: true)
         let manager = SwitchControlManager(config: config)

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import AppKit
 import ViewInspector
@@ -7,9 +7,9 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
 @MainActor
-final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
+final class OCROverlayViewRealAccessibilityTDDTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -19,13 +19,13 @@ final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
         config.enableAutoIDs = true
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
-    func testOCROverlayView_AppliesCorrectModifiersOnIOS() {
+    @Test func testOCROverlayView_AppliesCorrectModifiersOnIOS() {
         // MANDATORY: Platform mocking required - OCROverlayView has platform-dependent behavior
         
         let mockImage = PlatformImage()
@@ -44,11 +44,11 @@ final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
             onTextDelete: { _ in }
         )
         
-        XCTAssertNotNil(ocrView, "OCROverlayView should be creatable")
+        #expect(ocrView != nil, "OCROverlayView should be creatable")
         
         // MANDATORY: Test that accessibility identifiers are applied on iOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             ocrView, 
             expectedPattern: "TDDTest.main.element.*", 
             componentName: "OCROverlayView"
@@ -59,7 +59,7 @@ final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
         print("✅ iOS Platform Mocking: OCROverlayView should use UIImage on iOS")
     }
     
-    func testOCROverlayView_AppliesCorrectModifiersOnMacOS() {
+    @Test func testOCROverlayView_AppliesCorrectModifiersOnMacOS() {
         // MANDATORY: Platform mocking required - OCROverlayView has platform-dependent behavior
         
         let mockImage = PlatformImage()
@@ -78,11 +78,11 @@ final class OCROverlayViewRealAccessibilityTDDTests: XCTestCase {
             onTextDelete: { _ in }
         )
         
-        XCTAssertNotNil(ocrView, "OCROverlayView should be creatable")
+        #expect(ocrView != nil, "OCROverlayView should be creatable")
         
         // MANDATORY: Test that accessibility identifiers are applied on macOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             ocrView, 
             expectedPattern: "TDDTest.main.element.*", 
             componentName: "OCROverlayView"

@@ -1,78 +1,76 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Comprehensive test suite for Apple HIG Compliance system
 /// Tests automatic application of Apple Human Interface Guidelines
 @MainActor
-class AppleHIGComplianceTests: XCTestCase {
+class AppleHIGComplianceTests {
     
     var complianceManager: AppleHIGComplianceManager!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         complianceManager = AppleHIGComplianceManager()
     }
     
-    override func tearDown() {
+    deinit {
         complianceManager = nil
-        super.tearDown()
     }
     
     // MARK: - Apple HIG Compliance Manager Tests
     
-    func testComplianceManagerInitialization() {
+    @Test func testComplianceManagerInitialization() {
         // Given: A new AppleHIGComplianceManager
         // When: Initialized
         // Then: Should have default compliance level and platform detection
-        XCTAssertEqual(complianceManager.complianceLevel, .automatic)
-        XCTAssertNotNil(complianceManager.accessibilityState)
-        XCTAssertNotNil(complianceManager.designSystem)
-        XCTAssertNotNil(complianceManager.currentPlatform)
+        #expect(complianceManager.complianceLevel == .automatic)
+        #expect(complianceManager.accessibilityState != nil)
+        #expect(complianceManager.designSystem != nil)
+        #expect(complianceManager.currentPlatform != nil)
     }
     
-    func testPlatformDetection() {
+    @Test func testPlatformDetection() {
         // Given: AppleHIGComplianceManager
         // When: Platform is detected
         // Then: Should detect correct platform
         #if os(iOS)
-        XCTAssertEqual(complianceManager.currentPlatform, .iOS)
+        #expect(complianceManager.currentPlatform == .iOS)
         #elseif os(macOS)
-        XCTAssertEqual(complianceManager.currentPlatform, .macOS)
+        #expect(complianceManager.currentPlatform == .macOS)
         #elseif os(watchOS)
-        XCTAssertEqual(complianceManager.currentPlatform, .watchOS)
+        #expect(complianceManager.currentPlatform == .watchOS)
         #elseif os(tvOS)
-        XCTAssertEqual(complianceManager.currentPlatform, .tvOS)
+        #expect(complianceManager.currentPlatform == .tvOS)
         #endif
     }
     
-    func testAccessibilityStateMonitoring() {
+    @Test func testAccessibilityStateMonitoring() {
         // Given: AppleHIGComplianceManager
         // When: Accessibility state is monitored
         // Then: Should track system accessibility settings
         let state = complianceManager.accessibilityState
-        XCTAssertNotNil(state.isVoiceOverRunning)
-        XCTAssertNotNil(state.isDarkerSystemColorsEnabled)
-        XCTAssertNotNil(state.isReduceTransparencyEnabled)
-        XCTAssertNotNil(state.isHighContrastEnabled)
-        XCTAssertNotNil(state.isReducedMotionEnabled)
+        #expect(state.isVoiceOverRunning != nil)
+        #expect(state.isDarkerSystemColorsEnabled != nil)
+        #expect(state.isReduceTransparencyEnabled != nil)
+        #expect(state.isHighContrastEnabled != nil)
+        #expect(state.isReducedMotionEnabled != nil)
     }
     
     // MARK: - Design System Tests
     
-    func testDesignSystemInitialization() {
+    @Test func testDesignSystemInitialization() {
         // Given: AppleHIGComplianceManager
         // When: Design system is initialized
         // Then: Should have platform-appropriate design system
         let designSystem = complianceManager.designSystem
-        XCTAssertEqual(designSystem.platform, complianceManager.currentPlatform)
-        XCTAssertNotNil(designSystem.colorSystem)
-        XCTAssertNotNil(designSystem.typographySystem)
-        XCTAssertNotNil(designSystem.spacingSystem)
-        XCTAssertNotNil(designSystem.iconSystem)
+        #expect(designSystem.platform == complianceManager.currentPlatform)
+        #expect(designSystem.colorSystem != nil)
+        #expect(designSystem.typographySystem != nil)
+        #expect(designSystem.spacingSystem != nil)
+        #expect(designSystem.iconSystem != nil)
     }
     
-    func testColorSystemPlatformSpecific() {
+    @Test func testColorSystemPlatformSpecific() {
         // Given: Different platforms
         // When: Color system is created
         // Then: Should have platform-appropriate colors
@@ -80,24 +78,24 @@ class AppleHIGComplianceTests: XCTestCase {
         let macOSColorSystem = ColorSystem(theme: .light, platform: .macOS)
         
         // Both should have system colors but may be different
-        XCTAssertNotNil(iOSColorSystem.primary)
-        XCTAssertNotNil(iOSColorSystem.secondary)
-        XCTAssertNotNil(iOSColorSystem.accent)
-        XCTAssertNotNil(iOSColorSystem.background)
-        XCTAssertNotNil(iOSColorSystem.surface)
-        XCTAssertNotNil(iOSColorSystem.text)
-        XCTAssertNotNil(iOSColorSystem.textSecondary)
+        #expect(iOSColorSystem.primary != nil)
+        #expect(iOSColorSystem.secondary != nil)
+        #expect(iOSColorSystem.accent != nil)
+        #expect(iOSColorSystem.background != nil)
+        #expect(iOSColorSystem.surface != nil)
+        #expect(iOSColorSystem.text != nil)
+        #expect(iOSColorSystem.textSecondary != nil)
         
-        XCTAssertNotNil(macOSColorSystem.primary)
-        XCTAssertNotNil(macOSColorSystem.secondary)
-        XCTAssertNotNil(macOSColorSystem.accent)
-        XCTAssertNotNil(macOSColorSystem.background)
-        XCTAssertNotNil(macOSColorSystem.surface)
-        XCTAssertNotNil(macOSColorSystem.text)
-        XCTAssertNotNil(macOSColorSystem.textSecondary)
+        #expect(macOSColorSystem.primary != nil)
+        #expect(macOSColorSystem.secondary != nil)
+        #expect(macOSColorSystem.accent != nil)
+        #expect(macOSColorSystem.background != nil)
+        #expect(macOSColorSystem.surface != nil)
+        #expect(macOSColorSystem.text != nil)
+        #expect(macOSColorSystem.textSecondary != nil)
     }
     
-    func testTypographySystemPlatformSpecific() {
+    @Test func testTypographySystemPlatformSpecific() {
         // Given: Different platforms
         // When: Typography system is created
         // Then: Should have platform-appropriate typography
@@ -106,43 +104,43 @@ class AppleHIGComplianceTests: XCTestCase {
         let macOSTypography = TypographySystem(platform: .macOS, accessibility: accessibilitySettings)
         
         // Both should have system fonts
-        XCTAssertNotNil(iOSTypography.largeTitle)
-        XCTAssertNotNil(iOSTypography.title1)
-        XCTAssertNotNil(iOSTypography.headline)
-        XCTAssertNotNil(iOSTypography.body)
-        XCTAssertNotNil(iOSTypography.callout)
-        XCTAssertNotNil(iOSTypography.subheadline)
-        XCTAssertNotNil(iOSTypography.footnote)
-        XCTAssertNotNil(iOSTypography.caption1)
+        #expect(iOSTypography.largeTitle != nil)
+        #expect(iOSTypography.title1 != nil)
+        #expect(iOSTypography.headline != nil)
+        #expect(iOSTypography.body != nil)
+        #expect(iOSTypography.callout != nil)
+        #expect(iOSTypography.subheadline != nil)
+        #expect(iOSTypography.footnote != nil)
+        #expect(iOSTypography.caption1 != nil)
         
-        XCTAssertNotNil(macOSTypography.largeTitle)
-        XCTAssertNotNil(macOSTypography.title1)
-        XCTAssertNotNil(macOSTypography.headline)
-        XCTAssertNotNil(macOSTypography.body)
-        XCTAssertNotNil(macOSTypography.callout)
-        XCTAssertNotNil(macOSTypography.subheadline)
-        XCTAssertNotNil(macOSTypography.footnote)
-        XCTAssertNotNil(macOSTypography.caption1)
+        #expect(macOSTypography.largeTitle != nil)
+        #expect(macOSTypography.title1 != nil)
+        #expect(macOSTypography.headline != nil)
+        #expect(macOSTypography.body != nil)
+        #expect(macOSTypography.callout != nil)
+        #expect(macOSTypography.subheadline != nil)
+        #expect(macOSTypography.footnote != nil)
+        #expect(macOSTypography.caption1 != nil)
     }
     
-    func testSpacingSystem8ptGrid() {
+    @Test func testSpacingSystem8ptGrid() {
         // Given: Spacing system
         // When: Spacing values are accessed
         // Then: Should follow Apple's 8pt grid system
         let spacing = HIGSpacingSystem(for: .iOS)
         
-        XCTAssertEqual(spacing.xs, 4)   // 4pt
-        XCTAssertEqual(spacing.sm, 8)   // 8pt
-        XCTAssertEqual(spacing.md, 16)  // 16pt (2 * 8)
-        XCTAssertEqual(spacing.lg, 24)  // 24pt (3 * 8)
-        XCTAssertEqual(spacing.xl, 32)  // 32pt (4 * 8)
-        XCTAssertEqual(spacing.xxl, 40) // 40pt (5 * 8)
-        XCTAssertEqual(spacing.xxxl, 48) // 48pt (6 * 8)
+        #expect(spacing.xs == 4)   // 4pt
+        #expect(spacing.sm == 8)   // 8pt
+        #expect(spacing.md == 16)  // 16pt (2 * 8)
+        #expect(spacing.lg == 24)  // 24pt (3 * 8)
+        #expect(spacing.xl == 32)  // 32pt (4 * 8)
+        #expect(spacing.xxl == 40) // 40pt (5 * 8)
+        #expect(spacing.xxxl == 48) // 48pt (6 * 8)
     }
     
     // MARK: - View Modifier Tests
     
-    func testAppleHIGCompliantModifier() {
+    @Test func testAppleHIGCompliantModifier() {
         // Given: A basic view
         let testView = Text("Test")
         
@@ -150,10 +148,10 @@ class AppleHIGComplianceTests: XCTestCase {
         let compliantView = testView.appleHIGCompliant()
         
         // Then: Should return a modified view
-        XCTAssertNotNil(compliantView)
+        #expect(compliantView != nil)
     }
     
-    func testAutomaticAccessibilityModifier() {
+    @Test func testAutomaticAccessibilityModifier() {
         // Given: A basic view
         let testView = Button("Test") { }
         
@@ -161,10 +159,10 @@ class AppleHIGComplianceTests: XCTestCase {
         let accessibleView = testView.automaticAccessibility()
         
         // Then: Should return a modified view
-        XCTAssertNotNil(accessibleView)
+        #expect(accessibleView != nil)
     }
     
-    func testPlatformPatternsModifier() {
+    @Test func testPlatformPatternsModifier() {
         // Given: A basic view
         let testView = Text("Test")
         
@@ -172,10 +170,10 @@ class AppleHIGComplianceTests: XCTestCase {
         let patternedView = testView.platformPatterns()
         
         // Then: Should return a modified view
-        XCTAssertNotNil(patternedView)
+        #expect(patternedView != nil)
     }
     
-    func testVisualConsistencyModifier() {
+    @Test func testVisualConsistencyModifier() {
         // Given: A basic view
         let testView = Text("Test")
         
@@ -183,10 +181,10 @@ class AppleHIGComplianceTests: XCTestCase {
         let consistentView = testView.visualConsistency()
         
         // Then: Should return a modified view
-        XCTAssertNotNil(consistentView)
+        #expect(consistentView != nil)
     }
     
-    func testInteractionPatternsModifier() {
+    @Test func testInteractionPatternsModifier() {
         // Given: A basic view
         let testView = Button("Test") { }
         
@@ -194,12 +192,12 @@ class AppleHIGComplianceTests: XCTestCase {
         let interactiveView = testView.interactionPatterns()
         
         // Then: Should return a modified view
-        XCTAssertNotNil(interactiveView)
+        #expect(interactiveView != nil)
     }
     
     // MARK: - Compliance Checking Tests
     
-    func testHIGComplianceCheck() async {
+    @Test func testHIGComplianceCheck() async {
         // Given: A test view
         let testView = Button("Test") { }
         
@@ -207,21 +205,21 @@ class AppleHIGComplianceTests: XCTestCase {
         let report = complianceManager.checkHIGCompliance(testView)
         
         // Then: Should return a compliance report
-        XCTAssertNotNil(report)
-        XCTAssertGreaterThanOrEqual(report.overallScore, 0.0)
-        XCTAssertLessThanOrEqual(report.overallScore, 100.0)
-        XCTAssertGreaterThanOrEqual(report.accessibilityScore, 0.0)
-        XCTAssertLessThanOrEqual(report.accessibilityScore, 100.0)
-        XCTAssertGreaterThanOrEqual(report.visualScore, 0.0)
-        XCTAssertLessThanOrEqual(report.visualScore, 100.0)
-        XCTAssertGreaterThanOrEqual(report.interactionScore, 0.0)
-        XCTAssertLessThanOrEqual(report.interactionScore, 100.0)
-        XCTAssertGreaterThanOrEqual(report.platformScore, 0.0)
-        XCTAssertLessThanOrEqual(report.platformScore, 100.0)
-        XCTAssertNotNil(report.recommendations)
+        #expect(report != nil)
+        #expect(report.overallScore >= 0.0)
+        #expect(report.overallScore <= 100.0)
+        #expect(report.accessibilityScore >= 0.0)
+        #expect(report.accessibilityScore <= 100.0)
+        #expect(report.visualScore >= 0.0)
+        #expect(report.visualScore <= 100.0)
+        #expect(report.interactionScore >= 0.0)
+        #expect(report.interactionScore <= 100.0)
+        #expect(report.platformScore >= 0.0)
+        #expect(report.platformScore <= 100.0)
+        #expect(report.recommendations != nil)
     }
     
-    func testComplianceReportStructure() {
+    @Test func testComplianceReportStructure() {
         // Given: A compliance report
         let report = HIGComplianceReport(
             overallScore: 85.0,
@@ -234,33 +232,33 @@ class AppleHIGComplianceTests: XCTestCase {
         
         // When: Report properties are accessed
         // Then: Should have correct structure
-        XCTAssertEqual(report.overallScore, 85.0)
-        XCTAssertEqual(report.accessibilityScore, 90.0)
-        XCTAssertEqual(report.visualScore, 80.0)
-        XCTAssertEqual(report.interactionScore, 85.0)
-        XCTAssertEqual(report.platformScore, 85.0)
-        XCTAssertEqual(report.recommendations.count, 0)
+        #expect(report.overallScore == 85.0)
+        #expect(report.accessibilityScore == 90.0)
+        #expect(report.visualScore == 80.0)
+        #expect(report.interactionScore == 85.0)
+        #expect(report.platformScore == 85.0)
+        #expect(report.recommendations.count == 0)
     }
     
     // MARK: - Accessibility System State Tests
     
-    func testAccessibilitySystemStateInitialization() {
+    @Test func testAccessibilitySystemStateInitialization() {
         // Given: Accessibility system state
         let state = AccessibilitySystemState()
         
         // When: State is initialized
         // Then: Should have default values
-        XCTAssertFalse(state.isVoiceOverRunning)
-        XCTAssertFalse(state.isDarkerSystemColorsEnabled)
-        XCTAssertFalse(state.isReduceTransparencyEnabled)
-        XCTAssertFalse(state.isHighContrastEnabled)
-        XCTAssertFalse(state.isReducedMotionEnabled)
-        XCTAssertFalse(state.hasKeyboardSupport)
-        XCTAssertFalse(state.hasFullKeyboardAccess)
-        XCTAssertFalse(state.hasSwitchControl)
+        #expect(!state.isVoiceOverRunning)
+        #expect(!state.isDarkerSystemColorsEnabled)
+        #expect(!state.isReduceTransparencyEnabled)
+        #expect(!state.isHighContrastEnabled)
+        #expect(!state.isReducedMotionEnabled)
+        #expect(!state.hasKeyboardSupport)
+        #expect(!state.hasFullKeyboardAccess)
+        #expect(!state.hasSwitchControl)
     }
     
-    func testAccessibilitySystemStateFromSystemChecker() {
+    @Test func testAccessibilitySystemStateFromSystemChecker() {
         // Given: System checker state (using simplified accessibility testing)
         let systemState = AccessibilitySystemState()
         
@@ -268,19 +266,19 @@ class AppleHIGComplianceTests: XCTestCase {
         let state = AccessibilitySystemState(from: systemState)
         
         // Then: Should reflect system state
-        XCTAssertFalse(state.isVoiceOverRunning)
-        XCTAssertFalse(state.isDarkerSystemColorsEnabled)
-        XCTAssertFalse(state.isReduceTransparencyEnabled)
-        XCTAssertFalse(state.isHighContrastEnabled)
-        XCTAssertFalse(state.isReducedMotionEnabled)
-        XCTAssertFalse(state.hasKeyboardSupport)
-        XCTAssertFalse(state.hasFullKeyboardAccess)
-        XCTAssertFalse(state.hasSwitchControl)
+        #expect(!state.isVoiceOverRunning)
+        #expect(!state.isDarkerSystemColorsEnabled)
+        #expect(!state.isReduceTransparencyEnabled)
+        #expect(!state.isHighContrastEnabled)
+        #expect(!state.isReducedMotionEnabled)
+        #expect(!state.hasKeyboardSupport)
+        #expect(!state.hasFullKeyboardAccess)
+        #expect(!state.hasSwitchControl)
     }
     
     // MARK: - HIG Recommendation Tests
     
-    func testHIGRecommendationCreation() {
+    @Test func testHIGRecommendationCreation() {
         // Given: Recommendation data
         let recommendation = HIGRecommendation(
             category: .accessibility,
@@ -291,78 +289,78 @@ class AppleHIGComplianceTests: XCTestCase {
         
         // When: Recommendation is created
         // Then: Should have correct properties
-        XCTAssertEqual(recommendation.category, .accessibility)
-        XCTAssertEqual(recommendation.priority, .high)
-        XCTAssertEqual(recommendation.description, "Improve accessibility features")
-        XCTAssertEqual(recommendation.suggestion, "Add proper accessibility labels")
+        #expect(recommendation.category == .accessibility)
+        #expect(recommendation.priority == .high)
+        #expect(recommendation.description == "Improve accessibility features")
+        #expect(recommendation.suggestion == "Add proper accessibility labels")
     }
     
-    func testHIGCategoryEnum() {
+    @Test func testHIGCategoryEnum() {
         // Given: HIG categories
         // When: Categories are accessed
         // Then: Should have all expected categories
         let categories = HIGCategory.allCases
-        XCTAssertTrue(categories.contains(.accessibility))
-        XCTAssertTrue(categories.contains(.visual))
-        XCTAssertTrue(categories.contains(.interaction))
-        XCTAssertTrue(categories.contains(.platform))
+        #expect(categories.contains(.accessibility))
+        #expect(categories.contains(.visual))
+        #expect(categories.contains(.interaction))
+        #expect(categories.contains(.platform))
     }
     
-    func testHIGPriorityEnum() {
+    @Test func testHIGPriorityEnum() {
         // Given: HIG priorities
         // When: Priorities are accessed
         // Then: Should have all expected priorities
         let priorities = HIGPriority.allCases
-        XCTAssertTrue(priorities.contains(.low))
-        XCTAssertTrue(priorities.contains(.medium))
-        XCTAssertTrue(priorities.contains(.high))
-        XCTAssertTrue(priorities.contains(.critical))
+        #expect(priorities.contains(.low))
+        #expect(priorities.contains(.medium))
+        #expect(priorities.contains(.high))
+        #expect(priorities.contains(.critical))
     }
     
     // MARK: - Platform Enum Tests
     
-    func testPlatformEnum() {
+    @Test func testPlatformEnum() {
         // Given: Platform enum
         // When: Platforms are accessed
         // Then: Should have all expected platforms
         let platforms = SixLayerPlatform.allCases
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.iOS))
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.macOS))
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.watchOS))
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.tvOS))
+        #expect(platforms.contains(SixLayerPlatform.iOS))
+        #expect(platforms.contains(SixLayerPlatform.macOS))
+        #expect(platforms.contains(SixLayerPlatform.watchOS))
+        #expect(platforms.contains(SixLayerPlatform.tvOS))
     }
     
-    func testPlatformStringValues() {
+    @Test func testPlatformStringValues() {
         // Given: Platform enum values
         // When: String values are accessed
         // Then: Should have correct string representations
-        XCTAssertEqual(SixLayerPlatform.iOS.rawValue, "iOS")
-        XCTAssertEqual(SixLayerPlatform.macOS.rawValue, "macOS")
-        XCTAssertEqual(SixLayerPlatform.watchOS.rawValue, "watchOS")
-        XCTAssertEqual(SixLayerPlatform.tvOS.rawValue, "tvOS")
+        #expect(SixLayerPlatform.iOS.rawValue == "iOS")
+        #expect(SixLayerPlatform.macOS.rawValue == "macOS")
+        #expect(SixLayerPlatform.watchOS.rawValue == "watchOS")
+        #expect(SixLayerPlatform.tvOS.rawValue == "tvOS")
     }
     
     // MARK: - HIG Compliance Level Tests
     
-    func testHIGComplianceLevelEnum() {
+    @Test func testHIGComplianceLevelEnum() {
         // Given: HIG compliance levels
         // When: Levels are accessed
         // Then: Should have all expected levels
         let levels = HIGComplianceLevel.allCases
-        XCTAssertTrue(levels.contains(.automatic))
-        XCTAssertTrue(levels.contains(.enhanced))
-        XCTAssertTrue(levels.contains(.standard))
-        XCTAssertTrue(levels.contains(.minimal))
+        #expect(levels.contains(.automatic))
+        #expect(levels.contains(.enhanced))
+        #expect(levels.contains(.standard))
+        #expect(levels.contains(.minimal))
     }
     
-    func testHIGComplianceLevelStringValues() {
+    @Test func testHIGComplianceLevelStringValues() {
         // Given: HIG compliance level enum values
         // When: String values are accessed
         // Then: Should have correct string representations
-        XCTAssertEqual(HIGComplianceLevel.automatic.rawValue, "automatic")
-        XCTAssertEqual(HIGComplianceLevel.enhanced.rawValue, "enhanced")
-        XCTAssertEqual(HIGComplianceLevel.standard.rawValue, "standard")
-        XCTAssertEqual(HIGComplianceLevel.minimal.rawValue, "minimal")
+        #expect(HIGComplianceLevel.automatic.rawValue == "automatic")
+        #expect(HIGComplianceLevel.enhanced.rawValue == "enhanced")
+        #expect(HIGComplianceLevel.standard.rawValue == "standard")
+        #expect(HIGComplianceLevel.minimal.rawValue == "minimal")
     }
     
     // MARK: - Integration Tests
@@ -374,7 +372,7 @@ class AppleHIGComplianceTests: XCTestCase {
      * TESTING SCOPE: Tests accessibility integration through platform configuration
      * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
      */
-    func testAccessibilityOptimizationManagerIntegration() async {
+    @Test func testAccessibilityOptimizationManagerIntegration() async {
         // Test with accessibility features enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -384,9 +382,9 @@ class AppleHIGComplianceTests: XCTestCase {
         
         // When: Apple HIG compliance is applied through platform configuration
         // Then: Should have proper accessibility support
-        XCTAssertTrue(enabledConfig.supportsVoiceOver, "VoiceOver should be supported when enabled")
-        XCTAssertTrue(enabledConfig.supportsSwitchControl, "Switch Control should be supported when enabled")
-        XCTAssertTrue(enabledConfig.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled")
+        #expect(enabledConfig.supportsVoiceOver, "VoiceOver should be supported when enabled")
+        #expect(enabledConfig.supportsSwitchControl, "Switch Control should be supported when enabled")
+        #expect(enabledConfig.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled")
         
         // Test with accessibility features disabled
         RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -396,9 +394,9 @@ class AppleHIGComplianceTests: XCTestCase {
         let disabledConfig = getCardExpansionPlatformConfig()
         
         // Then: Should reflect disabled state
-        XCTAssertFalse(disabledConfig.supportsVoiceOver, "VoiceOver should be disabled when disabled")
-        XCTAssertFalse(disabledConfig.supportsSwitchControl, "Switch Control should be disabled when disabled")
-        XCTAssertFalse(disabledConfig.supportsAssistiveTouch, "AssistiveTouch should be disabled when disabled")
+        #expect(!disabledConfig.supportsVoiceOver, "VoiceOver should be disabled when disabled")
+        #expect(!disabledConfig.supportsSwitchControl, "Switch Control should be disabled when disabled")
+        #expect(!disabledConfig.supportsAssistiveTouch, "AssistiveTouch should be disabled when disabled")
     }
     
     /**
@@ -408,7 +406,7 @@ class AppleHIGComplianceTests: XCTestCase {
      * TESTING SCOPE: Tests automatic accessibility integration through platform configuration
      * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
      */
-    func testAutomaticAccessibilityIntegration() async {
+    @Test func testAutomaticAccessibilityIntegration() async {
         // Test with accessibility features enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -418,9 +416,9 @@ class AppleHIGComplianceTests: XCTestCase {
         
         // When: Automatic accessibility is applied through platform configuration
         // Then: Should have proper accessibility support
-        XCTAssertTrue(enabledConfig.supportsVoiceOver, "VoiceOver should be supported when enabled")
-        XCTAssertTrue(enabledConfig.supportsSwitchControl, "Switch Control should be supported when enabled")
-        XCTAssertTrue(enabledConfig.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled")
+        #expect(enabledConfig.supportsVoiceOver, "VoiceOver should be supported when enabled")
+        #expect(enabledConfig.supportsSwitchControl, "Switch Control should be supported when enabled")
+        #expect(enabledConfig.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled")
         
         // Test with accessibility features disabled
         RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -430,9 +428,9 @@ class AppleHIGComplianceTests: XCTestCase {
         let disabledConfig = getCardExpansionPlatformConfig()
         
         // Then: Should reflect disabled state
-        XCTAssertFalse(disabledConfig.supportsVoiceOver, "VoiceOver should be disabled when disabled")
-        XCTAssertFalse(disabledConfig.supportsSwitchControl, "Switch Control should be disabled when disabled")
-        XCTAssertFalse(disabledConfig.supportsAssistiveTouch, "AssistiveTouch should be disabled when disabled")
+        #expect(!disabledConfig.supportsVoiceOver, "VoiceOver should be disabled when disabled")
+        #expect(!disabledConfig.supportsSwitchControl, "Switch Control should be disabled when disabled")
+        #expect(!disabledConfig.supportsAssistiveTouch, "AssistiveTouch should be disabled when disabled")
     }
     
     // MARK: - Platform Testing
@@ -444,29 +442,29 @@ class AppleHIGComplianceTests: XCTestCase {
      * TESTING SCOPE: Tests platform-specific behavior across all supported platforms
      * METHODOLOGY: Uses mock platform detection to test each platform's specific capabilities
      */
-    func testPlatformSpecificComplianceBehavior() async {
+    @Test func testPlatformSpecificComplianceBehavior() async {
         // Test that platform detection works correctly
         let originalPlatform = RuntimeCapabilityDetection.currentPlatform
         
         // Test iOS platform
         RuntimeCapabilityDetection.setTestPlatform(.iOS)
-        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .iOS, "Platform should be set to iOS")
+        #expect(RuntimeCapabilityDetection.currentPlatform == .iOS, "Platform should be set to iOS")
         
         // Test macOS platform  
         RuntimeCapabilityDetection.setTestPlatform(.macOS)
-        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .macOS, "Platform should be set to macOS")
+        #expect(RuntimeCapabilityDetection.currentPlatform == .macOS, "Platform should be set to macOS")
         
         // Test watchOS platform
         RuntimeCapabilityDetection.setTestPlatform(.watchOS)
-        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .watchOS, "Platform should be set to watchOS")
+        #expect(RuntimeCapabilityDetection.currentPlatform == .watchOS, "Platform should be set to watchOS")
         
         // Test tvOS platform
         RuntimeCapabilityDetection.setTestPlatform(.tvOS)
-        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .tvOS, "Platform should be set to tvOS")
+        #expect(RuntimeCapabilityDetection.currentPlatform == .tvOS, "Platform should be set to tvOS")
         
         // Test visionOS platform
         RuntimeCapabilityDetection.setTestPlatform(.visionOS)
-        XCTAssertEqual(RuntimeCapabilityDetection.currentPlatform, .visionOS, "Platform should be set to visionOS")
+        #expect(RuntimeCapabilityDetection.currentPlatform == .visionOS, "Platform should be set to visionOS")
         
         // Reset to original platform
         RuntimeCapabilityDetection.setTestPlatform(originalPlatform)
@@ -474,7 +472,7 @@ class AppleHIGComplianceTests: XCTestCase {
     
     // MARK: - Business Purpose Tests
     
-    func testAppleHIGComplianceBusinessPurpose() {
+    @Test func testAppleHIGComplianceBusinessPurpose() {
         // Given: A business requirement for Apple HIG compliance
         // When: A developer uses the framework
         // Then: Should automatically get Apple-quality UI without configuration
@@ -495,10 +493,10 @@ class AppleHIGComplianceTests: XCTestCase {
         .appleHIGCompliant()
         
         // The view should be compliant without developer configuration
-        XCTAssertNotNil(businessView)
+        #expect(businessView != nil)
     }
     
-    func testPlatformAdaptationBusinessPurpose() {
+    @Test func testPlatformAdaptationBusinessPurpose() {
         // Given: A business requirement for cross-platform apps
         // When: The same code runs on different platforms
         // Then: Should automatically adapt to platform conventions
@@ -507,10 +505,10 @@ class AppleHIGComplianceTests: XCTestCase {
             .appleHIGCompliant()
         
         // Should work on all platforms with appropriate adaptations
-        XCTAssertNotNil(crossPlatformView)
+        #expect(crossPlatformView != nil)
     }
     
-    func testAccessibilityInclusionBusinessPurpose() {
+    @Test func testAccessibilityInclusionBusinessPurpose() {
         // Given: A business requirement for inclusive design
         // When: Users with accessibility needs use the app
         // Then: Should automatically provide appropriate accessibility features
@@ -519,10 +517,10 @@ class AppleHIGComplianceTests: XCTestCase {
             .automaticAccessibility()
         
         // Should automatically include accessibility features
-        XCTAssertNotNil(inclusiveView)
+        #expect(inclusiveView != nil)
     }
     
-    func testDesignConsistencyBusinessPurpose() {
+    @Test func testDesignConsistencyBusinessPurpose() {
         // Given: A business requirement for consistent design
         // When: Multiple developers work on the same app
         // Then: Should automatically maintain Apple design consistency
@@ -534,10 +532,10 @@ class AppleHIGComplianceTests: XCTestCase {
         .visualConsistency()
         
         // Should automatically maintain design consistency
-        XCTAssertNotNil(consistentView)
+        #expect(consistentView != nil)
     }
     
-    func testDeveloperProductivityBusinessPurpose() {
+    @Test func testDeveloperProductivityBusinessPurpose() {
         // Given: A business requirement for developer productivity
         // When: Developers build UI components
         // Then: Should require minimal code for maximum quality
@@ -547,7 +545,7 @@ class AppleHIGComplianceTests: XCTestCase {
             .appleHIGCompliant()
         
         // One line of code should provide comprehensive compliance
-        XCTAssertNotNil(productiveView)
+        #expect(productiveView != nil)
     }
 }
 

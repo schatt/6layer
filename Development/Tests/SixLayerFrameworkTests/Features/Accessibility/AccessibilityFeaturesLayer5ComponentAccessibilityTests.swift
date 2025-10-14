@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL AccessibilityFeaturesLayer5 components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
+final class AccessibilityFeaturesLayer5ComponentAccessibilityTests {
     
     // MARK: - AccessibilityEnhancedView Tests
     
-    func testAccessibilityEnhancedViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityEnhancedViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Enhanced Content")
@@ -31,12 +31,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityEnhancedView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityEnhancedView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityEnhancedView should generate accessibility identifiers")
     }
     
     // MARK: - VoiceOverEnabledView Tests
     
-    func testVoiceOverEnabledViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testVoiceOverEnabledViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("VoiceOver Content")
@@ -53,12 +53,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "VoiceOverEnabledView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "VoiceOverEnabledView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "VoiceOverEnabledView should generate accessibility identifiers")
     }
     
     // MARK: - KeyboardNavigableView Tests
     
-    func testKeyboardNavigableViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testKeyboardNavigableViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Keyboard Content")
@@ -75,12 +75,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "KeyboardNavigableView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "KeyboardNavigableView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "KeyboardNavigableView should generate accessibility identifiers")
     }
     
     // MARK: - HighContrastEnabledView Tests
     
-    func testHighContrastEnabledViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testHighContrastEnabledViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("High Contrast Content")
@@ -97,12 +97,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "HighContrastEnabledView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "HighContrastEnabledView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "HighContrastEnabledView should generate accessibility identifiers")
     }
     
     // MARK: - AccessibilityHostingView Tests
     
-    func testAccessibilityHostingViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityHostingViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Hosting Content")
@@ -119,12 +119,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityHostingView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityHostingView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityHostingView should generate accessibility identifiers")
     }
     
     // MARK: - AccessibilityTestingView Tests
     
-    func testAccessibilityTestingViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityTestingViewGeneratesAccessibilityIdentifiers() async {
         // When: Creating AccessibilityTestingView
         let view = AccessibilityTestingView()
         
@@ -135,12 +135,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityTestingView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityTestingView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityTestingView should generate accessibility identifiers")
     }
     
     // MARK: - VoiceOverManager Tests
     
-    func testVoiceOverManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testVoiceOverManagerGeneratesAccessibilityIdentifiers() async {
         // Given: VoiceOverManager
         let manager = VoiceOverManager()
         
@@ -157,12 +157,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "VoiceOverManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "VoiceOverManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "VoiceOverManager should generate accessibility identifiers")
     }
     
     // MARK: - KeyboardNavigationManager Tests
     
-    func testKeyboardNavigationManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testKeyboardNavigationManagerGeneratesAccessibilityIdentifiers() async {
         // Given: KeyboardNavigationManager
         let manager = KeyboardNavigationManager()
         
@@ -179,12 +179,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "KeyboardNavigationManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "KeyboardNavigationManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "KeyboardNavigationManager should generate accessibility identifiers")
     }
     
     // MARK: - HighContrastManager Tests
     
-    func testHighContrastManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testHighContrastManagerGeneratesAccessibilityIdentifiers() async {
         // Given: HighContrastManager
         let manager = HighContrastManager()
         
@@ -201,12 +201,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "HighContrastManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "HighContrastManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "HighContrastManager should generate accessibility identifiers")
     }
     
     // MARK: - AccessibilityTestingManager Tests
     
-    func testAccessibilityTestingManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityTestingManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityTestingManager
         let manager = AccessibilityTestingManager()
         
@@ -223,12 +223,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityTestingManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityTestingManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityTestingManager should generate accessibility identifiers")
     }
     
     // MARK: - SwitchControlManager Tests
     
-    func testSwitchControlManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiers() async {
         // Given: SwitchControlManager
         let manager = SwitchControlManager()
         
@@ -245,12 +245,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "SwitchControlManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SwitchControlManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SwitchControlManager should generate accessibility identifiers")
     }
     
     // MARK: - MaterialAccessibilityManager Tests
     
-    func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
         // Given: MaterialAccessibilityManager
         let manager = MaterialAccessibilityManager()
         
@@ -267,12 +267,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "MaterialAccessibilityManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MaterialAccessibilityManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "MaterialAccessibilityManager should generate accessibility identifiers")
     }
     
     // MARK: - EyeTrackingManager Tests
     
-    func testEyeTrackingManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiers() async {
         // Given: EyeTrackingManager
         let manager = EyeTrackingManager()
         
@@ -289,12 +289,12 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "EyeTrackingManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "EyeTrackingManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "EyeTrackingManager should generate accessibility identifiers")
     }
     
     // MARK: - AssistiveTouchManager Tests
     
-    func testAssistiveTouchManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AssistiveTouchManager
         let manager = AssistiveTouchManager()
         
@@ -311,7 +311,7 @@ final class AccessibilityFeaturesLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "AssistiveTouchManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AssistiveTouchManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AssistiveTouchManager should generate accessibility identifiers")
     }
 }
 

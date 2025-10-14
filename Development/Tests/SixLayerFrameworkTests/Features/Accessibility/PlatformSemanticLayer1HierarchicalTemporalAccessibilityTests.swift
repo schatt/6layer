@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for hierarchical and temporal data functions in PlatformSemanticLayer1.swift
 /// Ensures hierarchical and temporal data presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTestCase {
+final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         await cleanupTestEnvironment()
         await MainActor.run {
@@ -48,7 +48,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
     
     /// BUSINESS PURPOSE: Validates that platformPresentHierarchicalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testData = GenericHierarchicalItem(
             title: "Root Item",
@@ -82,12 +82,12 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentHierarchicalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testData = GenericHierarchicalItem(
             title: "Root Item",
@@ -121,14 +121,14 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - Temporal Data Presentation Tests
     
     /// BUSINESS PURPOSE: Validates that platformPresentTemporalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testData = GenericTemporalItem(
             title: "Event 1",
@@ -159,12 +159,12 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentTemporalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testData = GenericTemporalItem(
             title: "Event 1",
@@ -195,6 +195,6 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: XCTest
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on macOS")
     }
 }

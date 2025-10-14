@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformInternationalizationL1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformInternationalizationL1Tests: XCTestCase {
+final class PlatformInternationalizationL1Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
     
     // MARK: - platformPresentLocalizedContent_L1 Tests
     
-    func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let hints = InternationalizationHints()
         
         let view = platformPresentLocalizedContent_L1(
@@ -48,10 +46,10 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
             componentName: "platformPresentLocalizedContent_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let hints = InternationalizationHints()
         
         let view = platformPresentLocalizedContent_L1(
@@ -66,12 +64,12 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
             componentName: "platformPresentLocalizedContent_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentLocalizedText_L1 Tests
     
-    func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let hints = InternationalizationHints()
         
         let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
@@ -83,10 +81,10 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
             componentName: "platformPresentLocalizedText_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let hints = InternationalizationHints()
         
         let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
@@ -98,6 +96,6 @@ final class PlatformInternationalizationL1Tests: XCTestCase {
             componentName: "platformPresentLocalizedText_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS")
     }
 }

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import AppKit
 import ViewInspector
@@ -7,9 +7,9 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for GenericItemCollectionView
 /// This test SHOULD FAIL - proving GenericItemCollectionView doesn't generate accessibility IDs
 @MainActor
-final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
+final class GenericItemCollectionViewRealAccessibilityTDDTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -19,13 +19,13 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         config.enableAutoIDs = true
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
-    func testExpandableCardCollectionView_AppliesCorrectModifiersOnIOS() {
+    @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnIOS() {
         // MANDATORY: Test iOS behavior by inspecting the returned view structure AND simulator testing
         
         let mockItems = [
@@ -50,11 +50,11 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
             onItemEdited: nil
         )
         
-        XCTAssertNotNil(collectionView, "ExpandableCardCollectionView should be creatable")
+        #expect(collectionView != nil, "ExpandableCardCollectionView should be creatable")
         
         // MANDATORY: Test that accessibility identifiers are applied
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             collectionView, 
             expectedPattern: "TDDTest.*collection.*item.*task1", 
             componentName: "ExpandableCardCollectionView"
@@ -70,7 +70,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         print("✅ iOS Platform Testing: Framework should return iOS-optimized view structure")
     }
     
-    func testExpandableCardCollectionView_AppliesCorrectModifiersOnMacOS() {
+    @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnMacOS() {
         // MANDATORY: Test macOS behavior by inspecting the returned view structure AND simulator testing
         
         let mockItems = [
@@ -95,11 +95,11 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
             onItemEdited: nil
         )
         
-        XCTAssertNotNil(collectionView, "ExpandableCardCollectionView should be creatable")
+        #expect(collectionView != nil, "ExpandableCardCollectionView should be creatable")
         
         // MANDATORY: Test that accessibility identifiers are applied
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             collectionView, 
             expectedPattern: "TDDTest.*collection.*item.*task1", 
             componentName: "ExpandableCardCollectionView"
@@ -117,7 +117,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
     
     // MARK: - Simulator Testing Methods
     
-    private func testIOSSimulatorBehavior<T: View>(_ view: T) {
+    @Test private func testIOSSimulatorBehavior<T: View>(_ view: T) {
         // Test iOS-specific behavior in iOS simulator
         // This would run the view in an iOS simulator and test actual behavior
         
@@ -131,10 +131,10 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         
         // For now, we validate that the framework returns the right structure for iOS
         let viewDescription = String(describing: view)
-        XCTAssertTrue(viewDescription.contains("ExpandableCardCollectionView"), "Should return ExpandableCardCollectionView for iOS")
+        #expect(viewDescription.contains("ExpandableCardCollectionView"), "Should return ExpandableCardCollectionView for iOS")
     }
     
-    private func testMacOSSimulatorBehavior<T: View>(_ view: T) {
+    @Test private func testMacOSSimulatorBehavior<T: View>(_ view: T) {
         // Test macOS-specific behavior in macOS simulator
         // This would run the view in a macOS simulator and test actual behavior
         
@@ -148,7 +148,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: XCTestCase {
         
         // For now, we validate that the framework returns the right structure for macOS
         let viewDescription = String(describing: view)
-        XCTAssertTrue(viewDescription.contains("ExpandableCardCollectionView"), "Should return ExpandableCardCollectionView for macOS")
+        #expect(viewDescription.contains("ExpandableCardCollectionView"), "Should return ExpandableCardCollectionView for macOS")
     }
     
     // MARK: - Helper Methods

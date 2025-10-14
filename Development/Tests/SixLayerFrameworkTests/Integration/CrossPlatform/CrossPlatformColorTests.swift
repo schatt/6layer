@@ -31,91 +31,91 @@
 //  - 🔧 Action Required: Add validation of cross-platform color accuracy
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class CrossPlatformColorTests: XCTestCase {
+final class CrossPlatformColorTests {
     
     // MARK: - Cross-Platform Color Tests
     
-    func testCrossPlatformColorsAreAvailable() {
+    @Test func testCrossPlatformColorsAreAvailable() {
         // Test that our cross-platform colors are accessible
-        XCTAssertNotNil(Color.cardBackground)
-        XCTAssertNotNil(Color.secondaryBackground)
-        XCTAssertNotNil(Color.primaryBackground)
-        XCTAssertNotNil(Color.groupedBackground)
-        XCTAssertNotNil(Color.separator)
-        XCTAssertNotNil(Color.label)
-        XCTAssertNotNil(Color.secondaryLabel)
+        #expect(Color.cardBackground != nil)
+        #expect(Color.secondaryBackground != nil)
+        #expect(Color.primaryBackground != nil)
+        #expect(Color.groupedBackground != nil)
+        #expect(Color.separator != nil)
+        #expect(Color.label != nil)
+        #expect(Color.secondaryLabel != nil)
     }
     
-    func testCardBackgroundColorIsCrossPlatform() {
+    @Test func testCardBackgroundColorIsCrossPlatform() {
         // Test that cardBackground works on both platforms
         let cardColor = Color.cardBackground
-        XCTAssertNotNil(cardColor)
+        #expect(cardColor != nil)
         
         // Verify it's not the same as system colors (should be our custom implementation)
-        XCTAssertNotEqual(cardColor, Color.clear)
-        XCTAssertNotEqual(cardColor, Color.primary)
+        #expect(cardColor != Color.clear)
+        #expect(cardColor != Color.primary)
     }
     
-    func testSecondaryBackgroundColorIsCrossPlatform() {
+    @Test func testSecondaryBackgroundColorIsCrossPlatform() {
         // Test that secondaryBackground works on both platforms
         let secondaryColor = Color.secondaryBackground
-        XCTAssertNotNil(secondaryColor)
+        #expect(secondaryColor != nil)
         
         // Verify it's not the same as system colors
-        XCTAssertNotEqual(secondaryColor, Color.clear)
-        XCTAssertNotEqual(secondaryColor, Color.primary)
+        #expect(secondaryColor != Color.clear)
+        #expect(secondaryColor != Color.primary)
     }
     
-    func testPrimaryBackgroundColorIsCrossPlatform() {
+    @Test func testPrimaryBackgroundColorIsCrossPlatform() {
         // Test that primaryBackground works on both platforms
         let primaryColor = Color.primaryBackground
-        XCTAssertNotNil(primaryColor)
+        #expect(primaryColor != nil)
         
         // Verify it's not the same as system colors
-        XCTAssertNotEqual(primaryColor, Color.clear)
-        XCTAssertNotEqual(primaryColor, Color.primary)
+        #expect(primaryColor != Color.clear)
+        #expect(primaryColor != Color.primary)
     }
     
-    func testGroupedBackgroundColorIsCrossPlatform() {
+    @Test func testGroupedBackgroundColorIsCrossPlatform() {
         // Test that groupedBackground works on both platforms
         let groupedColor = Color.groupedBackground
-        XCTAssertNotNil(groupedColor)
+        #expect(groupedColor != nil)
         
         // Verify it's not the same as system colors
-        XCTAssertNotEqual(groupedColor, Color.clear)
-        XCTAssertNotEqual(groupedColor, Color.primary)
+        #expect(groupedColor != Color.clear)
+        #expect(groupedColor != Color.primary)
     }
     
-    func testSeparatorColorIsCrossPlatform() {
+    @Test func testSeparatorColorIsCrossPlatform() {
         // Test that separator works on both platforms
         let separatorColor = Color.separator
-        XCTAssertNotNil(separatorColor)
+        #expect(separatorColor != nil)
         
         // Verify it's not the same as system colors
-        XCTAssertNotEqual(separatorColor, Color.clear)
-        XCTAssertNotEqual(separatorColor, Color.primary)
+        #expect(separatorColor != Color.clear)
+        #expect(separatorColor != Color.primary)
     }
     
-    func testLabelColorsAreCrossPlatform() {
+    @Test func testLabelColorsAreCrossPlatform() {
         // Test that label colors work on both platforms
         let labelColor = Color.label
         let secondaryLabelColor = Color.secondaryLabel
         
-        XCTAssertNotNil(labelColor)
-        XCTAssertNotNil(secondaryLabelColor)
+        #expect(labelColor != nil)
+        #expect(secondaryLabelColor != nil)
         
         // Verify they're not the same as system colors
-        XCTAssertNotEqual(labelColor, Color.clear)
-        XCTAssertNotEqual(secondaryLabelColor, Color.clear)
+        #expect(labelColor != Color.clear)
+        #expect(secondaryLabelColor != Color.clear)
     }
     
     // MARK: - Business Purpose Tests
     
-    func testCrossPlatformColorsEnableConsistentUI() {
+    @Test func testCrossPlatformColorsEnableConsistentUI() {
         // Test that our cross-platform colors provide consistent UI behavior
         // This is the business purpose: ensuring the framework works on both platforms
         
@@ -128,13 +128,13 @@ final class CrossPlatformColorTests: XCTestCase {
         
         // All colors should be valid and usable
         for color in colors {
-            XCTAssertNotNil(color)
+            #expect(color != nil)
             // Verify color can be used in SwiftUI views
             let _ = Rectangle().fill(color)
         }
     }
     
-    func testCrossPlatformColorsSupportFrameworkGoals() {
+    @Test func testCrossPlatformColorsSupportFrameworkGoals() {
         // Test that our color system supports the framework's cross-platform goals
         // Business purpose: enabling developers to write once, run everywhere
         
@@ -153,11 +153,11 @@ final class CrossPlatformColorTests: XCTestCase {
                     .frame(width: 100, height: 100)
             }
             
-            XCTAssertNotNil(view)
-            XCTAssertNotNil(color)
+            #expect(view != nil)
+            #expect(color != nil)
             
             // Verify the color name is descriptive and meaningful
-            XCTAssertTrue(name.contains("Background"), "Color name should be descriptive: \(name)")
+            #expect(name.contains("Background"), "Color name should be descriptive: \(name)")
         }
     }
 }

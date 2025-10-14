@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Utility Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class UtilityComponentAccessibilityTests: XCTestCase {
+final class UtilityComponentAccessibilityTests {
     
     // MARK: - Utility Component Tests
     
-    func testAccessibilityTestUtilitiesGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityTestUtilitiesGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityTestUtilities
         let testView = VStack {
             Text("Test Content")
@@ -30,10 +30,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should work correctly
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityTestUtilities should work correctly")
+        #expect(hasAccessibilityID, "AccessibilityTestUtilities should work correctly")
     }
     
-    func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier validation
         let testView = VStack {
             Text("Test Content")
@@ -49,10 +49,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should validate correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier validation should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier validation should work correctly")
     }
     
-    func testAccessibilityIdentifierPatternMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierPatternMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier pattern matching
         let testView = VStack {
             Text("Test Content")
@@ -68,10 +68,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match patterns correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier pattern matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier pattern matching should work correctly")
     }
     
-    func testAccessibilityIdentifierExactMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierExactMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier exact matching
         let testView = VStack {
             Text("Test Content")
@@ -87,10 +87,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match exactly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier exact matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier exact matching should work correctly")
     }
     
-    func testAccessibilityIdentifierWildcardMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierWildcardMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier wildcard matching
         let testView = VStack {
             Text("Test Content")
@@ -106,10 +106,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match wildcards correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier wildcard matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier wildcard matching should work correctly")
     }
     
-    func testAccessibilityIdentifierComponentNameMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierComponentNameMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier component name matching
         let testView = VStack {
             Text("Test Content")
@@ -125,10 +125,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match component names correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier component name matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier component name matching should work correctly")
     }
     
-    func testAccessibilityIdentifierNamespaceMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierNamespaceMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier namespace matching
         let testView = VStack {
             Text("Test Content")
@@ -144,10 +144,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match namespaces correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier namespace matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier namespace matching should work correctly")
     }
     
-    func testAccessibilityIdentifierScreenMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierScreenMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier screen matching
         let testView = VStack {
             Text("Test Content")
@@ -164,10 +164,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match screens correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier screen matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier screen matching should work correctly")
     }
     
-    func testAccessibilityIdentifierElementMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierElementMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier element matching
         let testView = VStack {
             Text("Test Content")
@@ -184,10 +184,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match elements correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier element matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier element matching should work correctly")
     }
     
-    func testAccessibilityIdentifierStateMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierStateMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier state matching
         let testView = VStack {
             Text("Test Content")
@@ -204,10 +204,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match states correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier state matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier state matching should work correctly")
     }
     
-    func testAccessibilityIdentifierHierarchyMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierHierarchyMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier hierarchy matching
         let testView = VStack {
             Text("Test Content")
@@ -226,10 +226,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match hierarchy correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier hierarchy matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier hierarchy matching should work correctly")
     }
     
-    func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier case insensitive matching
         let testView = VStack {
             Text("Test Content")
@@ -246,10 +246,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match case insensitively
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier case insensitive matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier case insensitive matching should work correctly")
     }
     
-    func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier partial matching
         let testView = VStack {
             Text("Test Content")
@@ -265,10 +265,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match partially
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier partial matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier partial matching should work correctly")
     }
     
-    func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier regex matching
         let testView = VStack {
             Text("Test Content")
@@ -284,10 +284,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should match regex patterns
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier regex matching should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier regex matching should work correctly")
     }
     
-    func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier performance matching
         let startTime = Date()
         
@@ -305,17 +305,17 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
                 componentName: "AccessibilityIdentifierPerformanceMatching"
             )
             
-            XCTAssertTrue(hasAccessibilityID, "Accessibility identifier performance matching should work correctly")
+            #expect(hasAccessibilityID, "Accessibility identifier performance matching should work correctly")
         }
         
         let endTime = Date()
         let duration = endTime.timeIntervalSince(startTime)
         
         // Then: Should perform within acceptable time
-        XCTAssertLessThan(duration, 1.0, "Accessibility identifier performance matching should be performant")
+        #expect(duration < 1.0, "Accessibility identifier performance matching should be performant")
     }
     
-    func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier error handling
         let testView = VStack {
             Text("Test Content")
@@ -331,10 +331,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle errors gracefully by not generating invalid IDs
-        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier error handling should not generate invalid IDs")
+        #expect(!hasAccessibilityID, "Accessibility identifier error handling should not generate invalid IDs")
     }
     
-    func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier null handling
         let testView = VStack {
             Text("Test Content")
@@ -350,10 +350,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle null values gracefully by not generating invalid IDs
-        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier null handling should not generate invalid IDs")
+        #expect(!hasAccessibilityID, "Accessibility identifier null handling should not generate invalid IDs")
     }
     
-    func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier empty handling
         let testView = VStack {
             Text("Test Content")
@@ -369,10 +369,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle empty patterns gracefully by not generating invalid IDs
-        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier empty handling should not generate invalid IDs")
+        #expect(!hasAccessibilityID, "Accessibility identifier empty handling should not generate invalid IDs")
     }
     
-    func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier whitespace handling
         let testView = VStack {
             Text("Test Content")
@@ -388,10 +388,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle whitespace gracefully
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier whitespace handling should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier whitespace handling should work correctly")
     }
     
-    func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier special character handling
         let testView = VStack {
             Text("Test Content")
@@ -408,10 +408,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle special characters gracefully
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier special character handling should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier special character handling should work correctly")
     }
     
-    func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier unicode handling
         let testView = VStack {
             Text("Test Content")
@@ -428,10 +428,10 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle unicode gracefully
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier unicode handling should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier unicode handling should work correctly")
     }
     
-    func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier long string handling
         let longString = String(repeating: "A", count: 1000)
         let testView = VStack {
@@ -449,7 +449,7 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should handle long strings gracefully
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier long string handling should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier long string handling should work correctly")
     }
 }
 

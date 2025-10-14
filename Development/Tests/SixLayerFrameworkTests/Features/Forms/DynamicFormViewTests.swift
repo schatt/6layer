@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in DynamicFormView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class DynamicFormViewTests: XCTestCase {
+final class DynamicFormViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class DynamicFormViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class DynamicFormViewTests: XCTestCase {
     
     // MARK: - DynamicFormView Tests
     
-    func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -44,10 +42,10 @@ final class DynamicFormViewTests: XCTestCase {
         )
         
         // Verify test field is properly configured
-        XCTAssertEqual(testField.id, "testField", "Test field should have correct ID")
-        XCTAssertEqual(testField.contentType, .text, "Test field should have correct content type")
-        XCTAssertEqual(testField.label, "Test Field", "Test field should have correct label")
-        XCTAssertTrue(testField.isRequired, "Test field should be required")
+        #expect(testField.id == "testField", "Test field should have correct ID")
+        #expect(testField.contentType == .text, "Test field should have correct content type")
+        #expect(testField.label == "Test Field", "Test field should have correct label")
+        #expect(testField.isRequired, "Test field should be required")
         
         let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
         
@@ -63,10 +61,10 @@ final class DynamicFormViewTests: XCTestCase {
             componentName: "DynamicFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers on iOS")
     }
     
-    func testDynamicFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -77,10 +75,10 @@ final class DynamicFormViewTests: XCTestCase {
         )
         
         // Verify test field is properly configured
-        XCTAssertEqual(testField.id, "testField", "Test field should have correct ID")
-        XCTAssertEqual(testField.contentType, .text, "Test field should have correct content type")
-        XCTAssertEqual(testField.label, "Test Field", "Test field should have correct label")
-        XCTAssertTrue(testField.isRequired, "Test field should be required")
+        #expect(testField.id == "testField", "Test field should have correct ID")
+        #expect(testField.contentType == .text, "Test field should have correct content type")
+        #expect(testField.label == "Test Field", "Test field should have correct label")
+        #expect(testField.isRequired, "Test field should be required")
         
         let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
         
@@ -96,7 +94,7 @@ final class DynamicFormViewTests: XCTestCase {
             componentName: "DynamicFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers on macOS")
     }
 }
 

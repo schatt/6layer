@@ -30,22 +30,20 @@
 //  - ✅ Excellent: Tests all possible capability combinations
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Capability combination testing
 /// Tests all possible combinations of capabilities to ensure they work together correctly
 @MainActor
-final class CapabilityCombinationTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
+final class CapabilityCombinationTests {
+    init() {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
@@ -176,7 +174,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Test touch, haptic feedback, and AssistiveTouch capability combination
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate iOS phone capabilities
-    func testTouchHapticAssistiveTouchCombination() {
+    @Test func testTouchHapticAssistiveTouchCombination() {
         // Set mock capabilities for iOS phone combination
         RuntimeCapabilityDetection.setTestPlatform(.iOS)
         RuntimeCapabilityDetection.setTestTouchSupport(true)
@@ -188,17 +186,17 @@ final class CapabilityCombinationTests: XCTestCase {
         testTouchHapticAssistiveTouchLogic()
         
         // Test that touch-related functions work together
-        XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported")
-        XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported")
-        XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported")
-        XCTAssertFalse(RuntimeCapabilityDetection.supportsHover, "Hover should not be supported on iPhone")
+        #expect(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported")
+        #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported")
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported")
+        #expect(!RuntimeCapabilityDetection.supportsHover, "Hover should not be supported on iPhone")
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported when enabled on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported when enabled on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported when enabled on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported when enabled on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported when enabled on \(platform)")
         }
         
         // Clean up
@@ -208,21 +206,21 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Test logical relationships between touch, haptic feedback, and AssistiveTouch capabilities
     /// TESTING SCOPE: Capability dependency logic, mutual exclusivity, platform consistency
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test capability relationships
-    func testTouchHapticAssistiveTouchLogic() {
+    @Test func testTouchHapticAssistiveTouchLogic() {
         // Test the logical relationships between capabilities
         if RuntimeCapabilityDetection.supportsTouch {
             // Touch should enable haptic feedback
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, 
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, 
                          "Haptic feedback should be available with touch")
             // Touch should enable AssistiveTouch
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, 
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, 
                          "AssistiveTouch should be available with touch")
         } else {
             // No touch should mean no haptic feedback
-            XCTAssertFalse(RuntimeCapabilityDetection.supportsHapticFeedback, 
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
                           "Haptic feedback should not be available without touch")
             // No touch should mean no AssistiveTouch
-            XCTAssertFalse(RuntimeCapabilityDetection.supportsAssistiveTouch, 
+            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, 
                           "AssistiveTouch should not be available without touch")
         }
     }
@@ -230,7 +228,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate iPad-specific capability combination functionality for touch, hover, haptic, and AssistiveTouch
     /// TESTING SCOPE: iPad capability detection, touch+hover coexistence, haptic feedback, AssistiveTouch
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate iPad capabilities
-    func testTouchHoverHapticAssistiveTouchCombination() {
+    @Test func testTouchHoverHapticAssistiveTouchCombination() {
         // Test iPad combination
         let iPadConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.iOS,
@@ -244,17 +242,17 @@ final class CapabilityCombinationTests: XCTestCase {
         )
         
         // All four should be enabled together (iPad)
-        XCTAssertTrue(iPadConfig.supportsTouch, "Touch should be supported on iPad")
-        XCTAssertTrue(iPadConfig.supportsHover, "Hover should be supported on iPad")
-        XCTAssertTrue(iPadConfig.supportsHapticFeedback, "Haptic should be supported on iPad")
-        XCTAssertTrue(iPadConfig.supportsAssistiveTouch, "AssistiveTouch should be supported on iPad")
+        #expect(iPadConfig.supportsTouch, "Touch should be supported on iPad")
+        #expect(iPadConfig.supportsHover, "Hover should be supported on iPad")
+        #expect(iPadConfig.supportsHapticFeedback, "Haptic should be supported on iPad")
+        #expect(iPadConfig.supportsAssistiveTouch, "AssistiveTouch should be supported on iPad")
         
         // Test that touch and hover can coexist (iPad special case)
-        XCTAssertTrue(iPadConfig.supportsTouch && iPadConfig.supportsHover, 
+        #expect(iPadConfig.supportsTouch && iPadConfig.supportsHover, 
                      "Touch and hover should coexist on iPad")
         
         // Test that touch targets are appropriate
-        XCTAssertGreaterThanOrEqual(iPadConfig.minTouchTarget, 44, 
+        #expect(iPadConfig.minTouchTarget >= 44, 
                                    "Touch targets should be adequate")
         
         // Test across all platforms
@@ -265,10 +263,10 @@ final class CapabilityCombinationTests: XCTestCase {
             RuntimeCapabilityDetection.setTestHapticFeedback(true)
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsHover, "Hover should be supported on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsHover, "Hover should be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported on \(platform)")
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -277,7 +275,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate macOS-specific capability combination functionality for hover, vision, and OCR
     /// TESTING SCOPE: macOS capability detection, hover support, vision framework, OCR functionality
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate macOS capabilities
-    func testHoverVisionOCRCombination() {
+    @Test func testHoverVisionOCRCombination() {
         // Test macOS combination (hover + vision + OCR, no touch)
         let macOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.macOS,
@@ -291,16 +289,16 @@ final class CapabilityCombinationTests: XCTestCase {
         )
         
         // Hover should be supported
-        XCTAssertTrue(macOSConfig.supportsHover, "Hover should be supported on macOS")
+        #expect(macOSConfig.supportsHover, "Hover should be supported on macOS")
         
         // Touch should not be supported
-        XCTAssertFalse(macOSConfig.supportsTouch, "Touch should not be supported on macOS")
-        XCTAssertFalse(macOSConfig.supportsHapticFeedback, "Haptic should not be supported on macOS")
-        XCTAssertFalse(macOSConfig.supportsAssistiveTouch, "AssistiveTouch should not be supported on macOS")
+        #expect(!macOSConfig.supportsTouch, "Touch should not be supported on macOS")
+        #expect(!macOSConfig.supportsHapticFeedback, "Haptic should not be supported on macOS")
+        #expect(!macOSConfig.supportsAssistiveTouch, "AssistiveTouch should not be supported on macOS")
         
         // Vision and OCR should be supported
-        XCTAssertTrue(isVisionFrameworkAvailable(), "Vision should be available")
-        XCTAssertTrue(isVisionOCRAvailable(), "OCR should be available")
+        #expect(isVisionFrameworkAvailable(), "Vision should be available")
+        #expect(isVisionOCRAvailable(), "OCR should be available")
         
         // Test that Vision functions work
         let testImage = PlatformImage()
@@ -333,7 +331,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate watchOS-specific capability combination functionality for touch, haptic, and AssistiveTouch
     /// TESTING SCOPE: watchOS capability detection, touch support, haptic feedback, AssistiveTouch, limited capabilities
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate watchOS capabilities
-    func testWatchOSCombination() {
+    @Test func testWatchOSCombination() {
         // Test watchOS combination (touch + haptic + AssistiveTouch, no hover/vision/OCR)
         let watchOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.watchOS,
@@ -347,24 +345,24 @@ final class CapabilityCombinationTests: XCTestCase {
         )
         
         // Touch and haptic should be supported
-        XCTAssertTrue(watchOSConfig.supportsTouch, "Touch should be supported on watchOS")
-        XCTAssertTrue(watchOSConfig.supportsHapticFeedback, "Haptic should be supported on watchOS")
-        XCTAssertTrue(watchOSConfig.supportsAssistiveTouch, "AssistiveTouch should be supported on watchOS")
+        #expect(watchOSConfig.supportsTouch, "Touch should be supported on watchOS")
+        #expect(watchOSConfig.supportsHapticFeedback, "Haptic should be supported on watchOS")
+        #expect(watchOSConfig.supportsAssistiveTouch, "AssistiveTouch should be supported on watchOS")
         
         // Hover should not be supported
-        XCTAssertFalse(watchOSConfig.supportsHover, "Hover should not be supported on watchOS")
+        #expect(!watchOSConfig.supportsHover, "Hover should not be supported on watchOS")
         
         // Vision and OCR should not be supported on watchOS
         // Note: These functions check the actual platform, not the simulated one
         // In a real watchOS environment, these would return false
         // For testing purposes, we verify the logical relationship
         if DeviceType.current == .watch {
-            XCTAssertFalse(isVisionFrameworkAvailable(), "Vision should not be available on watchOS")
-            XCTAssertFalse(isVisionOCRAvailable(), "OCR should not be available on watchOS")
+            #expect(!isVisionFrameworkAvailable(), "Vision should not be available on watchOS")
+            #expect(!isVisionOCRAvailable(), "OCR should not be available on watchOS")
         }
         
         // Test that touch targets are appropriate for watch
-        XCTAssertGreaterThanOrEqual(watchOSConfig.minTouchTarget, 44, 
+        #expect(watchOSConfig.minTouchTarget >= 44, 
                                    "Touch targets should be adequate")
         
         // Test across all platforms
@@ -375,10 +373,10 @@ final class CapabilityCombinationTests: XCTestCase {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             RuntimeCapabilityDetection.setTestHover(false)
             
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported on \(platform)")
-            XCTAssertFalse(RuntimeCapabilityDetection.supportsHover, "Hover should not be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic should be supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be supported on \(platform)")
+            #expect(!RuntimeCapabilityDetection.supportsHover, "Hover should not be supported on \(platform)")
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -387,7 +385,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate tvOS-specific capability combination functionality with accessibility-only features
     /// TESTING SCOPE: tvOS capability detection, accessibility support, limited interaction capabilities
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate tvOS capabilities
-    func testTVOSCombination() {
+    @Test func testTVOSCombination() {
         // Test tvOS combination (accessibility only, no touch/hover/haptic/vision/OCR)
         let tvOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.tvOS,
@@ -401,24 +399,24 @@ final class CapabilityCombinationTests: XCTestCase {
         )
         
         // Touch, hover, haptic, AssistiveTouch should not be supported
-        XCTAssertFalse(tvOSConfig.supportsTouch, "Touch should not be supported on tvOS")
-        XCTAssertFalse(tvOSConfig.supportsHover, "Hover should not be supported on tvOS")
-        XCTAssertFalse(tvOSConfig.supportsHapticFeedback, "Haptic should not be supported on tvOS")
-        XCTAssertFalse(tvOSConfig.supportsAssistiveTouch, "AssistiveTouch should not be supported on tvOS")
+        #expect(!tvOSConfig.supportsTouch, "Touch should not be supported on tvOS")
+        #expect(!tvOSConfig.supportsHover, "Hover should not be supported on tvOS")
+        #expect(!tvOSConfig.supportsHapticFeedback, "Haptic should not be supported on tvOS")
+        #expect(!tvOSConfig.supportsAssistiveTouch, "AssistiveTouch should not be supported on tvOS")
         
         // Vision and OCR should not be supported on tvOS
         // Note: These functions check the actual platform, not the simulated one
         // In a real tvOS environment, these would return false
         if DeviceType.current == .tv {
-            XCTAssertFalse(isVisionFrameworkAvailable(), "Vision should not be available on tvOS")
-            XCTAssertFalse(isVisionOCRAvailable(), "OCR should not be available on tvOS")
+            #expect(!isVisionFrameworkAvailable(), "Vision should not be available on tvOS")
+            #expect(!isVisionOCRAvailable(), "OCR should not be available on tvOS")
         }
         
         // Touch targets should be larger for TV (even though touch isn't supported, config should reflect TV requirements)
         // Note: The simulated config has minTouchTarget: 0, but in a real tvOS environment it would be 60
         // For testing purposes, we verify the logical relationship
         if DeviceType.current == .tv {
-            XCTAssertGreaterThanOrEqual(tvOSConfig.minTouchTarget, 60, 
+            #expect(tvOSConfig.minTouchTarget >= 60, 
                                        "Touch targets should be larger for TV")
         }
     }
@@ -426,7 +424,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate visionOS-specific capability combination functionality for Vision framework and OCR
     /// TESTING SCOPE: visionOS capability detection, Vision framework support, OCR functionality, accessibility
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate visionOS capabilities
-    func testVisionOSCombination() {
+    @Test func testVisionOSCombination() {
         // Test visionOS combination (Vision + OCR + accessibility, no touch/hover/haptic/AssistiveTouch)
         let visionOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.visionOS,
@@ -440,20 +438,20 @@ final class CapabilityCombinationTests: XCTestCase {
         )
         
         // Only Vision and accessibility features should be supported
-        XCTAssertTrue(isVisionFrameworkAvailable(), "Vision should be available on visionOS")
-        XCTAssertTrue(isVisionOCRAvailable(), "OCR should be available on visionOS")
+        #expect(isVisionFrameworkAvailable(), "Vision should be available on visionOS")
+        #expect(isVisionOCRAvailable(), "OCR should be available on visionOS")
         
         // Touch, hover, haptic, AssistiveTouch should not be supported
-        XCTAssertFalse(visionOSConfig.supportsTouch, "Touch should not be supported on visionOS")
-        XCTAssertFalse(visionOSConfig.supportsHover, "Hover should not be supported on visionOS")
-        XCTAssertFalse(visionOSConfig.supportsHapticFeedback, "Haptic should not be supported on visionOS")
-        XCTAssertFalse(visionOSConfig.supportsAssistiveTouch, "AssistiveTouch should not be supported on visionOS")
+        #expect(!visionOSConfig.supportsTouch, "Touch should not be supported on visionOS")
+        #expect(!visionOSConfig.supportsHover, "Hover should not be supported on visionOS")
+        #expect(!visionOSConfig.supportsHapticFeedback, "Haptic should not be supported on visionOS")
+        #expect(!visionOSConfig.supportsAssistiveTouch, "AssistiveTouch should not be supported on visionOS")
         
         // Touch targets should be larger for Vision Pro (even though touch isn't supported, config should reflect Vision Pro requirements)
         // Note: The simulated config has minTouchTarget: 0, but in a real visionOS environment it would be 60
         // For testing purposes, we verify the logical relationship
         if SixLayerPlatform.current == SixLayerPlatform.visionOS {
-            XCTAssertGreaterThanOrEqual(visionOSConfig.minTouchTarget, 60, 
+            #expect(visionOSConfig.minTouchTarget >= 60, 
                                        "Touch targets should be larger for Vision Pro")
         }
     }
@@ -464,7 +462,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate comprehensive capability combination functionality across all defined combinations
     /// TESTING SCOPE: Capability combination matrix testing, platform matching, combination behavior validation
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test all capability combinations
-    func testCapabilityCombination(_ combination: CapabilityCombination) {
+    @Test func testCapabilityCombination(_ combination: CapabilityCombination) {
         let platform = SixLayerPlatform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
         
@@ -485,7 +483,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate capability combination behavior logic for specific combination types
     /// TESTING SCOPE: Combination behavior validation, platform-specific logic, capability interaction testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test combination-specific behaviors
-    func testCombinationBehavior(_ combination: CapabilityCombination) {
+    @Test func testCombinationBehavior(_ combination: CapabilityCombination) {
         switch combination.name {
         case "Touch + Haptic + AssistiveTouch":
             testTouchHapticAssistiveTouchCombination()
@@ -507,13 +505,13 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate capability combination matching functionality for expected platform combinations
     /// TESTING SCOPE: Platform combination matching, capability value validation, combination accuracy testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to verify combination matches platform
-    func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
+    @Test func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
         // Test that all capabilities match the expected combination
         for (capability, expectedValue) in combination.capabilities {
             let actualValue = getActualCapabilityValue(capability, config: config)
-            XCTAssertEqual(actualValue, expectedValue, 
+            #expect(actualValue == expectedValue, 
                          "\(capability) should be \(expectedValue) for \(combination.name)")
         }
     }
@@ -521,7 +519,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate capability combination exclusion functionality for non-matching platform combinations
     /// TESTING SCOPE: Platform combination exclusion, capability mismatch detection, combination accuracy testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to verify combination doesn't match platform
-    func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
+    @Test func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
         // Test that at least one capability doesn't match
@@ -534,7 +532,7 @@ final class CapabilityCombinationTests: XCTestCase {
             }
         }
         
-        XCTAssertTrue(hasMismatch, 
+        #expect(hasMismatch, 
                      "Current platform should not match \(combination.name)")
     }
     
@@ -557,16 +555,16 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate touch and haptic feedback capability dependency functionality
     /// TESTING SCOPE: Touch-haptic dependency logic, capability relationship validation, platform consistency
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-haptic relationships
-    func testTouchHapticCombination() {
+    @Test func testTouchHapticCombination() {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
             // Touch should enable haptic feedback
-            XCTAssertTrue(config.supportsHapticFeedback, 
+            #expect(config.supportsHapticFeedback, 
                          "Haptic feedback should be enabled when touch is supported")
         } else {
             // No touch should mean no haptic feedback
-            XCTAssertFalse(config.supportsHapticFeedback, 
+            #expect(!config.supportsHapticFeedback, 
                           "Haptic feedback should be disabled when touch is not supported")
         }
     }
@@ -574,16 +572,16 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate touch and AssistiveTouch capability dependency functionality
     /// TESTING SCOPE: Touch-AssistiveTouch dependency logic, capability relationship validation, accessibility support
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-AssistiveTouch relationships
-    func testTouchAssistiveTouchCombination() {
+    @Test func testTouchAssistiveTouchCombination() {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
             // Touch should enable AssistiveTouch
-            XCTAssertTrue(config.supportsAssistiveTouch, 
+            #expect(config.supportsAssistiveTouch, 
                          "AssistiveTouch should be enabled when touch is supported")
         } else {
             // No touch should mean no AssistiveTouch
-            XCTAssertFalse(config.supportsAssistiveTouch, 
+            #expect(!config.supportsAssistiveTouch, 
                           "AssistiveTouch should be disabled when touch is not supported")
         }
     }
@@ -591,19 +589,19 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate Vision framework and OCR capability dependency functionality
     /// TESTING SCOPE: Vision-OCR dependency logic, framework availability validation, OCR capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test Vision-OCR relationships
-    func testVisionOCRCombination() {
+    @Test func testVisionOCRCombination() {
         let visionAvailable = isVisionFrameworkAvailable()
         let ocrAvailable = isVisionOCRAvailable()
         
         // OCR should only be available if Vision is available
-        XCTAssertEqual(ocrAvailable, visionAvailable, 
+        #expect(ocrAvailable == visionAvailable, 
                      "OCR availability should match Vision framework availability")
     }
     
     /// BUSINESS PURPOSE: Validate hover and touch capability mutual exclusivity functionality
     /// TESTING SCOPE: Touch-hover mutual exclusivity logic, platform-specific exceptions, capability conflict detection
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-hover exclusivity
-    func testHoverTouchMutualExclusivity() {
+    @Test func testHoverTouchMutualExclusivity() {
         let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
@@ -613,11 +611,11 @@ final class CapabilityCombinationTests: XCTestCase {
         } else {
             // Other platforms should have mutual exclusivity
             if config.supportsTouch {
-                XCTAssertFalse(config.supportsHover, 
+                #expect(!config.supportsHover, 
                              "Hover should be disabled when touch is enabled on \(platform)")
             }
             if config.supportsHover {
-                XCTAssertFalse(config.supportsTouch, 
+                #expect(!config.supportsTouch, 
                              "Touch should be disabled when hover is enabled on \(platform)")
             }
         }
@@ -629,19 +627,19 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate impossible capability combination detection functionality
     /// TESTING SCOPE: Impossible combination detection, capability constraint validation, logical consistency testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test impossible combinations
-    func testImpossibleCombinations() {
+    @Test func testImpossibleCombinations() {
         // Test combinations that should never occur
         let config = getCardExpansionPlatformConfig()
         
         // Haptic feedback without touch should never occur
         if config.supportsHapticFeedback {
-            XCTAssertTrue(config.supportsTouch, 
+            #expect(config.supportsTouch, 
                          "Haptic feedback should only be available with touch")
         }
         
         // AssistiveTouch without touch should never occur
         if config.supportsAssistiveTouch {
-            XCTAssertTrue(config.supportsTouch, 
+            #expect(config.supportsTouch, 
                          "AssistiveTouch should only be available with touch")
         }
     }
@@ -649,7 +647,7 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate conflicting capability combination detection functionality
     /// TESTING SCOPE: Conflicting combination detection, capability conflict resolution, platform-specific conflict handling
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test conflicting combinations
-    func testConflictingCombinations() {
+    @Test func testConflictingCombinations() {
         // Test that conflicting combinations are handled
         let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
@@ -657,7 +655,7 @@ final class CapabilityCombinationTests: XCTestCase {
         if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
             // In red-phase, assert softly to avoid false negatives from overrides
-            XCTAssertFalse(config.supportsTouch && config.supportsHover,
+            #expect(!(config.supportsTouch && config.supportsHover), 
                           "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
         }
     }
@@ -665,20 +663,20 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate capability dependency validation functionality
     /// TESTING SCOPE: Capability dependency validation, missing dependency detection, dependency chain testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test capability dependencies
-    func testMissingDependencies() {
+    @Test func testMissingDependencies() {
         // Test that dependent capabilities are properly handled
         let config = getCardExpansionPlatformConfig()
         
         // OCR should only be available if Vision is available
         if config.supportsTouch {
             // Touch should enable haptic feedback
-            XCTAssertTrue(config.supportsHapticFeedback, 
+            #expect(config.supportsHapticFeedback, 
                          "Touch should enable haptic feedback")
         }
         
         // Vision should be available for OCR
         if isVisionOCRAvailable() {
-            XCTAssertTrue(isVisionFrameworkAvailable(), 
+            #expect(isVisionFrameworkAvailable(), 
                          "OCR should only be available if Vision is available")
         }
     }
@@ -688,20 +686,20 @@ final class CapabilityCombinationTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate capability combination performance optimization functionality
     /// TESTING SCOPE: Performance optimization for capability combinations, animation settings, hover delay configuration
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test performance with combinations
-    func testPerformanceWithCombinations() {
+    @Test func testPerformanceWithCombinations() {
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
         
         // Test that performance settings are appropriate for capability combinations
         if config.supportsTouch {
             // Touch platforms should have appropriate animation settings
-            XCTAssertGreaterThan(performanceConfig.maxAnimationDuration, 0, 
+            #expect(performanceConfig.maxAnimationDuration > 0, 
                                "Touch platforms should have animation duration")
         }
         
         if config.supportsHover {
             // Hover platforms should have appropriate hover delays
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
+            #expect(config.hoverDelay >= 0, 
                                        "Hover platforms should have hover delay")
         }
     }

@@ -30,14 +30,14 @@
 //  - ✅ Excellent: Tests both simulated and actual platform scenarios
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Platform simulation tests that can test different platform combinations
 /// without requiring actual hardware for each platform
 @MainActor
-final class PlatformSimulationTests: XCTestCase {
+final class PlatformSimulationTests {
     
     // MARK: - Platform Simulation Data
     
@@ -188,171 +188,171 @@ final class PlatformSimulationTests: XCTestCase {
     
     // MARK: - Comprehensive Platform Testing
     
-    func testAllPlatformCombinations() {
+    @Test func testAllPlatformCombinations() {
         for simulatedPlatform in PlatformSimulationTests.simulatedPlatforms {
             testPlatformConfiguration(simulatedPlatform)
         }
     }
     
-    func testPlatformConfiguration(_ platform: SimulatedPlatform) {
+    @Test func testPlatformConfiguration(_ platform: SimulatedPlatform) {
         // Test that the platform configuration is internally consistent
-        XCTAssertTrue(platform.capabilities.isInternallyConsistent(), 
+        #expect(platform.capabilities.isInternallyConsistent(), 
                      "Platform \(platform.platform) (\(platform.deviceType)) should be internally consistent")
         
         // Test platform-specific constraints
-        XCTAssertTrue(platform.capabilities.satisfiesPlatformConstraints(platform.platform), 
+        #expect(platform.capabilities.satisfiesPlatformConstraints(platform.platform), 
                      "Platform \(platform.platform) should satisfy platform constraints")
         
         // Test screen size appropriateness
-        XCTAssertTrue(platform.screenSize.width > 0 && platform.screenSize.height > 0, 
+        #expect(platform.screenSize.width > 0 && platform.screenSize.height > 0, 
                      "Platform \(platform.platform) should have valid screen size")
         
         // Test touch target size appropriateness
         if platform.capabilities.supportsTouch {
-            XCTAssertGreaterThanOrEqual(platform.capabilities.minTouchTarget, 44, 
+            #expect(platform.capabilities.minTouchTarget >= 44, 
                                        "Touch platforms should have adequate touch targets")
         }
     }
     
     // MARK: - Device Type Specific Testing
     
-    func testPhoneSpecificFeatures() {
+    @Test func testPhoneSpecificFeatures() {
         let phonePlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .phone }
         
         for platform in phonePlatforms {
-            XCTAssertTrue(platform.capabilities.supportsTouch, 
+            #expect(platform.capabilities.supportsTouch, 
                          "Phone should support touch")
-            XCTAssertTrue(platform.capabilities.supportsHapticFeedback, 
+            #expect(platform.capabilities.supportsHapticFeedback, 
                          "Phone should support haptic feedback")
-            XCTAssertTrue(platform.capabilities.supportsAssistiveTouch, 
+            #expect(platform.capabilities.supportsAssistiveTouch, 
                          "Phone should support AssistiveTouch")
-            XCTAssertFalse(platform.capabilities.supportsHover, 
+            #expect(!platform.capabilities.supportsHover, 
                           "Phone should not support hover")
         }
     }
     
-    func testPadSpecificFeatures() {
+    @Test func testPadSpecificFeatures() {
         let padPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .pad }
         
         for platform in padPlatforms {
-            XCTAssertTrue(platform.capabilities.supportsTouch, 
+            #expect(platform.capabilities.supportsTouch, 
                          "iPad should support touch")
-            XCTAssertTrue(platform.capabilities.supportsHover, 
+            #expect(platform.capabilities.supportsHover, 
                          "iPad should support hover")
-            XCTAssertTrue(platform.capabilities.supportsHapticFeedback, 
+            #expect(platform.capabilities.supportsHapticFeedback, 
                          "iPad should support haptic feedback")
-            XCTAssertTrue(platform.capabilities.supportsAssistiveTouch, 
+            #expect(platform.capabilities.supportsAssistiveTouch, 
                          "iPad should support AssistiveTouch")
         }
     }
     
-    func testMacSpecificFeatures() {
+    @Test func testMacSpecificFeatures() {
         let macPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .mac }
         
         for platform in macPlatforms {
-            XCTAssertFalse(platform.capabilities.supportsTouch, 
+            #expect(!platform.capabilities.supportsTouch, 
                           "Mac should not support touch")
-            XCTAssertTrue(platform.capabilities.supportsHover, 
+            #expect(platform.capabilities.supportsHover, 
                          "Mac should support hover")
-            XCTAssertFalse(platform.capabilities.supportsHapticFeedback, 
+            #expect(!platform.capabilities.supportsHapticFeedback, 
                           "Mac should not support haptic feedback")
-            XCTAssertFalse(platform.capabilities.supportsAssistiveTouch, 
+            #expect(!platform.capabilities.supportsAssistiveTouch, 
                           "Mac should not support AssistiveTouch")
         }
     }
     
-    func testWatchSpecificFeatures() {
+    @Test func testWatchSpecificFeatures() {
         let watchPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .watch }
         
         for platform in watchPlatforms {
-            XCTAssertTrue(platform.capabilities.supportsTouch, 
+            #expect(platform.capabilities.supportsTouch, 
                          "Watch should support touch")
-            XCTAssertTrue(platform.capabilities.supportsHapticFeedback, 
+            #expect(platform.capabilities.supportsHapticFeedback, 
                          "Watch should support haptic feedback")
-            XCTAssertTrue(platform.capabilities.supportsAssistiveTouch, 
+            #expect(platform.capabilities.supportsAssistiveTouch, 
                          "Watch should support AssistiveTouch")
-            XCTAssertFalse(platform.capabilities.supportsHover, 
+            #expect(!platform.capabilities.supportsHover, 
                           "Watch should not support hover")
-            XCTAssertLessThan(platform.capabilities.maxAnimationDuration, 0.2, 
+            #expect(platform.capabilities.maxAnimationDuration < 0.2, 
                              "Watch should have fast animations")
         }
     }
     
-    func testTVSpecificFeatures() {
+    @Test func testTVSpecificFeatures() {
         let tvPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.deviceType == .tv }
         
         for platform in tvPlatforms {
-            XCTAssertFalse(platform.capabilities.supportsTouch, 
+            #expect(!platform.capabilities.supportsTouch, 
                           "TV should not support touch")
-            XCTAssertFalse(platform.capabilities.supportsHover, 
+            #expect(!platform.capabilities.supportsHover, 
                           "TV should not support hover")
-            XCTAssertFalse(platform.capabilities.supportsHapticFeedback, 
+            #expect(!platform.capabilities.supportsHapticFeedback, 
                           "TV should not support haptic feedback")
-            XCTAssertFalse(platform.capabilities.supportsAssistiveTouch, 
+            #expect(!platform.capabilities.supportsAssistiveTouch, 
                           "TV should not support AssistiveTouch")
-            XCTAssertGreaterThan(platform.capabilities.minTouchTarget, 44, 
+            #expect(platform.capabilities.minTouchTarget > 44, 
                                 "TV should have larger touch targets")
         }
     }
     
-    func testVisionSpecificFeatures() {
+    @Test func testVisionSpecificFeatures() {
         let visionPlatforms = PlatformSimulationTests.simulatedPlatforms.filter { $0.platform == SixLayerPlatform.visionOS }
         
         for platform in visionPlatforms {
-            XCTAssertFalse(platform.capabilities.supportsTouch, 
+            #expect(!platform.capabilities.supportsTouch, 
                           "Vision should not support touch")
-            XCTAssertFalse(platform.capabilities.supportsHover, 
+            #expect(!platform.capabilities.supportsHover, 
                           "Vision should not support hover")
-            XCTAssertFalse(platform.capabilities.supportsHapticFeedback, 
+            #expect(!platform.capabilities.supportsHapticFeedback, 
                           "Vision should not support haptic feedback")
-            XCTAssertFalse(platform.capabilities.supportsAssistiveTouch, 
+            #expect(!platform.capabilities.supportsAssistiveTouch, 
                           "Vision should not support AssistiveTouch")
-            XCTAssertTrue(platform.capabilities.supportsVision, 
+            #expect(platform.capabilities.supportsVision, 
                          "Vision should support Vision framework")
-            XCTAssertGreaterThan(platform.capabilities.minTouchTarget, 44, 
+            #expect(platform.capabilities.minTouchTarget > 44, 
                                 "Vision should have larger targets")
         }
     }
     
     // MARK: - Screen Size Testing
     
-    func testScreenSizeAppropriateness() {
+    @Test func testScreenSizeAppropriateness() {
         for platform in PlatformSimulationTests.simulatedPlatforms {
             let screenSize = platform.screenSize
             let deviceType = platform.deviceType
             
             switch deviceType {
             case .phone:
-                XCTAssertTrue(screenSize.width < 500, 
+                #expect(screenSize.width < 500, 
                              "Phone screen should be narrow")
             case .vision:
-                XCTAssertTrue(screenSize.width >= 1000, "Vision Pro should have large screen")
-                XCTAssertTrue(screenSize.height > screenSize.width, 
+                #expect(screenSize.width >= 1000, "Vision Pro should have large screen")
+                #expect(screenSize.height > screenSize.width, 
                              "Phone should be taller than wide")
             case .pad:
-                XCTAssertTrue(screenSize.width > 700, 
+                #expect(screenSize.width > 700, 
                              "iPad screen should be wide")
-                XCTAssertTrue(screenSize.height > screenSize.width, 
+                #expect(screenSize.height > screenSize.width, 
                              "iPad should be taller than wide")
             case .mac:
-                XCTAssertTrue(screenSize.width > 1000, 
+                #expect(screenSize.width > 1000, 
                              "Mac screen should be wide")
-                XCTAssertTrue(screenSize.height > 500, 
+                #expect(screenSize.height > 500, 
                              "Mac screen should be tall")
             case .watch:
-                XCTAssertTrue(screenSize.width < 200, 
+                #expect(screenSize.width < 200, 
                              "Watch screen should be small")
-                XCTAssertTrue(screenSize.height < 250, 
+                #expect(screenSize.height < 250, 
                              "Watch screen should be small")
             case .tv:
-                XCTAssertTrue(screenSize.width > 1000, 
+                #expect(screenSize.width > 1000, 
                              "TV/Vision screen should be wide")
-                XCTAssertTrue(screenSize.height > 500, 
+                #expect(screenSize.height > 500, 
                              "TV/Vision screen should be tall")
             case .car:
-                XCTAssertTrue(screenSize.width > 800, 
+                #expect(screenSize.width > 800, 
                              "CarPlay screen should be wide")
-                XCTAssertTrue(screenSize.height > 400, 
+                #expect(screenSize.height > 400, 
                              "CarPlay screen should be tall")
             }
         }

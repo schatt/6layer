@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -17,12 +17,11 @@ struct PlatformResponsiveCardsTestItem: Identifiable {
 /// TESTING SCOPE: All components in PlatformResponsiveCardsLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
+final class PlatformResponsiveCardsLayer4Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -32,8 +31,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -41,7 +39,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
     
     // MARK: - GenericItemCollectionView Tests
     
-    func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             PlatformResponsiveCardsLayer4TestItem(id: "item1", title: "Test Item 1"),
             PlatformResponsiveCardsLayer4TestItem(id: "item2", title: "Test Item 2")
@@ -66,10 +64,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             PlatformResponsiveCardsLayer4TestItem(id: "item1", title: "Test Item 1"),
             PlatformResponsiveCardsLayer4TestItem(id: "item2", title: "Test Item 2")
@@ -94,12 +92,12 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GenericNumericDataView Tests
     
-    func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testData = [
             GenericNumericData(value: 123.45, label: "Test Value 1", unit: "units"),
             GenericNumericData(value: 67.89, label: "Test Value 2", unit: "items")
@@ -121,10 +119,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testData = [
             GenericNumericData(value: 123.45, label: "Test Value 1", unit: "units"),
             GenericNumericData(value: 67.89, label: "Test Value 2", unit: "items")
@@ -146,12 +144,12 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GenericMediaView Tests
     
-    func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testMedia = [
             GenericMediaItem(title: "Test Media 1", url: "https://example.com/1"),
             GenericMediaItem(title: "Test Media 2", url: "https://example.com/2")
@@ -173,10 +171,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericMediaView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testMedia = [
             GenericMediaItem(title: "Test Media 1", url: "https://example.com/1"),
             GenericMediaItem(title: "Test Media 2", url: "https://example.com/2")
@@ -198,12 +196,12 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericMediaView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GenericSettingsView Tests
     
-    func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -237,10 +235,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericSettingsView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -274,12 +272,12 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericSettingsView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GenericContentView Tests
     
-    func testGenericContentViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericContentViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -298,10 +296,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericContentView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericContentViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericContentViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -320,12 +318,12 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericContentView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GenericNumericDataView Tests
     
-    func testBasicValueViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testBasicValueViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -347,10 +345,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
     }
     
-    func testBasicValueViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testBasicValueViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -372,12 +370,12 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GenericItemCollectionView Tests
     
-    func testBasicArrayViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testBasicArrayViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -399,10 +397,10 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testBasicArrayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testBasicArrayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -424,7 +422,7 @@ final class PlatformResponsiveCardsLayer4Tests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
     }
 }
 

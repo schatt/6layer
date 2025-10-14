@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Intelligence Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class IntelligenceComponentAccessibilityTests: XCTestCase {
+final class IntelligenceComponentAccessibilityTests {
     
     // MARK: - Intelligence Component Tests
     
-    func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiers() async {
+    @Test func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiers() async {
         // Given: ImageMetadataIntelligence
         let testView = ImageMetadataIntelligence()
         
@@ -25,10 +25,10 @@ final class IntelligenceComponentAccessibilityTests: XCTestCase {
             componentName: "ImageMetadataIntelligence"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ImageMetadataIntelligence should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ImageMetadataIntelligence should generate accessibility identifiers")
     }
     
-    func testDataFrameAnalysisEngineGeneratesAccessibilityIdentifiers() async {
+    @Test func testDataFrameAnalysisEngineGeneratesAccessibilityIdentifiers() async {
         // Given: DataFrameAnalysisEngine
         let testView = DataFrameAnalysisEngine()
         
@@ -39,10 +39,10 @@ final class IntelligenceComponentAccessibilityTests: XCTestCase {
             componentName: "DataFrameAnalysisEngine"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DataFrameAnalysisEngine should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DataFrameAnalysisEngine should generate accessibility identifiers")
     }
     
-    func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
+    @Test func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
         // Given: RuntimeCapabilityDetection
         let testView = RuntimeCapabilityDetection()
         
@@ -53,7 +53,7 @@ final class IntelligenceComponentAccessibilityTests: XCTestCase {
             componentName: "RuntimeCapabilityDetection"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "RuntimeCapabilityDetection should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "RuntimeCapabilityDetection should generate accessibility identifiers")
     }
 }
 

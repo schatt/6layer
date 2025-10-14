@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Example Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ExampleComponentAccessibilityTests: XCTestCase {
+final class ExampleComponentAccessibilityTests {
     
     // MARK: - Example Component Tests
     
-    func testFormUsageExampleGeneratesAccessibilityIdentifiers() async {
+    @Test func testFormUsageExampleGeneratesAccessibilityIdentifiers() async {
         // Given: FormUsageExample
         let testView = FormUsageExample()
         
@@ -25,10 +25,10 @@ final class ExampleComponentAccessibilityTests: XCTestCase {
             componentName: "FormUsageExample"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers")
     }
     
-    func testFormInsightsDashboardGeneratesAccessibilityIdentifiers() async {
+    @Test func testFormInsightsDashboardGeneratesAccessibilityIdentifiers() async {
         // Given: FormInsightsDashboard
         let testView = FormInsightsDashboard()
         
@@ -39,10 +39,10 @@ final class ExampleComponentAccessibilityTests: XCTestCase {
             componentName: "FormInsightsDashboard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers")
     }
     
-    func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
+    @Test func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
         // Given: ExampleHelpers
         let testView = ExampleHelpers()
         
@@ -53,7 +53,7 @@ final class ExampleComponentAccessibilityTests: XCTestCase {
             componentName: "ExampleHelpers"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExampleHelpers should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ExampleHelpers should generate accessibility identifiers")
     }
 }
 

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL DynamicFormView components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
+final class DynamicFormViewComponentAccessibilityTests {
     
     // MARK: - DynamicFormView Tests
     
-    func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test form configuration
         let formConfig = DynamicFormConfiguration(
             id: "test-form",
@@ -32,12 +32,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers")
     }
     
     // MARK: - DynamicFormHeader Tests
     
-    func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
         // Given: Test form configuration
         let formConfig = DynamicFormConfiguration(
             id: "test-form",
@@ -55,12 +55,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFormHeader"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormHeader should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFormHeader should generate accessibility identifiers")
     }
     
     // MARK: - DynamicFormSectionView Tests
     
-    func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test form section
         let section = DynamicFormSection(
             id: "test-section",
@@ -78,12 +78,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFormSectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormSectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFormSectionView should generate accessibility identifiers")
     }
     
     // MARK: - DynamicFormFieldView Tests
     
-    func testDynamicFormFieldViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFormFieldViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test form field
         let field = DynamicFormField(
             id: "test-field",
@@ -102,12 +102,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFormFieldView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormFieldView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFormFieldView should generate accessibility identifiers")
     }
     
     // MARK: - DynamicFormActions Tests
     
-    func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
         // Given: Test form actions
         let actions = DynamicFormActions(
             submitTitle: "Submit",
@@ -131,12 +131,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFormActions"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormActions should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFormActions should generate accessibility identifiers")
     }
     
     // MARK: - DynamicTextField Tests
     
-    func testDynamicTextFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicTextFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test text field configuration
         let field = DynamicFormField(
             id: "text-field",
@@ -155,12 +155,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicTextField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicTextField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicTextField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicNumberField Tests
     
-    func testDynamicNumberFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicNumberFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test number field configuration
         let field = DynamicFormField(
             id: "number-field",
@@ -179,12 +179,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicNumberField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicNumberField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicNumberField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicTextAreaField Tests
     
-    func testDynamicTextAreaFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicTextAreaFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test text area field configuration
         let field = DynamicFormField(
             id: "textarea-field",
@@ -203,12 +203,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicTextAreaField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicTextAreaField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicTextAreaField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicSelectField Tests
     
-    func testDynamicSelectFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicSelectFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test select field configuration
         let field = DynamicFormField(
             id: "select-field",
@@ -228,12 +228,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicSelectField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicSelectField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicSelectField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicMultiSelectField Tests
     
-    func testDynamicMultiSelectFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicMultiSelectFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test multi-select field configuration
         let field = DynamicFormField(
             id: "multiselect-field",
@@ -253,12 +253,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicMultiSelectField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicMultiSelectField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicMultiSelectField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicRadioField Tests
     
-    func testDynamicRadioFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicRadioFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test radio field configuration
         let field = DynamicFormField(
             id: "radio-field",
@@ -278,12 +278,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicRadioField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicRadioField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicRadioField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicCheckboxField Tests
     
-    func testDynamicCheckboxFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicCheckboxFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test checkbox field configuration
         let field = DynamicFormField(
             id: "checkbox-field",
@@ -302,12 +302,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicCheckboxField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicCheckboxField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicCheckboxField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicToggleField Tests
     
-    func testDynamicToggleFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicToggleFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test toggle field configuration
         let field = DynamicFormField(
             id: "toggle-field",
@@ -326,12 +326,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicToggleField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicToggleField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicToggleField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicDateField Tests
     
-    func testDynamicDateFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicDateFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test date field configuration
         let field = DynamicFormField(
             id: "date-field",
@@ -350,12 +350,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicDateField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicDateField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicDateField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicTimeField Tests
     
-    func testDynamicTimeFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicTimeFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test time field configuration
         let field = DynamicFormField(
             id: "time-field",
@@ -374,12 +374,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicTimeField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicTimeField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicTimeField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicDateTimeField Tests
     
-    func testDynamicDateTimeFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicDateTimeFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test date-time field configuration
         let field = DynamicFormField(
             id: "datetime-field",
@@ -398,12 +398,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicDateTimeField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicDateTimeField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicDateTimeField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicColorField Tests
     
-    func testDynamicColorFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicColorFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test color field configuration
         let field = DynamicFormField(
             id: "color-field",
@@ -422,12 +422,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicColorField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicColorField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicColorField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicFileField Tests
     
-    func testDynamicFileFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFileFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test file field configuration
         let field = DynamicFormField(
             id: "file-field",
@@ -446,12 +446,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFileField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFileField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFileField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicIntegerField Tests
     
-    func testDynamicIntegerFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicIntegerFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test integer field configuration
         let field = DynamicFormField(
             id: "integer-field",
@@ -470,12 +470,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicIntegerField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicIntegerField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicIntegerField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicImageField Tests
     
-    func testDynamicImageFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicImageFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test image field configuration
         let field = DynamicFormField(
             id: "image-field",
@@ -494,12 +494,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicImageField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicImageField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicImageField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicURLField Tests
     
-    func testDynamicURLFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicURLFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test URL field configuration
         let field = DynamicFormField(
             id: "url-field",
@@ -518,12 +518,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicURLField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicURLField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicURLField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicArrayField Tests
     
-    func testDynamicArrayFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicArrayFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test array field configuration
         let field = DynamicFormField(
             id: "array-field",
@@ -542,12 +542,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicArrayField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicArrayField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicArrayField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicDataField Tests
     
-    func testDynamicDataFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicDataFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test data field configuration
         let field = DynamicFormField(
             id: "data-field",
@@ -566,12 +566,12 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicDataField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicDataField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicDataField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicEnumField Tests
     
-    func testDynamicEnumFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicEnumFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test enum field configuration
         let field = DynamicFormField(
             id: "enum-field",
@@ -591,7 +591,7 @@ final class DynamicFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicEnumField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicEnumField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicEnumField should generate accessibility identifiers")
     }
 }
 

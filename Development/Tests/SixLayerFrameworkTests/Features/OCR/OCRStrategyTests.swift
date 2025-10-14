@@ -23,25 +23,22 @@
 //  view creation and hosting, not actual OCR strategy functionality.
 //  Real tests need to be written that test actual OCR strategy behavior.
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for OCR strategy functionality
 /// TODO: Implement real tests that test actual OCR strategy functionality
 @MainActor
-final class OCRStrategyTests: XCTestCase {
+final class OCRStrategyTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         // TODO: Set up real OCR strategy tests
     }
     
-    override func tearDown() {
-        // TODO: Clean up OCR strategy tests
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Real OCR Strategy Tests (To Be Implemented)

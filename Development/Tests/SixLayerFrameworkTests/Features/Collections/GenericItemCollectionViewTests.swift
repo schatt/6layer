@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: GenericItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class GenericItemCollectionViewTests: XCTestCase {
+final class GenericItemCollectionViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class GenericItemCollectionViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class GenericItemCollectionViewTests: XCTestCase {
     
     // MARK: - GenericItemCollectionView Tests
     
-    func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
             GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
@@ -51,10 +49,10 @@ final class GenericItemCollectionViewTests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
             GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
@@ -72,7 +70,7 @@ final class GenericItemCollectionViewTests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
     }
 }
 

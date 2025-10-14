@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in PlatformStylingLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformStylingLayer4Tests: XCTestCase {
+final class PlatformStylingLayer4Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformStylingLayer4Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class PlatformStylingLayer4Tests: XCTestCase {
     
     // MARK: - platformStyledContainer_L4 Tests
     
-    func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         let view = Text("Test Content")
             .platformStyledContainer_L4(
                 content: {
@@ -48,10 +46,10 @@ final class PlatformStylingLayer4Tests: XCTestCase {
             componentName: "platformStyledContainer_L4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = Text("Test Content")
             .platformStyledContainer_L4(
                 content: {
@@ -66,7 +64,7 @@ final class PlatformStylingLayer4Tests: XCTestCase {
             componentName: "platformStyledContainer_L4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on macOS")
     }
 }
 

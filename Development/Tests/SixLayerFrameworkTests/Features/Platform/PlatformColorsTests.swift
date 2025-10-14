@@ -31,23 +31,21 @@
 //  - 🔧 Action Required: Add validation of platform color behavior accuracy
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class PlatformColorsTests: XCTestCase {
+final class PlatformColorsTests {
     
-    override func setUp() {
-        super.setUp()
+    init() {
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Platform-Specific Business Logic Tests
     
-    @MainActor
+    @Test @MainActor
     func testPlatformColorsAcrossPlatforms() {
         // Given: Platform-specific color expectations
         let platform = SixLayerPlatform.current
@@ -59,35 +57,35 @@ final class PlatformColorsTests: XCTestCase {
             // Test that iOS colors can actually be used in views
             let iosView = createTestViewWithPlatformColors()
             let iosHostingView = hostRootPlatformView(iosView.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(iosHostingView, "iOS colors should work in actual views")
+            #expect(iosHostingView != nil, "iOS colors should work in actual views")
             
         case .macOS:
             // Test that macOS colors can actually be used in views
             let macosView = createTestViewWithPlatformColors()
             let macosHostingView = hostRootPlatformView(macosView.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(macosHostingView, "macOS colors should work in actual views")
+            #expect(macosHostingView != nil, "macOS colors should work in actual views")
             
         case .watchOS:
             // Test that watchOS colors can actually be used in views
             let watchosView = createTestViewWithPlatformColors()
             let watchosHostingView = hostRootPlatformView(watchosView.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(watchosHostingView, "watchOS colors should work in actual views")
+            #expect(watchosHostingView != nil, "watchOS colors should work in actual views")
             
         case .tvOS:
             // Test that tvOS colors can actually be used in views
             let tvosView = createTestViewWithPlatformColors()
             let tvosHostingView = hostRootPlatformView(tvosView.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(tvosHostingView, "tvOS colors should work in actual views")
+            #expect(tvosHostingView != nil, "tvOS colors should work in actual views")
             
         case .visionOS:
             // Test that visionOS colors can actually be used in views
             let visionosView = createTestViewWithPlatformColors()
             let visionosHostingView = hostRootPlatformView(visionosView.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(visionosHostingView, "visionOS colors should work in actual views")
+            #expect(visionosHostingView != nil, "visionOS colors should work in actual views")
         }
     }
     
-    func testPlatformColorConsistency() {
+    @Test func testPlatformColorConsistency() {
         // Given: Platform colors for consistency testing
         let primaryLabel = Color.platformPrimaryLabel
         let secondaryLabel = Color.platformSecondaryLabel
@@ -97,24 +95,24 @@ final class PlatformColorsTests: XCTestCase {
         
         // When: Validating platform color consistency
         // Then: Test business logic for color consistency
-        XCTAssertNotNil(primaryLabel, "Primary label color should be consistent")
-        XCTAssertNotNil(secondaryLabel, "Secondary label color should be consistent")
-        XCTAssertNotNil(tertiaryLabel, "Tertiary label color should be consistent")
-        XCTAssertNotNil(background, "Background color should be consistent")
-        XCTAssertNotNil(secondaryBackground, "Secondary background color should be consistent")
+        #expect(primaryLabel != nil, "Primary label color should be consistent")
+        #expect(secondaryLabel != nil, "Secondary label color should be consistent")
+        #expect(tertiaryLabel != nil, "Tertiary label color should be consistent")
+        #expect(background != nil, "Background color should be consistent")
+        #expect(secondaryBackground != nil, "Secondary background color should be consistent")
         
         // Test business logic: Platform colors should be different from each other
-        XCTAssertNotEqual(primaryLabel, secondaryLabel, "Primary and secondary label colors should be different")
-        XCTAssertNotEqual(secondaryLabel, tertiaryLabel, "Secondary and tertiary label colors should be different")
-        XCTAssertNotEqual(background, secondaryBackground, "Background and secondary background colors should be different")
+        #expect(primaryLabel != secondaryLabel, "Primary and secondary label colors should be different")
+        #expect(secondaryLabel != tertiaryLabel, "Secondary and tertiary label colors should be different")
+        #expect(background != secondaryBackground, "Background and secondary background colors should be different")
         
         // Test business logic: Platform colors should be accessible
-        XCTAssertTrue(primaryLabel != Color.clear, "Primary label color should not be clear")
-        XCTAssertTrue(secondaryLabel != Color.clear, "Secondary label color should not be clear")
-        XCTAssertTrue(background != Color.clear, "Background color should not be clear")
+        #expect(primaryLabel != Color.clear, "Primary label color should not be clear")
+        #expect(secondaryLabel != Color.clear, "Secondary label color should not be clear")
+        #expect(background != Color.clear, "Background color should not be clear")
     }
     
-    func testPlatformColorEncoding() throws {
+    @Test func testPlatformColorEncoding() throws {
         // Given: Platform colors for encoding testing
         let primaryLabel = Color.platformPrimaryLabel
         let secondaryLabel = Color.platformSecondaryLabel
@@ -126,94 +124,94 @@ final class PlatformColorsTests: XCTestCase {
         let backgroundEncoded = try platformColorEncode(background)
         
         // Then: Test business logic for color encoding
-        XCTAssertNotNil(primaryEncoded, "Primary label color should be encodable")
-        XCTAssertNotNil(secondaryEncoded, "Secondary label color should be encodable")
-        XCTAssertNotNil(backgroundEncoded, "Background color should be encodable")
+        #expect(primaryEncoded != nil, "Primary label color should be encodable")
+        #expect(secondaryEncoded != nil, "Secondary label color should be encodable")
+        #expect(backgroundEncoded != nil, "Background color should be encodable")
         
         // Test business logic: Encoded colors should be decodable
-        XCTAssertNotNil(try platformColorDecode(primaryEncoded), "Primary label color should be decodable")
-        XCTAssertNotNil(try platformColorDecode(secondaryEncoded), "Secondary label color should be decodable")
-        XCTAssertNotNil(try platformColorDecode(backgroundEncoded), "Background color should be decodable")
+        #expect(try platformColorDecode(primaryEncoded) != nil, "Primary label color should be decodable")
+        #expect(try platformColorDecode(secondaryEncoded) != nil, "Secondary label color should be decodable")
+        #expect(try platformColorDecode(backgroundEncoded) != nil, "Background color should be decodable")
         
         // Test business logic: Decoded colors should match original colors
-        XCTAssertEqual(try platformColorDecode(primaryEncoded), primaryLabel, "Decoded primary label color should match original")
-        XCTAssertEqual(try platformColorDecode(secondaryEncoded), secondaryLabel, "Decoded secondary label color should match original")
-        XCTAssertEqual(try platformColorDecode(backgroundEncoded), background, "Decoded background color should match original")
+        #expect(try platformColorDecode(primaryEncoded) == primaryLabel, "Decoded primary label color should match original")
+        #expect(try platformColorDecode(secondaryEncoded) == secondaryLabel, "Decoded secondary label color should match original")
+        #expect(try platformColorDecode(backgroundEncoded) == background, "Decoded background color should match original")
     }
     
     // MARK: - Basic Color Tests
     
-    func testPlatformPrimaryLabelColor() {
+    @Test func testPlatformPrimaryLabelColor() {
         // Given & When
         let color = Color.platformPrimaryLabel
         
         // Then - Test business logic: Platform primary label color should be properly defined
-        XCTAssertNotNil(color, "Platform primary label color should not be nil")
+        #expect(color != nil, "Platform primary label color should not be nil")
         
         // Test business logic: Platform primary label should be consistent with platform label
-        XCTAssertEqual(color, Color.platformLabel, "Platform primary label should equal platform label")
+        #expect(color == Color.platformLabel, "Platform primary label should equal platform label")
         
         // Test business logic: Platform primary label should be accessible across platforms
         let platform = SixLayerPlatform.current
         switch platform {
         case .iOS, .macOS, .watchOS, .tvOS, .visionOS:
-            XCTAssertNotNil(color, "Platform primary label should be available on \(platform)")
+            #expect(color != nil, "Platform primary label should be available on \(platform)")
         }
     }
     
-    func testPlatformSecondaryLabelColor() {
+    @Test func testPlatformSecondaryLabelColor() {
         // Given & When
         let color = Color.platformSecondaryLabel
         
         // Then
-        XCTAssertNotNil(color, "Platform secondary label color should not be nil")
+        #expect(color != nil, "Platform secondary label color should not be nil")
         // Should be the same as existing platformSecondaryLabel
-        XCTAssertEqual(color, Color.platformSecondaryLabel, "Platform secondary label should be consistent")
+        #expect(color == Color.platformSecondaryLabel, "Platform secondary label should be consistent")
     }
     
-    func testPlatformTertiaryLabelColor() {
+    @Test func testPlatformTertiaryLabelColor() {
         // Given & When
         let color = Color.platformTertiaryLabel
         
         // Then
-        XCTAssertNotNil(color, "Platform tertiary label color should not be nil")
+        #expect(color != nil, "Platform tertiary label color should not be nil")
     }
     
-    func testPlatformQuaternaryLabelColor() {
+    @Test func testPlatformQuaternaryLabelColor() {
         // Given & When
         let color = Color.platformQuaternaryLabel
         
         // Then
-        XCTAssertNotNil(color, "Platform quaternary label color should not be nil")
+        #expect(color != nil, "Platform quaternary label color should not be nil")
     }
     
-    func testPlatformPlaceholderTextColor() {
+    @Test func testPlatformPlaceholderTextColor() {
         // Given & When
         let color = Color.platformPlaceholderText
         
         // Then
-        XCTAssertNotNil(color, "Platform placeholder text color should not be nil")
+        #expect(color != nil, "Platform placeholder text color should not be nil")
     }
     
-    func testPlatformSeparatorColor() {
+    @Test func testPlatformSeparatorColor() {
         // Given & When
         let color = Color.platformSeparator
         
         // Then
-        XCTAssertNotNil(color, "Platform separator color should not be nil")
+        #expect(color != nil, "Platform separator color should not be nil")
     }
     
-    func testPlatformOpaqueSeparatorColor() {
+    @Test func testPlatformOpaqueSeparatorColor() {
         // Given & When
         let color = Color.platformOpaqueSeparator
         
         // Then
-        XCTAssertNotNil(color, "Platform opaque separator color should not be nil")
+        #expect(color != nil, "Platform opaque separator color should not be nil")
     }
     
     // MARK: - Platform-Specific Behavior Tests
     
-    func testPlatformTertiaryLabelPlatformBehavior() {
+    @Test func testPlatformTertiaryLabelPlatformBehavior() {
         // Given & When
         let color = Color.platformTertiaryLabel
         
@@ -222,14 +220,14 @@ final class PlatformColorsTests: XCTestCase {
         // On macOS, this should be .secondary
         #if os(iOS)
         // On iOS, we expect the tertiary label color
-        XCTAssertNotNil(color, "Tertiary label should be available on iOS")
+        #expect(color != nil, "Tertiary label should be available on iOS")
         #elseif os(macOS)
         // On macOS, we expect the secondary color as fallback
-        XCTAssertNotNil(color, "Secondary color should be used as fallback on macOS")
+        #expect(color != nil, "Secondary color should be used as fallback on macOS")
         #endif
     }
     
-    func testPlatformQuaternaryLabelPlatformBehavior() {
+    @Test func testPlatformQuaternaryLabelPlatformBehavior() {
         // Given & When
         let color = Color.platformQuaternaryLabel
         
@@ -238,14 +236,14 @@ final class PlatformColorsTests: XCTestCase {
         // On macOS, this should be .secondary
         #if os(iOS)
         // On iOS, we expect the quaternary label color
-        XCTAssertNotNil(color, "Quaternary label should be available on iOS")
+        #expect(color != nil, "Quaternary label should be available on iOS")
         #elseif os(macOS)
         // On macOS, we expect the secondary color as fallback
-        XCTAssertNotNil(color, "Secondary color should be used as fallback on macOS")
+        #expect(color != nil, "Secondary color should be used as fallback on macOS")
         #endif
     }
     
-    func testPlatformPlaceholderTextPlatformBehavior() {
+    @Test func testPlatformPlaceholderTextPlatformBehavior() {
         // Given & When
         let color = Color.platformPlaceholderText
         
@@ -254,14 +252,14 @@ final class PlatformColorsTests: XCTestCase {
         // On macOS, this should be .secondary
         #if os(iOS)
         // On iOS, we expect the placeholder text color
-        XCTAssertNotNil(color, "Placeholder text should be available on iOS")
+        #expect(color != nil, "Placeholder text should be available on iOS")
         #elseif os(macOS)
         // On macOS, we expect the secondary color as fallback
-        XCTAssertNotNil(color, "Secondary color should be used as fallback on macOS")
+        #expect(color != nil, "Secondary color should be used as fallback on macOS")
         #endif
     }
     
-    func testPlatformOpaqueSeparatorPlatformBehavior() {
+    @Test func testPlatformOpaqueSeparatorPlatformBehavior() {
         // Given & When
         let color = Color.platformOpaqueSeparator
         
@@ -270,16 +268,16 @@ final class PlatformColorsTests: XCTestCase {
         // On macOS, this should be .separator
         #if os(iOS)
         // On iOS, we expect the opaque separator color
-        XCTAssertNotNil(color, "Opaque separator should be available on iOS")
+        #expect(color != nil, "Opaque separator should be available on iOS")
         #elseif os(macOS)
         // On macOS, we expect the separator color as fallback
-        XCTAssertNotNil(color, "Separator color should be used as fallback on macOS")
+        #expect(color != nil, "Separator color should be used as fallback on macOS")
         #endif
     }
     
     // MARK: - Consistency Tests
     
-    func testColorConsistency() {
+    @Test func testColorConsistency() {
         // Given & When
         let primary1 = Color.platformPrimaryLabel
         let primary2 = Color.platformPrimaryLabel
@@ -288,11 +286,11 @@ final class PlatformColorsTests: XCTestCase {
         
         // Then
         // Colors should be consistent across multiple calls
-        XCTAssertEqual(primary1, primary2, "Primary label color should be consistent")
-        XCTAssertEqual(secondary1, secondary2, "Secondary label color should be consistent")
+        #expect(primary1 == primary2, "Primary label color should be consistent")
+        #expect(secondary1 == secondary2, "Secondary label color should be consistent")
     }
     
-    func testAllPlatformColorsAreAvailable() {
+    @Test func testAllPlatformColorsAreAvailable() {
         // Given & When
         let colors = [
             Color.platformPrimaryLabel,
@@ -306,13 +304,13 @@ final class PlatformColorsTests: XCTestCase {
         
         // Then
         for color in colors {
-            XCTAssertNotNil(color, "All platform colors should be available")
+            #expect(color != nil, "All platform colors should be available")
         }
     }
     
     // MARK: - Accessibility Tests
     
-    func testColorsWorkWithAccessibility() {
+    @Test func testColorsWorkWithAccessibility() {
         // Given
         let colors = [
             Color.platformPrimaryLabel,
@@ -327,13 +325,13 @@ final class PlatformColorsTests: XCTestCase {
         // When & Then
         for color in colors {
             // Colors should be accessible and not cause crashes
-            XCTAssertNotNil(color, "Color should be accessible: \(color)")
+            #expect(color != nil, "Color should be accessible: \(color)")
         }
     }
     
     // MARK: - Dark Mode Tests
     
-    func testColorsWorkInDarkMode() {
+    @Test func testColorsWorkInDarkMode() {
         // Given
         let colors = [
             Color.platformPrimaryLabel,
@@ -348,13 +346,13 @@ final class PlatformColorsTests: XCTestCase {
         // When & Then
         for color in colors {
             // Colors should work in both light and dark modes
-            XCTAssertNotNil(color, "Color should work in dark mode: \(color)")
+            #expect(color != nil, "Color should work in dark mode: \(color)")
         }
     }
     
     // MARK: - Performance Tests
     
-    func testColorCreationPerformance() {
+    @Test func testColorCreationPerformance() {
         // Given
         let iterations = 1000
         
@@ -373,12 +371,12 @@ final class PlatformColorsTests: XCTestCase {
         
         // Then
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 0.1, "Color creation should be fast (under 100ms for 1000 iterations)")
+        #expect(executionTime < 0.1, "Color creation should be fast (under 100ms for 1000 iterations)")
     }
     
     // MARK: - Edge Case Tests
     
-    func testColorsInDifferentContexts() {
+    @Test func testColorsInDifferentContexts() {
         // Given
         let colors = [
             Color.platformPrimaryLabel,
@@ -396,13 +394,13 @@ final class PlatformColorsTests: XCTestCase {
             let view = Text("Test")
                 .foregroundColor(color)
             
-            XCTAssertNotNil(view, "Color should work in view context: \(color)")
+            #expect(view != nil, "Color should work in view context: \(color)")
         }
     }
     
     // MARK: - Integration Tests
     
-    func testColorsWithSwiftUIViews() {
+    @Test func testColorsWithSwiftUIViews() {
         // Given
         let testColors = [
             ("Primary", Color.platformPrimaryLabel),
@@ -425,13 +423,13 @@ final class PlatformColorsTests: XCTestCase {
                     .frame(height: 1)
             }
             
-            XCTAssertNotNil(view, "Color should work with SwiftUI views: \(name)")
+            #expect(view != nil, "Color should work with SwiftUI views: \(name)")
         }
     }
     
     // MARK: - Documentation Tests
     
-    func testColorUsageExamples() {
+    @Test func testColorUsageExamples() {
         // Given
         let exampleView = VStack {
             Text("Primary Text")
@@ -458,12 +456,12 @@ final class PlatformColorsTests: XCTestCase {
         }
         
         // When & Then
-        XCTAssertNotNil(exampleView, "Color usage examples should work correctly")
+        #expect(exampleView != nil, "Color usage examples should work correctly")
     }
     
     // MARK: - Backward Compatibility Tests
     
-    func testBackwardCompatibility() {
+    @Test func testBackwardCompatibility() {
         // Given & When
         let colors = [
             Color.platformPrimaryLabel,
@@ -478,13 +476,13 @@ final class PlatformColorsTests: XCTestCase {
         // Then
         // All colors should be backward compatible
         for color in colors {
-            XCTAssertNotNil(color, "Color should be backward compatible: \(color)")
+            #expect(color != nil, "Color should be backward compatible: \(color)")
         }
     }
     
     // MARK: - Error Handling Tests
     
-    func testColorErrorHandling() {
+    @Test func testColorErrorHandling() {
         // Given & When
         let colors = [
             Color.platformPrimaryLabel,
@@ -499,9 +497,9 @@ final class PlatformColorsTests: XCTestCase {
         // Then
         // Colors should handle errors gracefully
         for color in colors {
-            XCTAssertNoThrow({
+            #expect(throws: Never.self, "Color should handle errors gracefully: \(color)") { {
                 _ = color
-            }, "Color should handle errors gracefully: \(color)")
+            } }
         }
     }
     

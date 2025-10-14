@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Automatic Accessibility Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AutomaticAccessibilityComponentAccessibilityTests: XCTestCase {
+final class AutomaticAccessibilityComponentAccessibilityTests {
     
     // MARK: - Automatic Accessibility Component Tests
     
-    func testAutomaticAccessibilityIdentifiersGeneratesAccessibilityIdentifiers() async {
+    @Test func testAutomaticAccessibilityIdentifiersGeneratesAccessibilityIdentifiers() async {
         // Given: AutomaticAccessibilityIdentifiers
         let testView = AutomaticAccessibilityIdentifiers()
         
@@ -25,7 +25,7 @@ final class AutomaticAccessibilityComponentAccessibilityTests: XCTestCase {
             componentName: "AutomaticAccessibilityIdentifiers"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers")
     }
 }
 

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Tracing Layer 5 Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformTracingLayer5ComponentAccessibilityTests: XCTestCase {
+final class PlatformTracingLayer5ComponentAccessibilityTests {
     
     // MARK: - Platform Tracing Layer 5 Component Tests
     
-    func testPlatformTracingLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformTracingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformTracingLayer5
         let testView = PlatformTracingLayer5()
         
@@ -25,7 +25,7 @@ final class PlatformTracingLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformTracingLayer5"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformTracingLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformTracingLayer5 should generate accessibility identifiers")
     }
 }
 

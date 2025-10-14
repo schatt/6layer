@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Layer 3 components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer3ComponentAccessibilityTests: XCTestCase {
+final class Layer3ComponentAccessibilityTests {
     
     // MARK: - Layer 3 Semantic Functions Tests
     
-    func testPlatformPresentItemCollectionL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentItemCollectionL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 item collection function
         let testItems = ["Item 1", "Item 2", "Item 3"]
         let testHints = ["Hint 1", "Hint 2", "Hint 3"]
@@ -32,10 +32,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "ItemCollectionL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 item collection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 item collection function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentNumericDataL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentNumericDataL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 numeric data function
         let testData = [1.0, 2.0, 3.0]
         
@@ -49,10 +49,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "NumericDataL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 numeric data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 numeric data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentFormDataL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentFormDataL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 form data function
         let testFormData = ["field1": "value1", "field2": "value2"]
         
@@ -66,10 +66,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "FormDataL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 form data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 form data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentMediaDataL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentMediaDataL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 media data function
         let testMediaData = ["image1.jpg", "video1.mp4"]
         
@@ -83,10 +83,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "MediaDataL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 media data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 media data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentSettingsL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentSettingsL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 settings function
         let testSettings = ["setting1": "value1", "setting2": "value2"]
         
@@ -100,10 +100,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "SettingsL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 settings function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 settings function should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoCaptureL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoCaptureL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo capture function
         let testCallback: (UIImage?) -> Void = { _ in }
         
@@ -117,10 +117,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "PhotoCaptureL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 photo capture function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 photo capture function should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoDisplayL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoDisplayL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo display function
         let testImage = UIImage(systemName: "photo")
         
@@ -134,10 +134,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "PhotoDisplayL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 photo display function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 photo display function should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoSelectionL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoSelectionL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo selection function
         let testCallback: ([UIImage]) -> Void = { _ in }
         
@@ -151,10 +151,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "PhotoSelectionL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 photo selection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 photo selection function should generate accessibility identifiers")
     }
     
-    func testPlatformOCRWithVisualCorrectionL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOCRWithVisualCorrectionL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 OCR function
         let testImage = UIImage(systemName: "doc.text")
         let testCallback: (String) -> Void = { _ in }
@@ -169,10 +169,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "OCRL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 OCR function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 OCR function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentModalFormL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentModalFormL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 modal form function
         let testFormData = ["field1": "value1"]
         let testCallback: ([String: String]) -> Void = { _ in }
@@ -187,10 +187,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "ModalFormL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 modal form function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 modal form function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentHierarchicalDataL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentHierarchicalDataL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 hierarchical data function
         let testHierarchy = ["root": ["child1": [], "child2": []]]
         
@@ -204,10 +204,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "HierarchicalDataL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 hierarchical data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 hierarchical data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentTemporalDataL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentTemporalDataL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 temporal data function
         let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
         
@@ -221,10 +221,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "TemporalDataL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 temporal data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 temporal data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentContentL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentContentL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 content function
         let testContent = "Sample content"
         
@@ -238,10 +238,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "ContentL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 content function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 content function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentBasicValueL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentBasicValueL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 basic value function
         let testValue = 42
         
@@ -255,10 +255,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "BasicValueL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 basic value function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 basic value function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentBasicArrayL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentBasicArrayL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 basic array function
         let testArray = [1, 2, 3, 4, 5]
         
@@ -272,10 +272,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "BasicArrayL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 basic array function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 basic array function should generate accessibility identifiers")
     }
     
-    func testPlatformResponsiveCardL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformResponsiveCardL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 responsive card function
         let testTitle = "Card Title"
         let testContent = "Card Content"
@@ -290,10 +290,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveCardL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 responsive card function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 responsive card function should generate accessibility identifiers")
     }
     
-    func testPlatformOCRWithDisambiguationL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOCRWithDisambiguationL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 OCR with disambiguation function
         let testImage = UIImage(systemName: "doc.text")
         let testOptions = ["Option 1", "Option 2", "Option 3"]
@@ -309,10 +309,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "OCRDisambiguationL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 OCR with disambiguation function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 OCR with disambiguation function should generate accessibility identifiers")
     }
     
-    func testPlatformExtractStructuredDataL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformExtractStructuredDataL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 structured data extraction function
         let testData = ["key1": "value1", "key2": "value2"]
         
@@ -326,10 +326,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "StructuredDataL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 structured data extraction function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 structured data extraction function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentLocalizedContentL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentLocalizedContentL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 localized content function
         let testContent = "Localized content"
         let testLocale = Locale(identifier: "en_US")
@@ -344,10 +344,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "LocalizedContentL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 localized content function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 localized content function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentLocalizedTextL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentLocalizedTextL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 localized text function
         let testText = "Localized text"
         let testLocale = Locale(identifier: "en_US")
@@ -362,10 +362,10 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "LocalizedTextL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 localized text function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 localized text function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentLocalizedNumberL3GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentLocalizedNumberL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 localized number function
         let testNumber = 123.45
         let testLocale = Locale(identifier: "en_US")
@@ -380,7 +380,7 @@ final class Layer3ComponentAccessibilityTests: XCTestCase {
             componentName: "LocalizedNumberL3"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 3 localized number function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 3 localized number function should generate accessibility identifiers")
     }
 }
 

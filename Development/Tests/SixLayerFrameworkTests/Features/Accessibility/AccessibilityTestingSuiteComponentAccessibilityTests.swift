@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Accessibility Testing Suite Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AccessibilityTestingSuiteComponentAccessibilityTests: XCTestCase {
+final class AccessibilityTestingSuiteComponentAccessibilityTests {
     
     // MARK: - Accessibility Testing Suite Component Tests
     
-    func testAccessibilityTestingSuiteGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityTestingSuiteGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityTestingSuite
         let testView = AccessibilityTestingSuite()
         
@@ -25,7 +25,7 @@ final class AccessibilityTestingSuiteComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityTestingSuite"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityTestingSuite should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityTestingSuite should generate accessibility identifiers")
     }
 }
 

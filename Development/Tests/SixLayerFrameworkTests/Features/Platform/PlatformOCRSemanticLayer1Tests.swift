@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformOCRSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformOCRSemanticLayer1Tests: XCTestCase {
+final class PlatformOCRSemanticLayer1Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
     
     // MARK: - platformOCRWithVisualCorrection_L1 Tests
     
-    func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -55,10 +53,10 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
             componentName: "platformOCRWithVisualCorrection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -80,12 +78,12 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
             componentName: "platformOCRWithVisualCorrection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformExtractStructuredData_L1 Tests
     
-    func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -107,10 +105,10 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
             componentName: "platformExtractStructuredData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -132,6 +130,6 @@ final class PlatformOCRSemanticLayer1Tests: XCTestCase {
             componentName: "platformExtractStructuredData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on macOS")
     }
 }

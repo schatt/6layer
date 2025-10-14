@@ -7,47 +7,47 @@
 //  CrossPlatformPerformanceMetrics, PlatformUIPatterns, and related functions
 //
 
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
+final class CrossPlatformOptimizationLayer6Tests {
     
     // MARK: - CrossPlatformOptimizationManager Tests
     
-    func testCrossPlatformOptimizationManager_Initialization() {
+    @Test func testCrossPlatformOptimizationManager_Initialization() {
         // Given: Cross-platform optimization manager
         let manager = CrossPlatformOptimizationManager()
         
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(manager, "CrossPlatformOptimizationManager should be created successfully")
+        #expect(manager != nil, "CrossPlatformOptimizationManager should be created successfully")
         
         // 2. Does that structure contain what it should?
-        XCTAssertNotNil(manager.currentPlatform, "Manager should have a current platform")
-        XCTAssertNotNil(manager.optimizationSettings, "Manager should have optimization settings")
-        XCTAssertNotNil(manager.performanceMetrics, "Manager should have performance metrics")
-        XCTAssertNotNil(manager.uiPatterns, "Manager should have UI patterns")
+        #expect(manager.currentPlatform != nil, "Manager should have a current platform")
+        #expect(manager.optimizationSettings != nil, "Manager should have optimization settings")
+        #expect(manager.performanceMetrics != nil, "Manager should have performance metrics")
+        #expect(manager.uiPatterns != nil, "Manager should have UI patterns")
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Manager should detect current platform correctly
         #if os(iOS)
-        XCTAssertEqual(manager.currentPlatform, .iOS, "Manager should detect iOS platform")
+        #expect(manager.currentPlatform == .iOS, "Manager should detect iOS platform")
         #elseif os(macOS)
-        XCTAssertEqual(manager.currentPlatform, .macOS, "Manager should detect macOS platform")
+        #expect(manager.currentPlatform == .macOS, "Manager should detect macOS platform")
         #elseif os(visionOS)
-        XCTAssertEqual(manager.currentPlatform, .visionOS, "Manager should detect visionOS platform")
+        #expect(manager.currentPlatform == .visionOS, "Manager should detect visionOS platform")
         #elseif os(watchOS)
-        XCTAssertEqual(manager.currentPlatform, .watchOS, "Manager should detect watchOS platform")
+        #expect(manager.currentPlatform == .watchOS, "Manager should detect watchOS platform")
         #elseif os(tvOS)
-        XCTAssertEqual(manager.currentPlatform, .tvOS, "Manager should detect tvOS platform")
+        #expect(manager.currentPlatform == .tvOS, "Manager should detect tvOS platform")
         #endif
     }
     
-    func testCrossPlatformOptimizationManager_WithSpecificPlatform() {
+    @Test func testCrossPlatformOptimizationManager_WithSpecificPlatform() {
         // Given: Manager initialized with specific platform
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -56,13 +56,13 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let manager = CrossPlatformOptimizationManager(platform: platform)
             
             // Then: Each manager should be configured correctly
-            XCTAssertEqual(manager.currentPlatform, platform, "Manager should use specified platform: \(platform)")
-            XCTAssertNotNil(manager.optimizationSettings, "Manager should have settings for \(platform)")
-            XCTAssertNotNil(manager.uiPatterns, "Manager should have UI patterns for \(platform)")
+            #expect(manager.currentPlatform == platform, "Manager should use specified platform: \(platform)")
+            #expect(manager.optimizationSettings != nil, "Manager should have settings for \(platform)")
+            #expect(manager.uiPatterns != nil, "Manager should have UI patterns for \(platform)")
         }
     }
     
-    func testCrossPlatformOptimizationManager_OptimizeView() {
+    @Test func testCrossPlatformOptimizationManager_OptimizeView() {
         // Given: Manager and test view
         let manager = CrossPlatformOptimizationManager()
         let testView = Text("Test View")
@@ -73,13 +73,13 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(optimizedView, "Optimized view should be created successfully")
+        #expect(optimizedView != nil, "Optimized view should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try optimizedView.inspect()
         } catch {
-            XCTFail("Failed to inspect optimized view structure: \(error)")
+            Issue.record("Failed to inspect optimized view structure: \(error)")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -88,11 +88,11 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let _ = try optimizedView.inspect()
             // Platform-specific optimizations verified
         } catch {
-            XCTFail("Optimized view should be inspectable on current platform")
+            Issue.record("Optimized view should be inspectable on current platform")
         }
     }
     
-    func testCrossPlatformOptimizationManager_PlatformRecommendations() {
+    @Test func testCrossPlatformOptimizationManager_PlatformRecommendations() {
         // Given: Manager
         let manager = CrossPlatformOptimizationManager()
         
@@ -100,14 +100,14 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         let recommendations = manager.getPlatformRecommendations()
         
         // Then: Should return platform recommendations (L6 function responsibility)
-        XCTAssertNotNil(recommendations, "Should return recommendations")
+        #expect(recommendations != nil, "Should return recommendations")
         // Note: Recommendations may be empty if no platform-specific issues are detected
         // This is valid behavior for L6 functions
     }
     
     // MARK: - PlatformOptimizationSettings Tests
     
-    func testPlatformOptimizationSettings_Creation() {
+    @Test func testPlatformOptimizationSettings_Creation() {
         // Given: Different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -116,83 +116,83 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let settings = PlatformOptimizationSettings(for: platform)
             
             // Then: Settings should be created successfully (L6 function responsibility)
-            XCTAssertNotNil(settings, "Settings should be created for \(platform)")
-            XCTAssertNotNil(settings.performanceLevel, "Should have performance level for \(platform)")
-            XCTAssertNotNil(settings.memoryStrategy, "Should have memory strategy for \(platform)")
-            XCTAssertNotNil(settings.renderingOptimizations, "Should have rendering optimizations for \(platform)")
-            XCTAssertNotNil(settings.featureFlags, "Should have feature flags for \(platform)")
+            #expect(settings != nil, "Settings should be created for \(platform)")
+            #expect(settings.performanceLevel != nil, "Should have performance level for \(platform)")
+            #expect(settings.memoryStrategy != nil, "Should have memory strategy for \(platform)")
+            #expect(settings.renderingOptimizations != nil, "Should have rendering optimizations for \(platform)")
+            #expect(settings.featureFlags != nil, "Should have feature flags for \(platform)")
         }
     }
     
-    func testPlatformOptimizationSettings_PerformanceLevels() {
+    @Test func testPlatformOptimizationSettings_PerformanceLevels() {
         // Given: Performance levels
         let levels: [PerformanceLevel] = [.low, .balanced, .high, .maximum]
         
         // When: Testing each performance level
         for level in levels {
             // Then: Each level should have appropriate multiplier
-            XCTAssertGreaterThan(level.optimizationMultiplier, 0, 
+            #expect(level.optimizationMultiplier > 0, 
                                 "Performance level \(level) should have positive multiplier")
         }
         
         // Performance levels should be ordered correctly
-        XCTAssertLessThan(PerformanceLevel.low.optimizationMultiplier, 
-                         PerformanceLevel.balanced.optimizationMultiplier,
+        #expect(PerformanceLevel.low.optimizationMultiplier < 
+                         PerformanceLevel.balanced.optimizationMultiplier, 
                          "Low should be less than balanced")
-        XCTAssertLessThan(PerformanceLevel.balanced.optimizationMultiplier, 
-                         PerformanceLevel.high.optimizationMultiplier,
+        #expect(PerformanceLevel.balanced.optimizationMultiplier < 
+                         PerformanceLevel.high.optimizationMultiplier, 
                          "Balanced should be less than high")
-        XCTAssertLessThan(PerformanceLevel.high.optimizationMultiplier, 
-                         PerformanceLevel.maximum.optimizationMultiplier,
+        #expect(PerformanceLevel.high.optimizationMultiplier < 
+                         PerformanceLevel.maximum.optimizationMultiplier, 
                          "High should be less than maximum")
     }
     
-    func testPlatformOptimizationSettings_MemoryStrategies() {
+    @Test func testPlatformOptimizationSettings_MemoryStrategies() {
         // Given: Memory strategies
         let strategies: [MemoryStrategy] = [.conservative, .adaptive, .aggressive]
         
         // When: Testing each memory strategy
         for strategy in strategies {
             // Then: Each strategy should have appropriate threshold
-            XCTAssertGreaterThanOrEqual(strategy.memoryThreshold, 0, 
+            #expect(strategy.memoryThreshold >= 0, 
                                       "Memory strategy \(strategy) should have non-negative threshold")
-            XCTAssertLessThanOrEqual(strategy.memoryThreshold, 1, 
+            #expect(strategy.memoryThreshold <= 1, 
                                    "Memory strategy \(strategy) should have threshold <= 1")
         }
         
         // Memory strategies should be ordered correctly
-        XCTAssertLessThan(MemoryStrategy.conservative.memoryThreshold, 
-                         MemoryStrategy.adaptive.memoryThreshold,
+        #expect(MemoryStrategy.conservative.memoryThreshold < 
+                         MemoryStrategy.adaptive.memoryThreshold, 
                          "Conservative should be less than adaptive")
-        XCTAssertLessThan(MemoryStrategy.adaptive.memoryThreshold, 
-                         MemoryStrategy.aggressive.memoryThreshold,
+        #expect(MemoryStrategy.adaptive.memoryThreshold < 
+                         MemoryStrategy.aggressive.memoryThreshold, 
                          "Adaptive should be less than aggressive")
     }
     
     // MARK: - CrossPlatformPerformanceMetrics Tests
     
-    func testCrossPlatformPerformanceMetrics_Initialization() {
+    @Test func testCrossPlatformPerformanceMetrics_Initialization() {
         // Given: Performance metrics
         let metrics = CrossPlatformPerformanceMetrics()
         
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(metrics, "Performance metrics should be created successfully")
+        #expect(metrics != nil, "Performance metrics should be created successfully")
         
         // 2. Does that structure contain what it should?
-        XCTAssertNotNil(metrics.renderingMetrics, "Should have rendering metrics")
-        XCTAssertNotNil(metrics.memoryMetrics, "Should have memory metrics")
-        XCTAssertNotNil(metrics.platformMetrics, "Should have platform metrics")
+        #expect(metrics.renderingMetrics != nil, "Should have rendering metrics")
+        #expect(metrics.memoryMetrics != nil, "Should have memory metrics")
+        #expect(metrics.platformMetrics != nil, "Should have platform metrics")
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Metrics should be initialized for current platform
         let currentPlatform = SixLayerPlatform.current
-        XCTAssertTrue(metrics.platformMetrics.keys.contains(currentPlatform), 
+        #expect(metrics.platformMetrics.keys.contains(currentPlatform), 
                     "Should have metrics for current platform")
     }
     
-    func testCrossPlatformPerformanceMetrics_RecordMeasurement() {
+    @Test func testCrossPlatformPerformanceMetrics_RecordMeasurement() {
         // Given: Performance metrics and measurement
         let metrics = CrossPlatformPerformanceMetrics()
         let measurement = PerformanceMeasurement(
@@ -207,12 +207,12 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         
         // Then: Measurement should be recorded
         let summary = metrics.getCurrentPlatformSummary()
-        XCTAssertNotNil(summary, "Should be able to get performance summary")
-        XCTAssertEqual(summary.platform, SixLayerPlatform.current, 
+        #expect(summary != nil, "Should be able to get performance summary")
+        #expect(summary.platform == SixLayerPlatform.current, 
                       "Summary should be for current platform")
     }
     
-    func testCrossPlatformPerformanceMetrics_PlatformSummary() {
+    @Test func testCrossPlatformPerformanceMetrics_PlatformSummary() {
         // Given: Performance metrics
         let metrics = CrossPlatformPerformanceMetrics()
         
@@ -220,19 +220,19 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         let summary = metrics.getCurrentPlatformSummary()
         
         // Then: Summary should be valid
-        XCTAssertNotNil(summary, "Should be able to get performance summary")
-        XCTAssertEqual(summary.platform, SixLayerPlatform.current, 
+        #expect(summary != nil, "Should be able to get performance summary")
+        #expect(summary.platform == SixLayerPlatform.current, 
                       "Summary should be for current platform")
-        XCTAssertNotNil(summary.rendering, "Summary should have rendering metrics")
-        XCTAssertNotNil(summary.memory, "Summary should have memory metrics")
-        XCTAssertNotNil(summary.platformSpecific, "Summary should have platform-specific metrics")
-        XCTAssertGreaterThanOrEqual(summary.overallScore, 0, "Overall score should be non-negative")
-        XCTAssertLessThanOrEqual(summary.overallScore, 100, "Overall score should be <= 100")
+        #expect(summary.rendering != nil, "Summary should have rendering metrics")
+        #expect(summary.memory != nil, "Summary should have memory metrics")
+        #expect(summary.platformSpecific != nil, "Summary should have platform-specific metrics")
+        #expect(summary.overallScore >= 0, "Overall score should be non-negative")
+        #expect(summary.overallScore <= 100, "Overall score should be <= 100")
     }
     
     // MARK: - PlatformUIPatterns Tests
     
-    func testPlatformUIPatterns_PlatformSpecific() {
+    @Test func testPlatformUIPatterns_PlatformSpecific() {
         // Given: Different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -241,39 +241,39 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let patterns = PlatformUIPatterns(for: platform)
             
             // Then: Patterns should be platform-appropriate
-            XCTAssertNotNil(patterns, "UI patterns should be created for \(platform)")
-            XCTAssertEqual(patterns.platform, platform, "Patterns should be for correct platform")
-            XCTAssertNotNil(patterns.navigationPatterns, "Should have navigation patterns for \(platform)")
-            XCTAssertNotNil(patterns.interactionPatterns, "Should have interaction patterns for \(platform)")
-            XCTAssertNotNil(patterns.layoutPatterns, "Should have layout patterns for \(platform)")
+            #expect(patterns != nil, "UI patterns should be created for \(platform)")
+            #expect(patterns.platform == platform, "Patterns should be for correct platform")
+            #expect(patterns.navigationPatterns != nil, "Should have navigation patterns for \(platform)")
+            #expect(patterns.interactionPatterns != nil, "Should have interaction patterns for \(platform)")
+            #expect(patterns.layoutPatterns != nil, "Should have layout patterns for \(platform)")
             
             // Platform-specific verification
             switch platform {
             case .iOS:
                 // iOS should have mobile navigation patterns
-                XCTAssertEqual(patterns.navigationPatterns.platform, platform, 
+                #expect(patterns.navigationPatterns.platform == platform, 
                               "iOS navigation patterns should be for iOS")
             case .macOS:
                 // macOS should have desktop navigation patterns
-                XCTAssertEqual(patterns.navigationPatterns.platform, platform, 
+                #expect(patterns.navigationPatterns.platform == platform, 
                               "macOS navigation patterns should be for macOS")
             case .visionOS:
                 // visionOS should have spatial navigation patterns
-                XCTAssertEqual(patterns.navigationPatterns.platform, platform, 
+                #expect(patterns.navigationPatterns.platform == platform, 
                               "visionOS navigation patterns should be for visionOS")
             case .watchOS:
                 // watchOS should have compact navigation patterns
-                XCTAssertEqual(patterns.navigationPatterns.platform, platform, 
+                #expect(patterns.navigationPatterns.platform == platform, 
                               "watchOS navigation patterns should be for watchOS")
             case .tvOS:
                 // tvOS should have TV navigation patterns
-                XCTAssertEqual(patterns.navigationPatterns.platform, platform, 
+                #expect(patterns.navigationPatterns.platform == platform, 
                               "tvOS navigation patterns should be for tvOS")
             }
         }
     }
     
-    func testPlatformUIPatterns_NavigationPatterns() {
+    @Test func testPlatformUIPatterns_NavigationPatterns() {
         // Given: Navigation patterns for different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -282,18 +282,18 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let navigationPatterns = NavigationPatterns(for: platform)
             
             // Then: Navigation patterns should be platform-appropriate
-            XCTAssertEqual(navigationPatterns.platform, platform, 
+            #expect(navigationPatterns.platform == platform, 
                           "Navigation patterns should be for \(platform)")
-            XCTAssertNotNil(navigationPatterns.primaryNavigation, 
+            #expect(navigationPatterns.primaryNavigation != nil, 
                            "Should have primary navigation for \(platform)")
-            XCTAssertNotNil(navigationPatterns.secondaryNavigation, 
+            #expect(navigationPatterns.secondaryNavigation != nil, 
                            "Should have secondary navigation for \(platform)")
-            XCTAssertNotNil(navigationPatterns.modalPresentation, 
+            #expect(navigationPatterns.modalPresentation != nil, 
                            "Should have modal presentation for \(platform)")
         }
     }
     
-    func testPlatformUIPatterns_InteractionPatterns() {
+    @Test func testPlatformUIPatterns_InteractionPatterns() {
         // Given: Interaction patterns for different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -302,18 +302,18 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let interactionPatterns = InteractionPatterns(for: platform)
             
             // Then: Interaction patterns should be platform-appropriate
-            XCTAssertEqual(interactionPatterns.platform, platform, 
+            #expect(interactionPatterns.platform == platform, 
                           "Interaction patterns should be for \(platform)")
-            XCTAssertNotNil(interactionPatterns.primaryInput, 
+            #expect(interactionPatterns.primaryInput != nil, 
                            "Should have primary input for \(platform)")
-            XCTAssertNotNil(interactionPatterns.secondaryInput, 
+            #expect(interactionPatterns.secondaryInput != nil, 
                            "Should have secondary input for \(platform)")
-            XCTAssertNotNil(interactionPatterns.gestureSupport, 
+            #expect(interactionPatterns.gestureSupport != nil, 
                            "Should have gesture support for \(platform)")
         }
     }
     
-    func testPlatformUIPatterns_LayoutPatterns() {
+    @Test func testPlatformUIPatterns_LayoutPatterns() {
         // Given: Layout patterns for different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -322,22 +322,22 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let layoutPatterns = LayoutPatterns(for: platform)
             
             // Then: Layout patterns should be platform-appropriate
-            XCTAssertEqual(layoutPatterns.platform, platform, 
+            #expect(layoutPatterns.platform == platform, 
                           "Layout patterns should be for \(platform)")
-            XCTAssertNotNil(layoutPatterns.primaryLayout, 
+            #expect(layoutPatterns.primaryLayout != nil, 
                            "Should have primary layout for \(platform)")
-            XCTAssertNotNil(layoutPatterns.secondaryLayout, 
+            #expect(layoutPatterns.secondaryLayout != nil, 
                            "Should have secondary layout for \(platform)")
-            XCTAssertNotNil(layoutPatterns.responsiveBreakpoints, 
+            #expect(layoutPatterns.responsiveBreakpoints != nil, 
                            "Should have responsive breakpoints for \(platform)")
-            XCTAssertFalse(layoutPatterns.responsiveBreakpoints.isEmpty, 
+            #expect(!layoutPatterns.responsiveBreakpoints.isEmpty, 
                           "Should have at least one breakpoint for \(platform)")
         }
     }
     
     // MARK: - View Modifier Tests
     
-    func testPlatformSpecificOptimizationsModifier() {
+    @Test func testPlatformSpecificOptimizationsModifier() {
         // Given: Test view and platform
         let testView = Text("Test View")
         let platform = SixLayerPlatform.current
@@ -348,13 +348,13 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(optimizedView, "Optimized view should be created successfully")
+        #expect(optimizedView != nil, "Optimized view should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try optimizedView.inspect()
         } catch {
-            XCTFail("Failed to inspect platform-optimized view structure: \(error)")
+            Issue.record("Failed to inspect platform-optimized view structure: \(error)")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -363,11 +363,11 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let _ = try optimizedView.inspect()
             // Platform-specific optimizations verified
         } catch {
-            XCTFail("Platform-optimized view should be inspectable on current platform")
+            Issue.record("Platform-optimized view should be inspectable on current platform")
         }
     }
     
-    func testPerformanceOptimizationsModifier() {
+    @Test func testPerformanceOptimizationsModifier() {
         // Given: Test view and performance settings
         let testView = Text("Test View")
         let settings = PlatformOptimizationSettings(for: SixLayerPlatform.current)
@@ -378,13 +378,13 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(optimizedView, "Performance-optimized view should be created successfully")
+        #expect(optimizedView != nil, "Performance-optimized view should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try optimizedView.inspect()
         } catch {
-            XCTFail("Failed to inspect performance-optimized view structure: \(error)")
+            Issue.record("Failed to inspect performance-optimized view structure: \(error)")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -393,11 +393,11 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let _ = try optimizedView.inspect()
             // Performance optimizations verified
         } catch {
-            XCTFail("Performance-optimized view should be inspectable on current platform")
+            Issue.record("Performance-optimized view should be inspectable on current platform")
         }
     }
     
-    func testUIPatternOptimizationsModifier() {
+    @Test func testUIPatternOptimizationsModifier() {
         // Given: Test view and UI patterns
         let testView = Text("Test View")
         let patterns = PlatformUIPatterns(for: SixLayerPlatform.current)
@@ -408,13 +408,13 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(optimizedView, "UI pattern-optimized view should be created successfully")
+        #expect(optimizedView != nil, "UI pattern-optimized view should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try optimizedView.inspect()
         } catch {
-            XCTFail("Failed to inspect UI pattern-optimized view structure: \(error)")
+            Issue.record("Failed to inspect UI pattern-optimized view structure: \(error)")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -423,13 +423,13 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
             let _ = try optimizedView.inspect()
             // UI pattern optimizations verified
         } catch {
-            XCTFail("UI pattern-optimized view should be inspectable on current platform")
+            Issue.record("UI pattern-optimized view should be inspectable on current platform")
         }
     }
     
     // MARK: - Environment Values Tests
     
-    func testEnvironmentValues_PlatformSpecific() {
+    @Test func testEnvironmentValues_PlatformSpecific() {
         // Given: Environment values
         var environment = EnvironmentValues()
         
@@ -439,15 +439,15 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         environment.memoryStrategy = .adaptive
         
         // Then: Environment values should be set correctly
-        XCTAssertEqual(environment.platform, SixLayerPlatform.current, 
+        #expect(environment.platform == SixLayerPlatform.current, 
                       "Platform should be set correctly")
-        XCTAssertEqual(environment.performanceLevel, .balanced, "Performance level should be balanced")
-        XCTAssertEqual(environment.memoryStrategy, .adaptive, "Memory strategy should be adaptive")
+        #expect(environment.performanceLevel == .balanced, "Performance level should be balanced")
+        #expect(environment.memoryStrategy == .adaptive, "Memory strategy should be adaptive")
     }
     
     // MARK: - Integration Tests
     
-    func testCrossPlatformOptimizationIntegration() {
+    @Test func testCrossPlatformOptimizationIntegration() {
         // Given: Manager and test view
         let manager = CrossPlatformOptimizationManager()
         let testView = Text("Integration Test View")
@@ -456,16 +456,16 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         let fullyOptimizedView = manager.optimizeView(testView)
         
         // Then: Fully optimized view should be created successfully
-        XCTAssertNotNil(fullyOptimizedView, "Fully optimized view should be created")
+        #expect(fullyOptimizedView != nil, "Fully optimized view should be created")
         
         do {
             let _ = try fullyOptimizedView.inspect()
         } catch {
-            XCTFail("Fully optimized view should be inspectable: \(error)")
+            Issue.record("Fully optimized view should be inspectable: \(error)")
         }
     }
     
-    func testCrossPlatformOptimizationPerformance() {
+    @Test func testCrossPlatformOptimizationPerformance() {
         // Given: Manager for performance testing
         let manager = CrossPlatformOptimizationManager()
         
@@ -479,42 +479,42 @@ final class CrossPlatformOptimizationLayer6Tests: XCTestCase {
         }
         
         // Then: Performance should be acceptable
-        XCTAssertNotNil(manager, "Manager should exist for performance test")
+        #expect(manager != nil, "Manager should exist for performance test")
     }
     
     // MARK: - Platform Detection Tests
     
-    func testSixLayerPlatform_CurrentPlatformDetection() {
+    @Test func testSixLayerPlatform_CurrentPlatformDetection() {
         // Given: Current platform detection
         let currentPlatform = SixLayerPlatform.current
         
         // Then: Platform should be detected correctly
-        XCTAssertNotNil(currentPlatform, "Current platform should be detected")
+        #expect(currentPlatform != nil, "Current platform should be detected")
         
         // Platform-specific verification
         #if os(iOS)
-        XCTAssertEqual(currentPlatform, .iOS, "Should detect iOS platform")
+        #expect(currentPlatform == .iOS, "Should detect iOS platform")
         #elseif os(macOS)
-        XCTAssertEqual(currentPlatform, .macOS, "Should detect macOS platform")
+        #expect(currentPlatform == .macOS, "Should detect macOS platform")
         #elseif os(visionOS)
-        XCTAssertEqual(currentPlatform, .visionOS, "Should detect visionOS platform")
+        #expect(currentPlatform == .visionOS, "Should detect visionOS platform")
         #elseif os(watchOS)
-        XCTAssertEqual(currentPlatform, .watchOS, "Should detect watchOS platform")
+        #expect(currentPlatform == .watchOS, "Should detect watchOS platform")
         #elseif os(tvOS)
-        XCTAssertEqual(currentPlatform, .tvOS, "Should detect tvOS platform")
+        #expect(currentPlatform == .tvOS, "Should detect tvOS platform")
         #endif
     }
     
-    func testSixLayerPlatform_AllPlatforms() {
+    @Test func testSixLayerPlatform_AllPlatforms() {
         // Given: All available platforms
         let allPlatforms = SixLayerPlatform.allCases
         
         // Then: Should have all expected platforms
-        XCTAssertTrue(allPlatforms.contains(.iOS), "Should include iOS")
-        XCTAssertTrue(allPlatforms.contains(.macOS), "Should include macOS")
-        XCTAssertTrue(allPlatforms.contains(.visionOS), "Should include visionOS")
-        XCTAssertTrue(allPlatforms.contains(.watchOS), "Should include watchOS")
-        XCTAssertTrue(allPlatforms.contains(.tvOS), "Should include tvOS")
-        XCTAssertEqual(allPlatforms.count, 5, "Should have exactly 5 platforms")
+        #expect(allPlatforms.contains(.iOS), "Should include iOS")
+        #expect(allPlatforms.contains(.macOS), "Should include macOS")
+        #expect(allPlatforms.contains(.visionOS), "Should include visionOS")
+        #expect(allPlatforms.contains(.watchOS), "Should include watchOS")
+        #expect(allPlatforms.contains(.tvOS), "Should include tvOS")
+        #expect(allPlatforms.count == 5, "Should have exactly 5 platforms")
     }
 }

@@ -27,15 +27,15 @@
 //  - ✅ Business Logic Focus: Tests actual form analytics functionality, not testing framework
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
-final class FormAnalyticsManagerTests: XCTestCase {
+final class FormAnalyticsManagerTests {
     
     /// BUSINESS PURPOSE: Validate FormAnalyticsManager initialization functionality
     /// TESTING SCOPE: Tests FormAnalyticsManager initialization and setup
     /// METHODOLOGY: Initialize FormAnalyticsManager and verify initial state properties
-    func testFormAnalyticsManagerInitialization() {
+    @Test func testFormAnalyticsManagerInitialization() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -49,28 +49,28 @@ final class FormAnalyticsManagerTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate event tracking functionality
     /// TESTING SCOPE: Tests FormAnalyticsManager event tracking and analytics collection
     /// METHODOLOGY: Track form events and verify event tracking functionality
-    func testEventTracking() {
+    @Test func testEventTracking() {
         // TODO: Implement test
     }
     
     /// BUSINESS PURPOSE: Validate performance metrics functionality
     /// TESTING SCOPE: Tests FormAnalyticsManager performance metrics collection
     /// METHODOLOGY: Collect performance metrics and verify metrics functionality
-    func testPerformanceMetrics() {
+    @Test func testPerformanceMetrics() {
         // TODO: Implement test
     }
     
     /// BUSINESS PURPOSE: Validate user behavior analysis functionality
     /// TESTING SCOPE: Tests FormAnalyticsManager user behavior analysis and pattern detection
     /// METHODOLOGY: Analyze user behavior and verify analysis functionality
-    func testUserBehaviorAnalysis() {
+    @Test func testUserBehaviorAnalysis() {
         // TODO: Implement test
     }
     
     /// BUSINESS PURPOSE: Validate data export functionality
     /// TESTING SCOPE: Tests FormAnalyticsManager data export and reporting
     /// METHODOLOGY: Export analytics data and verify export functionality
-    func testDataExport() {
+    @Test func testDataExport() {
         // TODO: Implement test
     }
 }

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform OCR Components Layer 4
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformOCRComponentsLayer4ComponentAccessibilityTests: XCTestCase {
+final class PlatformOCRComponentsLayer4ComponentAccessibilityTests {
     
     // MARK: - Platform OCR Components Layer 4 Tests
     
-    func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOCRComponentsLayer4
         let testView = PlatformOCRComponentsLayer4()
         
@@ -25,7 +25,7 @@ final class PlatformOCRComponentsLayer4ComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformOCRComponentsLayer4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformOCRComponentsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOCRComponentsLayer4 should generate accessibility identifiers")
     }
 }
 

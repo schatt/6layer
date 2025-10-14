@@ -30,7 +30,7 @@
 //  - ✅ Excellent: Tests all possible platform capability combinations
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -38,7 +38,7 @@ import SwiftUI
 /// Tests EVERY combination of platform capabilities and accessibility features
 /// This ensures we handle all possible user configurations and platform variations
 @MainActor
-final class ComprehensiveCapabilityMatrixTests: XCTestCase {
+final class ComprehensiveCapabilityMatrixTests {
     
     // MARK: - Test Data
     
@@ -53,8 +53,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
     
     var sampleData: [TestDataItem] = []
     
-    override func setUp() {
-        super.setUp()
+    init() {
         
         sampleData = [
             TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
@@ -116,7 +115,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
     
     // MARK: - Specific Platform Scenarios
     
-    func testMacWithTouchDisplay() {
+    @Test func testMacWithTouchDisplay() {
         // GIVEN: Mac with touch-capable display
         let capabilities: Set<PlatformCapability> = [.hover, .touch, .touchpad, .voiceOver, .switchControl, .vision, .ocr, .externalDisplay, .multipleDisplays]
         let accessibility: Set<AccessibilityFeature> = [.voiceOver, .switchControl, .reduceMotion, .increaseContrast]
@@ -140,7 +139,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         testCapabilityCombination(config)
     }
     
-    func testMacWithoutTouchDisplay() {
+    @Test func testMacWithoutTouchDisplay() {
         // GIVEN: Mac without touch display
         let capabilities: Set<PlatformCapability> = [.hover, .touchpad, .voiceOver, .switchControl, .vision, .ocr, .externalDisplay, .multipleDisplays]
         let accessibility: Set<AccessibilityFeature> = [.voiceOver, .switchControl, .reduceMotion, .increaseContrast]
@@ -164,7 +163,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         testCapabilityCombination(config)
     }
     
-    func testIPhoneWithAllAccessibilityFeatures() {
+    @Test func testIPhoneWithAllAccessibilityFeatures() {
         // GIVEN: iPhone with all accessibility features enabled
         let capabilities: Set<PlatformCapability> = [.touch, .hapticFeedback, .assistiveTouch, .voiceOver, .switchControl, .vision, .ocr]
         let accessibility: Set<AccessibilityFeature> = Set(AccessibilityFeature.allCases)
@@ -197,7 +196,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         testCapabilityCombination(config)
     }
     
-    func testIPhoneWithNoAccessibilityFeatures() {
+    @Test func testIPhoneWithNoAccessibilityFeatures() {
         // GIVEN: iPhone with no accessibility features enabled
         let capabilities: Set<PlatformCapability> = [.touch, .hapticFeedback, .assistiveTouch, .voiceOver, .switchControl, .vision, .ocr]
         let accessibility: Set<AccessibilityFeature> = []
@@ -230,7 +229,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         testCapabilityCombination(config)
     }
     
-    func testTVOSWithMinimalCapabilities() {
+    @Test func testTVOSWithMinimalCapabilities() {
         // GIVEN: tvOS with minimal capabilities
         let capabilities: Set<PlatformCapability> = [.voiceOver, .switchControl]
         let accessibility: Set<AccessibilityFeature> = [.voiceOver, .switchControl, .reduceMotion, .increaseContrast]
@@ -257,7 +256,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
     
     // MARK: - Edge Cases
     
-    func testNoCapabilitiesNoAccessibility() {
+    @Test func testNoCapabilitiesNoAccessibility() {
         // GIVEN: No capabilities and no accessibility features
         let capabilities: Set<PlatformCapability> = []
         let accessibility: Set<AccessibilityFeature> = []
@@ -282,7 +281,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         testCapabilityCombination(config)
     }
     
-    func testAllCapabilitiesAllAccessibility() {
+    @Test func testAllCapabilitiesAllAccessibility() {
         // GIVEN: All capabilities and all accessibility features
         let capabilities: Set<PlatformCapability> = Set(PlatformCapability.allCases)
         let accessibility: Set<AccessibilityFeature> = Set(AccessibilityFeature.allCases)
@@ -323,7 +322,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
     
     // MARK: - Test Implementation
     
-    func testCapabilityCombination(_ config: TestConfiguration) {
+    @Test func testCapabilityCombination(_ config: TestConfiguration) {
         print("🧪 Testing: \(config.description)")
         
         // GIVEN: A test data item
@@ -337,7 +336,7 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
         )
         
         // THEN: Should generate the expected view definition
-        XCTAssertEqual(viewDefinition.viewType, config.expectedViewType, "View type should match for \(config.description)")
+        #expect(viewDefinition.viewType == config.expectedViewType, "View type should match for \(config.description)")
         
         // Test all expected properties
         for (key, expectedValue) in config.expectedProperties {
@@ -345,14 +344,14 @@ final class ComprehensiveCapabilityMatrixTests: XCTestCase {
             
             // Cast to the expected type for comparison
             if let expectedBool = expectedValue as? Bool, let actualBool = actualValue as? Bool {
-                XCTAssertEqual(actualBool, expectedBool, "Property \(key) should match for \(config.description)")
+                #expect(actualBool == expectedBool, "Property \(key) should match for \(config.description)")
             } else if let expectedDouble = expectedValue as? Double, let actualDouble = actualValue as? Double {
-                XCTAssertEqual(actualDouble, expectedDouble, "Property \(key) should match for \(config.description)")
+                #expect(actualDouble == expectedDouble, "Property \(key) should match for \(config.description)")
             } else if let expectedCGFloat = expectedValue as? CGFloat, let actualCGFloat = actualValue as? CGFloat {
-                XCTAssertEqual(actualCGFloat, expectedCGFloat, "Property \(key) should match for \(config.description)")
+                #expect(actualCGFloat == expectedCGFloat, "Property \(key) should match for \(config.description)")
             } else {
                 // For other types, just check that they're not nil
-                XCTAssertNotNil(actualValue, "Property \(key) should not be nil for \(config.description)")
+                #expect(actualValue != nil, "Property \(key) should not be nil for \(config.description)")
             }
         }
     }

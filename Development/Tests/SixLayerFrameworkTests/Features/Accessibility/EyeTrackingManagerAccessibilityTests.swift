@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for EyeTrackingManager.swift classes
 /// Ensures EyeTrackingManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class EyeTrackingManagerAccessibilityTests: XCTestCase {
+final class EyeTrackingManagerAccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,37 +34,37 @@ final class EyeTrackingManagerAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that EyeTrackingManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let manager = await MainActor.run { EyeTrackingManager() }
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(manager, "EyeTrackingManager should be instantiable")
+        #expect(manager != nil, "EyeTrackingManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            XCTAssertTrue(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
-            XCTAssertEqual(config.namespace, "SixLayer", "EyeTrackingManager should use correct namespace")
+            #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
         }
     }
     
     /// BUSINESS PURPOSE: Validates that EyeTrackingManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let manager = await MainActor.run { EyeTrackingManager() }
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(manager, "EyeTrackingManager should be instantiable")
+        #expect(manager != nil, "EyeTrackingManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            XCTAssertTrue(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
-            XCTAssertEqual(config.namespace, "SixLayer", "EyeTrackingManager should use correct namespace")
+            #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
         }
     }
 }

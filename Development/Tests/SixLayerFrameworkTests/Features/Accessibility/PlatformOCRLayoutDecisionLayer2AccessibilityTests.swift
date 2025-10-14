@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRLayoutDecisionLayer2.swift functions
 /// Ensures OCR layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
+final class PlatformOCRLayoutDecisionLayer2AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         await cleanupTestEnvironment()
         await MainActor.run {
@@ -34,7 +34,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformOCRLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -43,7 +43,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         )
         
         // Verify test image is properly configured
-        XCTAssertNotNil(testImage, "Test image should be created")
+        #expect(testImage != nil, "Test image should be created")
         
         let result = platformOCRLayout_L2(
             context: context
@@ -51,14 +51,14 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformOCRLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
-        XCTAssertTrue(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
+        #expect(result != nil, "platformOCRLayout_L2 should return a valid layout decision")
+        #expect(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
+        #expect(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -67,7 +67,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         )
         
         // Verify test image is properly configured
-        XCTAssertNotNil(testImage, "Test image should be created")
+        #expect(testImage != nil, "Test image should be created")
         
         let result = platformOCRLayout_L2(
             context: context
@@ -75,9 +75,9 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformOCRLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
-        XCTAssertTrue(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
+        #expect(result != nil, "platformOCRLayout_L2 should return a valid layout decision")
+        #expect(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
+        #expect(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
     }
 }
 

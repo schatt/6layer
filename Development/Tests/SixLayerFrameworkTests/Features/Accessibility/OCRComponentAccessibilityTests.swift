@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL OCR Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class OCRComponentAccessibilityTests: XCTestCase {
+final class OCRComponentAccessibilityTests {
     
     // MARK: - OCR Component Tests
     
-    func testPlatformOCRComponentsGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOCRComponentsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOCRComponents
         let testView = PlatformOCRComponents()
         
@@ -25,10 +25,10 @@ final class OCRComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformOCRComponents"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformOCRComponents should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOCRComponents should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoComponentsGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoComponentsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPhotoComponents
         let testView = PlatformPhotoComponents()
         
@@ -39,7 +39,7 @@ final class OCRComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformPhotoComponents"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformPhotoComponents should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPhotoComponents should generate accessibility identifiers")
     }
 }
 

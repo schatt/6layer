@@ -6,32 +6,30 @@
 //  Tests generic item collection presentation features
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ItemCollectionL1Tests: XCTestCase {
+final class ItemCollectionL1Tests {
     
     // MARK: - Test Data
     
     private var sampleItems: [GenericDataItem] = []
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override func setUp() {
-        super.setUp()
+    init() {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
     }
     
-    override func tearDown() {
+    deinit {
         sampleItems = []
-        super.tearDown()
     }
     
     // MARK: - Item Collection Tests
     
-    func testPlatformPresentItemCollection_L1() {
+    @Test func testPlatformPresentItemCollection_L1() {
         // Given
         let items = sampleItems
         
@@ -42,10 +40,10 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 should return a view")
     }
     
-    func testPlatformPresentItemCollection_L1_WithEmptyItems() {
+    @Test func testPlatformPresentItemCollection_L1_WithEmptyItems() {
         // Given
         let items: [GenericDataItem] = []
         
@@ -56,10 +54,10 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with empty items should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with empty items should return a view")
     }
     
-    func testPlatformPresentItemCollection_L1_WithSingleItem() {
+    @Test func testPlatformPresentItemCollection_L1_WithSingleItem() {
         // Given
         let items = [sampleItems.first!]
         
@@ -70,10 +68,10 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with single item should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with single item should return a view")
     }
     
-    func testPlatformPresentItemCollection_L1_WithManyItems() {
+    @Test func testPlatformPresentItemCollection_L1_WithManyItems() {
         // Given
         let items = createManyItems(count: 100)
         
@@ -84,12 +82,12 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with many items should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with many items should return a view")
     }
     
     // MARK: - Different Hint Types
     
-    func testPlatformPresentItemCollection_L1_WithCompactHints() {
+    @Test func testPlatformPresentItemCollection_L1_WithCompactHints() {
         // Given
         let items = sampleItems
         let hints = PresentationHints(
@@ -106,10 +104,10 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with compact hints should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with compact hints should return a view")
     }
     
-    func testPlatformPresentItemCollection_L1_WithDetailedHints() {
+    @Test func testPlatformPresentItemCollection_L1_WithDetailedHints() {
         // Given
         let items = sampleItems
         let hints = PresentationHints(
@@ -126,10 +124,10 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with detailed hints should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with detailed hints should return a view")
     }
     
-    func testPlatformPresentItemCollection_L1_WithGridHints() {
+    @Test func testPlatformPresentItemCollection_L1_WithGridHints() {
         // Given
         let items = sampleItems
         let hints = PresentationHints(
@@ -146,10 +144,10 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with grid hints should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with grid hints should return a view")
     }
     
-    func testPlatformPresentItemCollection_L1_WithListHints() {
+    @Test func testPlatformPresentItemCollection_L1_WithListHints() {
         // Given
         let items = sampleItems
         let hints = PresentationHints(
@@ -166,12 +164,12 @@ final class ItemCollectionL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 with list hints should return a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 with list hints should return a view")
     }
     
     // MARK: - Performance Tests
     
-    func testPlatformPresentItemCollection_L1_Performance() {
+    @Test func testPlatformPresentItemCollection_L1_Performance() {
         // Given
         let items = sampleItems
         
@@ -181,11 +179,11 @@ final class ItemCollectionL1Tests: XCTestCase {
                 items: items,
                 hints: sampleHints
             )
-            XCTAssertNotNil(view)
+            #expect(view != nil)
         }
     }
     
-    func testPlatformPresentItemCollection_L1_LargeDatasetPerformance() {
+    @Test func testPlatformPresentItemCollection_L1_LargeDatasetPerformance() {
         // Given
         let items = createManyItems(count: 1000)
         
@@ -195,7 +193,7 @@ final class ItemCollectionL1Tests: XCTestCase {
                 items: items,
                 hints: sampleHints
             )
-            XCTAssertNotNil(view)
+            #expect(view != nil)
         }
     }
     

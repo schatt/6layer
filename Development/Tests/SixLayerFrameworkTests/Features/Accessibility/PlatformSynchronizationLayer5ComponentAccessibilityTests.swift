@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Synchronization Layer 5 Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformSynchronizationLayer5ComponentAccessibilityTests: XCTestCase {
+final class PlatformSynchronizationLayer5ComponentAccessibilityTests {
     
     // MARK: - Platform Synchronization Layer 5 Component Tests
     
-    func testPlatformSynchronizationLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformSynchronizationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSynchronizationLayer5
         let testView = PlatformSynchronizationLayer5()
         
@@ -25,7 +25,7 @@ final class PlatformSynchronizationLayer5ComponentAccessibilityTests: XCTestCase
             componentName: "PlatformSynchronizationLayer5"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformSynchronizationLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSynchronizationLayer5 should generate accessibility identifiers")
     }
 }
 

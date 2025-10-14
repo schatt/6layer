@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL DataFrame Analysis Engine Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class DataFrameAnalysisEngineComponentAccessibilityTests: XCTestCase {
+final class DataFrameAnalysisEngineComponentAccessibilityTests {
     
     // MARK: - DataFrame Analysis Engine Component Tests
     
-    func testDataFrameAnalysisEngineGeneratesAccessibilityIdentifiers() async {
+    @Test func testDataFrameAnalysisEngineGeneratesAccessibilityIdentifiers() async {
         // Given: DataFrameAnalysisEngine
         let testView = DataFrameAnalysisEngine()
         
@@ -25,7 +25,7 @@ final class DataFrameAnalysisEngineComponentAccessibilityTests: XCTestCase {
             componentName: "DataFrameAnalysisEngine"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DataFrameAnalysisEngine should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DataFrameAnalysisEngine should generate accessibility identifiers")
     }
 }
 

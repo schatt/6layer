@@ -5,10 +5,10 @@
 //  Tests for the Data Introspection Engine
 //
 
-import XCTest
+import Testing
 import SixLayerFramework
 
-final class DataIntrospectionTests: XCTestCase {
+final class DataIntrospectionTests {
     
     // MARK: - Test Data Models
     
@@ -87,25 +87,25 @@ final class DataIntrospectionTests: XCTestCase {
     
     // MARK: - Basic Analysis Tests
     
-    func testSimpleModelAnalysis() {
+    @Test func testSimpleModelAnalysis() {
         let model = SimpleModel(name: "John", age: 30, isActive: true)
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertEqual(analysis.fields.count, 3)
-        XCTAssertEqual(analysis.complexity, .simple)
-        XCTAssertFalse(analysis.patterns.hasMedia)
-        XCTAssertFalse(analysis.patterns.hasDates)
-        XCTAssertFalse(analysis.patterns.hasRelationships)
-        XCTAssertFalse(analysis.patterns.isHierarchical)
+        #expect(analysis.fields.count == 3)
+        #expect(analysis.complexity == .simple)
+        #expect(!analysis.patterns.hasMedia)
+        #expect(!analysis.patterns.hasDates)
+        #expect(!analysis.patterns.hasRelationships)
+        #expect(!analysis.patterns.isHierarchical)
         
         // Check field types
         let fieldTypes = analysis.fields.map { $0.type }
-        XCTAssertTrue(fieldTypes.contains(.string))
-        XCTAssertTrue(fieldTypes.contains(.number))
-        XCTAssertTrue(fieldTypes.contains(.boolean))
+        #expect(fieldTypes.contains(.string))
+        #expect(fieldTypes.contains(.number))
+        #expect(fieldTypes.contains(.boolean))
     }
     
-    func testModerateModelAnalysis() {
+    @Test func testModerateModelAnalysis() {
         let model = ModerateModel(
             id: UUID(),
             title: "Test Title",
@@ -117,15 +117,15 @@ final class DataIntrospectionTests: XCTestCase {
         )
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertEqual(analysis.fields.count, 7)
-        XCTAssertEqual(analysis.complexity, .moderate)
-        XCTAssertFalse(analysis.patterns.hasMedia)
-        XCTAssertTrue(analysis.patterns.hasDates)
-        XCTAssertFalse(analysis.patterns.hasRelationships)
-        XCTAssertTrue(analysis.patterns.isHierarchical) // Due to arrays
+        #expect(analysis.fields.count == 7)
+        #expect(analysis.complexity == .moderate)
+        #expect(!analysis.patterns.hasMedia)
+        #expect(analysis.patterns.hasDates)
+        #expect(!analysis.patterns.hasRelationships)
+        #expect(analysis.patterns.isHierarchical) // Due to arrays
     }
     
-    func testComplexModelAnalysis() {
+    @Test func testComplexModelAnalysis() {
         let model = ComplexModel(
             id: UUID(),
             name: "John Doe",
@@ -140,28 +140,28 @@ final class DataIntrospectionTests: XCTestCase {
         )
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertGreaterThanOrEqual(analysis.fields.count, 10)
-        XCTAssertTrue(analysis.complexity == .complex || analysis.complexity == .veryComplex)
+        #expect(analysis.fields.count >= 10)
+        #expect(analysis.complexity == .complex || analysis.complexity == .veryComplex)
 
         
-        XCTAssertFalse(analysis.patterns.hasMedia) // No actual image/document types
-        XCTAssertTrue(analysis.patterns.hasDates)
-        XCTAssertTrue(analysis.patterns.hasRelationships)
-        XCTAssertTrue(analysis.patterns.isHierarchical)
+        #expect(!analysis.patterns.hasMedia) // No actual image/document types
+        #expect(analysis.patterns.hasDates)
+        #expect(analysis.patterns.hasRelationships)
+        #expect(analysis.patterns.isHierarchical)
     }
     
     // MARK: - Collection Analysis Tests
     
-    func testEmptyCollectionAnalysis() {
+    @Test func testEmptyCollectionAnalysis() {
         let items: [SimpleModel] = []
         let analysis = DataIntrospectionEngine.analyzeCollection(items)
         
-        XCTAssertEqual(analysis.itemCount, 0)
-        XCTAssertEqual(analysis.collectionType, .empty)
-        XCTAssertEqual(analysis.recommendations.count, 0)
+        #expect(analysis.itemCount == 0)
+        #expect(analysis.collectionType == .empty)
+        #expect(analysis.recommendations.count == 0)
     }
     
-    func testSmallCollectionAnalysis() {
+    @Test func testSmallCollectionAnalysis() {
         let items = [
             SimpleModel(name: "Item 1", age: 25, isActive: true),
             SimpleModel(name: "Item 2", age: 30, isActive: false),
@@ -169,30 +169,30 @@ final class DataIntrospectionTests: XCTestCase {
         ]
         let analysis = DataIntrospectionEngine.analyzeCollection(items)
         
-        XCTAssertEqual(analysis.itemCount, 3)
-        XCTAssertEqual(analysis.collectionType, .small)
-        XCTAssertEqual(analysis.itemComplexity, .simple)
-        XCTAssertGreaterThan(analysis.recommendations.count, 0)
+        #expect(analysis.itemCount == 3)
+        #expect(analysis.collectionType == .small)
+        #expect(analysis.itemComplexity == .simple)
+        #expect(analysis.recommendations.count > 0)
     }
     
-    func testLargeCollectionAnalysis() {
+    @Test func testLargeCollectionAnalysis() {
         let items = Array(0..<150).map { index in
             SimpleModel(name: "Item \(index)", age: 20 + index, isActive: index % 2 == 0)
         }
         let analysis = DataIntrospectionEngine.analyzeCollection(items)
         
-        XCTAssertEqual(analysis.itemCount, 150)
-        XCTAssertEqual(analysis.collectionType, .large)
-        XCTAssertEqual(analysis.itemComplexity, .simple)
+        #expect(analysis.itemCount == 150)
+        #expect(analysis.collectionType == .large)
+        #expect(analysis.itemComplexity == .simple)
         
         // Should have performance recommendations
         let performanceRecommendations = analysis.recommendations.filter { $0.type == .performance }
-        XCTAssertGreaterThan(performanceRecommendations.count, 0)
+        #expect(performanceRecommendations.count > 0)
     }
     
     // MARK: - Field Type Detection Tests
     
-    func testFieldTypeDetection() {
+    @Test func testFieldTypeDetection() {
         let model = ModerateModel(
             id: UUID(),
             title: "Test",
@@ -206,44 +206,44 @@ final class DataIntrospectionTests: XCTestCase {
         
         // Check specific field types
         let idField = analysis.fields.first { $0.name == "id" }
-        XCTAssertNotNil(idField)
-        XCTAssertEqual(idField?.type, .uuid)
+        #expect(idField != nil)
+        #expect(idField?.type == .uuid)
         
         let titleField = analysis.fields.first { $0.name == "title" }
-        XCTAssertNotNil(titleField)
-        XCTAssertEqual(titleField?.type, .string)
+        #expect(titleField != nil)
+        #expect(titleField?.type == .string)
         
         let priorityField = analysis.fields.first { $0.name == "priority" }
-        XCTAssertNotNil(priorityField)
-        XCTAssertEqual(priorityField?.type, .number)
+        #expect(priorityField != nil)
+        #expect(priorityField?.type == .number)
         
         let tagsField = analysis.fields.first { $0.name == "tags" }
-        XCTAssertNotNil(tagsField)
-        XCTAssertTrue(tagsField?.isArray == true)
+        #expect(tagsField != nil)
+        #expect(tagsField?.isArray == true)
     }
     
     // MARK: - Utility Method Tests
     
-    func testGetAnalysisSummary() {
+    @Test func testGetAnalysisSummary() {
         let model = SimpleModel(name: "Test", age: 25, isActive: true)
         let summary = DataIntrospectionEngine.getAnalysisSummary(model)
         
-        XCTAssertTrue(summary.contains("Data Analysis Summary"))
-        XCTAssertTrue(summary.contains("Fields: 3"))
-        XCTAssertTrue(summary.contains("Complexity: simple"))
+        #expect(summary.contains("Data Analysis Summary"))
+        #expect(summary.contains("Fields: 3"))
+        #expect(summary.contains("Complexity: simple"))
     }
     
-    func testGetFieldNames() {
+    @Test func testGetFieldNames() {
         let model = SimpleModel(name: "Test", age: 25, isActive: true)
         let fieldNames = DataIntrospectionEngine.getFieldNames(model)
         
-        XCTAssertEqual(fieldNames.count, 3)
-        XCTAssertTrue(fieldNames.contains("name"))
-        XCTAssertTrue(fieldNames.contains("age"))
-        XCTAssertTrue(fieldNames.contains("isActive"))
+        #expect(fieldNames.count == 3)
+        #expect(fieldNames.contains("name"))
+        #expect(fieldNames.contains("age"))
+        #expect(fieldNames.contains("isActive"))
     }
     
-    func testHasFieldType() {
+    @Test func testHasFieldType() {
         let model = ModerateModel(
             id: UUID(),
             title: "Test",
@@ -254,13 +254,13 @@ final class DataIntrospectionTests: XCTestCase {
             metadata: ["key": "value"]
         )
         
-        XCTAssertTrue(DataIntrospectionEngine.hasFieldType(model, type: .string))
-        XCTAssertTrue(DataIntrospectionEngine.hasFieldType(model, type: .number))
-        XCTAssertTrue(DataIntrospectionEngine.hasFieldType(model, type: .uuid))
-        XCTAssertFalse(DataIntrospectionEngine.hasFieldType(model, type: .image))
+        #expect(DataIntrospectionEngine.hasFieldType(model, type: .string))
+        #expect(DataIntrospectionEngine.hasFieldType(model, type: .number))
+        #expect(DataIntrospectionEngine.hasFieldType(model, type: .uuid))
+        #expect(!DataIntrospectionEngine.hasFieldType(model, type: .image))
     }
     
-    func testGetFieldsOfType() {
+    @Test func testGetFieldsOfType() {
         let model = ModerateModel(
             id: UUID(),
             title: "Test",
@@ -272,32 +272,32 @@ final class DataIntrospectionTests: XCTestCase {
         )
         
         let stringFields = DataIntrospectionEngine.getFieldsOfType(model, type: .string)
-        XCTAssertGreaterThan(stringFields.count, 0)
+        #expect(stringFields.count > 0)
         
         let numberFields = DataIntrospectionEngine.getFieldsOfType(model, type: .number)
-        XCTAssertGreaterThan(numberFields.count, 0)
+        #expect(numberFields.count > 0)
         
         let uuidFields = DataIntrospectionEngine.getFieldsOfType(model, type: .uuid)
-        XCTAssertEqual(uuidFields.count, 1)
+        #expect(uuidFields.count == 1)
     }
     
     // MARK: - Recommendation Tests
     
-    func testRecommendationsForSimpleModel() {
+    @Test func testRecommendationsForSimpleModel() {
         let model = SimpleModel(name: "Test", age: 25, isActive: true)
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertGreaterThan(analysis.recommendations.count, 0)
+        #expect(analysis.recommendations.count > 0)
         
         let layoutRecommendations = analysis.recommendations.filter { $0.type == .layout }
-        XCTAssertGreaterThan(layoutRecommendations.count, 0)
+        #expect(layoutRecommendations.count > 0)
         
         // Simple models should recommend compact layouts
         let compactRecommendation = layoutRecommendations.first { $0.description.contains("compact") }
-        XCTAssertNotNil(compactRecommendation)
+        #expect(compactRecommendation != nil)
     }
     
-    func testRecommendationsForComplexModel() {
+    @Test func testRecommendationsForComplexModel() {
         let model = ComplexModel(
             id: UUID(),
             name: "John Doe",
@@ -312,28 +312,28 @@ final class DataIntrospectionTests: XCTestCase {
         )
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertGreaterThan(analysis.recommendations.count, 0)
+        #expect(analysis.recommendations.count > 0)
         
         let layoutRecommendations = analysis.recommendations.filter { $0.type == .layout }
-        XCTAssertGreaterThan(layoutRecommendations.count, 0)
+        #expect(layoutRecommendations.count > 0)
         
         // Complex models should recommend tabbed or master-detail layouts
         let tabbedRecommendation = layoutRecommendations.first { $0.description.contains("tabbed") || $0.description.contains("master-detail") }
-        XCTAssertNotNil(tabbedRecommendation)
+        #expect(tabbedRecommendation != nil)
     }
     
     // MARK: - Edge Case Tests
     
-    func testEmptyStruct() {
+    @Test func testEmptyStruct() {
         struct EmptyStruct {}
         let model = EmptyStruct()
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertEqual(analysis.fields.count, 0)
-        XCTAssertEqual(analysis.complexity, .simple)
+        #expect(analysis.fields.count == 0)
+        #expect(analysis.complexity == .simple)
     }
     
-    func testOptionalFields() {
+    @Test func testOptionalFields() {
         struct OptionalModel {
             let name: String?
             let age: Int?
@@ -342,12 +342,12 @@ final class DataIntrospectionTests: XCTestCase {
         let model = OptionalModel(name: "Test", age: 25, isActive: true)
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertEqual(analysis.fields.count, 3)
+        #expect(analysis.fields.count == 3)
         // Note: Our current implementation doesn't detect optionals perfectly
         // This test documents the current behavior
     }
     
-    func testIdentifiableDetection() {
+    @Test func testIdentifiableDetection() {
         struct IdentifiableModel: Identifiable {
             let id = UUID()
             let name: String
@@ -355,10 +355,10 @@ final class DataIntrospectionTests: XCTestCase {
         let model = IdentifiableModel(name: "Test")
         let analysis = DataIntrospectionEngine.analyze(model)
         
-        XCTAssertEqual(analysis.fields.count, 2)
+        #expect(analysis.fields.count == 2)
         // Check if we detect the id field
         let idField = analysis.fields.first { $0.name == "id" }
-        XCTAssertNotNil(idField)
-        XCTAssertEqual(idField?.type, .uuid)
+        #expect(idField != nil)
+        #expect(idField?.type == .uuid)
     }
 }

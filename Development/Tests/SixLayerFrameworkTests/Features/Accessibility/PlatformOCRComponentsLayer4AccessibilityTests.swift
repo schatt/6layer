@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRComponentsLayer4.swift functions
 /// Ensures OCR components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
+final class PlatformOCRComponentsLayer4AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         await cleanupTestEnvironment()
         await MainActor.run {
@@ -34,7 +34,7 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformOCRImplementation_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformOCRImplementationL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformOCRImplementationL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -53,13 +53,13 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         // Verify layout decision is properly configured
-        XCTAssertEqual(layoutDecision.columns, 2, "Layout decision should have correct columns")
-        XCTAssertEqual(layoutDecision.spacing, 16, "Layout decision should have correct spacing")
-        XCTAssertEqual(layoutDecision.cardWidth, 150, "Layout decision should have correct card width")
-        XCTAssertEqual(layoutDecision.cardHeight, 200, "Layout decision should have correct card height")
-        XCTAssertEqual(layoutDecision.padding, 16, "Layout decision should have correct padding")
-        XCTAssertEqual(layoutDecision.expansionScale, 1.0, "Layout decision should have correct expansion scale")
-        XCTAssertEqual(layoutDecision.animationDuration, 0.3, "Layout decision should have correct animation duration")
+        #expect(layoutDecision.columns == 2, "Layout decision should have correct columns")
+        #expect(layoutDecision.spacing == 16, "Layout decision should have correct spacing")
+        #expect(layoutDecision.cardWidth == 150, "Layout decision should have correct card width")
+        #expect(layoutDecision.cardHeight == 200, "Layout decision should have correct card height")
+        #expect(layoutDecision.padding == 16, "Layout decision should have correct padding")
+        #expect(layoutDecision.expansionScale == 1.0, "Layout decision should have correct expansion scale")
+        #expect(layoutDecision.animationDuration == 0.3, "Layout decision should have correct animation duration")
         
         let strategy = OCRStrategy(
             supportedTextTypes: [.general],
@@ -90,12 +90,12 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRImplementation_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformOCRImplementationL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformOCRImplementationL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -114,13 +114,13 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         )
         
         // Verify layout decision is properly configured
-        XCTAssertEqual(layoutDecision.columns, 2, "Layout decision should have correct columns")
-        XCTAssertEqual(layoutDecision.spacing, 16, "Layout decision should have correct spacing")
-        XCTAssertEqual(layoutDecision.cardWidth, 150, "Layout decision should have correct card width")
-        XCTAssertEqual(layoutDecision.cardHeight, 200, "Layout decision should have correct card height")
-        XCTAssertEqual(layoutDecision.padding, 16, "Layout decision should have correct padding")
-        XCTAssertEqual(layoutDecision.expansionScale, 1.0, "Layout decision should have correct expansion scale")
-        XCTAssertEqual(layoutDecision.animationDuration, 0.3, "Layout decision should have correct animation duration")
+        #expect(layoutDecision.columns == 2, "Layout decision should have correct columns")
+        #expect(layoutDecision.spacing == 16, "Layout decision should have correct spacing")
+        #expect(layoutDecision.cardWidth == 150, "Layout decision should have correct card width")
+        #expect(layoutDecision.cardHeight == 200, "Layout decision should have correct card height")
+        #expect(layoutDecision.padding == 16, "Layout decision should have correct padding")
+        #expect(layoutDecision.expansionScale == 1.0, "Layout decision should have correct expansion scale")
+        #expect(layoutDecision.animationDuration == 0.3, "Layout decision should have correct animation duration")
         
         let strategy = OCRStrategy(
             supportedTextTypes: [.general],
@@ -151,7 +151,7 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers on macOS")
     }
 }
 

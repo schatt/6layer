@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,11 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: Layer 4 components and other remaining components in the framework
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class RemainingComponentsAccessibilityTests: XCTestCase {
+final class RemainingComponentsAccessibilityTests {
     
     // MARK: - Test Setup
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
@@ -24,7 +24,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
@@ -33,7 +33,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
     
     // MARK: - ExpandableCardComponent Tests
     
-    func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -76,10 +76,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "ExpandableCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers on iOS")
     }
     
-    func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -122,12 +122,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "ExpandableCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers on macOS")
     }
     
     // MARK: - CoverFlowCollectionView Tests
     
-    func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -151,10 +151,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "CoverFlowCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -178,12 +178,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "CoverFlowCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - CoverFlowCardComponent Tests
     
-    func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = CoverFlowCardComponent(
@@ -200,10 +200,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "CoverFlowCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers on iOS")
     }
     
-    func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = CoverFlowCardComponent(
@@ -220,12 +220,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "CoverFlowCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers on macOS")
     }
     
     // MARK: - GridCollectionView Tests
     
-    func testGridCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGridCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -249,10 +249,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "GridCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testGridCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGridCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -276,12 +276,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "GridCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - ListCollectionView Tests
     
-    func testListCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testListCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -305,10 +305,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "ListCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testListCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testListCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -332,12 +332,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "ListCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - MasonryCollectionView Tests
     
-    func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -361,10 +361,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "MasonryCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -388,12 +388,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "MasonryCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - AdaptiveCollectionView Tests
     
-    func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -417,10 +417,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "AdaptiveCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -444,12 +444,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "AdaptiveCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - SimpleCardComponent Tests
     
-    func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -477,10 +477,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "SimpleCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on iOS")
     }
     
-    func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -508,12 +508,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "SimpleCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on macOS")
     }
     
     // MARK: - ListCardComponent Tests
     
-    func testListCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testListCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = ListCardComponent(
@@ -530,10 +530,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "ListCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on iOS")
     }
     
-    func testListCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testListCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = ListCardComponent(
@@ -550,12 +550,12 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "ListCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on macOS")
     }
     
     // MARK: - MasonryCardComponent Tests
     
-    func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = MasonryCardComponent(item: testItem)
@@ -567,10 +567,10 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "MasonryCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on iOS")
     }
     
-    func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = MasonryCardComponent(item: testItem)
@@ -582,7 +582,7 @@ final class RemainingComponentsAccessibilityTests: XCTestCase {
             componentName: "MasonryCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on macOS")
     }
 }
 

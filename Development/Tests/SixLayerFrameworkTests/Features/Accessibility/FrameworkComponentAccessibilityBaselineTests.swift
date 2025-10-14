@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
 @MainActor
-final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
+final class FrameworkComponentAccessibilityBaselineTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -18,7 +18,7 @@ final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
         config.enableAutoIDs = true
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -26,21 +26,21 @@ final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
     
     // MARK: - TDD Green Phase: Components That SHOULD Work (Have .automaticAccessibility())
     
-    func testPlatformPresentContentL1GeneratesAccessibilityID() {
+    @Test func testPlatformPresentContentL1GeneratesAccessibilityID() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let contentView = platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
         assertComponentGeneratesAccessibilityID(contentView, name: "platformPresentContent_L1")
         print("✅ platformPresentContent_L1 generates accessibility ID")
     }
     
-    func testPlatformPresentBasicValueL1GeneratesAccessibilityID() {
+    @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityID() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let valueView = platformPresentBasicValue_L1(value: 42, hints: PresentationHints())
         assertComponentGeneratesAccessibilityID(valueView, name: "platformPresentBasicValue_L1")
         print("✅ platformPresentBasicValue_L1 generates accessibility ID")
     }
     
-    func testPlatformPresentBasicArrayL1GeneratesAccessibilityID() {
+    @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityID() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let arrayView = platformPresentBasicArray_L1(array: [1, 2, 3], hints: PresentationHints())
         assertComponentGeneratesAccessibilityID(arrayView, name: "platformPresentBasicArray_L1")
@@ -49,7 +49,7 @@ final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
     
     // MARK: - TDD Red Phase: Components That SHOULD FAIL (Missing .automaticAccessibility())
     
-    func testPlatformPresentItemCollectionL1GeneratesAccessibilityID() {
+    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityID() {
         // Test that platformPresentItemCollection_L1 generates accessibility identifiers
         let mockItems = [
             MockTaskItemBaseline(id: "task1", title: "Test Task 1"),
@@ -76,7 +76,7 @@ final class FrameworkComponentAccessibilityBaselineTests: XCTestCase {
     
     private func assertComponentGeneratesAccessibilityID<T: View>(_ component: T, name: String) {
         // Look for component-specific accessibility identifier pattern
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             component, 
             expectedPattern: "FrameworkTest.*\(name.lowercased()).*", 
             componentName: name

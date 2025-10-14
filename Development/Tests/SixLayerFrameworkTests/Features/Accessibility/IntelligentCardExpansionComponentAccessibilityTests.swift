@@ -5,18 +5,18 @@
 //  Comprehensive accessibility tests for ALL IntelligentCardExpansion components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
+final class IntelligentCardExpansionComponentAccessibilityTests {
     
     // MARK: - Layer 4 Components Tests
     
     // MARK: - ExpandableCardCollectionView Tests
     
-    func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test items
         let testItems = [
             CardTestItem(id: "1", title: "Card 1"),
@@ -34,12 +34,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "ExpandableCardCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers")
     }
     
     // MARK: - ExpandableCardComponent Tests
     
-    func testExpandableCardComponentGeneratesAccessibilityIdentifiers() async {
+    @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "Test Card")
         let hints = PresentationHints()
@@ -54,12 +54,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "ExpandableCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers")
     }
     
     // MARK: - CoverFlowCollectionView Tests
     
-    func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test items
         let testItems = [
             CardTestItem(id: "1", title: "CoverFlow Card 1"),
@@ -77,12 +77,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "CoverFlowCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers")
     }
     
     // MARK: - CoverFlowCardComponent Tests
     
-    func testCoverFlowCardComponentGeneratesAccessibilityIdentifiers() async {
+    @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "CoverFlow Card")
         let hints = PresentationHints()
@@ -97,12 +97,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "CoverFlowCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers")
     }
     
     // MARK: - GridCollectionView Tests
     
-    func testGridCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGridCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test items
         let testItems = [
             CardTestItem(id: "1", title: "Grid Card 1"),
@@ -120,12 +120,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "GridCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers")
     }
     
     // MARK: - ListCollectionView Tests
     
-    func testListCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testListCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test items
         let testItems = [
             CardTestItem(id: "1", title: "List Card 1"),
@@ -143,12 +143,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "ListCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers")
     }
     
     // MARK: - MasonryCollectionView Tests
     
-    func testMasonryCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test items
         let testItems = [
             CardTestItem(id: "1", title: "Masonry Card 1"),
@@ -166,12 +166,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "MasonryCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers")
     }
     
     // MARK: - AdaptiveCollectionView Tests
     
-    func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test items
         let testItems = [
             CardTestItem(id: "1", title: "Adaptive Card 1"),
@@ -189,12 +189,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "AdaptiveCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers")
     }
     
     // MARK: - SimpleCardComponent Tests
     
-    func testSimpleCardComponentGeneratesAccessibilityIdentifiers() async {
+    @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "Simple Card")
         let hints = PresentationHints()
@@ -209,12 +209,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "SimpleCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers")
     }
     
     // MARK: - ListCardComponent Tests
     
-    func testListCardComponentGeneratesAccessibilityIdentifiers() async {
+    @Test func testListCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "List Card")
         let hints = PresentationHints()
@@ -229,12 +229,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "ListCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers")
     }
     
     // MARK: - MasonryCardComponent Tests
     
-    func testMasonryCardComponentGeneratesAccessibilityIdentifiers() async {
+    @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "Masonry Card")
         let hints = PresentationHints()
@@ -249,14 +249,14 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "MasonryCardComponent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers")
     }
     
     // MARK: - Layer 6 Components Tests
     
     // MARK: - NativeExpandableCardView Tests
     
-    func testNativeExpandableCardViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testNativeExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Native Card")
         let expansionStrategy = ExpansionStrategy.automatic
@@ -280,12 +280,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "NativeExpandableCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "NativeExpandableCardView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "NativeExpandableCardView should generate accessibility identifiers")
     }
     
     // MARK: - iOSExpandableCardView Tests
     
-    func testIOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testIOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "iOS Card")
         let expansionStrategy = ExpansionStrategy.automatic
@@ -309,12 +309,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "iOSExpandableCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "iOSExpandableCardView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "iOSExpandableCardView should generate accessibility identifiers")
     }
     
     // MARK: - macOSExpandableCardView Tests
     
-    func testMacOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testMacOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "macOS Card")
         let expansionStrategy = ExpansionStrategy.automatic
@@ -338,12 +338,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "macOSExpandableCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "macOSExpandableCardView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "macOSExpandableCardView should generate accessibility identifiers")
     }
     
     // MARK: - visionOSExpandableCardView Tests
     
-    func testVisionOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testVisionOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "visionOS Card")
         let expansionStrategy = ExpansionStrategy.automatic
@@ -367,12 +367,12 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "visionOSExpandableCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "visionOSExpandableCardView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "visionOSExpandableCardView should generate accessibility identifiers")
     }
     
     // MARK: - PlatformAwareExpandableCardView Tests
     
-    func testPlatformAwareExpandableCardViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAwareExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Platform Aware Card")
         let expansionStrategy = ExpansionStrategy.automatic
@@ -396,7 +396,7 @@ final class IntelligentCardExpansionComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAwareExpandableCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAwareExpandableCardView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAwareExpandableCardView should generate accessibility identifiers")
     }
 }
 

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,10 +6,10 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformSemanticLayer1.swift modal form functions
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
+final class PlatformSemanticLayer1ModalFormAccessibilityTests {
     
     @MainActor
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
@@ -21,7 +21,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     }
     
     @MainActor
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
@@ -39,7 +39,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformPresentModalForm_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testData = ModalFormTestData(name: "Test Name", email: "test@example.com")
         
@@ -52,10 +52,10 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         )
         
         // Verify test data and hints are properly configured
-        XCTAssertEqual(testData.name, "Test Name", "Test data should have correct name")
-        XCTAssertEqual(testData.email, "test@example.com", "Test data should have correct email")
-        XCTAssertEqual(hints.dataType, .form, "Hints should have correct data type")
-        XCTAssertEqual(hints.context, .modal, "Hints should have correct context")
+        #expect(testData.name == "Test Name", "Test data should have correct name")
+        #expect(testData.email == "test@example.com", "Test data should have correct email")
+        #expect(hints.dataType == .form, "Hints should have correct data type")
+        #expect(hints.context == .modal, "Hints should have correct context")
         
         let view = await MainActor.run {
             platformPresentModalForm_L1(
@@ -74,12 +74,12 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentModalForm_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testData = ModalFormTestData(name: "Test Name", email: "test@example.com")
         
@@ -92,10 +92,10 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
         )
         
         // Verify test data and hints are properly configured
-        XCTAssertEqual(testData.name, "Test Name", "Test data should have correct name")
-        XCTAssertEqual(testData.email, "test@example.com", "Test data should have correct email")
-        XCTAssertEqual(hints.dataType, .form, "Hints should have correct data type")
-        XCTAssertEqual(hints.context, .modal, "Hints should have correct context")
+        #expect(testData.name == "Test Name", "Test data should have correct name")
+        #expect(testData.email == "test@example.com", "Test data should have correct email")
+        #expect(hints.dataType == .form, "Hints should have correct data type")
+        #expect(hints.context == .modal, "Hints should have correct context")
         
         let view = await MainActor.run {
             platformPresentModalForm_L1(
@@ -114,6 +114,6 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on macOS")
     }
 }

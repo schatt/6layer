@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import XCTest
+import Testing
 #if canImport(UIKit)
 import UIKit
 #endif

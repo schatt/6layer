@@ -30,7 +30,7 @@
 //  - ✅ Excellent: Tests both supported and unsupported capability scenarios
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -38,9 +38,8 @@ import SwiftUI
 /// Tests that platform detection correctly determines capability support
 /// AND that capabilities work when supported and are disabled when not supported
 @MainActor
-final class CapabilityMatrixTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
+final class CapabilityMatrixTests {
+    init() {
         // Establish deterministic baseline for current platform
         let platform = SixLayerPlatform.current
         RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -75,9 +74,8 @@ final class CapabilityMatrixTests: XCTestCase {
         }
     }
 
-    override func tearDown() {
+    deinit {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        super.tearDown()
     }
     
     // MARK: - Capability Test Matrix
@@ -99,20 +97,20 @@ final class CapabilityMatrixTests: XCTestCase {
                 let config = getCardExpansionPlatformConfig()
                 if config.supportsTouch {
                     // Touch should enable haptic feedback
-                    XCTAssertTrue(config.supportsHapticFeedback, 
+                    #expect(config.supportsHapticFeedback, 
                                 "Touch platforms should support haptic feedback")
                     // Touch should enable AssistiveTouch
-                    XCTAssertTrue(config.supportsAssistiveTouch, 
+                    #expect(config.supportsAssistiveTouch, 
                                 "Touch platforms should support AssistiveTouch")
                     // Touch targets should be appropriate size
-                    XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+                    #expect(config.minTouchTarget >= 44, 
                                               "Touch platforms should have adequate touch targets")
                 } else {
                     // Non-touch platforms should not have haptic feedback
-                    XCTAssertFalse(config.supportsHapticFeedback, 
+                    #expect(!config.supportsHapticFeedback, 
                                  "Non-touch platforms should not support haptic feedback")
                     // Non-touch platforms should not have AssistiveTouch
-                    XCTAssertFalse(config.supportsAssistiveTouch, 
+                    #expect(!config.supportsAssistiveTouch, 
                                  "Non-touch platforms should not support AssistiveTouch")
                 }
             },
@@ -127,14 +125,14 @@ final class CapabilityMatrixTests: XCTestCase {
                 let config = getCardExpansionPlatformConfig()
                 if config.supportsHover {
                     // Hover platforms should not support touch (mutually exclusive)
-                    XCTAssertFalse(config.supportsTouch, 
+                    #expect(!config.supportsTouch, 
                                  "Hover platforms should not support touch")
                     // Hover should have appropriate delay settings
-                    XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
+                    #expect(config.hoverDelay >= 0, 
                                               "Hover platforms should have hover delay")
                 } else {
                     // Non-hover platforms should not have hover-specific features
-                    XCTAssertEqual(config.hoverDelay, 0, 
+                    #expect(config.hoverDelay == 0, 
                                  "Non-hover platforms should have zero hover delay")
                 }
             },
@@ -149,11 +147,11 @@ final class CapabilityMatrixTests: XCTestCase {
                 let config = getCardExpansionPlatformConfig()
                 if config.supportsHapticFeedback {
                     // Haptic feedback should only be on touch platforms
-                    XCTAssertTrue(config.supportsTouch, 
+                    #expect(config.supportsTouch, 
                                 "Haptic feedback should only be on touch platforms")
                 } else {
                     // Non-haptic platforms should not have touch
-                    XCTAssertFalse(config.supportsTouch, 
+                    #expect(!config.supportsTouch, 
                                  "Non-haptic platforms should not support touch")
                 }
             },
@@ -168,11 +166,11 @@ final class CapabilityMatrixTests: XCTestCase {
                 let config = getCardExpansionPlatformConfig()
                 if config.supportsAssistiveTouch {
                     // AssistiveTouch should only be on touch platforms
-                    XCTAssertTrue(config.supportsTouch, 
+                    #expect(config.supportsTouch, 
                                 "AssistiveTouch should only be on touch platforms")
                 } else {
                     // Non-AssistiveTouch platforms should not have touch
-                    XCTAssertFalse(config.supportsTouch, 
+                    #expect(!config.supportsTouch, 
                                  "Non-AssistiveTouch platforms should not support touch")
                 }
             },
@@ -188,9 +186,9 @@ final class CapabilityMatrixTests: XCTestCase {
                 let platform = SixLayerPlatform.current
                 switch platform {
                 case .iOS, .macOS:
-                    XCTAssertTrue(isVisionAvailable, "Vision should be available on \(platform)")
+                    #expect(isVisionAvailable, "Vision should be available on \(platform)")
                 case .watchOS, .tvOS, .visionOS:
-                    XCTAssertFalse(isVisionAvailable, "Vision should not be available on \(platform)")
+                    #expect(!isVisionAvailable, "Vision should not be available on \(platform)")
                 }
             },
             expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.visionOS]
@@ -205,7 +203,7 @@ final class CapabilityMatrixTests: XCTestCase {
                 let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
 
                 // OCR should only be available if Vision is available
-                XCTAssertEqual(isOCRAvailable, isVisionAvailable,
+                #expect(isOCRAvailable == isVisionAvailable, 
                              "OCR availability should match Vision framework availability")
 
                 if isOCRAvailable {
@@ -257,12 +255,12 @@ final class CapabilityMatrixTests: XCTestCase {
                 
                 do {
                     let encodedData = try platformColorEncode(testColor)
-                    XCTAssertFalse(encodedData.isEmpty, "Color encoding should produce data")
+                    #expect(!encodedData.isEmpty, "Color encoding should produce data")
                     
                     let decodedColor = try platformColorDecode(encodedData)
-                    XCTAssertNotNil(decodedColor, "Color decoding should work")
+                    #expect(decodedColor != nil, "Color decoding should work")
                 } catch {
-                    XCTFail("Color encoding/decoding should work on all platforms: \(error)")
+                    Issue.record("Color encoding/decoding should work on all platforms: \(error)")
                 }
             },
             expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS]
@@ -271,19 +269,19 @@ final class CapabilityMatrixTests: XCTestCase {
     
     // MARK: - Comprehensive Capability Testing
     
-    func testAllCapabilities() {
+    @Test func testAllCapabilities() {
         for capabilityTest in capabilityTests {
             testCapability(capabilityTest)
         }
     }
     
-    func testCapability(_ capabilityTest: CapabilityTest) {
+    @Test func testCapability(_ capabilityTest: CapabilityTest) {
         let platform = SixLayerPlatform.current
         let isSupported = capabilityTest.testSupported()
         let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
         
         // Test 1: Platform detection should be correct
-        XCTAssertEqual(isSupported, shouldBeSupported, 
+        #expect(isSupported == shouldBeSupported, 
                      "\(capabilityTest.name) detection should be correct for \(platform)")
         
         // Test 2: Behavior should be appropriate for support status
@@ -295,44 +293,44 @@ final class CapabilityMatrixTests: XCTestCase {
     
     // MARK: - Individual Capability Tests
     
-    func testTouchCapability() {
+    @Test func testTouchCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "Touch Support" }!
         testCapability(capabilityTest)
     }
     
-    func testHoverCapability() {
+    @Test func testHoverCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "Hover Support" }!
         testCapability(capabilityTest)
     }
     
-    func testHapticFeedbackCapability() {
+    @Test func testHapticFeedbackCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "Haptic Feedback Support" }!
         testCapability(capabilityTest)
     }
     
-    func testAssistiveTouchCapability() {
+    @Test func testAssistiveTouchCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "AssistiveTouch Support" }!
         testCapability(capabilityTest)
     }
     
-    func testVisionFrameworkCapability() {
+    @Test func testVisionFrameworkCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "Vision Framework Support" }!
         testCapability(capabilityTest)
     }
     
-    func testOCRCapability() {
+    @Test func testOCRCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "OCR Support" }!
         testCapability(capabilityTest)
     }
     
-    func testColorEncodingCapability() {
+    @Test func testColorEncodingCapability() {
         let capabilityTest = capabilityTests.first { $0.name == "Color Encoding Support" }!
         testCapability(capabilityTest)
     }
     
     // MARK: - Platform-Specific Capability Validation
     
-    func testPlatformCapabilityConsistency() {
+    @Test func testPlatformCapabilityConsistency() {
         let platform = SixLayerPlatform.current
         let config = getCardExpansionPlatformConfig()
         
@@ -340,48 +338,48 @@ final class CapabilityMatrixTests: XCTestCase {
         switch platform {
         case .iOS:
             // iOS should support touch, haptic, and AssistiveTouch
-            XCTAssertTrue(config.supportsTouch, "iOS should support touch")
-            XCTAssertTrue(config.supportsHapticFeedback, "iOS should support haptic feedback")
-            XCTAssertTrue(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
-            XCTAssertFalse(config.supportsHover, "iOS should not support hover")
+            #expect(config.supportsTouch, "iOS should support touch")
+            #expect(config.supportsHapticFeedback, "iOS should support haptic feedback")
+            #expect(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+            #expect(!config.supportsHover, "iOS should not support hover")
             
         case .macOS:
             // macOS should support hover but not touch
-            XCTAssertFalse(config.supportsTouch, "macOS should not support touch")
-            XCTAssertFalse(config.supportsHapticFeedback, "macOS should not support haptic feedback")
-            XCTAssertFalse(config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
-            XCTAssertTrue(config.supportsHover, "macOS should support hover")
+            #expect(!config.supportsTouch, "macOS should not support touch")
+            #expect(!config.supportsHapticFeedback, "macOS should not support haptic feedback")
+            #expect(!config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
+            #expect(config.supportsHover, "macOS should support hover")
             
         case .watchOS:
             // watchOS should support touch and haptic
-            XCTAssertTrue(config.supportsTouch, "watchOS should support touch")
-            XCTAssertTrue(config.supportsHapticFeedback, "watchOS should support haptic feedback")
-            XCTAssertTrue(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
-            XCTAssertFalse(config.supportsHover, "watchOS should not support hover")
+            #expect(config.supportsTouch, "watchOS should support touch")
+            #expect(config.supportsHapticFeedback, "watchOS should support haptic feedback")
+            #expect(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
+            #expect(!config.supportsHover, "watchOS should not support hover")
             
         case .tvOS:
             // tvOS should not support touch or hover
-            XCTAssertFalse(config.supportsTouch, "tvOS should not support touch")
-            XCTAssertFalse(config.supportsHapticFeedback, "tvOS should not support haptic feedback")
-            XCTAssertFalse(config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
-            XCTAssertFalse(config.supportsHover, "tvOS should not support hover")
+            #expect(!config.supportsTouch, "tvOS should not support touch")
+            #expect(!config.supportsHapticFeedback, "tvOS should not support haptic feedback")
+            #expect(!config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
+            #expect(!config.supportsHover, "tvOS should not support hover")
             
         case .visionOS:
             // visionOS should not support touch or hover
-            XCTAssertFalse(config.supportsTouch, "visionOS should not support touch")
-            XCTAssertFalse(config.supportsHapticFeedback, "visionOS should not support haptic feedback")
-            XCTAssertFalse(config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
-            XCTAssertFalse(config.supportsHover, "visionOS should not support hover")
+            #expect(!config.supportsTouch, "visionOS should not support touch")
+            #expect(!config.supportsHapticFeedback, "visionOS should not support haptic feedback")
+            #expect(!config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
+            #expect(!config.supportsHover, "visionOS should not support hover")
         }
         
         // All platforms should support accessibility features
-        XCTAssertTrue(config.supportsVoiceOver, "All platforms should support VoiceOver")
-        XCTAssertTrue(config.supportsSwitchControl, "All platforms should support Switch Control")
+        #expect(config.supportsVoiceOver, "All platforms should support VoiceOver")
+        #expect(config.supportsSwitchControl, "All platforms should support Switch Control")
     }
     
     // MARK: - Capability Matrix Validation
     
-    func testCapabilityMatrix() {
+    @Test func testCapabilityMatrix() {
         let platform = SixLayerPlatform.current
         let config = getCardExpansionPlatformConfig()
         
@@ -403,7 +401,7 @@ final class CapabilityMatrixTests: XCTestCase {
         }
         
         // Test that the matrix is internally consistent
-        XCTAssertTrue(validateCapabilityMatrix(capabilities), 
+        #expect(validateCapabilityMatrix(capabilities), 
                      "Capability matrix should be internally consistent")
     }
     

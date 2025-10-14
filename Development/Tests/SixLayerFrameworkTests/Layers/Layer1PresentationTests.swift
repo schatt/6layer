@@ -6,11 +6,11 @@
 //  Tests for platformPresentFormData_L1 and platformPresentModalForm_L1 functions
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer1PresentationTests: XCTestCase {
+final class Layer1PresentationTests {
     
     // MARK: - Test Helpers
     
@@ -79,7 +79,7 @@ final class Layer1PresentationTests: XCTestCase {
     
     // MARK: - platformPresentFormData_L1 Tests
     
-    func testPlatformPresentFormData_L1_CreatesSimpleFormView() {
+    @Test func testPlatformPresentFormData_L1_CreatesSimpleFormView() {
         // Given: Form fields and hints
         let fields = testFields
         let hints = testHints
@@ -95,14 +95,14 @@ final class Layer1PresentationTests: XCTestCase {
         ))
         
         // Then: Should return a SimpleFormView
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify the view type using Mirror reflection
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformPresentFormData_L1_HandlesEmptyFields() {
+    @Test func testPlatformPresentFormData_L1_HandlesEmptyFields() {
         // Given: Empty fields array
         let fields: [DynamicFormField] = []
         let hints = testHints
@@ -118,13 +118,13 @@ final class Layer1PresentationTests: XCTestCase {
         ))
         
         // Then: Should return a SimpleFormView even with empty fields
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformPresentFormData_L1_HandlesDifferentComplexityLevels() {
+    @Test func testPlatformPresentFormData_L1_HandlesDifferentComplexityLevels() {
         // Given: Different complexity hints
         let simpleHints = PresentationHints(
             dataType: .form,
@@ -145,17 +145,17 @@ final class Layer1PresentationTests: XCTestCase {
         let complexView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: complexHints))
         
         // Then: Both should return SimpleFormView
-        XCTAssertNotNil(simpleView)
-        XCTAssertNotNil(complexView)
+        #expect(simpleView != nil)
+        #expect(complexView != nil)
         
         let simpleMirror = Mirror(reflecting: simpleView)
         let complexMirror = Mirror(reflecting: complexView)
         
-        XCTAssertEqual(String(describing: simpleMirror.subjectType), "AnyView")
-        XCTAssertEqual(String(describing: complexMirror.subjectType), "AnyView")
+        #expect(String(describing: simpleMirror.subjectType) == "AnyView")
+        #expect(String(describing: complexMirror.subjectType) == "AnyView")
     }
     
-    func testPlatformPresentFormData_L1_HandlesDifferentDataTypes() {
+    @Test func testPlatformPresentFormData_L1_HandlesDifferentDataTypes() {
         // Given: Different data type hints
         let formHints = PresentationHints(
             dataType: .form,
@@ -176,19 +176,19 @@ final class Layer1PresentationTests: XCTestCase {
         let textView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: textHints))
         
         // Then: Both should return SimpleFormView
-        XCTAssertNotNil(formView)
-        XCTAssertNotNil(textView)
+        #expect(formView != nil)
+        #expect(textView != nil)
         
         let formMirror = Mirror(reflecting: formView)
         let textMirror = Mirror(reflecting: textView)
         
-        XCTAssertEqual(String(describing: formMirror.subjectType), "AnyView")
-        XCTAssertEqual(String(describing: textMirror.subjectType), "AnyView")
+        #expect(String(describing: formMirror.subjectType) == "AnyView")
+        #expect(String(describing: textMirror.subjectType) == "AnyView")
     }
     
     // MARK: - platformPresentModalForm_L1 Tests
     
-    func testPlatformPresentModalForm_L1_CreatesModalFormView() {
+    @Test func testPlatformPresentModalForm_L1_CreatesModalFormView() {
         // Given: Form type and context
         let formType = DataTypeHint.form
         let context = PresentationContext.form
@@ -197,13 +197,13 @@ final class Layer1PresentationTests: XCTestCase {
         let view = platformPresentModalForm_L1(formType: formType, context: context)
         
         // Then: Should return a ModalFormView
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "ModalFormView")
+        #expect(String(describing: mirror.subjectType) == "ModalFormView")
     }
     
-    func testPlatformPresentModalForm_L1_HandlesDifferentFormTypes() {
+    @Test func testPlatformPresentModalForm_L1_HandlesDifferentFormTypes() {
         // Given: Different form types
         let formTypes: [DataTypeHint] = [
             .form, .text, .number, .date, .boolean, .collection,
@@ -216,14 +216,14 @@ final class Layer1PresentationTests: XCTestCase {
             let view = platformPresentModalForm_L1(formType: formType, context: context)
             
             // Then: Should return a ModalFormView for each type
-            XCTAssertNotNil(view, "Should handle form type: \(formType)")
+            #expect(view != nil, "Should handle form type: \(formType)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "ModalFormView", "Should return ModalFormView for type: \(formType)")
+            #expect(String(describing: mirror.subjectType) == "ModalFormView", "Should return ModalFormView for type: \(formType)")
         }
     }
     
-    func testPlatformPresentModalForm_L1_HandlesDifferentContexts() {
+    @Test func testPlatformPresentModalForm_L1_HandlesDifferentContexts() {
         // Given: Different presentation contexts
         let formType = DataTypeHint.form
         let contexts: [PresentationContext] = [
@@ -236,14 +236,14 @@ final class Layer1PresentationTests: XCTestCase {
             let view = platformPresentModalForm_L1(formType: formType, context: context)
             
             // Then: Should return a ModalFormView for each context
-            XCTAssertNotNil(view, "Should handle context: \(context)")
+            #expect(view != nil, "Should handle context: \(context)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "ModalFormView", "Should return ModalFormView for context: \(context)")
+            #expect(String(describing: mirror.subjectType) == "ModalFormView", "Should return ModalFormView for context: \(context)")
         }
     }
     
-    func testPlatformPresentModalForm_L1_GeneratesAppropriateFields() {
+    @Test func testPlatformPresentModalForm_L1_GeneratesAppropriateFields() {
         // Given: Different form types that should generate different fields
         let testCases: [(DataTypeHint, Int)] = [
             (.text, 1),           // Should generate 1 field
@@ -261,10 +261,10 @@ final class Layer1PresentationTests: XCTestCase {
             let view = platformPresentModalForm_L1(formType: formType, context: .form)
             
             // Then: Should return a ModalFormView
-            XCTAssertNotNil(view, "Should handle form type: \(formType)")
+            #expect(view != nil, "Should handle form type: \(formType)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "ModalFormView", "Should return ModalFormView for type: \(formType)")
+            #expect(String(describing: mirror.subjectType) == "ModalFormView", "Should return ModalFormView for type: \(formType)")
             
             // Note: We can't easily test the internal field count without accessing private properties
             // The important thing is that the function returns the correct view type
@@ -273,7 +273,7 @@ final class Layer1PresentationTests: XCTestCase {
     
     // MARK: - Edge Cases and Error Handling
     
-    func testPlatformPresentFormData_L1_HandlesLargeFieldSets() {
+    @Test func testPlatformPresentFormData_L1_HandlesLargeFieldSets() {
         // Given: Large number of fields
         let largeFieldSet = (1...100).map { i in
             createTestField(
@@ -290,13 +290,13 @@ final class Layer1PresentationTests: XCTestCase {
         let view = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
         
         // Then: Should handle large field sets gracefully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformPresentFormData_L1_HandlesSpecialCharacters() {
+    @Test func testPlatformPresentFormData_L1_HandlesSpecialCharacters() {
         // Given: Fields with special characters
         let specialFields = [
             createTestField(
@@ -320,13 +320,13 @@ final class Layer1PresentationTests: XCTestCase {
         let view = platformPresentFormData_L1(fields: specialFields, hints: enhancedHints(from: hints))
         
         // Then: Should handle special characters gracefully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformPresentModalForm_L1_HandlesCustomFormType() {
+    @Test func testPlatformPresentModalForm_L1_HandlesCustomFormType() {
         // Given: Custom form type
         let formType = DataTypeHint.custom
         let context = PresentationContext.form
@@ -335,15 +335,15 @@ final class Layer1PresentationTests: XCTestCase {
         let view = platformPresentModalForm_L1(formType: formType, context: context)
         
         // Then: Should return a ModalFormView (falls back to generic form)
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "ModalFormView")
+        #expect(String(describing: mirror.subjectType) == "ModalFormView")
     }
     
     // MARK: - Integration Tests
     
-    func testPlatformPresentFormData_L1_IntegrationWithHints() {
+    @Test func testPlatformPresentFormData_L1_IntegrationWithHints() {
         // Given: Comprehensive hints
         let comprehensiveHints = PresentationHints(
             dataType: .form,
@@ -361,13 +361,13 @@ final class Layer1PresentationTests: XCTestCase {
         let view = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: comprehensiveHints))
         
         // Then: Should return a SimpleFormView
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformPresentModalForm_L1_IntegrationWithAllParameters() {
+    @Test func testPlatformPresentModalForm_L1_IntegrationWithAllParameters() {
         // Given: All possible parameters
         let formType = DataTypeHint.user
         let context = PresentationContext.create
@@ -376,15 +376,15 @@ final class Layer1PresentationTests: XCTestCase {
         let view = platformPresentModalForm_L1(formType: formType, context: context)
         
         // Then: Should return a ModalFormView
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "ModalFormView")
+        #expect(String(describing: mirror.subjectType) == "ModalFormView")
     }
     
     // MARK: - Performance Tests
     
-    func testPlatformPresentFormData_L1_Performance() {
+    @Test func testPlatformPresentFormData_L1_Performance() {
         // Given: Large field set
         let largeFieldSet = (1...1000).map { i in
             createTestField(
@@ -403,7 +403,7 @@ final class Layer1PresentationTests: XCTestCase {
         }
     }
     
-    func testPlatformPresentModalForm_L1_Performance() {
+    @Test func testPlatformPresentModalForm_L1_Performance() {
         // Given: Form type and context
         let formType = DataTypeHint.form
         let context = PresentationContext.form

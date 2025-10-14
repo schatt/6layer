@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL AccessibilityManager components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AccessibilityManagerComponentAccessibilityTests: XCTestCase {
+final class AccessibilityManagerComponentAccessibilityTests {
     
     // MARK: - AccessibilityManager Tests
     
-    func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         
@@ -31,7 +31,7 @@ final class AccessibilityManagerComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityManager should generate accessibility identifiers")
     }
 }
 

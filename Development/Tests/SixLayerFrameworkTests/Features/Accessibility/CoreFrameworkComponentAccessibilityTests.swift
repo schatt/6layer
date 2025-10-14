@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Core Framework components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
+final class CoreFrameworkComponentAccessibilityTests {
     
     // MARK: - Core Framework Component Tests
     
-    func testAccessibilityIdentifierConfigGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierConfigGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityIdentifierConfig singleton
         let config = AccessibilityIdentifierConfig.shared
         
@@ -22,11 +22,11 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         config.enableAutoIDs = true
         
         // Then: Should be properly configured
-        XCTAssertTrue(config.enableAutoIDs, "AccessibilityIdentifierConfig should enable automatic identifiers")
-        XCTAssertNotNil(config.namespace, "AccessibilityIdentifierConfig should have a namespace")
+        #expect(config.enableAutoIDs, "AccessibilityIdentifierConfig should enable automatic identifiers")
+        #expect(config.namespace != nil, "AccessibilityIdentifierConfig should have a namespace")
     }
     
-    func testGlobalAutomaticAccessibilityIdentifiersKeyGeneratesAccessibilityIdentifiers() async {
+    @Test func testGlobalAutomaticAccessibilityIdentifiersKeyGeneratesAccessibilityIdentifiers() async {
         // Given: GlobalAutomaticAccessibilityIdentifiersKey
         let key = GlobalAutomaticAccessibilityIdentifiersKey()
         
@@ -34,10 +34,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         let defaultValue = GlobalAutomaticAccessibilityIdentifiersKey.defaultValue
         
         // Then: Should have proper default value
-        XCTAssertTrue(defaultValue, "GlobalAutomaticAccessibilityIdentifiersKey should default to true")
+        #expect(defaultValue, "GlobalAutomaticAccessibilityIdentifiersKey should default to true")
     }
     
-    func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with ComprehensiveAccessibilityModifier
         let testView = VStack {
             Text("Test Content")
@@ -52,10 +52,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "ComprehensiveAccessibilityModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ComprehensiveAccessibilityModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ComprehensiveAccessibilityModifier should generate accessibility identifiers")
     }
     
-    func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with SystemAccessibilityModifier
         let testView = VStack {
             Text("Test Content")
@@ -73,10 +73,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "SystemAccessibilityModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers")
     }
     
-    func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with AccessibilityIdentifierAssignmentModifier
         let testView = VStack {
             Text("Test Content")
@@ -91,10 +91,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityIdentifierAssignmentModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityIdentifierAssignmentModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityIdentifierAssignmentModifier should generate accessibility identifiers")
     }
     
-    func testNamedModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testNamedModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with .named() modifier
         let testView = VStack {
             Text("Test Content")
@@ -109,10 +109,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "NamedModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, ".named() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".named() modifier should generate accessibility identifiers")
     }
     
-    func testExactNamedModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testExactNamedModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with .exactNamed() modifier
         let testView = VStack {
             Text("Test Content")
@@ -127,10 +127,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "ExactNamedModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, ".exactNamed() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".exactNamed() modifier should generate accessibility identifiers")
     }
     
-    func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with .screenContext() modifier
         let testView = VStack {
             Text("Test Content")
@@ -145,10 +145,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "ScreenContextModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, ".screenContext() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".screenContext() modifier should generate accessibility identifiers")
     }
     
-    func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with .navigationState() modifier
         let testView = VStack {
             Text("Test Content")
@@ -163,10 +163,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "NavigationStateModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, ".navigationState() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".navigationState() modifier should generate accessibility identifiers")
     }
     
-    func testAutomaticAccessibilityIdentifiersModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with .automaticAccessibilityIdentifiers() modifier
         let testView = VStack {
             Text("Test Content")
@@ -181,10 +181,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "AutomaticAccessibilityIdentifiersModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, ".automaticAccessibilityIdentifiers() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".automaticAccessibilityIdentifiers() modifier should generate accessibility identifiers")
     }
     
-    func testAutomaticAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testAutomaticAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
         // Given: A view with .automaticAccessibility() modifier
         let testView = VStack {
             Text("Test Content")
@@ -199,34 +199,34 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
             componentName: "AutomaticAccessibilityModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, ".automaticAccessibility() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".automaticAccessibility() modifier should generate accessibility identifiers")
     }
     
-    func testDetectAppNamespaceGeneratesCorrectNamespace() async {
+    @Test func testDetectAppNamespaceGeneratesCorrectNamespace() async {
         // Given: detectAppNamespace function
         let namespace = detectAppNamespace()
         
         // Then: Should return correct namespace for test environment
-        XCTAssertEqual(namespace, "SixLayer", "detectAppNamespace should return 'SixLayer' in test environment")
+        #expect(namespace == "SixLayer", "detectAppNamespace should return 'SixLayer' in test environment")
     }
     
-    func testAccessibilitySystemStateGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilitySystemStateGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilitySystemState
         let state = AccessibilitySystemState()
         
         // Then: Should be properly initialized
-        XCTAssertNotNil(state, "AccessibilitySystemState should be properly initialized")
+        #expect(state != nil, "AccessibilitySystemState should be properly initialized")
     }
     
-    func testPlatformDetectionGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDetectionGeneratesAccessibilityIdentifiers() async {
         // Given: Platform detection
         let platform = PlatformDetection.currentPlatform
         
         // Then: Should detect platform correctly
-        XCTAssertNotNil(platform, "Platform detection should work correctly")
+        #expect(platform != nil, "Platform detection should work correctly")
     }
     
-    func testAccessibilityIdentifierPatternsGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierPatternsGeneratesAccessibilityIdentifiers() async {
         // Given: Various accessibility identifier patterns
         let patterns = [
             "*.main.element.*",
@@ -238,12 +238,12 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         // When: Testing pattern validation
         for pattern in patterns {
             // Then: Should be valid patterns
-            XCTAssertFalse(pattern.isEmpty, "Accessibility identifier pattern should not be empty")
-            XCTAssertTrue(pattern.contains("*"), "Accessibility identifier pattern should contain wildcards")
+            #expect(!pattern.isEmpty, "Accessibility identifier pattern should not be empty")
+            #expect(pattern.contains("*"), "Accessibility identifier pattern should contain wildcards")
         }
     }
     
-    func testAccessibilityIdentifierGenerationGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierGenerationGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier generation
         let testView = VStack {
             Text("Test Content")
@@ -259,10 +259,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should generate accessibility identifiers
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier generation should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier generation should work correctly")
     }
     
-    func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier validation
         let testView = VStack {
             Text("Test Content")
@@ -278,10 +278,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should validate accessibility identifiers correctly
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier validation should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier validation should work correctly")
     }
     
-    func testAccessibilityIdentifierHierarchyGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierHierarchyGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier hierarchy
         let testView = VStack {
             Text("Test Content")
@@ -298,10 +298,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should generate hierarchical accessibility identifiers
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier hierarchy should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier hierarchy should work correctly")
     }
     
-    func testAccessibilityIdentifierCollisionPreventionGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierCollisionPreventionGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier collision prevention
         let testView = VStack {
             Text("Test Content")
@@ -318,10 +318,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         )
         
         // Then: Should prevent collisions
-        XCTAssertTrue(hasAccessibilityID, "Accessibility identifier collision prevention should work correctly")
+        #expect(hasAccessibilityID, "Accessibility identifier collision prevention should work correctly")
     }
     
-    func testAccessibilityIdentifierDebugLoggingGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierDebugLoggingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier debug logging
         let config = AccessibilityIdentifierConfig.shared
         config.enableDebugLogging = true
@@ -335,10 +335,10 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         .automaticAccessibilityIdentifiers()
         
         // Then: Should enable debug logging
-        XCTAssertTrue(config.enableDebugLogging, "Accessibility identifier debug logging should be enabled")
+        #expect(config.enableDebugLogging, "Accessibility identifier debug logging should be enabled")
     }
     
-    func testAccessibilityIdentifierPerformanceGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityIdentifierPerformanceGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier performance testing
         let startTime = Date()
         
@@ -355,7 +355,7 @@ final class CoreFrameworkComponentAccessibilityTests: XCTestCase {
         let duration = endTime.timeIntervalSince(startTime)
         
         // Then: Should perform within acceptable time
-        XCTAssertLessThan(duration, 1.0, "Accessibility identifier generation should be performant")
+        #expect(duration < 1.0, "Accessibility identifier generation should be performant")
     }
 }
 

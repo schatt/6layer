@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Image Metadata Intelligence Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ImageMetadataIntelligenceComponentAccessibilityTests: XCTestCase {
+final class ImageMetadataIntelligenceComponentAccessibilityTests {
     
     // MARK: - Image Metadata Intelligence Component Tests
     
-    func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiers() async {
+    @Test func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiers() async {
         // Given: ImageMetadataIntelligence
         let testView = ImageMetadataIntelligence()
         
@@ -25,7 +25,7 @@ final class ImageMetadataIntelligenceComponentAccessibilityTests: XCTestCase {
             componentName: "ImageMetadataIntelligence"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ImageMetadataIntelligence should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ImageMetadataIntelligence should generate accessibility identifiers")
     }
 }
 

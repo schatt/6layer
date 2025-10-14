@@ -6,12 +6,12 @@
 //  Tests layout decision logic with hardcoded platform, capabilities, and accessibility
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class L2LayoutDecisionTests: XCTestCase {
+final class L2LayoutDecisionTests {
     
     // MARK: - Test Data
     
@@ -25,8 +25,7 @@ final class L2LayoutDecisionTests: XCTestCase {
         deviceCapabilities: PhotoDeviceCapabilities()
     )
     
-    override func setUp() {
-        super.setUp()
+    init() {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
         sampleOCRContext = OCRContext()
@@ -38,14 +37,13 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
     }
     
-    override func tearDown() {
+    deinit {
         sampleItems = []
-        super.tearDown()
     }
     
     // MARK: - Generic Layout Decision Tests
     
-    func testDetermineOptimalLayout_L2_WithSmallItemCount() {
+    @Test func testDetermineOptimalLayout_L2_WithSmallItemCount() {
         // Given
         let items = Array(sampleItems.prefix(3))
         let hints = PresentationHints(
@@ -66,13 +64,13 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(decision, "determineOptimalLayout_L2 should return a decision")
-        XCTAssertGreaterThan(decision.columns, 0, "Should have at least 1 column")
-        XCTAssertGreaterThan(decision.spacing, 0, "Should have positive spacing")
-        XCTAssertFalse(decision.reasoning.isEmpty, "Should provide reasoning")
+        #expect(decision != nil, "determineOptimalLayout_L2 should return a decision")
+        #expect(decision.columns > 0, "Should have at least 1 column")
+        #expect(decision.spacing > 0, "Should have positive spacing")
+        #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    func testDetermineOptimalLayout_L2_WithLargeItemCount() {
+    @Test func testDetermineOptimalLayout_L2_WithLargeItemCount() {
         // Given
         let items = createManyItems(count: 50)
         let hints = PresentationHints(
@@ -93,13 +91,13 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(decision, "determineOptimalLayout_L2 should return a decision")
-        XCTAssertGreaterThan(decision.columns, 1, "Should have multiple columns for large item count")
-        XCTAssertGreaterThan(decision.spacing, 0, "Should have positive spacing")
-        XCTAssertFalse(decision.reasoning.isEmpty, "Should provide reasoning")
+        #expect(decision != nil, "determineOptimalLayout_L2 should return a decision")
+        #expect(decision.columns > 1, "Should have multiple columns for large item count")
+        #expect(decision.spacing > 0, "Should have positive spacing")
+        #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    func testDetermineOptimalLayout_L2_WithDifferentComplexityLevels() {
+    @Test func testDetermineOptimalLayout_L2_WithDifferentComplexityLevels() {
         // Test simple complexity
         let simpleHints = PresentationHints(
             dataType: .generic,
@@ -113,7 +111,7 @@ final class L2LayoutDecisionTests: XCTestCase {
             screenWidth: 375,
             deviceType: .phone
         )
-        XCTAssertNotNil(simpleDecision, "Simple complexity should return a decision")
+        #expect(simpleDecision != nil, "Simple complexity should return a decision")
         
         // Test moderate complexity
         let moderateHints = PresentationHints(
@@ -128,7 +126,7 @@ final class L2LayoutDecisionTests: XCTestCase {
             screenWidth: 375,
             deviceType: .phone
         )
-        XCTAssertNotNil(moderateDecision, "Moderate complexity should return a decision")
+        #expect(moderateDecision != nil, "Moderate complexity should return a decision")
         
         // Test complex complexity
         let complexHints = PresentationHints(
@@ -143,10 +141,10 @@ final class L2LayoutDecisionTests: XCTestCase {
             screenWidth: 375,
             deviceType: .phone
         )
-        XCTAssertNotNil(complexDecision, "Complex complexity should return a decision")
+        #expect(complexDecision != nil, "Complex complexity should return a decision")
     }
     
-    func testDetermineOptimalLayout_L2_WithDifferentDeviceTypes() {
+    @Test func testDetermineOptimalLayout_L2_WithDifferentDeviceTypes() {
         let hints = PresentationHints()
         
         // Test phone
@@ -156,7 +154,7 @@ final class L2LayoutDecisionTests: XCTestCase {
             screenWidth: 375,
             deviceType: .phone
         )
-        XCTAssertNotNil(phoneDecision, "Phone device type should return a decision")
+        #expect(phoneDecision != nil, "Phone device type should return a decision")
         
         // Test pad
         let padDecision = determineOptimalLayout_L2(
@@ -165,7 +163,7 @@ final class L2LayoutDecisionTests: XCTestCase {
             screenWidth: 768,
             deviceType: .pad
         )
-        XCTAssertNotNil(padDecision, "Pad device type should return a decision")
+        #expect(padDecision != nil, "Pad device type should return a decision")
         
         // Test mac
         let macDecision = determineOptimalLayout_L2(
@@ -174,12 +172,12 @@ final class L2LayoutDecisionTests: XCTestCase {
             screenWidth: 1024,
             deviceType: .mac
         )
-        XCTAssertNotNil(macDecision, "Mac device type should return a decision")
+        #expect(macDecision != nil, "Mac device type should return a decision")
     }
     
     // MARK: - Form Layout Decision Tests
     
-    func testDetermineOptimalFormLayout_L2_WithSimpleForm() {
+    @Test func testDetermineOptimalFormLayout_L2_WithSimpleForm() {
         // Given
         let hints = PresentationHints(
             dataType: .form,
@@ -193,11 +191,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then
-        XCTAssertNotNil(decision, "determineOptimalFormLayout_L2 should return a decision")
-        XCTAssertFalse(decision.reasoning.isEmpty, "Should provide reasoning")
+        #expect(decision != nil, "determineOptimalFormLayout_L2 should return a decision")
+        #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    func testDetermineOptimalFormLayout_L2_WithComplexForm() {
+    @Test func testDetermineOptimalFormLayout_L2_WithComplexForm() {
         // Given
         let hints = PresentationHints(
             dataType: .form,
@@ -211,13 +209,13 @@ final class L2LayoutDecisionTests: XCTestCase {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then
-        XCTAssertNotNil(decision, "determineOptimalFormLayout_L2 should return a decision")
-        XCTAssertFalse(decision.reasoning.isEmpty, "Should provide reasoning")
+        #expect(decision != nil, "determineOptimalFormLayout_L2 should return a decision")
+        #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
     // MARK: - Card Layout Decision Tests
     
-    func testDetermineOptimalCardLayout_L2_WithSmallContent() {
+    @Test func testDetermineOptimalCardLayout_L2_WithSmallContent() {
         // Given
         let contentCount = 3
         let screenWidth: CGFloat = 375
@@ -233,12 +231,12 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(decision, "determineOptimalCardLayout_L2 should return a decision")
-        XCTAssertGreaterThan(decision.columns, 0, "Should have at least 1 column")
-        XCTAssertGreaterThan(decision.spacing, 0, "Should have positive spacing")
+        #expect(decision != nil, "determineOptimalCardLayout_L2 should return a decision")
+        #expect(decision.columns > 0, "Should have at least 1 column")
+        #expect(decision.spacing > 0, "Should have positive spacing")
     }
     
-    func testDetermineOptimalCardLayout_L2_WithLargeContent() {
+    @Test func testDetermineOptimalCardLayout_L2_WithLargeContent() {
         // Given
         let contentCount = 20
         let screenWidth: CGFloat = 1024
@@ -254,12 +252,12 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(decision, "determineOptimalCardLayout_L2 should return a decision")
-        XCTAssertGreaterThan(decision.columns, 1, "Should have multiple columns for large content")
-        XCTAssertGreaterThan(decision.spacing, 0, "Should have positive spacing")
+        #expect(decision != nil, "determineOptimalCardLayout_L2 should return a decision")
+        #expect(decision.columns > 1, "Should have multiple columns for large content")
+        #expect(decision.spacing > 0, "Should have positive spacing")
     }
     
-    func testDetermineOptimalCardLayout_L2_WithDifferentDeviceTypes() {
+    @Test func testDetermineOptimalCardLayout_L2_WithDifferentDeviceTypes() {
         let contentCount = 10
         let complexity = ContentComplexity.moderate
         
@@ -270,7 +268,7 @@ final class L2LayoutDecisionTests: XCTestCase {
             deviceType: .phone,
             contentComplexity: complexity
         )
-        XCTAssertNotNil(phoneDecision, "Phone device type should return a decision")
+        #expect(phoneDecision != nil, "Phone device type should return a decision")
         
         // Test pad
         let padDecision = determineOptimalCardLayout_L2(
@@ -279,7 +277,7 @@ final class L2LayoutDecisionTests: XCTestCase {
             deviceType: .pad,
             contentComplexity: complexity
         )
-        XCTAssertNotNil(padDecision, "Pad device type should return a decision")
+        #expect(padDecision != nil, "Pad device type should return a decision")
         
         // Test mac
         let macDecision = determineOptimalCardLayout_L2(
@@ -288,12 +286,12 @@ final class L2LayoutDecisionTests: XCTestCase {
             deviceType: .mac,
             contentComplexity: complexity
         )
-        XCTAssertNotNil(macDecision, "Mac device type should return a decision")
+        #expect(macDecision != nil, "Mac device type should return a decision")
     }
     
     // MARK: - Intelligent Card Layout Decision Tests
     
-    func testDetermineIntelligentCardLayout_L2_WithSmallContent() {
+    @Test func testDetermineIntelligentCardLayout_L2_WithSmallContent() {
         // Given
         let contentCount = 3
         let screenWidth: CGFloat = 375
@@ -309,17 +307,17 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(decision, "determineIntelligentCardLayout_L2 should return a decision")
-        XCTAssertGreaterThan(decision.columns, 0, "Should have at least 1 column")
-        XCTAssertGreaterThan(decision.cardWidth, 0, "Should have positive card width")
-        XCTAssertGreaterThan(decision.cardHeight, 0, "Should have positive card height")
-        XCTAssertGreaterThan(decision.spacing, 0, "Should have positive spacing")
-        XCTAssertGreaterThan(decision.padding, 0, "Should have positive padding")
-        XCTAssertGreaterThan(decision.expansionScale, 0, "Should have positive expansion scale")
-        XCTAssertGreaterThan(decision.animationDuration, 0, "Should have positive animation duration")
+        #expect(decision != nil, "determineIntelligentCardLayout_L2 should return a decision")
+        #expect(decision.columns > 0, "Should have at least 1 column")
+        #expect(decision.cardWidth > 0, "Should have positive card width")
+        #expect(decision.cardHeight > 0, "Should have positive card height")
+        #expect(decision.spacing > 0, "Should have positive spacing")
+        #expect(decision.padding > 0, "Should have positive padding")
+        #expect(decision.expansionScale > 0, "Should have positive expansion scale")
+        #expect(decision.animationDuration > 0, "Should have positive animation duration")
     }
     
-    func testDetermineIntelligentCardLayout_L2_WithLargeContent() {
+    @Test func testDetermineIntelligentCardLayout_L2_WithLargeContent() {
         // Given
         let contentCount = 20
         let screenWidth: CGFloat = 1024
@@ -335,19 +333,19 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(decision, "determineIntelligentCardLayout_L2 should return a decision")
-        XCTAssertGreaterThan(decision.columns, 1, "Should have multiple columns for large content")
-        XCTAssertGreaterThan(decision.cardWidth, 0, "Should have positive card width")
-        XCTAssertGreaterThan(decision.cardHeight, 0, "Should have positive card height")
-        XCTAssertGreaterThan(decision.spacing, 0, "Should have positive spacing")
-        XCTAssertGreaterThan(decision.padding, 0, "Should have positive padding")
-        XCTAssertGreaterThan(decision.expansionScale, 0, "Should have positive expansion scale")
-        XCTAssertGreaterThan(decision.animationDuration, 0, "Should have positive animation duration")
+        #expect(decision != nil, "determineIntelligentCardLayout_L2 should return a decision")
+        #expect(decision.columns > 1, "Should have multiple columns for large content")
+        #expect(decision.cardWidth > 0, "Should have positive card width")
+        #expect(decision.cardHeight > 0, "Should have positive card height")
+        #expect(decision.spacing > 0, "Should have positive spacing")
+        #expect(decision.padding > 0, "Should have positive padding")
+        #expect(decision.expansionScale > 0, "Should have positive expansion scale")
+        #expect(decision.animationDuration > 0, "Should have positive animation duration")
     }
     
     // MARK: - OCR Layout Decision Tests
     
-    func testPlatformOCRLayout_L2_WithGeneralContext() {
+    @Test func testPlatformOCRLayout_L2_WithGeneralContext() {
         // Given
         let context = OCRContext()
         
@@ -355,14 +353,14 @@ final class L2LayoutDecisionTests: XCTestCase {
         let layout = platformOCRLayout_L2(context: context)
         
         // Then
-        XCTAssertNotNil(layout, "platformOCRLayout_L2 should return a layout")
-        XCTAssertGreaterThan(layout.maxImageSize.width, 0, "Should have positive max image width")
-        XCTAssertGreaterThan(layout.maxImageSize.height, 0, "Should have positive max image height")
-        XCTAssertGreaterThan(layout.recommendedImageSize.width, 0, "Should have positive recommended image width")
-        XCTAssertGreaterThan(layout.recommendedImageSize.height, 0, "Should have positive recommended image height")
+        #expect(layout != nil, "platformOCRLayout_L2 should return a layout")
+        #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
+        #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
+        #expect(layout.recommendedImageSize.width > 0, "Should have positive recommended image width")
+        #expect(layout.recommendedImageSize.height > 0, "Should have positive recommended image height")
     }
     
-    func testPlatformOCRLayout_L2_WithDocumentContext() {
+    @Test func testPlatformOCRLayout_L2_WithDocumentContext() {
         // Given
         let context = OCRContext()
         let documentType = DocumentType.general
@@ -374,12 +372,12 @@ final class L2LayoutDecisionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(layout, "platformDocumentOCRLayout_L2 should return a layout")
-        XCTAssertGreaterThan(layout.maxImageSize.width, 0, "Should have positive max image width")
-        XCTAssertGreaterThan(layout.maxImageSize.height, 0, "Should have positive max image height")
+        #expect(layout != nil, "platformDocumentOCRLayout_L2 should return a layout")
+        #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
+        #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
     
-    func testPlatformOCRLayout_L2_WithReceiptContext() {
+    @Test func testPlatformOCRLayout_L2_WithReceiptContext() {
         // Given
         let context = OCRContext()
         
@@ -387,12 +385,12 @@ final class L2LayoutDecisionTests: XCTestCase {
         let layout = platformReceiptOCRLayout_L2(context: context)
         
         // Then
-        XCTAssertNotNil(layout, "platformReceiptOCRLayout_L2 should return a layout")
-        XCTAssertGreaterThan(layout.maxImageSize.width, 0, "Should have positive max image width")
-        XCTAssertGreaterThan(layout.maxImageSize.height, 0, "Should have positive max image height")
+        #expect(layout != nil, "platformReceiptOCRLayout_L2 should return a layout")
+        #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
+        #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
     
-    func testPlatformOCRLayout_L2_WithBusinessCardContext() {
+    @Test func testPlatformOCRLayout_L2_WithBusinessCardContext() {
         // Given
         let context = OCRContext()
         
@@ -400,14 +398,14 @@ final class L2LayoutDecisionTests: XCTestCase {
         let layout = platformBusinessCardOCRLayout_L2(context: context)
         
         // Then
-        XCTAssertNotNil(layout, "platformBusinessCardOCRLayout_L2 should return a layout")
-        XCTAssertGreaterThan(layout.maxImageSize.width, 0, "Should have positive max image width")
-        XCTAssertGreaterThan(layout.maxImageSize.height, 0, "Should have positive max image height")
+        #expect(layout != nil, "platformBusinessCardOCRLayout_L2 should return a layout")
+        #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
+        #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
     
     // MARK: - Photo Layout Decision Tests
     
-    func testDetermineOptimalPhotoLayout_L2_WithVehiclePhoto() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = samplePhotoContext
@@ -416,11 +414,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithFuelReceipt() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = samplePhotoContext
@@ -429,11 +427,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithPumpDisplay() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
         let context = samplePhotoContext
@@ -442,11 +440,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithOdometer() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
         let context = samplePhotoContext
@@ -455,11 +453,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithMaintenance() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
         let context = samplePhotoContext
@@ -468,11 +466,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithExpense() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
         let context = samplePhotoContext
@@ -481,11 +479,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithProfile() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
         let context = samplePhotoContext
@@ -494,11 +492,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDetermineOptimalPhotoLayout_L2_WithDocument() {
+    @Test func testDetermineOptimalPhotoLayout_L2_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
         let context = samplePhotoContext
@@ -507,11 +505,11 @@ final class L2LayoutDecisionTests: XCTestCase {
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertGreaterThan(size.width, 0, "Should have positive width")
-        XCTAssertGreaterThan(size.height, 0, "Should have positive height")
+        #expect(size.width > 0, "Should have positive width")
+        #expect(size.height > 0, "Should have positive height")
     }
     
-    func testDeterminePhotoCaptureStrategy_L2_WithVehiclePhoto() {
+    @Test func testDeterminePhotoCaptureStrategy_L2_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = samplePhotoContext
@@ -520,10 +518,10 @@ final class L2LayoutDecisionTests: XCTestCase {
         let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertNotNil(strategy, "determinePhotoCaptureStrategy_L2 should return a strategy")
+        #expect(strategy != nil, "determinePhotoCaptureStrategy_L2 should return a strategy")
     }
     
-    func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
+    @Test func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = samplePhotoContext
@@ -532,12 +530,12 @@ final class L2LayoutDecisionTests: XCTestCase {
         let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then
-        XCTAssertNotNil(strategy, "determinePhotoCaptureStrategy_L2 should return a strategy")
+        #expect(strategy != nil, "determinePhotoCaptureStrategy_L2 should return a strategy")
     }
     
     // MARK: - Performance Tests
     
-    func testDetermineOptimalLayout_L2_Performance() {
+    @Test func testDetermineOptimalLayout_L2_Performance() {
         // Given
         let items = createManyItems(count: 100)
         let hints = PresentationHints()
@@ -550,11 +548,11 @@ final class L2LayoutDecisionTests: XCTestCase {
                 screenWidth: 375,
                 deviceType: .phone
             )
-            XCTAssertNotNil(decision)
+            #expect(decision != nil)
         }
     }
     
-    func testDetermineIntelligentCardLayout_L2_Performance() {
+    @Test func testDetermineIntelligentCardLayout_L2_Performance() {
         // Given
         let contentCount = 50
         let screenWidth: CGFloat = 1024
@@ -569,7 +567,7 @@ final class L2LayoutDecisionTests: XCTestCase {
                 deviceType: deviceType,
                 contentComplexity: complexity
             )
-            XCTAssertNotNil(decision)
+            #expect(decision != nil)
         }
     }
     

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Runtime Capability Detection Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class RuntimeCapabilityDetectionComponentAccessibilityTests: XCTestCase {
+final class RuntimeCapabilityDetectionComponentAccessibilityTests {
     
     // MARK: - Runtime Capability Detection Component Tests
     
-    func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
+    @Test func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
         // Given: RuntimeCapabilityDetection
         let testView = RuntimeCapabilityDetection()
         
@@ -25,7 +25,7 @@ final class RuntimeCapabilityDetectionComponentAccessibilityTests: XCTestCase {
             componentName: "RuntimeCapabilityDetection"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "RuntimeCapabilityDetection should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "RuntimeCapabilityDetection should generate accessibility identifiers")
     }
 }
 

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL IntelligentFormView components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class IntelligentFormViewComponentAccessibilityTests: XCTestCase {
+final class IntelligentFormViewComponentAccessibilityTests {
     
     // MARK: - IntelligentFormView Tests
     
-    func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test form configuration
         let formConfig = IntelligentFormConfiguration(
             id: "intelligent-form",
@@ -33,12 +33,12 @@ final class IntelligentFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "IntelligentFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers")
     }
     
     // MARK: - IntelligentDetailView Tests
     
-    func testIntelligentDetailViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testIntelligentDetailViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test detail data
         let detailData = IntelligentDetailData(
             id: "detail-1",
@@ -57,7 +57,7 @@ final class IntelligentFormViewComponentAccessibilityTests: XCTestCase {
             componentName: "IntelligentDetailView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers")
     }
 }
 

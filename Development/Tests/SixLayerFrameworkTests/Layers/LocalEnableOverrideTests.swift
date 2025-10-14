@@ -1,14 +1,13 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 /// Test the "global disable, local enable" functionality
 @MainActor
-final class LocalEnableOverrideTests: XCTestCase {
+final class LocalEnableOverrideTests {
     
-    override func setUp() {
-        super.setUp()
+    init() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TestApp"
@@ -16,13 +15,12 @@ final class LocalEnableOverrideTests: XCTestCase {
         config.enableDebugLogging = true  // Enable debug to see what's happening
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
-    func testGlobalDisableLocalEnable() {
+    @Test func testGlobalDisableLocalEnable() {
         // Test: Global disabled, but local enable should work
         
         // 1. Disable global config
@@ -42,19 +40,19 @@ final class LocalEnableOverrideTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should have an ID - local enable should override global disable
-            XCTAssertFalse(accessibilityID.isEmpty, "Local enable should override global disable")
-            XCTAssertTrue(accessibilityID.contains("TestApp"), "ID should contain namespace")
-            XCTAssertTrue(accessibilityID.contains("specialbutton"), "ID should contain view name")
+            #expect(!accessibilityID.isEmpty, "Local enable should override global disable")
+            #expect(accessibilityID.contains("TestApp"), "ID should contain namespace")
+            #expect(accessibilityID.contains("specialbutton"), "ID should contain view name")
             
             print("✅ SUCCESS: Local enable overrode global disable")
             print("   Generated ID: '\(accessibilityID)'")
             
         } catch {
-            XCTFail("Failed to inspect view with local enable: \(error)")
+            Issue.record("Failed to inspect view with local enable: \(error)")
         }
     }
     
-    func testGlobalEnableLocalDisable() {
+    @Test func testGlobalEnableLocalDisable() {
         // Test: Global enabled, but local disable should work
         
         // 1. Enable global config
@@ -74,7 +72,7 @@ final class LocalEnableOverrideTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty - local disable should override global enable
-            XCTAssertTrue(accessibilityID.isEmpty, "Local disable should override global enable")
+            #expect(accessibilityID.isEmpty, "Local disable should override global enable")
             
             print("✅ SUCCESS: Local disable overrode global enable")
             print("   No ID generated (as expected)")
@@ -85,7 +83,7 @@ final class LocalEnableOverrideTests: XCTestCase {
         }
     }
     
-    func testFrameworkComponentRespectsGlobalConfig() {
+    @Test func testFrameworkComponentRespectsGlobalConfig() {
         // Test: Framework components should respect global config
         
         // 1. Disable global config
@@ -105,7 +103,7 @@ final class LocalEnableOverrideTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty - framework components respect global config
-            XCTAssertTrue(accessibilityID.isEmpty, "Framework components should respect global config")
+            #expect(accessibilityID.isEmpty, "Framework components should respect global config")
             
             print("✅ SUCCESS: Framework component respected global config")
             print("   No ID generated (as expected)")

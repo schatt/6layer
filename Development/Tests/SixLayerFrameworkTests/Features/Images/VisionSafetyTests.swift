@@ -5,29 +5,29 @@
 //  Tests for safe Vision framework integration with availability checks
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class VisionSafetyTests: XCTestCase {
+final class VisionSafetyTests {
     
     // MARK: - Vision Availability Tests
     
-    func testVisionFrameworkAvailability() {
+    @Test func testVisionFrameworkAvailability() {
         // Given: A test environment
         // When: Checking Vision framework availability
         // Then: Should handle availability gracefully
         
         #if canImport(Vision)
         // Vision is available - this is expected on iOS 11+ and macOS 10.15+
-        XCTAssertTrue(true, "Vision framework should be available on supported platforms")
+        #expect(true, "Vision framework should be available on supported platforms")
         #else
         // Vision is not available - should have fallback behavior
-        XCTAssertTrue(true, "Should handle Vision unavailability gracefully")
+        #expect(true, "Should handle Vision unavailability gracefully")
         #endif
     }
     
-    func testOCRAvailabilityCheck() {
+    @Test func testOCRAvailabilityCheck() {
         // Given: OCR context and image
         let _ = OCRContext(
             textTypes: [.general],
@@ -43,13 +43,13 @@ final class VisionSafetyTests: XCTestCase {
         let platform = SixLayerPlatform.current
         switch platform {
         case .iOS, .macOS:
-            XCTAssertTrue(isOCRAvailable, "OCR should be available on \(platform)")
+            #expect(isOCRAvailable, "OCR should be available on \(platform)")
         case .watchOS, .tvOS, .visionOS:
-            XCTAssertFalse(isOCRAvailable, "OCR should not be available on \(platform)")
+            #expect(!isOCRAvailable, "OCR should not be available on \(platform)")
         }
     }
     
-    func testOCRFallbackBehavior() {
+    @Test func testOCRFallbackBehavior() {
         // Given: OCR context and image
         let context = OCRContext(
             textTypes: [.general],
@@ -63,9 +63,9 @@ final class VisionSafetyTests: XCTestCase {
         
         // Then: OCR availability should be deterministic
         if isOCRAvailable {
-            XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
+            #expect(isOCRAvailable, "OCR should be available when Vision framework is present")
         } else {
-            XCTAssertFalse(isOCRAvailable, "OCR should not be available when Vision framework is not present")
+            #expect(!isOCRAvailable, "OCR should not be available when Vision framework is not present")
         }
         
         // Test that fallback behavior is handled gracefully
@@ -93,7 +93,7 @@ final class VisionSafetyTests: XCTestCase {
         // Don't wait for async completion - just verify the function can be called
     }
     
-    func testVisionFrameworkVersionCheck() {
+    @Test func testVisionFrameworkVersionCheck() {
         // Given: A test environment
         // When: Checking Vision framework version compatibility
         let isCompatible = isVisionFrameworkCompatible()
@@ -102,25 +102,25 @@ final class VisionSafetyTests: XCTestCase {
         #if canImport(Vision)
         #if os(iOS)
         if #available(iOS 11.0, *) {
-            XCTAssertTrue(isCompatible, "Vision should be compatible on iOS 11+")
+            #expect(isCompatible, "Vision should be compatible on iOS 11+")
         } else {
-            XCTAssertFalse(isCompatible, "Vision should not be compatible on iOS < 11")
+            #expect(!isCompatible, "Vision should not be compatible on iOS < 11")
         }
         #elseif os(macOS)
         if #available(macOS 10.15, *) {
-            XCTAssertTrue(isCompatible, "Vision should be compatible on macOS 10.15+")
+            #expect(isCompatible, "Vision should be compatible on macOS 10.15+")
         } else {
-            XCTAssertFalse(isCompatible, "Vision should not be compatible on macOS < 10.15")
+            #expect(!isCompatible, "Vision should not be compatible on macOS < 10.15")
         }
         #else
-        XCTAssertFalse(isCompatible, "Vision should not be compatible on unsupported platforms")
+        #expect(!isCompatible, "Vision should not be compatible on unsupported platforms")
         #endif
         #else
-        XCTAssertFalse(isCompatible, "Vision should not be compatible when framework is unavailable")
+        #expect(!isCompatible, "Vision should not be compatible when framework is unavailable")
         #endif
     }
     
-    func testOCRErrorHandling() {
+    @Test func testOCRErrorHandling() {
         // Given: Invalid image for OCR
         let context = OCRContext(
             textTypes: [.general],
@@ -133,9 +133,9 @@ final class VisionSafetyTests: XCTestCase {
         
         // Then: OCR availability should be deterministic
         if isOCRAvailable {
-            XCTAssertTrue(isOCRAvailable, "OCR should be available when Vision framework is present")
+            #expect(isOCRAvailable, "OCR should be available when Vision framework is present")
         } else {
-            XCTAssertFalse(isOCRAvailable, "OCR should not be available when Vision framework is not present")
+            #expect(!isOCRAvailable, "OCR should not be available when Vision framework is not present")
         }
         
         // Test that error handling works gracefully
@@ -163,22 +163,22 @@ final class VisionSafetyTests: XCTestCase {
         // Don't wait for async completion - just verify the function can be called
     }
     
-    func testPlatformSpecificVisionAvailability() {
+    @Test func testPlatformSpecificVisionAvailability() {
         // Given: Different platforms
         // When: Checking Vision availability per platform
         let availability = SixLayerFramework.getVisionAvailabilityInfo()
         
         // Then: Should provide accurate platform-specific information
-        XCTAssertNotNil(availability, "Should provide availability information")
-        XCTAssertNotNil(availability.platform, "Should specify the platform")
-        XCTAssertNotNil(availability.isAvailable, "Should specify availability status")
+        #expect(availability != nil, "Should provide availability information")
+        #expect(availability.platform != nil, "Should specify the platform")
+        #expect(availability.isAvailable != nil, "Should specify availability status")
         
         #if os(iOS)
-        XCTAssertEqual(availability.platform, "iOS", "Should identify iOS platform")
+        #expect(availability.platform == "iOS", "Should identify iOS platform")
         #elseif os(macOS)
-        XCTAssertEqual(availability.platform, "macOS", "Should identify macOS platform")
+        #expect(availability.platform == "macOS", "Should identify macOS platform")
         #else
-        XCTAssertEqual(availability.platform, "Unknown", "Should identify unknown platform")
+        #expect(availability.platform == "Unknown", "Should identify unknown platform")
         #endif
     }
 }

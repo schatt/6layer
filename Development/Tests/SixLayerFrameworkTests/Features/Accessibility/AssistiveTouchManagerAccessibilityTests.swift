@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AssistiveTouchManager.swift classes
 /// Ensures AssistiveTouchManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
+final class AssistiveTouchManagerAccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,7 +34,7 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
@@ -48,19 +48,19 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(manager, "AssistiveTouchManager should be instantiable")
+        #expect(manager != nil, "AssistiveTouchManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            XCTAssertTrue(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
-            XCTAssertEqual(config.namespace, "SixLayer", "AssistiveTouchManager should use correct namespace")
+            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
     }
     
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
@@ -74,13 +74,13 @@ final class AssistiveTouchManagerAccessibilityTests: XCTestCase {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(manager, "AssistiveTouchManager should be instantiable")
+        #expect(manager != nil, "AssistiveTouchManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            XCTAssertTrue(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
-            XCTAssertEqual(config.namespace, "SixLayer", "AssistiveTouchManager should use correct namespace")
+            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
     }
 }

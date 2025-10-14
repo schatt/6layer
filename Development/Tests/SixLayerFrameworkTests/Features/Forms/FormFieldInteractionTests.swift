@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -36,7 +36,7 @@ import SwiftUI
 /// Tests for Form Field Interaction Functionality
 /// Tests that form fields properly handle user interactions and data binding
 @MainActor
-final class FormFieldInteractionTests: XCTestCase {
+final class FormFieldInteractionTests {
     
     // MARK: - Test Data
     
@@ -120,7 +120,7 @@ final class FormFieldInteractionTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate text field data binding functionality
     /// TESTING SCOPE: Tests text field data binding and value synchronization
     /// METHODOLOGY: Create text field with data binding and verify binding functionality
-    func testTextFieldWithDataBinding() {
+    @Test func testTextFieldWithDataBinding() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -143,7 +143,7 @@ final class FormFieldInteractionTests: XCTestCase {
             )
             
             // Then: View should be created successfully
-            XCTAssertNotNil(view)
+            #expect(view != nil)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -152,7 +152,7 @@ final class FormFieldInteractionTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate email field data binding functionality
     /// TESTING SCOPE: Tests email field data binding and value synchronization
     /// METHODOLOGY: Create email field with data binding and verify binding functionality
-    func testEmailFieldWithDataBinding() {
+    @Test func testEmailFieldWithDataBinding() {
         // Given: Email field with data binding
         resetCallbacks()
         let emailField = sampleFormFields[1]
@@ -172,13 +172,13 @@ final class FormFieldInteractionTests: XCTestCase {
         .textContentType(.emailAddress)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate select field picker functionality
     /// TESTING SCOPE: Tests select field picker interaction and selection
     /// METHODOLOGY: Create select field with picker and verify selection functionality
-    func testSelectFieldWithPicker() {
+    @Test func testSelectFieldWithPicker() {
         // Given: Select field with picker options
         resetCallbacks()
         let selectField = sampleFormFields[2]
@@ -203,13 +203,13 @@ final class FormFieldInteractionTests: XCTestCase {
         }
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate radio button group selection functionality
     /// TESTING SCOPE: Tests radio button group selection and state management
     /// METHODOLOGY: Create radio button group and verify selection functionality
-    func testRadioButtonGroupWithSelection() {
+    @Test func testRadioButtonGroupWithSelection() {
         // Given: Radio button group with selection
         resetCallbacks()
         let radioField = sampleFormFields[3]
@@ -234,13 +234,13 @@ final class FormFieldInteractionTests: XCTestCase {
         }
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate number field data binding functionality
     /// TESTING SCOPE: Tests number field data binding and value synchronization
     /// METHODOLOGY: Create number field with data binding and verify binding functionality
-    func testNumberFieldWithDataBinding() {
+    @Test func testNumberFieldWithDataBinding() {
         // Given: Number field with data binding
         resetCallbacks()
         let numberField = sampleFormFields[4]
@@ -260,13 +260,13 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate date field data binding functionality
     /// TESTING SCOPE: Tests date field data binding and value synchronization
     /// METHODOLOGY: Create date field with data binding and verify binding functionality
-    func testDateFieldWithDataBinding() {
+    @Test func testDateFieldWithDataBinding() {
         // Given: Date field with data binding
         resetCallbacks()
         let dateField = sampleFormFields[5]
@@ -286,13 +286,13 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate checkbox field data binding functionality
     /// TESTING SCOPE: Tests checkbox field data binding and value synchronization
     /// METHODOLOGY: Create checkbox field with data binding and verify binding functionality
-    func testCheckboxFieldWithDataBinding() {
+    @Test func testCheckboxFieldWithDataBinding() {
         // Given: Checkbox field with data binding
         resetCallbacks()
         let checkboxField = sampleFormFields[6]
@@ -311,7 +311,7 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Form Integration Tests
@@ -319,7 +319,7 @@ final class FormFieldInteractionTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate platform form data presentation functionality
     /// TESTING SCOPE: Tests platform form data presentation with interactive fields
     /// METHODOLOGY: Create platform form data presentation and verify interactive functionality
-    func testPlatformPresentFormDataL1WithInteractiveFields() {
+    @Test func testPlatformPresentFormDataL1WithInteractiveFields() {
         // Given: Form with interactive fields
         resetCallbacks()
         
@@ -330,13 +330,13 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate simple form view interactive functionality
     /// TESTING SCOPE: Tests simple form view with interactive fields
     /// METHODOLOGY: Create simple form view and verify interactive field functionality
-    func testSimpleFormViewWithInteractiveFields() {
+    @Test func testSimpleFormViewWithInteractiveFields() {
         // Given: Simple form view with interactive fields
         resetCallbacks()
         
@@ -347,7 +347,7 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Validation Tests
@@ -355,7 +355,7 @@ final class FormFieldInteractionTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate field validation error display functionality
     /// TESTING SCOPE: Tests field validation and error display
     /// METHODOLOGY: Test field validation and verify error display functionality
-    func testFieldValidationWithErrorDisplay() {
+    @Test func testFieldValidationWithErrorDisplay() {
         // Given: Field with validation
         resetCallbacks()
         let textField = sampleFormFields[0]
@@ -395,13 +395,13 @@ final class FormFieldInteractionTests: XCTestCase {
         }
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate required field validation functionality
     /// TESTING SCOPE: Tests required field validation and error handling
     /// METHODOLOGY: Test required field validation and verify error handling functionality
-    func testRequiredFieldValidation() {
+    @Test func testRequiredFieldValidation() {
         // Given: Required field validation
         resetCallbacks()
         let requiredField = sampleFormFields[0] // Text field is required
@@ -431,7 +431,7 @@ final class FormFieldInteractionTests: XCTestCase {
         }
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Focus Management Tests
@@ -439,7 +439,7 @@ final class FormFieldInteractionTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate field focus management functionality
     /// TESTING SCOPE: Tests field focus management and navigation
     /// METHODOLOGY: Test field focus management and verify focus navigation functionality
-    func testFieldFocusManagement() {
+    @Test func testFieldFocusManagement() {
         // Given: Field with focus management
         resetCallbacks()
         let textField = sampleFormFields[0]
@@ -462,7 +462,7 @@ final class FormFieldInteractionTests: XCTestCase {
         }
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Edge Case Tests
@@ -470,7 +470,7 @@ final class FormFieldInteractionTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate empty form fields functionality
     /// TESTING SCOPE: Tests empty form fields handling and validation
     /// METHODOLOGY: Test empty form fields and verify handling functionality
-    func testEmptyFormFields() {
+    @Test func testEmptyFormFields() {
         // Given: Empty form fields array
         resetCallbacks()
         
@@ -481,13 +481,13 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate form with all field types functionality
     /// TESTING SCOPE: Tests form with all field types and interactions
     /// METHODOLOGY: Create form with all field types and verify comprehensive functionality
-    func testFormWithAllFieldTypes() {
+    @Test func testFormWithAllFieldTypes() {
         // Given: Form with all field types
         resetCallbacks()
         let allContentTypes: [DynamicContentType] = Array(DynamicContentType.allCases) // Use real enum
@@ -508,13 +508,13 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate form with long labels functionality
     /// TESTING SCOPE: Tests form with long labels and layout handling
     /// METHODOLOGY: Create form with long labels and verify layout functionality
-    func testFormWithLongLabels() {
+    @Test func testFormWithLongLabels() {
         // Given: Form with long labels
         resetCallbacks()
         let longLabelField = DynamicFormField(
@@ -532,13 +532,13 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     /// BUSINESS PURPOSE: Validate form with special characters functionality
     /// TESTING SCOPE: Tests form with special characters and input handling
     /// METHODOLOGY: Create form with special characters and verify input functionality
-    func testFormWithSpecialCharacters() {
+    @Test func testFormWithSpecialCharacters() {
         // Given: Form with special characters
         resetCallbacks()
         let specialField = DynamicFormField(
@@ -556,6 +556,6 @@ final class FormFieldInteractionTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
 }

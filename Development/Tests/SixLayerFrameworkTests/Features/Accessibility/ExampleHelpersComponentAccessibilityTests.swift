@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL ExampleHelpers components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ExampleHelpersComponentAccessibilityTests: XCTestCase {
+final class ExampleHelpersComponentAccessibilityTests {
     
     // MARK: - ExampleProjectCard Tests
     
-    func testExampleProjectCardGeneratesAccessibilityIdentifiers() async {
+    @Test func testExampleProjectCardGeneratesAccessibilityIdentifiers() async {
         // Given: Test project data
         let projectData = ExampleProjectData(
             id: "1",
@@ -33,12 +33,12 @@ final class ExampleHelpersComponentAccessibilityTests: XCTestCase {
             componentName: "ExampleProjectCard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExampleProjectCard should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ExampleProjectCard should generate accessibility identifiers")
     }
     
     // MARK: - ExampleProjectList Tests
     
-    func testExampleProjectListGeneratesAccessibilityIdentifiers() async {
+    @Test func testExampleProjectListGeneratesAccessibilityIdentifiers() async {
         // Given: Test project items
         let projectItems = [
             ExampleProjectItem(id: "1", title: "Project 1"),
@@ -57,12 +57,12 @@ final class ExampleHelpersComponentAccessibilityTests: XCTestCase {
             componentName: "ExampleProjectList"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExampleProjectList should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ExampleProjectList should generate accessibility identifiers")
     }
     
     // MARK: - ExampleProjectFormField Tests
     
-    func testExampleProjectFormFieldGeneratesAccessibilityIdentifiers() async {
+    @Test func testExampleProjectFormFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test form field data
         let formFieldData = ExampleFormFieldData(
             id: "example-field",
@@ -81,7 +81,7 @@ final class ExampleHelpersComponentAccessibilityTests: XCTestCase {
             componentName: "ExampleProjectFormField"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExampleProjectFormField should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ExampleProjectFormField should generate accessibility identifiers")
     }
 }
 

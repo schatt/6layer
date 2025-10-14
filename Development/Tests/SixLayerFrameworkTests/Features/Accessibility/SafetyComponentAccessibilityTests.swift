@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Safety Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class SafetyComponentAccessibilityTests: XCTestCase {
+final class SafetyComponentAccessibilityTests {
     
     // MARK: - Safety Component Tests
     
-    func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
+    @Test func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
         // Given: VisionSafety
         let testView = VisionSafety()
         
@@ -25,10 +25,10 @@ final class SafetyComponentAccessibilityTests: XCTestCase {
             componentName: "VisionSafety"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
     }
     
-    func testPlatformSafetyGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformSafetyGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSafety
         let testView = PlatformSafety()
         
@@ -39,10 +39,10 @@ final class SafetyComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformSafety"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformSafety should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSafety should generate accessibility identifiers")
     }
     
-    func testPlatformSecurityGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformSecurityGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSecurity
         let testView = PlatformSecurity()
         
@@ -53,10 +53,10 @@ final class SafetyComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformSecurity"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformSecurity should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSecurity should generate accessibility identifiers")
     }
     
-    func testPlatformPrivacyGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPrivacyGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPrivacy
         let testView = PlatformPrivacy()
         
@@ -67,7 +67,7 @@ final class SafetyComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformPrivacy"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformPrivacy should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPrivacy should generate accessibility identifiers")
     }
 }
 

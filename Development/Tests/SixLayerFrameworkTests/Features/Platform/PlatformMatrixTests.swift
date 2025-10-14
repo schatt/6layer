@@ -30,199 +30,199 @@
 //  - ✅ Excellent: Tests all platform combinations and device types
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Comprehensive platform matrix testing for cross-platform framework
 /// Tests all platform combinations, device types, and capability matrices
 @MainActor
-final class PlatformMatrixTests: XCTestCase {
+final class PlatformMatrixTests {
     
     // MARK: - Platform Detection Tests
     
-    func testPlatformDetectionMatrix() {
+    @Test func testPlatformDetectionMatrix() {
         // Test that platform detection works correctly
         let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current
         
         // Verify we're running on a known platform
-        XCTAssertTrue([SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS].contains(platform), 
+        #expect([SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS].contains(platform), 
                      "Should detect a valid platform")
         
         // Verify device type is appropriate for platform
         switch platform {
         case .iOS:
-            XCTAssertTrue([.phone, .pad].contains(deviceType), 
+            #expect([.phone, .pad].contains(deviceType), 
                          "iOS should have phone or pad device type")
         case .macOS:
-            XCTAssertEqual(deviceType, .mac, 
+            #expect(deviceType == .mac, 
                           "macOS should have mac device type")
         case .watchOS:
-            XCTAssertEqual(deviceType, .watch, 
+            #expect(deviceType == .watch, 
                           "watchOS should have watch device type")
         case .tvOS:
-            XCTAssertEqual(deviceType, .tv, 
+            #expect(deviceType == .tv, 
                           "tvOS should have tv device type")
         case .visionOS:
-            XCTAssertEqual(deviceType, .tv, 
+            #expect(deviceType == .tv, 
                           "visionOS should have tv device type (using tv as closest match)")
         }
     }
     
     // MARK: - Touch Capability Matrix
     
-    func testTouchCapabilityMatrix() {
+    @Test func testTouchCapabilityMatrix() {
         let config = getCardExpansionPlatformConfig()
         
         // Test touch support matrix
         switch SixLayerPlatform.current {
         case .iOS, .watchOS:
-            XCTAssertTrue(config.supportsTouch, 
+            #expect(config.supportsTouch, 
                           "\(SixLayerPlatform.current) should support touch")
-            XCTAssertTrue(config.supportsHapticFeedback, 
+            #expect(config.supportsHapticFeedback, 
                          "Touch platforms should support haptic feedback")
         case .macOS, .tvOS, .visionOS:
-            XCTAssertFalse(config.supportsTouch, 
+            #expect(!config.supportsTouch, 
                            "\(SixLayerPlatform.current) should not support touch")
-            XCTAssertFalse(config.supportsHapticFeedback, 
+            #expect(!config.supportsHapticFeedback, 
                           "Non-touch platforms should not support haptic feedback")
         }
     }
     
     // MARK: - Hover Capability Matrix
     
-    func testHoverCapabilityMatrix() {
+    @Test func testHoverCapabilityMatrix() {
         let config = getCardExpansionPlatformConfig()
         
         // Test hover support matrix
         switch SixLayerPlatform.current {
         case .macOS:
-            XCTAssertTrue(config.supportsHover, 
+            #expect(config.supportsHover, 
                          "macOS should support hover")
         case .iOS, .watchOS, .tvOS, .visionOS:
-            XCTAssertFalse(config.supportsHover, 
+            #expect(!config.supportsHover, 
                            "\(SixLayerPlatform.current) should not support hover")
         }
     }
     
     // MARK: - Accessibility Capability Matrix
     
-    func testAccessibilityCapabilityMatrix() {
+    @Test func testAccessibilityCapabilityMatrix() {
         let config = getCardExpansionPlatformConfig()
         
         // All platforms should support these accessibility features
-        XCTAssertTrue(config.supportsVoiceOver, 
+        #expect(config.supportsVoiceOver, 
                      "All platforms should support VoiceOver")
-        XCTAssertTrue(config.supportsSwitchControl, 
+        #expect(config.supportsSwitchControl, 
                      "All platforms should support Switch Control")
         
         // AssistiveTouch is iOS/watchOS only
         switch SixLayerPlatform.current {
         case .iOS, .watchOS:
-            XCTAssertTrue(config.supportsAssistiveTouch, 
+            #expect(config.supportsAssistiveTouch, 
                           "\(SixLayerPlatform.current) should support AssistiveTouch")
         case .macOS, .tvOS, .visionOS:
-            XCTAssertFalse(config.supportsAssistiveTouch, 
+            #expect(!config.supportsAssistiveTouch, 
                            "\(SixLayerPlatform.current) should not support AssistiveTouch")
         }
     }
     
     // MARK: - Screen Size and Device Type Matrix
     
-    func testScreenSizeCapabilityMatrix() {
+    @Test func testScreenSizeCapabilityMatrix() {
         let config = getCardExpansionPlatformConfig()
         
         // Test touch target sizes based on platform
         switch SixLayerPlatform.current {
         case .iOS:
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+            #expect(config.minTouchTarget >= 44, 
                                        "iOS should have 44pt minimum touch targets")
         case .watchOS:
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+            #expect(config.minTouchTarget >= 44, 
                                        "watchOS should have 44pt minimum touch targets")
         case .macOS, .tvOS, .visionOS:
             // Non-touch platforms still need minimum sizes for accessibility
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+            #expect(config.minTouchTarget >= 44, 
                                        "All platforms should have 44pt minimum targets")
         }
     }
     
     // MARK: - Vision Framework Availability Matrix
     
-    func testVisionFrameworkAvailabilityMatrix() {
+    @Test func testVisionFrameworkAvailabilityMatrix() {
         let isAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
 
         // Vision framework availability by platform
         switch SixLayerPlatform.current {
         case .iOS, .macOS:
-            XCTAssertTrue(isAvailable, "Vision should be available on \(SixLayerPlatform.current)")
+            #expect(isAvailable, "Vision should be available on \(SixLayerPlatform.current)")
         case .watchOS, .tvOS, .visionOS:
-            XCTAssertFalse(isAvailable, "Vision should not be available on \(SixLayerPlatform.current)")
+            #expect(!isAvailable, "Vision should not be available on \(SixLayerPlatform.current)")
         }
     }
     
     // MARK: - Performance Configuration Matrix
     
-    func testPerformanceConfigurationMatrix() {
+    @Test func testPerformanceConfigurationMatrix() {
         let config = getCardExpansionPerformanceConfig()
         
         // Test performance settings are appropriate for platform
-        XCTAssertGreaterThan(config.maxAnimationDuration, 0, 
+        #expect(config.maxAnimationDuration > 0, 
                            "Animation duration should be positive")
-        XCTAssertGreaterThan(config.targetFrameRate, 0, 
+        #expect(config.targetFrameRate > 0, 
                            "Target frame rate should be positive")
-        XCTAssertTrue(config.supportsSmoothAnimations, 
+        #expect(config.supportsSmoothAnimations, 
                      "Should support smooth animations")
         
         // Platform-specific performance expectations
         switch SixLayerPlatform.current {
         case .watchOS:
             // Watch should have faster animations
-            XCTAssertLessThan(config.maxAnimationDuration, 0.5, 
+            #expect(config.maxAnimationDuration < 0.5, 
                              "Watch should have fast animations")
         case .tvOS:
             // TV should have slower, more deliberate animations
-            XCTAssertGreaterThan(config.maxAnimationDuration, 0.3, 
+            #expect(config.maxAnimationDuration > 0.3, 
                                 "TV should have slower animations")
         default:
             // Other platforms should have moderate animation speeds
-            XCTAssertGreaterThan(config.maxAnimationDuration, 0.1, 
+            #expect(config.maxAnimationDuration > 0.1, 
                                 "Platforms should have reasonable animation speeds")
         }
     }
     
     // MARK: - Color Encoding Matrix
     
-    func testColorEncodingCapabilityMatrix() {
+    @Test func testColorEncodingCapabilityMatrix() {
         // Test color encoding works on all platforms
         let testColor = Color.blue
         
         do {
             let encodedData = try platformColorEncode(testColor)
-            XCTAssertFalse(encodedData.isEmpty, "Color encoding should produce data")
+            #expect(!encodedData.isEmpty, "Color encoding should produce data")
             
             let decodedColor = try platformColorDecode(encodedData)
-            XCTAssertNotNil(decodedColor, "Color decoding should work")
+            #expect(decodedColor != nil, "Color decoding should work")
         } catch {
-            XCTFail("Color encoding/decoding should work on all platforms: \(error)")
+            Issue.record("Color encoding/decoding should work on all platforms: \(error)")
         }
     }
     
     // MARK: - OCR Capability Matrix
     
-    func testOCRCapabilityMatrix() {
+    @Test func testOCRCapabilityMatrix() {
         let isOCRAvailable = isVisionOCRAvailable()
         
         // OCR availability should match Vision framework availability
         let isVisionAvailable = isVisionFrameworkAvailable()
-        XCTAssertEqual(isOCRAvailable, isVisionAvailable, 
+        #expect(isOCRAvailable == isVisionAvailable, 
                      "OCR availability should match Vision framework availability")
     }
     
     // MARK: - CarPlay Capability Matrix
     
-    func testCarPlayCapabilityMatrix() {
+    @Test func testCarPlayCapabilityMatrix() {
         // Test CarPlay support detection
         let supportsCarPlay = CarPlayCapabilityDetection.supportsCarPlay
         let isCarPlayActive = CarPlayCapabilityDetection.isCarPlayActive
@@ -230,28 +230,28 @@ final class PlatformMatrixTests: XCTestCase {
         // CarPlay should only be supported on iOS
         switch SixLayerPlatform.current {
         case .iOS:
-            XCTAssertTrue(supportsCarPlay, "iOS should support CarPlay")
+            #expect(supportsCarPlay, "iOS should support CarPlay")
         case .macOS, .watchOS, .tvOS, .visionOS:
-            XCTAssertFalse(supportsCarPlay, "\(SixLayerPlatform.current) should not support CarPlay")
+            #expect(!supportsCarPlay, "\(SixLayerPlatform.current) should not support CarPlay")
         }
         
         // Test CarPlay device type
         if isCarPlayActive {
             let carPlayDeviceType = CarPlayCapabilityDetection.carPlayDeviceType
-            XCTAssertEqual(carPlayDeviceType, .car, "CarPlay should use car device type")
+            #expect(carPlayDeviceType == .car, "CarPlay should use car device type")
         }
         
         // Test CarPlay layout preferences
         let preferences = CarPlayCapabilityDetection.carPlayLayoutPreferences
-        XCTAssertTrue(preferences.prefersLargeText, "CarPlay should prefer large text")
-        XCTAssertTrue(preferences.prefersHighContrast, "CarPlay should prefer high contrast")
-        XCTAssertTrue(preferences.prefersMinimalUI, "CarPlay should prefer minimal UI")
-        XCTAssertTrue(preferences.supportsVoiceControl, "CarPlay should support voice control")
-        XCTAssertTrue(preferences.supportsTouch, "CarPlay should support touch")
-        XCTAssertTrue(preferences.supportsKnobControl, "CarPlay should support knob control")
+        #expect(preferences.prefersLargeText, "CarPlay should prefer large text")
+        #expect(preferences.prefersHighContrast, "CarPlay should prefer high contrast")
+        #expect(preferences.prefersMinimalUI, "CarPlay should prefer minimal UI")
+        #expect(preferences.supportsVoiceControl, "CarPlay should support voice control")
+        #expect(preferences.supportsTouch, "CarPlay should support touch")
+        #expect(preferences.supportsKnobControl, "CarPlay should support knob control")
     }
     
-    func testCarPlayFeatureAvailabilityMatrix() {
+    @Test func testCarPlayFeatureAvailabilityMatrix() {
         // Test all CarPlay features
         let features: [CarPlayFeature] = Array(CarPlayFeature.allCases) // Use real enum
         
@@ -259,49 +259,49 @@ final class PlatformMatrixTests: XCTestCase {
             let isAvailable = CarPlayCapabilityDetection.isFeatureAvailable(feature)
             
             if CarPlayCapabilityDetection.isCarPlayActive {
-                XCTAssertTrue(isAvailable, "CarPlay feature \(feature) should be available when CarPlay is active")
+                #expect(isAvailable, "CarPlay feature \(feature) should be available when CarPlay is active")
             } else {
-                XCTAssertFalse(isAvailable, "CarPlay feature \(feature) should not be available when CarPlay is not active")
+                #expect(!isAvailable, "CarPlay feature \(feature) should not be available when CarPlay is not active")
             }
         }
     }
     
-    func testDeviceContextDetectionMatrix() {
+    @Test func testDeviceContextDetectionMatrix() {
         let deviceContext = DeviceContext.current
         
         // Verify we get a valid device context
-        XCTAssertTrue([.standard, .carPlay, .externalDisplay, .splitView, .stageManager].contains(deviceContext),
+        #expect([.standard, .carPlay, .externalDisplay, .splitView, .stageManager].contains(deviceContext), 
                      "Should detect a valid device context")
         
         // Test CarPlay context detection
         if CarPlayCapabilityDetection.isCarPlayActive {
-            XCTAssertEqual(deviceContext, .carPlay, "Device context should be carPlay when CarPlay is active")
+            #expect(deviceContext == .carPlay, "Device context should be carPlay when CarPlay is active")
         }
         
         // Test external display context detection
         #if os(iOS)
         if UIScreen.screens.count > 1 && !CarPlayCapabilityDetection.isCarPlayActive {
-            XCTAssertEqual(deviceContext, .externalDisplay, "Device context should be externalDisplay when multiple screens are present")
+            #expect(deviceContext == .externalDisplay, "Device context should be externalDisplay when multiple screens are present")
         }
         #endif
     }
     
-    func testCarPlayDeviceTypeDetectionMatrix() {
+    @Test func testCarPlayDeviceTypeDetectionMatrix() {
         let deviceType = DeviceType.current
         let deviceContext = DeviceContext.current
         
         // Test CarPlay device type detection
         if deviceContext == .carPlay {
-            XCTAssertEqual(deviceType, .car, "Device type should be car when in CarPlay context")
+            #expect(deviceType == .car, "Device type should be car when in CarPlay context")
         }
         
         // Test that car device type is only used for CarPlay
         if deviceType == .car {
-            XCTAssertEqual(deviceContext, .carPlay, "Car device type should only be used in CarPlay context")
+            #expect(deviceContext == .carPlay, "Car device type should only be used in CarPlay context")
         }
     }
     
-    func testCarPlayPlatformCapabilitiesMatrix() {
+    @Test func testCarPlayPlatformCapabilitiesMatrix() {
         let platformCapabilities = PlatformDeviceCapabilities.self
         
         // Test CarPlay support in platform capabilities
@@ -310,17 +310,17 @@ final class PlatformMatrixTests: XCTestCase {
         let deviceContext = platformCapabilities.deviceContext
         
         // CarPlay support should match detection
-        XCTAssertEqual(supportsCarPlay, CarPlayCapabilityDetection.supportsCarPlay,
+        #expect(supportsCarPlay == CarPlayCapabilityDetection.supportsCarPlay, 
                       "Platform capabilities CarPlay support should match detection")
-        XCTAssertEqual(isCarPlayActive, CarPlayCapabilityDetection.isCarPlayActive,
+        #expect(isCarPlayActive == CarPlayCapabilityDetection.isCarPlayActive, 
                       "Platform capabilities CarPlay active should match detection")
-        XCTAssertEqual(deviceContext, DeviceContext.current,
+        #expect(deviceContext == DeviceContext.current, 
                       "Platform capabilities device context should match current context")
     }
     
     // MARK: - Comprehensive Platform Feature Matrix
     
-    func testComprehensivePlatformFeatureMatrix() {
+    @Test func testComprehensivePlatformFeatureMatrix() {
         let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current
         let platformConfig = getCardExpansionPlatformConfig()
@@ -346,11 +346,11 @@ final class PlatformMatrixTests: XCTestCase {
         )
         
         // Verify feature matrix is internally consistent
-        XCTAssertTrue(featureMatrix.isInternallyConsistent(), 
+        #expect(featureMatrix.isInternallyConsistent(), 
                      "Feature matrix should be internally consistent")
         
         // Verify platform-specific constraints
-        XCTAssertTrue(featureMatrix.satisfiesPlatformConstraints(), 
+        #expect(featureMatrix.satisfiesPlatformConstraints(), 
                      "Feature matrix should satisfy platform constraints")
     }
 }

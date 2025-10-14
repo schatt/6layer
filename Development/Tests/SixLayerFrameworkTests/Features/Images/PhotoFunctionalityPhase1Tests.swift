@@ -6,7 +6,7 @@
 //  Tests for enhanced PlatformImage, Layer 4 components, and cross-platform support
 //
 
-import XCTest
+import Testing
 import SwiftUI
 #if os(iOS)
 import UIKit
@@ -15,11 +15,11 @@ import AppKit
 #endif
 @testable import SixLayerFramework
 
-final class PhotoFunctionalityPhase1Tests: XCTestCase {
+final class PhotoFunctionalityPhase1Tests {
     
     // MARK: - Enhanced PlatformImage Tests
     
-    @MainActor
+    @Test @MainActor
     func testPlatformImageInitialization() {
         // Given: Sample image data
         let sampleData = createSampleImageData()
@@ -28,17 +28,17 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let platformImage = PlatformImage(data: sampleData)
         
         // Then: PlatformImage should be created successfully and be usable
-        XCTAssertNotNil(platformImage, "PlatformImage should be created from valid data")
+        #expect(platformImage != nil, "PlatformImage should be created from valid data")
         
         // Test that the PlatformImage can actually be used in a view
         if let platformImage = platformImage {
             let testView = createTestViewWithPlatformImage(platformImage)
             let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(hostingView, "PlatformImage should work in actual views")
+            #expect(hostingView != nil, "PlatformImage should work in actual views")
         }
     }
     
-    func testPlatformImageInitializationWithInvalidData() {
+    @Test func testPlatformImageInitializationWithInvalidData() {
         // Given: Invalid image data
         let invalidData = Data("invalid".utf8)
         
@@ -46,10 +46,10 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let platformImage = PlatformImage(data: invalidData)
         
         // Then: PlatformImage should be nil
-        XCTAssertNil(platformImage, "PlatformImage should be nil for invalid data")
+        #expect(platformImage == nil, "PlatformImage should be nil for invalid data")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformImageResize() {
         // Given: A PlatformImage
         let originalImage = createTestPlatformImage()
@@ -59,15 +59,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let resizedImage = originalImage.resized(to: targetSize)
         
         // Then: Image should be resized to target size and be usable
-        XCTAssertEqual(resizedImage.size, targetSize, "Image should be resized to target size")
+        #expect(resizedImage.size == targetSize, "Image should be resized to target size")
         
         // Test that the resized image can actually be used in a view
         let testView = createTestViewWithPlatformImage(resizedImage)
         let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Resized image should work in actual views")
+        #expect(hostingView != nil, "Resized image should work in actual views")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformImageCrop() {
         // Given: A PlatformImage and crop rectangle
         let originalImage = createTestPlatformImage()
@@ -77,15 +77,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let croppedImage = originalImage.cropped(to: cropRect)
         
         // Then: Image should be cropped to specified rectangle and be usable
-        XCTAssertEqual(croppedImage.size, cropRect.size, "Image should be cropped to specified size")
+        #expect(croppedImage.size == cropRect.size, "Image should be cropped to specified size")
         
         // Test that the cropped image can actually be used in a view
         let testView = createTestViewWithPlatformImage(croppedImage)
         let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Cropped image should work in actual views")
+        #expect(hostingView != nil, "Cropped image should work in actual views")
     }
     
-    func testPlatformImageCompression() {
+    @Test func testPlatformImageCompression() {
         // Given: A PlatformImage and photo purpose
         let originalImage = createTestPlatformImage()
         let purpose = PhotoPurpose.vehiclePhoto
@@ -94,11 +94,11 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let compressedData = originalImage.compressed(for: purpose, quality: 0.8)
         
         // Then: Compressed data should be returned
-        XCTAssertNotNil(compressedData, "Compressed data should be returned")
-        XCTAssertTrue(compressedData!.count > 0, "Compressed data should not be empty")
+        #expect(compressedData != nil, "Compressed data should be returned")
+        #expect(compressedData!.count > 0, "Compressed data should not be empty")
     }
     
-    func testPlatformImageThumbnail() {
+    @Test func testPlatformImageThumbnail() {
         // Given: A PlatformImage and thumbnail size
         let originalImage = createTestPlatformImage()
         let thumbnailSize = CGSize(width: 50, height: 50)
@@ -107,10 +107,10 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let thumbnail = originalImage.thumbnail(size: thumbnailSize)
         
         // Then: Thumbnail should be created with correct size
-        XCTAssertEqual(thumbnail.size, thumbnailSize, "Thumbnail should have correct size")
+        #expect(thumbnail.size == thumbnailSize, "Thumbnail should have correct size")
     }
     
-    func testPlatformImageOCROptimization() {
+    @Test func testPlatformImageOCROptimization() {
         // Given: A PlatformImage
         let originalImage = createTestPlatformImage()
         
@@ -118,10 +118,10 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let optimizedImage = originalImage.optimizedForOCR()
         
         // Then: Optimized image should be returned
-        XCTAssertNotNil(optimizedImage, "OCR optimized image should be returned")
+        #expect(optimizedImage != nil, "OCR optimized image should be returned")
     }
     
-    func testPlatformImageMetadata() {
+    @Test func testPlatformImageMetadata() {
         // Given: A PlatformImage
         let originalImage = createTestPlatformImage()
         
@@ -129,13 +129,13 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let metadata = originalImage.metadata
         
         // Then: Metadata should contain valid information
-        XCTAssertTrue(metadata.size.width > 0, "Metadata should contain valid size")
-        XCTAssertTrue(metadata.size.height > 0, "Metadata should contain valid size")
-        XCTAssertTrue(metadata.fileSize > 0, "Metadata should contain valid file size")
-        XCTAssertNotEqual(metadata.format, .unknown, "Metadata should contain valid format")
+        #expect(metadata.size.width > 0, "Metadata should contain valid size")
+        #expect(metadata.size.height > 0, "Metadata should contain valid size")
+        #expect(metadata.fileSize > 0, "Metadata should contain valid file size")
+        #expect(metadata.format != .unknown, "Metadata should contain valid format")
     }
     
-    func testPlatformImageMeetsRequirements() {
+    @Test func testPlatformImageMeetsRequirements() {
         // Given: A PlatformImage and photo purpose
         let originalImage = createTestPlatformImage()
         let purpose = PhotoPurpose.vehiclePhoto
@@ -144,29 +144,29 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let meetsRequirements = originalImage.meetsRequirements(for: purpose)
         
         // Then: Should return boolean result
-        XCTAssertTrue(meetsRequirements == true || meetsRequirements == false, "Should return boolean result")
+        #expect(meetsRequirements == true || meetsRequirements == false, "Should return boolean result")
     }
     
     // MARK: - Photo Purpose Tests
     
-    func testPhotoPurposeEnum() {
+    @Test func testPhotoPurposeEnum() {
         // Given: PhotoPurpose enum
         let purposes = PhotoPurpose.allCases
         
         // Then: Should contain expected purposes
-        XCTAssertTrue(purposes.contains(.vehiclePhoto), "Should contain vehiclePhoto")
-        XCTAssertTrue(purposes.contains(.fuelReceipt), "Should contain fuelReceipt")
-        XCTAssertTrue(purposes.contains(.pumpDisplay), "Should contain pumpDisplay")
-        XCTAssertTrue(purposes.contains(.odometer), "Should contain odometer")
-        XCTAssertTrue(purposes.contains(.maintenance), "Should contain maintenance")
-        XCTAssertTrue(purposes.contains(.expense), "Should contain expense")
-        XCTAssertTrue(purposes.contains(.profile), "Should contain profile")
-        XCTAssertTrue(purposes.contains(.document), "Should contain document")
+        #expect(purposes.contains(.vehiclePhoto), "Should contain vehiclePhoto")
+        #expect(purposes.contains(.fuelReceipt), "Should contain fuelReceipt")
+        #expect(purposes.contains(.pumpDisplay), "Should contain pumpDisplay")
+        #expect(purposes.contains(.odometer), "Should contain odometer")
+        #expect(purposes.contains(.maintenance), "Should contain maintenance")
+        #expect(purposes.contains(.expense), "Should contain expense")
+        #expect(purposes.contains(.profile), "Should contain profile")
+        #expect(purposes.contains(.document), "Should contain document")
     }
     
     // MARK: - Photo Context Tests
     
-    func testPhotoContextInitialization() {
+    @Test func testPhotoContextInitialization() {
         // Given: PhotoContext parameters
         let screenSize = PlatformSize(width: 1024, height: 768)
         let availableSpace = PlatformSize(width: 800, height: 600)
@@ -182,15 +182,15 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         )
         
         // Then: Context should be created with correct values
-        XCTAssertEqual(context.screenSize.width, screenSize.width, "Context should have correct screen size width")
-        XCTAssertEqual(context.screenSize.height, screenSize.height, "Context should have correct screen size height")
-        XCTAssertEqual(context.availableSpace.width, availableSpace.width, "Context should have correct available space width")
-        XCTAssertEqual(context.availableSpace.height, availableSpace.height, "Context should have correct available space height")
+        #expect(context.screenSize.width == screenSize.width, "Context should have correct screen size width")
+        #expect(context.screenSize.height == screenSize.height, "Context should have correct screen size height")
+        #expect(context.availableSpace.width == availableSpace.width, "Context should have correct available space width")
+        #expect(context.availableSpace.height == availableSpace.height, "Context should have correct available space height")
     }
     
     // MARK: - Photo Preferences Tests
     
-    func testPhotoPreferencesInitialization() {
+    @Test func testPhotoPreferencesInitialization() {
         // Given: PhotoPreferences parameters
         let source = PhotoSource.camera
         let allowEditing = true
@@ -206,16 +206,16 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         )
         
         // Then: Preferences should be created with correct values
-        XCTAssertEqual(preferences.preferredSource, source, "Preferences should have correct source")
-        XCTAssertEqual(preferences.allowEditing, allowEditing, "Preferences should have correct editing setting")
-        XCTAssertEqual(preferences.compressionQuality, compressionQuality, "Preferences should have correct quality")
-        XCTAssertEqual(preferences.maxImageSize?.width, maxImageSize.width, "Preferences should have correct max size width")
-        XCTAssertEqual(preferences.maxImageSize?.height, maxImageSize.height, "Preferences should have correct max size height")
+        #expect(preferences.preferredSource == source, "Preferences should have correct source")
+        #expect(preferences.allowEditing == allowEditing, "Preferences should have correct editing setting")
+        #expect(preferences.compressionQuality == compressionQuality, "Preferences should have correct quality")
+        #expect(preferences.maxImageSize?.width == maxImageSize.width, "Preferences should have correct max size width")
+        #expect(preferences.maxImageSize?.height == maxImageSize.height, "Preferences should have correct max size height")
     }
     
     // MARK: - Device Capabilities Tests
     
-    func testDeviceCapabilitiesInitialization() {
+    @Test func testDeviceCapabilitiesInitialization() {
         // Given: DeviceCapabilities parameters
         let hasCamera = true
         let hasPhotoLibrary = true
@@ -231,16 +231,16 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         )
         
         // Then: Capabilities should be created with correct values
-        XCTAssertEqual(capabilities.hasCamera, hasCamera, "Capabilities should have correct camera setting")
-        XCTAssertEqual(capabilities.hasPhotoLibrary, hasPhotoLibrary, "Capabilities should have correct photo library setting")
-        XCTAssertEqual(capabilities.supportsEditing, supportsEditing, "Capabilities should have correct editing setting")
-        XCTAssertEqual(capabilities.maxImageResolution.width, maxImageResolution.width, "Capabilities should have correct max resolution width")
-        XCTAssertEqual(capabilities.maxImageResolution.height, maxImageResolution.height, "Capabilities should have correct max resolution height")
+        #expect(capabilities.hasCamera == hasCamera, "Capabilities should have correct camera setting")
+        #expect(capabilities.hasPhotoLibrary == hasPhotoLibrary, "Capabilities should have correct photo library setting")
+        #expect(capabilities.supportsEditing == supportsEditing, "Capabilities should have correct editing setting")
+        #expect(capabilities.maxImageResolution.width == maxImageResolution.width, "Capabilities should have correct max resolution width")
+        #expect(capabilities.maxImageResolution.height == maxImageResolution.height, "Capabilities should have correct max resolution height")
     }
     
     // MARK: - Layer 4 Photo Components Tests
     
-    @MainActor
+    @Test @MainActor
     func testPlatformCameraInterfaceL4() {
         // Given: Image capture callback
         var _: PlatformImage?
@@ -250,14 +250,14 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let cameraInterface = platformCameraInterface_L4(onImageCaptured: onImageCaptured)
         
         // Then: Camera interface should be created and be hostable
-        XCTAssertNotNil(cameraInterface, "Camera interface should be created")
+        #expect(cameraInterface != nil, "Camera interface should be created")
         
         // Test that the camera interface can actually be hosted
         let hostingView = hostRootPlatformView(cameraInterface.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Camera interface should be hostable")
+        #expect(hostingView != nil, "Camera interface should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoPickerL4() {
         // Given: Image selection callback
         var _: PlatformImage?
@@ -267,14 +267,14 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let photoPicker = platformPhotoPicker_L4(onImageSelected: onImageSelected)
         
         // Then: Photo picker should be created and be hostable
-        XCTAssertNotNil(photoPicker, "Photo picker should be created")
+        #expect(photoPicker != nil, "Photo picker should be created")
         
         // Test that the photo picker can actually be hosted
         let hostingView = hostRootPlatformView(photoPicker.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Photo picker should be hostable")
+        #expect(hostingView != nil, "Photo picker should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoDisplayL4() {
         // Given: A PlatformImage and display style
         let testImage = createTestPlatformImage()
@@ -284,14 +284,14 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: style)
         
         // Then: Photo display should be created and be hostable
-        XCTAssertNotNil(photoDisplay, "Photo display should be created")
+        #expect(photoDisplay != nil, "Photo display should be created")
         
         // Test that the photo display can actually be hosted
         let hostingView = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Photo display should be hostable")
+        #expect(hostingView != nil, "Photo display should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoEditorL4() {
         // Given: A PlatformImage and edit callback
         let testImage = createTestPlatformImage()
@@ -302,27 +302,27 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let photoEditor = platformPhotoEditor_L4(image: testImage, onImageEdited: onImageEdited)
         
         // Then: Photo editor should be created and be hostable
-        XCTAssertNotNil(photoEditor, "Photo editor should be created")
+        #expect(photoEditor != nil, "Photo editor should be created")
         
         // Test that the photo editor can actually be hosted
         let hostingView = hostRootPlatformView(photoEditor.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Photo editor should be hostable")
+        #expect(hostingView != nil, "Photo editor should be hostable")
     }
     
     // MARK: - Cross-Platform Color Tests
     
-    @MainActor
+    @Test @MainActor
     func testPlatformSystemColors() {
         // Then: Platform system colors should be available and usable
         // Test that platform colors can actually be used in views
         let testView = createTestViewWithPlatformSystemColors()
         let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Platform system colors should work in actual views")
+        #expect(hostingView != nil, "Platform system colors should work in actual views")
     }
     
     // MARK: - Cross-Platform Keyboard Tests
     
-    @MainActor
+    @Test @MainActor
     func testPlatformKeyboardTypeModifier() {
         // Given: A view and keyboard type
         let testView = Text("Test")
@@ -332,14 +332,14 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let modifiedView = testView.platformKeyboardType(keyboardType)
         
         // Then: Modified view should be created and be hostable
-        XCTAssertNotNil(modifiedView, "Modified view with keyboard type should be created")
+        #expect(modifiedView != nil, "Modified view with keyboard type should be created")
         
         // Test that the modified view can actually be hosted
         let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Modified view with keyboard type should be hostable")
+        #expect(hostingView != nil, "Modified view with keyboard type should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformTextFieldStyleModifier() {
         // Given: A view and text field style
         let testView = Text("Test")
@@ -349,24 +349,24 @@ final class PhotoFunctionalityPhase1Tests: XCTestCase {
         let modifiedView = testView.platformTextFieldStyle(style)
         
         // Then: Modified view should be created and be hostable
-        XCTAssertNotNil(modifiedView, "Modified view with text field style should be created")
+        #expect(modifiedView != nil, "Modified view with text field style should be created")
         
         // Test that the modified view can actually be hosted
         let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "Modified view with text field style should be hostable")
+        #expect(hostingView != nil, "Modified view with text field style should be hostable")
     }
     
     // MARK: - Cross-Platform Location Tests
     
-    func testPlatformLocationAuthorizationStatus() {
+    @Test func testPlatformLocationAuthorizationStatus() {
         // Given: PlatformLocationAuthorizationStatus enum
         let statuses = PlatformLocationAuthorizationStatus.allCases
         
         // Then: Should contain expected statuses
-        XCTAssertTrue(statuses.contains(.notDetermined), "Should contain notDetermined")
-        XCTAssertTrue(statuses.contains(.denied), "Should contain denied")
-        XCTAssertTrue(statuses.contains(.restricted), "Should contain restricted")
-        XCTAssertTrue(statuses.contains(.authorizedAlways), "Should contain authorizedAlways")
+        #expect(statuses.contains(.notDetermined), "Should contain notDetermined")
+        #expect(statuses.contains(.denied), "Should contain denied")
+        #expect(statuses.contains(.restricted), "Should contain restricted")
+        #expect(statuses.contains(.authorizedAlways), "Should contain authorizedAlways")
     }
     
     // MARK: - Helper Methods

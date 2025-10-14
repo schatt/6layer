@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformSemanticLayer1Tests: XCTestCase {
+final class PlatformSemanticLayer1Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
     
     // MARK: - platformPresentItemCollection_L1 Tests
     
-    func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             PlatformSemanticLayer1TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
             PlatformSemanticLayer1TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
@@ -55,10 +53,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentItemCollection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             PlatformSemanticLayer1TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
             PlatformSemanticLayer1TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
@@ -80,12 +78,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentItemCollection_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentNumericData_L1 Tests
     
-    func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testData = GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
         let hints = PresentationHints(
             dataType: .numeric,
@@ -104,10 +102,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentNumericData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testData = GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
         let hints = PresentationHints(
             dataType: .numeric,
@@ -126,12 +124,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentNumericData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentFormData_L1 Tests
     
-    func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -157,10 +155,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentFormData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -186,12 +184,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentFormData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentMediaData_L1 Tests
     
-    func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testMedia = GenericMediaItem(title: "Test Media", url: "https://example.com")
         let hints = PresentationHints(
             dataType: .media,
@@ -210,10 +208,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentMediaData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testMedia = GenericMediaItem(title: "Test Media", url: "https://example.com")
         let hints = PresentationHints(
             dataType: .media,
@@ -232,12 +230,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentMediaData_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentSettings_L1 Tests
     
-    func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -268,10 +266,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentSettings_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -302,12 +300,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentSettings_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentContent_L1 Tests
     
-    func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -326,10 +324,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentContent_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -348,12 +346,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentContent_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentBasicValue_L1 Tests
     
-    func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -372,10 +370,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentBasicValue_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -394,12 +392,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentBasicValue_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformPresentBasicArray_L1 Tests
     
-    func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -418,10 +416,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentBasicArray_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -440,12 +438,12 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformPresentBasicArray_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - platformResponsiveCard_L1 Tests
     
-    func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .card,
@@ -465,10 +463,10 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformResponsiveCard_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .card,
@@ -488,7 +486,7 @@ final class PlatformSemanticLayer1Tests: XCTestCase {
             componentName: "platformResponsiveCard_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on macOS")
     }
 }
 

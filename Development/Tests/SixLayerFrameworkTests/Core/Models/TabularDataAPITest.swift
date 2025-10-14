@@ -5,12 +5,12 @@
 //  Test to understand TabularData API
 //
 
-import XCTest
+import Testing
 import TabularData
 
-final class TabularDataAPITest: XCTestCase {
+final class TabularDataAPITest {
     
-    func testTabularDataAPI() throws {
+    @Test func testTabularDataAPI() throws {
         // Create a simple DataFrame to understand the API
         let nameColumn = Column(name: "name", contents: ["Alice", "Bob", "Charlie"])
         let ageColumn = Column(name: "age", contents: [25, 30, 35])

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in FormWizardView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class FormWizardViewTests: XCTestCase {
+final class FormWizardViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class FormWizardViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class FormWizardViewTests: XCTestCase {
     
     // MARK: - FormWizardView Tests
     
-    func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
         let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         
@@ -53,10 +51,10 @@ final class FormWizardViewTests: XCTestCase {
             componentName: "FormWizardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormWizardView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "FormWizardView should generate accessibility identifiers on iOS")
     }
     
-    func testFormWizardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
         let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         
@@ -76,7 +74,7 @@ final class FormWizardViewTests: XCTestCase {
             componentName: "FormWizardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormWizardView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "FormWizardView should generate accessibility identifiers on macOS")
     }
 }
 

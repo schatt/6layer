@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformPhotoSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
+final class PlatformPhotoSemanticLayer1Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
     
     // MARK: - platformPhotoDisplay_L1 Tests
     
-    func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let preferences = PhotoPreferences(
             preferredSource: .camera,
@@ -60,7 +58,7 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPhotoDisplay_L1 should create a view")
+        #expect(view != nil, "platformPhotoDisplay_L1 should create a view")
         
         // Test accessibility identifier generation
         let hasAccessibilityID = await MainActor.run {
@@ -71,10 +69,10 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
                 componentName: "platformPhotoDisplay_L1"
             )
         }
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on iOS")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on iOS")
     }
     
-    func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let preferences = PhotoPreferences(
             preferredSource: .camera,
@@ -101,7 +99,7 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPhotoDisplay_L1 should create a view")
+        #expect(view != nil, "platformPhotoDisplay_L1 should create a view")
         
         // Test accessibility identifier generation
         let hasAccessibilityID = await MainActor.run {
@@ -112,6 +110,6 @@ final class PlatformPhotoSemanticLayer1Tests: XCTestCase {
                 componentName: "platformPhotoDisplay_L1"
             )
         }
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on macOS")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on macOS")
     }
 }

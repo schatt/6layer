@@ -30,13 +30,13 @@
 //  - 🔧 Action Required: Add platform-specific behavior testing
 //
 
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformPresentContentL1Tests: XCTestCase {
+final class PlatformPresentContentL1Tests {
     
     // MARK: - Test Data Setup
     
@@ -51,7 +51,7 @@ final class PlatformPresentContentL1Tests: XCTestCase {
     
     // MARK: - Basic Functionality Tests
     
-    func testPlatformPresentContent_L1_WithString() {
+    @Test func testPlatformPresentContent_L1_WithString() {
         // Given
         let content = "Hello, World!"
         let hints = createTestHints()
@@ -65,17 +65,17 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for string content")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for string content")
         
         // 2. Contains what it needs to contain - The view should contain the actual string content
         do {
             // The view should be wrapped in AnyView
             let anyView = try view.inspect().anyView()
-            XCTAssertNotNil(anyView, "String content should be wrapped in AnyView")
+            #expect(anyView != nil, "String content should be wrapped in AnyView")
             
             // The view should contain text elements with our string content
             let viewText = try view.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "String content view should contain text elements")
+            #expect(!viewText.isEmpty, "String content view should contain text elements")
             
             // Should contain our actual string content
             // NOTE: Currently BasicValueView doesn't handle String values properly
@@ -92,10 +92,10 @@ final class PlatformPresentContentL1Tests: XCTestCase {
             }
             
             // Verify string content detection works
-            XCTAssertNotNil(hasStringContent, "String content detection should work")
+            #expect(hasStringContent != nil, "String content detection should work")
             // Note: Currently BasicValueView shows "Value" instead of actual content due to framework bug
             // So we expect hasStringContent to be false until the bug is fixed
-            XCTAssertFalse(hasStringContent, "Currently BasicValueView doesn't show actual string content due to framework bug")
+            #expect(!hasStringContent, "Currently BasicValueView doesn't show actual string content due to framework bug")
             
             // For now, we expect the framework to show "Value" instead of the actual content
             // This test documents the current behavior until the framework bug is fixed
@@ -107,17 +107,17 @@ final class PlatformPresentContentL1Tests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasValueLabel, "View should contain 'Value' label (current framework behavior)")
+            #expect(hasValueLabel, "View should contain 'Value' label (current framework behavior)")
             
             // TODO: Fix BasicValueView to handle String values and then update this test
             // XCTAssertTrue(hasStringContent, "View should contain the actual string content 'Hello, World!'")
             
         } catch {
-            XCTFail("Failed to inspect string content view: \(error)")
+            Issue.record("Failed to inspect string content view: \(error)")
         }
     }
     
-    func testPlatformPresentContent_L1_WithNumber() {
+    @Test func testPlatformPresentContent_L1_WithNumber() {
         // Given
         let content = 42
         let hints = createTestHints()
@@ -131,17 +131,17 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for number content")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for number content")
         
         // 2. Contains what it needs to contain - The view should contain the actual number content
         do {
             // The view should be wrapped in AnyView
             let anyView = try view.inspect().anyView()
-            XCTAssertNotNil(anyView, "Number content should be wrapped in AnyView")
+            #expect(anyView != nil, "Number content should be wrapped in AnyView")
             
             // The view should contain text elements with our number content
             let viewText = try view.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "Number content view should contain text elements")
+            #expect(!viewText.isEmpty, "Number content view should contain text elements")
             
             // Should contain our actual number content
             let hasNumberContent = viewText.contains { text in
@@ -152,30 +152,30 @@ final class PlatformPresentContentL1Tests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasNumberContent, "View should contain the actual number content '42'")
+            #expect(hasNumberContent, "View should contain the actual number content '42'")
             
         } catch {
-            XCTFail("Failed to inspect number content view: \(error)")
+            Issue.record("Failed to inspect number content view: \(error)")
         }
         
         // Test different number types
         let doubleContent = 42.5
         let doubleView = platformPresentContent_L1(content: doubleContent, hints: hints)
-        XCTAssertNotNil(doubleView, "Should handle double values")
+        #expect(doubleView != nil, "Should handle double values")
         
         let floatContent: Float = 42.0
         let floatView = platformPresentContent_L1(content: floatContent, hints: hints)
-        XCTAssertNotNil(floatView, "Should handle float values")
+        #expect(floatView != nil, "Should handle float values")
         
         // Test edge cases
         let zeroView = platformPresentContent_L1(content: 0, hints: hints)
-        XCTAssertNotNil(zeroView, "Should handle zero values")
+        #expect(zeroView != nil, "Should handle zero values")
         
         let negativeView = platformPresentContent_L1(content: -42, hints: hints)
-        XCTAssertNotNil(negativeView, "Should handle negative values")
+        #expect(negativeView != nil, "Should handle negative values")
     }
     
-    func testPlatformPresentContent_L1_WithArray() {
+    @Test func testPlatformPresentContent_L1_WithArray() {
         // Given
         let content = [1, 2, 3, 4, 5]
         let hints = createTestHints()
@@ -187,31 +187,31 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for array content")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for array content")
         
         // Test actual business logic: Array content should be wrapped in AnyView
-        XCTAssertTrue(view is AnyView, "Array content should be wrapped in AnyView")
+        #expect(view is AnyView, "Array content should be wrapped in AnyView")
         
         // Test different array types
         let stringArray = ["hello", "world", "test"]
         let stringArrayView = platformPresentContent_L1(content: stringArray, hints: hints)
-        XCTAssertNotNil(stringArrayView, "Should handle string arrays")
-        XCTAssertTrue(stringArrayView is AnyView, "String array should be wrapped in AnyView")
+        #expect(stringArrayView != nil, "Should handle string arrays")
+        #expect(stringArrayView is AnyView, "String array should be wrapped in AnyView")
         
         let mixedArray: [Any] = [1, "hello", 3.14, true]
         let mixedArrayView = platformPresentContent_L1(content: mixedArray, hints: hints)
-        XCTAssertNotNil(mixedArrayView, "Should handle mixed type arrays")
-        XCTAssertTrue(mixedArrayView is AnyView, "Mixed array should be wrapped in AnyView")
+        #expect(mixedArrayView != nil, "Should handle mixed type arrays")
+        #expect(mixedArrayView is AnyView, "Mixed array should be wrapped in AnyView")
         
         // Test edge cases
         let emptyArrayView = platformPresentContent_L1(content: [] as [Int], hints: hints)
-        XCTAssertNotNil(emptyArrayView, "Should handle empty arrays")
+        #expect(emptyArrayView != nil, "Should handle empty arrays")
         
         let singleElementView = platformPresentContent_L1(content: [42], hints: hints)
-        XCTAssertNotNil(singleElementView, "Should handle single element arrays")
+        #expect(singleElementView != nil, "Should handle single element arrays")
     }
     
-    func testPlatformPresentContent_L1_WithDictionary() {
+    @Test func testPlatformPresentContent_L1_WithDictionary() {
         // Given
         let content: [String: Any] = ["name": "Test", "value": 123]
         let hints = createTestHints()
@@ -223,31 +223,31 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for dictionary content")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for dictionary content")
         
         // Test actual business logic: Dictionary content should be wrapped in AnyView
-        XCTAssertTrue(view is AnyView, "Dictionary content should be wrapped in AnyView")
+        #expect(view is AnyView, "Dictionary content should be wrapped in AnyView")
         
         // Test different dictionary types
         let stringDict = ["key1": "value1", "key2": "value2"]
         let stringDictView = platformPresentContent_L1(content: stringDict, hints: hints)
-        XCTAssertNotNil(stringDictView, "Should handle string dictionaries")
-        XCTAssertTrue(stringDictView is AnyView, "String dictionary should be wrapped in AnyView")
+        #expect(stringDictView != nil, "Should handle string dictionaries")
+        #expect(stringDictView is AnyView, "String dictionary should be wrapped in AnyView")
         
         let numberDict = ["count": 42, "price": 99.99]
         let numberDictView = platformPresentContent_L1(content: numberDict, hints: hints)
-        XCTAssertNotNil(numberDictView, "Should handle number dictionaries")
-        XCTAssertTrue(numberDictView is AnyView, "Number dictionary should be wrapped in AnyView")
+        #expect(numberDictView != nil, "Should handle number dictionaries")
+        #expect(numberDictView is AnyView, "Number dictionary should be wrapped in AnyView")
         
         // Test edge cases
         let emptyDictView = platformPresentContent_L1(content: [:] as [String: Any], hints: hints)
-        XCTAssertNotNil(emptyDictView, "Should handle empty dictionaries")
+        #expect(emptyDictView != nil, "Should handle empty dictionaries")
         
         let singleKeyView = platformPresentContent_L1(content: ["single": "value"], hints: hints)
-        XCTAssertNotNil(singleKeyView, "Should handle single key dictionaries")
+        #expect(singleKeyView != nil, "Should handle single key dictionaries")
     }
     
-    func testPlatformPresentContent_L1_WithNil() {
+    @Test func testPlatformPresentContent_L1_WithNil() {
         // Given
         let content: Any? = nil
         let hints = createTestHints()
@@ -259,12 +259,12 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for nil content")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for nil content")
     }
     
     // MARK: - Different Hint Types Tests
     
-    func testPlatformPresentContent_L1_WithDifferentDataTypes() {
+    @Test func testPlatformPresentContent_L1_WithDifferentDataTypes() {
         // Given
         let content = "Test content"
         let hints = PresentationHints(
@@ -281,10 +281,10 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view with different data type hints")
+        #expect(view != nil, "platformPresentContent_L1 should return a view with different data type hints")
     }
     
-    func testPlatformPresentContent_L1_WithComplexContent() {
+    @Test func testPlatformPresentContent_L1_WithComplexContent() {
         // Given
         let content = PresentationHints(
             dataType: .generic,
@@ -301,12 +301,12 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for complex content")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for complex content")
     }
     
     // MARK: - Edge Cases Tests
     
-    func testPlatformPresentContent_L1_WithEmptyString() {
+    @Test func testPlatformPresentContent_L1_WithEmptyString() {
         // Given
         let content = ""
         let hints = createTestHints()
@@ -318,10 +318,10 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for empty string")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for empty string")
     }
     
-    func testPlatformPresentContent_L1_WithEmptyArray() {
+    @Test func testPlatformPresentContent_L1_WithEmptyArray() {
         // Given
         let content: [Any] = []
         let hints = createTestHints()
@@ -333,10 +333,10 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for empty array")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for empty array")
     }
     
-    func testPlatformPresentContent_L1_WithEmptyDictionary() {
+    @Test func testPlatformPresentContent_L1_WithEmptyDictionary() {
         // Given
         let content: [String: Any] = [:]
         let hints = createTestHints()
@@ -348,12 +348,12 @@ final class PlatformPresentContentL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentContent_L1 should return a view for empty dictionary")
+        #expect(view != nil, "platformPresentContent_L1 should return a view for empty dictionary")
     }
     
     // MARK: - Performance Tests
     
-    func testPlatformPresentContent_L1_Performance() {
+    @Test func testPlatformPresentContent_L1_Performance() {
         // Given
         let content = "Performance test content"
         let hints = createTestHints()
@@ -367,7 +367,7 @@ final class PlatformPresentContentL1Tests: XCTestCase {
             
             // Force SwiftUI to actually render the view by hosting it
             let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-            XCTAssertNotNil(hostingView, "Performance test should successfully render the view")
+            #expect(hostingView != nil, "Performance test should successfully render the view")
         }
     }
 }

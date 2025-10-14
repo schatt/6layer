@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Form Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class FormComponentAccessibilityTests: XCTestCase {
+final class FormComponentAccessibilityTests {
     
     // MARK: - Form Component Tests
     
-    func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
         // Given: DynamicFormView
         let testView = DynamicFormView()
         
@@ -25,10 +25,10 @@ final class FormComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers")
     }
     
-    func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
         // Given: IntelligentFormView
         let testView = IntelligentFormView()
         
@@ -39,10 +39,10 @@ final class FormComponentAccessibilityTests: XCTestCase {
             componentName: "IntelligentFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers")
     }
     
-    func testResponsiveLayoutGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiers() async {
         // Given: ResponsiveLayout
         let testView = ResponsiveLayout()
         
@@ -53,10 +53,10 @@ final class FormComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveLayout"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers")
     }
     
-    func testIntelligentCardExpansionGeneratesAccessibilityIdentifiers() async {
+    @Test func testIntelligentCardExpansionGeneratesAccessibilityIdentifiers() async {
         // Given: IntelligentCardExpansion
         let testView = IntelligentCardExpansion()
         
@@ -67,10 +67,10 @@ final class FormComponentAccessibilityTests: XCTestCase {
             componentName: "IntelligentCardExpansion"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "IntelligentCardExpansion should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentCardExpansion should generate accessibility identifiers")
     }
     
-    func testAccessibilityFeaturesGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityFeaturesGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityFeatures
         let testView = AccessibilityFeatures()
         
@@ -81,10 +81,10 @@ final class FormComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityFeatures"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityFeatures should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityFeatures should generate accessibility identifiers")
     }
     
-    func testInputHandlingInteractionsGeneratesAccessibilityIdentifiers() async {
+    @Test func testInputHandlingInteractionsGeneratesAccessibilityIdentifiers() async {
         // Given: InputHandlingInteractions
         let testView = InputHandlingInteractions()
         
@@ -95,7 +95,7 @@ final class FormComponentAccessibilityTests: XCTestCase {
             componentName: "InputHandlingInteractions"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "InputHandlingInteractions should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "InputHandlingInteractions should generate accessibility identifiers")
     }
 }
 

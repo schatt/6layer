@@ -6,12 +6,12 @@
 //  Tests strategy selection logic with hardcoded platform, capabilities, and accessibility
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class L3StrategySelectionTests: XCTestCase {
+final class L3StrategySelectionTests {
     
     // MARK: - Test Data
     
@@ -22,8 +22,7 @@ final class L3StrategySelectionTests: XCTestCase {
         deviceCapabilities: PhotoDeviceCapabilities()
     )
     
-    override func setUp() {
-        super.setUp()
+    init() {
         samplePhotoContext = PhotoContext(
             screenSize: CGSize(width: 375, height: 667),
             availableSpace: CGSize(width: 375, height: 667),
@@ -32,13 +31,12 @@ final class L3StrategySelectionTests: XCTestCase {
         )
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Card Layout Strategy Tests
     
-    func testSelectCardLayoutStrategy_L3_WithSmallContent() {
+    @Test func testSelectCardLayoutStrategy_L3_WithSmallContent() {
         // Given
         let contentCount = 3
         let screenWidth: CGFloat = 375
@@ -54,18 +52,18 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then: Should return a strategy that can be used functionally
-        XCTAssertNotNil(strategy, "selectCardLayoutStrategy_L3 should return a strategy")
+        #expect(strategy != nil, "selectCardLayoutStrategy_L3 should return a strategy")
         
         // Test that the strategy can be used to create a functional view
         let testView = createTestViewWithCardLayoutStrategy(strategy)
-        XCTAssertNotNil(testView, "Should be able to create view with card layout strategy")
+        #expect(testView != nil, "Should be able to create view with card layout strategy")
         
-        XCTAssertGreaterThan(strategy.columns, 0, "Should have at least 1 column")
-        XCTAssertGreaterThan(strategy.spacing, 0, "Should have positive spacing")
-        XCTAssertFalse(strategy.reasoning.isEmpty, "Should provide reasoning")
+        #expect(strategy.columns > 0, "Should have at least 1 column")
+        #expect(strategy.spacing > 0, "Should have positive spacing")
+        #expect(!strategy.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    func testSelectCardLayoutStrategy_L3_WithLargeContent() {
+    @Test func testSelectCardLayoutStrategy_L3_WithLargeContent() {
         // Given
         let contentCount = 20
         let screenWidth: CGFloat = 1024
@@ -81,18 +79,18 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then: Should return a strategy that can be used functionally
-        XCTAssertNotNil(strategy, "selectCardLayoutStrategy_L3 should return a strategy")
+        #expect(strategy != nil, "selectCardLayoutStrategy_L3 should return a strategy")
         
         // Test that the strategy can be used to create a functional view
         let testView = createTestViewWithCardLayoutStrategy(strategy)
-        XCTAssertNotNil(testView, "Should be able to create view with large content card layout strategy")
+        #expect(testView != nil, "Should be able to create view with large content card layout strategy")
         
-        XCTAssertGreaterThan(strategy.columns, 1, "Should have multiple columns for large content")
-        XCTAssertGreaterThan(strategy.spacing, 0, "Should have positive spacing")
-        XCTAssertFalse(strategy.reasoning.isEmpty, "Should provide reasoning")
+        #expect(strategy.columns > 1, "Should have multiple columns for large content")
+        #expect(strategy.spacing > 0, "Should have positive spacing")
+        #expect(!strategy.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    func testSelectCardLayoutStrategy_L3_WithDifferentDeviceTypes() {
+    @Test func testSelectCardLayoutStrategy_L3_WithDifferentDeviceTypes() {
         let contentCount = 10
         let complexity = ContentComplexity.moderate
         
@@ -105,7 +103,7 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         // Test that the strategy can be used to create a functional view
         let phoneTestView = createTestViewWithCardLayoutStrategy(phoneStrategy)
-        XCTAssertNotNil(phoneTestView, "Should be able to create view with phone card layout strategy")
+        #expect(phoneTestView != nil, "Should be able to create view with phone card layout strategy")
         
         // Test pad
         let padStrategy = selectCardLayoutStrategy_L3(
@@ -116,7 +114,7 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         // Test that the strategy can be used to create a functional view
         let padTestView = createTestViewWithCardLayoutStrategy(padStrategy)
-        XCTAssertNotNil(padTestView, "Should be able to create view with pad card layout strategy")
+        #expect(padTestView != nil, "Should be able to create view with pad card layout strategy")
         
         // Test mac
         let macStrategy = selectCardLayoutStrategy_L3(
@@ -127,10 +125,10 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         // Test that the strategy can be used to create a functional view
         let macTestView = createTestViewWithCardLayoutStrategy(macStrategy)
-        XCTAssertNotNil(macTestView, "Should be able to create view with mac card layout strategy")
+        #expect(macTestView != nil, "Should be able to create view with mac card layout strategy")
     }
     
-    func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
+    @Test func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
         let contentCount = 10
         let screenWidth: CGFloat = 375
         let deviceType = DeviceType.phone
@@ -142,7 +140,7 @@ final class L3StrategySelectionTests: XCTestCase {
             deviceType: deviceType,
             contentComplexity: .simple
         )
-        XCTAssertNotNil(simpleStrategy, "Simple complexity should return a strategy")
+        #expect(simpleStrategy != nil, "Simple complexity should return a strategy")
         
         // Test moderate complexity
         let moderateStrategy = selectCardLayoutStrategy_L3(
@@ -151,7 +149,7 @@ final class L3StrategySelectionTests: XCTestCase {
             deviceType: deviceType,
             contentComplexity: .moderate
         )
-        XCTAssertNotNil(moderateStrategy, "Moderate complexity should return a strategy")
+        #expect(moderateStrategy != nil, "Moderate complexity should return a strategy")
         
         // Test complex complexity
         let complexStrategy = selectCardLayoutStrategy_L3(
@@ -160,12 +158,12 @@ final class L3StrategySelectionTests: XCTestCase {
             deviceType: deviceType,
             contentComplexity: .complex
         )
-        XCTAssertNotNil(complexStrategy, "Complex complexity should return a strategy")
+        #expect(complexStrategy != nil, "Complex complexity should return a strategy")
     }
     
     // MARK: - Form Strategy Tests
     
-    func testSelectFormStrategy_AddFuelView_L3() {
+    @Test func testSelectFormStrategy_AddFuelView_L3() {
         // Given
         let layout = FormLayoutDecision(
             containerType: .form,
@@ -178,10 +176,10 @@ final class L3StrategySelectionTests: XCTestCase {
         let strategy = selectFormStrategy_AddFuelView_L3(layout: layout)
         
         // Then
-        XCTAssertNotNil(strategy, "selectFormStrategy_AddFuelView_L3 should return a strategy")
+        #expect(strategy != nil, "selectFormStrategy_AddFuelView_L3 should return a strategy")
     }
     
-    func testSelectModalStrategy_Form_L3() {
+    @Test func testSelectModalStrategy_Form_L3() {
         // Given
         let layout = ModalLayoutDecision(
             presentationType: .sheet,
@@ -192,12 +190,12 @@ final class L3StrategySelectionTests: XCTestCase {
         let strategy = selectModalStrategy_Form_L3(layout: layout)
         
         // Then
-        XCTAssertNotNil(strategy, "selectModalStrategy_Form_L3 should return a strategy")
+        #expect(strategy != nil, "selectModalStrategy_Form_L3 should return a strategy")
     }
     
     // MARK: - OCR Strategy Tests
     
-    func testPlatformOCRStrategy_L3_WithGeneralText() {
+    @Test func testPlatformOCRStrategy_L3_WithGeneralText() {
         // Given
         let textTypes = [TextType.general]
         let platform = SixLayerPlatform.iOS
@@ -209,13 +207,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformOCRStrategy_L3_WithPriceText() {
+    @Test func testPlatformOCRStrategy_L3_WithPriceText() {
         // Given
         let textTypes = [TextType.price]
         let platform = SixLayerPlatform.iOS
@@ -227,13 +225,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformOCRStrategy_L3_WithDateText() {
+    @Test func testPlatformOCRStrategy_L3_WithDateText() {
         // Given
         let textTypes = [TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -245,13 +243,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformOCRStrategy_L3_WithMultipleTextTypes() {
+    @Test func testPlatformOCRStrategy_L3_WithMultipleTextTypes() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -263,13 +261,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformOCRStrategy_L3_WithDifferentPlatforms() {
+    @Test func testPlatformOCRStrategy_L3_WithDifferentPlatforms() {
         let textTypes = [TextType.general]
         
         // Test iOS
@@ -277,38 +275,38 @@ final class L3StrategySelectionTests: XCTestCase {
             textTypes: textTypes,
             platform: .iOS
         )
-        XCTAssertNotNil(iOSStrategy, "iOS platform should return a strategy")
+        #expect(iOSStrategy != nil, "iOS platform should return a strategy")
         
         // Test macOS
         let macOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .macOS
         )
-        XCTAssertNotNil(macOSStrategy, "macOS platform should return a strategy")
+        #expect(macOSStrategy != nil, "macOS platform should return a strategy")
         
         // Test watchOS
         let watchOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .watchOS
         )
-        XCTAssertNotNil(watchOSStrategy, "watchOS platform should return a strategy")
+        #expect(watchOSStrategy != nil, "watchOS platform should return a strategy")
         
         // Test tvOS
         let tvOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .tvOS
         )
-        XCTAssertNotNil(tvOSStrategy, "tvOS platform should return a strategy")
+        #expect(tvOSStrategy != nil, "tvOS platform should return a strategy")
         
         // Test visionOS
         let visionOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .visionOS
         )
-        XCTAssertNotNil(visionOSStrategy, "visionOS platform should return a strategy")
+        #expect(visionOSStrategy != nil, "visionOS platform should return a strategy")
     }
     
-    func testPlatformDocumentOCRStrategy_L3() {
+    @Test func testPlatformDocumentOCRStrategy_L3() {
         // Given
         let documentType = DocumentType.general
         let platform = SixLayerPlatform.iOS
@@ -320,13 +318,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformDocumentOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformDocumentOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformReceiptOCRStrategy_L3() {
+    @Test func testPlatformReceiptOCRStrategy_L3() {
         // Given
         let platform = SixLayerPlatform.iOS
         
@@ -334,13 +332,13 @@ final class L3StrategySelectionTests: XCTestCase {
         let strategy = platformReceiptOCRStrategy_L3(platform: platform)
         
         // Then
-        XCTAssertNotNil(strategy, "platformReceiptOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformReceiptOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformBusinessCardOCRStrategy_L3() {
+    @Test func testPlatformBusinessCardOCRStrategy_L3() {
         // Given
         let platform = SixLayerPlatform.iOS
         
@@ -348,13 +346,13 @@ final class L3StrategySelectionTests: XCTestCase {
         let strategy = platformBusinessCardOCRStrategy_L3(platform: platform)
         
         // Then
-        XCTAssertNotNil(strategy, "platformBusinessCardOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformBusinessCardOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformInvoiceOCRStrategy_L3() {
+    @Test func testPlatformInvoiceOCRStrategy_L3() {
         // Given
         let platform = SixLayerPlatform.iOS
         
@@ -362,13 +360,13 @@ final class L3StrategySelectionTests: XCTestCase {
         let strategy = platformInvoiceOCRStrategy_L3(platform: platform)
         
         // Then
-        XCTAssertNotNil(strategy, "platformInvoiceOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformInvoiceOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformOptimalOCRStrategy_L3() {
+    @Test func testPlatformOptimalOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -382,13 +380,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformOptimalOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformOptimalOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    func testPlatformBatchOCRStrategy_L3() {
+    @Test func testPlatformBatchOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -401,15 +399,15 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "platformBatchOCRStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedTextTypes.isEmpty, "Should support text types")
-        XCTAssertFalse(strategy.supportedLanguages.isEmpty, "Should support languages")
-        XCTAssertGreaterThan(strategy.estimatedProcessingTime, 0, "Should have positive processing time")
+        #expect(strategy != nil, "platformBatchOCRStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
+        #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
+        #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
     // MARK: - Card Expansion Strategy Tests
     
-    func testSelectCardExpansionStrategy_L3_WithStaticInteraction() {
+    @Test func testSelectCardExpansionStrategy_L3_WithStaticInteraction() {
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 375
@@ -427,14 +425,14 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectCardExpansionStrategy_L3 should return a strategy")
-        XCTAssertEqual(strategy.supportedStrategies, [ExpansionStrategy.none], "Static interaction should only support none strategy")
-        XCTAssertEqual(strategy.primaryStrategy, ExpansionStrategy.none, "Primary strategy should be none")
-        XCTAssertEqual(strategy.expansionScale, 1.0, "Expansion scale should be 1.0")
-        XCTAssertEqual(strategy.animationDuration, 0.0, "Animation duration should be 0.0")
+        #expect(strategy != nil, "selectCardExpansionStrategy_L3 should return a strategy")
+        #expect(strategy.supportedStrategies == [ExpansionStrategy.none], "Static interaction should only support none strategy")
+        #expect(strategy.primaryStrategy == ExpansionStrategy.none, "Primary strategy should be none")
+        #expect(strategy.expansionScale == 1.0, "Expansion scale should be 1.0")
+        #expect(strategy.animationDuration == 0.0, "Animation duration should be 0.0")
     }
     
-    func testSelectCardExpansionStrategy_L3_WithTouchInteraction() {
+    @Test func testSelectCardExpansionStrategy_L3_WithTouchInteraction() {
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 375
@@ -452,14 +450,14 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectCardExpansionStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedStrategies.isEmpty, "Should support expansion strategies")
-        XCTAssertNotEqual(strategy.primaryStrategy, ExpansionStrategy.none, "Primary strategy should not be none")
-        XCTAssertGreaterThan(strategy.expansionScale, 0, "Should have positive expansion scale")
-        XCTAssertGreaterThanOrEqual(strategy.animationDuration, 0, "Should have non-negative animation duration")
+        #expect(strategy != nil, "selectCardExpansionStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedStrategies.isEmpty, "Should support expansion strategies")
+        #expect(strategy.primaryStrategy != ExpansionStrategy.none, "Primary strategy should not be none")
+        #expect(strategy.expansionScale > 0, "Should have positive expansion scale")
+        #expect(strategy.animationDuration >= 0, "Should have non-negative animation duration")
     }
     
-    func testSelectCardExpansionStrategy_L3_WithHoverInteraction() {
+    @Test func testSelectCardExpansionStrategy_L3_WithHoverInteraction() {
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 1024
@@ -477,14 +475,14 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectCardExpansionStrategy_L3 should return a strategy")
-        XCTAssertFalse(strategy.supportedStrategies.isEmpty, "Should support expansion strategies")
-        XCTAssertNotEqual(strategy.primaryStrategy, ExpansionStrategy.none, "Primary strategy should not be none")
-        XCTAssertGreaterThan(strategy.expansionScale, 0, "Should have positive expansion scale")
-        XCTAssertGreaterThanOrEqual(strategy.animationDuration, 0, "Should have non-negative animation duration")
+        #expect(strategy != nil, "selectCardExpansionStrategy_L3 should return a strategy")
+        #expect(!strategy.supportedStrategies.isEmpty, "Should support expansion strategies")
+        #expect(strategy.primaryStrategy != ExpansionStrategy.none, "Primary strategy should not be none")
+        #expect(strategy.expansionScale > 0, "Should have positive expansion scale")
+        #expect(strategy.animationDuration >= 0, "Should have non-negative animation duration")
     }
     
-    func testSelectCardExpansionStrategy_L3_WithDifferentDeviceTypes() {
+    @Test func testSelectCardExpansionStrategy_L3_WithDifferentDeviceTypes() {
         let contentCount = 10
         let screenWidth: CGFloat = 375
         let interactionStyle = InteractionStyle.interactive
@@ -498,7 +496,7 @@ final class L3StrategySelectionTests: XCTestCase {
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        XCTAssertNotNil(phoneStrategy, "Phone device type should return a strategy")
+        #expect(phoneStrategy != nil, "Phone device type should return a strategy")
         
         // Test pad
         let padStrategy = selectCardExpansionStrategy_L3(
@@ -508,7 +506,7 @@ final class L3StrategySelectionTests: XCTestCase {
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        XCTAssertNotNil(padStrategy, "Pad device type should return a strategy")
+        #expect(padStrategy != nil, "Pad device type should return a strategy")
         
         // Test mac
         let macStrategy = selectCardExpansionStrategy_L3(
@@ -518,10 +516,10 @@ final class L3StrategySelectionTests: XCTestCase {
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        XCTAssertNotNil(macStrategy, "Mac device type should return a strategy")
+        #expect(macStrategy != nil, "Mac device type should return a strategy")
     }
     
-    func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
+    @Test func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
         let contentCount = 10
         let screenWidth: CGFloat = 375
         let deviceType = DeviceType.phone
@@ -535,7 +533,7 @@ final class L3StrategySelectionTests: XCTestCase {
             interactionStyle: interactionStyle,
             contentDensity: .dense
         )
-        XCTAssertNotNil(denseDensityStrategy, "Dense density should return a strategy")
+        #expect(denseDensityStrategy != nil, "Dense density should return a strategy")
         
         // Test balanced density
         let balancedDensityStrategy = selectCardExpansionStrategy_L3(
@@ -545,7 +543,7 @@ final class L3StrategySelectionTests: XCTestCase {
             interactionStyle: interactionStyle,
             contentDensity: .balanced
         )
-        XCTAssertNotNil(balancedDensityStrategy, "Balanced density should return a strategy")
+        #expect(balancedDensityStrategy != nil, "Balanced density should return a strategy")
         
         // Test spacious density
         let spaciousDensityStrategy = selectCardExpansionStrategy_L3(
@@ -555,12 +553,12 @@ final class L3StrategySelectionTests: XCTestCase {
             interactionStyle: interactionStyle,
             contentDensity: .spacious
         )
-        XCTAssertNotNil(spaciousDensityStrategy, "Spacious density should return a strategy")
+        #expect(spaciousDensityStrategy != nil, "Spacious density should return a strategy")
     }
     
     // MARK: - Photo Strategy Tests
     
-    func testSelectPhotoCaptureStrategy_L3_WithVehiclePhoto() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = samplePhotoContext
@@ -572,11 +570,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithFuelReceipt() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = samplePhotoContext
@@ -588,11 +586,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithPumpDisplay() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
         let context = samplePhotoContext
@@ -604,11 +602,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithOdometer() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
         let context = samplePhotoContext
@@ -620,11 +618,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithMaintenance() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
         let context = samplePhotoContext
@@ -636,11 +634,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithExpense() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
         let context = samplePhotoContext
@@ -652,11 +650,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithProfile() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
         let context = samplePhotoContext
@@ -668,11 +666,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoCaptureStrategy_L3_WithDocument() {
+    @Test func testSelectPhotoCaptureStrategy_L3_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
         let context = samplePhotoContext
@@ -684,11 +682,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoCaptureStrategy_L3 should return a strategy")
-        XCTAssertTrue([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
+        #expect(strategy != nil, "selectPhotoCaptureStrategy_L3 should return a strategy")
+        #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithVehiclePhoto() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = samplePhotoContext
@@ -700,11 +698,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithFuelReceipt() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = samplePhotoContext
@@ -716,11 +714,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithPumpDisplay() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
         let context = samplePhotoContext
@@ -732,11 +730,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithOdometer() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
         let context = samplePhotoContext
@@ -748,11 +746,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithMaintenance() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
         let context = samplePhotoContext
@@ -764,11 +762,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithExpense() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
         let context = samplePhotoContext
@@ -780,11 +778,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithProfile() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
         let context = samplePhotoContext
@@ -796,11 +794,11 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    func testSelectPhotoDisplayStrategy_L3_WithDocument() {
+    @Test func testSelectPhotoDisplayStrategy_L3_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
         let context = samplePhotoContext
@@ -812,13 +810,13 @@ final class L3StrategySelectionTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(strategy, "selectPhotoDisplayStrategy_L3 should return a strategy")
-        XCTAssertTrue([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
+        #expect(strategy != nil, "selectPhotoDisplayStrategy_L3 should return a strategy")
+        #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
     // MARK: - Performance Tests
     
-    func testSelectCardLayoutStrategy_L3_Performance() {
+    @Test func testSelectCardLayoutStrategy_L3_Performance() {
         // Given
         let contentCount = 50
         let screenWidth: CGFloat = 1024
@@ -833,11 +831,11 @@ final class L3StrategySelectionTests: XCTestCase {
                 deviceType: deviceType,
                 contentComplexity: complexity
             )
-            XCTAssertNotNil(strategy)
+            #expect(strategy != nil)
         }
     }
     
-    func testPlatformOCRStrategy_L3_Performance() {
+    @Test func testPlatformOCRStrategy_L3_Performance() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -848,11 +846,11 @@ final class L3StrategySelectionTests: XCTestCase {
                 textTypes: textTypes,
                 platform: platform
             )
-            XCTAssertNotNil(strategy)
+            #expect(strategy != nil)
         }
     }
     
-    func testSelectCardExpansionStrategy_L3_Performance() {
+    @Test func testSelectCardExpansionStrategy_L3_Performance() {
         // Given
         let contentCount = 50
         let screenWidth: CGFloat = 1024
@@ -869,7 +867,7 @@ final class L3StrategySelectionTests: XCTestCase {
                 interactionStyle: interactionStyle,
                 contentDensity: contentDensity
             )
-            XCTAssertNotNil(strategy)
+            #expect(strategy != nil)
         }
     }
     
@@ -878,7 +876,7 @@ final class L3StrategySelectionTests: XCTestCase {
     /// BUSINESS PURPOSE: Layer 3 functions return data structures, not views
     /// TESTING SCOPE: Tests that selectCardExpansionStrategy_L3 returns correct data structure
     /// METHODOLOGY: Tests Layer 3 functionality (data functions don't need accessibility identifiers)
-    func testSelectCardExpansionStrategy_L3_ReturnsCorrectDataStructure() async {
+    @Test func testSelectCardExpansionStrategy_L3_ReturnsCorrectDataStructure() async {
         await MainActor.run {
             // Given: Layer 3 function with test data
             let contentCount = 10
@@ -897,10 +895,10 @@ final class L3StrategySelectionTests: XCTestCase {
             )
             
             // Then: Should return correct data structure
-            XCTAssertNotNil(result, "Layer 3 function should return a result")
-            XCTAssertNotNil(result.primaryStrategy, "Should have expansion strategy")
-            XCTAssertGreaterThanOrEqual(result.animationDuration, 0, "Should have non-negative duration")
-            XCTAssertGreaterThan(result.expansionScale, 0, "Should have positive expansion scale")
+            #expect(result != nil, "Layer 3 function should return a result")
+            #expect(result.primaryStrategy != nil, "Should have expansion strategy")
+            #expect(result.animationDuration >= 0, "Should have non-negative duration")
+            #expect(result.expansionScale > 0, "Should have positive expansion scale")
             
             // NOTE: Layer 3 functions return data structures, not views
             // They don't need automatic accessibility identifiers because they're not UI elements

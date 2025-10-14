@@ -1,11 +1,11 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Collection View Callback Functionality
 /// Tests that collection views properly handle item selection, deletion, and editing callbacks
 @MainActor
-final class CollectionViewCallbackTests: XCTestCase {
+final class CollectionViewCallbackTests {
     
     // MARK: - Test Data
     
@@ -61,7 +61,7 @@ final class CollectionViewCallbackTests: XCTestCase {
     
     // MARK: - Layer 1 Function Tests
     
-    func testPlatformPresentItemCollectionL1WithCallbacks() {
+    @Test func testPlatformPresentItemCollectionL1WithCallbacks() {
         // Given: Collection view with callbacks
         resetCallbacks()
         
@@ -76,10 +76,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testPlatformPresentItemCollectionL1WithoutCallbacks() {
+    @Test func testPlatformPresentItemCollectionL1WithoutCallbacks() {
         // Given: Collection view without callbacks
         resetCallbacks()
         
@@ -90,10 +90,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testPlatformPresentItemCollectionL1WithEnhancedHints() {
+    @Test func testPlatformPresentItemCollectionL1WithEnhancedHints() {
         // Given: Collection view with enhanced hints and callbacks
         resetCallbacks()
         
@@ -108,12 +108,12 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Collection View Component Tests
     
-    func testExpandableCardCollectionViewWithCallbacks() {
+    @Test func testExpandableCardCollectionViewWithCallbacks() {
         // Given: Expandable card collection view with callbacks
         resetCallbacks()
         
@@ -128,10 +128,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testGridCollectionViewWithCallbacks() {
+    @Test func testGridCollectionViewWithCallbacks() {
         // Given: Grid collection view with callbacks
         resetCallbacks()
         
@@ -146,10 +146,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testListCollectionViewWithCallbacks() {
+    @Test func testListCollectionViewWithCallbacks() {
         // Given: List collection view with callbacks
         resetCallbacks()
         
@@ -164,10 +164,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testCoverFlowCollectionViewWithCallbacks() {
+    @Test func testCoverFlowCollectionViewWithCallbacks() {
         // Given: Cover flow collection view with callbacks
         resetCallbacks()
         
@@ -182,10 +182,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testMasonryCollectionViewWithCallbacks() {
+    @Test func testMasonryCollectionViewWithCallbacks() {
         // Given: Masonry collection view with callbacks
         resetCallbacks()
         
@@ -200,10 +200,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testAdaptiveCollectionViewWithCallbacks() {
+    @Test func testAdaptiveCollectionViewWithCallbacks() {
         // Given: Adaptive collection view with callbacks
         resetCallbacks()
         
@@ -218,12 +218,12 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Card Component Tests
     
-    func testExpandableCardComponentWithCallbacks() {
+    @Test func testExpandableCardComponentWithCallbacks() {
         // Given: Expandable card component with callbacks
         resetCallbacks()
         let item = sampleItems[0]
@@ -259,10 +259,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testSimpleCardComponentWithCallbacks() {
+    @Test func testSimpleCardComponentWithCallbacks() {
         // Given: Simple card component with callbacks
         resetCallbacks()
         let item = sampleItems[0]
@@ -284,10 +284,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testCoverFlowCardComponentWithCallbacks() {
+    @Test func testCoverFlowCardComponentWithCallbacks() {
         // Given: Cover flow card component with callbacks
         resetCallbacks()
         let item = sampleItems[0]
@@ -301,12 +301,12 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Empty State Tests
     
-    func testEmptyCollectionWithCreateCallback() {
+    @Test func testEmptyCollectionWithCreateCallback() {
         // Given: Empty collection with create callback
         resetCallbacks()
         
@@ -318,10 +318,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testEmptyCollectionWithoutCreateCallback() {
+    @Test func testEmptyCollectionWithoutCreateCallback() {
         // Given: Empty collection without create callback
         resetCallbacks()
         
@@ -332,12 +332,12 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Backward Compatibility Tests
     
-    func testBackwardCompatibilityWithoutNewCallbacks() {
+    @Test func testBackwardCompatibilityWithoutNewCallbacks() {
         // Given: Existing code without new callback parameters
         resetCallbacks()
         
@@ -349,10 +349,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testBackwardCompatibilityWithEnhancedHints() {
+    @Test func testBackwardCompatibilityWithEnhancedHints() {
         // Given: Existing code with enhanced hints but no new callbacks
         resetCallbacks()
         
@@ -364,12 +364,12 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Edge Case Tests
     
-    func testNilCallbacks() {
+    @Test func testNilCallbacks() {
         // Given: Collection view with nil callbacks
         resetCallbacks()
         
@@ -384,10 +384,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testSingleItemCollection() {
+    @Test func testSingleItemCollection() {
         // Given: Collection with single item
         resetCallbacks()
         let singleItem = [sampleItems[0]]
@@ -403,10 +403,10 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testLargeCollection() {
+    @Test func testLargeCollection() {
         // Given: Collection with many items
         resetCallbacks()
         let largeCollection = (1...100).map { i in
@@ -424,6 +424,6 @@ final class CollectionViewCallbackTests: XCTestCase {
         )
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
 }

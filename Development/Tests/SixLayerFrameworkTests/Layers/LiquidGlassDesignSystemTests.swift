@@ -5,53 +5,51 @@
 //  Tests for Liquid Glass design system integration
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 @available(iOS 26.0, macOS 26.0, *)
 @MainActor
-final class LiquidGlassDesignSystemTests: XCTestCase {
+final class LiquidGlassDesignSystemTests {
     
     var liquidGlassSystem: LiquidGlassDesignSystem!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         liquidGlassSystem = LiquidGlassDesignSystem.shared
     }
     
-    override func tearDown() {
+    deinit {
         liquidGlassSystem = nil
-        super.tearDown()
     }
     
     // MARK: - Material Tests
     
-    func testLiquidGlassMaterialCreation() {
+    @Test func testLiquidGlassMaterialCreation() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // Then
-        XCTAssertEqual(material.opacity, 0.8, accuracy: 0.01)
-        XCTAssertEqual(material.blurRadius, 20.0, accuracy: 0.01)
-        XCTAssertTrue(material.isTranslucent)
-        XCTAssertEqual(material.reflectionIntensity, 0.3, accuracy: 0.01)
+        #expect(material.opacity == 0.8)
+        #expect(material.blurRadius == 20.0)
+        #expect(material.isTranslucent)
+        #expect(material.reflectionIntensity == 0.3)
     }
     
-    func testLiquidGlassMaterialVariants() {
+    @Test func testLiquidGlassMaterialVariants() {
         // Given & When
         let primary = liquidGlassSystem.createMaterial(.primary)
         let secondary = liquidGlassSystem.createMaterial(.secondary)
         let tertiary = liquidGlassSystem.createMaterial(.tertiary)
         
         // Then
-        XCTAssertGreaterThan(primary.opacity, secondary.opacity)
-        XCTAssertGreaterThan(secondary.opacity, tertiary.opacity)
-        XCTAssertTrue(primary.isTranslucent)
-        XCTAssertTrue(secondary.isTranslucent)
-        XCTAssertTrue(tertiary.isTranslucent)
+        #expect(primary.opacity > secondary.opacity)
+        #expect(secondary.opacity > tertiary.opacity)
+        #expect(primary.isTranslucent)
+        #expect(secondary.isTranslucent)
+        #expect(tertiary.isTranslucent)
     }
     
-    func testLiquidGlassMaterialAdaptiveProperties() {
+    @Test func testLiquidGlassMaterialAdaptiveProperties() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
@@ -59,13 +57,13 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let adaptiveMaterial = material.adaptive(for: .light)
         
         // Then
-        XCTAssertEqual(adaptiveMaterial.opacity, 0.8, accuracy: 0.01)
-        XCTAssertTrue(adaptiveMaterial.isTranslucent)
+        #expect(adaptiveMaterial.opacity == 0.8)
+        #expect(adaptiveMaterial.isTranslucent)
     }
     
     // MARK: - Dynamic Reflection Tests
     
-    func testDynamicReflectionGeneration() {
+    @Test func testDynamicReflectionGeneration() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
@@ -73,12 +71,12 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let reflection = material.generateReflection(for: CGSize(width: 100, height: 100))
         
         // Then
-        XCTAssertNotNil(reflection)
-        XCTAssertEqual(reflection.size, CGSize(width: 100, height: 100))
-        XCTAssertTrue(reflection.isReflective)
+        #expect(reflection != nil)
+        #expect(reflection.size == CGSize(width: 100, height: 100))
+        #expect(reflection.isReflective)
     }
     
-    func testReflectionIntensityScaling() {
+    @Test func testReflectionIntensityScaling() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
@@ -87,14 +85,14 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let highIntensity = material.reflection(intensity: 0.9)
         
         // Then
-        XCTAssertLessThan(lowIntensity.reflectionIntensity, highIntensity.reflectionIntensity)
-        XCTAssertEqual(lowIntensity.reflectionIntensity, 0.1, accuracy: 0.01)
-        XCTAssertEqual(highIntensity.reflectionIntensity, 0.9, accuracy: 0.01)
+        #expect(lowIntensity.reflectionIntensity < highIntensity.reflectionIntensity)
+        #expect(lowIntensity.reflectionIntensity == 0.1)
+        #expect(highIntensity.reflectionIntensity == 0.9)
     }
     
     // MARK: - Floating Controls Tests
     
-    func testFloatingControlCreation() {
+    @Test func testFloatingControlCreation() {
         // Given
         let control = FloatingControl(
             type: .navigation,
@@ -103,14 +101,14 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(control.type, .navigation)
-        XCTAssertEqual(control.position, .top)
-        XCTAssertEqual(control.material.type, .primary)
-        XCTAssertTrue(control.isExpandable)
-        XCTAssertFalse(control.isExpanded)
+        #expect(control.type == .navigation)
+        #expect(control.position == .top)
+        #expect(control.material.type == .primary)
+        #expect(control.isExpandable)
+        #expect(!control.isExpanded)
     }
     
-    func testFloatingControlExpansion() {
+    @Test func testFloatingControlExpansion() {
         // Given
         var control = FloatingControl(
             type: .navigation,
@@ -122,11 +120,11 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         control.expand()
         
         // Then
-        XCTAssertTrue(control.isExpanded)
-        XCTAssertTrue(control.isExpandable)
+        #expect(control.isExpanded)
+        #expect(control.isExpandable)
     }
     
-    func testFloatingControlContraction() {
+    @Test func testFloatingControlContraction() {
         // Given
         var control = FloatingControl(
             type: .navigation,
@@ -139,13 +137,13 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         control.contract()
         
         // Then
-        XCTAssertFalse(control.isExpanded)
-        XCTAssertTrue(control.isExpandable)
+        #expect(!control.isExpanded)
+        #expect(control.isExpandable)
     }
     
     // MARK: - Contextual Menus Tests
     
-    func testContextualMenuCreation() {
+    @Test func testContextualMenuCreation() {
         // Given
         let menu = ContextualMenu(
             items: [
@@ -156,13 +154,13 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(menu.items.count, 2)
-        XCTAssertEqual(menu.material.type, .secondary)
-        XCTAssertTrue(menu.isVertical)
-        XCTAssertFalse(menu.isVisible)
+        #expect(menu.items.count == 2)
+        #expect(menu.material.type == .secondary)
+        #expect(menu.isVertical)
+        #expect(!menu.isVisible)
     }
     
-    func testContextualMenuVisibility() {
+    @Test func testContextualMenuVisibility() {
         // Given
         var menu = ContextualMenu(
             items: [
@@ -175,10 +173,10 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         menu.show()
         
         // Then
-        XCTAssertTrue(menu.isVisible)
+        #expect(menu.isVisible)
     }
     
-    func testContextualMenuHiding() {
+    @Test func testContextualMenuHiding() {
         // Given
         var menu = ContextualMenu(
             items: [
@@ -192,12 +190,12 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         menu.hide()
         
         // Then
-        XCTAssertFalse(menu.isVisible)
+        #expect(!menu.isVisible)
     }
     
     // MARK: - Adaptive Wallpapers Tests
     
-    func testAdaptiveWallpaperCreation() {
+    @Test func testAdaptiveWallpaperCreation() {
         // Given
         let wallpaper = AdaptiveWallpaper(
             baseImage: "test_wallpaper",
@@ -208,26 +206,26 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(wallpaper.baseImage, "test_wallpaper")
-        XCTAssertEqual(wallpaper.elements.count, 2)
-        XCTAssertTrue(wallpaper.isAdaptive)
+        #expect(wallpaper.baseImage == "test_wallpaper")
+        #expect(wallpaper.elements.count == 2)
+        #expect(wallpaper.isAdaptive)
     }
     
-    func testAdaptiveElementPositioning() {
+    @Test func testAdaptiveElementPositioning() {
         // Given
         let timeElement = AdaptiveElement(type: .time, position: .center)
         let notificationElement = AdaptiveElement(type: .notifications, position: .top)
         
         // Then
-        XCTAssertEqual(timeElement.type, .time)
-        XCTAssertEqual(timeElement.position, .center)
-        XCTAssertEqual(notificationElement.type, .notifications)
-        XCTAssertEqual(notificationElement.position, .top)
+        #expect(timeElement.type == .time)
+        #expect(timeElement.position == .center)
+        #expect(notificationElement.type == .notifications)
+        #expect(notificationElement.position == .top)
     }
     
     // MARK: - Platform Compatibility Tests
     
-    func testLiquidGlassMaterialPlatformCompatibility() {
+    @Test func testLiquidGlassMaterialPlatformCompatibility() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
@@ -236,11 +234,11 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let macOSCompatible = material.isCompatible(with: .macOS)
         
         // Then
-        XCTAssertTrue(iOSCompatible)
-        XCTAssertTrue(macOSCompatible)
+        #expect(iOSCompatible)
+        #expect(macOSCompatible)
     }
     
-    func testFloatingControlPlatformSupport() {
+    @Test func testFloatingControlPlatformSupport() {
         // Given
         let control = FloatingControl(
             type: .navigation,
@@ -253,13 +251,13 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let macOSSupported = control.isSupported(on: .macOS)
         
         // Then
-        XCTAssertTrue(iOSSupported)
-        XCTAssertTrue(macOSSupported)
+        #expect(iOSSupported)
+        #expect(macOSSupported)
     }
     
     // MARK: - Performance Tests
     
-    func testLiquidGlassMaterialPerformance() {
+    @Test func testLiquidGlassMaterialPerformance() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
@@ -270,10 +268,10 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         
         // Then
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 0.1) // Should complete in under 100ms
+        #expect(executionTime < 0.1) // Should complete in under 100ms
     }
     
-    func testFloatingControlAnimationPerformance() {
+    @Test func testFloatingControlAnimationPerformance() {
         // Given
         var control = FloatingControl(
             type: .navigation,
@@ -289,12 +287,12 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         
         // Then
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 0.05) // Should complete in under 50ms
+        #expect(executionTime < 0.05) // Should complete in under 50ms
     }
     
     // MARK: - Accessibility Tests
     
-    func testLiquidGlassMaterialAccessibility() {
+    @Test func testLiquidGlassMaterialAccessibility() {
         // Given
         let material = liquidGlassSystem.createMaterial(.primary)
         
@@ -302,12 +300,12 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let accessibilityInfo = material.accessibilityInfo
         
         // Then
-        XCTAssertTrue(accessibilityInfo.supportsVoiceOver)
-        XCTAssertTrue(accessibilityInfo.supportsReduceMotion)
-        XCTAssertTrue(accessibilityInfo.supportsHighContrast)
+        #expect(accessibilityInfo.supportsVoiceOver)
+        #expect(accessibilityInfo.supportsReduceMotion)
+        #expect(accessibilityInfo.supportsHighContrast)
     }
     
-    func testFloatingControlAccessibility() {
+    @Test func testFloatingControlAccessibility() {
         // Given
         let control = FloatingControl(
             type: .navigation,
@@ -319,14 +317,14 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let accessibilityInfo = control.accessibilityInfo
         
         // Then
-        XCTAssertTrue(accessibilityInfo.supportsVoiceOver)
-        XCTAssertTrue(accessibilityInfo.supportsSwitchControl ?? false)
-        XCTAssertNotNil(accessibilityInfo.accessibilityLabel)
+        #expect(accessibilityInfo.supportsVoiceOver)
+        #expect(accessibilityInfo.supportsSwitchControl ?? false)
+        #expect(accessibilityInfo.accessibilityLabel != nil)
     }
     
     // MARK: - Integration Tests
     
-    func testLiquidGlassSystemIntegration() {
+    @Test func testLiquidGlassSystemIntegration() {
         // Given
         let system = LiquidGlassDesignSystem.shared
         
@@ -336,13 +334,13 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let menu = system.createContextualMenu(items: [])
         
         // Then
-        XCTAssertNotNil(material)
-        XCTAssertNotNil(control)
-        XCTAssertNotNil(menu)
-        XCTAssertTrue(system.isLiquidGlassEnabled)
+        #expect(material != nil)
+        #expect(control != nil)
+        #expect(menu != nil)
+        #expect(system.isLiquidGlassEnabled)
     }
     
-    func testLiquidGlassSystemThemeAdaptation() {
+    @Test func testLiquidGlassSystemThemeAdaptation() {
         // Given
         let system = LiquidGlassDesignSystem.shared
         
@@ -354,8 +352,8 @@ final class LiquidGlassDesignSystemTests: XCTestCase {
         let darkMaterial = system.createMaterial(.primary)
         
         // Then
-        XCTAssertNotEqual(lightMaterial.opacity, darkMaterial.opacity)
-        XCTAssertTrue(lightMaterial.isTranslucent)
-        XCTAssertTrue(darkMaterial.isTranslucent)
+        #expect(lightMaterial.opacity != darkMaterial.opacity)
+        #expect(lightMaterial.isTranslucent)
+        #expect(darkMaterial.isTranslucent)
     }
 }

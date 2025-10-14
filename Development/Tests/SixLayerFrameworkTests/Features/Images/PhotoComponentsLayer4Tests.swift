@@ -23,19 +23,19 @@
 //  - Test edge cases and error handling for photo component logic
 //
 
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class PhotoComponentsLayer4Tests: XCTestCase {
+final class PhotoComponentsLayer4Tests {
     
     // MARK: - Test Data Setup
     
     private var testImage: PlatformImage!
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         // Create a test image (placeholder for now)
@@ -48,7 +48,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
         #endif
     }
     
-    override func tearDown() async throws {
+    deinit {
         testImage = nil
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
         try await super.tearDown()
@@ -59,7 +59,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
     /// BUSINESS PURPOSE: Layer 4 photo functions return views and should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformCameraInterface_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    func testPlatformCameraInterface_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+    @Test func testPlatformCameraInterface_L4_AppliesAutomaticAccessibilityIdentifiers() async {
         await MainActor.run {
             // Enable debug logging to see what identifier is generated
             AccessibilityIdentifierConfig.shared.enableDebugLogging = true
@@ -75,16 +75,16 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             )
             
             // Verify callback is properly configured
-            XCTAssertNotNil(result, "Camera interface should be created")
-            XCTAssertNil(capturedImage, "Captured image should be nil initially")
+            #expect(result != nil, "Camera interface should be created")
+            #expect(capturedImage == nil, "Captured image should be nil initially")
             
             // Then: Test the two critical aspects
             
             // 1. Does it return a valid structure of the kind it's supposed to?
-            XCTAssertNotNil(result, "Layer 4 camera interface should return a valid SwiftUI view")
+            #expect(result != nil, "Layer 4 camera interface should return a valid SwiftUI view")
             
             // 2. Does that structure contain what it should?
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifier(
                 result, 
                 expectedPattern: "SixLayer.main.element.*", 
                 componentName: "PlatformCameraInterface_L4"
@@ -100,7 +100,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 // but we can verify the view structure is valid
                 print("✅ macOS camera interface structure is valid")
             } catch {
-                XCTFail("Failed to verify macOS camera interface structure: \(error)")
+                Issue.record("Failed to verify macOS camera interface structure: \(error)")
             }
             #elseif os(iOS)
             // iOS should return a CameraView (UIImagePickerController wrapper)
@@ -111,7 +111,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 // Note: We can't easily test the underlying UIImagePickerController type
                 // but we can verify the view structure is valid
             } catch {
-                XCTFail("Failed to verify iOS camera interface structure: \(error)")
+                Issue.record("Failed to verify iOS camera interface structure: \(error)")
             }
             #endif
         }
@@ -120,7 +120,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
     /// BUSINESS PURPOSE: Layer 4 photo picker functions should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformPhotoPicker_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    func testPlatformPhotoPicker_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoPicker_L4_AppliesAutomaticAccessibilityIdentifiers() async {
         await MainActor.run {
             // Given: Layer 4 function with test data
             var selectedImage: PlatformImage?
@@ -133,13 +133,13 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             )
             
             // Verify callback is properly configured
-            XCTAssertNotNil(result, "Photo picker should be created")
-            XCTAssertNil(selectedImage, "Selected image should be nil initially")
+            #expect(result != nil, "Photo picker should be created")
+            #expect(selectedImage == nil, "Selected image should be nil initially")
             
             // Then: Test the two critical aspects
             
             // 1. Does it return a valid structure of the kind it's supposed to?
-            XCTAssertNotNil(result, "Layer 4 photo picker should return a valid SwiftUI view")
+            #expect(result != nil, "Layer 4 photo picker should return a valid SwiftUI view")
             
             // 2. Does that structure contain what it should?
             do {
@@ -148,14 +148,14 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 let viewImages = try result.inspect().findAll(ViewType.Image.self)
                 
                 // Photo picker should have some interactive elements
-                XCTAssertTrue(!viewButtons.isEmpty || !viewImages.isEmpty, 
+                #expect(!viewButtons.isEmpty || !viewImages.isEmpty, 
                              "Photo picker should contain interactive elements (buttons or images)")
                 
                 // Verify the view structure is inspectable
                 let _ = try result.inspect()
                 
             } catch {
-                XCTFail("Failed to inspect photo picker structure: \(error)")
+                Issue.record("Failed to inspect photo picker structure: \(error)")
             }
             
             // 3. Platform-specific implementation verification (REQUIRED)
@@ -163,7 +163,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             // macOS should return MacOSPhotoPickerView with "Select Image" button
             do {
                 let viewButtons = try result.inspect().findAll(ViewType.Button.self)
-                XCTAssertFalse(viewButtons.isEmpty, "macOS photo picker should contain buttons")
+                #expect(!viewButtons.isEmpty, "macOS photo picker should contain buttons")
                 
                 let hasSelectButton = viewButtons.contains { button in
                     do {
@@ -172,9 +172,9 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                         return textContent.contains("Select Image")
                     } catch { return false }
                 }
-                XCTAssertTrue(hasSelectButton, "macOS photo picker should have 'Select Image' button")
+                #expect(hasSelectButton, "macOS photo picker should have 'Select Image' button")
             } catch {
-                XCTFail("Failed to verify macOS photo picker content: \(error)")
+                Issue.record("Failed to verify macOS photo picker content: \(error)")
             }
             #elseif os(iOS)
             // iOS should return PhotoPickerView (UIImagePickerController wrapper)
@@ -184,7 +184,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 // Note: We can't easily test the underlying UIImagePickerController type
                 // but we can verify the view structure is valid
             } catch {
-                XCTFail("Failed to verify iOS photo picker structure: \(error)")
+                Issue.record("Failed to verify iOS photo picker structure: \(error)")
             }
             #endif
         }
@@ -193,7 +193,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
     /// BUSINESS PURPOSE: Layer 4 photo display functions should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformPhotoDisplay_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    func testPlatformPhotoDisplay_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoDisplay_L4_AppliesAutomaticAccessibilityIdentifiers() async {
         await MainActor.run {
             // Given: Layer 4 function with test data
             let testImage = self.testImage!
@@ -208,19 +208,19 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             // Then: Test the two critical aspects
             
             // 1. Does it return a valid structure of the kind it's supposed to?
-            XCTAssertNotNil(result, "Layer 4 photo display should return a valid SwiftUI view")
+            #expect(result != nil, "Layer 4 photo display should return a valid SwiftUI view")
             
             // 2. Does that structure contain what it should?
             do {
                 // The photo display should contain an image
                 let viewImages = try result.inspect().findAll(ViewType.Image.self)
-                XCTAssertFalse(viewImages.isEmpty, "Photo display should contain an image")
+                #expect(!viewImages.isEmpty, "Photo display should contain an image")
                 
                 // Verify the view structure is inspectable
                 let _ = try result.inspect()
                 
             } catch {
-                XCTFail("Failed to inspect photo display structure: \(error)")
+                Issue.record("Failed to inspect photo display structure: \(error)")
             }
             
             // 3. Platform-specific implementation verification
@@ -233,7 +233,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
     /// BUSINESS PURPOSE: Layer 4 photo editor functions should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformPhotoEditor_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    func testPlatformPhotoEditor_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoEditor_L4_AppliesAutomaticAccessibilityIdentifiers() async {
         await MainActor.run {
             // Given: Layer 4 function with test data
             let testImage = self.testImage!
@@ -248,13 +248,13 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
             )
             
             // Verify callback is properly configured
-            XCTAssertNotNil(result, "Photo editor should be created")
-            XCTAssertNil(editedImage, "Edited image should be nil initially")
+            #expect(result != nil, "Photo editor should be created")
+            #expect(editedImage == nil, "Edited image should be nil initially")
             
             // Then: Test the two critical aspects
             
             // 1. Does it return a valid structure of the kind it's supposed to?
-            XCTAssertNotNil(result, "Layer 4 photo editor should return a valid SwiftUI view")
+            #expect(result != nil, "Layer 4 photo editor should return a valid SwiftUI view")
             
             // 2. Does that structure contain what it should?
             do {
@@ -264,9 +264,9 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 let viewImages = try result.inspect().findAll(ViewType.Image.self)
                 
                 // Verify view inspection results
-                XCTAssertNotNil(viewText, "View text inspection should succeed")
-                XCTAssertNotNil(viewButtons, "View buttons inspection should succeed")
-                XCTAssertNotNil(viewImages, "View images inspection should succeed")
+                #expect(viewText != nil, "View text inspection should succeed")
+                #expect(viewButtons != nil, "View buttons inspection should succeed")
+                #expect(viewImages != nil, "View images inspection should succeed")
                 
                 // NOTE: Currently MacOSPhotoEditorView has a framework bug - it's missing the image parameter
                 // in its struct definition, so it doesn't contain the expected content
@@ -280,7 +280,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 //              "Photo editor should contain some content (text, buttons, or images)")
                 
             } catch {
-                XCTFail("Failed to inspect photo editor structure: \(error)")
+                Issue.record("Failed to inspect photo editor structure: \(error)")
             }
             
             // 3. Platform-specific implementation verification (REQUIRED)
@@ -292,7 +292,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 // Note: Currently MacOSPhotoEditorView has a framework bug
                 // Once fixed, we should verify it contains the expected macOS-specific content
             } catch {
-                XCTFail("Failed to verify macOS photo editor structure: \(error)")
+                Issue.record("Failed to verify macOS photo editor structure: \(error)")
             }
             #elseif os(iOS)
             // iOS should return PhotoEditorView
@@ -302,7 +302,7 @@ final class PhotoComponentsLayer4Tests: XCTestCase {
                 // Note: We can't easily test the underlying UIImagePickerController type
                 // but we can verify the view structure is valid
             } catch {
-                XCTFail("Failed to verify iOS photo editor structure: \(error)")
+                Issue.record("Failed to verify iOS photo editor structure: \(error)")
             }
             #endif
         }

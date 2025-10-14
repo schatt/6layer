@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Workflow Layer 5 Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformWorkflowLayer5ComponentAccessibilityTests: XCTestCase {
+final class PlatformWorkflowLayer5ComponentAccessibilityTests {
     
     // MARK: - Platform Workflow Layer 5 Component Tests
     
-    func testPlatformWorkflowLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformWorkflowLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformWorkflowLayer5
         let testView = PlatformWorkflowLayer5()
         
@@ -25,7 +25,7 @@ final class PlatformWorkflowLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformWorkflowLayer5"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformWorkflowLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformWorkflowLayer5 should generate accessibility identifiers")
     }
 }
 

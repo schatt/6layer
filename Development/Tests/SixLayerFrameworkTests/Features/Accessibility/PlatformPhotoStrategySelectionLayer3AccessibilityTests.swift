@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoStrategySelectionLayer3.swift functions
 /// Ensures Photo strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
+final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,7 +34,7 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -49,13 +49,13 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(captureStrategy, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
-        XCTAssertNotNil(displayStrategy, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
+        #expect(captureStrategy != nil, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
+        #expect(displayStrategy != nil, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
     }
     
     /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.document
         let context = PhotoContext(
@@ -70,7 +70,7 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(captureStrategy, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
-        XCTAssertNotNil(displayStrategy, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
+        #expect(captureStrategy != nil, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
+        #expect(displayStrategy != nil, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
     }
 }

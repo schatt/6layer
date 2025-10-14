@@ -1,15 +1,15 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Material Accessibility features
 /// Ensures materials are accessible and comply with accessibility standards
 @MainActor
-final class MaterialAccessibilityTests: XCTestCase {
+final class MaterialAccessibilityTests {
     
     // MARK: - Material Contrast Validation Tests
     
-    func testMaterialContrastValidation() {
+    @Test func testMaterialContrastValidation() {
         // Given: Different material types
         let regularMaterial = Material.regularMaterial
         let thickMaterial = Material.thickMaterial
@@ -21,15 +21,15 @@ final class MaterialAccessibilityTests: XCTestCase {
         let thinContrast = MaterialAccessibilityManager.validateContrast(thinMaterial)
         
         // Then: All materials should have valid contrast ratios
-        XCTAssertTrue(regularContrast.isValid)
-        XCTAssertTrue(thickContrast.isValid)
-        XCTAssertTrue(thinContrast.isValid)
-        XCTAssertGreaterThanOrEqual(regularContrast.contrastRatio, 4.5) // WCAG AA standard
-        XCTAssertGreaterThanOrEqual(thickContrast.contrastRatio, 4.5)
-        XCTAssertGreaterThanOrEqual(thinContrast.contrastRatio, 4.5)
+        #expect(regularContrast.isValid)
+        #expect(thickContrast.isValid)
+        #expect(thinContrast.isValid)
+        #expect(regularContrast.contrastRatio >= 4.5) // WCAG AA standard
+        #expect(thickContrast.contrastRatio >= 4.5)
+        #expect(thinContrast.contrastRatio >= 4.5)
     }
     
-    func testHighContrastMaterialAlternatives() {
+    @Test func testHighContrastMaterialAlternatives() {
         // Given: A material that might not meet contrast requirements
         let material = Material.regularMaterial
         
@@ -40,11 +40,11 @@ final class MaterialAccessibilityTests: XCTestCase {
         let originalContrast = MaterialAccessibilityManager.validateContrast(material)
         let alternativeContrast = MaterialAccessibilityManager.validateContrast(highContrastMaterial)
         
-        XCTAssertGreaterThanOrEqual(alternativeContrast.contrastRatio, originalContrast.contrastRatio)
-        XCTAssertTrue(alternativeContrast.isValid)
+        #expect(alternativeContrast.contrastRatio >= originalContrast.contrastRatio)
+        #expect(alternativeContrast.isValid)
     }
     
-    func testVoiceOverMaterialDescriptions() {
+    @Test func testVoiceOverMaterialDescriptions() {
         // Given: Different material types
         let materials: [Material] = [
             .regularMaterial,
@@ -59,12 +59,12 @@ final class MaterialAccessibilityTests: XCTestCase {
         
         // Then: All materials should have descriptive VoiceOver text
         for description in descriptions {
-            XCTAssertFalse(description.isEmpty)
-            XCTAssertTrue(description.contains("material"))
+            #expect(!description.isEmpty)
+            #expect(description.contains("material"))
         }
     }
     
-    func testAccessibilityAwareMaterialSelection() {
+    @Test func testAccessibilityAwareMaterialSelection() {
         // Given: Different accessibility settings
         var highContrastSettings = SixLayerFramework.AccessibilitySettings()
         highContrastSettings.highContrastMode = true
@@ -88,14 +88,14 @@ final class MaterialAccessibilityTests: XCTestCase {
         )
         
         // Then: Materials should be appropriate for accessibility settings
-        XCTAssertNotNil(highContrastMaterial)
-        XCTAssertNotNil(reducedMotionMaterial)
-        XCTAssertNotNil(voiceOverMaterial)
+        #expect(highContrastMaterial != nil)
+        #expect(reducedMotionMaterial != nil)
+        #expect(voiceOverMaterial != nil)
     }
     
     // MARK: - Material Accessibility Compliance Tests
     
-    func testMaterialAccessibilityCompliance() {
+    @Test func testMaterialAccessibilityCompliance() {
         // Given: A view with material background
         let view = Rectangle()
             .fill(.regularMaterial)
@@ -105,11 +105,11 @@ final class MaterialAccessibilityTests: XCTestCase {
         let compliance = MaterialAccessibilityManager.checkCompliance(for: view)
         
         // Then: Material should be compliant
-        XCTAssertTrue(compliance.isCompliant)
-        XCTAssertEqual(compliance.issues.count, 0)
+        #expect(compliance.isCompliant)
+        #expect(compliance.issues.count == 0)
     }
     
-    func testMaterialAccessibilityIssues() {
+    @Test func testMaterialAccessibilityIssues() {
         // Given: A material with poor contrast
         let poorContrastMaterial = MaterialAccessibilityManager.createPoorContrastMaterial()
         
@@ -117,14 +117,14 @@ final class MaterialAccessibilityTests: XCTestCase {
         let contrastResult = MaterialAccessibilityManager.validateContrastForPoorContrastTesting(poorContrastMaterial)
         
         // Then: Should identify contrast issues
-        XCTAssertFalse(contrastResult.isValid)
-        XCTAssertLessThan(contrastResult.contrastRatio, 4.5) // WCAG AA standard
-        XCTAssertEqual(contrastResult.wcagLevel, .A) // Should be WCAG A level
+        #expect(!contrastResult.isValid)
+        #expect(contrastResult.contrastRatio < 4.5) // WCAG AA standard
+        #expect(contrastResult.wcagLevel == .A) // Should be WCAG A level
     }
     
     // MARK: - Material Accessibility Extensions Tests
     
-    func testMaterialAccessibilityViewModifier() {
+    @Test func testMaterialAccessibilityViewModifier() {
         // Given: A view with material
         let view = VStack {
             Text("Test")
@@ -136,10 +136,10 @@ final class MaterialAccessibilityTests: XCTestCase {
         let enhancedView = view.accessibilityMaterialEnhanced()
         
         // Then: View should have accessibility enhancements
-        XCTAssertNotNil(enhancedView)
+        #expect(enhancedView != nil)
     }
     
-    func testMaterialAccessibilityConfiguration() {
+    @Test func testMaterialAccessibilityConfiguration() {
         // Given: Material accessibility configuration
         let config = MaterialAccessibilityConfig(
             enableContrastValidation: true,
@@ -152,15 +152,15 @@ final class MaterialAccessibilityTests: XCTestCase {
         let manager = MaterialAccessibilityManager(configuration: config)
         
         // Then: Manager should be configured correctly
-        XCTAssertTrue(manager.configuration.enableContrastValidation)
-        XCTAssertTrue(manager.configuration.enableHighContrastAlternatives)
-        XCTAssertTrue(manager.configuration.enableVoiceOverDescriptions)
-        XCTAssertTrue(manager.configuration.enableReducedMotionAlternatives)
+        #expect(manager.configuration.enableContrastValidation)
+        #expect(manager.configuration.enableHighContrastAlternatives)
+        #expect(manager.configuration.enableVoiceOverDescriptions)
+        #expect(manager.configuration.enableReducedMotionAlternatives)
     }
     
     // MARK: - Material Accessibility Performance Tests
     
-    func testMaterialAccessibilityPerformance() {
+    @Test func testMaterialAccessibilityPerformance() {
         // Given: Multiple materials to validate
         let materials = Array(repeating: Material.regularMaterial, count: 100)
         
@@ -174,12 +174,12 @@ final class MaterialAccessibilityTests: XCTestCase {
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         
         // Then: Validation should be performant
-        XCTAssertLessThan(timeElapsed, 1.0) // Should complete in under 1 second
+        #expect(timeElapsed < 1.0) // Should complete in under 1 second
     }
     
     // MARK: - Material Accessibility Integration Tests
     
-    func testMaterialAccessibilityWithVoiceOver() {
+    @Test func testMaterialAccessibilityWithVoiceOver() {
         // Given: A view with material and VoiceOver enabled
         let view = Rectangle()
             .fill(.regularMaterial)
@@ -190,10 +190,10 @@ final class MaterialAccessibilityTests: XCTestCase {
         let voiceOverCompliance = MaterialAccessibilityManager.checkVoiceOverCompliance(for: view)
         
         // Then: Should be VoiceOver compliant
-        XCTAssertTrue(voiceOverCompliance.isCompliant)
+        #expect(voiceOverCompliance.isCompliant)
     }
     
-    func testMaterialAccessibilityWithHighContrast() {
+    @Test func testMaterialAccessibilityWithHighContrast() {
         // Given: High contrast mode enabled
         var highContrastSettings = SixLayerFramework.AccessibilitySettings()
         highContrastSettings.highContrastMode = true
@@ -206,11 +206,11 @@ final class MaterialAccessibilityTests: XCTestCase {
         
         // Then: Material should be high contrast appropriate
         let contrast = MaterialAccessibilityManager.validateContrast(material)
-        XCTAssertTrue(contrast.isValid)
-        XCTAssertGreaterThanOrEqual(contrast.contrastRatio, 7.0) // WCAG AAA standard
+        #expect(contrast.isValid)
+        #expect(contrast.contrastRatio >= 7.0) // WCAG AAA standard
     }
     
-    func testMaterialAccessibilityWithReducedMotion() {
+    @Test func testMaterialAccessibilityWithReducedMotion() {
         // Given: Reduced motion enabled
         var reducedMotionSettings = SixLayerFramework.AccessibilitySettings()
         reducedMotionSettings.reducedMotion = true
@@ -223,7 +223,7 @@ final class MaterialAccessibilityTests: XCTestCase {
         
         // Then: Material should be motion-appropriate
         let motionCompliance = MaterialAccessibilityManager.checkMotionCompliance(for: material)
-        XCTAssertTrue(motionCompliance.isCompliant)
+        #expect(motionCompliance.isCompliant)
     }
 }
 

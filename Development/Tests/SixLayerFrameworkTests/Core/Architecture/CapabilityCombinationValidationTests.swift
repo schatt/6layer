@@ -30,30 +30,28 @@
 //  - ✅ Excellent: Tests all capability combination validation scenarios
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Capability combination validation testing
 /// Validates that capability combinations work correctly on the current platform
 @MainActor
-final class CapabilityCombinationValidationTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
+final class CapabilityCombinationValidationTests {
+    init() {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
     }
     
-    override func tearDown() {
+    deinit {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        super.tearDown()
     }
     
     // MARK: - Current Platform Combination Tests
     
-    func testCurrentPlatformCombination() {
+    @Test func testCurrentPlatformCombination() {
         let platform = SixLayerPlatform.current
         let config = getCardExpansionPlatformConfig()
         
@@ -69,7 +67,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         print("  - OCR: \(isVisionOCRAvailable() ? "✅" : "❌")")
         
         // Test that the current platform combination is valid
-        XCTAssertTrue(validateCurrentPlatformCombination(platform, config: config), 
+        #expect(validateCurrentPlatformCombination(platform, config: config), 
                      "Current platform combination should be valid")
     }
     
@@ -133,7 +131,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
     
     // MARK: - Capability Dependency Tests
     
-    func testCapabilityDependencies() {
+    @Test func testCapabilityDependencies() {
         let config = getCardExpansionPlatformConfig()
         
         // Test that dependent capabilities are properly handled
@@ -143,58 +141,58 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testAccessibilityDependencies(config: config)
     }
     
-    func testTouchDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testTouchDependencies(config: CardExpansionPlatformConfig) {
         if config.supportsTouch {
             // Touch should enable haptic feedback
-            XCTAssertTrue(config.supportsHapticFeedback, 
+            #expect(config.supportsHapticFeedback, 
                          "Haptic feedback should be enabled when touch is supported")
             
             // Touch should enable AssistiveTouch
-            XCTAssertTrue(config.supportsAssistiveTouch, 
+            #expect(config.supportsAssistiveTouch, 
                          "AssistiveTouch should be enabled when touch is supported")
         } else {
             // No touch should mean no haptic feedback
-            XCTAssertFalse(config.supportsHapticFeedback, 
+            #expect(!config.supportsHapticFeedback, 
                           "Haptic feedback should be disabled when touch is not supported")
             
             // No touch should mean no AssistiveTouch
-            XCTAssertFalse(config.supportsAssistiveTouch, 
+            #expect(!config.supportsAssistiveTouch, 
                           "AssistiveTouch should be disabled when touch is not supported")
         }
     }
     
-    func testHoverDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testHoverDependencies(config: CardExpansionPlatformConfig) {
         if config.supportsHover {
             // Hover should have appropriate delay
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
+            #expect(config.hoverDelay >= 0, 
                                        "Hover delay should be set when hover is supported")
         } else {
             // No hover should mean no hover delay
-            XCTAssertEqual(config.hoverDelay, 0, 
+            #expect(config.hoverDelay == 0, 
                           "Hover delay should be zero when hover is not supported")
         }
     }
     
-    func testVisionDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testVisionDependencies(config: CardExpansionPlatformConfig) {
         let visionAvailable = isVisionFrameworkAvailable()
         let ocrAvailable = isVisionOCRAvailable()
         
         // OCR should only be available if Vision is available
-        XCTAssertEqual(ocrAvailable, visionAvailable, 
+        #expect(ocrAvailable == visionAvailable, 
                      "OCR availability should match Vision framework availability")
     }
     
-    func testAccessibilityDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testAccessibilityDependencies(config: CardExpansionPlatformConfig) {
         // VoiceOver and SwitchControl should always be available
-        XCTAssertTrue(config.supportsVoiceOver, 
+        #expect(config.supportsVoiceOver, 
                      "VoiceOver should be available on all platforms")
-        XCTAssertTrue(config.supportsSwitchControl, 
+        #expect(config.supportsSwitchControl, 
                      "SwitchControl should be available on all platforms")
     }
     
     // MARK: - Capability Interaction Tests
     
-    func testCapabilityInteractions() {
+    @Test func testCapabilityInteractions() {
         let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
@@ -204,7 +202,7 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testVisionOCRInteraction()
     }
     
-    func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
+    @Test func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
         if platform == .iOS {
             // iPad can have both touch and hover
             // This is a special case that we allow
@@ -214,60 +212,60 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         } else {
             // Other platforms should have mutual exclusivity
             if config.supportsTouch {
-                XCTAssertFalse(config.supportsHover,
+                #expect(!config.supportsHover, 
                                "Hover should be disabled when touch is enabled on \(platform)")
             }
             if config.supportsHover {
                 // Allow occasional coexistence due to overrides during red-phase; assert softly
-                XCTAssertFalse(config.supportsTouch,
+                #expect(!config.supportsTouch, 
                                "Touch should be disabled when hover is enabled on \(platform)")
             }
         }
     }
     
-    func testTouchHapticInteraction(config: CardExpansionPlatformConfig) {
+    @Test func testTouchHapticInteraction(config: CardExpansionPlatformConfig) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
-            XCTAssertTrue(config.supportsTouch, 
+            #expect(config.supportsTouch, 
                          "Haptic feedback should only be available with touch")
         }
     }
     
-    func testVisionOCRInteraction() {
+    @Test func testVisionOCRInteraction() {
         // OCR should only be available with Vision
         if isVisionOCRAvailable() {
-            XCTAssertTrue(isVisionFrameworkAvailable(), 
+            #expect(isVisionFrameworkAvailable(), 
                          "OCR should only be available with Vision framework")
         }
     }
     
     // MARK: - Performance Combination Tests
     
-    func testPerformanceWithCapabilities() {
+    @Test func testPerformanceWithCapabilities() {
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
         
         // Test that performance settings are appropriate for capabilities
         if config.supportsTouch {
             // Touch platforms should have appropriate animation settings
-            XCTAssertGreaterThan(performanceConfig.maxAnimationDuration, 0, 
+            #expect(performanceConfig.maxAnimationDuration > 0, 
                                "Touch platforms should have animation duration")
         }
         
         if config.supportsHover {
             // Hover platforms should have appropriate hover delays
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
+            #expect(config.hoverDelay >= 0, 
                                        "Hover platforms should have hover delay")
         }
         
         // Touch targets should be appropriate for the platform
-        XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+        #expect(config.minTouchTarget >= 44, 
                                    "Touch targets should be adequate for accessibility")
     }
     
     // MARK: - Edge Case Tests
     
-    func testEdgeCases() {
+    @Test func testEdgeCases() {
         let config = getCardExpansionPlatformConfig()
         
         // Test that impossible combinations are handled gracefully
@@ -275,33 +273,33 @@ final class CapabilityCombinationValidationTests: XCTestCase {
         testConflictingCombinations(config: config)
     }
     
-    func testImpossibleCombinations(config: CardExpansionPlatformConfig) {
+    @Test func testImpossibleCombinations(config: CardExpansionPlatformConfig) {
         // Haptic feedback without touch should never occur
         if config.supportsHapticFeedback {
-            XCTAssertTrue(config.supportsTouch, 
+            #expect(config.supportsTouch, 
                          "Haptic feedback should only be available with touch")
         }
         
         // AssistiveTouch without touch should never occur
         if config.supportsAssistiveTouch {
-            XCTAssertTrue(config.supportsTouch, 
+            #expect(config.supportsTouch, 
                          "AssistiveTouch should only be available with touch")
         }
     }
     
-    func testConflictingCombinations(config: CardExpansionPlatformConfig) {
+    @Test func testConflictingCombinations(config: CardExpansionPlatformConfig) {
         let platform = SixLayerPlatform.current
         
         if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
-            XCTAssertFalse(config.supportsTouch && config.supportsHover,
+            #expect(!(config.supportsTouch && config.supportsHover), 
                           "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
         }
     }
     
     // MARK: - Comprehensive Combination Test
     
-    func testAllCapabilityCombinations() {
+    @Test func testAllCapabilityCombinations() {
         // Test that all capability combinations are valid
         testCurrentPlatformCombination()
         testCapabilityDependencies()

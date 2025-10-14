@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,10 +6,10 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for SwitchControlManager.swift classes
 /// Ensures SwitchControlManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class SwitchControlManagerAccessibilityTests: XCTestCase {
+final class SwitchControlManagerAccessibilityTests {
     
     @MainActor
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
@@ -21,7 +21,7 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
     }
     
     @MainActor
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
@@ -32,7 +32,7 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that SwitchControlManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @MainActor
+    @Test @MainActor
     func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let switchConfig = SwitchControlConfig(
@@ -47,17 +47,17 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(manager, "SwitchControlManager should be instantiable")
+        #expect(manager != nil, "SwitchControlManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         let accessibilityConfig = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
-        XCTAssertEqual(accessibilityConfig.namespace, "SixLayer", "SwitchControlManager should use correct namespace")
+        #expect(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
+        #expect(accessibilityConfig.namespace == "SixLayer", "SwitchControlManager should use correct namespace")
     }
     
     /// BUSINESS PURPOSE: Validates that SwitchControlManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @MainActor
+    @Test @MainActor
     func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let switchConfig = SwitchControlConfig(
@@ -72,12 +72,12 @@ final class SwitchControlManagerAccessibilityTests: XCTestCase {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(manager, "SwitchControlManager should be instantiable")
+        #expect(manager != nil, "SwitchControlManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         let accessibilityConfig = AccessibilityIdentifierConfig.shared
-        XCTAssertTrue(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
-        XCTAssertEqual(accessibilityConfig.namespace, "SixLayer", "SwitchControlManager should use correct namespace")
+        #expect(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
+        #expect(accessibilityConfig.namespace == "SixLayer", "SwitchControlManager should use correct namespace")
     }
 }
 

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Layer 6 components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer6ComponentAccessibilityTests: XCTestCase {
+final class Layer6ComponentAccessibilityTests {
     
     // MARK: - Layer 6 Semantic Functions Tests
     
-    func testPlatformPresentItemCollectionL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentItemCollectionL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 item collection function
         let testItems = ["Item 1", "Item 2", "Item 3"]
         let testHints = ["Hint 1", "Hint 2", "Hint 3"]
@@ -32,10 +32,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "ItemCollectionL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 item collection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 item collection function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentNumericDataL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentNumericDataL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 numeric data function
         let testData = [1.0, 2.0, 3.0]
         
@@ -49,10 +49,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "NumericDataL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 numeric data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 numeric data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentFormDataL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentFormDataL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 form data function
         let testFormData = ["field1": "value1", "field2": "value2"]
         
@@ -66,10 +66,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "FormDataL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 form data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 form data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentMediaDataL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentMediaDataL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 media data function
         let testMediaData = ["image1.jpg", "video1.mp4"]
         
@@ -83,10 +83,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "MediaDataL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 media data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 media data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentSettingsL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentSettingsL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 settings function
         let testSettings = ["setting1": "value1", "setting2": "value2"]
         
@@ -100,10 +100,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "SettingsL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 settings function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 settings function should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoCaptureL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoCaptureL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 photo capture function
         let testCallback: (UIImage?) -> Void = { _ in }
         
@@ -117,10 +117,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "PhotoCaptureL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 photo capture function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 photo capture function should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoDisplayL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoDisplayL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 photo display function
         let testImage = UIImage(systemName: "photo")
         
@@ -134,10 +134,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "PhotoDisplayL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 photo display function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 photo display function should generate accessibility identifiers")
     }
     
-    func testPlatformPhotoSelectionL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoSelectionL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 photo selection function
         let testCallback: ([UIImage]) -> Void = { _ in }
         
@@ -151,10 +151,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "PhotoSelectionL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 photo selection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 photo selection function should generate accessibility identifiers")
     }
     
-    func testPlatformOCRWithVisualCorrectionL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOCRWithVisualCorrectionL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 OCR function
         let testImage = UIImage(systemName: "doc.text")
         let testCallback: (String) -> Void = { _ in }
@@ -169,10 +169,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "OCRL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 OCR function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 OCR function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentModalFormL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentModalFormL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 modal form function
         let testFormData = ["field1": "value1"]
         let testCallback: ([String: String]) -> Void = { _ in }
@@ -187,10 +187,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "ModalFormL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 modal form function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 modal form function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentHierarchicalDataL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentHierarchicalDataL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 hierarchical data function
         let testHierarchy = ["root": ["child1": [], "child2": []]]
         
@@ -204,10 +204,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "HierarchicalDataL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 hierarchical data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 hierarchical data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentTemporalDataL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentTemporalDataL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 temporal data function
         let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
         
@@ -221,10 +221,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "TemporalDataL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 temporal data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 temporal data function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentContentL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentContentL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 content function
         let testContent = "Sample content"
         
@@ -238,10 +238,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "ContentL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 content function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 content function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentBasicValueL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentBasicValueL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 basic value function
         let testValue = 42
         
@@ -255,10 +255,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "BasicValueL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 basic value function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 basic value function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentBasicArrayL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentBasicArrayL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 basic array function
         let testArray = [1, 2, 3, 4, 5]
         
@@ -272,10 +272,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "BasicArrayL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 basic array function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 basic array function should generate accessibility identifiers")
     }
     
-    func testPlatformResponsiveCardL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformResponsiveCardL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 responsive card function
         let testTitle = "Card Title"
         let testContent = "Card Content"
@@ -290,10 +290,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveCardL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 responsive card function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 responsive card function should generate accessibility identifiers")
     }
     
-    func testPlatformOCRWithDisambiguationL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOCRWithDisambiguationL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 OCR with disambiguation function
         let testImage = UIImage(systemName: "doc.text")
         let testOptions = ["Option 1", "Option 2", "Option 3"]
@@ -309,10 +309,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "OCRDisambiguationL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 OCR with disambiguation function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 OCR with disambiguation function should generate accessibility identifiers")
     }
     
-    func testPlatformExtractStructuredDataL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformExtractStructuredDataL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 structured data extraction function
         let testData = ["key1": "value1", "key2": "value2"]
         
@@ -326,10 +326,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "StructuredDataL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 structured data extraction function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 structured data extraction function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentLocalizedContentL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentLocalizedContentL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 localized content function
         let testContent = "Localized content"
         let testLocale = Locale(identifier: "en_US")
@@ -344,10 +344,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "LocalizedContentL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 localized content function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 localized content function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentLocalizedTextL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentLocalizedTextL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 localized text function
         let testText = "Localized text"
         let testLocale = Locale(identifier: "en_US")
@@ -362,10 +362,10 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "LocalizedTextL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 localized text function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 localized text function should generate accessibility identifiers")
     }
     
-    func testPlatformPresentLocalizedNumberL6GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentLocalizedNumberL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 localized number function
         let testNumber = 123.45
         let testLocale = Locale(identifier: "en_US")
@@ -380,7 +380,7 @@ final class Layer6ComponentAccessibilityTests: XCTestCase {
             componentName: "LocalizedNumberL6"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "Layer 6 localized number function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 6 localized number function should generate accessibility identifiers")
     }
 }
 

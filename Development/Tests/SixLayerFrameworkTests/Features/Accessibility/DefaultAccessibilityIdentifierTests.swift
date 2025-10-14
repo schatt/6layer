@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -9,14 +9,14 @@ import SwiftUI
  * TESTING SCOPE: Tests that the default behavior now enables automatic identifiers
  * METHODOLOGY: Tests that views get automatic identifiers without explicit enabling
  */
-final class DefaultAccessibilityIdentifierTests: XCTestCase {
+final class DefaultAccessibilityIdentifierTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func tearDown() async throws {
+    deinit {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
         try await super.tearDown()
     }
@@ -24,7 +24,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that automatic identifiers work by default
     /// TESTING SCOPE: Tests that no explicit enabling is required
     /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticAccessibilityIdentifiers()
-    func testAutomaticIdentifiersWorkByDefault() async {
+    @Test func testAutomaticIdentifiersWorkByDefault() async {
         await MainActor.run {
             // Given: Default configuration (no explicit enabling)
             let config = AccessibilityIdentifierConfig.shared
@@ -38,24 +38,24 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             .automaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully with accessibility identifier
-            XCTAssertNotNil(testView, "View with automatic accessibility identifiers should be created successfully")
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "SixLayer.main.element.*", 
                 componentName: "AutomaticIdentifiersWorkByDefault"
             ), "View should have accessibility identifier by default")
             
             // Verify default configuration
-            XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled by default")
-            XCTAssertEqual(config.namespace, "app", "Namespace should be 'app' by default")
-            XCTAssertEqual(config.mode, .automatic, "Mode should be automatic by default")
+            #expect(config.enableAutoIDs, "Auto IDs should be enabled by default")
+            #expect(config.namespace == "app", "Namespace should be 'app' by default")
+            #expect(config.mode == .automatic, "Mode should be automatic by default")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that breadcrumb modifiers work by default
     /// TESTING SCOPE: Tests that Enhanced Breadcrumb System works without explicit enabling
     /// METHODOLOGY: Tests that .trackViewHierarchy() works out of the box
-    func testBreadcrumbModifiersWorkByDefault() async {
+    @Test func testBreadcrumbModifiersWorkByDefault() async {
         await MainActor.run {
             // Given: Default configuration
             let config = AccessibilityIdentifierConfig.shared
@@ -70,7 +70,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             .screenContext("TestScreen")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with breadcrumb modifiers should be created successfully")
+            #expect(testView != nil, "View with breadcrumb modifiers should be created successfully")
             
             // Verify that the modifiers work without explicit global enabling
             // The fix ensures breadcrumb modifiers set globalAutomaticAccessibilityIdentifiers = true
@@ -80,13 +80,13 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that manual identifiers still work
     /// TESTING SCOPE: Tests that manual identifiers continue to work with new defaults
     /// METHODOLOGY: Tests that manual identifiers take precedence
-    func testManualIdentifiersStillWork() async {
+    @Test func testManualIdentifiersStillWork() async {
         await MainActor.run {
             // Given: Default configuration
             let config = AccessibilityIdentifierConfig.shared
             
             // Verify config is properly configured
-            XCTAssertNotNil(config, "AccessibilityIdentifierConfig should be available")
+            #expect(config != nil, "AccessibilityIdentifierConfig should be available")
             
             // When: Using manual accessibility identifier
             let testView = Button(action: {}) {
@@ -95,8 +95,8 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             .accessibilityIdentifier("manual-test-button")
             
             // Then: The view should be created successfully with manual accessibility identifier
-            XCTAssertNotNil(testView, "View with manual accessibility identifier should be created successfully")
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(testView != nil, "View with manual accessibility identifier should be created successfully")
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedIdentifier: "manual-test-button", 
                 componentName: "ManualIdentifiersWorkByDefault"
@@ -107,13 +107,13 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that opt-out still works
     /// TESTING SCOPE: Tests that .disableAutomaticAccessibilityIdentifiers() still works
     /// METHODOLOGY: Tests that opt-out functionality is preserved
-    func testOptOutStillWorks() async {
+    @Test func testOptOutStillWorks() async {
         await MainActor.run {
             // Given: Default configuration
             let config = AccessibilityIdentifierConfig.shared
             
             // Verify config is properly configured
-            XCTAssertNotNil(config, "AccessibilityIdentifierConfig should be available")
+            #expect(config != nil, "AccessibilityIdentifierConfig should be available")
             
             // When: Using opt-out modifier
             let testView = Button(action: {}) {
@@ -122,7 +122,7 @@ final class DefaultAccessibilityIdentifierTests: XCTestCase {
             .disableAutomaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with opt-out modifier should be created successfully")
+            #expect(testView != nil, "View with opt-out modifier should be created successfully")
             
             // Opt-out should work even with automatic identifiers enabled by default
         }

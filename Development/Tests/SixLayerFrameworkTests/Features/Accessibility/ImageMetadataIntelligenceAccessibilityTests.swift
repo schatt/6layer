@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for ImageMetadataIntelligence.swift classes
 /// Ensures ImageMetadataIntelligence classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class ImageMetadataIntelligenceAccessibilityTests: XCTestCase {
+final class ImageMetadataIntelligenceAccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class ImageMetadataIntelligenceAccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         await cleanupTestEnvironment()
         await MainActor.run {
@@ -34,37 +34,37 @@ final class ImageMetadataIntelligenceAccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that ImageMetadataIntelligence generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let intelligence = ImageMetadataIntelligence()
         
         // When & Then
         // Service classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(intelligence, "ImageMetadataIntelligence should be instantiable")
+        #expect(intelligence != nil, "ImageMetadataIntelligence should be instantiable")
         
         // Test that the intelligence service can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            XCTAssertTrue(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
-            XCTAssertEqual(config.namespace, "SixLayer", "ImageMetadataIntelligence should use correct namespace")
+            #expect(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "ImageMetadataIntelligence should use correct namespace")
         }
     }
     
     /// BUSINESS PURPOSE: Validates that ImageMetadataIntelligence generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let intelligence = ImageMetadataIntelligence()
         
         // When & Then
         // Service classes don't directly generate views, but we test their configuration
-        XCTAssertNotNil(intelligence, "ImageMetadataIntelligence should be instantiable")
+        #expect(intelligence != nil, "ImageMetadataIntelligence should be instantiable")
         
         // Test that the intelligence service can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            XCTAssertTrue(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
-            XCTAssertEqual(config.namespace, "SixLayer", "ImageMetadataIntelligence should use correct namespace")
+            #expect(config.enableAutoIDs, "ImageMetadataIntelligence should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "ImageMetadataIntelligence should use correct namespace")
         }
     }
 }

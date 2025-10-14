@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in CrossPlatformNavigation.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class CrossPlatformNavigationTests: XCTestCase {
+final class CrossPlatformNavigationTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class CrossPlatformNavigationTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class CrossPlatformNavigationTests: XCTestCase {
     
     // MARK: - CrossPlatformNavigation Tests
     
-    func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = Text("Test Navigation")
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -43,10 +41,10 @@ final class CrossPlatformNavigationTests: XCTestCase {
             componentName: "CrossPlatformNavigationView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CrossPlatformNavigationView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "CrossPlatformNavigationView should generate accessibility identifiers on iOS")
     }
     
-    func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = Text("Test Navigation")
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -56,6 +54,6 @@ final class CrossPlatformNavigationTests: XCTestCase {
             componentName: "CrossPlatformNavigationView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CrossPlatformNavigationView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "CrossPlatformNavigationView should generate accessibility identifiers on macOS")
     }
 }

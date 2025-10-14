@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Vision Safety Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class VisionSafetyComponentAccessibilityTests: XCTestCase {
+final class VisionSafetyComponentAccessibilityTests {
     
     // MARK: - Vision Safety Component Tests
     
-    func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
+    @Test func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
         // Given: VisionSafety
         let testView = VisionSafety()
         
@@ -25,7 +25,7 @@ final class VisionSafetyComponentAccessibilityTests: XCTestCase {
             componentName: "VisionSafety"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
     }
 }
 

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in FormInsightsDashboard.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class FormInsightsDashboardTests: XCTestCase {
+final class FormInsightsDashboardTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class FormInsightsDashboardTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class FormInsightsDashboardTests: XCTestCase {
     
     // MARK: - FormInsightsDashboard Tests
     
-    func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnIOS() async {
         let insights = FormInsights(
             formId: "test-form",
             analytics: nil,
@@ -43,9 +41,9 @@ final class FormInsightsDashboardTests: XCTestCase {
         )
         
         // Verify insights are properly configured
-        XCTAssertEqual(insights.formId, "test-form", "Insights should have correct form ID")
-        XCTAssertTrue(insights.errors.isEmpty, "Insights should have empty errors initially")
-        XCTAssertTrue(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
+        #expect(insights.formId == "test-form", "Insights should have correct form ID")
+        #expect(insights.errors.isEmpty, "Insights should have empty errors initially")
+        #expect(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
         
         let view = FormInsightsDashboard()
         
@@ -56,10 +54,10 @@ final class FormInsightsDashboardTests: XCTestCase {
             componentName: "FormInsightsDashboard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers on iOS")
     }
     
-    func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnMacOS() async {
         let insights = FormInsights(
             formId: "test-form",
             analytics: nil,
@@ -69,9 +67,9 @@ final class FormInsightsDashboardTests: XCTestCase {
         )
         
         // Verify insights are properly configured
-        XCTAssertEqual(insights.formId, "test-form", "Insights should have correct form ID")
-        XCTAssertTrue(insights.errors.isEmpty, "Insights should have empty errors initially")
-        XCTAssertTrue(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
+        #expect(insights.formId == "test-form", "Insights should have correct form ID")
+        #expect(insights.errors.isEmpty, "Insights should have empty errors initially")
+        #expect(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
         
         let view = FormInsightsDashboard()
         
@@ -82,7 +80,7 @@ final class FormInsightsDashboardTests: XCTestCase {
             componentName: "FormInsightsDashboard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers on macOS")
     }
 }
 

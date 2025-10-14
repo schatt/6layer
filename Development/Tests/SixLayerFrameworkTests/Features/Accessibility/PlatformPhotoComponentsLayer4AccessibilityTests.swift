@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
+final class PlatformPhotoComponentsLayer4AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,7 +34,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let view = platformPhotoPicker_L4(
             onImageSelected: { _ in }
@@ -50,12 +50,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let view = platformPhotoPicker_L4(
             onImageSelected: { _ in }
@@ -71,14 +71,14 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - Photo Display Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let view = platformPhotoDisplay_L4(
             image: PlatformImage(),
@@ -95,12 +95,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let view = platformPhotoDisplay_L4(
             image: PlatformImage(),
@@ -117,14 +117,14 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - Photo Editor Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoEditor_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testPhoto = PlatformImage()
         
@@ -143,12 +143,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoEditor_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testPhoto = PlatformImage()
         
@@ -167,7 +167,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS")
     }
 }
 

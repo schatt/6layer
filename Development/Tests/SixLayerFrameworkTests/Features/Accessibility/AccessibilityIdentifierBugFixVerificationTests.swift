@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -15,14 +15,14 @@ import SwiftUI
  * METHODOLOGY: Reproduces the exact configuration and usage pattern from the bug report
  * and verifies that accessibility identifiers are now generated correctly.
  */
-final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
+final class AccessibilityIdentifierBugFixVerificationTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func tearDown() async throws {
+    deinit {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
         try await super.tearDown()
     }
@@ -30,7 +30,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify the exact bug scenario from the user's report is now fixed
     /// TESTING SCOPE: Tests the specific configuration and usage pattern that was failing
     /// METHODOLOGY: Reproduces the exact scenario and verifies identifiers are generated
-    func testBugReportScenarioIsFixed() async {
+    @Test func testBugReportScenarioIsFixed() async {
         await MainActor.run {
             // Given: Exact configuration from the user's bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -69,21 +69,21 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             }
             
             // Then: The view should be created successfully with automatic accessibility identifiers
-            XCTAssertNotNil(fuelView, "FuelView should be created successfully")
+            #expect(fuelView != nil, "FuelView should be created successfully")
             
             // Verify configuration is correct
-            XCTAssertTrue(config.enableAutoIDs, "Auto IDs should be enabled")
-            XCTAssertEqual(config.namespace, "CarManager", "Namespace should be set correctly")
-            XCTAssertTrue(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
-            XCTAssertTrue(config.enableUITestIntegration, "UI test integration should be enabled")
-            XCTAssertTrue(config.enableDebugLogging, "Debug logging should be enabled")
+            #expect(config.enableAutoIDs, "Auto IDs should be enabled")
+            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
+            #expect(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
+            #expect(config.enableUITestIntegration, "UI test integration should be enabled")
+            #expect(config.enableDebugLogging, "Debug logging should be enabled")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that .named() modifier generates accessibility identifiers
     /// TESTING SCOPE: Tests ONLY the .named() modifier functionality (without screen context)
     /// METHODOLOGY: Tests the .named() modifier in isolation
-    func testNamedModifierGeneratesIdentifiers() async {
+    @Test func testNamedModifierGeneratesIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -101,7 +101,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .named("AddFuelButton")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with .named() should be created successfully")
+            #expect(testView != nil, "View with .named() should be created successfully")
             
             // Test actual accessibility identifier generation (should use default "main" screen context)
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -110,14 +110,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
                 componentName: "AddFuelButton"
             )
             
-            XCTAssertTrue(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
+            #expect(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that .named() modifier respects screen context when combined
     /// TESTING SCOPE: Tests the COMBINATION of .screenContext() and .named() modifiers
     /// METHODOLOGY: Tests that .named() modifier respects previously set screen context
-    func testNamedModifierWithScreenContext() async {
+    @Test func testNamedModifierWithScreenContext() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -136,7 +136,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .named("AddFuelButton")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with .screenContext() and .named() should be created successfully")
+            #expect(testView != nil, "View with .screenContext() and .named() should be created successfully")
             
             // Test actual accessibility identifier generation (should use "FuelView" screen context)
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -145,14 +145,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
                 componentName: "AddFuelButton"
             )
             
-            XCTAssertTrue(hasAccessibilityID, "View with .screenContext() and .named() should generate accessibility identifiers matching pattern 'CarManager.FuelView.element.*'")
+            #expect(hasAccessibilityID, "View with .screenContext() and .named() should generate accessibility identifiers matching pattern 'CarManager.FuelView.element.*'")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that .screenContext() now generates accessibility identifiers
     /// TESTING SCOPE: Tests that screen context modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    func testScreenContextGeneratesIdentifiers() async {
+    @Test func testScreenContextGeneratesIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -169,7 +169,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .screenContext("FuelView")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with screenContext should be created successfully")
+            #expect(testView != nil, "View with screenContext should be created successfully")
             
             // Test actual accessibility identifier generation
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -178,14 +178,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
                 componentName: "ScreenContext"
             )
             
-            XCTAssertTrue(hasAccessibilityID, "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
+            #expect(hasAccessibilityID, "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that .navigationState() now generates accessibility identifiers
     /// TESTING SCOPE: Tests that navigation state modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    func testNavigationStateGeneratesIdentifiers() async {
+    @Test func testNavigationStateGeneratesIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -202,7 +202,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .navigationState("ProfileEditMode")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with navigationState should be created successfully")
+            #expect(testView != nil, "View with navigationState should be created successfully")
             
             // Test actual accessibility identifier generation
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -211,14 +211,14 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
                 componentName: "NavigationState"
             )
             
-            XCTAssertTrue(hasAccessibilityID, "View with navigationState should generate accessibility identifiers matching pattern 'CarManager.*'")
+            #expect(hasAccessibilityID, "View with navigationState should generate accessibility identifiers matching pattern 'CarManager.*'")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that manual accessibility identifiers still work (regression test)
     /// TESTING SCOPE: Tests that manual identifiers continue to work as before
     /// METHODOLOGY: Tests that the fix doesn't break existing functionality
-    func testManualAccessibilityIdentifiersStillWork() async {
+    @Test func testManualAccessibilityIdentifiersStillWork() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -233,10 +233,10 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .accessibilityIdentifier("manual-add-fuel-button")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with manual accessibility identifier should be created successfully")
+            #expect(testView != nil, "View with manual accessibility identifier should be created successfully")
             
             // Verify that manual identifiers continue to work
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedIdentifier: "manual-add-fuel-button", 
                 componentName: "ManualAccessibilityIdentifier"
@@ -247,7 +247,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that the fix enables proper identifier generation
     /// TESTING SCOPE: Tests that the root cause has been addressed
     /// METHODOLOGY: Tests that globalAutomaticAccessibilityIdentifiers is properly set
-    func testGlobalAutomaticAccessibilityIdentifiersIsSet() async {
+    @Test func testGlobalAutomaticAccessibilityIdentifiersIsSet() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -262,10 +262,10 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             .named("TestButton")
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with breadcrumb modifiers should be created successfully")
+            #expect(testView != nil, "View with breadcrumb modifiers should be created successfully")
             
             // The fix ensures that breadcrumb modifiers now set globalAutomaticAccessibilityIdentifiers = true
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "CarManager.*element.*testbutton", 
                 componentName: "TrackViewHierarchy"
@@ -276,7 +276,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that the fix doesn't break existing global modifier usage
     /// TESTING SCOPE: Tests that .enableGlobalAutomaticAccessibilityIdentifiers() still works
     /// METHODOLOGY: Tests that the fix doesn't interfere with existing functionality
-    func testGlobalModifierStillWorks() async {
+    @Test func testGlobalModifierStillWorks() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -289,7 +289,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully
-            XCTAssertNotNil(testView, "View with global modifier should be created successfully")
+            #expect(testView != nil, "View with global modifier should be created successfully")
             
             // Verify that the original approach still works
             // This was the only way to make automatic identifiers work before the fix
@@ -299,7 +299,7 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that the fix enables proper identifier generation with context
     /// TESTING SCOPE: Tests that identifiers are generated with proper context information
     /// METHODOLOGY: Tests that the Enhanced Breadcrumb System now works correctly
-    func testIdentifiersGeneratedWithProperContext() async {
+    @Test func testIdentifiersGeneratedWithProperContext() async {
         await MainActor.run {
             // Given: Configuration with enhanced features enabled
             let config = AccessibilityIdentifierConfig.shared
@@ -324,10 +324,10 @@ final class AccessibilityIdentifierBugFixVerificationTests: XCTestCase {
             )
             
             // Then: The identifier should contain proper context information
-            XCTAssertTrue(id.contains("CarManager"), "ID should contain namespace")
-            XCTAssertTrue(id.contains("FuelView"), "ID should contain screen context")
-            XCTAssertTrue(id.contains("button"), "ID should contain role")
-            XCTAssertTrue(id.contains("test-object"), "ID should contain object ID")
+            #expect(id.contains("CarManager"), "ID should contain namespace")
+            #expect(id.contains("FuelView"), "ID should contain screen context")
+            #expect(id.contains("button"), "ID should contain role")
+            #expect(id.contains("test-object"), "ID should contain object ID")
             
             // Cleanup
             config.popViewHierarchy()

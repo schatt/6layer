@@ -6,12 +6,12 @@
 //  Tests photo selection and gallery features
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PhotoSelectionL1Tests: XCTestCase {
+final class PhotoSelectionL1Tests {
     
     // MARK: - Test Data
     
@@ -24,8 +24,7 @@ final class PhotoSelectionL1Tests: XCTestCase {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override func setUp() {
-        super.setUp()
+    init() {
         samplePhotoContext = PhotoContext(
             screenSize: CGSize(width: 375, height: 667),
             availableSpace: CGSize(width: 375, height: 667),
@@ -35,13 +34,12 @@ final class PhotoSelectionL1Tests: XCTestCase {
         sampleHints = PresentationHints()
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Photo Selection Tests
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
@@ -55,14 +53,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_WithDifferentPurpose() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
@@ -76,16 +74,16 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 with different purpose should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 with different purpose should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
     // MARK: - Different Photo Purposes
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_FuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
@@ -99,14 +97,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for fuel receipt should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for fuel receipt should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_PumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
@@ -120,14 +118,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for pump display should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for pump display should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_Odometer() {
         // Given
         let purpose = PhotoPurpose.odometer
@@ -141,14 +139,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for odometer should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for odometer should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_Maintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
@@ -162,14 +160,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for maintenance should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for maintenance should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_Expense() {
         // Given
         let purpose = PhotoPurpose.expense
@@ -183,14 +181,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for expense should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for expense should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_Profile() {
         // Given
         let purpose = PhotoPurpose.profile
@@ -204,14 +202,14 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for profile should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for profile should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_Document() {
         // Given
         let purpose = PhotoPurpose.document
@@ -225,16 +223,16 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 for document should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 for document should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
     // MARK: - Edge Cases
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1_WithEmptyContext() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
@@ -253,16 +251,16 @@ final class PhotoSelectionL1Tests: XCTestCase {
         )
         
         // Then: Should return a view that can be hosted
-        XCTAssertNotNil(view, "platformPhotoSelection_L1 with empty context should return a view")
+        #expect(view != nil, "platformPhotoSelection_L1 with empty context should return a view")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
     // MARK: - Performance Tests
     
-    func testPlatformPhotoSelection_L1_Performance() {
+    @Test func testPlatformPhotoSelection_L1_Performance() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = samplePhotoContext
@@ -274,7 +272,7 @@ final class PhotoSelectionL1Tests: XCTestCase {
                 context: context,
                 onImageSelected: { _ in }
             )
-            XCTAssertNotNil(view)
+            #expect(view != nil)
         }
     }
 }

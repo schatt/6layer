@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in PlatformPhotoComponentsLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
+final class PlatformPhotoComponentsLayer4Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
     
     // MARK: - platformCameraInterface_L4 Tests
     
-    func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
         let view = platformCameraInterface_L4(
             onImageCaptured: { _ in }
         )
@@ -45,10 +43,10 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
             componentName: "platformCameraInterface_L4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = platformCameraInterface_L4(
             onImageCaptured: { _ in }
         )
@@ -60,7 +58,7 @@ final class PlatformPhotoComponentsLayer4Tests: XCTestCase {
             componentName: "platformCameraInterface_L4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers on macOS")
     }
 }
 

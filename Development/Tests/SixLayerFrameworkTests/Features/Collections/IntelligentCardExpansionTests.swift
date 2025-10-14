@@ -1,11 +1,11 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for the Intelligent Card Expansion System
 /// Tests all 6 layers of the expandable card functionality
 @MainActor
-final class IntelligentCardExpansionTests: XCTestCase {
+final class IntelligentCardExpansionTests {
     
     // MARK: - Test Data
     
@@ -39,7 +39,7 @@ final class IntelligentCardExpansionTests: XCTestCase {
     
     // MARK: - Layer 1 Tests: Semantic Intent Functions
     
-    func testPlatformPresentItemCollectionL1WithExpandableHints() {
+    @Test func testPlatformPresentItemCollectionL1WithExpandableHints() {
         // Test that the Layer 1 function accepts expandable hints
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
@@ -47,25 +47,25 @@ final class IntelligentCardExpansionTests: XCTestCase {
         )
         
         // Verify the function returns a view
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testExpandableHintsStructure() {
+    @Test func testExpandableHintsStructure() {
         // Test that expandable hints are properly structured
         let hints = expandableHints
         
-        XCTAssertEqual(hints.dataType, .collection)
-        XCTAssertEqual(hints.presentationPreference, .cards)
-        XCTAssertEqual(hints.complexity, .moderate)
-        XCTAssertEqual(hints.context, .dashboard)
-        XCTAssertEqual(hints.customPreferences["interactionStyle"], "expandable")
-        XCTAssertEqual(hints.customPreferences["layoutPreference"], "adaptiveGrid")
-        XCTAssertEqual(hints.customPreferences["contentDensity"], "balanced")
+        #expect(hints.dataType == .collection)
+        #expect(hints.presentationPreference == .cards)
+        #expect(hints.complexity == .moderate)
+        #expect(hints.context == .dashboard)
+        #expect(hints.customPreferences["interactionStyle"] == "expandable")
+        #expect(hints.customPreferences["layoutPreference"] == "adaptiveGrid")
+        #expect(hints.customPreferences["contentDensity"] == "balanced")
     }
     
     // MARK: - Layer 2 Tests: Layout Decision Engine
     
-    func testIntelligentCardSizing() {
+    @Test func testIntelligentCardSizing() {
         // Test that the system can determine optimal card sizing
         let layoutDecision = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
@@ -74,13 +74,13 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentComplexity: .moderate
         )
         
-        XCTAssertGreaterThan(layoutDecision.columns, 0)
-        XCTAssertGreaterThan(layoutDecision.spacing, 0)
-        XCTAssertGreaterThan(layoutDecision.cardWidth, 0)
-        XCTAssertGreaterThan(layoutDecision.cardHeight, 0)
+        #expect(layoutDecision.columns > 0)
+        #expect(layoutDecision.spacing > 0)
+        #expect(layoutDecision.cardWidth > 0)
+        #expect(layoutDecision.cardHeight > 0)
     }
     
-    func testDeviceAdaptation() {
+    @Test func testDeviceAdaptation() {
         // Test different behaviors for different devices
         let iPhoneLayout = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
@@ -97,10 +97,10 @@ final class IntelligentCardExpansionTests: XCTestCase {
         )
         
         // iPhone should have fewer columns than iPad
-        XCTAssertLessThan(iPhoneLayout.columns, iPadLayout.columns)
+        #expect(iPhoneLayout.columns < iPadLayout.columns)
     }
     
-    func testScreenSpaceOptimization() {
+    @Test func testScreenSpaceOptimization() {
         // Test that the system optimizes screen space intelligently
         let compactLayout = determineIntelligentCardLayout_L2(
             contentCount: 4,
@@ -117,12 +117,12 @@ final class IntelligentCardExpansionTests: XCTestCase {
         )
         
         // Spacious layout should have larger cards
-        XCTAssertGreaterThan(spaciousLayout.cardWidth, compactLayout.cardWidth)
+        #expect(spaciousLayout.cardWidth > compactLayout.cardWidth)
     }
     
     // MARK: - Layer 3 Tests: Strategy Selection
     
-    func testExpansionStrategySelection() {
+    @Test func testExpansionStrategySelection() {
         // Test that the system selects appropriate expansion strategies
         let strategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -132,11 +132,11 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentDensity: .balanced
         )
         
-        XCTAssertNotNil(strategy)
-        XCTAssertTrue(strategy.supportedStrategies.contains(.hoverExpand))
+        #expect(strategy != nil)
+        #expect(strategy.supportedStrategies.contains(.hoverExpand))
     }
     
-    func testHoverExpandStrategy() {
+    @Test func testHoverExpandStrategy() {
         // Test hover expansion strategy
         let strategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -146,12 +146,12 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentDensity: .balanced
         )
         
-        XCTAssertTrue(strategy.supportedStrategies.contains(.hoverExpand))
-        XCTAssertEqual(strategy.primaryStrategy, .hoverExpand)
-        XCTAssertEqual(strategy.expansionScale, 1.265, accuracy: 0.05) // Actual expansion scale
+        #expect(strategy.supportedStrategies.contains(.hoverExpand))
+        #expect(strategy.primaryStrategy == .hoverExpand)
+        #expect(strategy.expansionScale == 1.265) // Actual expansion scale
     }
     
-    func testContentRevealStrategy() {
+    @Test func testContentRevealStrategy() {
         // Test content reveal strategy
         let strategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -161,10 +161,10 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentDensity: .dense
         )
         
-        XCTAssertTrue(strategy.supportedStrategies.contains(.contentReveal) || strategy.supportedStrategies.contains(.focusMode))
+        #expect(strategy.supportedStrategies.contains(.contentReveal) || strategy.supportedStrategies.contains(.focusMode))
     }
     
-    func testGridReorganizeStrategy() {
+    @Test func testGridReorganizeStrategy() {
         // Test grid reorganization strategy
         let strategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -174,10 +174,10 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentDensity: .spacious
         )
         
-        XCTAssertTrue(strategy.supportedStrategies.contains(.gridReorganize))
+        #expect(strategy.supportedStrategies.contains(.gridReorganize))
     }
     
-    func testFocusModeStrategy() {
+    @Test func testFocusModeStrategy() {
         // Test focus mode strategy
         let strategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -187,22 +187,22 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentDensity: .balanced
         )
         
-        XCTAssertTrue(strategy.supportedStrategies.contains(.focusMode))
+        #expect(strategy.supportedStrategies.contains(.focusMode))
     }
     
     // MARK: - Layer 4 Tests: Component Implementation
     
-    func testSmartGridContainer() {
+    @Test func testSmartGridContainer() {
         // Test that the smart grid container works
         let container = SmartGridContainer(
             items: sampleMenuItems,
             hints: expandableHints
         )
         
-        XCTAssertNotNil(container)
+        #expect(container != nil)
     }
     
-    func testExpandableCardComponent() {
+    @Test func testExpandableCardComponent() {
         // Test that expandable card components work
         let card = ExpandableCardComponent(
             item: sampleMenuItems[0],
@@ -210,78 +210,78 @@ final class IntelligentCardExpansionTests: XCTestCase {
             isExpanded: false
         )
         
-        XCTAssertNotNil(card)
-        XCTAssertFalse(card.isExpanded)
+        #expect(card != nil)
+        #expect(!card.isExpanded)
     }
     
-    func testResponsiveBreakpoints() {
+    @Test func testResponsiveBreakpoints() {
         // Test that responsive breakpoints work correctly
         let breakpoints = ResponsiveBreakpoints()
         
-        XCTAssertGreaterThan(breakpoints.tabletBreakpoint, breakpoints.mobileBreakpoint)
-        XCTAssertGreaterThan(breakpoints.desktopBreakpoint, breakpoints.tabletBreakpoint)
+        #expect(breakpoints.tabletBreakpoint > breakpoints.mobileBreakpoint)
+        #expect(breakpoints.desktopBreakpoint > breakpoints.tabletBreakpoint)
     }
     
     // MARK: - Layer 5 Tests: Platform Optimization
     
-    func testTouchOptimizedExpansion() {
+    @Test func testTouchOptimizedExpansion() {
         // Test iOS touch-optimized expansion
         let touchConfig = TouchExpansionConfig()
         
-        XCTAssertTrue(touchConfig.supportsHapticFeedback)
-        XCTAssertGreaterThanOrEqual(touchConfig.minTouchTarget, 44) // 44pt minimum
+        #expect(touchConfig.supportsHapticFeedback)
+        #expect(touchConfig.minTouchTarget >= 44) // 44pt minimum
     }
     
-    func testHoverBasedExpansion() {
+    @Test func testHoverBasedExpansion() {
         // Test macOS hover-based expansion
         let hoverConfig = HoverExpansionConfig()
         
-        XCTAssertTrue(hoverConfig.supportsHover)
-        XCTAssertGreaterThan(hoverConfig.hoverDelay, 0)
+        #expect(hoverConfig.supportsHover)
+        #expect(hoverConfig.hoverDelay > 0)
     }
     
-    func testAccessibilitySupport() {
+    @Test func testAccessibilitySupport() {
         // Test accessibility support for expanded states
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
-        XCTAssertTrue(accessibilityConfig.supportsVoiceOver)
-        XCTAssertTrue(accessibilityConfig.supportsSwitchControl)
-        XCTAssertTrue(accessibilityConfig.supportsAssistiveTouch)
+        #expect(accessibilityConfig.supportsVoiceOver)
+        #expect(accessibilityConfig.supportsSwitchControl)
+        #expect(accessibilityConfig.supportsAssistiveTouch)
     }
     
     // MARK: - Layer 6 Tests: Platform System
     
-    func testNativeSwiftUIComponents() {
+    @Test func testNativeSwiftUIComponents() {
         // Test that native SwiftUI components are used
         let nativeView = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .hoverExpand
         )
         
-        XCTAssertNotNil(nativeView)
+        #expect(nativeView != nil)
     }
     
-    func testPlatformSpecificOptimizations() {
+    @Test func testPlatformSpecificOptimizations() {
         // Test platform-specific optimizations
         #if os(iOS)
         let platformConfig = iOSCardExpansionConfig()
-        XCTAssertTrue(platformConfig.supportsHapticFeedback)
+        #expect(platformConfig.supportsHapticFeedback)
         #elseif os(macOS)
         let platformConfig = macOSCardExpansionConfig()
-        XCTAssertTrue(platformConfig.supportsHover)
+        #expect(platformConfig.supportsHover)
         #endif
     }
     
     // MARK: - Integration Tests
     
-    func testEndToEndCardExpansion() {
+    @Test func testEndToEndCardExpansion() {
         // Test complete end-to-end card expansion functionality
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: expandableHints
         )
         
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify that the system can handle the complete workflow
         let layoutDecision = determineIntelligentCardLayout_L2(
@@ -299,32 +299,32 @@ final class IntelligentCardExpansionTests: XCTestCase {
             contentDensity: .balanced
         )
         
-        XCTAssertNotNil(layoutDecision)
-        XCTAssertNotNil(strategy)
+        #expect(layoutDecision != nil)
+        #expect(strategy != nil)
     }
     
-    func testPerformanceRequirements() {
+    @Test func testPerformanceRequirements() {
         // Test that performance requirements are met
         let performanceConfig = CardExpansionPerformanceConfig()
         
-        XCTAssertEqual(performanceConfig.targetFrameRate, 60)
-        XCTAssertLessThanOrEqual(performanceConfig.maxAnimationDuration, 0.3) // 300ms max
-        XCTAssertTrue(performanceConfig.supportsSmoothAnimations)
+        #expect(performanceConfig.targetFrameRate == 60)
+        #expect(performanceConfig.maxAnimationDuration <= 0.3) // 300ms max
+        #expect(performanceConfig.supportsSmoothAnimations)
     }
     
-    func testBackwardCompatibility() {
+    @Test func testBackwardCompatibility() {
         // Test that the system works with existing MenuItem structure
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: expandableHints
         )
         
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify that all menu items are processed
         for item in sampleMenuItems {
-            XCTAssertFalse(item.title.isEmpty)
-            XCTAssertFalse(item.icon.isEmpty)
+            #expect(!item.title.isEmpty)
+            #expect(!item.icon.isEmpty)
         }
     }
 }

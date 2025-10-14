@@ -6,13 +6,13 @@
 //  Tests for platformFormContainer_L4 function
 //
 
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer4FormContainerTests: XCTestCase {
+final class Layer4FormContainerTests {
     
     // MARK: - Test Data
     
@@ -20,7 +20,7 @@ final class Layer4FormContainerTests: XCTestCase {
     
     // MARK: - Form Container Type Tests
     
-    func testPlatformFormContainer_L4_FormContainer() {
+    @Test func testPlatformFormContainer_L4_FormContainer() {
         // Given: Form container strategy
         let strategy = FormStrategy(
             containerType: .form,
@@ -36,13 +36,13 @@ final class Layer4FormContainerTests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(view, "Form container should return a valid SwiftUI view")
+        #expect(view != nil, "Form container should return a valid SwiftUI view")
         
         // 2. Does that structure contain what it should?
         do {
             // The form container should contain the test content
             let viewText = try view.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "Form container should contain text elements")
+            #expect(!viewText.isEmpty, "Form container should contain text elements")
             
             // Should contain the test content
             let hasTestContent = viewText.contains { text in
@@ -53,10 +53,10 @@ final class Layer4FormContainerTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasTestContent, "Form container should contain the test content")
+            #expect(hasTestContent, "Form container should contain the test content")
             
         } catch {
-            XCTFail("Failed to inspect form container structure: \(error)")
+            Issue.record("Failed to inspect form container structure: \(error)")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -67,7 +67,7 @@ final class Layer4FormContainerTests: XCTestCase {
             // Form found - this is correct for iOS
             // Note: iOS uses Color(.systemGroupedBackground) for form backgrounds
         } catch {
-            XCTFail("iOS form container should contain Form structure")
+            Issue.record("iOS form container should contain Form structure")
         }
         #elseif os(macOS)
         // macOS: Should contain Form structure with macOS-specific background color
@@ -76,12 +76,12 @@ final class Layer4FormContainerTests: XCTestCase {
             // Form found - this is correct for macOS
             // Note: macOS uses Color(.controlBackgroundColor) for form backgrounds
         } catch {
-            XCTFail("macOS form container should contain Form structure")
+            Issue.record("macOS form container should contain Form structure")
         }
         #endif
     }
     
-    func testPlatformFormContainer_L4_StandardContainer() {
+    @Test func testPlatformFormContainer_L4_StandardContainer() {
         // Given: Standard container strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -97,13 +97,13 @@ final class Layer4FormContainerTests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(view, "Standard container should return a valid SwiftUI view")
+        #expect(view != nil, "Standard container should return a valid SwiftUI view")
         
         // 2. Does that structure contain what it should?
         do {
             // The standard container should contain the test content
             let viewText = try view.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "Standard container should contain text elements")
+            #expect(!viewText.isEmpty, "Standard container should contain text elements")
             
             // Should contain the test content
             let hasTestContent = viewText.contains { text in
@@ -114,10 +114,10 @@ final class Layer4FormContainerTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasTestContent, "Standard container should contain the test content")
+            #expect(hasTestContent, "Standard container should contain the test content")
             
         } catch {
-            XCTFail("Failed to inspect standard container structure: \(error)")
+            Issue.record("Failed to inspect standard container structure: \(error)")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -128,7 +128,7 @@ final class Layer4FormContainerTests: XCTestCase {
             // VStack found - this is correct for iOS
             // Note: iOS uses Color(.secondarySystemBackground) for standard container backgrounds
         } catch {
-            XCTFail("iOS standard container should contain VStack structure")
+            Issue.record("iOS standard container should contain VStack structure")
         }
         #elseif os(macOS)
         // macOS: Should contain VStack structure with macOS-specific background color
@@ -137,12 +137,12 @@ final class Layer4FormContainerTests: XCTestCase {
             // VStack found - this is correct for macOS
             // Note: macOS uses Color(.controlBackgroundColor) for standard container backgrounds
         } catch {
-            XCTFail("macOS standard container should contain VStack structure")
+            Issue.record("macOS standard container should contain VStack structure")
         }
         #endif
     }
     
-    func testPlatformFormContainer_L4_ScrollViewContainer() {
+    @Test func testPlatformFormContainer_L4_ScrollViewContainer() {
         // Given: ScrollView container strategy
         let strategy = FormStrategy(
             containerType: .scrollView,
@@ -156,7 +156,7 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with ScrollView container
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
@@ -166,7 +166,7 @@ final class Layer4FormContainerTests: XCTestCase {
             // ScrollView found - this is correct for iOS
             // Note: iOS uses Color(.systemGroupedBackground) for scroll view backgrounds
         } catch {
-            XCTFail("iOS scroll view container should contain ScrollView structure")
+            Issue.record("iOS scroll view container should contain ScrollView structure")
         }
         #elseif os(macOS)
         // macOS: Should contain ScrollView structure with macOS-specific background color
@@ -175,12 +175,12 @@ final class Layer4FormContainerTests: XCTestCase {
             // ScrollView found - this is correct for macOS
             // Note: macOS uses Color(.controlBackgroundColor) for scroll view backgrounds
         } catch {
-            XCTFail("macOS scroll view container should contain ScrollView structure")
+            Issue.record("macOS scroll view container should contain ScrollView structure")
         }
         #endif
     }
     
-    func testPlatformFormContainer_L4_CustomContainer() {
+    @Test func testPlatformFormContainer_L4_CustomContainer() {
         // Given: Custom container strategy
         let strategy = FormStrategy(
             containerType: .custom,
@@ -194,13 +194,13 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with custom VStack container
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformFormContainer_L4_AdaptiveContainer() {
+    @Test func testPlatformFormContainer_L4_AdaptiveContainer() {
         // Given: Adaptive container strategy
         let strategy = FormStrategy(
             containerType: .adaptive,
@@ -214,15 +214,15 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with adaptive VStack container
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
     // MARK: - Field Layout Tests
     
-    func testPlatformFormContainer_L4_DifferentFieldLayouts() {
+    @Test func testPlatformFormContainer_L4_DifferentFieldLayouts() {
         // Given: Different field layout strategies
         let fieldLayouts: [FieldLayout] = [
             .compact, .standard, .spacious, .adaptive,
@@ -242,14 +242,14 @@ final class Layer4FormContainerTests: XCTestCase {
             }
             
             // Then: Should return a view for each field layout
-            XCTAssertNotNil(view, "Should handle field layout: \(fieldLayout)")
+            #expect(view != nil, "Should handle field layout: \(fieldLayout)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "AnyView", "Should return AnyView for layout: \(fieldLayout)")
+            #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for layout: \(fieldLayout)")
         }
     }
     
-    func testPlatformFormContainer_L4_CompactLayout() {
+    @Test func testPlatformFormContainer_L4_CompactLayout() {
         // Given: Compact field layout strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -263,13 +263,13 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with compact spacing
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformFormContainer_L4_SpaciousLayout() {
+    @Test func testPlatformFormContainer_L4_SpaciousLayout() {
         // Given: Spacious field layout strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -283,13 +283,13 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with spacious spacing
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformFormContainer_L4_GridLayout() {
+    @Test func testPlatformFormContainer_L4_GridLayout() {
         // Given: Grid field layout strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -303,15 +303,15 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with grid spacing
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
     // MARK: - Validation Strategy Tests
     
-    func testPlatformFormContainer_L4_DifferentValidationStrategies() {
+    @Test func testPlatformFormContainer_L4_DifferentValidationStrategies() {
         // Given: Different validation strategies
         let validationStrategies: [ValidationStrategy] = [
             .none, .realTime, .onSubmit, .custom, .immediate, .deferred
@@ -330,16 +330,16 @@ final class Layer4FormContainerTests: XCTestCase {
             }
             
             // Then: Should return a view for each validation strategy
-            XCTAssertNotNil(view, "Should handle validation: \(validation)")
+            #expect(view != nil, "Should handle validation: \(validation)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "AnyView", "Should return AnyView for validation: \(validation)")
+            #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for validation: \(validation)")
         }
     }
     
     // MARK: - Complex Content Tests
     
-    func testPlatformFormContainer_L4_ComplexContent() {
+    @Test func testPlatformFormContainer_L4_ComplexContent() {
         // Given: Complex content with multiple views
         let complexContent = VStack {
             Text("Form Title")
@@ -361,13 +361,13 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view containing the complex content
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    func testPlatformFormContainer_L4_EmptyContent() {
+    @Test func testPlatformFormContainer_L4_EmptyContent() {
         // Given: Empty content
         let emptyContent = EmptyView()
         
@@ -383,15 +383,15 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view even with empty content
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
     // MARK: - Platform Adaptations Tests
     
-    func testPlatformFormContainer_L4_WithPlatformAdaptations() {
+    @Test func testPlatformFormContainer_L4_WithPlatformAdaptations() {
         // Given: Strategy with platform adaptations
         let platformAdaptations: [ModalPlatform: PlatformAdaptation] = [
             .iOS: .standardFields,
@@ -411,15 +411,15 @@ final class Layer4FormContainerTests: XCTestCase {
         }
         
         // Then: Should return a view with platform adaptations
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         let mirror = Mirror(reflecting: view)
-        XCTAssertEqual(String(describing: mirror.subjectType), "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
     // MARK: - Edge Cases and Error Handling
     
-    func testPlatformFormContainer_L4_AllContainerTypes() {
+    @Test func testPlatformFormContainer_L4_AllContainerTypes() {
         // Given: All possible container types
         let containerTypes: [FormContainerType] = [
             .form, .scrollView, .custom, .adaptive, .standard
@@ -438,14 +438,14 @@ final class Layer4FormContainerTests: XCTestCase {
             }
             
             // Then: Should return a view for each container type
-            XCTAssertNotNil(view, "Should handle container type: \(containerType)")
+            #expect(view != nil, "Should handle container type: \(containerType)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "AnyView", "Should return AnyView for container: \(containerType)")
+            #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for container: \(containerType)")
         }
     }
     
-    func testPlatformFormContainer_L4_AllFieldLayouts() {
+    @Test func testPlatformFormContainer_L4_AllFieldLayouts() {
         // Given: All possible field layouts
         let fieldLayouts: [FieldLayout] = [
             .standard, .compact, .spacious, .adaptive,
@@ -465,14 +465,14 @@ final class Layer4FormContainerTests: XCTestCase {
             }
             
             // Then: Should return a view for each field layout
-            XCTAssertNotNil(view, "Should handle field layout: \(fieldLayout)")
+            #expect(view != nil, "Should handle field layout: \(fieldLayout)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "AnyView", "Should return AnyView for layout: \(fieldLayout)")
+            #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for layout: \(fieldLayout)")
         }
     }
     
-    func testPlatformFormContainer_L4_AllValidationStrategies() {
+    @Test func testPlatformFormContainer_L4_AllValidationStrategies() {
         // Given: All possible validation strategies
         let validationStrategies: [ValidationStrategy] = [
             .none, .realTime, .onSubmit, .custom, .immediate, .deferred
@@ -491,16 +491,16 @@ final class Layer4FormContainerTests: XCTestCase {
             }
             
             // Then: Should return a view for each validation strategy
-            XCTAssertNotNil(view, "Should handle validation: \(validation)")
+            #expect(view != nil, "Should handle validation: \(validation)")
             
             let mirror = Mirror(reflecting: view)
-            XCTAssertEqual(String(describing: mirror.subjectType), "AnyView", "Should return AnyView for validation: \(validation)")
+            #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for validation: \(validation)")
         }
     }
     
     // MARK: - Performance Tests
     
-    func testPlatformFormContainer_L4_Performance() {
+    @Test func testPlatformFormContainer_L4_Performance() {
         // Given: Standard strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -516,7 +516,7 @@ final class Layer4FormContainerTests: XCTestCase {
         }
     }
     
-    func testPlatformFormContainer_L4_PerformanceWithComplexContent() {
+    @Test func testPlatformFormContainer_L4_PerformanceWithComplexContent() {
         // Given: Complex content
         let complexContent = VStack {
             ForEach(0..<50) { i in

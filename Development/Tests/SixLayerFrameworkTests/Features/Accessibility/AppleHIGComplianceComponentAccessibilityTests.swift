@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL AppleHIGCompliance components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
+final class AppleHIGComplianceComponentAccessibilityTests {
     
     // MARK: - AppleHIGComplianceModifier Tests
     
-    func testAppleHIGComplianceModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testAppleHIGComplianceModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("HIG Compliance Content")
@@ -31,12 +31,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "AppleHIGComplianceModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AppleHIGComplianceModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AppleHIGComplianceModifier should generate accessibility identifiers")
     }
     
     // MARK: - SystemAccessibilityModifier Tests
     
-    func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("System Accessibility Content")
@@ -53,12 +53,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "SystemAccessibilityModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers")
     }
     
     // MARK: - PlatformPatternModifier Tests
     
-    func testPlatformPatternModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPatternModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Pattern Content")
@@ -75,12 +75,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformPatternModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformPatternModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPatternModifier should generate accessibility identifiers")
     }
     
     // MARK: - VisualConsistencyModifier Tests
     
-    func testVisualConsistencyModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testVisualConsistencyModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Visual Consistency Content")
@@ -97,12 +97,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "VisualConsistencyModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "VisualConsistencyModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "VisualConsistencyModifier should generate accessibility identifiers")
     }
     
     // MARK: - InteractionPatternModifier Tests
     
-    func testInteractionPatternModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testInteractionPatternModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Interaction Pattern Content")
@@ -119,12 +119,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "InteractionPatternModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "InteractionPatternModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "InteractionPatternModifier should generate accessibility identifiers")
     }
     
     // MARK: - VoiceOverSupportModifier Tests
     
-    func testVoiceOverSupportModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testVoiceOverSupportModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("VoiceOver Support Content")
@@ -141,12 +141,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "VoiceOverSupportModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "VoiceOverSupportModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "VoiceOverSupportModifier should generate accessibility identifiers")
     }
     
     // MARK: - KeyboardNavigationModifier Tests
     
-    func testKeyboardNavigationModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testKeyboardNavigationModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Keyboard Navigation Content")
@@ -163,12 +163,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "KeyboardNavigationModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "KeyboardNavigationModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "KeyboardNavigationModifier should generate accessibility identifiers")
     }
     
     // MARK: - HighContrastModifier Tests
     
-    func testHighContrastModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testHighContrastModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("High Contrast Content")
@@ -185,12 +185,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "HighContrastModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "HighContrastModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "HighContrastModifier should generate accessibility identifiers")
     }
     
     // MARK: - ReducedMotionModifier Tests
     
-    func testReducedMotionModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testReducedMotionModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Reduced Motion Content")
@@ -207,12 +207,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "ReducedMotionModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ReducedMotionModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ReducedMotionModifier should generate accessibility identifiers")
     }
     
     // MARK: - DynamicTypeModifier Tests
     
-    func testDynamicTypeModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testDynamicTypeModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Dynamic Type Content")
@@ -229,12 +229,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "DynamicTypeModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DynamicTypeModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DynamicTypeModifier should generate accessibility identifiers")
     }
     
     // MARK: - PlatformNavigationModifier Tests
     
-    func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Navigation Content")
@@ -251,12 +251,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformNavigationModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformNavigationModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformNavigationModifier should generate accessibility identifiers")
     }
     
     // MARK: - PlatformStylingModifier Tests
     
-    func testPlatformStylingModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformStylingModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Styling Content")
@@ -273,12 +273,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformStylingModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformStylingModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformStylingModifier should generate accessibility identifiers")
     }
     
     // MARK: - PlatformIconModifier Tests
     
-    func testPlatformIconModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformIconModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Icon Content")
@@ -295,12 +295,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformIconModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformIconModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformIconModifier should generate accessibility identifiers")
     }
     
     // MARK: - SystemColorModifier Tests
     
-    func testSystemColorModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testSystemColorModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("System Color Content")
@@ -317,12 +317,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "SystemColorModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SystemColorModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SystemColorModifier should generate accessibility identifiers")
     }
     
     // MARK: - SystemTypographyModifier Tests
     
-    func testSystemTypographyModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testSystemTypographyModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("System Typography Content")
@@ -339,12 +339,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "SystemTypographyModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SystemTypographyModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SystemTypographyModifier should generate accessibility identifiers")
     }
     
     // MARK: - SpacingModifier Tests
     
-    func testSpacingModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testSpacingModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Spacing Content")
@@ -361,12 +361,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "SpacingModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SpacingModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SpacingModifier should generate accessibility identifiers")
     }
     
     // MARK: - TouchTargetModifier Tests
     
-    func testTouchTargetModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testTouchTargetModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Touch Target Content")
@@ -383,12 +383,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "TouchTargetModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "TouchTargetModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "TouchTargetModifier should generate accessibility identifiers")
     }
     
     // MARK: - PlatformInteractionModifier Tests
     
-    func testPlatformInteractionModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformInteractionModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Interaction Content")
@@ -405,12 +405,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformInteractionModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformInteractionModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformInteractionModifier should generate accessibility identifiers")
     }
     
     // MARK: - HapticFeedbackModifier Tests
     
-    func testHapticFeedbackModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testHapticFeedbackModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Haptic Feedback Content")
@@ -427,12 +427,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "HapticFeedbackModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "HapticFeedbackModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "HapticFeedbackModifier should generate accessibility identifiers")
     }
     
     // MARK: - GestureRecognitionModifier Tests
     
-    func testGestureRecognitionModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testGestureRecognitionModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Gesture Recognition Content")
@@ -449,12 +449,12 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "GestureRecognitionModifier"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GestureRecognitionModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GestureRecognitionModifier should generate accessibility identifiers")
     }
     
     // MARK: - AppleHIGComplianceManager Tests
     
-    func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AppleHIGComplianceManager
         let manager = AppleHIGComplianceManager()
         
@@ -471,7 +471,7 @@ final class AppleHIGComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "AppleHIGComplianceManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AppleHIGComplianceManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AppleHIGComplianceManager should generate accessibility identifiers")
     }
 }
 

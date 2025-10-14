@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoLayoutDecisionLayer2.swift functions
 /// Ensures Photo layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
+final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,7 +34,7 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformPhotoLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -51,14 +51,14 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.width > 0, "Layout decision should have valid width")
-        XCTAssertTrue(result.height > 0, "Layout decision should have valid height")
+        #expect(result != nil, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
+        #expect(result.width > 0, "Layout decision should have valid width")
+        #expect(result.height > 0, "Layout decision should have valid height")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -75,8 +75,8 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
-        XCTAssertTrue(result.width > 0, "Layout decision should have valid width")
-        XCTAssertTrue(result.height > 0, "Layout decision should have valid height")
+        #expect(result != nil, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
+        #expect(result.width > 0, "Layout decision should have valid width")
+        #expect(result.height > 0, "Layout decision should have valid height")
     }
 }

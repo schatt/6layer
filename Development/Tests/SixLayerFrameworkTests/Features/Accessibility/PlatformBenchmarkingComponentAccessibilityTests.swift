@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Benchmarking Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformBenchmarkingComponentAccessibilityTests: XCTestCase {
+final class PlatformBenchmarkingComponentAccessibilityTests {
     
     // MARK: - Platform Benchmarking Component Tests
     
-    func testPlatformBenchmarkingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformBenchmarkingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformBenchmarking
         let testView = PlatformBenchmarking()
         
@@ -25,7 +25,7 @@ final class PlatformBenchmarkingComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformBenchmarking"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformBenchmarking should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformBenchmarking should generate accessibility identifiers")
     }
 }
 

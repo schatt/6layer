@@ -32,18 +32,18 @@
 //  - ✅ Business Logic Focus: Tests actual dynamic form functionality, not testing framework
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class DynamicFormTests: XCTestCase {
+final class DynamicFormTests {
     
     // MARK: - Dynamic Form Field Tests
     
     /// BUSINESS PURPOSE: Validate DynamicFormField creation functionality
     /// TESTING SCOPE: Tests DynamicFormField initialization with various configuration parameters
     /// METHODOLOGY: Create DynamicFormField with comprehensive parameters and verify all properties are set correctly
-    func testDynamicFormFieldCreation() {
+    @Test func testDynamicFormFieldCreation() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -60,15 +60,15 @@ final class DynamicFormTests: XCTestCase {
                 metadata: ["maxWidth": "200"]
             )
             
-            XCTAssertEqual(field.id, "testField")
-            XCTAssertEqual(field.contentType, .text)
-            XCTAssertEqual(field.label, "Test Field")
-            XCTAssertEqual(field.placeholder, "Enter text")
-            XCTAssertTrue(field.isRequired)
-            XCTAssertEqual(field.validationRules?["minLength"], "2")
-            XCTAssertNil(field.options)
-            XCTAssertEqual(field.defaultValue, "")
-            XCTAssertEqual(field.metadata?["maxWidth"], "200")
+            #expect(field.id == "testField")
+            #expect(field.contentType == .text)
+            #expect(field.label == "Test Field")
+            #expect(field.placeholder == "Enter text")
+            #expect(field.isRequired)
+            #expect(field.validationRules?["minLength"] == "2")
+            #expect(field.options == nil)
+            #expect(field.defaultValue == "")
+            #expect(field.metadata?["maxWidth"] == "200")
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -79,7 +79,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormSection creation functionality
     /// TESTING SCOPE: Tests DynamicFormSection initialization with fields and configuration
     /// METHODOLOGY: Create DynamicFormSection with multiple fields and verify all section properties are set correctly
-    func testDynamicFormSectionCreation() {
+    @Test func testDynamicFormSectionCreation() {
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
             DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
@@ -95,19 +95,19 @@ final class DynamicFormTests: XCTestCase {
             metadata: ["order": "1"]
         )
         
-        XCTAssertEqual(section.id, "testSection")
-        XCTAssertEqual(section.title, "Test Section")
-        XCTAssertEqual(section.description, "A test section")
-        XCTAssertEqual(section.fields.count, 2)
-        XCTAssertTrue(section.isCollapsible)
-        XCTAssertFalse(section.isCollapsed)
-        XCTAssertEqual(section.metadata?["order"], "1")
+        #expect(section.id == "testSection")
+        #expect(section.title == "Test Section")
+        #expect(section.description == "A test section")
+        #expect(section.fields.count == 2)
+        #expect(section.isCollapsible)
+        #expect(!section.isCollapsed)
+        #expect(section.metadata?["order"] == "1")
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormSection helper functionality
     /// TESTING SCOPE: Tests DynamicFormSection field access and helper methods
     /// METHODOLOGY: Create DynamicFormSection and verify field access and helper method functionality
-    func testDynamicFormSectionHelpers() {
+    @Test func testDynamicFormSectionHelpers() {
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
             DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
@@ -120,9 +120,9 @@ final class DynamicFormTests: XCTestCase {
         )
         
         // Test field access
-        XCTAssertEqual(section.fields.count, 2)
-        XCTAssertEqual(section.fields[0].id, "field1")
-        XCTAssertEqual(section.fields[1].id, "field2")
+        #expect(section.fields.count == 2)
+        #expect(section.fields[0].id == "field1")
+        #expect(section.fields[1].id == "field2")
     }
     
     // MARK: - Dynamic Form Configuration Tests
@@ -130,7 +130,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormConfiguration creation functionality
     /// TESTING SCOPE: Tests DynamicFormConfiguration initialization with sections and configuration
     /// METHODOLOGY: Create DynamicFormConfiguration with sections and verify all configuration properties are set correctly
-    func testDynamicFormConfigurationCreation() {
+    @Test func testDynamicFormConfigurationCreation() {
         let sections = [
             DynamicFormSection(
                 id: "section1",
@@ -151,19 +151,19 @@ final class DynamicFormTests: XCTestCase {
             metadata: ["version": "1.0"]
         )
         
-        XCTAssertEqual(config.id, "testForm")
-        XCTAssertEqual(config.title, "Test Form")
-        XCTAssertEqual(config.description, "A test form")
-        XCTAssertEqual(config.sections.count, 1)
-        XCTAssertEqual(config.submitButtonText, "Submit Form")
-        XCTAssertEqual(config.cancelButtonText, "Cancel")
-        XCTAssertEqual(config.metadata?["version"], "1.0")
+        #expect(config.id == "testForm")
+        #expect(config.title == "Test Form")
+        #expect(config.description == "A test form")
+        #expect(config.sections.count == 1)
+        #expect(config.submitButtonText == "Submit Form")
+        #expect(config.cancelButtonText == "Cancel")
+        #expect(config.metadata?["version"] == "1.0")
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormConfiguration helper functionality
     /// TESTING SCOPE: Tests DynamicFormConfiguration helper methods and field access
     /// METHODOLOGY: Create DynamicFormConfiguration and verify helper method functionality
-    func testDynamicFormConfigurationHelpers() {
+    @Test func testDynamicFormConfigurationHelpers() {
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
             DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
@@ -181,29 +181,29 @@ final class DynamicFormTests: XCTestCase {
         
         // Test all fields access
         let allFields = config.allFields
-        XCTAssertEqual(allFields.count, 2)
-        XCTAssertEqual(allFields[0].id, "field1")
-        XCTAssertEqual(allFields[1].id, "field2")
+        #expect(allFields.count == 2)
+        #expect(allFields[0].id == "field1")
+        #expect(allFields[1].id == "field2")
         
         // Test field lookup
         let field1 = config.getField(by: "field1")
-        XCTAssertNotNil(field1)
-        XCTAssertEqual(field1?.contentType, .text)
+        #expect(field1 != nil)
+        #expect(field1?.contentType == .text)
         
         let field2 = config.getField(by: "field2")
-        XCTAssertNotNil(field2)
-        XCTAssertEqual(field2?.contentType, .email)
+        #expect(field2 != nil)
+        #expect(field2?.contentType == .email)
         
         let nonExistentField = config.getField(by: "nonExistent")
-        XCTAssertNil(nonExistentField)
+        #expect(nonExistentField == nil)
         
         // Test section lookup
         let section1 = config.getSection(by: "section1")
-        XCTAssertNotNil(section1)
-        XCTAssertEqual(section1?.title, "Section 1")
+        #expect(section1 != nil)
+        #expect(section1?.title == "Section 1")
         
         let nonExistentSection = config.getSection(by: "nonExistent")
-        XCTAssertNil(nonExistentSection)
+        #expect(nonExistentSection == nil)
     }
     
     // MARK: - Dynamic Form State Tests
@@ -211,7 +211,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormState creation functionality
     /// TESTING SCOPE: Tests DynamicFormState initialization with configuration
     /// METHODOLOGY: Create DynamicFormState with configuration and verify initial state properties
-    func testDynamicFormStateCreation() {
+    @Test func testDynamicFormStateCreation() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -224,12 +224,12 @@ final class DynamicFormTests: XCTestCase {
             
             let state = DynamicFormState(configuration: config)
             
-            XCTAssertEqual(state.fieldValues.count, 0)
-            XCTAssertEqual(state.fieldErrors.count, 0)
-            XCTAssertEqual(state.sectionStates.count, 0)
-            XCTAssertFalse(state.isSubmitting)
-            XCTAssertFalse(state.isDirty)
-            XCTAssertTrue(state.isValid)
+            #expect(state.fieldValues.count == 0)
+            #expect(state.fieldErrors.count == 0)
+            #expect(state.sectionStates.count == 0)
+            #expect(!state.isSubmitting)
+            #expect(!state.isDirty)
+            #expect(state.isValid)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -238,7 +238,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormState field value management functionality
     /// TESTING SCOPE: Tests DynamicFormState field value setting and retrieval
     /// METHODOLOGY: Set field values in DynamicFormState and verify value management functionality
-    func testDynamicFormStateFieldValues() {
+    @Test func testDynamicFormStateFieldValues() {
         let config = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
@@ -252,16 +252,16 @@ final class DynamicFormTests: XCTestCase {
         state.setValue(25, for: "age")
         state.setValue(true, for: "isActive")
         
-        XCTAssertEqual(state.getValue(for: "firstName") as String?, "John")
-        XCTAssertEqual(state.getValue(for: "age") as Int?, 25)
-        XCTAssertEqual(state.getValue(for: "isActive") as Bool?, true)
-        XCTAssertTrue(state.isDirty)
+        #expect(state.getValue(for: "firstName") as String? == "John")
+        #expect(state.getValue(for: "age") as Int? == 25)
+        #expect(state.getValue(for: "isActive") as Bool? == true)
+        #expect(state.isDirty)
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormState validation functionality
     /// TESTING SCOPE: Tests DynamicFormState error management and validation
     /// METHODOLOGY: Add and clear errors in DynamicFormState and verify validation functionality
-    func testDynamicFormStateValidation() {
+    @Test func testDynamicFormStateValidation() {
         let config = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
@@ -271,29 +271,29 @@ final class DynamicFormTests: XCTestCase {
         let state = DynamicFormState(configuration: config)
         
         // Test error management
-        XCTAssertFalse(state.hasErrors(for: "testField"))
-        XCTAssertEqual(state.getErrors(for: "testField").count, 0)
+        #expect(!state.hasErrors(for: "testField"))
+        #expect(state.getErrors(for: "testField").count == 0)
         
         state.addError("Field is required", for: "testField")
-        XCTAssertTrue(state.hasErrors(for: "testField"))
-        XCTAssertEqual(state.getErrors(for: "testField").count, 1)
-        XCTAssertTrue(state.getErrors(for: "testField").contains("Field is required"))
+        #expect(state.hasErrors(for: "testField"))
+        #expect(state.getErrors(for: "testField").count == 1)
+        #expect(state.getErrors(for: "testField").contains("Field is required"))
         
         state.addError("Field is too short", for: "testField")
-        XCTAssertEqual(state.getErrors(for: "testField").count, 2)
+        #expect(state.getErrors(for: "testField").count == 2)
         
         state.clearErrors(for: "testField")
-        XCTAssertFalse(state.hasErrors(for: "testField"))
-        XCTAssertEqual(state.getErrors(for: "testField").count, 0)
+        #expect(!state.hasErrors(for: "testField"))
+        #expect(state.getErrors(for: "testField").count == 0)
         
         state.clearAllErrors()
-        XCTAssertEqual(state.fieldErrors.count, 0)
+        #expect(state.fieldErrors.count == 0)
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormState section management functionality
     /// TESTING SCOPE: Tests DynamicFormState section state management and operations
     /// METHODOLOGY: Toggle section states in DynamicFormState and verify section management functionality
-    func testDynamicFormStateSections() {
+    @Test func testDynamicFormStateSections() {
         let config = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
@@ -310,19 +310,19 @@ final class DynamicFormTests: XCTestCase {
         let state = DynamicFormState(configuration: config)
         
         // Test section state management
-        XCTAssertFalse(state.isSectionCollapsed("section1"))
+        #expect(!state.isSectionCollapsed("section1"))
         
         state.toggleSection("section1")
-        XCTAssertTrue(state.isSectionCollapsed("section1"))
+        #expect(state.isSectionCollapsed("section1"))
         
         state.toggleSection("section1")
-        XCTAssertFalse(state.isSectionCollapsed("section1"))
+        #expect(!state.isSectionCollapsed("section1"))
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormState reset functionality
     /// TESTING SCOPE: Tests DynamicFormState reset and state clearing
     /// METHODOLOGY: Set state, reset DynamicFormState, and verify complete state reset functionality
-    func testDynamicFormStateReset() {
+    @Test func testDynamicFormStateReset() {
         let config = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
@@ -337,17 +337,17 @@ final class DynamicFormTests: XCTestCase {
         state.toggleSection("section1")
         
         // Verify state is set
-        XCTAssertTrue(state.isDirty)
-        XCTAssertTrue(state.hasErrors(for: "firstName"))
-        XCTAssertTrue(state.isSectionCollapsed("section1"))
+        #expect(state.isDirty)
+        #expect(state.hasErrors(for: "firstName"))
+        #expect(state.isSectionCollapsed("section1"))
         
         // Reset
         state.reset()
         
         // Verify state is reset
-        XCTAssertFalse(state.isDirty)
-        XCTAssertFalse(state.hasErrors(for: "firstName"))
-        XCTAssertFalse(state.isSectionCollapsed("section1"))
+        #expect(!state.isDirty)
+        #expect(!state.hasErrors(for: "firstName"))
+        #expect(!state.isSectionCollapsed("section1"))
     }
     
     // MARK: - Dynamic Form Builder Tests
@@ -355,7 +355,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormBuilder basic flow functionality
     /// TESTING SCOPE: Tests DynamicFormBuilder basic form building workflow
     /// METHODOLOGY: Use DynamicFormBuilder to create form and verify basic building functionality
-    func testDynamicFormBuilderBasicFlow() {
+    @Test func testDynamicFormBuilderBasicFlow() {
         var builder = DynamicFormBuilder()
         builder.startSection(id: "personal", title: "Personal Information")
         builder.addContentField(id: "firstName", contentType: .text, label: "First Name", isRequired: true)
@@ -369,19 +369,19 @@ final class DynamicFormTests: XCTestCase {
             title: "User Registration"
         )
         
-        XCTAssertEqual(config.id, "user-form")
-        XCTAssertEqual(config.title, "User Registration")
-        XCTAssertEqual(config.sections.count, 2)
-        XCTAssertEqual(config.sections[0].id, "personal")
-        XCTAssertEqual(config.sections[1].id, "contact")
-        XCTAssertEqual(config.sections[0].fields.count, 2)
-        XCTAssertEqual(config.sections[1].fields.count, 2)
+        #expect(config.id == "user-form")
+        #expect(config.title == "User Registration")
+        #expect(config.sections.count == 2)
+        #expect(config.sections[0].id == "personal")
+        #expect(config.sections[1].id == "contact")
+        #expect(config.sections[0].fields.count == 2)
+        #expect(config.sections[1].fields.count == 2)
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormBuilder validation functionality
     /// TESTING SCOPE: Tests DynamicFormBuilder form building with validation rules
     /// METHODOLOGY: Use DynamicFormBuilder to create form with validation and verify validation functionality
-    func testDynamicFormBuilderWithValidation() {
+    @Test func testDynamicFormBuilderWithValidation() {
         let validationRules = ["minLength": "3", "maxLength": "50", "pattern": "^[a-zA-Z]+$"]
         
         var builder = DynamicFormBuilder()
@@ -398,23 +398,23 @@ final class DynamicFormTests: XCTestCase {
             title: "Validation Form"
         )
         
-        XCTAssertEqual(config.id, "validation-form")
-        XCTAssertEqual(config.title, "Validation Form")
-        XCTAssertEqual(config.sections.count, 1)
-        XCTAssertEqual(config.sections[0].fields.count, 1)
+        #expect(config.id == "validation-form")
+        #expect(config.title == "Validation Form")
+        #expect(config.sections.count == 1)
+        #expect(config.sections[0].fields.count == 1)
         
         let field = config.sections[0].fields[0]
-        XCTAssertEqual(field.id, "username")
-        XCTAssertEqual(field.contentType, .text)
-        XCTAssertEqual(field.validationRules?["minLength"], "3")
-        XCTAssertEqual(field.validationRules?["maxLength"], "50")
-        XCTAssertEqual(field.validationRules?["pattern"], "^[a-zA-Z]+$")
+        #expect(field.id == "username")
+        #expect(field.contentType == .text)
+        #expect(field.validationRules?["minLength"] == "3")
+        #expect(field.validationRules?["maxLength"] == "50")
+        #expect(field.validationRules?["pattern"] == "^[a-zA-Z]+$")
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormBuilder options functionality
     /// TESTING SCOPE: Tests DynamicFormBuilder form building with field options
     /// METHODOLOGY: Use DynamicFormBuilder to create form with options and verify options functionality
-    func testDynamicFormBuilderWithOptions() {
+    @Test func testDynamicFormBuilderWithOptions() {
         var builder = DynamicFormBuilder()
         builder.startSection(id: "preferences", title: "Preferences")
         builder.addContentField(
@@ -439,23 +439,23 @@ final class DynamicFormTests: XCTestCase {
             title: "Options Form"
         )
         
-        XCTAssertEqual(config.sections.count, 1)
-        XCTAssertEqual(config.sections[0].fields.count, 3)
+        #expect(config.sections.count == 1)
+        #expect(config.sections[0].fields.count == 3)
         
         let themeField = config.sections[0].fields[0]
-        XCTAssertEqual(themeField.contentType, .select)
-        XCTAssertEqual(themeField.options?.count, 3)
-        XCTAssertTrue(themeField.contentType == .select)
+        #expect(themeField.contentType == .select)
+        #expect(themeField.options?.count == 3)
+        #expect(themeField.contentType == .select)
         
         let notificationsField = config.sections[0].fields[1]
-        XCTAssertEqual(notificationsField.contentType, .multiselect)
-        XCTAssertTrue(notificationsField.contentType == .multiselect)
+        #expect(notificationsField.contentType == .multiselect)
+        #expect(notificationsField.contentType == .multiselect)
     }
     
     /// BUSINESS PURPOSE: Validate DynamicFormBuilder metadata functionality
     /// TESTING SCOPE: Tests DynamicFormBuilder form building with metadata
     /// METHODOLOGY: Use DynamicFormBuilder to create form with metadata and verify metadata functionality
-    func testDynamicFormBuilderWithMetadata() {
+    @Test func testDynamicFormBuilderWithMetadata() {
         var builder = DynamicFormBuilder()
         builder.startSection(
             id: "metadata",
@@ -475,20 +475,20 @@ final class DynamicFormTests: XCTestCase {
             title: "Metadata Form"
         )
         
-        XCTAssertEqual(config.sections.count, 1)
+        #expect(config.sections.count == 1)
         let section = config.sections[0]
-        XCTAssertTrue(section.isCollapsible)
-        XCTAssertFalse(section.isCollapsed)
+        #expect(section.isCollapsible)
+        #expect(!section.isCollapsed)
         
         let field = section.fields[0]
-        XCTAssertEqual(field.metadata?["maxWidth"], "300")
-        XCTAssertEqual(field.metadata?["placeholder"], "Custom placeholder")
+        #expect(field.metadata?["maxWidth"] == "300")
+        #expect(field.metadata?["placeholder"] == "Custom placeholder")
     }
     
     /// BUSINESS PURPOSE: Validate DynamicForm complete workflow functionality
     /// TESTING SCOPE: Tests DynamicForm complete end-to-end workflow
     /// METHODOLOGY: Create complete DynamicForm workflow and verify end-to-end functionality
-    func testDynamicFormCompleteWorkflow() {
+    @Test func testDynamicFormCompleteWorkflow() {
         var builder = DynamicFormBuilder()
         builder.startSection(id: "personal", title: "Personal Information")
         builder.addContentField(id: "firstName", contentType: .text, label: "First Name", isRequired: true)
@@ -516,15 +516,15 @@ final class DynamicFormTests: XCTestCase {
         
         // Verify form data
         let formData = formState.formData
-        XCTAssertEqual(formData["firstName"] as? String, "John")
-        XCTAssertEqual(formData["lastName"] as? String, "Doe")
-        XCTAssertEqual(formData["email"] as? String, "john@example.com")
-        XCTAssertEqual(formData["theme"] as? String, "Dark")
-        XCTAssertEqual(formData["notifications"] as? Bool, true)
+        #expect(formData["firstName"] as? String == "John")
+        #expect(formData["lastName"] as? String == "Doe")
+        #expect(formData["email"] as? String == "john@example.com")
+        #expect(formData["theme"] as? String == "Dark")
+        #expect(formData["notifications"] as? Bool == true)
         
         // Verify form is valid
-        XCTAssertTrue(formState.isValid)
-        XCTAssertTrue(formState.isDirty)
+        #expect(formState.isValid)
+        #expect(formState.isDirty)
     }
     
     // MARK: - Performance Tests
@@ -532,7 +532,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormBuilder performance functionality
     /// TESTING SCOPE: Tests DynamicFormBuilder performance with large forms
     /// METHODOLOGY: Measure DynamicFormBuilder performance when creating large forms with many fields
-    func testDynamicFormBuilderPerformance() {
+    @Test func testDynamicFormBuilderPerformance() {
         measure {
             var builder = DynamicFormBuilder()
             for i in 0..<100 {
@@ -553,7 +553,7 @@ final class DynamicFormTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DynamicFormState performance functionality
     /// TESTING SCOPE: Tests DynamicFormState performance with large forms
     /// METHODOLOGY: Measure DynamicFormState performance when managing large forms with many fields
-    func testDynamicFormStatePerformance() {
+    @Test func testDynamicFormStatePerformance() {
         let config = DynamicFormConfiguration(
             id: "perf-form",
             title: "Performance Form",

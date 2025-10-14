@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Form Usage Example Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class FormUsageExampleComponentAccessibilityTests: XCTestCase {
+final class FormUsageExampleComponentAccessibilityTests {
     
     // MARK: - Form Usage Example Component Tests
     
-    func testFormUsageExampleGeneratesAccessibilityIdentifiers() async {
+    @Test func testFormUsageExampleGeneratesAccessibilityIdentifiers() async {
         // Given: FormUsageExample
         let testView = FormUsageExample()
         
@@ -25,7 +25,7 @@ final class FormUsageExampleComponentAccessibilityTests: XCTestCase {
             componentName: "FormUsageExample"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers")
     }
 }
 

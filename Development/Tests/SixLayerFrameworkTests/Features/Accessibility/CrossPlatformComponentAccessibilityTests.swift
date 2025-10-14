@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Cross-Platform Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class CrossPlatformComponentAccessibilityTests: XCTestCase {
+final class CrossPlatformComponentAccessibilityTests {
     
     // MARK: - Cross-Platform Component Tests
     
-    func testCrossPlatformOptimizationGeneratesAccessibilityIdentifiers() async {
+    @Test func testCrossPlatformOptimizationGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformOptimization
         let testView = CrossPlatformOptimization()
         
@@ -25,7 +25,7 @@ final class CrossPlatformComponentAccessibilityTests: XCTestCase {
             componentName: "CrossPlatformOptimization"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CrossPlatformOptimization should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CrossPlatformOptimization should generate accessibility identifiers")
     }
 }
 

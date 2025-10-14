@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -6,7 +6,7 @@ import SwiftUI
 /// Tests the platform detection and configuration logic without relying on runtime platform detection
 /// These tests focus on the logic that determines platform-specific behavior
 @MainActor
-final class PlatformLogicTests: XCTestCase {
+final class PlatformLogicTests {
     
     // Local, general-purpose capability snapshot for tests (do not use card-specific config)
     struct PlatformCapabilities {
@@ -28,7 +28,7 @@ final class PlatformLogicTests: XCTestCase {
     
     // MARK: - Platform Detection Logic Tests
     
-    func testPlatformDetectionLogic() {
+    @Test func testPlatformDetectionLogic() {
         // GIVEN: Different platform configurations
         let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
@@ -40,48 +40,48 @@ final class PlatformLogicTests: XCTestCase {
             // Test that platform-specific capabilities are correctly determined
             switch platform {
             case .iOS:
-                XCTAssertTrue(config.supportsTouch, "iOS should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "iOS should support haptic feedback")
-                XCTAssertTrue(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
-                XCTAssertTrue(config.supportsVoiceOver, "iOS should support VoiceOver")
-                XCTAssertTrue(config.supportsSwitchControl, "iOS should support SwitchControl")
+                #expect(config.supportsTouch, "iOS should support touch")
+                #expect(config.supportsHapticFeedback, "iOS should support haptic feedback")
+                #expect(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+                #expect(config.supportsVoiceOver, "iOS should support VoiceOver")
+                #expect(config.supportsSwitchControl, "iOS should support SwitchControl")
                 
             case .macOS:
-                XCTAssertFalse(config.supportsTouch, "macOS should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "macOS should not support haptic feedback")
-                XCTAssertFalse(config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
-                XCTAssertTrue(config.supportsHover, "macOS should support hover")
-                XCTAssertTrue(config.supportsVoiceOver, "macOS should support VoiceOver")
-                XCTAssertTrue(config.supportsSwitchControl, "macOS should support SwitchControl")
+                #expect(!config.supportsTouch, "macOS should not support touch")
+                #expect(!config.supportsHapticFeedback, "macOS should not support haptic feedback")
+                #expect(!config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
+                #expect(config.supportsHover, "macOS should support hover")
+                #expect(config.supportsVoiceOver, "macOS should support VoiceOver")
+                #expect(config.supportsSwitchControl, "macOS should support SwitchControl")
                 
             case .watchOS:
-                XCTAssertTrue(config.supportsTouch, "watchOS should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "watchOS should support haptic feedback")
-                XCTAssertTrue(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
-                XCTAssertFalse(config.supportsHover, "watchOS should not support hover")
-                XCTAssertTrue(config.supportsVoiceOver, "watchOS should support VoiceOver")
-                XCTAssertTrue(config.supportsSwitchControl, "watchOS should support SwitchControl")
+                #expect(config.supportsTouch, "watchOS should support touch")
+                #expect(config.supportsHapticFeedback, "watchOS should support haptic feedback")
+                #expect(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
+                #expect(!config.supportsHover, "watchOS should not support hover")
+                #expect(config.supportsVoiceOver, "watchOS should support VoiceOver")
+                #expect(config.supportsSwitchControl, "watchOS should support SwitchControl")
                 
             case .tvOS:
-                XCTAssertFalse(config.supportsTouch, "tvOS should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "tvOS should not support haptic feedback")
-                XCTAssertFalse(config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
-                XCTAssertFalse(config.supportsHover, "tvOS should not support hover")
-                XCTAssertTrue(config.supportsVoiceOver, "tvOS should support VoiceOver")
-                XCTAssertTrue(config.supportsSwitchControl, "tvOS should support SwitchControl")
+                #expect(!config.supportsTouch, "tvOS should not support touch")
+                #expect(!config.supportsHapticFeedback, "tvOS should not support haptic feedback")
+                #expect(!config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
+                #expect(!config.supportsHover, "tvOS should not support hover")
+                #expect(config.supportsVoiceOver, "tvOS should support VoiceOver")
+                #expect(config.supportsSwitchControl, "tvOS should support SwitchControl")
                 
             case .visionOS:
-                XCTAssertFalse(config.supportsTouch, "visionOS should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "visionOS should not support haptic feedback")
-                XCTAssertFalse(config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
-                XCTAssertTrue(config.supportsHover, "visionOS should support hover")
-                XCTAssertTrue(config.supportsVoiceOver, "visionOS should support VoiceOver")
-                XCTAssertTrue(config.supportsSwitchControl, "visionOS should support SwitchControl")
+                #expect(!config.supportsTouch, "visionOS should not support touch")
+                #expect(!config.supportsHapticFeedback, "visionOS should not support haptic feedback")
+                #expect(!config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
+                #expect(config.supportsHover, "visionOS should support hover")
+                #expect(config.supportsVoiceOver, "visionOS should support VoiceOver")
+                #expect(config.supportsSwitchControl, "visionOS should support SwitchControl")
             }
         }
     }
     
-    func testDeviceTypeDetectionLogic() {
+    @Test func testDeviceTypeDetectionLogic() {
         // GIVEN: Different device types
         let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
         
@@ -93,43 +93,43 @@ final class PlatformLogicTests: XCTestCase {
             // Test that device-specific capabilities are correctly determined
             switch deviceType {
             case .phone:
-                XCTAssertTrue(config.supportsTouch, "Phone should support touch")
+                #expect(config.supportsTouch, "Phone should support touch")
             case .car:
-                XCTAssertTrue(config.supportsTouch, "Car should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "Car should support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "Car should not support hover")
+                #expect(config.supportsTouch, "Car should support touch")
+                #expect(config.supportsHapticFeedback, "Car should support haptic feedback")
+                #expect(!config.supportsHover, "Car should not support hover")
                 
             case .pad:
-                XCTAssertTrue(config.supportsTouch, "Pad should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "Pad should support haptic feedback")
-                XCTAssertTrue(config.supportsHover, "Pad should support hover")
+                #expect(config.supportsTouch, "Pad should support touch")
+                #expect(config.supportsHapticFeedback, "Pad should support haptic feedback")
+                #expect(config.supportsHover, "Pad should support hover")
                 
             case .mac:
-                XCTAssertFalse(config.supportsTouch, "Mac should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "Mac should not support haptic feedback")
-                XCTAssertTrue(config.supportsHover, "Mac should support hover")
+                #expect(!config.supportsTouch, "Mac should not support touch")
+                #expect(!config.supportsHapticFeedback, "Mac should not support haptic feedback")
+                #expect(config.supportsHover, "Mac should support hover")
                 
             case .watch:
-                XCTAssertTrue(config.supportsTouch, "Watch should support touch")
-                XCTAssertTrue(config.supportsHapticFeedback, "Watch should support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "Watch should not support hover")
+                #expect(config.supportsTouch, "Watch should support touch")
+                #expect(config.supportsHapticFeedback, "Watch should support haptic feedback")
+                #expect(!config.supportsHover, "Watch should not support hover")
                 
             case .tv:
-                XCTAssertFalse(config.supportsTouch, "TV should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "TV should not support haptic feedback")
-                XCTAssertFalse(config.supportsHover, "TV should not support hover")
+                #expect(!config.supportsTouch, "TV should not support touch")
+                #expect(!config.supportsHapticFeedback, "TV should not support haptic feedback")
+                #expect(!config.supportsHover, "TV should not support hover")
                 
             case .vision:
-                XCTAssertFalse(config.supportsTouch, "Vision should not support touch")
-                XCTAssertFalse(config.supportsHapticFeedback, "Vision should not support haptic feedback")
-                XCTAssertTrue(config.supportsHover, "Vision should support hover")
+                #expect(!config.supportsTouch, "Vision should not support touch")
+                #expect(!config.supportsHapticFeedback, "Vision should not support haptic feedback")
+                #expect(config.supportsHover, "Vision should support hover")
             }
         }
     }
     
     // MARK: - Capability Matrix Tests
     
-    func testCapabilityMatrixConsistency() {
+    @Test func testCapabilityMatrixConsistency() {
         // GIVEN: All platform and device combinations
         let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
@@ -145,33 +145,33 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
+    @Test func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
-            XCTAssertTrue(config.supportsTouch, "Haptic feedback should only be available with touch on \(platform) \(deviceType)")
+            #expect(config.supportsTouch, "Haptic feedback should only be available with touch on \(platform) \(deviceType)")
         }
         
         // AssistiveTouch should only be available with touch
         if config.supportsAssistiveTouch {
-            XCTAssertTrue(config.supportsTouch, "AssistiveTouch should only be available with touch on \(platform) \(deviceType)")
+            #expect(config.supportsTouch, "AssistiveTouch should only be available with touch on \(platform) \(deviceType)")
         }
         
         // Hover delay should be zero if hover is not supported
         if !config.supportsHover {
-            XCTAssertEqual(config.hoverDelay, 0, "Hover delay should be zero when hover is not supported on \(platform) \(deviceType)")
+            #expect(config.hoverDelay == 0, "Hover delay should be zero when hover is not supported on \(platform) \(deviceType)")
         }
         
         // Touch target should be appropriate for touch platforms
         if config.supportsTouch {
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch target should be adequate for touch platforms on \(platform) \(deviceType)")
+            #expect(config.minTouchTarget >= 44, "Touch target should be adequate for touch platforms on \(platform) \(deviceType)")
         } else {
-            XCTAssertEqual(config.minTouchTarget, 0, "Touch target should be zero for non-touch platforms on \(platform) \(deviceType)")
+            #expect(config.minTouchTarget == 0, "Touch target should be zero for non-touch platforms on \(platform) \(deviceType)")
         }
     }
     
     // MARK: - Vision Framework Availability Tests
     
-    func testVisionFrameworkAvailabilityLogic() {
+    @Test func testVisionFrameworkAvailabilityLogic() {
         // GIVEN: Different platforms
         let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
@@ -182,15 +182,15 @@ final class PlatformLogicTests: XCTestCase {
             // THEN: Vision availability should be correct for each platform
             switch platform {
             case .iOS, .macOS, .visionOS:
-                XCTAssertTrue(hasVision, "\(platform) should have Vision framework")
+                #expect(hasVision, "\(platform) should have Vision framework")
                 
             case .watchOS, .tvOS:
-                XCTAssertFalse(hasVision, "\(platform) should not have Vision framework")
+                #expect(!hasVision, "\(platform) should not have Vision framework")
             }
         }
     }
     
-    func testOCRAvailabilityLogic() {
+    @Test func testOCRAvailabilityLogic() {
         // GIVEN: Different platforms
         let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
@@ -201,17 +201,17 @@ final class PlatformLogicTests: XCTestCase {
             // THEN: OCR availability should be correct for each platform
             switch platform {
             case .iOS, .macOS, .visionOS:
-                XCTAssertTrue(hasOCR, "\(platform) should have OCR")
+                #expect(hasOCR, "\(platform) should have OCR")
                 
             case .watchOS, .tvOS:
-                XCTAssertFalse(hasOCR, "\(platform) should not have OCR")
+                #expect(!hasOCR, "\(platform) should not have OCR")
             }
         }
     }
     
     // MARK: - Layout Decision Logic Tests
     
-    func testLayoutDecisionLogic() {
+    @Test func testLayoutDecisionLogic() {
         // GIVEN: Different platform configurations
         let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
@@ -225,25 +225,25 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
+    @Test func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate touch targets
         if config.supportsTouch {
-            XCTAssertGreaterThanOrEqual(layoutDecision.cardWidth, CGFloat(config.minTouchTarget), "Card width should accommodate touch targets on \(platform)")
-            XCTAssertGreaterThanOrEqual(layoutDecision.cardHeight, CGFloat(config.minTouchTarget), "Card height should accommodate touch targets on \(platform)")
+            #expect(layoutDecision.cardWidth >= CGFloat(config.minTouchTarget), "Card width should accommodate touch targets on \(platform)")
+            #expect(layoutDecision.cardHeight >= CGFloat(config.minTouchTarget), "Card height should accommodate touch targets on \(platform)")
         }
         
         // Hover platforms should have appropriate spacing
         if config.supportsHover {
-            XCTAssertGreaterThan(layoutDecision.spacing, 0, "Hover platforms should have spacing on \(platform)")
+            #expect(layoutDecision.spacing > 0, "Hover platforms should have spacing on \(platform)")
         }
         
         // All platforms should have reasonable padding
-        XCTAssertGreaterThanOrEqual(layoutDecision.padding, 8, "All platforms should have reasonable padding on \(platform)")
+        #expect(layoutDecision.padding >= 8, "All platforms should have reasonable padding on \(platform)")
     }
     
     // MARK: - Animation Logic Tests
     
-    func testAnimationLogic() {
+    @Test func testAnimationLogic() {
         // GIVEN: Different platform configurations
         let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
         
@@ -257,14 +257,14 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testAnimationAppropriateness(_ performanceConfig: PerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
+    @Test func testAnimationAppropriateness(_ performanceConfig: PerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate animation duration
         if config.supportsTouch {
-            XCTAssertGreaterThan(performanceConfig.maxAnimationDuration, 0, "Touch platforms should have animation duration on \(platform)")
+            #expect(performanceConfig.maxAnimationDuration > 0, "Touch platforms should have animation duration on \(platform)")
         }
         
         // All platforms should have reasonable animation settings
-        XCTAssertGreaterThanOrEqual(performanceConfig.maxAnimationDuration, 0, "All platforms should have non-negative animation duration on \(platform)")
+        #expect(performanceConfig.maxAnimationDuration >= 0, "All platforms should have non-negative animation duration on \(platform)")
     }
     
     // MARK: - Helper Methods

@@ -30,17 +30,17 @@
 //  - 🔧 Action Required: Add accessibility type conversion testing
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Comprehensive tests for all accessibility types and enums
 @MainActor
-final class AccessibilityTypesTests: XCTestCase {
+final class AccessibilityTypesTests {
     
     // MARK: - Platform-Specific Business Logic Tests
     
-    func testAccessibilityTypesAcrossPlatforms() {
+    @Test func testAccessibilityTypesAcrossPlatforms() {
         // Given: Platform-specific accessibility type expectations
         let platform = SixLayerPlatform.current
         
@@ -49,64 +49,64 @@ final class AccessibilityTypesTests: XCTestCase {
         switch platform {
         case .iOS:
             // iOS should support comprehensive accessibility types
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "iOS should support comprehensive VoiceOver announcement types")
-            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "iOS should support comprehensive VoiceOver gesture types")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "iOS should support comprehensive VoiceOver custom action types")
+            #expect(VoiceOverAnnouncementType.allCases.count >= 6, "iOS should support comprehensive VoiceOver announcement types")
+            #expect(VoiceOverGestureType.allCases.count >= 24, "iOS should support comprehensive VoiceOver gesture types")
+            #expect(VoiceOverCustomActionType.allCases.count >= 17, "iOS should support comprehensive VoiceOver custom action types")
             
             // Test iOS-specific accessibility type behavior
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "iOS should support element announcements")
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.action), "iOS should support action announcements")
-            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.singleTap), "iOS should support single tap gestures")
-            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.doubleTap), "iOS should support double tap gestures")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.element), "iOS should support element announcements")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.action), "iOS should support action announcements")
+            #expect(VoiceOverGestureType.allCases.contains(.singleTap), "iOS should support single tap gestures")
+            #expect(VoiceOverGestureType.allCases.contains(.doubleTap), "iOS should support double tap gestures")
             
         case .macOS:
             // macOS should support keyboard-focused accessibility types
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "macOS should support comprehensive VoiceOver announcement types")
-            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "macOS should support comprehensive VoiceOver gesture types")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "macOS should support comprehensive VoiceOver custom action types")
+            #expect(VoiceOverAnnouncementType.allCases.count >= 6, "macOS should support comprehensive VoiceOver announcement types")
+            #expect(VoiceOverGestureType.allCases.count >= 24, "macOS should support comprehensive VoiceOver gesture types")
+            #expect(VoiceOverCustomActionType.allCases.count >= 17, "macOS should support comprehensive VoiceOver custom action types")
             
             // Test macOS-specific accessibility type behavior
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "macOS should support element announcements")
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.state), "macOS should support state announcements")
-            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.rotor), "macOS should support rotor gestures")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "macOS should support activate actions")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.element), "macOS should support element announcements")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.state), "macOS should support state announcements")
+            #expect(VoiceOverGestureType.allCases.contains(.rotor), "macOS should support rotor gestures")
+            #expect(VoiceOverCustomActionType.allCases.contains(.activate), "macOS should support activate actions")
             
         case .watchOS:
             // watchOS should have simplified accessibility types
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "watchOS should support comprehensive VoiceOver announcement types")
-            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "watchOS should support comprehensive VoiceOver gesture types")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "watchOS should support comprehensive VoiceOver custom action types")
+            #expect(VoiceOverAnnouncementType.allCases.count >= 6, "watchOS should support comprehensive VoiceOver announcement types")
+            #expect(VoiceOverGestureType.allCases.count >= 24, "watchOS should support comprehensive VoiceOver gesture types")
+            #expect(VoiceOverCustomActionType.allCases.count >= 17, "watchOS should support comprehensive VoiceOver custom action types")
             
             // Test watchOS-specific accessibility type behavior
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "watchOS should support element announcements")
-            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.singleTap), "watchOS should support single tap gestures")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "watchOS should support activate actions")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.element), "watchOS should support element announcements")
+            #expect(VoiceOverGestureType.allCases.contains(.singleTap), "watchOS should support single tap gestures")
+            #expect(VoiceOverCustomActionType.allCases.contains(.activate), "watchOS should support activate actions")
             
         case .tvOS:
             // tvOS should support focus-based accessibility types
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "tvOS should support comprehensive VoiceOver announcement types")
-            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "tvOS should support comprehensive VoiceOver gesture types")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "tvOS should support comprehensive VoiceOver custom action types")
+            #expect(VoiceOverAnnouncementType.allCases.count >= 6, "tvOS should support comprehensive VoiceOver announcement types")
+            #expect(VoiceOverGestureType.allCases.count >= 24, "tvOS should support comprehensive VoiceOver gesture types")
+            #expect(VoiceOverCustomActionType.allCases.count >= 17, "tvOS should support comprehensive VoiceOver custom action types")
             
             // Test tvOS-specific accessibility type behavior
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "tvOS should support element announcements")
-            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.rotor), "tvOS should support rotor gestures")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "tvOS should support activate actions")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.element), "tvOS should support element announcements")
+            #expect(VoiceOverGestureType.allCases.contains(.rotor), "tvOS should support rotor gestures")
+            #expect(VoiceOverCustomActionType.allCases.contains(.activate), "tvOS should support activate actions")
             
         case .visionOS:
             // visionOS should support spatial accessibility types
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.count >= 6, "visionOS should support comprehensive VoiceOver announcement types")
-            XCTAssertTrue(VoiceOverGestureType.allCases.count >= 24, "visionOS should support comprehensive VoiceOver gesture types")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.count >= 17, "visionOS should support comprehensive VoiceOver custom action types")
+            #expect(VoiceOverAnnouncementType.allCases.count >= 6, "visionOS should support comprehensive VoiceOver announcement types")
+            #expect(VoiceOverGestureType.allCases.count >= 24, "visionOS should support comprehensive VoiceOver gesture types")
+            #expect(VoiceOverCustomActionType.allCases.count >= 17, "visionOS should support comprehensive VoiceOver custom action types")
             
             // Test visionOS-specific accessibility type behavior
-            XCTAssertTrue(VoiceOverAnnouncementType.allCases.contains(.element), "visionOS should support element announcements")
-            XCTAssertTrue(VoiceOverGestureType.allCases.contains(.singleTap), "visionOS should support single tap gestures")
-            XCTAssertTrue(VoiceOverCustomActionType.allCases.contains(.activate), "visionOS should support activate actions")
+            #expect(VoiceOverAnnouncementType.allCases.contains(.element), "visionOS should support element announcements")
+            #expect(VoiceOverGestureType.allCases.contains(.singleTap), "visionOS should support single tap gestures")
+            #expect(VoiceOverCustomActionType.allCases.contains(.activate), "visionOS should support activate actions")
         }
     }
     
-    func testAccessibilityTypeConversionAndMapping() {
+    @Test func testAccessibilityTypeConversionAndMapping() {
         // Given: Different accessibility types for conversion testing
         let announcementType = VoiceOverAnnouncementType.element
         let gestureType = VoiceOverGestureType.singleTap
@@ -118,36 +118,36 @@ final class AccessibilityTypesTests: XCTestCase {
         let actionString = actionType.rawValue
         
         // Then: Test business logic for type conversion
-        XCTAssertNotNil(announcementString, "Announcement type should convert to string")
-        XCTAssertNotNil(gestureString, "Gesture type should convert to string")
-        XCTAssertNotNil(actionString, "Action type should convert to string")
+        #expect(announcementString != nil, "Announcement type should convert to string")
+        #expect(gestureString != nil, "Gesture type should convert to string")
+        #expect(actionString != nil, "Action type should convert to string")
         
         // Test business logic: String conversion should be reversible
-        XCTAssertEqual(VoiceOverAnnouncementType(rawValue: announcementString), announcementType, 
+        #expect(VoiceOverAnnouncementType(rawValue: announcementString) == announcementType, 
                       "Announcement type conversion should be reversible")
-        XCTAssertEqual(VoiceOverGestureType(rawValue: gestureString), gestureType, 
+        #expect(VoiceOverGestureType(rawValue: gestureString) == gestureType, 
                       "Gesture type conversion should be reversible")
-        XCTAssertEqual(VoiceOverCustomActionType(rawValue: actionString), actionType, 
+        #expect(VoiceOverCustomActionType(rawValue: actionString) == actionType, 
                       "Action type conversion should be reversible")
         
         // Test business logic: All enum cases should be convertible
         for announcementType in VoiceOverAnnouncementType.allCases {
-            XCTAssertNotNil(VoiceOverAnnouncementType(rawValue: announcementType.rawValue), 
+            #expect(VoiceOverAnnouncementType(rawValue: announcementType.rawValue) != nil, 
                           "All announcement types should be convertible")
         }
         
         for gestureType in VoiceOverGestureType.allCases {
-            XCTAssertNotNil(VoiceOverGestureType(rawValue: gestureType.rawValue), 
+            #expect(VoiceOverGestureType(rawValue: gestureType.rawValue) != nil, 
                           "All gesture types should be convertible")
         }
         
         for actionType in VoiceOverCustomActionType.allCases {
-            XCTAssertNotNil(VoiceOverCustomActionType(rawValue: actionType.rawValue), 
+            #expect(VoiceOverCustomActionType(rawValue: actionType.rawValue) != nil, 
                           "All action types should be convertible")
         }
     }
     
-    func testAccessibilityTypeConsistencyAndValidation() {
+    @Test func testAccessibilityTypeConsistencyAndValidation() {
         // Given: Accessibility types for consistency testing
         let announcementTypes = VoiceOverAnnouncementType.allCases
         let gestureTypes = VoiceOverGestureType.allCases
@@ -155,129 +155,129 @@ final class AccessibilityTypesTests: XCTestCase {
         
         // When: Validating accessibility type consistency
         // Then: Test business logic for type consistency
-        XCTAssertTrue(announcementTypes.count > 0, "Should have at least one announcement type")
-        XCTAssertTrue(gestureTypes.count > 0, "Should have at least one gesture type")
-        XCTAssertTrue(actionTypes.count > 0, "Should have at least one action type")
+        #expect(announcementTypes.count > 0, "Should have at least one announcement type")
+        #expect(gestureTypes.count > 0, "Should have at least one gesture type")
+        #expect(actionTypes.count > 0, "Should have at least one action type")
         
         // Test business logic: All types should have unique raw values
         let announcementRawValues = Set(announcementTypes.map { $0.rawValue })
-        XCTAssertEqual(announcementRawValues.count, announcementTypes.count, 
+        #expect(announcementRawValues.count == announcementTypes.count, 
                       "All announcement types should have unique raw values")
         
         let gestureRawValues = Set(gestureTypes.map { $0.rawValue })
-        XCTAssertEqual(gestureRawValues.count, gestureTypes.count, 
+        #expect(gestureRawValues.count == gestureTypes.count, 
                       "All gesture types should have unique raw values")
         
         let actionRawValues = Set(actionTypes.map { $0.rawValue })
-        XCTAssertEqual(actionRawValues.count, actionTypes.count, 
+        #expect(actionRawValues.count == actionTypes.count, 
                       "All action types should have unique raw values")
         
         // Test business logic: All types should be case iterable
-        XCTAssertTrue(announcementTypes.contains(.element), "Should contain element announcement type")
-        XCTAssertTrue(gestureTypes.contains(.singleTap), "Should contain single tap gesture type")
-        XCTAssertTrue(actionTypes.contains(.activate), "Should contain activate action type")
+        #expect(announcementTypes.contains(.element), "Should contain element announcement type")
+        #expect(gestureTypes.contains(.singleTap), "Should contain single tap gesture type")
+        #expect(actionTypes.contains(.activate), "Should contain activate action type")
     }
     
     // MARK: - VoiceOver Types Tests
     
-    func testVoiceOverAnnouncementType() {
+    @Test func testVoiceOverAnnouncementType() {
         let types = VoiceOverAnnouncementType.allCases
-        XCTAssertEqual(types.count, 6)
-        XCTAssertTrue(types.contains(.element))
-        XCTAssertTrue(types.contains(.action))
-        XCTAssertTrue(types.contains(.state))
-        XCTAssertTrue(types.contains(.hint))
-        XCTAssertTrue(types.contains(.value))
-        XCTAssertTrue(types.contains(.custom))
+        #expect(types.count == 6)
+        #expect(types.contains(.element))
+        #expect(types.contains(.action))
+        #expect(types.contains(.state))
+        #expect(types.contains(.hint))
+        #expect(types.contains(.value))
+        #expect(types.contains(.custom))
     }
     
-    func testVoiceOverNavigationMode() {
+    @Test func testVoiceOverNavigationMode() {
         let modes = VoiceOverNavigationMode.allCases
-        XCTAssertEqual(modes.count, 3)
-        XCTAssertTrue(modes.contains(.automatic))
-        XCTAssertTrue(modes.contains(.manual))
-        XCTAssertTrue(modes.contains(.custom))
+        #expect(modes.count == 3)
+        #expect(modes.contains(.automatic))
+        #expect(modes.contains(.manual))
+        #expect(modes.contains(.custom))
     }
     
-    func testVoiceOverGestureType() {
+    @Test func testVoiceOverGestureType() {
         let gestures = VoiceOverGestureType.allCases
-        XCTAssertEqual(gestures.count, 24)
-        XCTAssertTrue(gestures.contains(.singleTap))
-        XCTAssertTrue(gestures.contains(.doubleTap))
-        XCTAssertTrue(gestures.contains(.tripleTap))
-        XCTAssertTrue(gestures.contains(.rotor))
-        XCTAssertTrue(gestures.contains(.custom))
+        #expect(gestures.count == 24)
+        #expect(gestures.contains(.singleTap))
+        #expect(gestures.contains(.doubleTap))
+        #expect(gestures.contains(.tripleTap))
+        #expect(gestures.contains(.rotor))
+        #expect(gestures.contains(.custom))
     }
     
-    func testVoiceOverCustomActionType() {
+    @Test func testVoiceOverCustomActionType() {
         let actions = VoiceOverCustomActionType.allCases
-        XCTAssertEqual(actions.count, 17)
-        XCTAssertTrue(actions.contains(.activate))
-        XCTAssertTrue(actions.contains(.edit))
-        XCTAssertTrue(actions.contains(.delete))
-        XCTAssertTrue(actions.contains(.play))
-        XCTAssertTrue(actions.contains(.pause))
-        XCTAssertTrue(actions.contains(.custom))
+        #expect(actions.count == 17)
+        #expect(actions.contains(.activate))
+        #expect(actions.contains(.edit))
+        #expect(actions.contains(.delete))
+        #expect(actions.contains(.play))
+        #expect(actions.contains(.pause))
+        #expect(actions.contains(.custom))
     }
     
-    func testVoiceOverAnnouncementPriority() {
+    @Test func testVoiceOverAnnouncementPriority() {
         let priorities = VoiceOverAnnouncementPriority.allCases
-        XCTAssertEqual(priorities.count, 4)
-        XCTAssertTrue(priorities.contains(.low))
-        XCTAssertTrue(priorities.contains(.normal))
-        XCTAssertTrue(priorities.contains(.high))
-        XCTAssertTrue(priorities.contains(.critical))
+        #expect(priorities.count == 4)
+        #expect(priorities.contains(.low))
+        #expect(priorities.contains(.normal))
+        #expect(priorities.contains(.high))
+        #expect(priorities.contains(.critical))
     }
     
-    func testVoiceOverAnnouncementTiming() {
+    @Test func testVoiceOverAnnouncementTiming() {
         let timings = VoiceOverAnnouncementTiming.allCases
-        XCTAssertEqual(timings.count, 4)
-        XCTAssertTrue(timings.contains(.immediate))
-        XCTAssertTrue(timings.contains(.delayed))
-        XCTAssertTrue(timings.contains(.queued))
-        XCTAssertTrue(timings.contains(.interrupt))
+        #expect(timings.count == 4)
+        #expect(timings.contains(.immediate))
+        #expect(timings.contains(.delayed))
+        #expect(timings.contains(.queued))
+        #expect(timings.contains(.interrupt))
     }
     
-    func testVoiceOverElementTraits() {
+    @Test func testVoiceOverElementTraits() {
         let traits = VoiceOverElementTraits.all
-        XCTAssertNotEqual(traits.rawValue, 0)
+        #expect(traits.rawValue != 0)
         
         let button = VoiceOverElementTraits.button
         let link = VoiceOverElementTraits.link
         let header = VoiceOverElementTraits.header
         
-        XCTAssertTrue(button.contains(.button))
-        XCTAssertTrue(link.contains(.link))
-        XCTAssertTrue(header.contains(.header))
+        #expect(button.contains(.button))
+        #expect(link.contains(.link))
+        #expect(header.contains(.header))
         
         let combined = button.union(link).union(header)
-        XCTAssertTrue(combined.contains(.button))
-        XCTAssertTrue(combined.contains(.link))
-        XCTAssertTrue(combined.contains(.header))
+        #expect(combined.contains(.button))
+        #expect(combined.contains(.link))
+        #expect(combined.contains(.header))
     }
     
-    func testVoiceOverConfiguration() {
+    @Test func testVoiceOverConfiguration() {
         let config = VoiceOverConfiguration()
-        XCTAssertEqual(config.announcementType, .element)
-        XCTAssertEqual(config.navigationMode, .automatic)
-        XCTAssertEqual(config.gestureSensitivity, .medium)
-        XCTAssertEqual(config.announcementPriority, .normal)
-        XCTAssertEqual(config.announcementTiming, .immediate)
-        XCTAssertTrue(config.enableCustomActions)
-        XCTAssertTrue(config.enableGestureRecognition)
-        XCTAssertTrue(config.enableRotorSupport)
-        XCTAssertTrue(config.enableHapticFeedback)
+        #expect(config.announcementType == .element)
+        #expect(config.navigationMode == .automatic)
+        #expect(config.gestureSensitivity == .medium)
+        #expect(config.announcementPriority == .normal)
+        #expect(config.announcementTiming == .immediate)
+        #expect(config.enableCustomActions)
+        #expect(config.enableGestureRecognition)
+        #expect(config.enableRotorSupport)
+        #expect(config.enableHapticFeedback)
     }
     
-    func testVoiceOverGestureSensitivity() {
+    @Test func testVoiceOverGestureSensitivity() {
         let sensitivities = VoiceOverGestureSensitivity.allCases
-        XCTAssertEqual(sensitivities.count, 3)
-        XCTAssertTrue(sensitivities.contains(.low))
-        XCTAssertTrue(sensitivities.contains(.medium))
-        XCTAssertTrue(sensitivities.contains(.high))
+        #expect(sensitivities.count == 3)
+        #expect(sensitivities.contains(.low))
+        #expect(sensitivities.contains(.medium))
+        #expect(sensitivities.contains(.high))
     }
     
-    func testVoiceOverCustomAction() {
+    @Test func testVoiceOverCustomAction() {
         var actionExecuted = false
         let action = VoiceOverCustomAction(
             name: "Test Action",
@@ -286,13 +286,13 @@ final class AccessibilityTypesTests: XCTestCase {
             actionExecuted = true
         }
         
-        XCTAssertEqual(action.name, "Test Action")
-        XCTAssertEqual(action.type, .activate)
+        #expect(action.name == "Test Action")
+        #expect(action.type == .activate)
         action.handler()
-        XCTAssertTrue(actionExecuted)
+        #expect(actionExecuted)
     }
     
-    func testVoiceOverAnnouncement() {
+    @Test func testVoiceOverAnnouncement() {
         let announcement = VoiceOverAnnouncement(
             message: "Test message",
             type: .element,
@@ -301,65 +301,65 @@ final class AccessibilityTypesTests: XCTestCase {
             delay: 0.5
         )
         
-        XCTAssertEqual(announcement.message, "Test message")
-        XCTAssertEqual(announcement.type, .element)
-        XCTAssertEqual(announcement.priority, .normal)
-        XCTAssertEqual(announcement.timing, .immediate)
-        XCTAssertEqual(announcement.delay, 0.5)
+        #expect(announcement.message == "Test message")
+        #expect(announcement.type == .element)
+        #expect(announcement.priority == .normal)
+        #expect(announcement.timing == .immediate)
+        #expect(announcement.delay == 0.5)
     }
     
     // MARK: - Switch Control Types Tests
     
-    func testSwitchControlActionType() {
+    @Test func testSwitchControlActionType() {
         let actions = SwitchControlActionType.allCases
-        XCTAssertEqual(actions.count, 11)
-        XCTAssertTrue(actions.contains(.select))
-        XCTAssertTrue(actions.contains(.moveNext))
-        XCTAssertTrue(actions.contains(.movePrevious))
-        XCTAssertTrue(actions.contains(.activate))
-        XCTAssertTrue(actions.contains(.custom))
+        #expect(actions.count == 11)
+        #expect(actions.contains(.select))
+        #expect(actions.contains(.moveNext))
+        #expect(actions.contains(.movePrevious))
+        #expect(actions.contains(.activate))
+        #expect(actions.contains(.custom))
     }
     
-    func testSwitchControlNavigationPattern() {
+    @Test func testSwitchControlNavigationPattern() {
         let patterns = SwitchControlNavigationPattern.allCases
-        XCTAssertEqual(patterns.count, 3)
-        XCTAssertTrue(patterns.contains(.linear))
-        XCTAssertTrue(patterns.contains(.grid))
-        XCTAssertTrue(patterns.contains(.custom))
+        #expect(patterns.count == 3)
+        #expect(patterns.contains(.linear))
+        #expect(patterns.contains(.grid))
+        #expect(patterns.contains(.custom))
     }
     
-    func testSwitchControlGestureType() {
+    @Test func testSwitchControlGestureType() {
         let gestures = SwitchControlGestureType.allCases
-        XCTAssertEqual(gestures.count, 7)
-        XCTAssertTrue(gestures.contains(.singleTap))
-        XCTAssertTrue(gestures.contains(.doubleTap))
-        XCTAssertTrue(gestures.contains(.longPress))
-        XCTAssertTrue(gestures.contains(.swipeLeft))
-        XCTAssertTrue(gestures.contains(.swipeRight))
-        XCTAssertTrue(gestures.contains(.swipeUp))
-        XCTAssertTrue(gestures.contains(.swipeDown))
+        #expect(gestures.count == 7)
+        #expect(gestures.contains(.singleTap))
+        #expect(gestures.contains(.doubleTap))
+        #expect(gestures.contains(.longPress))
+        #expect(gestures.contains(.swipeLeft))
+        #expect(gestures.contains(.swipeRight))
+        #expect(gestures.contains(.swipeUp))
+        #expect(gestures.contains(.swipeDown))
     }
     
-    func testSwitchControlGestureIntensity() {
+    @Test func testSwitchControlGestureIntensity() {
         let intensities = SwitchControlGestureIntensity.allCases
-        XCTAssertEqual(intensities.count, 3)
-        XCTAssertTrue(intensities.contains(.light))
-        XCTAssertTrue(intensities.contains(.medium))
-        XCTAssertTrue(intensities.contains(.heavy))
+        #expect(intensities.count == 3)
+        #expect(intensities.contains(.light))
+        #expect(intensities.contains(.medium))
+        #expect(intensities.contains(.heavy))
     }
     
-    func testSwitchControlGesture() {
+    @Test func testSwitchControlGesture() {
         let gesture = SwitchControlGesture(
             type: .singleTap,
             intensity: .medium
         )
         
-        XCTAssertEqual(gesture.type, .singleTap)
-        XCTAssertEqual(gesture.intensity, .medium)
-        XCTAssertNotNil(gesture.timestamp)
+        #expect(gesture.type == .singleTap)
+        #expect(gesture.intensity == .medium)
+        #expect(gesture.timestamp != nil)
     }
     
-    func testSwitchControlAction() {
+    @Test func testSwitchControlAction() {
         var actionExecuted = false
         let action = SwitchControlAction(
             name: "Test Action",
@@ -368,62 +368,62 @@ final class AccessibilityTypesTests: XCTestCase {
             actionExecuted = true
         }
         
-        XCTAssertEqual(action.name, "Test Action")
-        XCTAssertEqual(action.gesture, .singleTap)
+        #expect(action.name == "Test Action")
+        #expect(action.gesture == .singleTap)
         action.action()
-        XCTAssertTrue(actionExecuted)
+        #expect(actionExecuted)
     }
     
-    func testSwitchControlFocusResult() {
+    @Test func testSwitchControlFocusResult() {
         let successResult = SwitchControlFocusResult(
             success: true,
             focusedElement: "Test Element"
         )
         
-        XCTAssertTrue(successResult.success)
-        XCTAssertEqual(successResult.focusedElement as? String, "Test Element")
-        XCTAssertNil(successResult.error)
+        #expect(successResult.success)
+        #expect(successResult.focusedElement as? String == "Test Element")
+        #expect(successResult.error == nil)
         
         let failureResult = SwitchControlFocusResult(
             success: false,
             error: "Test Error"
         )
         
-        XCTAssertFalse(failureResult.success)
-        XCTAssertNil(failureResult.focusedElement)
-        XCTAssertEqual(failureResult.error, "Test Error")
+        #expect(!failureResult.success)
+        #expect(failureResult.focusedElement == nil)
+        #expect(failureResult.error == "Test Error")
     }
     
-    func testSwitchControlGestureResult() {
+    @Test func testSwitchControlGestureResult() {
         let successResult = SwitchControlGestureResult(
             success: true,
             action: "Test Action"
         )
         
-        XCTAssertTrue(successResult.success)
-        XCTAssertEqual(successResult.action, "Test Action")
-        XCTAssertNil(successResult.error)
+        #expect(successResult.success)
+        #expect(successResult.action == "Test Action")
+        #expect(successResult.error == nil)
         
         let failureResult = SwitchControlGestureResult(
             success: false,
             error: "Test Error"
         )
         
-        XCTAssertFalse(failureResult.success)
-        XCTAssertNil(failureResult.action)
-        XCTAssertEqual(failureResult.error, "Test Error")
+        #expect(!failureResult.success)
+        #expect(failureResult.action == nil)
+        #expect(failureResult.error == "Test Error")
     }
     
-    func testSwitchControlCompliance() {
+    @Test func testSwitchControlCompliance() {
         let compliant = SwitchControlCompliance(
             isCompliant: true,
             issues: [],
             score: 100.0
         )
         
-        XCTAssertTrue(compliant.isCompliant)
-        XCTAssertTrue(compliant.issues.isEmpty)
-        XCTAssertEqual(compliant.score, 100.0)
+        #expect(compliant.isCompliant)
+        #expect(compliant.issues.isEmpty)
+        #expect(compliant.score == 100.0)
         
         let nonCompliant = SwitchControlCompliance(
             isCompliant: false,
@@ -431,80 +431,80 @@ final class AccessibilityTypesTests: XCTestCase {
             score: 50.0
         )
         
-        XCTAssertFalse(nonCompliant.isCompliant)
-        XCTAssertEqual(nonCompliant.issues.count, 2)
-        XCTAssertEqual(nonCompliant.score, 50.0)
+        #expect(!nonCompliant.isCompliant)
+        #expect(nonCompliant.issues.count == 2)
+        #expect(nonCompliant.score == 50.0)
     }
     
     // MARK: - AssistiveTouch Types Tests
     
-    func testAssistiveTouchActionType() {
+    @Test func testAssistiveTouchActionType() {
         let actions = AssistiveTouchActionType.allCases
-        XCTAssertEqual(actions.count, 4)
-        XCTAssertTrue(actions.contains(.home))
-        XCTAssertTrue(actions.contains(.back))
-        XCTAssertTrue(actions.contains(.menu))
-        XCTAssertTrue(actions.contains(.custom))
+        #expect(actions.count == 4)
+        #expect(actions.contains(.home))
+        #expect(actions.contains(.back))
+        #expect(actions.contains(.menu))
+        #expect(actions.contains(.custom))
     }
     
-    func testAssistiveTouchGestureSensitivity() {
+    @Test func testAssistiveTouchGestureSensitivity() {
         let sensitivities = AssistiveTouchGestureSensitivity.allCases
-        XCTAssertEqual(sensitivities.count, 3)
-        XCTAssertTrue(sensitivities.contains(.low))
-        XCTAssertTrue(sensitivities.contains(.medium))
-        XCTAssertTrue(sensitivities.contains(.high))
+        #expect(sensitivities.count == 3)
+        #expect(sensitivities.contains(.low))
+        #expect(sensitivities.contains(.medium))
+        #expect(sensitivities.contains(.high))
     }
     
-    func testAssistiveTouchMenuStyle() {
+    @Test func testAssistiveTouchMenuStyle() {
         let styles = AssistiveTouchMenuStyle.allCases
-        XCTAssertEqual(styles.count, 3)
-        XCTAssertTrue(styles.contains(.floating))
-        XCTAssertTrue(styles.contains(.docked))
-        XCTAssertTrue(styles.contains(.contextual))
+        #expect(styles.count == 3)
+        #expect(styles.contains(.floating))
+        #expect(styles.contains(.docked))
+        #expect(styles.contains(.contextual))
     }
     
-    func testAssistiveTouchGestureType() {
+    @Test func testAssistiveTouchGestureType() {
         let gestures = AssistiveTouchGestureType.allCases
-        XCTAssertEqual(gestures.count, 7)
-        XCTAssertTrue(gestures.contains(.singleTap))
-        XCTAssertTrue(gestures.contains(.doubleTap))
-        XCTAssertTrue(gestures.contains(.longPress))
-        XCTAssertTrue(gestures.contains(.swipeLeft))
-        XCTAssertTrue(gestures.contains(.swipeRight))
-        XCTAssertTrue(gestures.contains(.swipeUp))
-        XCTAssertTrue(gestures.contains(.swipeDown))
+        #expect(gestures.count == 7)
+        #expect(gestures.contains(.singleTap))
+        #expect(gestures.contains(.doubleTap))
+        #expect(gestures.contains(.longPress))
+        #expect(gestures.contains(.swipeLeft))
+        #expect(gestures.contains(.swipeRight))
+        #expect(gestures.contains(.swipeUp))
+        #expect(gestures.contains(.swipeDown))
     }
     
-    func testAssistiveTouchGestureIntensity() {
+    @Test func testAssistiveTouchGestureIntensity() {
         let intensities = AssistiveTouchGestureIntensity.allCases
-        XCTAssertEqual(intensities.count, 3)
-        XCTAssertTrue(intensities.contains(.light))
-        XCTAssertTrue(intensities.contains(.medium))
-        XCTAssertTrue(intensities.contains(.heavy))
+        #expect(intensities.count == 3)
+        #expect(intensities.contains(.light))
+        #expect(intensities.contains(.medium))
+        #expect(intensities.contains(.heavy))
     }
     
-    func testAssistiveTouchConfig() {
+    @Test func testAssistiveTouchConfig() {
         let config = AssistiveTouchConfig()
-        XCTAssertTrue(config.enableIntegration)
-        XCTAssertTrue(config.enableCustomActions)
-        XCTAssertTrue(config.enableMenuSupport)
-        XCTAssertTrue(config.enableGestureRecognition)
-        XCTAssertEqual(config.gestureSensitivity, .medium)
-        XCTAssertEqual(config.menuStyle, .floating)
+        #expect(config.enableIntegration)
+        #expect(config.enableCustomActions)
+        #expect(config.enableMenuSupport)
+        #expect(config.enableGestureRecognition)
+        #expect(config.gestureSensitivity == .medium)
+        #expect(config.menuStyle == .floating)
     }
     
-    func testAssistiveTouchGesture() {
+    @Test func testAssistiveTouchGesture() {
         let gesture = AssistiveTouchGesture(
             type: .singleTap,
             intensity: .medium
         )
         
-        XCTAssertEqual(gesture.type, .singleTap)
-        XCTAssertEqual(gesture.intensity, .medium)
-        XCTAssertNotNil(gesture.timestamp)
+        #expect(gesture.type == .singleTap)
+        #expect(gesture.intensity == .medium)
+        #expect(gesture.timestamp != nil)
     }
     
-    func testAssistiveTouchAction() {
+    @Test func testAssistiveTouchAction() {
         var actionExecuted = false
         let action = AssistiveTouchAction(
             name: "Test Action",
@@ -513,70 +513,70 @@ final class AccessibilityTypesTests: XCTestCase {
             actionExecuted = true
         }
         
-        XCTAssertEqual(action.name, "Test Action")
-        XCTAssertEqual(action.gesture, .singleTap)
+        #expect(action.name == "Test Action")
+        #expect(action.gesture == .singleTap)
         action.action()
-        XCTAssertTrue(actionExecuted)
+        #expect(actionExecuted)
     }
     
-    func testAssistiveTouchMenuAction() {
+    @Test func testAssistiveTouchMenuAction() {
         let actions = AssistiveTouchMenuAction.allCases
-        XCTAssertEqual(actions.count, 3)
-        XCTAssertTrue(actions.contains(.show))
-        XCTAssertTrue(actions.contains(.hide))
-        XCTAssertTrue(actions.contains(.toggle))
+        #expect(actions.count == 3)
+        #expect(actions.contains(.show))
+        #expect(actions.contains(.hide))
+        #expect(actions.contains(.toggle))
     }
     
-    func testAssistiveTouchMenuResult() {
+    @Test func testAssistiveTouchMenuResult() {
         let successResult = AssistiveTouchMenuResult(
             success: true,
             menuElement: "Test Menu"
         )
         
-        XCTAssertTrue(successResult.success)
-        XCTAssertEqual(successResult.menuElement as? String, "Test Menu")
-        XCTAssertNil(successResult.error)
+        #expect(successResult.success)
+        #expect(successResult.menuElement as? String == "Test Menu")
+        #expect(successResult.error == nil)
         
         let failureResult = AssistiveTouchMenuResult(
             success: false,
             error: "Test Error"
         )
         
-        XCTAssertFalse(failureResult.success)
-        XCTAssertNil(failureResult.menuElement)
-        XCTAssertEqual(failureResult.error, "Test Error")
+        #expect(!failureResult.success)
+        #expect(failureResult.menuElement == nil)
+        #expect(failureResult.error == "Test Error")
     }
     
-    func testAssistiveTouchGestureResult() {
+    @Test func testAssistiveTouchGestureResult() {
         let successResult = AssistiveTouchGestureResult(
             success: true,
             action: "Test Action"
         )
         
-        XCTAssertTrue(successResult.success)
-        XCTAssertEqual(successResult.action, "Test Action")
-        XCTAssertNil(successResult.error)
+        #expect(successResult.success)
+        #expect(successResult.action == "Test Action")
+        #expect(successResult.error == nil)
         
         let failureResult = AssistiveTouchGestureResult(
             success: false,
             error: "Test Error"
         )
         
-        XCTAssertFalse(failureResult.success)
-        XCTAssertNil(failureResult.action)
-        XCTAssertEqual(failureResult.error, "Test Error")
+        #expect(!failureResult.success)
+        #expect(failureResult.action == nil)
+        #expect(failureResult.error == "Test Error")
     }
     
-    func testAssistiveTouchCompliance() {
+    @Test func testAssistiveTouchCompliance() {
         let compliant = AssistiveTouchCompliance(
             isCompliant: true,
             issues: [],
             score: 100.0
         )
         
-        XCTAssertTrue(compliant.isCompliant)
-        XCTAssertTrue(compliant.issues.isEmpty)
-        XCTAssertEqual(compliant.score, 100.0)
+        #expect(compliant.isCompliant)
+        #expect(compliant.issues.isEmpty)
+        #expect(compliant.score == 100.0)
         
         let nonCompliant = AssistiveTouchCompliance(
             isCompliant: false,
@@ -584,70 +584,70 @@ final class AccessibilityTypesTests: XCTestCase {
             score: 50.0
         )
         
-        XCTAssertFalse(nonCompliant.isCompliant)
-        XCTAssertEqual(nonCompliant.issues.count, 2)
-        XCTAssertEqual(nonCompliant.score, 50.0)
+        #expect(!nonCompliant.isCompliant)
+        #expect(nonCompliant.issues.count == 2)
+        #expect(nonCompliant.score == 50.0)
     }
     
     // MARK: - Eye Tracking Types Tests
     
-    func testEyeTrackingCalibrationLevel() {
+    @Test func testEyeTrackingCalibrationLevel() {
         let levels = EyeTrackingCalibrationLevel.allCases
-        XCTAssertEqual(levels.count, 4)
-        XCTAssertTrue(levels.contains(.basic))
-        XCTAssertTrue(levels.contains(.standard))
-        XCTAssertTrue(levels.contains(.advanced))
-        XCTAssertTrue(levels.contains(.expert))
+        #expect(levels.count == 4)
+        #expect(levels.contains(.basic))
+        #expect(levels.contains(.standard))
+        #expect(levels.contains(.advanced))
+        #expect(levels.contains(.expert))
     }
     
-    func testEyeTrackingInteractionType() {
+    @Test func testEyeTrackingInteractionType() {
         let types = EyeTrackingInteractionType.allCases
-        XCTAssertEqual(types.count, 5)
-        XCTAssertTrue(types.contains(.gaze))
-        XCTAssertTrue(types.contains(.dwell))
-        XCTAssertTrue(types.contains(.blink))
-        XCTAssertTrue(types.contains(.wink))
-        XCTAssertTrue(types.contains(.custom))
+        #expect(types.count == 5)
+        #expect(types.contains(.gaze))
+        #expect(types.contains(.dwell))
+        #expect(types.contains(.blink))
+        #expect(types.contains(.wink))
+        #expect(types.contains(.custom))
     }
     
-    func testEyeTrackingFocusManagement() {
+    @Test func testEyeTrackingFocusManagement() {
         let management = EyeTrackingFocusManagement.allCases
-        XCTAssertEqual(management.count, 3)
-        XCTAssertTrue(management.contains(.automatic))
-        XCTAssertTrue(management.contains(.manual))
-        XCTAssertTrue(management.contains(.hybrid))
+        #expect(management.count == 3)
+        #expect(management.contains(.automatic))
+        #expect(management.contains(.manual))
+        #expect(management.contains(.hybrid))
     }
     
-    func testEyeTrackingConfiguration() {
+    @Test func testEyeTrackingConfiguration() {
         let config = EyeTrackingConfiguration()
-        XCTAssertEqual(config.calibrationLevel, .standard)
-        XCTAssertEqual(config.interactionType, .dwell)
-        XCTAssertEqual(config.focusManagement, .automatic)
-        XCTAssertEqual(config.dwellTime, 1.0)
-        XCTAssertTrue(config.enableHapticFeedback)
-        XCTAssertFalse(config.enableAudioFeedback)
+        #expect(config.calibrationLevel == .standard)
+        #expect(config.interactionType == .dwell)
+        #expect(config.focusManagement == .automatic)
+        #expect(config.dwellTime == 1.0)
+        #expect(config.enableHapticFeedback)
+        #expect(!config.enableAudioFeedback)
     }
     
-    func testEyeTrackingSensitivity() {
+    @Test func testEyeTrackingSensitivity() {
         let sensitivities = EyeTrackingSensitivity.allCases
-        XCTAssertEqual(sensitivities.count, 4)
-        XCTAssertTrue(sensitivities.contains(.low))
-        XCTAssertTrue(sensitivities.contains(.medium))
-        XCTAssertTrue(sensitivities.contains(.high))
-        XCTAssertTrue(sensitivities.contains(.adaptive))
+        #expect(sensitivities.count == 4)
+        #expect(sensitivities.contains(.low))
+        #expect(sensitivities.contains(.medium))
+        #expect(sensitivities.contains(.high))
+        #expect(sensitivities.contains(.adaptive))
         
-        XCTAssertEqual(EyeTrackingSensitivity.low.threshold, 0.8)
-        XCTAssertEqual(EyeTrackingSensitivity.medium.threshold, 0.6)
-        XCTAssertEqual(EyeTrackingSensitivity.high.threshold, 0.4)
-        XCTAssertEqual(EyeTrackingSensitivity.adaptive.threshold, 0.6)
+        #expect(EyeTrackingSensitivity.low.threshold == 0.8)
+        #expect(EyeTrackingSensitivity.medium.threshold == 0.6)
+        #expect(EyeTrackingSensitivity.high.threshold == 0.4)
+        #expect(EyeTrackingSensitivity.adaptive.threshold == 0.6)
     }
     
-    func testEyeTrackingCalibration() {
+    @Test func testEyeTrackingCalibration() {
         let calibration = EyeTrackingCalibration()
-        XCTAssertFalse(calibration.isCalibrated)
-        XCTAssertEqual(calibration.accuracy, 0.0)
-        XCTAssertNil(calibration.lastCalibrationDate)
-        XCTAssertTrue(calibration.calibrationPoints.isEmpty)
+        #expect(!calibration.isCalibrated)
+        #expect(calibration.accuracy == 0.0)
+        #expect(calibration.lastCalibrationDate == nil)
+        #expect(calibration.calibrationPoints.isEmpty)
         
         let calibrated = EyeTrackingCalibration(
             isCalibrated: true,
@@ -656,13 +656,13 @@ final class AccessibilityTypesTests: XCTestCase {
             calibrationPoints: [CGPoint(x: 0, y: 0), CGPoint(x: 100, y: 100)]
         )
         
-        XCTAssertTrue(calibrated.isCalibrated)
-        XCTAssertEqual(calibrated.accuracy, 0.85)
-        XCTAssertNotNil(calibrated.lastCalibrationDate)
-        XCTAssertEqual(calibrated.calibrationPoints.count, 2)
+        #expect(calibrated.isCalibrated)
+        #expect(calibrated.accuracy == 0.85)
+        #expect(calibrated.lastCalibrationDate != nil)
+        #expect(calibrated.calibrationPoints.count == 2)
     }
     
-    func testEyeTrackingGazeEvent() {
+    @Test func testEyeTrackingGazeEvent() {
         let position = CGPoint(x: 100, y: 200)
         let timestamp = Date()
         let event = EyeTrackingGazeEvent(
@@ -672,13 +672,13 @@ final class AccessibilityTypesTests: XCTestCase {
             isStable: true
         )
         
-        XCTAssertEqual(event.position, position)
-        XCTAssertEqual(event.timestamp, timestamp)
-        XCTAssertEqual(event.confidence, 0.85)
-        XCTAssertTrue(event.isStable)
+        #expect(event.position == position)
+        #expect(event.timestamp == timestamp)
+        #expect(event.confidence == 0.85)
+        #expect(event.isStable)
     }
     
-    func testEyeTrackingDwellEvent() {
+    @Test func testEyeTrackingDwellEvent() {
         let targetView = AnyView(Text("Test"))
         let position = CGPoint(x: 100, y: 200)
         let duration: TimeInterval = 2.5
@@ -691,45 +691,45 @@ final class AccessibilityTypesTests: XCTestCase {
             timestamp: timestamp
         )
         
-        XCTAssertEqual(event.position, position)
-        XCTAssertEqual(event.duration, duration)
-        XCTAssertEqual(event.timestamp, timestamp)
+        #expect(event.position == position)
+        #expect(event.duration == duration)
+        #expect(event.timestamp == timestamp)
     }
     
-    func testEyeTrackingConfig() {
+    @Test func testEyeTrackingConfig() {
         let config = EyeTrackingConfig()
-        XCTAssertEqual(config.sensitivity, .medium)
-        XCTAssertEqual(config.dwellTime, 1.0)
-        XCTAssertTrue(config.visualFeedback)
-        XCTAssertTrue(config.hapticFeedback)
-        XCTAssertFalse(config.calibration.isCalibrated)
+        #expect(config.sensitivity == .medium)
+        #expect(config.dwellTime == 1.0)
+        #expect(config.visualFeedback)
+        #expect(config.hapticFeedback)
+        #expect(!config.calibration.isCalibrated)
     }
     
     // MARK: - Voice Control Types Tests
     
-    func testVoiceControlCommandType() {
+    @Test func testVoiceControlCommandType() {
         let types = VoiceControlCommandType.allCases
-        XCTAssertEqual(types.count, 8)
-        XCTAssertTrue(types.contains(.tap))
-        XCTAssertTrue(types.contains(.swipe))
-        XCTAssertTrue(types.contains(.scroll))
-        XCTAssertTrue(types.contains(.zoom))
-        XCTAssertTrue(types.contains(.select))
-        XCTAssertTrue(types.contains(.edit))
-        XCTAssertTrue(types.contains(.delete))
-        XCTAssertTrue(types.contains(.custom))
+        #expect(types.count == 8)
+        #expect(types.contains(.tap))
+        #expect(types.contains(.swipe))
+        #expect(types.contains(.scroll))
+        #expect(types.contains(.zoom))
+        #expect(types.contains(.select))
+        #expect(types.contains(.edit))
+        #expect(types.contains(.delete))
+        #expect(types.contains(.custom))
     }
     
-    func testVoiceControlFeedbackType() {
+    @Test func testVoiceControlFeedbackType() {
         let types = VoiceControlFeedbackType.allCases
-        XCTAssertEqual(types.count, 4)
-        XCTAssertTrue(types.contains(.audio))
-        XCTAssertTrue(types.contains(.haptic))
-        XCTAssertTrue(types.contains(.visual))
-        XCTAssertTrue(types.contains(.combined))
+        #expect(types.count == 4)
+        #expect(types.contains(.audio))
+        #expect(types.contains(.haptic))
+        #expect(types.contains(.visual))
+        #expect(types.contains(.combined))
     }
     
-    func testVoiceControlCustomCommand() {
+    @Test func testVoiceControlCustomCommand() {
         var commandExecuted = false
         let command = VoiceControlCustomCommand(
             phrase: "Test command",
@@ -738,97 +738,97 @@ final class AccessibilityTypesTests: XCTestCase {
             commandExecuted = true
         }
         
-        XCTAssertEqual(command.phrase, "Test command")
-        XCTAssertEqual(command.type, .tap)
+        #expect(command.phrase == "Test command")
+        #expect(command.type == .tap)
         command.handler()
-        XCTAssertTrue(commandExecuted)
+        #expect(commandExecuted)
     }
     
-    func testVoiceControlConfiguration() {
+    @Test func testVoiceControlConfiguration() {
         let config = VoiceControlConfiguration()
-        XCTAssertTrue(config.enableCustomCommands)
-        XCTAssertEqual(config.feedbackType, .combined)
-        XCTAssertTrue(config.enableAudioFeedback)
-        XCTAssertTrue(config.enableHapticFeedback)
-        XCTAssertTrue(config.enableVisualFeedback)
-        XCTAssertEqual(config.commandTimeout, 5.0)
+        #expect(config.enableCustomCommands)
+        #expect(config.feedbackType == .combined)
+        #expect(config.enableAudioFeedback)
+        #expect(config.enableHapticFeedback)
+        #expect(config.enableVisualFeedback)
+        #expect(config.commandTimeout == 5.0)
     }
     
-    func testVoiceControlCommandResult() {
+    @Test func testVoiceControlCommandResult() {
         let successResult = VoiceControlCommandResult(
             success: true,
             action: "Test Action",
             feedback: "Test Feedback"
         )
         
-        XCTAssertTrue(successResult.success)
-        XCTAssertEqual(successResult.action, "Test Action")
-        XCTAssertEqual(successResult.feedback, "Test Feedback")
-        XCTAssertNil(successResult.error)
+        #expect(successResult.success)
+        #expect(successResult.action == "Test Action")
+        #expect(successResult.feedback == "Test Feedback")
+        #expect(successResult.error == nil)
         
         let failureResult = VoiceControlCommandResult(
             success: false,
             error: "Test Error"
         )
         
-        XCTAssertFalse(failureResult.success)
-        XCTAssertNil(failureResult.action)
-        XCTAssertNil(failureResult.feedback)
-        XCTAssertEqual(failureResult.error, "Test Error")
+        #expect(!failureResult.success)
+        #expect(failureResult.action == nil)
+        #expect(failureResult.feedback == nil)
+        #expect(failureResult.error == "Test Error")
     }
     
-    func testVoiceControlNavigationType() {
+    @Test func testVoiceControlNavigationType() {
         let types = VoiceControlNavigationType.allCases
-        XCTAssertEqual(types.count, 9)
-        XCTAssertTrue(types.contains(.tap))
-        XCTAssertTrue(types.contains(.swipe))
-        XCTAssertTrue(types.contains(.scroll))
-        XCTAssertTrue(types.contains(.zoom))
-        XCTAssertTrue(types.contains(.select))
-        XCTAssertTrue(types.contains(.navigate))
-        XCTAssertTrue(types.contains(.back))
-        XCTAssertTrue(types.contains(.home))
-        XCTAssertTrue(types.contains(.menu))
+        #expect(types.count == 9)
+        #expect(types.contains(.tap))
+        #expect(types.contains(.swipe))
+        #expect(types.contains(.scroll))
+        #expect(types.contains(.zoom))
+        #expect(types.contains(.select))
+        #expect(types.contains(.navigate))
+        #expect(types.contains(.back))
+        #expect(types.contains(.home))
+        #expect(types.contains(.menu))
     }
     
-    func testVoiceControlGestureType() {
+    @Test func testVoiceControlGestureType() {
         let types = VoiceControlGestureType.allCases
-        XCTAssertEqual(types.count, 10)
-        XCTAssertTrue(types.contains(.tap))
-        XCTAssertTrue(types.contains(.doubleTap))
-        XCTAssertTrue(types.contains(.longPress))
-        XCTAssertTrue(types.contains(.swipeLeft))
-        XCTAssertTrue(types.contains(.swipeRight))
-        XCTAssertTrue(types.contains(.swipeUp))
-        XCTAssertTrue(types.contains(.swipeDown))
-        XCTAssertTrue(types.contains(.pinch))
-        XCTAssertTrue(types.contains(.rotate))
-        XCTAssertTrue(types.contains(.scroll))
+        #expect(types.count == 10)
+        #expect(types.contains(.tap))
+        #expect(types.contains(.doubleTap))
+        #expect(types.contains(.longPress))
+        #expect(types.contains(.swipeLeft))
+        #expect(types.contains(.swipeRight))
+        #expect(types.contains(.swipeUp))
+        #expect(types.contains(.swipeDown))
+        #expect(types.contains(.pinch))
+        #expect(types.contains(.rotate))
+        #expect(types.contains(.scroll))
     }
     
-    func testVoiceControlCommandRecognition() {
+    @Test func testVoiceControlCommandRecognition() {
         let recognition = VoiceControlCommandRecognition(
             phrase: "Test phrase",
             confidence: 0.85,
             recognizedCommand: .tap
         )
         
-        XCTAssertEqual(recognition.phrase, "Test phrase")
-        XCTAssertEqual(recognition.confidence, 0.85)
-        XCTAssertEqual(recognition.recognizedCommand, .tap)
-        XCTAssertNotNil(recognition.timestamp)
+        #expect(recognition.phrase == "Test phrase")
+        #expect(recognition.confidence == 0.85)
+        #expect(recognition.recognizedCommand == .tap)
+        #expect(recognition.timestamp != nil)
     }
     
-    func testVoiceControlCompliance() {
+    @Test func testVoiceControlCompliance() {
         let compliant = VoiceControlCompliance(
             isCompliant: true,
             issues: [],
             score: 100.0
         )
         
-        XCTAssertTrue(compliant.isCompliant)
-        XCTAssertTrue(compliant.issues.isEmpty)
-        XCTAssertEqual(compliant.score, 100.0)
+        #expect(compliant.isCompliant)
+        #expect(compliant.issues.isEmpty)
+        #expect(compliant.score == 100.0)
         
         let nonCompliant = VoiceControlCompliance(
             isCompliant: false,
@@ -836,30 +836,30 @@ final class AccessibilityTypesTests: XCTestCase {
             score: 50.0
         )
         
-        XCTAssertFalse(nonCompliant.isCompliant)
-        XCTAssertEqual(nonCompliant.issues.count, 2)
-        XCTAssertEqual(nonCompliant.score, 50.0)
+        #expect(!nonCompliant.isCompliant)
+        #expect(nonCompliant.issues.count == 2)
+        #expect(nonCompliant.score == 50.0)
     }
     
     // MARK: - Material Accessibility Types Tests
     
-    func testMaterialContrastLevel() {
+    @Test func testMaterialContrastLevel() {
         let levels = MaterialContrastLevel.allCases
-        XCTAssertEqual(levels.count, 4)
-        XCTAssertTrue(levels.contains(.low))
-        XCTAssertTrue(levels.contains(.medium))
-        XCTAssertTrue(levels.contains(.high))
-        XCTAssertTrue(levels.contains(.maximum))
+        #expect(levels.count == 4)
+        #expect(levels.contains(.low))
+        #expect(levels.contains(.medium))
+        #expect(levels.contains(.high))
+        #expect(levels.contains(.maximum))
     }
     
     
-    func testMaterialAccessibilityConfiguration() {
+    @Test func testMaterialAccessibilityConfiguration() {
         let config = MaterialAccessibilityConfiguration()
-        XCTAssertEqual(config.contrastLevel, .medium)
-        XCTAssertTrue(config.enableHighContrastAlternatives)
-        XCTAssertTrue(config.enableVoiceOverDescriptions)
-        XCTAssertTrue(config.enableSwitchControlSupport)
-        XCTAssertTrue(config.enableAssistiveTouchSupport)
+        #expect(config.contrastLevel == .medium)
+        #expect(config.enableHighContrastAlternatives)
+        #expect(config.enableVoiceOverDescriptions)
+        #expect(config.enableSwitchControlSupport)
+        #expect(config.enableAssistiveTouchSupport)
     }
     
     
@@ -872,49 +872,49 @@ final class AccessibilityTypesTests: XCTestCase {
     
     // MARK: - Basic Accessibility Types Tests
     
-    func testComplianceLevel() {
+    @Test func testComplianceLevel() {
         let levels = ComplianceLevel.allCases
-        XCTAssertEqual(levels.count, 4)
-        XCTAssertTrue(levels.contains(.basic))
-        XCTAssertTrue(levels.contains(.intermediate))
-        XCTAssertTrue(levels.contains(.advanced))
-        XCTAssertTrue(levels.contains(.expert))
+        #expect(levels.count == 4)
+        #expect(levels.contains(.basic))
+        #expect(levels.contains(.intermediate))
+        #expect(levels.contains(.advanced))
+        #expect(levels.contains(.expert))
         
-        XCTAssertEqual(ComplianceLevel.basic.rawValue, 1)
-        XCTAssertEqual(ComplianceLevel.intermediate.rawValue, 2)
-        XCTAssertEqual(ComplianceLevel.advanced.rawValue, 3)
-        XCTAssertEqual(ComplianceLevel.expert.rawValue, 4)
+        #expect(ComplianceLevel.basic.rawValue == 1)
+        #expect(ComplianceLevel.intermediate.rawValue == 2)
+        #expect(ComplianceLevel.advanced.rawValue == 3)
+        #expect(ComplianceLevel.expert.rawValue == 4)
     }
     
-    func testIssueSeverity() {
+    @Test func testIssueSeverity() {
         let severities = IssueSeverity.allCases
-        XCTAssertEqual(severities.count, 4)
-        XCTAssertTrue(severities.contains(.low))
-        XCTAssertTrue(severities.contains(.medium))
-        XCTAssertTrue(severities.contains(.high))
-        XCTAssertTrue(severities.contains(.critical))
+        #expect(severities.count == 4)
+        #expect(severities.contains(.low))
+        #expect(severities.contains(.medium))
+        #expect(severities.contains(.high))
+        #expect(severities.contains(.critical))
     }
     
-    func testAccessibilitySettings() {
+    @Test func testAccessibilitySettings() {
         let settings = SixLayerFramework.AccessibilitySettings()
-        XCTAssertTrue(settings.voiceOverSupport)
-        XCTAssertTrue(settings.keyboardNavigation)
-        XCTAssertTrue(settings.highContrastMode)
-        XCTAssertTrue(settings.dynamicType)
-        XCTAssertTrue(settings.reducedMotion)
-        XCTAssertTrue(settings.hapticFeedback)
+        #expect(settings.voiceOverSupport)
+        #expect(settings.keyboardNavigation)
+        #expect(settings.highContrastMode)
+        #expect(settings.dynamicType)
+        #expect(settings.reducedMotion)
+        #expect(settings.hapticFeedback)
     }
     
-    func testAccessibilityComplianceMetrics() {
+    @Test func testAccessibilityComplianceMetrics() {
         let metrics = AccessibilityComplianceMetrics()
-        XCTAssertEqual(metrics.voiceOverCompliance, .basic)
-        XCTAssertEqual(metrics.keyboardCompliance, .basic)
-        XCTAssertEqual(metrics.contrastCompliance, .basic)
-        XCTAssertEqual(metrics.motionCompliance, .basic)
-        XCTAssertEqual(metrics.overallComplianceScore, 0.0)
+        #expect(metrics.voiceOverCompliance == .basic)
+        #expect(metrics.keyboardCompliance == .basic)
+        #expect(metrics.contrastCompliance == .basic)
+        #expect(metrics.motionCompliance == .basic)
+        #expect(metrics.overallComplianceScore == 0.0)
     }
     
-    func testAccessibilityAuditResult() {
+    @Test func testAccessibilityAuditResult() {
         let metrics = AccessibilityComplianceMetrics()
         let result = AccessibilityAuditResult(
             complianceLevel: .basic,
@@ -924,14 +924,14 @@ final class AccessibilityTypesTests: XCTestCase {
             complianceMetrics: metrics
         )
         
-        XCTAssertEqual(result.complianceLevel, .basic)
-        XCTAssertTrue(result.issues.isEmpty)
-        XCTAssertEqual(result.recommendations.count, 1)
-        XCTAssertEqual(result.score, 75.0)
-        XCTAssertEqual(result.complianceMetrics.voiceOverCompliance, .basic)
+        #expect(result.complianceLevel == .basic)
+        #expect(result.issues.isEmpty)
+        #expect(result.recommendations.count == 1)
+        #expect(result.score == 75.0)
+        #expect(result.complianceMetrics.voiceOverCompliance == .basic)
     }
     
-    func testAccessibilityIssue() {
+    @Test func testAccessibilityIssue() {
         let issue = AccessibilityIssue(
             severity: .high,
             description: "Test issue",
@@ -939,9 +939,9 @@ final class AccessibilityTypesTests: XCTestCase {
             suggestion: "Test suggestion"
         )
         
-        XCTAssertEqual(issue.severity, .high)
-        XCTAssertEqual(issue.description, "Test issue")
-        XCTAssertEqual(issue.element, "Test element")
-        XCTAssertEqual(issue.suggestion, "Test suggestion")
+        #expect(issue.severity == .high)
+        #expect(issue.description == "Test issue")
+        #expect(issue.element == "Test element")
+        #expect(issue.suggestion == "Test suggestion")
     }
 }

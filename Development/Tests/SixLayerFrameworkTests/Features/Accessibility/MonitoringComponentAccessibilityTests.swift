@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Monitoring Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class MonitoringComponentAccessibilityTests: XCTestCase {
+final class MonitoringComponentAccessibilityTests {
     
     // MARK: - Monitoring Component Tests
     
-    func testPlatformMonitoringGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformMonitoringGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformMonitoring
         let testView = PlatformMonitoring()
         
@@ -25,10 +25,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformMonitoring"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformMonitoring should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformMonitoring should generate accessibility identifiers")
     }
     
-    func testPlatformLoggingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformLoggingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformLogging
         let testView = PlatformLogging()
         
@@ -39,10 +39,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformLogging"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformLogging should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformLogging should generate accessibility identifiers")
     }
     
-    func testPlatformErrorHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformErrorHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformErrorHandling
         let testView = PlatformErrorHandling()
         
@@ -53,10 +53,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformErrorHandling"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformErrorHandling should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformErrorHandling should generate accessibility identifiers")
     }
     
-    func testPlatformDebuggingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDebuggingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformDebugging
         let testView = PlatformDebugging()
         
@@ -67,10 +67,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformDebugging"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformDebugging should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformDebugging should generate accessibility identifiers")
     }
     
-    func testPlatformProfilingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformProfilingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformProfiling
         let testView = PlatformProfiling()
         
@@ -81,10 +81,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformProfiling"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformProfiling should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformProfiling should generate accessibility identifiers")
     }
     
-    func testPlatformTracingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformTracingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformTracing
         let testView = PlatformTracing()
         
@@ -95,10 +95,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformTracing"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformTracing should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformTracing should generate accessibility identifiers")
     }
     
-    func testPlatformMetricsGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformMetricsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformMetrics
         let testView = PlatformMetrics()
         
@@ -109,10 +109,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformMetrics"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformMetrics should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformMetrics should generate accessibility identifiers")
     }
     
-    func testPlatformAlertingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAlertingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAlerting
         let testView = PlatformAlerting()
         
@@ -123,10 +123,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAlerting"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAlerting should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAlerting should generate accessibility identifiers")
     }
     
-    func testPlatformReportingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformReportingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformReporting
         let testView = PlatformReporting()
         
@@ -137,10 +137,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformReporting"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformReporting should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformReporting should generate accessibility identifiers")
     }
     
-    func testPlatformNotificationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformNotificationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformNotification
         let testView = PlatformNotification()
         
@@ -151,10 +151,10 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformNotification"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformNotification should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformNotification should generate accessibility identifiers")
     }
     
-    func testPlatformEventGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformEventGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformEvent
         let testView = PlatformEvent()
         
@@ -165,7 +165,7 @@ final class MonitoringComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformEvent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformEvent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformEvent should generate accessibility identifiers")
     }
 }
 

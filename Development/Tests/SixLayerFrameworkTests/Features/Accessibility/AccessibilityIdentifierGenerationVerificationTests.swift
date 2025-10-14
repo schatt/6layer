@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -15,14 +15,14 @@ import ViewInspector
  * identifiers are present and have the expected format. This addresses the gap in original
  * tests that only verified views could be created, not that identifiers were actually assigned.
  */
-final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
+final class AccessibilityIdentifierGenerationVerificationTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func tearDown() async throws {
+    deinit {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
         try await super.tearDown()
     }
@@ -30,7 +30,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
     /// TESTING SCOPE: Tests that the basic automatic identifier modifier works end-to-end
     /// METHODOLOGY: Creates a view, applies the modifier, and verifies an identifier is actually assigned
-    func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
+    @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
         await MainActor.run {
             // Given: Configuration for identifier generation
             let config = AccessibilityIdentifierConfig.shared
@@ -48,10 +48,10 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             // Then: Test the two critical aspects
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView, "View with automatic accessibility identifiers should be created successfully")
+            #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "test.*element.*main-ui", 
                 componentName: "AutomaticAccessibilityIdentifiers"
@@ -62,7 +62,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that .named() actually triggers identifier generation
     /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifier works end-to-end
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    func testNamedActuallyGeneratesIdentifiers() async {
+    @Test func testNamedActuallyGeneratesIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
@@ -82,10 +82,10 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             // Then: Test the two critical aspects
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView, "View with .named() should be created successfully")
+            #expect(testView != nil, "View with .named() should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "CarManager.*element.*main-addfuelbutton", 
                 componentName: "NamedModifier"
@@ -96,7 +96,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that combined breadcrumb modifiers actually generate identifiers
     /// TESTING SCOPE: Tests that multiple breadcrumb modifiers work together end-to-end
     /// METHODOLOGY: Tests the exact scenario from the bug report with multiple modifiers
-    func testCombinedBreadcrumbModifiersActuallyGenerateIdentifiers() async {
+    @Test func testCombinedBreadcrumbModifiersActuallyGenerateIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report exactly
             let config = AccessibilityIdentifierConfig.shared
@@ -117,10 +117,10 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             // Then: Test the two critical aspects
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView, "Combined breadcrumb modifiers should create view successfully")
+            #expect(testView != nil, "Combined breadcrumb modifiers should create view successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            XCTAssertTrue(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
                 componentName: "CombinedBreadcrumbModifiers"
@@ -131,7 +131,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that manual identifiers still override automatic ones
     /// TESTING SCOPE: Tests that manual identifiers take precedence over automatic generation
     /// METHODOLOGY: Tests that manual identifiers work even when automatic generation is enabled
-    func testManualIdentifiersOverrideAutomaticGeneration() async {
+    @Test func testManualIdentifiersOverrideAutomaticGeneration() async {
         await MainActor.run {
             // Given: Automatic IDs enabled
             let config = AccessibilityIdentifierConfig.shared
@@ -147,14 +147,14 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             // Then: Test the two critical aspects
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView, "View with manual identifier should be created successfully")
+            #expect(testView != nil, "View with manual identifier should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the manual accessibility identifier assigned
             do {
                 let accessibilityIdentifier = try testView.inspect().text().accessibilityIdentifier()
-                XCTAssertEqual(accessibilityIdentifier, manualID, "Manual identifier should override automatic generation")
+                #expect(accessibilityIdentifier == manualID, "Manual identifier should override automatic generation")
             } catch {
-                XCTFail("Failed to inspect accessibility identifier: \(error)")
+                Issue.record("Failed to inspect accessibility identifier: \(error)")
             }
         }
     }
@@ -162,7 +162,7 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that global configuration actually controls identifier generation
     /// TESTING SCOPE: Tests that global config settings affect actual identifier generation
     /// METHODOLOGY: Tests that enabling/disabling automatic IDs actually works
-    func testGlobalConfigActuallyControlsIdentifierGeneration() async {
+    @Test func testGlobalConfigActuallyControlsIdentifierGeneration() async {
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.namespace = "test"
@@ -176,12 +176,12 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             .automaticAccessibilityIdentifiers()
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView1, "View should be created even when automatic IDs are disabled")
+            #expect(testView1 != nil, "View should be created even when automatic IDs are disabled")
             
             // 2. Contains what it needs to contain - The view should NOT have an automatic accessibility identifier
             do {
                 let accessibilityIdentifier1 = try testView1.inspect().button().accessibilityIdentifier()
-                XCTAssertTrue(accessibilityIdentifier1.isEmpty || !accessibilityIdentifier1.hasPrefix("test"), 
+                #expect(accessibilityIdentifier1.isEmpty || !accessibilityIdentifier1.hasPrefix("test"), 
                              "No automatic identifier should be generated when disabled")
             } catch {
                 // If we can't inspect, that's also acceptable - it means no identifier was set
@@ -197,15 +197,15 @@ final class AccessibilityIdentifierGenerationVerificationTests: XCTestCase {
             .automaticAccessibilityIdentifiers()
             
             // 1. View created - The view can be instantiated successfully
-            XCTAssertNotNil(testView2, "View should be created when automatic IDs are enabled")
+            #expect(testView2 != nil, "View should be created when automatic IDs are enabled")
             
             // 2. Contains what it needs to contain - The view should have an automatic accessibility identifier
             do {
                 let accessibilityIdentifier2 = try testView2.inspect().button().accessibilityIdentifier()
-                XCTAssertFalse(accessibilityIdentifier2.isEmpty, "An identifier should be generated when enabled")
-                XCTAssertTrue(accessibilityIdentifier2.hasPrefix("test"), "Generated ID should start with namespace")
+                #expect(!accessibilityIdentifier2.isEmpty, "An identifier should be generated when enabled")
+                #expect(accessibilityIdentifier2.hasPrefix("test"), "Generated ID should start with namespace")
             } catch {
-                XCTFail("Failed to inspect accessibility identifier: \(error)")
+                Issue.record("Failed to inspect accessibility identifier: \(error)")
             }
         }
     }

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// TDD Tests for Accessibility Identifier Persistence
 /// Following proper TDD: Write failing tests first to prove the issue exists
 @MainActor
-final class AccessibilityIdentifierPersistenceTests: XCTestCase {
+final class AccessibilityIdentifierPersistenceTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -18,7 +18,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -26,7 +26,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
     
     // MARK: - TDD Red Phase: Tests That Should Fail
     
-    func testAccessibilityIdentifiersArePersistentAcrossSessions() {
+    @Test func testAccessibilityIdentifiersArePersistentAcrossSessions() {
         // TDD: This test SHOULD FAIL initially - IDs are not persistent
         // We want IDs to be the same across app launches
         
@@ -52,12 +52,12 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         let id2 = generateIDForView(view2)
         
         // This assertion SHOULD FAIL initially
-        XCTAssertEqual(id1, id2, "Accessibility IDs should be persistent across app launches")
+        #expect(id1 == id2, "Accessibility IDs should be persistent across app launches")
         
         print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
     }
     
-    func testAccessibilityIdentifiersAreDeterministicForSameView() {
+    @Test func testAccessibilityIdentifiersAreDeterministicForSameView() {
         // TDD: This test SHOULD FAIL initially - IDs contain timestamps
         // Same view with same hierarchy should generate same ID
         
@@ -75,12 +75,12 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         let id2 = generateIDForView(view2)
         
         // This assertion SHOULD FAIL initially (timestamps differ)
-        XCTAssertEqual(id1, id2, "Identical views should generate identical IDs")
+        #expect(id1 == id2, "Identical views should generate identical IDs")
         
         print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
     }
     
-    func testAccessibilityIdentifiersDontContainTimestamps() {
+    @Test func testAccessibilityIdentifiersDontContainTimestamps() {
         // TDD: This test SHOULD FAIL initially - IDs contain timestamps
         // IDs should be based on view structure, not time
         
@@ -100,12 +100,12 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         let id2 = generateIDForView(view2)
         
         // This assertion SHOULD FAIL initially (timestamps differ)
-        XCTAssertEqual(id, id2, "IDs should not contain timestamps")
+        #expect(id == id2, "IDs should not contain timestamps")
         
         print("🔴 TDD Red Phase: ID1='\(id)', ID2='\(id2)' - These should be equal but aren't")
     }
     
-    func testAccessibilityIdentifiersAreStableForUITesting() {
+    @Test func testAccessibilityIdentifiersAreStableForUITesting() {
         // TDD: This test SHOULD FAIL initially
         // UI tests need stable IDs that don't change between runs
         
@@ -146,13 +146,13 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
             let originalID = ids[buttonName]!
             
             // This assertion SHOULD FAIL initially
-            XCTAssertEqual(originalID, newID, "ID for \(buttonName) should be stable across sessions")
+            #expect(originalID == newID, "ID for \(buttonName) should be stable across sessions")
             
             print("Testing accessibility identifier persistence: \(buttonName) - Original='\(originalID)', New='\(newID)'")
         }
     }
     
-    func testAccessibilityIdentifiersAreBasedOnViewStructure() {
+    @Test func testAccessibilityIdentifiersAreBasedOnViewStructure() {
         // TDD: This test SHOULD FAIL initially
         // IDs should be based on view hierarchy and context, not random factors
         
@@ -174,12 +174,12 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         let id2 = generateIDForView(view2)
         
         // This assertion SHOULD FAIL initially
-        XCTAssertEqual(id1, id2, "Same view structure should generate same ID regardless of timing")
+        #expect(id1 == id2, "Same view structure should generate same ID regardless of timing")
         
         print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
     }
     
-    func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
+    @Test func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
         // TDD: This test focuses ONLY on persistence - truly identical views
         // Same button text, same .named(), same .screenContext(), same everything
         
@@ -204,12 +204,12 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         let id2 = generateIDForView(view2)
         
         // This assertion SHOULD PASS with our fix
-        XCTAssertEqual(id1, id2, "Truly identical views should generate identical IDs")
+        #expect(id1 == id2, "Truly identical views should generate identical IDs")
         
         print("🟢 TDD Green Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
     }
     
-    func testAccessibilityIdentifiersPersistAcrossConfigResets() {
+    @Test func testAccessibilityIdentifiersPersistAcrossConfigResets() {
         // TDD: Test persistence across config resets (simulating app restarts)
         
         let createTestView = {
@@ -234,7 +234,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
         let id2 = generateIDForView(view2)
         
         // This assertion SHOULD PASS with our fix
-        XCTAssertEqual(id1, id2, "IDs should persist across config resets")
+        #expect(id1 == id2, "IDs should persist across config resets")
         
         print("🟢 TDD Green Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
     }
@@ -247,7 +247,7 @@ final class AccessibilityIdentifierPersistenceTests: XCTestCase {
             let button = try inspectedView.button()
             return try button.accessibilityIdentifier()
         } catch {
-            XCTFail("Failed to generate ID for view: \(error)")
+            Issue.record("Failed to generate ID for view: \(error)")
             return ""
         }
     }

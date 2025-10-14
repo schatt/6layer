@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL macOS Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class MacOSComponentAccessibilityTests: XCTestCase {
+final class MacOSComponentAccessibilityTests {
     
     // MARK: - macOS Component Tests
     
-    func testMacOSComponentsGeneratesAccessibilityIdentifiers() async {
+    @Test func testMacOSComponentsGeneratesAccessibilityIdentifiers() async {
         // Given: MacOSComponents
         let testView = MacOSComponents()
         
@@ -25,7 +25,7 @@ final class MacOSComponentAccessibilityTests: XCTestCase {
             componentName: "MacOSComponents"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "MacOSComponents should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "MacOSComponents should generate accessibility identifiers")
     }
 }
 

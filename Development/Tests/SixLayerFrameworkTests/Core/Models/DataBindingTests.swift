@@ -30,19 +30,19 @@
 //  - ✅ Business Logic Focus: Tests actual data binding functionality, not testing framework
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class DataBindingTests: XCTestCase {
+final class DataBindingTests {
     
     // MARK: - DataBinder Tests
     
     /// BUSINESS PURPOSE: Validate DataBinder initialization functionality
     /// TESTING SCOPE: Tests DataBinder creation with test model and initial state verification
     /// METHODOLOGY: Create DataBinder with TestModel and verify underlying model properties
-    func testDataBinderInitialization() {
+    @Test func testDataBinderInitialization() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -51,9 +51,9 @@ final class DataBindingTests: XCTestCase {
             let binder = DataBinder(testModel)
             
             // Verify initial state using public properties
-            XCTAssertEqual(binder.underlyingModel.name, "John")
-            XCTAssertEqual(binder.underlyingModel.age, 30)
-            XCTAssertTrue(binder.underlyingModel.isActive)
+            #expect(binder.underlyingModel.name == "John")
+            #expect(binder.underlyingModel.age == 30)
+            #expect(binder.underlyingModel.isActive)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -62,7 +62,7 @@ final class DataBindingTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate field binding establishment functionality
     /// TESTING SCOPE: Tests DataBinder field binding creation and verification
     /// METHODOLOGY: Bind field to model property and verify binding state and value retrieval
-    func testDataBinderBindField() {
+    @Test func testDataBinderBindField() {
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         
@@ -70,14 +70,14 @@ final class DataBindingTests: XCTestCase {
         binder.bind("name", to: \TestModel.name)
         
         // Verify binding is established
-        XCTAssertTrue(binder.hasBinding(for: "name"))
-        XCTAssertEqual(binder.getBoundValue("name") as? String, "John")
+        #expect(binder.hasBinding(for: "name"))
+        #expect(binder.getBoundValue("name") as? String == "John")
     }
     
     /// BUSINESS PURPOSE: Validate field update functionality
     /// TESTING SCOPE: Tests DataBinder field value updates and change tracking
     /// METHODOLOGY: Update bound field value and verify binder state, model updates, and dirty tracking
-    func testDataBinderUpdateField() {
+    @Test func testDataBinderUpdateField() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -90,12 +90,12 @@ final class DataBindingTests: XCTestCase {
             binder.updateField("name", value: "Jane")
             
             // Verify model is updated through the binder
-            XCTAssertEqual(binder.getBoundValue("name") as? String, "Jane")
-            XCTAssertEqual(binder.underlyingModel.name, "Jane")
+            #expect(binder.getBoundValue("name") as? String == "Jane")
+            #expect(binder.underlyingModel.name == "Jane")
             
             // Verify change tracking
-            XCTAssertTrue(binder.hasUnsavedChanges)
-            XCTAssertTrue(binder.dirtyFields.contains("name"))
+            #expect(binder.hasUnsavedChanges)
+            #expect(binder.dirtyFields.contains("name"))
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -104,7 +104,7 @@ final class DataBindingTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate model synchronization functionality
     /// TESTING SCOPE: Tests DataBinder synchronization of multiple field updates to underlying model
     /// METHODOLOGY: Update multiple bound fields and verify model synchronization after sync call
-    func testDataBinderSyncToModel() {
+    @Test func testDataBinderSyncToModel() {
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         binder.bind("name", to: \TestModel.name)
@@ -118,15 +118,15 @@ final class DataBindingTests: XCTestCase {
         let updatedModel = binder.sync()
         
         // Verify model is updated
-        XCTAssertEqual(updatedModel.name, "Jane")
-        XCTAssertEqual(updatedModel.age, 25)
-        XCTAssertEqual(updatedModel.isActive, true) // Unchanged
+        #expect(updatedModel.name == "Jane")
+        #expect(updatedModel.age == 25)
+        #expect(updatedModel.isActive == true) // Unchanged
     }
     
     /// BUSINESS PURPOSE: Validate multiple field binding functionality
     /// TESTING SCOPE: Tests DataBinder creation and management of multiple field bindings
     /// METHODOLOGY: Bind multiple fields to model properties and verify all bindings are established
-    func testDataBinderMultipleBindings() {
+    @Test func testDataBinderMultipleBindings() {
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         
@@ -136,29 +136,29 @@ final class DataBindingTests: XCTestCase {
         binder.bind("isActive", to: \TestModel.isActive)
         
         // Verify all bindings exist
-        XCTAssertTrue(binder.hasBinding(for: "name"))
-        XCTAssertTrue(binder.hasBinding(for: "age"))
-        XCTAssertTrue(binder.hasBinding(for: "isActive"))
-        XCTAssertEqual(binder.bindingCount, 3)
+        #expect(binder.hasBinding(for: "name"))
+        #expect(binder.hasBinding(for: "age"))
+        #expect(binder.hasBinding(for: "isActive"))
+        #expect(binder.bindingCount == 3)
     }
     
     /// BUSINESS PURPOSE: Validate field unbinding functionality
     /// TESTING SCOPE: Tests DataBinder field unbinding and binding removal
     /// METHODOLOGY: Bind field, then unbind it and verify binding is completely removed
-    func testDataBinderUnbindField() {
+    @Test func testDataBinderUnbindField() {
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         binder.bind("name", to: \TestModel.name)
         
         // Verify binding exists
-        XCTAssertTrue(binder.hasBinding(for: "name"))
+        #expect(binder.hasBinding(for: "name"))
         
         // Unbind the field
         binder.unbind("name")
         
         // Verify binding is removed
-        XCTAssertFalse(binder.hasBinding(for: "name"))
-        XCTAssertEqual(binder.bindingCount, 0)
+        #expect(!binder.hasBinding(for: "name"))
+        #expect(binder.bindingCount == 0)
     }
     
     // MARK: - ChangeTracker Tests
@@ -166,35 +166,35 @@ final class DataBindingTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate ChangeTracker initialization functionality
     /// TESTING SCOPE: Tests ChangeTracker creation and initial state verification
     /// METHODOLOGY: Create ChangeTracker and verify initial state with no changes tracked
-    func testChangeTrackerInitialization() {
+    @Test func testChangeTrackerInitialization() {
         let tracker = ChangeTracker()
         
         // Verify initial state
-        XCTAssertFalse(tracker.hasChanges)
-        XCTAssertEqual(tracker.changedFieldNames.count, 0)
-        XCTAssertEqual(tracker.totalChanges, 0)
+        #expect(!tracker.hasChanges)
+        #expect(tracker.changedFieldNames.count == 0)
+        #expect(tracker.totalChanges == 0)
     }
     
     /// BUSINESS PURPOSE: Validate change tracking functionality
     /// TESTING SCOPE: Tests ChangeTracker single field change tracking and state management
     /// METHODOLOGY: Track single field change and verify tracker state reflects the change
-    func testChangeTrackerTrackChange() {
+    @Test func testChangeTrackerTrackChange() {
         let tracker = ChangeTracker()
         
         // Track a change
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
         // Verify change is tracked
-        XCTAssertTrue(tracker.hasChanges)
-        XCTAssertEqual(tracker.changedFieldNames.count, 1)
-        XCTAssertEqual(tracker.totalChanges, 1)
-        XCTAssertTrue(tracker.changedFieldNames.contains("name"))
+        #expect(tracker.hasChanges)
+        #expect(tracker.changedFieldNames.count == 1)
+        #expect(tracker.totalChanges == 1)
+        #expect(tracker.changedFieldNames.contains("name"))
     }
     
     /// BUSINESS PURPOSE: Validate multiple change tracking functionality
     /// TESTING SCOPE: Tests ChangeTracker multiple field change tracking and aggregation
     /// METHODOLOGY: Track multiple field changes and verify all changes are properly tracked and counted
-    func testChangeTrackerTrackMultipleChanges() {
+    @Test func testChangeTrackerTrackMultipleChanges() {
         let tracker = ChangeTracker()
         
         // Track multiple changes
@@ -202,17 +202,17 @@ final class DataBindingTests: XCTestCase {
         tracker.trackChange("age", oldValue: 30, newValue: 25)
         
         // Verify all changes are tracked
-        XCTAssertTrue(tracker.hasChanges)
-        XCTAssertEqual(tracker.changedFieldNames.count, 2)
-        XCTAssertEqual(tracker.totalChanges, 2)
-        XCTAssertTrue(tracker.changedFieldNames.contains("name"))
-        XCTAssertTrue(tracker.changedFieldNames.contains("age"))
+        #expect(tracker.hasChanges)
+        #expect(tracker.changedFieldNames.count == 2)
+        #expect(tracker.totalChanges == 2)
+        #expect(tracker.changedFieldNames.contains("name"))
+        #expect(tracker.changedFieldNames.contains("age"))
     }
     
     /// BUSINESS PURPOSE: Validate change details retrieval functionality
     /// TESTING SCOPE: Tests ChangeTracker change details access and data integrity
     /// METHODOLOGY: Track change and verify change details can be retrieved with correct old/new values
-    func testChangeTrackerGetChangeDetails() {
+    @Test func testChangeTrackerGetChangeDetails() {
         let tracker = ChangeTracker()
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
@@ -220,46 +220,46 @@ final class DataBindingTests: XCTestCase {
         let changeDetails = tracker.getChangeDetails(for: "name")
         
         // Verify change details
-        XCTAssertNotNil(changeDetails)
-        XCTAssertEqual(changeDetails?.oldValue as? String, "John")
-        XCTAssertEqual(changeDetails?.newValue as? String, "Jane")
+        #expect(changeDetails != nil)
+        #expect(changeDetails?.oldValue as? String == "John")
+        #expect(changeDetails?.newValue as? String == "Jane")
     }
     
     /// BUSINESS PURPOSE: Validate change clearing functionality
     /// TESTING SCOPE: Tests ChangeTracker change clearing and state reset
     /// METHODOLOGY: Track changes, clear them, and verify tracker returns to initial state
-    func testChangeTrackerClearChanges() {
+    @Test func testChangeTrackerClearChanges() {
         let tracker = ChangeTracker()
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
         // Verify changes exist
-        XCTAssertTrue(tracker.hasChanges)
+        #expect(tracker.hasChanges)
         
         // Clear changes
         tracker.clearChanges()
         
         // Verify changes are cleared
-        XCTAssertFalse(tracker.hasChanges)
-        XCTAssertEqual(tracker.changedFieldNames.count, 0)
-        XCTAssertEqual(tracker.totalChanges, 0)
+        #expect(!tracker.hasChanges)
+        #expect(tracker.changedFieldNames.count == 0)
+        #expect(tracker.totalChanges == 0)
     }
     
     /// BUSINESS PURPOSE: Validate field reversion functionality
     /// TESTING SCOPE: Tests ChangeTracker individual field reversion and change removal
     /// METHODOLOGY: Track change, revert specific field, and verify field returns to original value and is removed from tracking
-    func testChangeTrackerRevertField() {
+    @Test func testChangeTrackerRevertField() {
         let tracker = ChangeTracker()
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
         // Verify change is tracked
-        XCTAssertTrue(tracker.changedFieldNames.contains("name"))
+        #expect(tracker.changedFieldNames.contains("name"))
         
         // Revert the field
         let revertedValue = tracker.revertField("name")
         
         // Verify field is reverted
-        XCTAssertEqual(revertedValue as? String, "John")
-        XCTAssertFalse(tracker.changedFieldNames.contains("name"))
+        #expect(revertedValue as? String == "John")
+        #expect(!tracker.changedFieldNames.contains("name"))
     }
     
     // MARK: - DirtyStateManager Tests
@@ -267,51 +267,51 @@ final class DataBindingTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate DirtyStateManager initialization functionality
     /// TESTING SCOPE: Tests DirtyStateManager creation and initial state verification
     /// METHODOLOGY: Create DirtyStateManager and verify initial state with no dirty fields
-    func testDirtyStateManagerInitialization() {
+    @Test func testDirtyStateManagerInitialization() {
         let manager = DirtyStateManager()
         
         // Verify initial state
-        XCTAssertFalse(manager.isDirty)
-        XCTAssertEqual(manager.dirtyFieldNames.count, 0)
+        #expect(!manager.isDirty)
+        #expect(manager.dirtyFieldNames.count == 0)
     }
     
     /// BUSINESS PURPOSE: Validate dirty field marking functionality
     /// TESTING SCOPE: Tests DirtyStateManager field dirty state marking and tracking
     /// METHODOLOGY: Mark field as dirty and verify dirty state is properly tracked
-    func testDirtyStateManagerMarkFieldDirty() {
+    @Test func testDirtyStateManagerMarkFieldDirty() {
         let manager = DirtyStateManager()
         
         // Mark field as dirty
         manager.markFieldDirty("name")
         
         // Verify dirty state
-        XCTAssertTrue(manager.isDirty)
-        XCTAssertEqual(manager.dirtyFieldNames.count, 1)
-        XCTAssertTrue(manager.dirtyFieldNames.contains("name"))
+        #expect(manager.isDirty)
+        #expect(manager.dirtyFieldNames.count == 1)
+        #expect(manager.dirtyFieldNames.contains("name"))
     }
     
     /// BUSINESS PURPOSE: Validate clean field marking functionality
     /// TESTING SCOPE: Tests DirtyStateManager field clean state marking and dirty state removal
     /// METHODOLOGY: Mark field dirty, then mark clean, and verify dirty state is properly cleared
-    func testDirtyStateManagerMarkFieldClean() {
+    @Test func testDirtyStateManagerMarkFieldClean() {
         let manager = DirtyStateManager()
         manager.markFieldDirty("name")
         
         // Verify field is dirty
-        XCTAssertTrue(manager.isDirty)
+        #expect(manager.isDirty)
         
         // Mark field as clean
         manager.markFieldClean("name")
         
         // Verify field is clean
-        XCTAssertFalse(manager.isDirty)
-        XCTAssertEqual(manager.dirtyFieldNames.count, 0)
+        #expect(!manager.isDirty)
+        #expect(manager.dirtyFieldNames.count == 0)
     }
     
     /// BUSINESS PURPOSE: Validate multiple field dirty state management functionality
     /// TESTING SCOPE: Tests DirtyStateManager multiple field dirty state tracking and partial cleaning
     /// METHODOLOGY: Mark multiple fields dirty, clean one field, and verify partial dirty state management
-    func testDirtyStateManagerMultipleFields() {
+    @Test func testDirtyStateManagerMultipleFields() {
         let manager = DirtyStateManager()
         
         // Mark multiple fields as dirty
@@ -319,44 +319,44 @@ final class DataBindingTests: XCTestCase {
         manager.markFieldDirty("age")
         
         // Verify dirty state
-        XCTAssertTrue(manager.isDirty)
-        XCTAssertEqual(manager.dirtyFieldNames.count, 2)
-        XCTAssertTrue(manager.dirtyFieldNames.contains("name"))
-        XCTAssertTrue(manager.dirtyFieldNames.contains("age"))
+        #expect(manager.isDirty)
+        #expect(manager.dirtyFieldNames.count == 2)
+        #expect(manager.dirtyFieldNames.contains("name"))
+        #expect(manager.dirtyFieldNames.contains("age"))
         
         // Mark one field clean
         manager.markFieldClean("name")
         
         // Verify partial clean state
-        XCTAssertTrue(manager.isDirty) // Still dirty because age is dirty
-        XCTAssertEqual(manager.dirtyFieldNames.count, 1)
-        XCTAssertFalse(manager.dirtyFieldNames.contains("name"))
-        XCTAssertTrue(manager.dirtyFieldNames.contains("age"))
+        #expect(manager.isDirty) // Still dirty because age is dirty
+        #expect(manager.dirtyFieldNames.count == 1)
+        #expect(!manager.dirtyFieldNames.contains("name"))
+        #expect(manager.dirtyFieldNames.contains("age"))
     }
     
     /// BUSINESS PURPOSE: Validate dirty state clearing functionality
     /// TESTING SCOPE: Tests DirtyStateManager bulk dirty state clearing and reset
     /// METHODOLOGY: Mark multiple fields dirty, clear all, and verify complete clean state
-    func testDirtyStateManagerClearAll() {
+    @Test func testDirtyStateManagerClearAll() {
         let manager = DirtyStateManager()
         manager.markFieldDirty("name")
         manager.markFieldDirty("age")
         
         // Verify dirty state
-        XCTAssertTrue(manager.isDirty)
+        #expect(manager.isDirty)
         
         // Clear all dirty fields
         manager.clearAll()
         
         // Verify clean state
-        XCTAssertFalse(manager.isDirty)
-        XCTAssertEqual(manager.dirtyFieldNames.count, 0)
+        #expect(!manager.isDirty)
+        #expect(manager.dirtyFieldNames.count == 0)
     }
     
     /// BUSINESS PURPOSE: Validate dirty values retrieval functionality
     /// TESTING SCOPE: Tests DirtyStateManager dirty field values access and enumeration
     /// METHODOLOGY: Mark multiple fields dirty and verify dirty values can be retrieved correctly
-    func testDirtyStateManagerGetDirtyValues() {
+    @Test func testDirtyStateManagerGetDirtyValues() {
         let manager = DirtyStateManager()
         manager.markFieldDirty("name")
         manager.markFieldDirty("age")
@@ -365,9 +365,9 @@ final class DataBindingTests: XCTestCase {
         let dirtyValues = manager.getDirtyValues()
         
         // Verify dirty values
-        XCTAssertEqual(dirtyValues.count, 2)
-        XCTAssertTrue(dirtyValues.contains("name"))
-        XCTAssertTrue(dirtyValues.contains("age"))
+        #expect(dirtyValues.count == 2)
+        #expect(dirtyValues.contains("name"))
+        #expect(dirtyValues.contains("age"))
     }
 }
 

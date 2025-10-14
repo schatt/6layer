@@ -23,25 +23,22 @@
 //  view creation and hosting, not actual Layer 1 OCR disambiguation functionality.
 //  Real tests need to be written that test actual Layer 1 OCR disambiguation behavior.
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Layer 1 OCR disambiguation functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR disambiguation functionality
 @MainActor
-final class OCRDisambiguationL1Tests: XCTestCase {
+final class OCRDisambiguationL1Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         // TODO: Set up real Layer 1 OCR disambiguation tests
     }
     
-    override func tearDown() {
-        // TODO: Clean up Layer 1 OCR disambiguation tests
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Real Layer 1 OCR Disambiguation Tests (To Be Implemented)

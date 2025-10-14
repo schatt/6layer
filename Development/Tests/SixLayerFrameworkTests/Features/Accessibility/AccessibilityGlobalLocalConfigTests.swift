@@ -1,13 +1,13 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 /// Test that accessibility functions respect both global and local configuration options
 @MainActor
-final class AccessibilityGlobalLocalConfigTests: XCTestCase {
+final class AccessibilityGlobalLocalConfigTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -17,7 +17,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -25,7 +25,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
     
     // MARK: - Global Config Tests
     
-    func testAccessibilityFunctionsRespectGlobalConfigDisabled() {
+    @Test func testAccessibilityFunctionsRespectGlobalConfigDisabled() {
         // Test that accessibility functions don't generate IDs when global config is disabled
         
         // Disable global config
@@ -44,7 +44,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty when global config is disabled
-            XCTAssertTrue(accessibilityID.isEmpty, "Accessibility functions should not generate ID when global config is disabled")
+            #expect(accessibilityID.isEmpty, "Accessibility functions should not generate ID when global config is disabled")
             
         } catch {
             // If we can't inspect, that's also fine - means no accessibility identifier was applied
@@ -52,7 +52,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         }
     }
     
-    func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
+    @Test func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
         // Test that accessibility functions DO generate IDs when global config is enabled
         
         // Ensure global config is enabled (default)
@@ -72,14 +72,14 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         )
         
         // Should have an ID when global config is enabled
-        XCTAssertTrue(hasAccessibilityID, "Accessibility functions should generate ID when global config is enabled")
+        #expect(hasAccessibilityID, "Accessibility functions should generate ID when global config is enabled")
         
         print("✅ Accessibility functions correctly generate ID when global config is enabled")
     }
     
     // MARK: - Local Config Tests
     
-    func testAccessibilityFunctionsRespectLocalDisableModifier() {
+    @Test func testAccessibilityFunctionsRespectLocalDisableModifier() {
         // Test that accessibility functions respect local disable modifier
         
         // Global config is enabled
@@ -100,7 +100,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty when local disable is applied
-            XCTAssertTrue(accessibilityID.isEmpty, "Accessibility functions should not generate ID when local disable modifier is applied")
+            #expect(accessibilityID.isEmpty, "Accessibility functions should not generate ID when local disable modifier is applied")
             
         } catch {
             // If we can't inspect, that's also fine - means no accessibility identifier was applied
@@ -108,7 +108,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         }
     }
     
-    func testAccessibilityFunctionsRespectLocalEnableModifier() {
+    @Test func testAccessibilityFunctionsRespectLocalEnableModifier() {
         // Test that accessibility functions respect local enable modifier
         
         // Global config is disabled
@@ -129,14 +129,14 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         )
         
         // Should have an ID when local enable is applied (even with global disabled)
-        XCTAssertTrue(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied")
+        #expect(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied")
         
         print("✅ Accessibility functions correctly respect local enable modifier")
     }
     
     // MARK: - Priority Tests
     
-    func testLocalDisableOverridesGlobalEnable() {
+    @Test func testLocalDisableOverridesGlobalEnable() {
         // Test that local disable takes precedence over global enable
         
         // Global config is enabled
@@ -156,14 +156,14 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty - local disable should override global enable
-            XCTAssertTrue(accessibilityID.isEmpty, "Local disable should override global enable")
+            #expect(accessibilityID.isEmpty, "Local disable should override global enable")
             
         } catch {
             print("✅ Local disable correctly overrides global enable")
         }
     }
     
-    func testLocalEnableOverridesGlobalDisable() {
+    @Test func testLocalEnableOverridesGlobalDisable() {
         // Test that local enable takes precedence over global disable
         
         // Global config is disabled
@@ -184,14 +184,14 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
         )
         
         // Should have an ID - local enable should override global disable
-        XCTAssertTrue(hasAccessibilityID, "Local enable should override global disable")
+        #expect(hasAccessibilityID, "Local enable should override global disable")
         
         print("✅ Local enable correctly overrides global disable")
     }
     
     // MARK: - Environment Variable Tests
     
-    func testEnvironmentVariablesAreRespected() {
+    @Test func testEnvironmentVariablesAreRespected() {
         // Test that environment variables are properly respected
         
         // Global config is enabled
@@ -211,7 +211,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty - environment variable should override
-            XCTAssertTrue(accessibilityID.isEmpty, "Environment variable should override global config")
+            #expect(accessibilityID.isEmpty, "Environment variable should override global config")
             
         } catch {
             print("✅ Environment variable correctly overrides global config")
@@ -226,7 +226,7 @@ final class AccessibilityGlobalLocalConfigTests: XCTestCase {
             let button = try inspectedView.button()
             return try button.accessibilityIdentifier()
         } catch {
-            XCTFail("Failed to generate ID for view: \(error)")
+            Issue.record("Failed to generate ID for view: \(error)")
             return ""
         }
     }

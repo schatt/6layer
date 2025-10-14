@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL CrossPlatformOptimizationLayer6 components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCase {
+final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests {
     
     // MARK: - CrossPlatformOptimizationManager Tests
     
-    func testCrossPlatformOptimizationManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testCrossPlatformOptimizationManagerGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformOptimizationManager
         let manager = CrossPlatformOptimizationManager()
         
@@ -31,12 +31,12 @@ final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCa
             componentName: "CrossPlatformOptimizationManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CrossPlatformOptimizationManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CrossPlatformOptimizationManager should generate accessibility identifiers")
     }
     
     // MARK: - PlatformOptimizationSettings Tests
     
-    func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOptimizationSettings
         let settings = PlatformOptimizationSettings(for: .macOS)
         
@@ -53,12 +53,12 @@ final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCa
             componentName: "PlatformOptimizationSettings"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformOptimizationSettings should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOptimizationSettings should generate accessibility identifiers")
     }
     
     // MARK: - CrossPlatformPerformanceMetrics Tests
     
-    func testCrossPlatformPerformanceMetricsGeneratesAccessibilityIdentifiers() async {
+    @Test func testCrossPlatformPerformanceMetricsGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformPerformanceMetrics
         let metrics = CrossPlatformPerformanceMetrics()
         
@@ -75,12 +75,12 @@ final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCa
             componentName: "CrossPlatformPerformanceMetrics"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CrossPlatformPerformanceMetrics should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CrossPlatformPerformanceMetrics should generate accessibility identifiers")
     }
     
     // MARK: - PlatformUIPatterns Tests
     
-    func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformUIPatterns
         let patterns = PlatformUIPatterns(for: .macOS)
         
@@ -97,12 +97,12 @@ final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCa
             componentName: "PlatformUIPatterns"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformUIPatterns should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformUIPatterns should generate accessibility identifiers")
     }
     
     // MARK: - PlatformRecommendationEngine Tests
     
-    func testPlatformRecommendationEngineGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformRecommendationEngineGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRecommendationEngine
         let engine = PlatformRecommendationEngine()
         
@@ -119,12 +119,12 @@ final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCa
             componentName: "PlatformRecommendationEngine"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformRecommendationEngine should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformRecommendationEngine should generate accessibility identifiers")
     }
     
     // MARK: - CrossPlatformTesting Tests
     
-    func testCrossPlatformTestingGeneratesAccessibilityIdentifiers() async {
+    @Test func testCrossPlatformTestingGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformTesting
         let testing = CrossPlatformTesting()
         
@@ -141,7 +141,7 @@ final class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: XCTestCa
             componentName: "CrossPlatformTesting"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CrossPlatformTesting should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CrossPlatformTesting should generate accessibility identifiers")
     }
 }
 

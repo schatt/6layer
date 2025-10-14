@@ -33,11 +33,11 @@
 //  - ✅ Excellent: Tests all core architecture components and business logic
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class CoreArchitectureTests: XCTestCase {
+final class CoreArchitectureTests {
     
     // MARK: - Test Helpers
     
@@ -64,7 +64,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate data type hint creation functionality for presentation hints
     /// TESTING SCOPE: DataTypeHint creation, EnhancedPresentationHints initialization, data type validation
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test data type hint creation
-    func testDataTypeHintCreation() throws {
+    @Test func testDataTypeHintCreation() throws {
         // Given
         let dataType = DataTypeHint.text
         let preference = PresentationPreference.card
@@ -80,10 +80,10 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(hints.dataType, dataType)
-        XCTAssertEqual(hints.presentationPreference, preference)
-        XCTAssertEqual(hints.complexity, complexity)
-        XCTAssertEqual(hints.context, context)
+        #expect(hints.dataType == dataType)
+        #expect(hints.presentationPreference == preference)
+        #expect(hints.complexity == complexity)
+        #expect(hints.context == context)
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
@@ -96,36 +96,36 @@ final class CoreArchitectureTests: XCTestCase {
                 context: context
             )
             
-            XCTAssertEqual(platformHints.dataType, dataType, "Data type should be consistent on \(platform)")
-            XCTAssertEqual(platformHints.presentationPreference, preference, "Presentation preference should be consistent on \(platform)")
-            XCTAssertEqual(platformHints.complexity, complexity, "Complexity should be consistent on \(platform)")
-            XCTAssertEqual(platformHints.context, context, "Context should be consistent on \(platform)")
+            #expect(platformHints.dataType == dataType, "Data type should be consistent on \(platform)")
+            #expect(platformHints.presentationPreference == preference, "Presentation preference should be consistent on \(platform)")
+            #expect(platformHints.complexity == complexity, "Complexity should be consistent on \(platform)")
+            #expect(platformHints.context == context, "Context should be consistent on \(platform)")
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        XCTAssertTrue(hints.extensibleHints.isEmpty)
+        #expect(hints.extensibleHints.isEmpty)
     }
     
     /// BUSINESS PURPOSE: Validate content complexity enumeration completeness functionality
     /// TESTING SCOPE: ContentComplexity enum completeness, enumeration validation, complexity level testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test content complexity enumeration
-    func testContentComplexityEnumeration() throws {
+    @Test func testContentComplexityEnumeration() throws {
         // Given & When
         let complexities = ContentComplexity.allCases
         
         // Then
-        XCTAssertEqual(complexities.count, 5)
-        XCTAssertTrue(complexities.contains(.simple))
-        XCTAssertTrue(complexities.contains(.moderate))
-        XCTAssertTrue(complexities.contains(.complex))
-        XCTAssertTrue(complexities.contains(.veryComplex))
-        XCTAssertTrue(complexities.contains(.advanced))
+        #expect(complexities.count == 5)
+        #expect(complexities.contains(.simple))
+        #expect(complexities.contains(.moderate))
+        #expect(complexities.contains(.complex))
+        #expect(complexities.contains(.veryComplex))
+        #expect(complexities.contains(.advanced))
     }
     
     /// BUSINESS PURPOSE: Validate presentation context business behavior functionality for different user experiences
     /// TESTING SCOPE: PresentationContext business logic, context-specific field generation, user experience validation
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation context behavior
-    func testPresentationContextBusinessBehavior() throws {
+    @Test func testPresentationContextBusinessBehavior() throws {
         // Test that PresentationContext creates different user experiences
         // This tests the actual business value, not just technical properties
         
@@ -134,39 +134,39 @@ final class CoreArchitectureTests: XCTestCase {
         
         // Dashboard context should create simple, overview-focused fields
         let dashboardFields = createDynamicFormFields(context: .dashboard)
-        XCTAssertEqual(dashboardFields.count, 2, "Dashboard should have 2 simple fields")
-        XCTAssertTrue(dashboardFields.contains { $0.label == "Dashboard Name" })
-        XCTAssertTrue(dashboardFields.contains { $0.label == "Auto Refresh" })
-        XCTAssertTrue(dashboardFields.contains { field in
+        #expect(dashboardFields.count == 2, "Dashboard should have 2 simple fields")
+        #expect(dashboardFields.contains { $0.label == "Dashboard Name" })
+        #expect(dashboardFields.contains { $0.label == "Auto Refresh" })
+        #expect(dashboardFields.contains { field in
             field.contentType == .toggle
         })
         
         // Detail context should create rich, comprehensive fields
         let detailFields = createDynamicFormFields(context: .detail)
-        XCTAssertEqual(detailFields.count, 5, "Detail should have 5 comprehensive fields")
-        XCTAssertTrue(detailFields.contains { $0.label == "Title" })
-        XCTAssertTrue(detailFields.contains { $0.label == "Description" })
-        XCTAssertTrue(detailFields.contains { $0.label == "Created Date" })
-        XCTAssertTrue(detailFields.contains { $0.label == "Created Time" })
-        XCTAssertTrue(detailFields.contains { $0.label == "Attachments" })
-        XCTAssertTrue(detailFields.contains { field in
+        #expect(detailFields.count == 5, "Detail should have 5 comprehensive fields")
+        #expect(detailFields.contains { $0.label == "Title" })
+        #expect(detailFields.contains { $0.label == "Description" })
+        #expect(detailFields.contains { $0.label == "Created Date" })
+        #expect(detailFields.contains { $0.label == "Created Time" })
+        #expect(detailFields.contains { $0.label == "Attachments" })
+        #expect(detailFields.contains { field in
             field.contentType == .richtext
         })
-        XCTAssertTrue(detailFields.contains { field in
+        #expect(detailFields.contains { field in
             field.contentType == .file
         })
         
         // Test that contexts produce different user experiences
-        XCTAssertNotEqual(dashboardFields.count, detailFields.count, 
+        #expect(dashboardFields.count != detailFields.count, 
                          "Different contexts should produce different field counts")
         
         // Test that contexts can be used in PresentationHints for UI generation
         let dashboardHints = PresentationHints(context: .dashboard)
         let detailHints = PresentationHints(context: .detail)
         
-        XCTAssertEqual(dashboardHints.context, .dashboard)
-        XCTAssertEqual(detailHints.context, .detail)
-        XCTAssertNotEqual(dashboardHints.context, detailHints.context)
+        #expect(dashboardHints.context == .dashboard)
+        #expect(detailHints.context == .detail)
+        #expect(dashboardHints.context != detailHints.context)
     }
     
     // MARK: - REAL TDD TESTS FOR PRESENTATION CONTEXT FIELD GENERATION
@@ -174,7 +174,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate presentation context field generation completeness functionality
     /// TESTING SCOPE: PresentationContext field generation completeness, exhaustive context handling, field creation validation
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation context field generation
-    func testPresentationContextFieldGenerationCompleteness() throws {
+    @Test func testPresentationContextFieldGenerationCompleteness() throws {
         // Test that ALL PresentationContext cases are handled in createDynamicFormFields
         // This will FAIL if we add a new context without handling it in createDynamicFormFields
         
@@ -182,12 +182,12 @@ final class CoreArchitectureTests: XCTestCase {
             let fields = createDynamicFormFields(context: context)
             
             // Each context should return at least one field
-            XCTAssertFalse(fields.isEmpty, "Context \(context) should return at least one field")
+            #expect(!fields.isEmpty, "Context \(context) should return at least one field")
             
             // Each field should have required properties
             for field in fields {
-                XCTAssertFalse(field.id.isEmpty, "Field ID should not be empty for context \(context)")
-                XCTAssertFalse(field.label.isEmpty, "Field label should not be empty for context \(context)")
+                #expect(!field.id.isEmpty, "Field ID should not be empty for context \(context)")
+                #expect(!field.label.isEmpty, "Field label should not be empty for context \(context)")
             }
         }
     }
@@ -195,7 +195,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate presentation context field generation behavior functionality for context-specific field creation
     /// TESTING SCOPE: PresentationContext field generation behavior, context-specific field validation, business logic testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation context field generation behavior
-    func testPresentationContextFieldGenerationBehavior() throws {
+    @Test func testPresentationContextFieldGenerationBehavior() throws {
         // Test that each PresentationContext returns appropriate fields for its business purpose
         // This tests the actual business behavior, not just existence
         
@@ -206,74 +206,74 @@ final class CoreArchitectureTests: XCTestCase {
             switch context {
             case .dashboard:
                 // Dashboard should have dashboard-specific fields
-                XCTAssertTrue(fields.contains { $0.id.contains("dashboard") || $0.id.contains("auto_refresh") }, 
+                #expect(fields.contains { $0.id.contains("dashboard") || $0.id.contains("auto_refresh") }, 
                             "Dashboard context should have dashboard/auto_refresh fields")
                 
             case .browse:
                 // Browse should have search/filter fields
-                XCTAssertTrue(fields.contains { $0.id.contains("search") || $0.id.contains("filter") }, 
+                #expect(fields.contains { $0.id.contains("search") || $0.id.contains("filter") }, 
                             "Browse context should have search/filter fields")
                 
             case .detail:
                 // Detail should have comprehensive information fields
-                XCTAssertGreaterThan(fields.count, 2, "Detail context should have multiple information fields")
+                #expect(fields.count > 2, "Detail context should have multiple information fields")
                 
             case .edit:
                 // Edit should have editable fields
-                XCTAssertTrue(fields.contains { field in
+                #expect(fields.contains { field in
                     field.contentType == .text || field.contentType == .textarea
                 }, "Edit context should have text input fields")
                 
             case .create:
                 // Create should have form fields for new item creation
-                XCTAssertTrue(fields.contains { $0.id.contains("name") || $0.id.contains("title") }, 
+                #expect(fields.contains { $0.id.contains("name") || $0.id.contains("title") }, 
                             "Create context should have name/title fields")
                 
             case .search:
                 // Search should have search-specific fields
-                XCTAssertTrue(fields.contains { $0.id.contains("query") || $0.id.contains("search") }, 
+                #expect(fields.contains { $0.id.contains("query") || $0.id.contains("search") }, 
                             "Search context should have query/search fields")
                 
             case .settings:
                 // Settings should have configuration fields
-                XCTAssertTrue(fields.contains { $0.id.contains("theme") || $0.id.contains("notifications") }, 
+                #expect(fields.contains { $0.id.contains("theme") || $0.id.contains("notifications") }, 
                             "Settings context should have theme/notifications fields")
                 
             case .profile:
                 // Profile should have user information fields
-                XCTAssertTrue(fields.contains { $0.id.contains("display_name") || $0.id.contains("bio") || $0.id.contains("avatar") }, 
+                #expect(fields.contains { $0.id.contains("display_name") || $0.id.contains("bio") || $0.id.contains("avatar") }, 
                             "Profile context should have display_name/bio/avatar fields")
                 
             case .form:
                 // Form should have comprehensive form fields
-                XCTAssertGreaterThan(fields.count, 3, "Form context should have multiple form fields")
+                #expect(fields.count > 3, "Form context should have multiple form fields")
                 
             case .modal:
                 // Modal should have focused, specific fields
-                XCTAssertLessThanOrEqual(fields.count, 5, "Modal context should have focused, limited fields")
+                #expect(fields.count <= 5, "Modal context should have focused, limited fields")
                 
             case .summary:
                 // Summary should have overview fields
-                XCTAssertTrue(fields.contains { $0.id.contains("summary") || $0.id.contains("overview") }, 
+                #expect(fields.contains { $0.id.contains("summary") || $0.id.contains("overview") }, 
                             "Summary context should have summary/overview fields")
                 
             case .list:
                 // List should have list-specific fields
-                XCTAssertTrue(fields.contains { $0.id.contains("list") || $0.id.contains("item") }, 
+                #expect(fields.contains { $0.id.contains("list") || $0.id.contains("item") }, 
                             "List context should have list/item fields")
                 
             case .standard:
                 // Standard should have basic fields
-                XCTAssertGreaterThan(fields.count, 0, "Standard context should have basic fields")
+                #expect(fields.count > 0, "Standard context should have basic fields")
                 
             case .navigation:
                 // Navigation should have navigation-specific fields
-                XCTAssertTrue(fields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
+                #expect(fields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
                             "Navigation context should have navigation/route fields")
                 
             case .gallery:
                 // Gallery should have gallery-specific fields
-                XCTAssertTrue(fields.contains { $0.id.contains("gallery") || $0.id.contains("title") || $0.id.contains("description") }, 
+                #expect(fields.contains { $0.id.contains("gallery") || $0.id.contains("title") || $0.id.contains("description") }, 
                             "Gallery context should have gallery/title/description fields")
             }
         }
@@ -288,45 +288,45 @@ final class CoreArchitectureTests: XCTestCase {
                 // Test context-specific field requirements using switch for compiler enforcement
                 switch context {
                 case .dashboard:
-                    XCTAssertEqual(platformFields.count, 2, "Dashboard should have 2 fields on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Dashboard Name" }, "Dashboard should have Dashboard Name field on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Auto Refresh" }, "Dashboard should have Auto Refresh field on \(platform)")
+                    #expect(platformFields.count == 2, "Dashboard should have 2 fields on \(platform)")
+                    #expect(platformFields.contains { $0.label == "Dashboard Name" }, "Dashboard should have Dashboard Name field on \(platform)")
+                    #expect(platformFields.contains { $0.label == "Auto Refresh" }, "Dashboard should have Auto Refresh field on \(platform)")
                     
                 case .detail:
-                    XCTAssertEqual(platformFields.count, 5, "Detail should have 5 fields on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Title" }, "Detail should have Title field on \(platform)")
-                    XCTAssertTrue(platformFields.contains { $0.label == "Description" }, "Detail should have Description field on \(platform)")
+                    #expect(platformFields.count == 5, "Detail should have 5 fields on \(platform)")
+                    #expect(platformFields.contains { $0.label == "Title" }, "Detail should have Title field on \(platform)")
+                    #expect(platformFields.contains { $0.label == "Description" }, "Detail should have Description field on \(platform)")
                     
                 case .list:
-                    XCTAssertTrue(platformFields.contains { $0.id.contains("list") || $0.id.contains("item") }, 
+                    #expect(platformFields.contains { $0.id.contains("list") || $0.id.contains("item") }, 
                                 "List context should have list/item fields on \(platform)")
                     
                 case .standard:
-                    XCTAssertGreaterThan(platformFields.count, 0, "Standard context should have basic fields on \(platform)")
+                    #expect(platformFields.count > 0, "Standard context should have basic fields on \(platform)")
                     
                 case .navigation:
-                    XCTAssertTrue(platformFields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
+                    #expect(platformFields.contains { $0.id.contains("nav") || $0.id.contains("route") }, 
                                 "Navigation context should have navigation/route fields on \(platform)")
                 case .browse:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .edit:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .create:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .search:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .settings:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .profile:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .summary:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .form:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .modal:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 case .gallery:
-                    XCTAssertTrue(platformFields.count >= 1)
+                    #expect(platformFields.count >= 1)
                 }
             }
         }
@@ -337,7 +337,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate presentation context field generation exhaustiveness functionality for complete context handling
     /// TESTING SCOPE: PresentationContext field generation exhaustiveness, complete context coverage, exhaustive handling validation
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation context field generation exhaustiveness
-    func testPresentationContextFieldGenerationExhaustiveness() throws {
+    @Test func testPresentationContextFieldGenerationExhaustiveness() throws {
         // Test that createDynamicFormFields handles ALL PresentationContext cases
         // This will FAIL if we add a new context without handling it
         
@@ -350,11 +350,11 @@ final class CoreArchitectureTests: XCTestCase {
             handledContexts.insert(context)
             
             // Verify we got fields (not empty array)
-            XCTAssertFalse(fields.isEmpty, "Context \(context) should return fields")
+            #expect(!fields.isEmpty, "Context \(context) should return fields")
         }
         
         // Verify we handled all contexts
-        XCTAssertEqual(handledContexts.count, allContexts.count, 
+        #expect(handledContexts.count == allContexts.count, 
                       "All PresentationContext cases should be handled")
     }
     
@@ -362,7 +362,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate presentation context completeness functionality for complete context enumeration
     /// TESTING SCOPE: PresentationContext completeness, context enumeration validation, expected context verification
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation context completeness
-    func testPresentationContextCompleteness() throws {
+    @Test func testPresentationContextCompleteness() throws {
         // Test that we have all expected contexts and no unexpected ones
         // This will FAIL if someone adds/removes contexts without updating tests
         
@@ -375,7 +375,7 @@ final class CoreArchitectureTests: XCTestCase {
         let actualContexts = Set(PresentationContext.allCases)
         
         // This will fail if contexts are added or removed
-        XCTAssertEqual(actualContexts, expectedContexts, 
+        #expect(actualContexts == expectedContexts, 
                       "PresentationContext enum has changed. Update test expectations and verify behavior.")
     }
     
@@ -383,7 +383,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate presentation context semantic meaning functionality for distinct context identification
     /// TESTING SCOPE: PresentationContext semantic meaning, context distinction validation, semantic uniqueness testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation context semantic meaning
-    func testPresentationContextSemanticMeaning() throws {
+    @Test func testPresentationContextSemanticMeaning() throws {
         // Test that contexts have distinct semantic meanings
         // This verifies that each context represents a different use case
         
@@ -392,57 +392,57 @@ final class CoreArchitectureTests: XCTestCase {
         let detailHints = PresentationHints(context: .detail)
         let formHints = PresentationHints(context: .form)
         
-        XCTAssertNotEqual(dashboardHints.context, detailHints.context)
-        XCTAssertNotEqual(detailHints.context, formHints.context)
-        XCTAssertNotEqual(dashboardHints.context, formHints.context)
+        #expect(dashboardHints.context != detailHints.context)
+        #expect(detailHints.context != formHints.context)
+        #expect(dashboardHints.context != formHints.context)
         
         // Test that contexts can be used in different scenarios
         let contexts = Array(PresentationContext.allCases.prefix(5)) // Use real enum, test first 5
         let uniqueContexts = Set(contexts)
-        XCTAssertEqual(uniqueContexts.count, contexts.count, "All contexts should be unique")
+        #expect(uniqueContexts.count == contexts.count, "All contexts should be unique")
     }
     
     /// BUSINESS PURPOSE: Validate data type hint behavior functionality for data type-specific presentation behavior
     /// TESTING SCOPE: DataTypeHint behavior, data type-specific presentation validation, hint behavior testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test data type hint behavior
-    func testDataTypeHintBehavior() throws {
+    @Test func testDataTypeHintBehavior() throws {
         // Test that DataTypeHint provides the behavior it's supposed to provide
         // This tests actual functionality, not just existence
         
         // Test that data types can be used in PresentationHints
         let textHints = PresentationHints(dataType: .text)
-        XCTAssertEqual(textHints.dataType, .text)
+        #expect(textHints.dataType == .text)
         
         let imageHints = PresentationHints(dataType: .image)
-        XCTAssertEqual(imageHints.dataType, .image)
+        #expect(imageHints.dataType == .image)
         
         // Test that data types have meaningful raw values for serialization
-        XCTAssertEqual(DataTypeHint.text.rawValue, "text")
-        XCTAssertEqual(DataTypeHint.image.rawValue, "image")
-        XCTAssertEqual(DataTypeHint.number.rawValue, "number")
-        XCTAssertEqual(DataTypeHint.date.rawValue, "date")
+        #expect(DataTypeHint.text.rawValue == "text")
+        #expect(DataTypeHint.image.rawValue == "image")
+        #expect(DataTypeHint.number.rawValue == "number")
+        #expect(DataTypeHint.date.rawValue == "date")
         
         // Test that data types can be created from raw values (round-trip)
-        XCTAssertEqual(DataTypeHint(rawValue: "text"), .text)
-        XCTAssertEqual(DataTypeHint(rawValue: "image"), .image)
-        XCTAssertEqual(DataTypeHint(rawValue: "number"), .number)
+        #expect(DataTypeHint(rawValue: "text") == .text)
+        #expect(DataTypeHint(rawValue: "image") == .image)
+        #expect(DataTypeHint(rawValue: "number") == .number)
         
         // Test that invalid raw values return nil
-        XCTAssertNil(DataTypeHint(rawValue: "invalid"))
-        XCTAssertNil(DataTypeHint(rawValue: ""))
+        #expect(DataTypeHint(rawValue: "invalid") == nil)
+        #expect(DataTypeHint(rawValue: "") == nil)
         
         // Test that all data types are case iterable (for UI generation)
         let allDataTypes = DataTypeHint.allCases
-        XCTAssertFalse(allDataTypes.isEmpty, "DataTypeHint should have cases")
-        XCTAssertTrue(allDataTypes.contains(.text))
-        XCTAssertTrue(allDataTypes.contains(.image))
-        XCTAssertTrue(allDataTypes.contains(.number))
+        #expect(!allDataTypes.isEmpty, "DataTypeHint should have cases")
+        #expect(allDataTypes.contains(.text))
+        #expect(allDataTypes.contains(.image))
+        #expect(allDataTypes.contains(.number))
     }
     
     /// BUSINESS PURPOSE: Validate data type hint completeness functionality for complete data type enumeration
     /// TESTING SCOPE: DataTypeHint completeness, data type enumeration validation, expected data type verification
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test data type hint completeness
-    func testDataTypeHintCompleteness() throws {
+    @Test func testDataTypeHintCompleteness() throws {
         // Test that we have all expected data types and no unexpected ones
         // This will FAIL if someone adds/removes data types without updating tests
         
@@ -456,14 +456,14 @@ final class CoreArchitectureTests: XCTestCase {
         let actualDataTypes = Set(DataTypeHint.allCases)
         
         // This will fail if data types are added or removed
-        XCTAssertEqual(actualDataTypes, expectedDataTypes, 
+        #expect(actualDataTypes == expectedDataTypes, 
                       "DataTypeHint enum has changed. Update test expectations and verify behavior.")
     }
     
     /// BUSINESS PURPOSE: Validate data type hint semantic meaning functionality for distinct data type identification
     /// TESTING SCOPE: DataTypeHint semantic meaning, data type distinction validation, semantic uniqueness testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test data type hint semantic meaning
-    func testDataTypeHintSemanticMeaning() throws {
+    @Test func testDataTypeHintSemanticMeaning() throws {
         // Test that data types have distinct semantic meanings
         // This verifies that each data type represents a different content type
         
@@ -472,57 +472,57 @@ final class CoreArchitectureTests: XCTestCase {
         let imageHints = PresentationHints(dataType: .image)
         let numberHints = PresentationHints(dataType: .number)
         
-        XCTAssertNotEqual(textHints.dataType, imageHints.dataType)
-        XCTAssertNotEqual(imageHints.dataType, numberHints.dataType)
-        XCTAssertNotEqual(textHints.dataType, numberHints.dataType)
+        #expect(textHints.dataType != imageHints.dataType)
+        #expect(imageHints.dataType != numberHints.dataType)
+        #expect(textHints.dataType != numberHints.dataType)
         
         // Test that data types can be used in different scenarios
         let dataTypes = Array(DataTypeHint.allCases.prefix(5)) // Use real enum, test first 5
         let uniqueDataTypes = Set(dataTypes)
-        XCTAssertEqual(uniqueDataTypes.count, dataTypes.count, "All data types should be unique")
+        #expect(uniqueDataTypes.count == dataTypes.count, "All data types should be unique")
     }
     
     /// BUSINESS PURPOSE: Validate presentation preference behavior functionality for preference-specific presentation behavior
     /// TESTING SCOPE: PresentationPreference behavior, preference-specific presentation validation, preference behavior testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation preference behavior
-    func testPresentationPreferenceBehavior() throws {
+    @Test func testPresentationPreferenceBehavior() throws {
         // Test that PresentationPreference provides the behavior it's supposed to provide
         // This tests actual functionality, not just existence
         
         // Test that preferences can be used in PresentationHints
         let automaticHints = PresentationHints(presentationPreference: .automatic)
-        XCTAssertEqual(automaticHints.presentationPreference, .automatic)
+        #expect(automaticHints.presentationPreference == .automatic)
         
         let cardHints = PresentationHints(presentationPreference: .card)
-        XCTAssertEqual(cardHints.presentationPreference, .card)
+        #expect(cardHints.presentationPreference == .card)
         
         // Test that preferences have meaningful raw values for serialization
-        XCTAssertEqual(PresentationPreference.automatic.rawValue, "automatic")
-        XCTAssertEqual(PresentationPreference.card.rawValue, "card")
-        XCTAssertEqual(PresentationPreference.grid.rawValue, "grid")
-        XCTAssertEqual(PresentationPreference.detail.rawValue, "detail")
+        #expect(PresentationPreference.automatic.rawValue == "automatic")
+        #expect(PresentationPreference.card.rawValue == "card")
+        #expect(PresentationPreference.grid.rawValue == "grid")
+        #expect(PresentationPreference.detail.rawValue == "detail")
         
         // Test that preferences can be created from raw values (round-trip)
-        XCTAssertEqual(PresentationPreference(rawValue: "automatic"), .automatic)
-        XCTAssertEqual(PresentationPreference(rawValue: "card"), .card)
-        XCTAssertEqual(PresentationPreference(rawValue: "grid"), .grid)
+        #expect(PresentationPreference(rawValue: "automatic") == .automatic)
+        #expect(PresentationPreference(rawValue: "card") == .card)
+        #expect(PresentationPreference(rawValue: "grid") == .grid)
         
         // Test that invalid raw values return nil
-        XCTAssertNil(PresentationPreference(rawValue: "invalid"))
-        XCTAssertNil(PresentationPreference(rawValue: ""))
+        #expect(PresentationPreference(rawValue: "invalid") == nil)
+        #expect(PresentationPreference(rawValue: "") == nil)
         
         // Test that all preferences are case iterable (for UI generation)
         let allPreferences = PresentationPreference.allCases
-        XCTAssertFalse(allPreferences.isEmpty, "PresentationPreference should have cases")
-        XCTAssertTrue(allPreferences.contains(.automatic))
-        XCTAssertTrue(allPreferences.contains(.card))
-        XCTAssertTrue(allPreferences.contains(.grid))
+        #expect(!allPreferences.isEmpty, "PresentationPreference should have cases")
+        #expect(allPreferences.contains(.automatic))
+        #expect(allPreferences.contains(.card))
+        #expect(allPreferences.contains(.grid))
     }
     
     /// BUSINESS PURPOSE: Validate presentation preference completeness functionality for complete preference enumeration
     /// TESTING SCOPE: PresentationPreference completeness, preference enumeration validation, expected preference verification
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation preference completeness
-    func testPresentationPreferenceCompleteness() throws {
+    @Test func testPresentationPreferenceCompleteness() throws {
         // Test that we have all expected preferences and no unexpected ones
         // This will FAIL if someone adds/removes preferences without updating tests
         
@@ -535,14 +535,14 @@ final class CoreArchitectureTests: XCTestCase {
         let actualPreferences = Set(PresentationPreference.allCases)
         
         // This will fail if preferences are added or removed
-        XCTAssertEqual(actualPreferences, expectedPreferences, 
+        #expect(actualPreferences == expectedPreferences, 
                       "PresentationPreference enum has changed. Update test expectations and verify behavior.")
     }
     
     /// BUSINESS PURPOSE: Validate presentation preference semantic meaning functionality for distinct preference identification
     /// TESTING SCOPE: PresentationPreference semantic meaning, preference distinction validation, semantic uniqueness testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test presentation preference semantic meaning
-    func testPresentationPreferenceSemanticMeaning() throws {
+    @Test func testPresentationPreferenceSemanticMeaning() throws {
         // Test that preferences have distinct semantic meanings
         // This verifies that each preference represents a different presentation style
         
@@ -551,14 +551,14 @@ final class CoreArchitectureTests: XCTestCase {
         let cardHints = PresentationHints(presentationPreference: .card)
         let gridHints = PresentationHints(presentationPreference: .grid)
         
-        XCTAssertNotEqual(automaticHints.presentationPreference, cardHints.presentationPreference)
-        XCTAssertNotEqual(cardHints.presentationPreference, gridHints.presentationPreference)
-        XCTAssertNotEqual(automaticHints.presentationPreference, gridHints.presentationPreference)
+        #expect(automaticHints.presentationPreference != cardHints.presentationPreference)
+        #expect(cardHints.presentationPreference != gridHints.presentationPreference)
+        #expect(automaticHints.presentationPreference != gridHints.presentationPreference)
         
         // Test that preferences can be used in different scenarios
         let preferences = Array(PresentationPreference.allCases.prefix(5)) // Use real enum, test first 5
         let uniquePreferences = Set(preferences)
-        XCTAssertEqual(uniquePreferences.count, preferences.count, "All preferences should be unique")
+        #expect(uniquePreferences.count == preferences.count, "All preferences should be unique")
     }
     
     // MARK: - Layer 2: Layout Decision Engine Tests
@@ -566,7 +566,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate form content metrics creation functionality for metrics initialization
     /// TESTING SCOPE: FormContentMetrics creation, metrics initialization validation, metrics object creation testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test form content metrics creation
-    func testFormContentMetricsCreation() throws {
+    @Test func testFormContentMetricsCreation() throws {
         // Given
         let fieldCount = 5
         let complexity = ContentComplexity.moderate
@@ -584,30 +584,30 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(metrics.estimatedComplexity, complexity)
-        XCTAssertEqual(metrics.preferredLayout, preferredLayout)
-        XCTAssertEqual(metrics.sectionCount, sectionCount)
-        XCTAssertEqual(metrics.hasComplexContent, hasComplexContent)
+        #expect(metrics.estimatedComplexity == complexity)
+        #expect(metrics.preferredLayout == preferredLayout)
+        #expect(metrics.sectionCount == sectionCount)
+        #expect(metrics.hasComplexContent == hasComplexContent)
     }
     
     /// BUSINESS PURPOSE: Validate form content metrics default values functionality for metrics initialization
     /// TESTING SCOPE: FormContentMetrics default values, metrics initialization validation, default value testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test form content metrics default values
-    func testFormContentMetricsDefaultValues() throws {
+    @Test func testFormContentMetricsDefaultValues() throws {
         // When
         let metrics = FormContentMetrics(fieldCount: 0)
         
         // Then
-        XCTAssertEqual(metrics.estimatedComplexity, .simple)
-        XCTAssertEqual(metrics.preferredLayout, .adaptive)
-        XCTAssertEqual(metrics.sectionCount, 1)
-        XCTAssertFalse(metrics.hasComplexContent)
+        #expect(metrics.estimatedComplexity == .simple)
+        #expect(metrics.preferredLayout == .adaptive)
+        #expect(metrics.sectionCount == 1)
+        #expect(!metrics.hasComplexContent)
     }
     
     /// BUSINESS PURPOSE: Validate form content metrics equatable functionality for metrics comparison
     /// TESTING SCOPE: FormContentMetrics equatable, metrics comparison validation, equality testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test form content metrics equatable
-    func testFormContentMetricsEquatable() throws {
+    @Test func testFormContentMetricsEquatable() throws {
         // Given
         let metrics1 = FormContentMetrics(
             fieldCount: 3,
@@ -632,8 +632,8 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(metrics1, metrics2)
-        XCTAssertNotEqual(metrics1, metrics3)
+        #expect(metrics1 == metrics2)
+        #expect(metrics1 != metrics3)
     }
     
     // MARK: - Layer 3: Strategy Selection Tests
@@ -641,7 +641,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate form strategy creation functionality for strategy initialization
     /// TESTING SCOPE: FormStrategy creation, strategy initialization validation, strategy object creation testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test form strategy creation
-    func testFormStrategyCreation() throws {
+    @Test func testFormStrategyCreation() throws {
         // Given
         let containerType = FormContainerType.adaptive
         let fieldLayout = FieldLayout.vertical
@@ -655,15 +655,15 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(strategy.containerType, containerType)
-        XCTAssertEqual(strategy.fieldLayout, fieldLayout)
-        XCTAssertEqual(strategy.validation, validation)
+        #expect(strategy.containerType == containerType)
+        #expect(strategy.fieldLayout == fieldLayout)
+        #expect(strategy.validation == validation)
     }
     
     /// BUSINESS PURPOSE: Validate form strategy default values functionality for strategy initialization
     /// TESTING SCOPE: FormStrategy default values, strategy initialization validation, default value testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test form strategy default values
-    func testFormStrategyDefaultValues() throws {
+    @Test func testFormStrategyDefaultValues() throws {
         // When
         let strategy = FormStrategy(
             containerType: .standard,
@@ -672,9 +672,9 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(strategy.containerType, .standard)
-        XCTAssertEqual(strategy.fieldLayout, .vertical)
-        XCTAssertEqual(strategy.validation, .deferred)
+        #expect(strategy.containerType == .standard)
+        #expect(strategy.fieldLayout == .vertical)
+        #expect(strategy.validation == .deferred)
     }
     
     // MARK: - Layer 4: Component Implementation Tests
@@ -682,7 +682,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate dynamic form field creation functionality for field initialization
     /// TESTING SCOPE: DynamicFormField creation, field initialization validation, field object creation testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test dynamic form field creation
-    func testDynamicFormFieldCreation() throws {
+    @Test func testDynamicFormFieldCreation() throws {
         // Given
         let label = "Test Field"
         let value = "Test Value"
@@ -696,15 +696,15 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(field.label, label)
-        XCTAssertEqual(field.defaultValue, value)
-        XCTAssertEqual(field.isRequired, isRequired)
+        #expect(field.label == label)
+        #expect(field.defaultValue == value)
+        #expect(field.isRequired == isRequired)
     }
     
     /// BUSINESS PURPOSE: Validate generic media item creation functionality for media item initialization
     /// TESTING SCOPE: GenericMediaItem creation, media item initialization validation, media item object creation testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test generic media item creation
-    func testGenericMediaItemCreation() throws {
+    @Test func testGenericMediaItemCreation() throws {
         // Given
         let title = "Test Image"
         let url = "https://example.com/image.jpg"
@@ -716,8 +716,8 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(media.title, title)
-        XCTAssertEqual(media.url, url)
+        #expect(media.title == title)
+        #expect(media.url == url)
     }
     
     // MARK: - Layer 5: Platform Optimization Tests
@@ -725,30 +725,30 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate device type cases functionality for device type enumeration
     /// TESTING SCOPE: DeviceType cases, device type enumeration validation, device type testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test device type cases
-    func testDeviceTypeCases() throws {
+    @Test func testDeviceTypeCases() throws {
         // Given & When
         let deviceTypes = DeviceType.allCases
         
         // Then
-        XCTAssertTrue(deviceTypes.contains(.phone))
-        XCTAssertTrue(deviceTypes.contains(.pad))
-        XCTAssertTrue(deviceTypes.contains(.mac))
-        XCTAssertTrue(deviceTypes.contains(.tv))
-        XCTAssertTrue(deviceTypes.contains(.watch))
+        #expect(deviceTypes.contains(.phone))
+        #expect(deviceTypes.contains(.pad))
+        #expect(deviceTypes.contains(.mac))
+        #expect(deviceTypes.contains(.tv))
+        #expect(deviceTypes.contains(.watch))
     }
     
     /// BUSINESS PURPOSE: Validate platform cases functionality for platform enumeration
     /// TESTING SCOPE: SixLayerPlatform cases, platform enumeration validation, platform testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test platform cases
-    func testPlatformCases() throws {
+    @Test func testPlatformCases() throws {
         // Given & When
         let platforms = SixLayerPlatform.allCases
         
         // Then
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.iOS))
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.macOS))
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.tvOS))
-        XCTAssertTrue(platforms.contains(SixLayerPlatform.watchOS))
+        #expect(platforms.contains(SixLayerPlatform.iOS))
+        #expect(platforms.contains(SixLayerPlatform.macOS))
+        #expect(platforms.contains(SixLayerPlatform.tvOS))
+        #expect(platforms.contains(SixLayerPlatform.watchOS))
         
         // Test platform detection with mock framework
         for platform in platforms {
@@ -756,7 +756,7 @@ final class CoreArchitectureTests: XCTestCase {
             
             // Test platform-specific behavior
             let platformHints = PresentationHints(context: .dashboard)
-            XCTAssertEqual(platformHints.context, .dashboard, "Presentation hints should work on \(platform)")
+            #expect(platformHints.context == .dashboard, "Presentation hints should work on \(platform)")
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -767,7 +767,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate responsive behavior creation functionality for responsive behavior initialization
     /// TESTING SCOPE: ResponsiveBehavior creation, responsive behavior initialization validation, responsive behavior object creation testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test responsive behavior creation
-    func testResponsiveBehaviorCreation() throws {
+    @Test func testResponsiveBehaviorCreation() throws {
         // Given
         let type = ResponsiveType.adaptive
         let breakpoints: [CGFloat] = [320, 768, 1024, 1440]
@@ -779,8 +779,8 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(behavior.type, type)
-        XCTAssertEqual(behavior.breakpoints, breakpoints)
+        #expect(behavior.type == type)
+        #expect(behavior.breakpoints == breakpoints)
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
@@ -791,8 +791,8 @@ final class CoreArchitectureTests: XCTestCase {
                 breakpoints: breakpoints
             )
             
-            XCTAssertEqual(platformBehavior.type, type, "Responsive behavior type should be consistent on \(platform)")
-            XCTAssertEqual(platformBehavior.breakpoints, breakpoints, "Responsive behavior breakpoints should be consistent on \(platform)")
+            #expect(platformBehavior.type == type, "Responsive behavior type should be consistent on \(platform)")
+            #expect(platformBehavior.breakpoints == breakpoints, "Responsive behavior breakpoints should be consistent on \(platform)")
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -801,7 +801,7 @@ final class CoreArchitectureTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate responsive behavior default values functionality for responsive behavior initialization
     /// TESTING SCOPE: ResponsiveBehavior default values, responsive behavior initialization validation, default value testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test responsive behavior default values
-    func testResponsiveBehaviorDefaultValues() throws {
+    @Test func testResponsiveBehaviorDefaultValues() throws {
         // When
         let behavior = ResponsiveBehavior(
             type: .fixed,
@@ -810,8 +810,8 @@ final class CoreArchitectureTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(behavior.type, .fixed)
-        XCTAssertEqual(behavior.breakpoints, [])
-        XCTAssertFalse(behavior.adaptive)
+        #expect(behavior.type == .fixed)
+        #expect(behavior.breakpoints == [])
+        #expect(!behavior.adaptive)
     }
 }

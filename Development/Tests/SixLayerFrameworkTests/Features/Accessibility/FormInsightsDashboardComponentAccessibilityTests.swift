@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL FormInsightsDashboard components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
+final class FormInsightsDashboardComponentAccessibilityTests {
     
     // MARK: - FormInsightsDashboard Tests
     
-    func testFormInsightsDashboardGeneratesAccessibilityIdentifiers() async {
+    @Test func testFormInsightsDashboardGeneratesAccessibilityIdentifiers() async {
         // Given: Test form analytics data
         let analyticsData = FormAnalyticsData(
             totalSubmissions: 100,
@@ -32,12 +32,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "FormInsightsDashboard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers")
     }
     
     // MARK: - OverviewCard Tests
     
-    func testOverviewCardGeneratesAccessibilityIdentifiers() async {
+    @Test func testOverviewCardGeneratesAccessibilityIdentifiers() async {
         // Given: Test overview data
         let overviewData = OverviewData(
             title: "Form Overview",
@@ -55,12 +55,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "OverviewCard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OverviewCard should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "OverviewCard should generate accessibility identifiers")
     }
     
     // MARK: - SectionHeader Tests
     
-    func testSectionHeaderGeneratesAccessibilityIdentifiers() async {
+    @Test func testSectionHeaderGeneratesAccessibilityIdentifiers() async {
         // Given: Test section header data
         let headerData = SectionHeaderData(
             title: "Performance Metrics",
@@ -77,12 +77,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "SectionHeader"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "SectionHeader should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "SectionHeader should generate accessibility identifiers")
     }
     
     // MARK: - PerformanceMetricRow Tests
     
-    func testPerformanceMetricRowGeneratesAccessibilityIdentifiers() async {
+    @Test func testPerformanceMetricRowGeneratesAccessibilityIdentifiers() async {
         // Given: Test performance metric data
         let metricData = PerformanceMetricData(
             name: "Completion Rate",
@@ -101,12 +101,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "PerformanceMetricRow"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PerformanceMetricRow should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PerformanceMetricRow should generate accessibility identifiers")
     }
     
     // MARK: - ChartCard Tests
     
-    func testChartCardGeneratesAccessibilityIdentifiers() async {
+    @Test func testChartCardGeneratesAccessibilityIdentifiers() async {
         // Given: Test chart data
         let chartData = ChartData(
             title: "Submission Trends",
@@ -125,12 +125,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "ChartCard"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ChartCard should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ChartCard should generate accessibility identifiers")
     }
     
     // MARK: - ErrorRow Tests
     
-    func testErrorRowGeneratesAccessibilityIdentifiers() async {
+    @Test func testErrorRowGeneratesAccessibilityIdentifiers() async {
         // Given: Test error data
         let errorData = ErrorData(
             message: "Form validation failed",
@@ -147,12 +147,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "ErrorRow"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ErrorRow should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ErrorRow should generate accessibility identifiers")
     }
     
     // MARK: - ABTestResultRow Tests
     
-    func testABTestResultRowGeneratesAccessibilityIdentifiers() async {
+    @Test func testABTestResultRowGeneratesAccessibilityIdentifiers() async {
         // Given: Test A/B test result data
         let abTestData = ABTestResultData(
             testName: "Button Color Test",
@@ -171,12 +171,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "ABTestResultRow"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ABTestResultRow should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ABTestResultRow should generate accessibility identifiers")
     }
     
     // MARK: - RecommendationRow Tests
     
-    func testRecommendationRowGeneratesAccessibilityIdentifiers() async {
+    @Test func testRecommendationRowGeneratesAccessibilityIdentifiers() async {
         // Given: Test recommendation data
         let recommendationData = RecommendationData(
             title: "Improve Form Completion",
@@ -194,12 +194,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "RecommendationRow"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "RecommendationRow should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "RecommendationRow should generate accessibility identifiers")
     }
     
     // MARK: - PriorityBadge Tests
     
-    func testPriorityBadgeGeneratesAccessibilityIdentifiers() async {
+    @Test func testPriorityBadgeGeneratesAccessibilityIdentifiers() async {
         // Given: Test priority
         let priority = Priority.high
         
@@ -213,12 +213,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "PriorityBadge"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PriorityBadge should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PriorityBadge should generate accessibility identifiers")
     }
     
     // MARK: - CompletionRateChart Tests
     
-    func testCompletionRateChartGeneratesAccessibilityIdentifiers() async {
+    @Test func testCompletionRateChartGeneratesAccessibilityIdentifiers() async {
         // Given: Test completion rate data
         let completionData = CompletionRateData(
             currentRate: 0.85,
@@ -236,12 +236,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "CompletionRateChart"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CompletionRateChart should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CompletionRateChart should generate accessibility identifiers")
     }
     
     // MARK: - FieldInteractionChart Tests
     
-    func testFieldInteractionChartGeneratesAccessibilityIdentifiers() async {
+    @Test func testFieldInteractionChartGeneratesAccessibilityIdentifiers() async {
         // Given: Test field interaction data
         let interactionData = FieldInteractionData(
             fieldName: "Email Field",
@@ -259,12 +259,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "FieldInteractionChart"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FieldInteractionChart should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FieldInteractionChart should generate accessibility identifiers")
     }
     
     // MARK: - FormSelectorView Tests
     
-    func testFormSelectorViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testFormSelectorViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test form options
         let formOptions = [
             FormOption(id: "1", name: "Contact Form"),
@@ -281,12 +281,12 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "FormSelectorView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormSelectorView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FormSelectorView should generate accessibility identifiers")
     }
     
     // MARK: - FormAnalyticsManager Tests
     
-    func testFormAnalyticsManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testFormAnalyticsManagerGeneratesAccessibilityIdentifiers() async {
         // Given: FormAnalyticsManager
         let analyticsManager = FormAnalyticsManager()
         
@@ -303,7 +303,7 @@ final class FormInsightsDashboardComponentAccessibilityTests: XCTestCase {
             componentName: "FormAnalyticsManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "FormAnalyticsManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "FormAnalyticsManager should generate accessibility identifiers")
     }
 }
 

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL InputHandlingInteractions components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
+final class InputHandlingInteractionsComponentAccessibilityTests {
     
     // MARK: - PlatformInteractionButton Tests
     
-    func testPlatformInteractionButtonGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiers() async {
         // Given: Test label
         let testLabel = VStack {
             Text("Platform Interaction Button")
@@ -33,12 +33,12 @@ final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformInteractionButton"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers")
     }
     
     // MARK: - InputHandlingManager Tests
     
-    func testInputHandlingManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testInputHandlingManagerGeneratesAccessibilityIdentifiers() async {
         // Given: InputHandlingManager
         let manager = InputHandlingManager()
         
@@ -55,12 +55,12 @@ final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
             componentName: "InputHandlingManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "InputHandlingManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "InputHandlingManager should generate accessibility identifiers")
     }
     
     // MARK: - KeyboardShortcutManager Tests
     
-    func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
         // Given: KeyboardShortcutManager
         let manager = KeyboardShortcutManager()
         
@@ -77,12 +77,12 @@ final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
             componentName: "KeyboardShortcutManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "KeyboardShortcutManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "KeyboardShortcutManager should generate accessibility identifiers")
     }
     
     // MARK: - HapticFeedbackManager Tests
     
-    func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
         // Given: HapticFeedbackManager
         let manager = HapticFeedbackManager()
         
@@ -99,12 +99,12 @@ final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
             componentName: "HapticFeedbackManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "HapticFeedbackManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "HapticFeedbackManager should generate accessibility identifiers")
     }
     
     // MARK: - DragDropManager Tests
     
-    func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
         // Given: DragDropManager
         let manager = DragDropManager()
         
@@ -121,7 +121,7 @@ final class InputHandlingInteractionsComponentAccessibilityTests: XCTestCase {
             componentName: "DragDropManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "DragDropManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "DragDropManager should generate accessibility identifiers")
     }
 }
 

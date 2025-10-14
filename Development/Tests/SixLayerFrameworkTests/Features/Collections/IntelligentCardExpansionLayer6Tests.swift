@@ -7,13 +7,13 @@
 //  visionOSExpandableCardView, and PlatformAwareExpandableCardView
 //
 
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class IntelligentCardExpansionLayer6Tests: XCTestCase {
+final class IntelligentCardExpansionLayer6Tests {
     
     // MARK: - Test Data
     
@@ -27,7 +27,7 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
     
     // MARK: - NativeExpandableCardView Tests
     
-    func testNativeExpandableCardView_Creation() {
+    @Test func testNativeExpandableCardView_Creation() {
         // Given: Configuration for native expandable card
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -45,7 +45,7 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(cardView, "NativeExpandableCardView should be created successfully")
+        #expect(cardView != nil, "NativeExpandableCardView should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
@@ -53,16 +53,16 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             let _ = try cardView.inspect()
             // If we get here, the view is properly structured
         } catch {
-            XCTFail("Failed to inspect NativeExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect NativeExpandableCardView structure: \(error)")
         }
         
         // 3. Configuration should be valid (L6 function responsibility)
-        XCTAssertNotNil(platformConfig, "Platform config should be created")
-        XCTAssertNotNil(performanceConfig, "Performance config should be created")
-        XCTAssertNotNil(accessibilityConfig, "Accessibility config should be created")
+        #expect(platformConfig != nil, "Platform config should be created")
+        #expect(performanceConfig != nil, "Performance config should be created")
+        #expect(accessibilityConfig != nil, "Accessibility config should be created")
     }
     
-    func testNativeExpandableCardView_WithDifferentStrategies() {
+    @Test func testNativeExpandableCardView_WithDifferentStrategies() {
         // Given: Different expansion strategies
         let strategies: [ExpansionStrategy] = [.hoverExpand, .contentReveal, .gridReorganize, .focusMode]
         let platformConfig = getCardExpansionPlatformConfig()
@@ -80,17 +80,17 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             )
             
             // Then: Each card should be created successfully
-            XCTAssertNotNil(cardView, "Card with strategy \(strategy) should be created")
+            #expect(cardView != nil, "Card with strategy \(strategy) should be created")
             
             do {
                 let _ = try cardView.inspect()
             } catch {
-                XCTFail("Failed to inspect card with strategy \(strategy): \(error)")
+                Issue.record("Failed to inspect card with strategy \(strategy): \(error)")
             }
         }
     }
     
-    func testNativeExpandableCardView_HapticFeedback() {
+    @Test func testNativeExpandableCardView_HapticFeedback() {
         // Given: Card with haptic feedback enabled
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -105,18 +105,18 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         )
         
         // Verify card view is properly configured
-        XCTAssertNotNil(cardView, "Card view should be created")
+        #expect(cardView != nil, "Card view should be created")
         
         // When: Testing haptic feedback behavior
         // Then: Configuration should be valid (L6 function responsibility)
-        XCTAssertNotNil(platformConfig, "Platform config should be created")
-        XCTAssertNotNil(performanceConfig, "Performance config should be created")
-        XCTAssertNotNil(accessibilityConfig, "Accessibility config should be created")
+        #expect(platformConfig != nil, "Platform config should be created")
+        #expect(performanceConfig != nil, "Performance config should be created")
+        #expect(accessibilityConfig != nil, "Accessibility config should be created")
     }
     
     // MARK: - Platform-Specific Card View Tests
     
-    func testiOSExpandableCardView_Creation() {
+    @Test func testiOSExpandableCardView_Creation() {
         // Given: iOS-specific card view
         let cardView = iOSExpandableCardView(
             item: testItem,
@@ -126,13 +126,13 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(cardView, "iOSExpandableCardView should be created successfully")
+        #expect(cardView != nil, "iOSExpandableCardView should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try cardView.inspect()
         } catch {
-            XCTFail("Failed to inspect iOSExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect iOSExpandableCardView structure: \(error)")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
@@ -140,11 +140,11 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             let _ = try cardView.inspect()
             // L6 function successfully created inspectable view
         } catch {
-            XCTFail("iOS card view should be inspectable: \(error)")
+            Issue.record("iOS card view should be inspectable: \(error)")
         }
     }
     
-    func testmacOSExpandableCardView_Creation() {
+    @Test func testmacOSExpandableCardView_Creation() {
         // Given: macOS-specific card view
         let cardView = macOSExpandableCardView(
             item: testItem,
@@ -154,13 +154,13 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(cardView, "macOSExpandableCardView should be created successfully")
+        #expect(cardView != nil, "macOSExpandableCardView should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try cardView.inspect()
         } catch {
-            XCTFail("Failed to inspect macOSExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect macOSExpandableCardView structure: \(error)")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
@@ -168,11 +168,11 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             let _ = try cardView.inspect()
             // L6 function successfully created inspectable view
         } catch {
-            XCTFail("macOS card view should be inspectable: \(error)")
+            Issue.record("macOS card view should be inspectable: \(error)")
         }
     }
     
-    func testvisionOSExpandableCardView_Creation() {
+    @Test func testvisionOSExpandableCardView_Creation() {
         // Given: visionOS-specific card view
         let cardView = visionOSExpandableCardView(
             item: testItem,
@@ -182,13 +182,13 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(cardView, "visionOSExpandableCardView should be created successfully")
+        #expect(cardView != nil, "visionOSExpandableCardView should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try cardView.inspect()
         } catch {
-            XCTFail("Failed to inspect visionOSExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect visionOSExpandableCardView structure: \(error)")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
@@ -196,13 +196,13 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             let _ = try cardView.inspect()
             // L6 function successfully created inspectable view
         } catch {
-            XCTFail("visionOS card view should be inspectable: \(error)")
+            Issue.record("visionOS card view should be inspectable: \(error)")
         }
     }
     
     // MARK: - Platform-Aware Card View Tests
     
-    func testPlatformAwareExpandableCardView_Creation() {
+    @Test func testPlatformAwareExpandableCardView_Creation() {
         // Given: Platform-aware card view
         let cardView = PlatformAwareExpandableCardView(
             item: testItem,
@@ -212,13 +212,13 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        XCTAssertNotNil(cardView, "PlatformAwareExpandableCardView should be created successfully")
+        #expect(cardView != nil, "PlatformAwareExpandableCardView should be created successfully")
         
         // 2. Does that structure contain what it should?
         do {
             let _ = try cardView.inspect()
         } catch {
-            XCTFail("Failed to inspect PlatformAwareExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect PlatformAwareExpandableCardView structure: \(error)")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
@@ -226,11 +226,11 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             let _ = try cardView.inspect()
             // L6 function successfully created inspectable view
         } catch {
-            XCTFail("Platform-aware card view should be inspectable: \(error)")
+            Issue.record("Platform-aware card view should be inspectable: \(error)")
         }
     }
     
-    func testPlatformAwareExpandableCardView_PlatformAdaptation() {
+    @Test func testPlatformAwareExpandableCardView_PlatformAdaptation() {
         // Given: Platform-aware card view
         let cardView = PlatformAwareExpandableCardView(
             item: testItem,
@@ -243,56 +243,56 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
             let _ = try cardView.inspect()
             // L6 function successfully created inspectable view
         } catch {
-            XCTFail("Platform-aware card view should be inspectable: \(error)")
+            Issue.record("Platform-aware card view should be inspectable: \(error)")
         }
     }
     
     // MARK: - Configuration Tests
     
-    func testCardExpansionPlatformConfig_Creation() {
+    @Test func testCardExpansionPlatformConfig_Creation() {
         // Given: Platform configuration
         let config = getCardExpansionPlatformConfig()
         
         // Then: Configuration should be valid (L6 function responsibility)
-        XCTAssertNotNil(config, "Platform config should be created")
-        XCTAssertNotNil(config.supportsTouch, "Should have touch support setting")
-        XCTAssertNotNil(config.supportsHover, "Should have hover support setting")
-        XCTAssertNotNil(config.supportsHapticFeedback, "Should have haptic feedback support setting")
-        XCTAssertNotNil(config.supportsVoiceOver, "Should have VoiceOver support setting")
-        XCTAssertNotNil(config.supportsSwitchControl, "Should have Switch Control support setting")
-        XCTAssertNotNil(config.supportsAssistiveTouch, "Should have AssistiveTouch support setting")
-        XCTAssertGreaterThan(config.minTouchTarget, 0, "Should have positive min touch target")
-        XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Should have non-negative hover delay")
+        #expect(config != nil, "Platform config should be created")
+        #expect(config.supportsTouch != nil, "Should have touch support setting")
+        #expect(config.supportsHover != nil, "Should have hover support setting")
+        #expect(config.supportsHapticFeedback != nil, "Should have haptic feedback support setting")
+        #expect(config.supportsVoiceOver != nil, "Should have VoiceOver support setting")
+        #expect(config.supportsSwitchControl != nil, "Should have Switch Control support setting")
+        #expect(config.supportsAssistiveTouch != nil, "Should have AssistiveTouch support setting")
+        #expect(config.minTouchTarget > 0, "Should have positive min touch target")
+        #expect(config.hoverDelay >= 0, "Should have non-negative hover delay")
     }
     
-    func testCardExpansionPerformanceConfig_Creation() {
+    @Test func testCardExpansionPerformanceConfig_Creation() {
         // Given: Performance configuration
         let config = getCardExpansionPerformanceConfig()
         
         // Then: Configuration should be valid (L6 function responsibility)
-        XCTAssertNotNil(config, "Performance config should be created")
-        XCTAssertGreaterThan(config.maxAnimationDuration, 0, "Should have positive max animation duration")
-        XCTAssertGreaterThan(config.targetFrameRate, 0, "Should have positive target frame rate")
-        XCTAssertNotNil(config.supportsSmoothAnimations, "Should have smooth animations setting")
-        XCTAssertNotNil(config.memoryOptimization, "Should have memory optimization setting")
-        XCTAssertNotNil(config.lazyLoading, "Should have lazy loading setting")
+        #expect(config != nil, "Performance config should be created")
+        #expect(config.maxAnimationDuration > 0, "Should have positive max animation duration")
+        #expect(config.targetFrameRate > 0, "Should have positive target frame rate")
+        #expect(config.supportsSmoothAnimations != nil, "Should have smooth animations setting")
+        #expect(config.memoryOptimization != nil, "Should have memory optimization setting")
+        #expect(config.lazyLoading != nil, "Should have lazy loading setting")
     }
     
-    func testCardExpansionAccessibilityConfig_Creation() {
+    @Test func testCardExpansionAccessibilityConfig_Creation() {
         // Given: Accessibility configuration
         let config = getCardExpansionAccessibilityConfig()
         
         // Then: Configuration should be valid (L6 function responsibility)
-        XCTAssertNotNil(config, "Accessibility config should be created")
-        XCTAssertNotNil(config.supportsVoiceOver, "Should have VoiceOver support setting")
-        XCTAssertNotNil(config.supportsSwitchControl, "Should have Switch Control support setting")
-        XCTAssertNotNil(config.supportsAssistiveTouch, "Should have AssistiveTouch support setting")
-        XCTAssertGreaterThanOrEqual(config.announcementDelay, 0, "Should have non-negative announcement delay")
+        #expect(config != nil, "Accessibility config should be created")
+        #expect(config.supportsVoiceOver != nil, "Should have VoiceOver support setting")
+        #expect(config.supportsSwitchControl != nil, "Should have Switch Control support setting")
+        #expect(config.supportsAssistiveTouch != nil, "Should have AssistiveTouch support setting")
+        #expect(config.announcementDelay >= 0, "Should have non-negative announcement delay")
     }
     
     // MARK: - Integration Tests
     
-    func testCardExpansionIntegration_AllPlatforms() {
+    @Test func testCardExpansionIntegration_AllPlatforms() {
         // Given: Different platform-specific card views
         let nativeCard = NativeExpandableCardView(
             item: testItem,
@@ -310,18 +310,18 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         // When: Testing integration
         // Then: All cards should be created successfully
         
-        XCTAssertNotNil(nativeCard, "Native card should be created")
-        XCTAssertNotNil(platformAwareCard, "Platform-aware card should be created")
+        #expect(nativeCard != nil, "Native card should be created")
+        #expect(platformAwareCard != nil, "Platform-aware card should be created")
         
         do {
             let _ = try nativeCard.inspect()
             let _ = try platformAwareCard.inspect()
         } catch {
-            XCTFail("All card types should be inspectable: \(error)")
+            Issue.record("All card types should be inspectable: \(error)")
         }
     }
     
-    func testCardExpansionPerformance() {
+    @Test func testCardExpansionPerformance() {
         // Given: Card view for performance testing
         let cardView = PlatformAwareExpandableCardView(
             item: testItem,
@@ -340,6 +340,6 @@ final class IntelligentCardExpansionLayer6Tests: XCTestCase {
         }
         
         // Then: Performance should be acceptable
-        XCTAssertNotNil(cardView, "Card should be created for performance test")
+        #expect(cardView != nil, "Card should be created for performance test")
     }
 }

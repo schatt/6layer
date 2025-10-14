@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: GenericNumericDataView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class GenericNumericDataViewTests: XCTestCase {
+final class GenericNumericDataViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class GenericNumericDataViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class GenericNumericDataViewTests: XCTestCase {
     
     // MARK: - GenericNumericDataView Tests
     
-    func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = GenericNumericDataView(
             data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
             hints: PresentationHints()
@@ -46,10 +44,10 @@ final class GenericNumericDataViewTests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
     }
     
-    func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = GenericNumericDataView(
             data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
             hints: PresentationHints()
@@ -62,6 +60,6 @@ final class GenericNumericDataViewTests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
     }
 }

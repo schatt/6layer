@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// TDD Tests for Accessibility Identifier Generation
 /// Following proper TDD: Test drives design, write best code to make tests pass
 @MainActor
-final class AccessibilityIdentifierTDDTests: XCTestCase {
+final class AccessibilityIdentifierTDDTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         // Reset configuration to known state
         let config = AccessibilityIdentifierConfig.shared
@@ -19,7 +19,7 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
         config.enableDebugLogging = false // Disable spam for TDD
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -27,7 +27,7 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
     
     // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior
     
-    func testAccessibilityIdentifiersAreReasonableLength() {
+    @Test func testAccessibilityIdentifiersAreReasonableLength() {
         // TDD: Define the behavior I want - short, clean IDs
         let view = Button("Add Fuel") { }
             .named("AddFuelButton")
@@ -38,18 +38,18 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
             let buttonID = try inspectedView.accessibilityIdentifier()
             
             // This test SHOULD FAIL initially - IDs are currently 400+ chars
-            XCTAssertLessThan(buttonID.count, 80, "Accessibility ID should be reasonable length")
-            XCTAssertTrue(buttonID.contains("CarManager"), "Should contain namespace")
-            XCTAssertTrue(buttonID.contains("addfuelbutton"), "Should contain view name")
+            #expect(buttonID.count < 80, "Accessibility ID should be reasonable length")
+            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("addfuelbutton"), "Should contain view name")
             
             print("✅ Generated ID: '\(buttonID)' (\(buttonID.count) chars)")
             
         } catch {
-            XCTFail("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view: \(error)")
         }
     }
     
-    func testAccessibilityIdentifiersDontDuplicateHierarchy() {
+    @Test func testAccessibilityIdentifiersDontDuplicateHierarchy() {
         // TDD: Define the behavior I want - no hierarchy duplication
         let view = VStack {
             Button("Test") { }
@@ -64,18 +64,18 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
             let vStackID = try inspectedView.accessibilityIdentifier()
             
             // This test SHOULD FAIL initially - contains duplicates like "container-container"
-            XCTAssertFalse(vStackID.contains("container-container"), "Should not contain duplicated hierarchy")
-            XCTAssertFalse(vStackID.contains("outercontainer-outercontainer"), "Should not contain duplicated hierarchy")
-            XCTAssertLessThan(vStackID.count, 80, "Should be reasonable length even with multiple .named() calls")
+            #expect(!vStackID.contains("container-container"), "Should not contain duplicated hierarchy")
+            #expect(!vStackID.contains("outercontainer-outercontainer"), "Should not contain duplicated hierarchy")
+            #expect(vStackID.count < 80, "Should be reasonable length even with multiple .named() calls")
             
             print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
             
         } catch {
-            XCTFail("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view: \(error)")
         }
     }
     
-    func testAccessibilityIdentifiersAreSemantic() {
+    @Test func testAccessibilityIdentifiersAreSemantic() {
         // TDD: Define the behavior I want - semantic, meaningful IDs
         let view = VStack {
             Text("User Profile")
@@ -92,18 +92,18 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
             let vStackID = try inspectedView.accessibilityIdentifier()
             
             // This test SHOULD FAIL initially - IDs are not semantic
-            XCTAssertTrue(vStackID.contains("UserProfile"), "Should contain screen context")
-            XCTAssertTrue(vStackID.contains("profileview"), "Should contain view name")
-            XCTAssertLessThan(vStackID.count, 80, "Should be concise and semantic")
+            #expect(vStackID.contains("UserProfile"), "Should contain screen context")
+            #expect(vStackID.contains("profileview"), "Should contain view name")
+            #expect(vStackID.count < 80, "Should be concise and semantic")
             
             print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
             
         } catch {
-            XCTFail("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view: \(error)")
         }
     }
     
-    func testAccessibilityIdentifiersWorkInComplexHierarchy() {
+    @Test func testAccessibilityIdentifiersWorkInComplexHierarchy() {
         // TDD: Define the behavior I want - works in complex nested views
         let view = VStack {
             HStack {
@@ -131,15 +131,15 @@ final class AccessibilityIdentifierTDDTests: XCTestCase {
             let vStackID = try inspectedView.accessibilityIdentifier()
             
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
-            XCTAssertLessThan(vStackID.count, 100, "Should handle complex hierarchies gracefully")
-            XCTAssertTrue(vStackID.contains("ComplexView"), "Should contain screen context")
-            XCTAssertTrue(vStackID.contains("complexcontainer"), "Should contain container name")
-            XCTAssertFalse(vStackID.contains("item0-item1-item2"), "Should not contain all nested item names")
+            #expect(vStackID.count < 100, "Should handle complex hierarchies gracefully")
+            #expect(vStackID.contains("ComplexView"), "Should contain screen context")
+            #expect(vStackID.contains("complexcontainer"), "Should contain container name")
+            #expect(!vStackID.contains("item0-item1-item2"), "Should not contain all nested item names")
             
             print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
             
         } catch {
-            XCTFail("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view: \(error)")
         }
     }
 }

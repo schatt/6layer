@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Implementation Layer 5 Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformImplementationLayer5ComponentAccessibilityTests: XCTestCase {
+final class PlatformImplementationLayer5ComponentAccessibilityTests {
     
     // MARK: - Platform Implementation Layer 5 Component Tests
     
-    func testPlatformImplementationLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformImplementationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformImplementationLayer5
         let testView = PlatformImplementationLayer5()
         
@@ -25,7 +25,7 @@ final class PlatformImplementationLayer5ComponentAccessibilityTests: XCTestCase 
             componentName: "PlatformImplementationLayer5"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformImplementationLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformImplementationLayer5 should generate accessibility identifiers")
     }
 }
 

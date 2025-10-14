@@ -5,7 +5,7 @@
 //  Comprehensive accessibility tests for ALL Shared Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -17,11 +17,11 @@ struct TestImage {
 }
 
 @MainActor
-final class SharedComponentAccessibilityTests: XCTestCase {
+final class SharedComponentAccessibilityTests {
     
     // MARK: - Shared Component Tests
     
-    func testGenericNumericDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericNumericDataView
         let testData = [1.0, 2.0, 3.0]
         let testView = GenericNumericDataView(data: testData)
@@ -33,10 +33,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericNumericDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers")
     }
     
-    func testGenericFormDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericFormDataViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericFormDataView
         let testFormData = ["field1": "value1", "field2": "value2"]
         let testView = GenericFormDataView(formData: testFormData)
@@ -48,10 +48,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericFormDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericFormDataView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericFormDataView should generate accessibility identifiers")
     }
     
-    func testGenericMediaDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericMediaDataViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericMediaDataView
         let testMediaData = ["image1.jpg", "video1.mp4"]
         let testView = GenericMediaDataView(mediaData: testMediaData)
@@ -63,10 +63,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericMediaDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericMediaDataView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericMediaDataView should generate accessibility identifiers")
     }
     
-    func testGenericSettingsViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericSettingsView
         let testSettings = ["setting1": "value1", "setting2": "value2"]
         let testView = GenericSettingsView(settings: testSettings)
@@ -78,10 +78,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericSettingsView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers")
     }
     
-    func testGenericItemCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericItemCollectionView
         let testItems = ["Item 1", "Item 2", "Item 3"]
         let testHints = ["Hint 1", "Hint 2", "Hint 3"]
@@ -94,10 +94,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericItemCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers")
     }
     
-    func testGenericPhotoCaptureViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericPhotoCaptureViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericPhotoCaptureView
         let testCallback: (TestImage?) -> Void = { _ in }
         let testView = GenericPhotoCaptureView(onCapture: testCallback)
@@ -109,10 +109,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericPhotoCaptureView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericPhotoCaptureView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericPhotoCaptureView should generate accessibility identifiers")
     }
     
-    func testGenericPhotoDisplayViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericPhotoDisplayViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericPhotoDisplayView
         let testImage = TestImage(name: "photo")
         let testView = GenericPhotoDisplayView(image: testImage)
@@ -124,10 +124,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericPhotoDisplayView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericPhotoDisplayView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericPhotoDisplayView should generate accessibility identifiers")
     }
     
-    func testGenericPhotoSelectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericPhotoSelectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericPhotoSelectionView
         let testCallback: ([TestImage]) -> Void = { _ in }
         let testView = GenericPhotoSelectionView(onSelection: testCallback)
@@ -139,10 +139,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericPhotoSelectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericPhotoSelectionView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericPhotoSelectionView should generate accessibility identifiers")
     }
     
-    func testGenericOCRViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericOCRViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericOCRView
         let testImage = TestImage(name: "doc.text")
         let testCallback: (String) -> Void = { _ in }
@@ -155,10 +155,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericOCRView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericOCRView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericOCRView should generate accessibility identifiers")
     }
     
-    func testGenericModalFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericModalFormViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericModalFormView
         let testFormData = ["field1": "value1"]
         let testCallback: ([String: String]) -> Void = { _ in }
@@ -171,10 +171,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericModalFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericModalFormView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericModalFormView should generate accessibility identifiers")
     }
     
-    func testGenericHierarchicalDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericHierarchicalDataViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericHierarchicalDataView
         let testHierarchy = ["root": ["child1": [], "child2": []]]
         let testView = GenericHierarchicalDataView(hierarchy: testHierarchy)
@@ -186,10 +186,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericHierarchicalDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericHierarchicalDataView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericHierarchicalDataView should generate accessibility identifiers")
     }
     
-    func testGenericTemporalDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericTemporalDataViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericTemporalDataView
         let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
         let testView = GenericTemporalDataView(temporalData: testTemporalData)
@@ -201,10 +201,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericTemporalDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericTemporalDataView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericTemporalDataView should generate accessibility identifiers")
     }
     
-    func testGenericContentViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericContentViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericContentView
         let testContent = "Sample content"
         let testView = GenericContentView(content: testContent)
@@ -216,10 +216,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericContentView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericContentView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers")
     }
     
-    func testGenericBasicValueViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericBasicValueViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericBasicValueView
         let testValue = 42
         let testView = GenericBasicValueView(value: testValue)
@@ -231,10 +231,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericBasicValueView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericBasicValueView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericBasicValueView should generate accessibility identifiers")
     }
     
-    func testGenericBasicArrayViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericBasicArrayViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericBasicArrayView
         let testArray = [1, 2, 3, 4, 5]
         let testView = GenericBasicArrayView(array: testArray)
@@ -246,10 +246,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericBasicArrayView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericBasicArrayView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericBasicArrayView should generate accessibility identifiers")
     }
     
-    func testGenericResponsiveCardViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericResponsiveCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericResponsiveCardView
         let testTitle = "Card Title"
         let testContent = "Card Content"
@@ -262,10 +262,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericResponsiveCardView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericResponsiveCardView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericResponsiveCardView should generate accessibility identifiers")
     }
     
-    func testGenericOCRWithDisambiguationViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericOCRWithDisambiguationViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericOCRWithDisambiguationView
         let testImage = TestImage(name: "doc.text")
         let testOptions = ["Option 1", "Option 2", "Option 3"]
@@ -279,10 +279,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericOCRWithDisambiguationView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericOCRWithDisambiguationView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericOCRWithDisambiguationView should generate accessibility identifiers")
     }
     
-    func testGenericStructuredDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericStructuredDataViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericStructuredDataView
         let testData = ["key1": "value1", "key2": "value2"]
         let testView = GenericStructuredDataView(data: testData)
@@ -294,10 +294,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericStructuredDataView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericStructuredDataView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericStructuredDataView should generate accessibility identifiers")
     }
     
-    func testGenericLocalizedContentViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericLocalizedContentViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericLocalizedContentView
         let testContent = "Localized content"
         let testLocale = Locale(identifier: "en_US")
@@ -310,10 +310,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericLocalizedContentView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericLocalizedContentView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericLocalizedContentView should generate accessibility identifiers")
     }
     
-    func testGenericLocalizedTextViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericLocalizedTextViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericLocalizedTextView
         let testText = "Localized text"
         let testLocale = Locale(identifier: "en_US")
@@ -326,10 +326,10 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericLocalizedTextView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericLocalizedTextView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericLocalizedTextView should generate accessibility identifiers")
     }
     
-    func testGenericLocalizedNumberViewGeneratesAccessibilityIdentifiers() async {
+    @Test func testGenericLocalizedNumberViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericLocalizedNumberView
         let testNumber = 123.45
         let testLocale = Locale(identifier: "en_US")
@@ -342,7 +342,7 @@ final class SharedComponentAccessibilityTests: XCTestCase {
             componentName: "GenericLocalizedNumberView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "GenericLocalizedNumberView should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "GenericLocalizedNumberView should generate accessibility identifiers")
     }
 }
 

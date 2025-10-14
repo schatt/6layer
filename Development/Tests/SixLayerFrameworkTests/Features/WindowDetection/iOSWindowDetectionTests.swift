@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 /**
@@ -20,25 +20,25 @@ import XCTest
  * - Validate platform integration
  */
 
-final class iOSWindowDetectionTests: XCTestCase {
+final class iOSWindowDetectionTests {
     
-    func testiOSWindowDetectionInitialization() {
+    @Test func testiOSWindowDetectionInitialization() {
         // TODO: Implement test
     }
     
-    func testWindowStateDetection() {
+    @Test func testWindowStateDetection() {
         // TODO: Implement test
     }
     
-    func testSizeAndPositionTracking() {
+    @Test func testSizeAndPositionTracking() {
         // TODO: Implement test
     }
     
-    func testiOSSpecificBehaviors() {
+    @Test func testiOSSpecificBehaviors() {
         // TODO: Implement test
     }
     
-    func testPlatformIntegration() {
+    @Test func testPlatformIntegration() {
         // TODO: Implement test
     }
 }

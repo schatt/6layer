@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Photo Components Layer 4
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: XCTestCase {
+final class PlatformPhotoComponentsLayer4ComponentAccessibilityTests {
     
     // MARK: - Platform Photo Components Layer 4 Tests
     
-    func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPhotoComponentsLayer4
         let testView = PlatformPhotoComponentsLayer4()
         
@@ -25,7 +25,7 @@ final class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: XCTestCase
             componentName: "PlatformPhotoComponentsLayer4"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers")
     }
 }
 

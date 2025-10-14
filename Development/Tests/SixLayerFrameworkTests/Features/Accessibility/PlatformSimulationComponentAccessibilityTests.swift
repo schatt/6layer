@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Simulation Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformSimulationComponentAccessibilityTests: XCTestCase {
+final class PlatformSimulationComponentAccessibilityTests {
     
     // MARK: - Platform Simulation Component Tests
     
-    func testPlatformSimulationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformSimulationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSimulation
         let testView = PlatformSimulation()
         
@@ -25,7 +25,7 @@ final class PlatformSimulationComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformSimulation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformSimulation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSimulation should generate accessibility identifiers")
     }
 }
 

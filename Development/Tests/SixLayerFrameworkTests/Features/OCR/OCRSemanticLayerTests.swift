@@ -25,7 +25,7 @@
 //  instead of real OCR functionality. Real tests need to be written that test actual
 //  OCR service behavior with real Vision framework integration.
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -38,18 +38,15 @@ import AppKit
 /// Tests for OCR semantic layer functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
-final class OCRSemanticLayerTests: XCTestCase {
+final class OCRSemanticLayerTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         // TODO: Set up real OCR service tests
     }
     
-    override func tearDown() {
-        // TODO: Clean up OCR service tests
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Real OCR Tests (To Be Implemented)

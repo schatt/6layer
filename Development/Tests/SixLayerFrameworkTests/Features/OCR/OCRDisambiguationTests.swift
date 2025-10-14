@@ -23,25 +23,22 @@
 //  view creation and hosting, not actual OCR disambiguation functionality.
 //  Real tests need to be written that test actual OCR disambiguation behavior.
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for OCR disambiguation functionality
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
 @MainActor
-final class OCRDisambiguationTests: XCTestCase {
+final class OCRDisambiguationTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         // TODO: Set up real OCR disambiguation tests
     }
     
-    override func tearDown() {
-        // TODO: Clean up OCR disambiguation tests
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Real OCR Disambiguation Tests (To Be Implemented)

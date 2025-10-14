@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -12,15 +12,14 @@ import SwiftUI
  * METHODOLOGY: Creates views using Layer 1 functions and verifies they automatically have
  * compliance features without requiring manual modifier application
  */
-final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
+final class AutomaticHIGComplianceDemonstrationTests {
     
     // MARK: - Test Data Setup
     
     private var testItems: [AutomaticHIGComplianceTestItem]!
     private var testHints: PresentationHints!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         testItems = [
             AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
             AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
@@ -34,10 +33,9 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
         )
     }
     
-    override func tearDown() {
+    deinit {
         testItems = nil
         testHints = nil
-        super.tearDown()
     }
     
     // MARK: - Demonstration Tests
@@ -45,7 +43,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
     /// BUSINESS PURPOSE: Demonstrate that Layer 1 functions now automatically apply HIG compliance
     /// TESTING SCOPE: Shows the difference between old manual approach and new automatic approach
     /// METHODOLOGY: Creates views using Layer 1 functions and verifies automatic compliance
-    func testDemonstrateAutomaticHIGCompliance() async {
+    @Test func testDemonstrateAutomaticHIGCompliance() async {
         await MainActor.run {
             // OLD WAY (what developers had to do before):
             // let view = platformPresentItemCollection_L1(items: items, hints: hints)
@@ -62,17 +60,17 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
             // That's it! HIG compliance is automatically applied.
             
             // Verify the view is created successfully with automatic compliance
-            XCTAssertNotNil(view, "Layer 1 function should create a view with automatic HIG compliance")
+            #expect(view != nil, "Layer 1 function should create a view with automatic HIG compliance")
             
             // The fact that this compiles and runs means the automatic modifiers are working
-            XCTAssertTrue(true, "Automatic HIG compliance is now working!")
+            #expect(true, "Automatic HIG compliance is now working!")
         }
     }
     
     /// BUSINESS PURPOSE: Demonstrate that automatic compliance works with different accessibility states
     /// TESTING SCOPE: Shows automatic compliance adapts to different accessibility capabilities
     /// METHODOLOGY: Tests automatic compliance with VoiceOver, Switch Control, and AssistiveTouch
-    func testDemonstrateAutomaticComplianceWithAccessibilityStates() async {
+    @Test func testDemonstrateAutomaticComplianceWithAccessibilityStates() async {
         await MainActor.run {
             // Test with VoiceOver enabled
             RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -80,8 +78,8 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(voiceOverView, "View should work with VoiceOver enabled")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
+            #expect(voiceOverView != nil, "View should work with VoiceOver enabled")
+            #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
             
             // Test with Switch Control enabled
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -90,8 +88,8 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(switchControlView, "View should work with Switch Control enabled")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
+            #expect(switchControlView != nil, "View should work with Switch Control enabled")
+            #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
             
             // Test with AssistiveTouch enabled
             RuntimeCapabilityDetection.setTestSwitchControl(false)
@@ -100,8 +98,8 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(assistiveTouchView, "View should work with AssistiveTouch enabled")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+            #expect(assistiveTouchView != nil, "View should work with AssistiveTouch enabled")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -113,7 +111,7 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
     /// BUSINESS PURPOSE: Demonstrate that automatic compliance works across all platforms
     /// TESTING SCOPE: Shows automatic compliance works on iOS, macOS, watchOS, tvOS, and visionOS
     /// METHODOLOGY: Tests automatic compliance across all supported platforms
-    func testDemonstrateAutomaticComplianceAcrossPlatforms() async {
+    @Test func testDemonstrateAutomaticComplianceAcrossPlatforms() async {
         await MainActor.run {
             // Test across all platforms
             for platform in SixLayerPlatform.allCases {
@@ -124,8 +122,8 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
                     hints: testHints!
                 )
                 
-                XCTAssertNotNil(view, "View should work on \(platform)")
-                XCTAssertTrue(true, "Automatic HIG compliance works on \(platform)")
+                #expect(view != nil, "View should work on \(platform)")
+                #expect(true, "Automatic HIG compliance works on \(platform)")
             }
         }
     }
@@ -133,14 +131,14 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
     /// BUSINESS PURPOSE: Demonstrate that multiple Layer 1 functions all have automatic compliance
     /// TESTING SCOPE: Shows that all Layer 1 functions automatically apply compliance
     /// METHODOLOGY: Tests multiple Layer 1 functions to verify they all have automatic compliance
-    func testDemonstrateAllLayer1FunctionsHaveAutomaticCompliance() async {
+    @Test func testDemonstrateAllLayer1FunctionsHaveAutomaticCompliance() async {
         await MainActor.run {
             // Test platformPresentItemCollection_L1
             let collectionView = platformPresentItemCollection_L1(
                 items: testItems!,
                 hints: testHints!
             )
-            XCTAssertNotNil(collectionView, "Collection view should have automatic compliance")
+            #expect(collectionView != nil, "Collection view should have automatic compliance")
             
             // Test platformPresentNumericData_L1
             let numericData = [
@@ -150,10 +148,10 @@ final class AutomaticHIGComplianceDemonstrationTests: XCTestCase {
                 data: numericData,
                 hints: testHints!
             )
-            XCTAssertNotNil(numericView, "Numeric view should have automatic compliance")
+            #expect(numericView != nil, "Numeric view should have automatic compliance")
             
             // Both views should automatically have HIG compliance applied
-            XCTAssertTrue(true, "All Layer 1 functions now have automatic HIG compliance!")
+            #expect(true, "All Layer 1 functions now have automatic HIG compliance!")
         }
     }
 }

@@ -23,25 +23,22 @@
 //  view creation and hosting, not actual Layer 1 OCR visual correction functionality.
 //  Real tests need to be written that test actual Layer 1 OCR visual correction behavior.
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Layer 1 OCR visual correction functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR visual correction functionality
 @MainActor
-final class OCRL1VisualCorrectionTests: XCTestCase {
+final class OCRL1VisualCorrectionTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         // TODO: Set up real Layer 1 OCR visual correction tests
     }
     
-    override func tearDown() {
-        // TODO: Clean up Layer 1 OCR visual correction tests
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Real Layer 1 OCR Visual Correction Tests (To Be Implemented)

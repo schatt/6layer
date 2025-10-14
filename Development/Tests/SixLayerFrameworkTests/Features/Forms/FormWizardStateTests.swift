@@ -27,15 +27,15 @@
 //  - ✅ Business Logic Focus: Tests actual form wizard state functionality, not testing framework
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
-final class FormWizardStateTests: XCTestCase {
+final class FormWizardStateTests {
     
     /// BUSINESS PURPOSE: Validate FormWizardState initialization functionality
     /// TESTING SCOPE: Tests FormWizardState initialization and setup
     /// METHODOLOGY: Initialize FormWizardState and verify initial state properties
-    func testFormWizardStateInitialization() {
+    @Test func testFormWizardStateInitialization() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -49,28 +49,28 @@ final class FormWizardStateTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate step progression functionality
     /// TESTING SCOPE: Tests FormWizardState step navigation and progression
     /// METHODOLOGY: Navigate between steps in FormWizardState and verify progression functionality
-    func testStepProgression() {
+    @Test func testStepProgression() {
         // TODO: Implement test
     }
     
     /// BUSINESS PURPOSE: Validate step validation functionality
     /// TESTING SCOPE: Tests FormWizardState step validation and error handling
     /// METHODOLOGY: Validate steps in FormWizardState and verify validation functionality
-    func testStepValidation() {
+    @Test func testStepValidation() {
         // TODO: Implement test
     }
     
     /// BUSINESS PURPOSE: Validate progress tracking functionality
     /// TESTING SCOPE: Tests FormWizardState progress tracking and completion status
     /// METHODOLOGY: Track progress in FormWizardState and verify progress functionality
-    func testProgressTracking() {
+    @Test func testProgressTracking() {
         // TODO: Implement test
     }
     
     /// BUSINESS PURPOSE: Validate completion detection functionality
     /// TESTING SCOPE: Tests FormWizardState completion detection and finalization
     /// METHODOLOGY: Complete FormWizardState and verify completion detection functionality
-    func testCompletionDetection() {
+    @Test func testCompletionDetection() {
         // TODO: Implement test
     }
 }

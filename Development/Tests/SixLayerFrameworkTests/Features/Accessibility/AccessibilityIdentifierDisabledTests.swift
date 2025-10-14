@@ -1,13 +1,13 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 /// Test what happens when automatic accessibility IDs are disabled
 @MainActor
-final class AccessibilityIdentifierDisabledTests: XCTestCase {
+final class AccessibilityIdentifierDisabledTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -17,13 +17,13 @@ final class AccessibilityIdentifierDisabledTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
-    func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
+    @Test func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
         // Test: When automatic IDs are disabled, views should not have accessibility identifier modifiers
         let view = Button("Test Button") { }
             .named("TestButton")
@@ -37,11 +37,11 @@ final class AccessibilityIdentifierDisabledTests: XCTestCase {
             print("✅ View is inspectable when automatic IDs disabled (no accessibility modifier applied)")
             
         } catch {
-            XCTFail("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view: \(error)")
         }
     }
     
-    func testManualIDsStillWorkWhenAutomaticDisabled() {
+    @Test func testManualIDsStillWorkWhenAutomaticDisabled() {
         // Test: Manual accessibility identifiers should still work when automatic is disabled
         let view = Button("Test Button") { }
             .accessibilityIdentifier("manual-test-button")
@@ -51,16 +51,16 @@ final class AccessibilityIdentifierDisabledTests: XCTestCase {
             let buttonID = try inspectedView.accessibilityIdentifier()
             
             // Manual ID should work regardless of automatic setting
-            XCTAssertEqual(buttonID, "manual-test-button", "Manual accessibility identifier should work when automatic is disabled")
+            #expect(buttonID == "manual-test-button", "Manual accessibility identifier should work when automatic is disabled")
             
             print("🔍 Manual ID when automatic disabled: '\(buttonID)'")
             
         } catch {
-            XCTFail("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view: \(error)")
         }
     }
     
-    func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
+    @Test func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
         // Test: Breadcrumb modifiers (.named, .screenContext) should still work for tracking
         let view = VStack {
             Text("Content")
@@ -73,7 +73,7 @@ final class AccessibilityIdentifierDisabledTests: XCTestCase {
             let _ = try view.inspect()
             print("✅ Breadcrumb modifiers work when automatic IDs disabled")
         } catch {
-            XCTFail("Breadcrumb modifiers should not crash when automatic IDs disabled: \(error)")
+            Issue.record("Breadcrumb modifiers should not crash when automatic IDs disabled: \(error)")
         }
     }
 }

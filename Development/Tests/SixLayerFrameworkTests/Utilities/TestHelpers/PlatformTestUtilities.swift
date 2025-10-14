@@ -30,7 +30,7 @@
 //  - ✅ Excellent: Provides centralized platform testing infrastructure
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -141,107 +141,107 @@ final class PlatformTestUtilities {
     // MARK: - Behavioral Test Methods
     
     /// Test the behavioral implications of touch platform capabilities
-    static func testTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Touch platforms should have adequate touch targets
-        XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 44, 
+        #expect(capabilities.minTouchTarget >= 44, 
                                    "\(platformName) should have adequate touch targets")
         
         // Touch platforms should support haptic feedback
-        XCTAssertTrue(capabilities.supportsHapticFeedback, 
+        #expect(capabilities.supportsHapticFeedback, 
                      "\(platformName) should support haptic feedback")
         
         // Touch platforms should support AssistiveTouch
-        XCTAssertTrue(capabilities.supportsAssistiveTouch, 
+        #expect(capabilities.supportsAssistiveTouch, 
                      "\(platformName) should support AssistiveTouch")
         
         // Touch platforms should have zero hover delay (no hover)
-        XCTAssertEqual(capabilities.hoverDelay, 0, 
+        #expect(capabilities.hoverDelay == 0, 
                       "\(platformName) should have zero hover delay")
     }
     
     /// Test the behavioral implications of non-touch platform capabilities
-    static func testNonTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testNonTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Non-touch platforms should not support haptic feedback
-        XCTAssertFalse(capabilities.supportsHapticFeedback, 
+        #expect(!capabilities.supportsHapticFeedback, 
                       "\(platformName) should not support haptic feedback")
         
         // Non-touch platforms should not support AssistiveTouch
-        XCTAssertFalse(capabilities.supportsAssistiveTouch, 
+        #expect(!capabilities.supportsAssistiveTouch, 
                       "\(platformName) should not support AssistiveTouch")
         
         // Non-touch platforms should have zero touch target requirement
-        XCTAssertEqual(capabilities.minTouchTarget, 0, 
+        #expect(capabilities.minTouchTarget == 0, 
                       "\(platformName) should have zero touch target requirement")
     }
     
     /// Test the behavioral implications of hover platform capabilities
-    static func testHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Hover platforms should have hover delay set
-        XCTAssertGreaterThanOrEqual(capabilities.hoverDelay, 0, 
+        #expect(capabilities.hoverDelay >= 0, 
                                    "\(platformName) should have hover delay set")
         
         // Hover platforms should not support touch (mutually exclusive)
-        XCTAssertFalse(capabilities.supportsTouch, 
+        #expect(!capabilities.supportsTouch, 
                       "\(platformName) should not support touch (hover exclusive)")
     }
     
     /// Test the behavioral implications of non-hover platform capabilities
-    static func testNonHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testNonHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Non-hover platforms should have zero hover delay
-        XCTAssertEqual(capabilities.hoverDelay, 0, 
+        #expect(capabilities.hoverDelay == 0, 
                       "\(platformName) should have zero hover delay")
     }
     
     /// Test the behavioral implications of accessibility platform capabilities
-    static func testAccessibilityPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testAccessibilityPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Test the actual business logic: how does the platform handle accessibility?
         
         // Test that touch targets are appropriate for the platform's capabilities
         if capabilities.supportsTouch {
             // Touch platforms need adequate touch targets for accessibility
-            XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 44, 
+            #expect(capabilities.minTouchTarget >= 44, 
                                        "\(platformName) touch targets should be adequate for accessibility")
         } else {
             // Non-touch platforms can have smaller targets
-            XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 20, 
+            #expect(capabilities.minTouchTarget >= 20, 
                                        "\(platformName) should have reasonable minimum touch target")
         }
         
         // Test that hover behavior is appropriate for the platform
         if capabilities.supportsHover {
             // Hover platforms should have reasonable hover delay
-            XCTAssertGreaterThanOrEqual(capabilities.hoverDelay, 0, 
+            #expect(capabilities.hoverDelay >= 0, 
                                        "\(platformName) hover delay should be non-negative")
         } else {
             // Non-hover platforms should have zero hover delay
-            XCTAssertEqual(capabilities.hoverDelay, 0, 
+            #expect(capabilities.hoverDelay == 0, 
                           "\(platformName) should have zero hover delay")
         }
         
         // Test that the configuration reflects the actual platform capabilities
         // This tests the real business logic: does the config match what the platform actually supports?
-        XCTAssertNotNil(capabilities, "\(platformName) should have a valid accessibility configuration")
+        #expect(capabilities != nil, "\(platformName) should have a valid accessibility configuration")
     }
     
     /// Test the behavioral implications of Vision framework availability
-    static func testVisionAvailableBehavior(_ testConfig: PlatformTestConfig, platformName: String) {
+    @Test static func testVisionAvailableBehavior(_ testConfig: PlatformTestConfig, platformName: String) {
         // Vision-available platforms should have OCR
-        XCTAssertTrue(testConfig.ocrAvailable, 
+        #expect(testConfig.ocrAvailable, 
                      "\(platformName) should have OCR available")
         
         // Vision-available platforms should have Vision framework
-        XCTAssertTrue(testConfig.visionAvailable, 
+        #expect(testConfig.visionAvailable, 
                      "\(platformName) should have Vision framework")
     }
     
     /// Test the behavioral implications of Vision framework unavailability
-    static func testVisionUnavailableBehavior(_ testConfig: PlatformTestConfig, platformName: String) {
+    @Test static func testVisionUnavailableBehavior(_ testConfig: PlatformTestConfig, platformName: String) {
         // Vision-unavailable platforms should not have OCR
-        XCTAssertFalse(testConfig.ocrAvailable, 
+        #expect(!testConfig.ocrAvailable, 
                       "\(platformName) should not have OCR available")
         
         // Vision-unavailable platforms should not have Vision framework
-        XCTAssertFalse(testConfig.visionAvailable, 
+        #expect(!testConfig.visionAvailable, 
                       "\(platformName) should not have Vision framework")
     }
     

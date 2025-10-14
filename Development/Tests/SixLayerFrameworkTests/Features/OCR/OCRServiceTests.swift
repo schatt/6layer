@@ -22,23 +22,20 @@
 //  TODO: This file has been emptied because the previous tests were empty TODO comments.
 //  Real tests need to be written that test actual OCR service functionality.
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 /// Tests for OCR service functionality
 /// TODO: Implement real tests that test actual OCR service behavior
-final class OCRServiceTests: XCTestCase {
+final class OCRServiceTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         // TODO: Set up real OCR service tests
     }
     
-    override func tearDown() {
-        // TODO: Clean up OCR service tests
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Real OCR Service Tests (To Be Implemented)

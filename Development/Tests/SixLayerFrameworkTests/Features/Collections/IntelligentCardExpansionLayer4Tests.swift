@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in IntelligentCardExpansionLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class IntelligentCardExpansionLayer4Tests: XCTestCase {
+final class IntelligentCardExpansionLayer4Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class IntelligentCardExpansionLayer4Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class IntelligentCardExpansionLayer4Tests: XCTestCase {
     
     // MARK: - ExpandableCardCollectionView Tests
     
-    func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
             IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
@@ -57,10 +55,10 @@ final class IntelligentCardExpansionLayer4Tests: XCTestCase {
             componentName: "ExpandableCardCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on iOS")
     }
     
-    func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
             IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
@@ -84,7 +82,7 @@ final class IntelligentCardExpansionLayer4Tests: XCTestCase {
             componentName: "ExpandableCardCollectionView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS")
     }
 }
 

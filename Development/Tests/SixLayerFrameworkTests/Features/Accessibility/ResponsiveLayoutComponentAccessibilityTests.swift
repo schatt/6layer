@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL ResponsiveLayout components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
+final class ResponsiveLayoutComponentAccessibilityTests {
     
     // MARK: - ResponsiveGrid Tests
     
-    func testResponsiveGridGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsiveGridGeneratesAccessibilityIdentifiers() async {
         // Given: Test grid items
         let gridItems = [
             GridItemData(title: "Grid Item 1", subtitle: "Subtitle 1", icon: "star", color: .blue),
@@ -39,12 +39,12 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveGrid"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveGrid should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsiveGrid should generate accessibility identifiers")
     }
     
     // MARK: - ResponsiveNavigation Tests
     
-    func testResponsiveNavigationGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsiveNavigationGeneratesAccessibilityIdentifiers() async {
         // Given: Test navigation content
         let navigationContent: (Bool) -> some View = { _ in
             VStack {
@@ -63,12 +63,12 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveNavigation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveNavigation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsiveNavigation should generate accessibility identifiers")
     }
     
     // MARK: - ResponsiveStack Tests
     
-    func testResponsiveStackGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsiveStackGeneratesAccessibilityIdentifiers() async {
         // Given: Test stack content
         let stackContent = {
             VStack {
@@ -88,12 +88,12 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveStack"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveStack should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsiveStack should generate accessibility identifiers")
     }
     
     // MARK: - ResponsiveLayoutExample Tests
     
-    func testResponsiveLayoutExampleGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsiveLayoutExampleGeneratesAccessibilityIdentifiers() async {
         // When: Creating ResponsiveLayoutExample
         let view = ResponsiveLayoutExample()
         
@@ -104,12 +104,12 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveLayoutExample"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveLayoutExample should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsiveLayoutExample should generate accessibility identifiers")
     }
     
     // MARK: - ResponsiveNavigationExample Tests
     
-    func testResponsiveNavigationExampleGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsiveNavigationExampleGeneratesAccessibilityIdentifiers() async {
         // When: Creating ResponsiveNavigationExample
         let view = ResponsiveNavigationExample()
         
@@ -120,12 +120,12 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsiveNavigationExample"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsiveNavigationExample should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsiveNavigationExample should generate accessibility identifiers")
     }
     
     // MARK: - ResponsivePadding Modifier Tests
     
-    func testResponsivePaddingModifierGeneratesAccessibilityIdentifiers() async {
+    @Test func testResponsivePaddingModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = Text("Test Content")
         
@@ -139,6 +139,6 @@ final class ResponsiveLayoutComponentAccessibilityTests: XCTestCase {
             componentName: "ResponsivePadding"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ResponsivePadding modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "ResponsivePadding modifier should generate accessibility identifiers")
     }
 }

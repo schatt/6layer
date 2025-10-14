@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformOCRDisambiguationLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
+final class PlatformOCRDisambiguationLayer1Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,14 +31,14 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
     
     // MARK: - platformOCRDisambiguation_L1 Tests
     
-    func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
         // Verify alternatives are properly configured
-        XCTAssertEqual(alternatives.count, 3, "Should have 3 alternatives")
-        XCTAssertEqual(alternatives[0], "Option 1", "First alternative should be correct")
-        XCTAssertEqual(alternatives[1], "Option 2", "Second alternative should be correct")
-        XCTAssertEqual(alternatives[2], "Option 3", "Third alternative should be correct")
+        #expect(alternatives.count == 3, "Should have 3 alternatives")
+        #expect(alternatives[0] == "Option 1", "First alternative should be correct")
+        #expect(alternatives[1] == "Option 2", "Second alternative should be correct")
+        #expect(alternatives[2] == "Option 3", "Third alternative should be correct")
         
         let view = platformOCRWithDisambiguation_L1(
             image: PlatformImage(),
@@ -60,17 +58,17 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
             componentName: "platformOCRDisambiguation_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformOCRDisambiguation_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformOCRDisambiguation_L1 should generate accessibility identifiers on iOS")
     }
     
-    func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
         // Verify alternatives are properly configured
-        XCTAssertEqual(alternatives.count, 3, "Should have 3 alternatives")
-        XCTAssertEqual(alternatives[0], "Option 1", "First alternative should be correct")
-        XCTAssertEqual(alternatives[1], "Option 2", "Second alternative should be correct")
-        XCTAssertEqual(alternatives[2], "Option 3", "Third alternative should be correct")
+        #expect(alternatives.count == 3, "Should have 3 alternatives")
+        #expect(alternatives[0] == "Option 1", "First alternative should be correct")
+        #expect(alternatives[1] == "Option 2", "Second alternative should be correct")
+        #expect(alternatives[2] == "Option 3", "Third alternative should be correct")
         
         let view = platformOCRWithDisambiguation_L1(
             image: PlatformImage(),
@@ -90,7 +88,7 @@ final class PlatformOCRDisambiguationLayer1Tests: XCTestCase {
             componentName: "platformOCRDisambiguation_L1"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "platformOCRDisambiguation_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformOCRDisambiguation_L1 should generate accessibility identifiers on macOS")
     }
 }
 

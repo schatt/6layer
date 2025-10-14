@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Workflow Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class WorkflowComponentAccessibilityTests: XCTestCase {
+final class WorkflowComponentAccessibilityTests {
     
     // MARK: - Workflow Component Tests
     
-    func testPlatformWorkflowGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformWorkflowGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformWorkflow
         let testView = PlatformWorkflow()
         
@@ -25,10 +25,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformWorkflow"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformWorkflow should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformWorkflow should generate accessibility identifiers")
     }
     
-    func testPlatformIntegrationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformIntegrationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformIntegration
         let testView = PlatformIntegration()
         
@@ -39,10 +39,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformIntegration"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformIntegration should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformIntegration should generate accessibility identifiers")
     }
     
-    func testPlatformAutomationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAutomationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAutomation
         let testView = PlatformAutomation()
         
@@ -53,10 +53,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAutomation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAutomation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAutomation should generate accessibility identifiers")
     }
     
-    func testPlatformOrchestrationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOrchestrationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOrchestration
         let testView = PlatformOrchestration()
         
@@ -67,10 +67,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformOrchestration"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformOrchestration should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOrchestration should generate accessibility identifiers")
     }
     
-    func testPlatformCoordinationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformCoordinationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformCoordination
         let testView = PlatformCoordination()
         
@@ -81,10 +81,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformCoordination"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformCoordination should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformCoordination should generate accessibility identifiers")
     }
     
-    func testPlatformSynchronizationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformSynchronizationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSynchronization
         let testView = PlatformSynchronization()
         
@@ -95,10 +95,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformSynchronization"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformSynchronization should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSynchronization should generate accessibility identifiers")
     }
     
-    func testPlatformCommunicationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformCommunicationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformCommunication
         let testView = PlatformCommunication()
         
@@ -109,10 +109,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformCommunication"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformCommunication should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformCommunication should generate accessibility identifiers")
     }
     
-    func testPlatformMessagingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformMessagingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformMessaging
         let testView = PlatformMessaging()
         
@@ -123,10 +123,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformMessaging"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformMessaging should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformMessaging should generate accessibility identifiers")
     }
     
-    func testPlatformRoutingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformRoutingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRouting
         let testView = PlatformRouting()
         
@@ -137,10 +137,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformRouting"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformRouting should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformRouting should generate accessibility identifiers")
     }
     
-    func testPlatformDiscoveryGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDiscoveryGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformDiscovery
         let testView = PlatformDiscovery()
         
@@ -151,20 +151,20 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformDiscovery"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformDiscovery should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformDiscovery should generate accessibility identifiers")
     }
     
-    func testPlatformDetectionGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDetectionGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformDetection (placeholder test - actual implementation may not be accessible)
         // Note: This test is skipped as PlatformDetection may not have accessible initializers
         // This is expected behavior for TDD RED phase
         
         // When: Testing accessibility identifier generation
         // Then: Should generate accessibility identifiers when properly implemented
-        XCTAssertTrue(true, "PlatformDetection accessibility test placeholder - implementation needed")
+        #expect(true, "PlatformDetection accessibility test placeholder - implementation needed")
     }
     
-    func testPlatformIdentificationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformIdentificationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformIdentification
         let testView = PlatformIdentification()
         
@@ -175,10 +175,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformIdentification"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformIdentification should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformIdentification should generate accessibility identifiers")
     }
     
-    func testPlatformRecognitionGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformRecognitionGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRecognition
         let testView = PlatformRecognition()
         
@@ -189,10 +189,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformRecognition"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformRecognition should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformRecognition should generate accessibility identifiers")
     }
     
-    func testPlatformClassificationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformClassificationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformClassification
         let testView = PlatformClassification()
         
@@ -203,10 +203,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformClassification"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformClassification should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformClassification should generate accessibility identifiers")
     }
     
-    func testPlatformCategorizationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformCategorizationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformCategorization
         let testView = PlatformCategorization()
         
@@ -217,10 +217,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformCategorization"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformCategorization should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformCategorization should generate accessibility identifiers")
     }
     
-    func testPlatformOrganizationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformOrganizationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOrganization
         let testView = PlatformOrganization()
         
@@ -231,10 +231,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformOrganization"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformOrganization should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOrganization should generate accessibility identifiers")
     }
     
-    func testPlatformStructureGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformStructureGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformStructure
         let testView = PlatformStructure()
         
@@ -245,10 +245,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformStructure"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformStructure should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformStructure should generate accessibility identifiers")
     }
     
-    func testPlatformArchitectureGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformArchitectureGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformArchitecture
         let testView = PlatformArchitecture()
         
@@ -259,10 +259,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformArchitecture"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformArchitecture should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformArchitecture should generate accessibility identifiers")
     }
     
-    func testPlatformDesignGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDesignGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformDesign
         let testView = PlatformDesign()
         
@@ -273,10 +273,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformDesign"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformDesign should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformDesign should generate accessibility identifiers")
     }
     
-    func testPlatformImplementationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformImplementationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformImplementation
         let testView = PlatformImplementation()
         
@@ -287,10 +287,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformImplementation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformImplementation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformImplementation should generate accessibility identifiers")
     }
     
-    func testPlatformDeploymentGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDeploymentGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformDeployment
         let testView = PlatformDeployment()
         
@@ -301,10 +301,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformDeployment"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformDeployment should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformDeployment should generate accessibility identifiers")
     }
     
-    func testPlatformMaintenanceGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformMaintenanceGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformMaintenance
         let testView = PlatformMaintenance()
         
@@ -315,10 +315,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformMaintenance"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformMaintenance should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformMaintenance should generate accessibility identifiers")
     }
     
-    func testPlatformSupportGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformSupportGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSupport
         let testView = PlatformSupport()
         
@@ -329,10 +329,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformSupport"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformSupport should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSupport should generate accessibility identifiers")
     }
     
-    func testPlatformServiceGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformServiceGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformService
         let testView = PlatformService()
         
@@ -343,10 +343,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformService"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformService should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformService should generate accessibility identifiers")
     }
     
-    func testPlatformResourceGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformResourceGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformResource
         let testView = PlatformResource()
         
@@ -357,10 +357,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformResource"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformResource should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformResource should generate accessibility identifiers")
     }
     
-    func testPlatformAssetGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAssetGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAsset
         let testView = PlatformAsset()
         
@@ -371,10 +371,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAsset"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAsset should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAsset should generate accessibility identifiers")
     }
     
-    func testPlatformContentGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformContentGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformContent
         let testView = PlatformContent()
         
@@ -385,10 +385,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformContent"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformContent should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformContent should generate accessibility identifiers")
     }
     
-    func testPlatformDataGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformDataGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformData
         let testView = PlatformData()
         
@@ -399,10 +399,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformData"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformData should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformData should generate accessibility identifiers")
     }
     
-    func testPlatformInformationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformInformationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformInformation
         let testView = PlatformInformation()
         
@@ -413,10 +413,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformInformation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformInformation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformInformation should generate accessibility identifiers")
     }
     
-    func testPlatformKnowledgeGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformKnowledgeGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformKnowledge
         let testView = PlatformKnowledge()
         
@@ -427,10 +427,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformKnowledge"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformKnowledge should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformKnowledge should generate accessibility identifiers")
     }
     
-    func testPlatformWisdomGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformWisdomGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformWisdom
         let testView = PlatformWisdom()
         
@@ -441,10 +441,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformWisdom"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformWisdom should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformWisdom should generate accessibility identifiers")
     }
     
-    func testPlatformInsightGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformInsightGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformInsight
         let testView = PlatformInsight()
         
@@ -455,10 +455,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformInsight"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformInsight should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformInsight should generate accessibility identifiers")
     }
     
-    func testPlatformIntelligenceGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformIntelligenceGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformIntelligence
         let testView = PlatformIntelligence()
         
@@ -469,10 +469,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformIntelligence"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformIntelligence should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformIntelligence should generate accessibility identifiers")
     }
     
-    func testPlatformUnderstandingGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformUnderstandingGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformUnderstanding
         let testView = PlatformUnderstanding()
         
@@ -483,10 +483,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformUnderstanding"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformUnderstanding should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformUnderstanding should generate accessibility identifiers")
     }
     
-    func testPlatformComprehensionGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformComprehensionGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformComprehension
         let testView = PlatformComprehension()
         
@@ -497,10 +497,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformComprehension"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformComprehension should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformComprehension should generate accessibility identifiers")
     }
     
-    func testPlatformInterpretationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformInterpretationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformInterpretation
         let testView = PlatformInterpretation()
         
@@ -511,10 +511,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformInterpretation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformInterpretation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformInterpretation should generate accessibility identifiers")
     }
     
-    func testPlatformAnalysisGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAnalysisGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAnalysis
         let testView = PlatformAnalysis()
         
@@ -525,10 +525,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAnalysis"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAnalysis should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAnalysis should generate accessibility identifiers")
     }
     
-    func testPlatformEvaluationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformEvaluationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformEvaluation
         let testView = PlatformEvaluation()
         
@@ -539,10 +539,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformEvaluation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformEvaluation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformEvaluation should generate accessibility identifiers")
     }
     
-    func testPlatformAssessmentGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAssessmentGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAssessment
         let testView = PlatformAssessment()
         
@@ -553,10 +553,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAssessment"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAssessment should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAssessment should generate accessibility identifiers")
     }
     
-    func testPlatformValidationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformValidationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformValidation
         let testView = PlatformValidation()
         
@@ -567,10 +567,10 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformValidation"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformValidation should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformValidation should generate accessibility identifiers")
     }
     
-    func testPlatformVerificationGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformVerificationGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformVerification
         let testView = PlatformVerification()
         
@@ -581,7 +581,7 @@ final class WorkflowComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformVerification"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformVerification should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformVerification should generate accessibility identifiers")
     }
 }
 

@@ -6,18 +6,17 @@
 //  Test-Driven Development approach for visual text correction
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class OCROverlayTests: XCTestCase {
+final class OCROverlayTests {
     
     var testImage: PlatformImage!
     var testOCRResult: OCRResult!
     var testBoundingBoxes: [CGRect]!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         
         // Create test image
         testImage = PlatformImage()
@@ -44,16 +43,15 @@ final class OCROverlayTests: XCTestCase {
         )
     }
     
-    override func tearDown() {
+    deinit {
         testImage = nil
         testOCRResult = nil
         testBoundingBoxes = nil
-        super.tearDown()
     }
     
     // MARK: - OCR Overlay View Tests
     
-    @MainActor
+    @Test @MainActor
     func testOCROverlayViewInitialization() {
         // Given: OCR overlay parameters
         let onTextEdit: (String, CGRect) -> Void = { _, _ in }
@@ -69,11 +67,11 @@ final class OCROverlayTests: XCTestCase {
         
         // Then: Should initialize successfully and be hostable
         let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "OCR overlay view should be hostable")
-        XCTAssertNotNil(overlayView, "OCR overlay view should be created")
+        #expect(hostingView != nil, "OCR overlay view should be hostable")
+        #expect(overlayView != nil, "OCR overlay view should be created")
     }
     
-    func testOCROverlayViewWithEmptyResult() {
+    @Test func testOCROverlayViewWithEmptyResult() {
         // Given: Empty OCR result
         let emptyResult = OCRResult(
             extractedText: "",
@@ -93,12 +91,12 @@ final class OCROverlayTests: XCTestCase {
         )
         
         // Then: Should handle empty result gracefully
-        XCTAssertNotNil(overlayView, "Overlay should handle empty result")
+        #expect(overlayView != nil, "Overlay should handle empty result")
     }
     
     // MARK: - Bounding Box Visualization Tests
     
-    func testBoundingBoxRendering() {
+    @Test func testBoundingBoxRendering() {
         // Given: OCR result with bounding boxes
         _ = OCROverlayView(
             image: testImage,
@@ -109,13 +107,13 @@ final class OCROverlayTests: XCTestCase {
         
         // When: Rendering overlay
         // Then: Should render all bounding boxes
-        XCTAssertEqual(testOCRResult.boundingBoxes.count, 3, "Should have 3 bounding boxes")
-        XCTAssertEqual(testOCRResult.boundingBoxes[0], CGRect(x: 10, y: 20, width: 100, height: 30))
-        XCTAssertEqual(testOCRResult.boundingBoxes[1], CGRect(x: 50, y: 60, width: 80, height: 25))
-        XCTAssertEqual(testOCRResult.boundingBoxes[2], CGRect(x: 120, y: 100, width: 60, height: 20))
+        #expect(testOCRResult.boundingBoxes.count == 3, "Should have 3 bounding boxes")
+        #expect(testOCRResult.boundingBoxes[0] == CGRect(x: 10, y: 20, width: 100, height: 30))
+        #expect(testOCRResult.boundingBoxes[1] == CGRect(x: 50, y: 60, width: 80, height: 25))
+        #expect(testOCRResult.boundingBoxes[2] == CGRect(x: 120, y: 100, width: 60, height: 20))
     }
     
-    func testBoundingBoxCoordinateConversion() {
+    @Test func testBoundingBoxCoordinateConversion() {
         // Given: Image size and bounding box
         let imageSize = CGSize(width: 200, height: 150)
         let boundingBox = CGRect(x: 0.1, y: 0.2, width: 0.5, height: 0.3) // Normalized coordinates
@@ -127,15 +125,15 @@ final class OCROverlayTests: XCTestCase {
         )
         
         // Then: Should convert correctly
-        XCTAssertEqual(convertedBox.origin.x, 20, accuracy: 0.1) // 0.1 * 200
-        XCTAssertEqual(convertedBox.origin.y, 30, accuracy: 0.1) // 0.2 * 150
-        XCTAssertEqual(convertedBox.width, 100, accuracy: 0.1)  // 0.5 * 200
-        XCTAssertEqual(convertedBox.height, 45, accuracy: 0.1)  // 0.3 * 150
+        #expect(convertedBox.origin.x == 20) // 0.1 * 200
+        #expect(convertedBox.origin.y == 30) // 0.2 * 150
+        #expect(convertedBox.width == 100)  // 0.5 * 200
+        #expect(convertedBox.height == 45)  // 0.3 * 150
     }
     
     // MARK: - Text Region Interaction Tests
     
-    func testTextRegionTapDetection() {
+    @Test func testTextRegionTapDetection() {
         // Given: OCR overlay with text regions
         var _: (String, CGRect)?
         let overlayView = OCROverlayView(
@@ -152,12 +150,12 @@ final class OCROverlayTests: XCTestCase {
         let detectedRegion = overlayView.detectTappedTextRegion(at: tapPoint)
         
         // Then: Should detect correct region
-        XCTAssertNotNil(detectedRegion, "Should detect tapped text region")
-        XCTAssertEqual(detectedRegion?.text, "Hello World")
-        XCTAssertEqual(detectedRegion?.boundingBox, testBoundingBoxes[0])
+        #expect(detectedRegion != nil, "Should detect tapped text region")
+        #expect(detectedRegion?.text == "Hello World")
+        #expect(detectedRegion?.boundingBox == testBoundingBoxes[0])
     }
     
-    func testTextRegionTapOutsideBounds() {
+    @Test func testTextRegionTapOutsideBounds() {
         // Given: OCR overlay
         let overlayView = OCROverlayView(
             image: testImage,
@@ -171,12 +169,12 @@ final class OCROverlayTests: XCTestCase {
         let detectedRegion = overlayView.detectTappedTextRegion(at: tapPoint)
         
         // Then: Should return nil
-        XCTAssertNil(detectedRegion, "Should return nil for tap outside bounds")
+        #expect(detectedRegion == nil, "Should return nil for tap outside bounds")
     }
     
     // MARK: - Text Editing Tests
     
-    func testTextEditingModeToggle() {
+    @Test func testTextEditingModeToggle() {
         // Given: OCR overlay
         let overlayView = OCROverlayView(
             image: testImage,
@@ -190,11 +188,11 @@ final class OCROverlayTests: XCTestCase {
         
         // Then: Should be able to detect tapped region
         let tappedRegion = overlayView.detectTappedTextRegion(at: CGPoint(x: testBoundingBoxes[0].midX, y: testBoundingBoxes[0].midY))
-        XCTAssertNotNil(tappedRegion, "Should detect tapped region")
-        XCTAssertEqual(tappedRegion?.boundingBox, testBoundingBoxes[0])
+        #expect(tappedRegion != nil, "Should detect tapped region")
+        #expect(tappedRegion?.boundingBox == testBoundingBoxes[0])
     }
     
-    func testTextEditingCompletion() {
+    @Test func testTextEditingCompletion() {
         // Given: OCR overlay in editing mode
         var editedText: String?
         var editedRect: CGRect?
@@ -215,11 +213,11 @@ final class OCROverlayTests: XCTestCase {
         overlayView.completeTextEditing(with: newText)
         
         // Then: Should call completion handler
-        XCTAssertEqual(editedText, newText)
-        XCTAssertEqual(editedRect, testBoundingBoxes[0])
+        #expect(editedText == newText)
+        #expect(editedRect == testBoundingBoxes[0])
     }
     
-    func testTextEditingCancellation() {
+    @Test func testTextEditingCancellation() {
         // Given: OCR overlay in editing mode
         let overlayView = OCROverlayView(
             image: testImage,
@@ -235,12 +233,12 @@ final class OCROverlayTests: XCTestCase {
         
         // Then: Should exit editing mode without calling completion
         // Note: We can't directly test internal state, but we can test the behavior
-        XCTAssertTrue(true, "Cancellation should work")
+        #expect(true, "Cancellation should work")
     }
     
     // MARK: - Text Deletion Tests
     
-    func testTextRegionDeletion() {
+    @Test func testTextRegionDeletion() {
         // Given: OCR overlay
         var deletedRect: CGRect?
         let overlayView = OCROverlayView(
@@ -256,12 +254,12 @@ final class OCROverlayTests: XCTestCase {
         overlayView.deleteTextRegion(at: testBoundingBoxes[1])
         
         // Then: Should call deletion handler
-        XCTAssertEqual(deletedRect, testBoundingBoxes[1])
+        #expect(deletedRect == testBoundingBoxes[1])
     }
     
     // MARK: - Visual Feedback Tests
     
-    func testConfidenceVisualIndicators() {
+    @Test func testConfidenceVisualIndicators() {
         // Given: OCR result with varying confidence levels
         let highConfidenceResult = OCRResult(
             extractedText: "High Confidence",
@@ -309,19 +307,19 @@ final class OCROverlayTests: XCTestCase {
         
         // Then: Should provide different visual indicators
         // Test high confidence (above high threshold)
-        XCTAssertGreaterThanOrEqual(0.95, configuration.highConfidenceThreshold, "High confidence should be above high threshold")
+        #expect(0.95 >= configuration.highConfidenceThreshold, "High confidence should be above high threshold")
 
         // Test low confidence (below low threshold)
-        XCTAssertLessThan(0.3, configuration.lowConfidenceThreshold, "Low confidence should be below low threshold")
+        #expect(0.3 < configuration.lowConfidenceThreshold, "Low confidence should be below low threshold")
 
         // Test that overlays can be created with different confidence levels
-        XCTAssertNotNil(highConfidenceOverlay)
-        XCTAssertNotNil(lowConfidenceOverlay)
+        #expect(highConfidenceOverlay != nil)
+        #expect(lowConfidenceOverlay != nil)
     }
     
     // MARK: - Accessibility Tests
     
-    @MainActor
+    @Test @MainActor
     func testAccessibilitySupport() {
         // Given: OCR overlay
         let overlayView = OCROverlayView(
@@ -334,12 +332,12 @@ final class OCROverlayTests: XCTestCase {
         // When: Checking accessibility
         // Then: Should provide accessibility labels and be hostable
         let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "OCR overlay view should be hostable with accessibility")
+        #expect(hostingView != nil, "OCR overlay view should be hostable with accessibility")
         // Note: We can't directly test SwiftUI accessibility modifiers in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
     }
     
-    @MainActor
+    @Test @MainActor
     func testVoiceOverSupport() {
         // Given: OCR overlay with multiple text regions
         let overlayView = OCROverlayView(
@@ -352,14 +350,14 @@ final class OCROverlayTests: XCTestCase {
         // When: Checking VoiceOver support
         // Then: Should provide proper accessibility elements and be hostable
         let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "OCR overlay view should be hostable with VoiceOver support")
+        #expect(hostingView != nil, "OCR overlay view should be hostable with VoiceOver support")
         // Note: We can't directly test SwiftUI accessibility elements in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
     }
     
     // MARK: - Performance Tests
     
-    func testOverlayRenderingPerformance() {
+    @Test func testOverlayRenderingPerformance() {
         // Given: Large OCR result with many bounding boxes
         let largeBoundingBoxes = (0..<100).map { i in
             CGRect(x: CGFloat(i * 10), y: CGFloat(i * 5), width: 50, height: 20)
@@ -390,7 +388,7 @@ final class OCROverlayTests: XCTestCase {
     
     // MARK: - Edge Cases Tests
     
-    func testOverlappingBoundingBoxes() {
+    @Test func testOverlappingBoundingBoxes() {
         // Given: OCR result with overlapping bounding boxes
         let overlappingBoxes = [
             CGRect(x: 10, y: 10, width: 50, height: 20),
@@ -418,10 +416,10 @@ final class OCROverlayTests: XCTestCase {
         let detectedRegion = overlayView.detectTappedTextRegion(at: tapPoint)
         
         // Then: Should handle overlap gracefully
-        XCTAssertNotNil(detectedRegion, "Should detect region despite overlap")
+        #expect(detectedRegion != nil, "Should detect region despite overlap")
     }
     
-    func testZeroSizeBoundingBoxes() {
+    @Test func testZeroSizeBoundingBoxes() {
         // Given: OCR result with zero-size bounding boxes
         let zeroSizeBoxes = [
             CGRect(x: 10, y: 10, width: 0, height: 0),
@@ -447,10 +445,10 @@ final class OCROverlayTests: XCTestCase {
         
         // When: Rendering overlay
         // Then: Should handle zero-size boxes gracefully
-        XCTAssertNotNil(overlayView, "Should handle zero-size bounding boxes")
+        #expect(overlayView != nil, "Should handle zero-size bounding boxes")
     }
     
-    func testNegativeBoundingBoxes() {
+    @Test func testNegativeBoundingBoxes() {
         // Given: OCR result with negative bounding boxes
         let negativeBoxes = [
             CGRect(x: -10, y: -10, width: 50, height: 20),
@@ -475,12 +473,12 @@ final class OCROverlayTests: XCTestCase {
         
         // When: Rendering overlay
         // Then: Should handle negative boxes gracefully
-        XCTAssertNotNil(overlayView, "Should handle negative bounding boxes")
+        #expect(overlayView != nil, "Should handle negative bounding boxes")
     }
     
     // MARK: - Integration Tests
     
-    func testOCROverlayWithDisambiguationIntegration() {
+    @Test func testOCROverlayWithDisambiguationIntegration() {
         // Given: OCR disambiguation result
         let candidates = [
             OCRDataCandidate(
@@ -514,6 +512,6 @@ final class OCROverlayTests: XCTestCase {
         )
         
         // Then: Should create overlay successfully
-        XCTAssertNotNil(overlayView, "Should create overlay from disambiguation result")
+        #expect(overlayView != nil, "Should create overlay from disambiguation result")
     }
 }

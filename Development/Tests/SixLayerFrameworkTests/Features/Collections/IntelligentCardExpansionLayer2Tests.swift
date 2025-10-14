@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in IntelligentCardExpansionLayer2.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class IntelligentCardExpansionLayer2Tests: XCTestCase {
+final class IntelligentCardExpansionLayer2Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class IntelligentCardExpansionLayer2Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class IntelligentCardExpansionLayer2Tests: XCTestCase {
     
     // MARK: - determineOptimalCardLayout_L2 Tests
     
-    func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         let result = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 375,
@@ -43,10 +41,10 @@ final class IntelligentCardExpansionLayer2Tests: XCTestCase {
         
         // Layer 2 functions return data structures, not views
         // So we test that the result is valid
-        XCTAssertNotNil(result, "determineOptimalCardLayout_L2 should return a valid result on iOS")
+        #expect(result != nil, "determineOptimalCardLayout_L2 should return a valid result on iOS")
     }
     
-    func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
         let result = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 1920,
@@ -56,7 +54,7 @@ final class IntelligentCardExpansionLayer2Tests: XCTestCase {
         
         // Layer 2 functions return data structures, not views
         // So we test that the result is valid
-        XCTAssertNotNil(result, "determineOptimalCardLayout_L2 should return a valid result on macOS")
+        #expect(result != nil, "determineOptimalCardLayout_L2 should return a valid result on macOS")
     }
 }
 

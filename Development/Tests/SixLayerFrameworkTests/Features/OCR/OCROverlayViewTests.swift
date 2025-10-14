@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in OCROverlayView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class OCROverlayViewTests: XCTestCase {
+final class OCROverlayViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class OCROverlayViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class OCROverlayViewTests: XCTestCase {
     
     // MARK: - OCROverlayView Tests
     
-    func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let testResult = OCRResult(
             extractedText: "Test OCR Text",
@@ -59,10 +57,10 @@ final class OCROverlayViewTests: XCTestCase {
             componentName: "OCROverlayView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers on iOS")
     }
     
-    func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
         let testResult = OCRResult(
             extractedText: "Test OCR Text",
@@ -88,7 +86,7 @@ final class OCROverlayViewTests: XCTestCase {
             componentName: "OCROverlayView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers on macOS")
     }
 }
 

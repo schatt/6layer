@@ -6,7 +6,7 @@
 //  Tests accessibility features with proper business logic testing
 //
 
-import XCTest
+import Testing
 import SwiftUI
 import Combine
 @testable import SixLayerFramework
@@ -34,7 +34,7 @@ import Combine
 /// Comprehensive TDD tests for AccessibilityFeaturesLayer5.swift
 /// Tests keyboard navigation algorithms, color calculation, and accessibility label application
 @MainActor
-final class AccessibilityFeaturesLayer5Tests: XCTestCase {
+final class AccessibilityFeaturesLayer5Tests {
     
     // MARK: - Test Data Setup
     
@@ -42,14 +42,14 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
     private var highContrastManager: HighContrastManager!
     private var cancellables: Set<AnyCancellable>!
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         keyboardManager = KeyboardNavigationManager()
         highContrastManager = HighContrastManager()
         cancellables = Set<AnyCancellable>()
     }
     
-    override func tearDown() async throws {
+    deinit {
         cancellables = nil
         highContrastManager = nil
         keyboardManager = nil
@@ -65,16 +65,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Focus management algorithms, wraparound behavior, edge cases
      * METHODOLOGY: Test success/failure scenarios with different focus configurations
      */
-    func testAddFocusableItemSuccess() {
+    @Test func testAddFocusableItemSuccess() {
         // GIVEN: Empty keyboard manager
-        XCTAssertEqual(keyboardManager.focusableItems.count, 0)
+        #expect(keyboardManager.focusableItems.count == 0)
         
         // WHEN: Adding a focusable item
         keyboardManager.addFocusableItem("button1")
         
         // THEN: Item should be added successfully
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
-        XCTAssertEqual(keyboardManager.focusableItems.first, "button1")
+        #expect(keyboardManager.focusableItems.count == 1)
+        #expect(keyboardManager.focusableItems.first == "button1")
     }
     
     /**
@@ -83,16 +83,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Duplicate prevention logic
      * METHODOLOGY: Test duplicate item handling
      */
-    func testAddFocusableItemDuplicate() {
+    @Test func testAddFocusableItemDuplicate() {
         // GIVEN: Keyboard manager with existing item
         keyboardManager.addFocusableItem("button1")
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
+        #expect(keyboardManager.focusableItems.count == 1)
         
         // WHEN: Adding duplicate item
         keyboardManager.addFocusableItem("button1")
         
         // THEN: Should not add duplicate
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
+        #expect(keyboardManager.focusableItems.count == 1)
     }
     
     /**
@@ -101,16 +101,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Edge case handling
      * METHODOLOGY: Test empty string handling
      */
-    func testAddFocusableItemEmptyString() {
+    @Test func testAddFocusableItemEmptyString() {
         // GIVEN: Empty keyboard manager
-        XCTAssertEqual(keyboardManager.focusableItems.count, 0)
+        #expect(keyboardManager.focusableItems.count == 0)
         
         // WHEN: Adding empty string
         keyboardManager.addFocusableItem("")
         
         // THEN: Should add empty string (current implementation allows it)
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
-        XCTAssertEqual(keyboardManager.focusableItems.first, "")
+        #expect(keyboardManager.focusableItems.count == 1)
+        #expect(keyboardManager.focusableItems.first == "")
     }
     
     /**
@@ -119,18 +119,18 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Item removal logic
      * METHODOLOGY: Test successful removal
      */
-    func testRemoveFocusableItemSuccess() {
+    @Test func testRemoveFocusableItemSuccess() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
-        XCTAssertEqual(keyboardManager.focusableItems.count, 2)
+        #expect(keyboardManager.focusableItems.count == 2)
         
         // WHEN: Removing an item
         keyboardManager.removeFocusableItem("button1")
         
         // THEN: Item should be removed successfully
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
-        XCTAssertEqual(keyboardManager.focusableItems.first, "button2")
+        #expect(keyboardManager.focusableItems.count == 1)
+        #expect(keyboardManager.focusableItems.first == "button2")
     }
     
     /**
@@ -139,17 +139,17 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Error handling for removal
      * METHODOLOGY: Test removal of non-existent item
      */
-    func testRemoveFocusableItemNotExists() {
+    @Test func testRemoveFocusableItemNotExists() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
+        #expect(keyboardManager.focusableItems.count == 1)
         
         // WHEN: Removing non-existent item
         keyboardManager.removeFocusableItem("button2")
         
         // THEN: Should not affect existing items
-        XCTAssertEqual(keyboardManager.focusableItems.count, 1)
-        XCTAssertEqual(keyboardManager.focusableItems.first, "button1")
+        #expect(keyboardManager.focusableItems.count == 1)
+        #expect(keyboardManager.focusableItems.first == "button1")
     }
     
     /**
@@ -158,7 +158,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Wraparound navigation algorithms
      * METHODOLOGY: Test wraparound behavior
      */
-    func testMoveFocusNextWithWraparound() {
+    @Test func testMoveFocusNextWithWraparound() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
@@ -166,13 +166,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         // Set focus to last item
         keyboardManager.focusItem("button3")
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 2)
+        #expect(keyboardManager.currentFocusIndex == 2)
         
         // WHEN: Moving focus next (should wraparound)
         keyboardManager.moveFocus(direction: .next)
         
         // THEN: Should wraparound to first item
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 0)
+        #expect(keyboardManager.currentFocusIndex == 0)
     }
     
     /**
@@ -181,7 +181,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Reverse wraparound navigation algorithms
      * METHODOLOGY: Test reverse wraparound behavior
      */
-    func testMoveFocusPreviousWithWraparound() {
+    @Test func testMoveFocusPreviousWithWraparound() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
@@ -189,13 +189,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         // Set focus to first item
         keyboardManager.focusItem("button1")
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 0)
+        #expect(keyboardManager.currentFocusIndex == 0)
         
         // WHEN: Moving focus previous (should wraparound)
         keyboardManager.moveFocus(direction: .previous)
         
         // THEN: Should wraparound to last item
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 2)
+        #expect(keyboardManager.currentFocusIndex == 2)
     }
     
     /**
@@ -204,7 +204,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Direct focus movement
      * METHODOLOGY: Test first item focus
      */
-    func testMoveFocusFirst() {
+    @Test func testMoveFocusFirst() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
@@ -212,13 +212,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         // Set focus to middle item
         keyboardManager.focusItem("button2")
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 1)
+        #expect(keyboardManager.currentFocusIndex == 1)
         
         // WHEN: Moving focus to first
         keyboardManager.moveFocus(direction: .first)
         
         // THEN: Should focus first item
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 0)
+        #expect(keyboardManager.currentFocusIndex == 0)
     }
     
     /**
@@ -227,7 +227,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Direct focus movement
      * METHODOLOGY: Test last item focus
      */
-    func testMoveFocusLast() {
+    @Test func testMoveFocusLast() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
@@ -235,13 +235,13 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         // Set focus to first item
         keyboardManager.focusItem("button1")
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 0)
+        #expect(keyboardManager.currentFocusIndex == 0)
         
         // WHEN: Moving focus to last
         keyboardManager.moveFocus(direction: .last)
         
         // THEN: Should focus last item
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 2)
+        #expect(keyboardManager.currentFocusIndex == 2)
     }
     
     /**
@@ -250,16 +250,16 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Edge case handling
      * METHODOLOGY: Test empty list behavior
      */
-    func testMoveFocusEmptyList() {
+    @Test func testMoveFocusEmptyList() {
         // GIVEN: Empty keyboard manager
-        XCTAssertEqual(keyboardManager.focusableItems.count, 0)
+        #expect(keyboardManager.focusableItems.count == 0)
         
         // WHEN: Moving focus with empty list
         keyboardManager.moveFocus(direction: .next)
         keyboardManager.moveFocus(direction: .previous)
         
         // THEN: Should handle empty list gracefully
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 0)
+        #expect(keyboardManager.currentFocusIndex == 0)
     }
     
     /**
@@ -268,7 +268,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Direct focus management
      * METHODOLOGY: Test direct focus to specific item
      */
-    func testFocusItemSuccess() {
+    @Test func testFocusItemSuccess() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
@@ -278,7 +278,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         keyboardManager.focusItem("button2")
         
         // THEN: Should focus successfully
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 1)
+        #expect(keyboardManager.currentFocusIndex == 1)
     }
     
     /**
@@ -287,7 +287,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Error handling for focus
      * METHODOLOGY: Test focus to non-existent item
      */
-    func testFocusItemNotExists() {
+    @Test func testFocusItemNotExists() {
         // GIVEN: Keyboard manager with items
         keyboardManager.addFocusableItem("button1")
         keyboardManager.addFocusableItem("button2")
@@ -296,7 +296,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         keyboardManager.focusItem("button3")
         
         // THEN: Should not change focus index
-        XCTAssertEqual(keyboardManager.currentFocusIndex, 0)
+        #expect(keyboardManager.currentFocusIndex == 0)
     }
     
     // MARK: - HighContrastManager Color Calculation Tests
@@ -307,7 +307,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Color calculation algorithms
      * METHODOLOGY: Test color modification with different contrast levels
      */
-    func testGetHighContrastColorNormalContrast() {
+    @Test func testGetHighContrastColorNormalContrast() {
         // GIVEN: Normal contrast mode
         highContrastManager.isHighContrastEnabled = false
         let baseColor = Color.blue
@@ -316,7 +316,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let resultColor = highContrastManager.getHighContrastColor(baseColor)
         
         // THEN: Should return original color
-        XCTAssertEqual(resultColor, baseColor, "Should return original color in normal contrast")
+        #expect(resultColor == baseColor, "Should return original color in normal contrast")
     }
     
     /**
@@ -325,7 +325,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: High contrast color calculation
      * METHODOLOGY: Test high contrast color modification
      */
-    func testGetHighContrastColorHighContrast() {
+    @Test func testGetHighContrastColorHighContrast() {
         // GIVEN: High contrast mode with high contrast level
         highContrastManager.isHighContrastEnabled = true
         highContrastManager.contrastLevel = .high
@@ -335,7 +335,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let resultColor = highContrastManager.getHighContrastColor(baseColor)
         
         // THEN: Should return modified color
-        XCTAssertNotEqual(resultColor, baseColor, "Should return modified color in high contrast")
+        #expect(resultColor != baseColor, "Should return modified color in high contrast")
     }
     
     /**
@@ -344,7 +344,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Extreme contrast color calculation
      * METHODOLOGY: Test extreme contrast modification
      */
-    func testGetHighContrastColorExtremeContrast() {
+    @Test func testGetHighContrastColorExtremeContrast() {
         // GIVEN: High contrast mode with extreme contrast level
         highContrastManager.isHighContrastEnabled = true
         highContrastManager.contrastLevel = .extreme
@@ -354,7 +354,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let resultColor = highContrastManager.getHighContrastColor(baseColor)
         
         // THEN: Should return high contrast color
-        XCTAssertNotEqual(resultColor, baseColor, "Should return high contrast color")
+        #expect(resultColor != baseColor, "Should return high contrast color")
     }
     
     /**
@@ -363,7 +363,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Multiple contrast level handling
      * METHODOLOGY: Test different contrast levels
      */
-    func testGetHighContrastColorDifferentLevels() {
+    @Test func testGetHighContrastColorDifferentLevels() {
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let baseColor = Color.red
@@ -373,7 +373,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let resultColor2 = highContrastManager.getHighContrastColor(baseColor)
         
         // THEN: Should return consistent results
-        XCTAssertEqual(resultColor1, resultColor2, "Should return consistent high contrast colors")
+        #expect(resultColor1 == resultColor2, "Should return consistent high contrast colors")
     }
     
     /**
@@ -382,7 +382,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Clear color handling
      * METHODOLOGY: Test clear color behavior
      */
-    func testGetHighContrastColorClearColor() {
+    @Test func testGetHighContrastColorClearColor() {
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let baseColor = Color.clear
@@ -391,7 +391,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let resultColor = highContrastManager.getHighContrastColor(baseColor)
         
         // THEN: Should handle clear color appropriately
-        XCTAssertNotNil(resultColor, "Should handle clear color appropriately")
+        #expect(resultColor != nil, "Should handle clear color appropriately")
     }
     
     // MARK: - View Modifier Tests
@@ -402,7 +402,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: View modifier integration
      * METHODOLOGY: Test view modifier application
      */
-    func testAccessibilityEnhancedViewModifier() {
+    @Test func testAccessibilityEnhancedViewModifier() {
         // GIVEN: A view and accessibility config
         let testView = Text("Test")
         let config = AccessibilityConfig(
@@ -417,8 +417,8 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let enhancedView = testView.accessibilityEnhanced(config: config)
         
         // THEN: Should return modified view with accessibility identifier
-        XCTAssertNotNil(enhancedView, "Should return accessibility enhanced view")
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(enhancedView != nil, "Should return accessibility enhanced view")
+        #expect(hasAccessibilityIdentifier(
             enhancedView, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityEnhancedViewModifier"
@@ -431,7 +431,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Default configuration handling
      * METHODOLOGY: Test default config behavior
      */
-    func testAccessibilityEnhancedViewModifierDefaultConfig() {
+    @Test func testAccessibilityEnhancedViewModifierDefaultConfig() {
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -439,8 +439,8 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let enhancedView = testView.accessibilityEnhanced()
         
         // THEN: Should return modified view with accessibility identifier
-        XCTAssertNotNil(enhancedView, "Should return accessibility enhanced view with default config")
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(enhancedView != nil, "Should return accessibility enhanced view with default config")
+        #expect(hasAccessibilityIdentifier(
             enhancedView, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
@@ -453,7 +453,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: VoiceOver integration
      * METHODOLOGY: Test VoiceOver modifier application
      */
-    func testVoiceOverEnabledViewModifier() {
+    @Test func testVoiceOverEnabledViewModifier() {
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -461,7 +461,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let voiceOverView = testView.voiceOverEnabled()
         
         // THEN: Should return modified view
-        XCTAssertNotNil(voiceOverView, "Should return VoiceOver enabled view")
+        #expect(voiceOverView != nil, "Should return VoiceOver enabled view")
     }
     
     /**
@@ -470,7 +470,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Keyboard navigation integration
      * METHODOLOGY: Test keyboard navigation modifier application
      */
-    func testKeyboardNavigableViewModifier() {
+    @Test func testKeyboardNavigableViewModifier() {
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -478,7 +478,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let keyboardView = testView.keyboardNavigable()
         
         // THEN: Should return modified view
-        XCTAssertNotNil(keyboardView, "Should return keyboard navigable view")
+        #expect(keyboardView != nil, "Should return keyboard navigable view")
     }
     
     /**
@@ -487,7 +487,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: High contrast integration
      * METHODOLOGY: Test high contrast modifier application
      */
-    func testHighContrastEnabledViewModifier() {
+    @Test func testHighContrastEnabledViewModifier() {
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -495,7 +495,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         let highContrastView = testView.highContrastEnabled()
         
         // THEN: Should return modified view
-        XCTAssertNotNil(highContrastView, "Should return high contrast enabled view")
+        #expect(highContrastView != nil, "Should return high contrast enabled view")
     }
     
     /**
@@ -504,7 +504,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Modifier integration
      * METHODOLOGY: Test multiple modifier application
      */
-    func testAccessibilityViewModifiersIntegration() {
+    @Test func testAccessibilityViewModifiersIntegration() {
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -516,8 +516,8 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
             .highContrastEnabled()
         
         // THEN: Should return modified view with accessibility identifier
-        XCTAssertNotNil(integratedView, "Should return integrated accessibility view")
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(integratedView != nil, "Should return integrated accessibility view")
+        #expect(hasAccessibilityIdentifier(
             integratedView, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityViewModifiersIntegration"
@@ -532,7 +532,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Performance with large datasets
      * METHODOLOGY: Test performance with many focusable items
      */
-    func testKeyboardNavigationManagerPerformance() {
+    @Test func testKeyboardNavigationManagerPerformance() {
         // GIVEN: Large number of focusable items
         let itemCount = 1000
         for i in 0..<itemCount {
@@ -548,7 +548,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         // THEN: Should perform efficiently
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 1.0, "Should perform focus movement efficiently")
+        #expect(executionTime < 1.0, "Should perform focus movement efficiently")
     }
     
     /**
@@ -557,7 +557,7 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
      * TESTING SCOPE: Performance with color calculations
      * METHODOLOGY: Test performance with many color calculations
      */
-    func testHighContrastManagerPerformance() {
+    @Test func testHighContrastManagerPerformance() {
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let colors = [Color.red, Color.blue, Color.green, Color.yellow, Color.purple]
@@ -573,6 +573,6 @@ final class AccessibilityFeaturesLayer5Tests: XCTestCase {
         
         // THEN: Should perform efficiently
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 1.0, "Should perform color calculations efficiently")
+        #expect(executionTime < 1.0, "Should perform color calculations efficiently")
     }
 }

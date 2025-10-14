@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Logging Layer 5 Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformLoggingLayer5ComponentAccessibilityTests: XCTestCase {
+final class PlatformLoggingLayer5ComponentAccessibilityTests {
     
     // MARK: - Platform Logging Layer 5 Component Tests
     
-    func testPlatformLoggingLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformLoggingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformLoggingLayer5
         let testView = PlatformLoggingLayer5()
         
@@ -25,7 +25,7 @@ final class PlatformLoggingLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformLoggingLayer5"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformLoggingLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformLoggingLayer5 should generate accessibility identifiers")
     }
 }
 

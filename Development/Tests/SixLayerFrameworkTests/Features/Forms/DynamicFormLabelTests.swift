@@ -27,14 +27,14 @@
 //  - ✅ Excellent: Follows TDD methodology
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for DynamicFormView label behavior
 /// Ensures single visible label per field, preventing duplication
 @MainActor
-final class DynamicFormLabelTests: XCTestCase {
+final class DynamicFormLabelTests {
     
     // MARK: - Test Data
     
@@ -49,7 +49,7 @@ final class DynamicFormLabelTests: XCTestCase {
     
     // MARK: - DatePicker Label Tests
     
-    func testDatePickerFieldCreation() {
+    @Test func testDatePickerFieldCreation() {
         // Given: Date field with wrapper label
         let field = DynamicFormField(
             id: "test-date",
@@ -62,14 +62,14 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DatePickerField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Select Date")
-        XCTAssertEqual(field.contentType, .date)
+        #expect(field.label == "Select Date")
+        #expect(field.contentType == .date)
     }
     
-    func testTimePickerFieldCreation() {
+    @Test func testTimePickerFieldCreation() {
         // Given: Time field with wrapper label
         let field = DynamicFormField(
             id: "test-time",
@@ -82,14 +82,14 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = TimePickerField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Select Time")
-        XCTAssertEqual(field.contentType, .time)
+        #expect(field.label == "Select Time")
+        #expect(field.contentType == .time)
     }
     
-    func testDateTimePickerFieldCreation() {
+    @Test func testDateTimePickerFieldCreation() {
         // Given: DateTime field with wrapper label
         let field = DynamicFormField(
             id: "test-datetime",
@@ -102,16 +102,16 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DateTimePickerField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Select Date & Time")
-        XCTAssertEqual(field.contentType, .datetime)
+        #expect(field.label == "Select Date & Time")
+        #expect(field.contentType == .datetime)
     }
     
     // MARK: - ColorPicker Label Tests
     
-    func testColorPickerFieldCreation() {
+    @Test func testColorPickerFieldCreation() {
         // Given: Color field with wrapper label
         let field = DynamicFormField(
             id: "test-color",
@@ -124,16 +124,16 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicColorField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Choose Color")
-        XCTAssertEqual(field.contentType, .color)
+        #expect(field.label == "Choose Color")
+        #expect(field.contentType == .color)
     }
     
     // MARK: - Toggle Label Tests
     
-    func testToggleFieldCreation() {
+    @Test func testToggleFieldCreation() {
         // Given: Toggle field with wrapper label
         let field = DynamicFormField(
             id: "test-toggle",
@@ -146,14 +146,14 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicToggleField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Enable Feature")
-        XCTAssertEqual(field.contentType, .toggle)
+        #expect(field.label == "Enable Feature")
+        #expect(field.contentType == .toggle)
     }
     
-    func testCheckboxFieldCreation() {
+    @Test func testCheckboxFieldCreation() {
         // Given: Checkbox field with wrapper label
         let field = DynamicFormField(
             id: "test-checkbox",
@@ -166,16 +166,16 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicCheckboxField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Accept Terms")
-        XCTAssertEqual(field.contentType, .checkbox)
+        #expect(field.label == "Accept Terms")
+        #expect(field.contentType == .checkbox)
     }
     
     // MARK: - TextEditor Label Tests
     
-    func testTextAreaFieldCreation() {
+    @Test func testTextAreaFieldCreation() {
         // Given: TextArea field with wrapper label
         let field = DynamicFormField(
             id: "test-textarea",
@@ -188,16 +188,16 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicTextAreaField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Notes")
-        XCTAssertEqual(field.contentType, .textarea)
+        #expect(field.label == "Notes")
+        #expect(field.contentType == .textarea)
     }
     
     // MARK: - Select Field Label Tests
     
-    func testSelectFieldCreation() {
+    @Test func testSelectFieldCreation() {
         // Given: Select field with wrapper label
         let field = DynamicFormField(
             id: "test-select",
@@ -211,17 +211,17 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify field configuration
-        XCTAssertEqual(field.label, "Choose Option")
-        XCTAssertEqual(field.contentType, .select)
-        XCTAssertEqual(field.options?.count, 3)
+        #expect(field.label == "Choose Option")
+        #expect(field.contentType == .select)
+        #expect(field.options?.count == 3)
     }
     
     // MARK: - Integration Tests
     
-    func testDynamicFormViewRendersFields() {
+    @Test func testDynamicFormViewRendersFields() {
         // Given: Form with multiple self-labeling fields
         let fields = [
             DynamicFormField(id: "date", contentType: .date, label: "Date"),
@@ -249,17 +249,17 @@ final class DynamicFormLabelTests: XCTestCase {
         )
         
         // Then: Form should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify configuration
-        XCTAssertEqual(configuration.title, "Test Form")
-        XCTAssertEqual(configuration.sections.count, 1)
-        XCTAssertEqual(configuration.sections.first?.fields.count, 4)
+        #expect(configuration.title == "Test Form")
+        #expect(configuration.sections.count == 1)
+        #expect(configuration.sections.first?.fields.count == 4)
     }
     
     // MARK: - Label Policy Tests
     
-    func testSelfLabelingControlsHaveEmptyTitles() {
+    @Test func testSelfLabelingControlsHaveEmptyTitles() {
         // Given: Fields that should have empty control titles
         let selfLabelingTypes: [DynamicContentType] = [.date, .time, .datetime, .color, .toggle, .checkbox, .select]
         
@@ -293,13 +293,13 @@ final class DynamicFormLabelTests: XCTestCase {
             }
             
             // Then: View should be created successfully
-            XCTAssertNotNil(view, "Failed to create view for \(contentType.rawValue)")
+            #expect(view != nil, "Failed to create view for \(contentType.rawValue)")
         }
     }
     
     // MARK: - Accessibility Tests
     
-    func testAccessibilityLabelsArePreserved() {
+    @Test func testAccessibilityLabelsArePreserved() {
         // Given: Field with accessibility requirements
         let field = DynamicFormField(
             id: "test-accessibility",
@@ -313,14 +313,14 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DatePickerField(field: field, formState: formState)
         
         // Then: Field should be created with proper accessibility info
-        XCTAssertNotNil(view)
-        XCTAssertEqual(field.label, "Birth Date")
-        XCTAssertEqual(field.description, "Required for age verification")
+        #expect(view != nil)
+        #expect(field.label == "Birth Date")
+        #expect(field.description == "Required for age verification")
     }
     
     // MARK: - Edge Case Tests
     
-    func testEmptyLabelHandling() {
+    @Test func testEmptyLabelHandling() {
         // Given: Field with empty label
         let field = DynamicFormField(
             id: "test-empty",
@@ -333,11 +333,11 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicToggleField(field: field, formState: formState)
         
         // Then: Should handle empty label gracefully
-        XCTAssertNotNil(view)
-        XCTAssertEqual(field.label, "")
+        #expect(view != nil)
+        #expect(field.label == "")
     }
     
-    func testLongLabelHandling() {
+    @Test func testLongLabelHandling() {
         // Given: Field with very long label
         let longLabel = "This is a very long label that might cause layout issues in the form"
         let field = DynamicFormField(
@@ -351,13 +351,13 @@ final class DynamicFormLabelTests: XCTestCase {
         let view = DynamicColorField(field: field, formState: formState)
         
         // Then: Should handle long label gracefully
-        XCTAssertNotNil(view)
-        XCTAssertEqual(field.label, longLabel)
+        #expect(view != nil)
+        #expect(field.label == longLabel)
     }
     
     // MARK: - Label Duplication Prevention Tests
     
-    func testLabelDuplicationPrevention() {
+    @Test func testLabelDuplicationPrevention() {
         // Given: Fields that previously had duplicate labels
         let problematicFields = [
             DynamicFormField(id: "date", contentType: .date, label: "Date"),
@@ -385,7 +385,7 @@ final class DynamicFormLabelTests: XCTestCase {
             // Then: Each field should be created successfully
             // The actual label duplication prevention is tested by the fact that
             // our implementation uses empty titles and .labelsHidden() modifiers
-            XCTAssertNotNil(view, "Failed to create view for \(field.contentType?.rawValue ?? "unknown")")
+            #expect(view != nil, "Failed to create view for \(field.contentType?.rawValue ?? "unknown")")
         }
     }
 }

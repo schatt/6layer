@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -6,7 +6,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class CardContentDisplayTests: XCTestCase {
+final class CardContentDisplayTests {
     
     // MARK: - Test Data
     
@@ -30,8 +30,7 @@ final class CardContentDisplayTests: XCTestCase {
     var sampleItemsWithData: [TestItemWithData] = []
     var layoutDecision: IntelligentCardLayoutDecision!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         
         sampleItems = [
             TestItem(title: "Test Item 1", subtitle: "Subtitle 1", description: "Description 1", icon: "star.fill", color: .blue),
@@ -55,7 +54,7 @@ final class CardContentDisplayTests: XCTestCase {
     
     // MARK: - SimpleCardComponent Tests
     
-    func testSimpleCardComponentDisplaysItemTitle() {
+    @Test func testSimpleCardComponentDisplaysItemTitle() {
         // GIVEN: A test item with a title
         let item = sampleItems[0]
         
@@ -70,11 +69,11 @@ final class CardContentDisplayTests: XCTestCase {
         
         // THEN: Should display the item's title instead of hardcoded text
         // Note: This test will fail initially (RED phase) until we implement proper content display
-        XCTAssertNotNil(card)
+        #expect(card != nil)
         // The actual assertion would be done through UI testing or by checking the view's content
     }
     
-    func testSimpleCardComponentDisplaysItemIcon() {
+    @Test func testSimpleCardComponentDisplaysItemIcon() {
         // GIVEN: A test item with an icon
         let item = sampleItems[0]
         
@@ -88,10 +87,10 @@ final class CardContentDisplayTests: XCTestCase {
         )
         
         // THEN: Should display the item's icon instead of hardcoded star
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
-    func testSimpleCardComponentHandlesMissingIcon() {
+    @Test func testSimpleCardComponentHandlesMissingIcon() {
         // GIVEN: A test item without an icon
         let item = sampleItems[2] // This item has icon: nil
         
@@ -105,12 +104,12 @@ final class CardContentDisplayTests: XCTestCase {
         )
         
         // THEN: Should handle missing icon gracefully
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - ExpandableCardComponent Tests
     
-    func testExpandableCardComponentDisplaysItemContent() {
+    @Test func testExpandableCardComponentDisplaysItemContent() {
         // GIVEN: A test item with title and description
         let item = sampleItems[0]
         let strategy = CardExpansionStrategy(
@@ -136,10 +135,10 @@ final class CardContentDisplayTests: XCTestCase {
         )
         
         // THEN: Should display the item's title and description instead of hardcoded text
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
-    func testExpandableCardComponentExpandedContent() {
+    @Test func testExpandableCardComponentExpandedContent() {
         // GIVEN: A test item and expanded state
         let item = sampleItems[0]
         let strategy = CardExpansionStrategy(
@@ -165,12 +164,12 @@ final class CardContentDisplayTests: XCTestCase {
         )
         
         // THEN: Should display expanded content with item data
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - ListCardComponent Tests
     
-    func testListCardComponentDisplaysItemData() {
+    @Test func testListCardComponentDisplaysItemData() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -178,10 +177,10 @@ final class CardContentDisplayTests: XCTestCase {
         let card = ListCardComponent(item: item)
         
         // THEN: Should display the item's title and subtitle instead of hardcoded text
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
-    func testListCardComponentHandlesMissingSubtitle() {
+    @Test func testListCardComponentHandlesMissingSubtitle() {
         // GIVEN: A test item without subtitle
         let item = sampleItems[2] // This item has subtitle: nil
         
@@ -189,12 +188,12 @@ final class CardContentDisplayTests: XCTestCase {
         let card = ListCardComponent(item: item)
         
         // THEN: Should handle missing subtitle gracefully
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - MasonryCardComponent Tests
     
-    func testMasonryCardComponentDisplaysItemData() {
+    @Test func testMasonryCardComponentDisplaysItemData() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -202,12 +201,12 @@ final class CardContentDisplayTests: XCTestCase {
         let card = MasonryCardComponent(item: item)
         
         // THEN: Should display the item's title instead of hardcoded text
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - Generic Item Display Tests
     
-    func testCardComponentsWorkWithGenericDataItem() {
+    @Test func testCardComponentsWorkWithGenericDataItem() {
         // GIVEN: GenericDataItem instances
         let genericItems = [
             GenericDataItem(title: "Generic 1", subtitle: "Subtitle 1", data: ["type": "test"]),
@@ -227,12 +226,12 @@ final class CardContentDisplayTests: XCTestCase {
         let masonryCard = MasonryCardComponent(item: genericItems[0])
         
         // THEN: Should display the generic item's title and subtitle
-        XCTAssertNotNil(simpleCard)
-        XCTAssertNotNil(listCard)
-        XCTAssertNotNil(masonryCard)
+        #expect(simpleCard != nil)
+        #expect(listCard != nil)
+        #expect(masonryCard != nil)
     }
     
-    func testCardComponentsWorkWithGenericVehicle() {
+    @Test func testCardComponentsWorkWithGenericVehicle() {
         // GIVEN: GenericDataItem instances (using available types)
         let vehicles = [
             GenericDataItem(title: "Car 1", subtitle: "A nice car"),
@@ -252,14 +251,14 @@ final class CardContentDisplayTests: XCTestCase {
         let masonryCard = MasonryCardComponent(item: vehicles[0])
         
         // THEN: Should display the vehicle's name and description
-        XCTAssertNotNil(simpleCard)
-        XCTAssertNotNil(listCard)
-        XCTAssertNotNil(masonryCard)
+        #expect(simpleCard != nil)
+        #expect(listCard != nil)
+        #expect(masonryCard != nil)
     }
     
     // MARK: - Edge Cases
     
-    func testCardComponentsWithEmptyStrings() {
+    @Test func testCardComponentsWithEmptyStrings() {
         // GIVEN: Items with empty strings
         let emptyItem = TestItem(title: "", subtitle: "", description: "", icon: "", color: nil)
         
@@ -276,12 +275,12 @@ final class CardContentDisplayTests: XCTestCase {
         let masonryCard = MasonryCardComponent(item: emptyItem)
         
         // THEN: Should handle empty strings gracefully
-        XCTAssertNotNil(simpleCard)
-        XCTAssertNotNil(listCard)
-        XCTAssertNotNil(masonryCard)
+        #expect(simpleCard != nil)
+        #expect(listCard != nil)
+        #expect(masonryCard != nil)
     }
     
-    func testCardComponentsWithVeryLongText() {
+    @Test func testCardComponentsWithVeryLongText() {
         // GIVEN: Items with very long text
         let longText = String(repeating: "Very long text that should be truncated properly. ", count: 10)
         let longItem = TestItem(
@@ -305,14 +304,14 @@ final class CardContentDisplayTests: XCTestCase {
         let masonryCard = MasonryCardComponent(item: longItem)
         
         // THEN: Should handle long text with proper truncation
-        XCTAssertNotNil(simpleCard)
-        XCTAssertNotNil(listCard)
-        XCTAssertNotNil(masonryCard)
+        #expect(simpleCard != nil)
+        #expect(listCard != nil)
+        #expect(masonryCard != nil)
     }
     
     // MARK: - Performance Tests
     
-    func testCardComponentCreationPerformance() {
+    @Test func testCardComponentCreationPerformance() {
         // GIVEN: A large number of items
         let manyItems = (0..<1000).map { i in
             TestItem(
@@ -341,7 +340,7 @@ final class CardContentDisplayTests: XCTestCase {
     
     // MARK: - Accessibility Tests
     
-    func testCardComponentsHaveProperAccessibility() {
+    @Test func testCardComponentsHaveProperAccessibility() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -358,8 +357,8 @@ final class CardContentDisplayTests: XCTestCase {
         let masonryCard = MasonryCardComponent(item: item)
         
         // THEN: Should have proper accessibility labels
-        XCTAssertNotNil(simpleCard)
-        XCTAssertNotNil(listCard)
-        XCTAssertNotNil(masonryCard)
+        #expect(simpleCard != nil)
+        #expect(listCard != nil)
+        #expect(masonryCard != nil)
     }
 }

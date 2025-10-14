@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL InternationalizationService components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class InternationalizationServiceComponentAccessibilityTests: XCTestCase {
+final class InternationalizationServiceComponentAccessibilityTests {
     
     // MARK: - InternationalizationService Tests
     
-    func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
+    @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
         // Given: InternationalizationService
         let i18nService = InternationalizationService()
         
@@ -31,7 +31,7 @@ final class InternationalizationServiceComponentAccessibilityTests: XCTestCase {
             componentName: "InternationalizationService"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "InternationalizationService should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "InternationalizationService should generate accessibility identifiers")
     }
 }
 

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRStrategySelectionLayer3.swift functions
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
+final class PlatformOCRStrategySelectionLayer3AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,7 +34,7 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let context = OCRContext(
             textTypes: [TextType.general],
@@ -42,8 +42,8 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         )
         
         // Verify context is properly configured
-        XCTAssertEqual(context.textTypes, [TextType.general], "Context should have correct text types")
-        XCTAssertEqual(context.language, OCRLanguage.english, "Context should have correct language")
+        #expect(context.textTypes == [TextType.general], "Context should have correct text types")
+        #expect(context.language == OCRLanguage.english, "Context should have correct language")
         
         let result = platformOCRStrategy_L3(
             textTypes: [TextType.general]
@@ -51,14 +51,14 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
-        XCTAssertFalse(result.supportedLanguages.isEmpty, "Strategy should have supported languages")
+        #expect(result != nil, "platformOCRStrategy_L3 should return a valid strategy")
+        #expect(!result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
+        #expect(!result.supportedLanguages.isEmpty, "Strategy should have supported languages")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformOCRStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let context = OCRContext(
             textTypes: [TextType.general],
@@ -66,8 +66,8 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         )
         
         // Verify context is properly configured
-        XCTAssertEqual(context.textTypes, [TextType.general], "Context should have correct text types")
-        XCTAssertEqual(context.language, OCRLanguage.english, "Context should have correct language")
+        #expect(context.textTypes == [TextType.general], "Context should have correct text types")
+        #expect(context.language == OCRLanguage.english, "Context should have correct language")
         
         let result = platformOCRStrategy_L3(
             textTypes: [TextType.general]
@@ -75,8 +75,8 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: XCTestCase {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        XCTAssertNotNil(result, "platformOCRStrategy_L3 should return a valid strategy")
-        XCTAssertFalse(result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
-        XCTAssertFalse(result.supportedLanguages.isEmpty, "Strategy should have supported languages")
+        #expect(result != nil, "platformOCRStrategy_L3 should return a valid strategy")
+        #expect(!result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
+        #expect(!result.supportedLanguages.isEmpty, "Strategy should have supported languages")
     }
 }

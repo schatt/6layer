@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All functions in IntelligentCardExpansionLayer3.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class IntelligentCardExpansionLayer3Tests: XCTestCase {
+final class IntelligentCardExpansionLayer3Tests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class IntelligentCardExpansionLayer3Tests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class IntelligentCardExpansionLayer3Tests: XCTestCase {
     
     // MARK: - selectCardExpansionStrategy_L3 Tests
     
-    func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         let result = selectCardExpansionStrategy_L3(
             contentCount: 5,
             screenWidth: 375,
@@ -44,10 +42,10 @@ final class IntelligentCardExpansionLayer3Tests: XCTestCase {
         
         // Layer 3 functions return strategy data structures, not views
         // So we test that the result is valid
-        XCTAssertNotNil(result, "selectCardExpansionStrategy_L3 should return a valid result on iOS")
+        #expect(result != nil, "selectCardExpansionStrategy_L3 should return a valid result on iOS")
     }
     
-    func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         let result = selectCardExpansionStrategy_L3(
             contentCount: 5,
             screenWidth: 1920,
@@ -58,7 +56,7 @@ final class IntelligentCardExpansionLayer3Tests: XCTestCase {
         
         // Layer 3 functions return strategy data structures, not views
         // So we test that the result is valid
-        XCTAssertNotNil(result, "selectCardExpansionStrategy_L3 should return a valid result on macOS")
+        #expect(result != nil, "selectCardExpansionStrategy_L3 should return a valid result on macOS")
     }
 }
 

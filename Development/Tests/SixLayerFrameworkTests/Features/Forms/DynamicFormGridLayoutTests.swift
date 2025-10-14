@@ -26,14 +26,14 @@
 //  - ✅ Excellent: Follows TDD methodology
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for DynamicFormView grid layout functionality
 /// Ensures fields with gridColumn metadata render in horizontal grid
 @MainActor
-final class DynamicFormGridLayoutTests: XCTestCase {
+final class DynamicFormGridLayoutTests {
     
     // MARK: - Test Data
     
@@ -48,7 +48,7 @@ final class DynamicFormGridLayoutTests: XCTestCase {
     
     // MARK: - Grid Layout Detection Tests
     
-    func testDetectsGridFieldsWithGridColumnMetadata() {
+    @Test func testDetectsGridFieldsWithGridColumnMetadata() {
         // Given: Fields with gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -66,11 +66,11 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should detect grid fields
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
-    func testDoesNotDetectGridFieldsWithoutGridColumnMetadata() {
+    @Test func testDoesNotDetectGridFieldsWithoutGridColumnMetadata() {
         // Given: Fields without gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
@@ -88,13 +88,13 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should not detect grid fields
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
     // MARK: - Grid Column Calculation Tests
     
-    func testCalculatesCorrectGridColumnsFromMetadata() {
+    @Test func testCalculatesCorrectGridColumnsFromMetadata() {
         // Given: Fields with different gridColumn values
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -113,11 +113,11 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should calculate 4 columns
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
-    func testHandlesMixedGridColumnValues() {
+    @Test func testHandlesMixedGridColumnValues() {
         // Given: Fields with non-sequential gridColumn values
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -135,13 +135,13 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should calculate 5 columns (max value)
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
     // MARK: - Integration Tests
     
-    func testDynamicFormViewRendersGridLayout() {
+    @Test func testDynamicFormViewRendersGridLayout() {
         // Given: Form with grid-enabled section
         let gridFields = [
             DynamicFormField(id: "odometer", contentType: .number, label: "Odometer", metadata: ["gridColumn": "1"]),
@@ -168,15 +168,15 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         )
         
         // Then: Form should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify configuration
-        XCTAssertEqual(configuration.title, "Test Form")
-        XCTAssertEqual(configuration.sections.count, 1)
-        XCTAssertEqual(configuration.sections.first?.fields.count, 3)
+        #expect(configuration.title == "Test Form")
+        #expect(configuration.sections.count == 1)
+        #expect(configuration.sections.first?.fields.count == 3)
     }
     
-    func testMixedGridAndVerticalSections() {
+    @Test func testMixedGridAndVerticalSections() {
         // Given: Form with both grid and vertical sections
         let gridFields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -206,17 +206,17 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         )
         
         // Then: Form should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify configuration
-        XCTAssertEqual(configuration.sections.count, 2)
-        XCTAssertEqual(configuration.sections[0].fields.count, 2)
-        XCTAssertEqual(configuration.sections[1].fields.count, 2)
+        #expect(configuration.sections.count == 2)
+        #expect(configuration.sections[0].fields.count == 2)
+        #expect(configuration.sections[1].fields.count == 2)
     }
     
     // MARK: - Edge Case Tests
     
-    func testHandlesEmptyGridColumnMetadata() {
+    @Test func testHandlesEmptyGridColumnMetadata() {
         // Given: Field with empty gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": ""])
@@ -232,10 +232,10 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle gracefully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testHandlesInvalidGridColumnMetadata() {
+    @Test func testHandlesInvalidGridColumnMetadata() {
         // Given: Field with invalid gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "invalid"])
@@ -251,10 +251,10 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle gracefully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
-    func testHandlesSingleGridField() {
+    @Test func testHandlesSingleGridField() {
         // Given: Single field with gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"])
@@ -270,12 +270,12 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle single field
-        XCTAssertNotNil(view)
+        #expect(view != nil)
     }
     
     // MARK: - Real-World Scenario Tests
     
-    func testFuelDetailsGridLayout() {
+    @Test func testFuelDetailsGridLayout() {
         // Given: Real-world fuel details fields (matching CarManager usage)
         let fuelFields = [
             DynamicFormField(id: "odometer", contentType: .number, label: "Odometer", metadata: ["maxWidth": "120", "gridColumn": "1"]),
@@ -303,15 +303,15 @@ final class DynamicFormGridLayoutTests: XCTestCase {
         )
         
         // Then: Form should be created successfully
-        XCTAssertNotNil(view)
+        #expect(view != nil)
         
         // Verify all fields have gridColumn metadata
         for field in fuelFields {
-            XCTAssertNotNil(field.metadata?["gridColumn"])
+            #expect(field.metadata?["gridColumn"] != nil)
         }
         
         // Verify configuration
-        XCTAssertEqual(configuration.sections.count, 1)
-        XCTAssertEqual(configuration.sections.first?.fields.count, 4)
+        #expect(configuration.sections.count == 1)
+        #expect(configuration.sections.first?.fields.count == 4)
     }
 }

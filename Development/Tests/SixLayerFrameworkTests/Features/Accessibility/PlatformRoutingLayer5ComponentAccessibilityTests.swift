@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Platform Routing Layer 5 Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformRoutingLayer5ComponentAccessibilityTests: XCTestCase {
+final class PlatformRoutingLayer5ComponentAccessibilityTests {
     
     // MARK: - Platform Routing Layer 5 Component Tests
     
-    func testPlatformRoutingLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformRoutingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRoutingLayer5
         let testView = PlatformRoutingLayer5()
         
@@ -25,7 +25,7 @@ final class PlatformRoutingLayer5ComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformRoutingLayer5"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformRoutingLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformRoutingLayer5 should generate accessibility identifiers")
     }
 }
 

@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Compliance Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ComplianceComponentAccessibilityTests: XCTestCase {
+final class ComplianceComponentAccessibilityTests {
     
     // MARK: - Compliance Component Tests
     
-    func testPlatformComplianceGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformComplianceGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformCompliance
         let testView = PlatformCompliance()
         
@@ -25,10 +25,10 @@ final class ComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformCompliance"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformCompliance should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformCompliance should generate accessibility identifiers")
     }
     
-    func testPlatformAuditGeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformAuditGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAudit
         let testView = PlatformAudit()
         
@@ -39,10 +39,10 @@ final class ComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "PlatformAudit"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "PlatformAudit should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformAudit should generate accessibility identifiers")
     }
     
-    func testAppleHIGComplianceGeneratesAccessibilityIdentifiers() async {
+    @Test func testAppleHIGComplianceGeneratesAccessibilityIdentifiers() async {
         // Given: AppleHIGCompliance
         let testView = AppleHIGCompliance()
         
@@ -53,7 +53,7 @@ final class ComplianceComponentAccessibilityTests: XCTestCase {
             componentName: "AppleHIGCompliance"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AppleHIGCompliance should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AppleHIGCompliance should generate accessibility identifiers")
     }
 }
 

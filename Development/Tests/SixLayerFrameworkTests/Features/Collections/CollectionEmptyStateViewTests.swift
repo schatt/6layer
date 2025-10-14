@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: CollectionEmptyStateView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class CollectionEmptyStateViewTests: XCTestCase {
+final class CollectionEmptyStateViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class CollectionEmptyStateViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class CollectionEmptyStateViewTests: XCTestCase {
     
     // MARK: - CollectionEmptyStateView Tests
     
-    func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = CollectionEmptyStateView(
             hints: PresentationHints(
                 dataType: .collection,
@@ -50,10 +48,10 @@ final class CollectionEmptyStateViewTests: XCTestCase {
             componentName: "CollectionEmptyStateView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on iOS")
     }
     
-    func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = CollectionEmptyStateView(
             hints: PresentationHints(
                 dataType: .collection,
@@ -70,6 +68,6 @@ final class CollectionEmptyStateViewTests: XCTestCase {
             componentName: "CollectionEmptyStateView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on macOS")
     }
 }

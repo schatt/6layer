@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: ModalFormView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class ModalFormViewTests: XCTestCase {
+final class ModalFormViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class ModalFormViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class ModalFormViewTests: XCTestCase {
     
     // MARK: - ModalFormView Tests
     
-    func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testFields = [
             DynamicFormField(
                 id: "field1",
@@ -65,10 +63,10 @@ final class ModalFormViewTests: XCTestCase {
             componentName: "ModalFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on iOS")
     }
     
-    func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testFields = [
             DynamicFormField(
                 id: "field1",
@@ -100,6 +98,6 @@ final class ModalFormViewTests: XCTestCase {
             componentName: "ModalFormView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on macOS")
     }
 }

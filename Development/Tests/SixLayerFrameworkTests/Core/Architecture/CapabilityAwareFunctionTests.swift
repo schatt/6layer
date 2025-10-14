@@ -30,17 +30,16 @@
 //  - ✅ Excellent: Tests both enabled and disabled capability scenarios
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Capability-aware function testing
 /// Tests every function that depends on capabilities in both enabled and disabled states
 @MainActor
-final class CapabilityAwareFunctionTests: XCTestCase {
+final class CapabilityAwareFunctionTests {
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
@@ -49,7 +48,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Test touch-dependent functions across all platforms
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use mock capability detection to test both enabled and disabled states
-    func testTouchDependentFunctions() {
+    @Test func testTouchDependentFunctions() {
         // Test both enabled and disabled states using the new methodology
         testTouchDependentFunctionsEnabled()
         testTouchDependentFunctionsDisabled()
@@ -58,7 +57,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Test touch functions when touch is enabled using mock capability detection
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate enabled touch state
-    func testTouchDependentFunctionsEnabled() {
+    @Test func testTouchDependentFunctionsEnabled() {
         // Set mock capabilities for enabled touch state
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
@@ -69,16 +68,16 @@ final class CapabilityAwareFunctionTests: XCTestCase {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             
             // Test the capabilities directly
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported when enabled on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic feedback should be available when touch is supported on \(platform)")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be available when touch is supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported when enabled on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "Haptic feedback should be available when touch is supported on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be available when touch is supported on \(platform)")
             
             // Test the platform config - now it should work correctly with Platform.deviceType
             let config = getCardExpansionPlatformConfig()
-            XCTAssertTrue(config.supportsTouch, "Touch should be supported when enabled on \(platform)")
-            XCTAssertTrue(config.supportsHapticFeedback, "Haptic feedback should be available when touch is supported on \(platform)")
-            XCTAssertTrue(config.supportsAssistiveTouch, "AssistiveTouch should be available when touch is supported on \(platform)")
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate when touch is supported on \(platform)")
+            #expect(config.supportsTouch, "Touch should be supported when enabled on \(platform)")
+            #expect(config.supportsHapticFeedback, "Haptic feedback should be available when touch is supported on \(platform)")
+            #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available when touch is supported on \(platform)")
+            #expect(config.minTouchTarget >= 44, "Touch targets should be adequate when touch is supported on \(platform)")
         }
         
         // Clean up
@@ -88,7 +87,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Test touch functions when touch is disabled using mock capability detection
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate disabled touch state
-    func testTouchDependentFunctionsDisabled() {
+    @Test func testTouchDependentFunctionsDisabled() {
         // Set mock capabilities for disabled touch state
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
@@ -100,11 +99,11 @@ final class CapabilityAwareFunctionTests: XCTestCase {
             let config = getCardExpansionPlatformConfig()
             
             // Test that touch-related functions handle disabled state gracefully
-            XCTAssertFalse(config.supportsTouch, "Touch should not be supported when disabled on \(platform)")
-            XCTAssertFalse(config.supportsHapticFeedback, "Haptic feedback should not be available when touch is disabled on \(platform)")
-            XCTAssertFalse(config.supportsAssistiveTouch, "AssistiveTouch should not be available when touch is disabled on \(platform)")
+            #expect(!config.supportsTouch, "Touch should not be supported when disabled on \(platform)")
+            #expect(!config.supportsHapticFeedback, "Haptic feedback should not be available when touch is disabled on \(platform)")
+            #expect(!config.supportsAssistiveTouch, "AssistiveTouch should not be available when touch is disabled on \(platform)")
             // Note: minTouchTarget is platform-specific and doesn't change based on touch support
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should still be adequate for accessibility on \(platform)")
+            #expect(config.minTouchTarget >= 44, "Touch targets should still be adequate for accessibility on \(platform)")
         }
         
         // Clean up
@@ -114,27 +113,27 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Touch-dependent functions provide haptic feedback, AssistiveTouch support, and appropriate touch targets
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use real system capability detection to test enabled touch state
-    func testTouchFunctionsEnabled() {
+    @Test func testTouchFunctionsEnabled() {
         // Test that touch-related functions work correctly when touch is supported
         let config = getCardExpansionPlatformConfig()
         
         // Touch targets should be appropriate size
-        XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+        #expect(config.minTouchTarget >= 44, 
                                    "Touch targets should be adequate when touch is supported")
         
         // Haptic feedback should be available
-        XCTAssertTrue(config.supportsHapticFeedback, 
+        #expect(config.supportsHapticFeedback, 
                      "Haptic feedback should be available when touch is supported")
         
         // AssistiveTouch should be available
-        XCTAssertTrue(config.supportsAssistiveTouch, 
+        #expect(config.supportsAssistiveTouch, 
                      "AssistiveTouch should be available when touch is supported")
     }
     
     /// BUSINESS PURPOSE: Touch-dependent functions gracefully handle disabled touch state by disabling haptic feedback and AssistiveTouch
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use real system capability detection to test disabled touch state
-    func testTouchFunctionsDisabled() {
+    @Test func testTouchFunctionsDisabled() {
         // Force disabled state to avoid environment variance
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
@@ -142,19 +141,19 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         let config = getCardExpansionPlatformConfig()
         
         // Touch should not be supported
-        XCTAssertFalse(config.supportsTouch, 
+        #expect(!config.supportsTouch, 
                       "Touch should not be supported when disabled")
         
         // Haptic feedback should not be available
-        XCTAssertFalse(config.supportsHapticFeedback, 
+        #expect(!config.supportsHapticFeedback, 
                       "Haptic feedback should not be available when touch is disabled")
         
         // AssistiveTouch should not be available
-        XCTAssertFalse(config.supportsAssistiveTouch, 
+        #expect(!config.supportsAssistiveTouch, 
                       "AssistiveTouch should not be available when touch is disabled")
         
         // Touch targets should still be reasonable for accessibility
-        XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+        #expect(config.minTouchTarget >= 44, 
                                    "Touch targets should still be adequate for accessibility")
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
@@ -164,7 +163,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Test hover-dependent functions across all platforms
     /// TESTING SCOPE: Hover capability detection, hover delay, touch exclusion
     /// METHODOLOGY: Use mock capability detection to test both enabled and disabled states
-    func testHoverDependentFunctions() {
+    @Test func testHoverDependentFunctions() {
         // Test both enabled and disabled states using the new methodology
         testHoverDependentFunctionsEnabled()
         testHoverDependentFunctionsDisabled()
@@ -173,7 +172,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Test hover functions when hover is enabled using mock capability detection
     /// TESTING SCOPE: Hover capability detection, hover delay, touch exclusion
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate enabled hover state
-    func testHoverDependentFunctionsEnabled() {
+    @Test func testHoverDependentFunctionsEnabled() {
         // Set mock capabilities for enabled hover state
         RuntimeCapabilityDetection.setTestHover(true)
         RuntimeCapabilityDetection.setTestTouchSupport(false)
@@ -184,9 +183,9 @@ final class CapabilityAwareFunctionTests: XCTestCase {
             let config = getCardExpansionPlatformConfig()
             
             // Test that hover-related functions work when hover is supported
-            XCTAssertTrue(config.supportsHover, "Hover should be supported when enabled on \(platform)")
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set when hover is supported on \(platform)")
-            XCTAssertFalse(config.supportsTouch, "Touch should not be supported when hover is enabled on \(platform)")
+            #expect(config.supportsHover, "Hover should be supported when enabled on \(platform)")
+            #expect(config.hoverDelay >= 0, "Hover delay should be set when hover is supported on \(platform)")
+            #expect(!config.supportsTouch, "Touch should not be supported when hover is enabled on \(platform)")
         }
         
         // Clean up
@@ -196,7 +195,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Hover-dependent functions provide hover delays and exclude touch interactions when hover is enabled
     /// TESTING SCOPE: Hover capability detection, hover delay, touch exclusion
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate disabled hover state
-    func testHoverDependentFunctionsDisabled() {
+    @Test func testHoverDependentFunctionsDisabled() {
         // Set mock capabilities for disabled hover state; do not assume touch implied
         RuntimeCapabilityDetection.setTestHover(false)
         // Do not force touch true here to avoid conflicting assumptions across platforms
@@ -207,9 +206,9 @@ final class CapabilityAwareFunctionTests: XCTestCase {
             let config = getCardExpansionPlatformConfig()
             
             // Test that hover-related functions handle disabled state gracefully
-            XCTAssertFalse(config.supportsHover, "Hover should not be supported when disabled on \(platform)")
+            #expect(!config.supportsHover, "Hover should not be supported when disabled on \(platform)")
             // Allow small non-zero delays introduced by debounce policies
-            XCTAssertLessThanOrEqual(config.hoverDelay, 0.1, "Hover delay should be effectively zero when hover is disabled on \(platform)")
+            #expect(config.hoverDelay <= 0.1, "Hover delay should be effectively zero when hover is disabled on \(platform)")
             // Do not assert touch state when hover is disabled; it can vary by platform/config
         }
         
@@ -222,7 +221,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Vision framework functions provide OCR processing and image analysis capabilities
     /// TESTING SCOPE: Vision framework availability, OCR processing, image analysis
     /// METHODOLOGY: Test both enabled and disabled Vision framework states
-    func testVisionFrameworkDependentFunctions() {
+    @Test func testVisionFrameworkDependentFunctions() {
         let supportsVision = isVisionFrameworkAvailable()
         
         if supportsVision {
@@ -235,13 +234,13 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Vision framework functions enable OCR text extraction and image processing when available
     /// TESTING SCOPE: Vision framework availability, OCR processing, image analysis
     /// METHODOLOGY: Test Vision framework enabled state with actual OCR processing
-    func testVisionFunctionsEnabled() {
+    @Test func testVisionFunctionsEnabled() {
         // Vision framework should be available
-        XCTAssertTrue(isVisionFrameworkAvailable(), 
+        #expect(isVisionFrameworkAvailable(), 
                      "Vision framework should be available when enabled")
         
         // OCR should be available
-        XCTAssertTrue(isVisionOCRAvailable(), 
+        #expect(isVisionOCRAvailable(), 
                      "OCR should be available when Vision framework is enabled")
         
         // Vision functions should not crash
@@ -275,20 +274,20 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Vision framework functions provide fallback behavior when Vision framework is unavailable
     /// TESTING SCOPE: Vision framework availability, OCR processing, image analysis
     /// METHODOLOGY: Test Vision framework disabled state with graceful fallback handling
-    func testVisionFunctionsDisabled() {
+    @Test func testVisionFunctionsDisabled() {
         // If Vision is available on this platform/SDK, skip strict disabled assertions
         guard !isVisionFrameworkAvailable() else {
             // Validate that availability implies OCR availability relationship
-            XCTAssertEqual(isVisionOCRAvailable(), true, "OCR availability should align with Vision framework availability when enabled")
+            #expect(isVisionOCRAvailable() == true, "OCR availability should align with Vision framework availability when enabled")
             return
         }
         
         // Vision framework should not be available
-        XCTAssertFalse(isVisionFrameworkAvailable(), 
+        #expect(!isVisionFrameworkAvailable(), 
                       "Vision framework should not be available when disabled")
         
         // OCR should not be available
-        XCTAssertFalse(isVisionOCRAvailable(), 
+        #expect(!isVisionOCRAvailable(), 
                       "OCR should not be available when Vision framework is disabled")
         
         // Vision functions should still be callable but return fallback behavior
@@ -314,10 +313,10 @@ final class CapabilityAwareFunctionTests: XCTestCase {
                     strategy: strategy
                 )
                 // Should provide fallback result when Vision is disabled
-                XCTAssertNotNil(result, "Should provide fallback result when Vision is disabled")
+                #expect(result != nil, "Should provide fallback result when Vision is disabled")
             } catch {
                 // Should handle error gracefully when Vision is disabled
-                XCTAssertNotNil(error, "Should handle error gracefully when Vision is disabled")
+                #expect(error != nil, "Should handle error gracefully when Vision is disabled")
             }
         }
     }
@@ -327,7 +326,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Accessibility functions provide VoiceOver and Switch Control support for inclusive user interaction
     /// TESTING SCOPE: VoiceOver support, Switch Control support, accessibility compliance
     /// METHODOLOGY: Test accessibility capability detection and support
-    func testAccessibilityDependentFunctions() {
+    @Test func testAccessibilityDependentFunctions() {
         // Test accessibility functions that are available
         // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
@@ -337,8 +336,8 @@ final class CapabilityAwareFunctionTests: XCTestCase {
         
         // Test that accessibility behavior can be tested
         let config = getCardExpansionPlatformConfig()
-        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should be supported")
-        XCTAssertTrue(config.supportsSwitchControl, "Switch Control should be supported")
+        #expect(config.supportsVoiceOver, "VoiceOver should be supported")
+        #expect(config.supportsSwitchControl, "Switch Control should be supported")
         
         // Clean up
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -349,7 +348,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Color encoding functions convert platform-specific colors to cross-platform data format
     /// TESTING SCOPE: Color encoding, color decoding, cross-platform color compatibility
     /// METHODOLOGY: Test color encoding and decoding across all platforms
-    func testColorEncodingDependentFunctions() {
+    @Test func testColorEncodingDependentFunctions() {
         // Color encoding should work on all platforms
         testColorEncodingFunctionsEnabled()
     }
@@ -357,18 +356,18 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Color encoding functions enable cross-platform color data exchange through encoding and decoding
     /// TESTING SCOPE: Color encoding, color decoding, cross-platform color compatibility
     /// METHODOLOGY: Test color encoding and decoding functionality
-    func testColorEncodingFunctionsEnabled() {
+    @Test func testColorEncodingFunctionsEnabled() {
         // Color encoding should work on all platforms
         let testColor = Color.blue
         
         do {
             let encodedData = try platformColorEncode(testColor)
-            XCTAssertFalse(encodedData.isEmpty, "Color encoding should work on all platforms")
+            #expect(!encodedData.isEmpty, "Color encoding should work on all platforms")
             
             let decodedColor = try platformColorDecode(encodedData)
-            XCTAssertNotNil(decodedColor, "Color decoding should work on all platforms")
+            #expect(decodedColor != nil, "Color decoding should work on all platforms")
         } catch {
-            XCTFail("Color encoding/decoding should work on all platforms: \(error)")
+            Issue.record("Color encoding/decoding should work on all platforms: \(error)")
         }
     }
     
@@ -377,7 +376,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Comprehensive capability testing validates all capability-dependent functions work correctly together
     /// TESTING SCOPE: All capability-dependent functions, cross-platform consistency
     /// METHODOLOGY: Test all capability-dependent functions in sequence
-    func testAllCapabilityDependentFunctions() {
+    @Test func testAllCapabilityDependentFunctions() {
         // Test all capability-dependent functions
         testTouchDependentFunctions()
         testHoverDependentFunctions()
@@ -391,7 +390,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
     /// BUSINESS PURPOSE: Capability state validation ensures internal consistency between related capabilities
     /// TESTING SCOPE: Capability state consistency, logical capability relationships
     /// METHODOLOGY: Test capability state consistency across all platforms
-    func testCapabilityStateConsistency() {
+    @Test func testCapabilityStateConsistency() {
         // Test capability state consistency across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -411,7 +410,7 @@ final class CapabilityAwareFunctionTests: XCTestCase {
             ]
             
             // Validate capability consistency for this platform
-            XCTAssertTrue(validateCapabilityStateConsistency(capabilities), 
+            #expect(validateCapabilityStateConsistency(capabilities), 
                          "Capability state should be internally consistent on \(platform)")
             
             // Print capability state for debugging

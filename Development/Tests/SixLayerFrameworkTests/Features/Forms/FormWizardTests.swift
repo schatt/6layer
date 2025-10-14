@@ -30,18 +30,18 @@
 //  - ✅ Business Logic Focus: Tests actual form wizard functionality, not testing framework
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class FormWizardTests: XCTestCase {
+final class FormWizardTests {
     
     // MARK: - Form Wizard Step Tests
     
     /// BUSINESS PURPOSE: Validate FormWizardStep creation functionality
     /// TESTING SCOPE: Tests FormWizardStep initialization with all parameters
     /// METHODOLOGY: Create FormWizardStep with comprehensive parameters and verify all properties are set correctly
-    func testFormWizardStepCreation() {
+    @Test func testFormWizardStepCreation() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -55,12 +55,12 @@ final class FormWizardTests: XCTestCase {
                 stepOrder: 0
             )
             
-            XCTAssertEqual(step.id, "personal")
-            XCTAssertEqual(step.title, "Personal Information")
-            XCTAssertEqual(step.description, "Basic details about you")
-            XCTAssertTrue(step.isRequired)
-            XCTAssertEqual(step.validationRules?["minLength"], "2")
-            XCTAssertEqual(step.stepOrder, 0)
+            #expect(step.id == "personal")
+            #expect(step.title == "Personal Information")
+            #expect(step.description == "Basic details about you")
+            #expect(step.isRequired)
+            #expect(step.validationRules?["minLength"] == "2")
+            #expect(step.stepOrder == 0)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -69,7 +69,7 @@ final class FormWizardTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate FormWizardStep equality functionality
     /// TESTING SCOPE: Tests FormWizardStep equality comparison and hashable conformance
     /// METHODOLOGY: Create multiple FormWizardStep instances and verify equality behavior
-    func testFormWizardStepEquality() {
+    @Test func testFormWizardStepEquality() {
         let step1 = FormWizardStep(
             id: "step1",
             title: "First Step",
@@ -88,14 +88,14 @@ final class FormWizardTests: XCTestCase {
             stepOrder: 1
         )
         
-        XCTAssertEqual(step1, step2)
-        XCTAssertNotEqual(step1, step3)
+        #expect(step1 == step2)
+        #expect(step1 != step3)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardStep hashable functionality
     /// TESTING SCOPE: Tests FormWizardStep hashable conformance and set operations
     /// METHODOLOGY: Create FormWizardStep instances and verify hashable behavior
-    func testFormWizardStepHashable() {
+    @Test func testFormWizardStepHashable() {
         let step = FormWizardStep(
             id: "testStep",
             title: "Test Step",
@@ -103,8 +103,8 @@ final class FormWizardTests: XCTestCase {
         )
         
         let stepSet: Set<FormWizardStep> = [step]
-        XCTAssertEqual(stepSet.count, 1)
-        XCTAssertTrue(stepSet.contains(step))
+        #expect(stepSet.count == 1)
+        #expect(stepSet.contains(step))
     }
     
     // MARK: - Form Wizard Builder Tests
@@ -112,25 +112,25 @@ final class FormWizardTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate FormWizardBuilder step creation functionality
     /// TESTING SCOPE: Tests FormWizardBuilder step creation and management
     /// METHODOLOGY: Use FormWizardBuilder to create steps and verify step creation functionality
-    func testFormWizardBuilderCreatesSteps() {
+    @Test func testFormWizardBuilderCreatesSteps() {
         var builder = FormWizardBuilder()
         builder.addStep(id: "step1", title: "First Step")
         builder.addStep(id: "step2", title: "Second Step")
         let steps = builder.build()
         
-        XCTAssertEqual(steps.count, 2)
-        XCTAssertEqual(steps[0].id, "step1")
-        XCTAssertEqual(steps[0].title, "First Step")
-        XCTAssertEqual(steps[0].stepOrder, 0)
-        XCTAssertEqual(steps[1].id, "step2")
-        XCTAssertEqual(steps[1].title, "Second Step")
-        XCTAssertEqual(steps[1].stepOrder, 1)
+        #expect(steps.count == 2)
+        #expect(steps[0].id == "step1")
+        #expect(steps[0].title == "First Step")
+        #expect(steps[0].stepOrder == 0)
+        #expect(steps[1].id == "step2")
+        #expect(steps[1].title == "Second Step")
+        #expect(steps[1].stepOrder == 1)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardBuilder description functionality
     /// TESTING SCOPE: Tests FormWizardBuilder step creation with descriptions
     /// METHODOLOGY: Use FormWizardBuilder to create steps with descriptions and verify functionality
-    func testFormWizardBuilderWithDescription() {
+    @Test func testFormWizardBuilderWithDescription() {
         var builder = FormWizardBuilder()
         builder.addStep(
             id: "step1",
@@ -139,14 +139,14 @@ final class FormWizardTests: XCTestCase {
         )
         let steps = builder.build()
         
-        XCTAssertEqual(steps.count, 1)
-        XCTAssertEqual(steps[0].description, "Description for first step")
+        #expect(steps.count == 1)
+        #expect(steps[0].description == "Description for first step")
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardBuilder validation functionality
     /// TESTING SCOPE: Tests FormWizardBuilder step creation with validation rules
     /// METHODOLOGY: Use FormWizardBuilder to create steps with validation and verify functionality
-    func testFormWizardBuilderWithValidation() {
+    @Test func testFormWizardBuilderWithValidation() {
         let validationRules = ["minLength": "3", "maxLength": "50"]
         
         var builder = FormWizardBuilder()
@@ -157,15 +157,15 @@ final class FormWizardTests: XCTestCase {
         )
         let steps = builder.build()
         
-        XCTAssertEqual(steps.count, 1)
-        XCTAssertEqual(steps[0].validationRules?["minLength"], "3")
-        XCTAssertEqual(steps[0].validationRules?["maxLength"], "50")
+        #expect(steps.count == 1)
+        #expect(steps[0].validationRules?["minLength"] == "3")
+        #expect(steps[0].validationRules?["maxLength"] == "50")
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardBuilder required flag functionality
     /// TESTING SCOPE: Tests FormWizardBuilder step creation with required flags
     /// METHODOLOGY: Use FormWizardBuilder to create required steps and verify functionality
-    func testFormWizardBuilderWithRequiredFlag() {
+    @Test func testFormWizardBuilderWithRequiredFlag() {
         var builder = FormWizardBuilder()
         builder.addStep(
             id: "step1",
@@ -174,8 +174,8 @@ final class FormWizardTests: XCTestCase {
         )
         let steps = builder.build()
         
-        XCTAssertEqual(steps.count, 1)
-        XCTAssertFalse(steps[0].isRequired)
+        #expect(steps.count == 1)
+        #expect(!steps[0].isRequired)
     }
     
     // MARK: - Form Wizard State Tests
@@ -183,20 +183,20 @@ final class FormWizardTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate FormWizardState initialization functionality
     /// TESTING SCOPE: Tests FormWizardState initialization and setup
     /// METHODOLOGY: Initialize FormWizardState and verify initial state properties
-    func testFormWizardStateInitialization() {
+    @Test func testFormWizardStateInitialization() {
         let state = FormWizardState()
         
-        XCTAssertEqual(state.currentStepIndex, 0)
-        XCTAssertEqual(state.completedSteps.count, 0)
-        XCTAssertEqual(state.stepData.count, 0)
-        XCTAssertEqual(state.validationErrors.count, 0)
-        XCTAssertFalse(state.isComplete)
+        #expect(state.currentStepIndex == 0)
+        #expect(state.completedSteps.count == 0)
+        #expect(state.stepData.count == 0)
+        #expect(state.validationErrors.count == 0)
+        #expect(!state.isComplete)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState step management functionality
     /// TESTING SCOPE: Tests FormWizardState step management and operations
     /// METHODOLOGY: Manage steps in FormWizardState and verify step management functionality
-    func testFormWizardStateStepManagement() {
+    @Test func testFormWizardStateStepManagement() {
         let state = FormWizardState()
         let steps = [
             FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0),
@@ -206,15 +206,15 @@ final class FormWizardTests: XCTestCase {
         
         state.setSteps(steps)
         
-        XCTAssertEqual(state.steps.count, 3)
-        XCTAssertEqual(state.getCurrentStep()?.id, "step1")
-        XCTAssertEqual(state.getCurrentStep()?.title, "Step 1")
+        #expect(state.steps.count == 3)
+        #expect(state.getCurrentStep()?.id == "step1")
+        #expect(state.getCurrentStep()?.title == "Step 1")
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState navigation functionality
     /// TESTING SCOPE: Tests FormWizardState navigation between steps
     /// METHODOLOGY: Navigate between steps in FormWizardState and verify navigation functionality
-    func testFormWizardStateNavigation() {
+    @Test func testFormWizardStateNavigation() {
         let state = FormWizardState()
         let steps = [
             FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0),
@@ -225,46 +225,46 @@ final class FormWizardTests: XCTestCase {
         state.setSteps(steps)
         
         // Initially at first step
-        XCTAssertEqual(state.currentStepIndex, 0)
-        XCTAssertEqual(state.getCurrentStep()?.id, "step1")
+        #expect(state.currentStepIndex == 0)
+        #expect(state.getCurrentStep()?.id == "step1")
         
         // Mark first step as complete (since it's required by default)
         state.markStepComplete("step1")
         
         // Test next step
-        XCTAssertTrue(state.nextStep())
-        XCTAssertEqual(state.currentStepIndex, 1)
-        XCTAssertEqual(state.getCurrentStep()?.id, "step2")
+        #expect(state.nextStep())
+        #expect(state.currentStepIndex == 1)
+        #expect(state.getCurrentStep()?.id == "step2")
         
         // Mark second step as complete
         state.markStepComplete("step2")
         
         // Test previous step
-        XCTAssertTrue(state.previousStep())
-        XCTAssertEqual(state.currentStepIndex, 0)
-        XCTAssertEqual(state.getCurrentStep()?.id, "step1")
+        #expect(state.previousStep())
+        #expect(state.currentStepIndex == 0)
+        #expect(state.getCurrentStep()?.id == "step1")
         
         // Go back to second step
-        XCTAssertTrue(state.nextStep())
-        XCTAssertEqual(state.currentStepIndex, 1)
+        #expect(state.nextStep())
+        #expect(state.currentStepIndex == 1)
         
         // Go to third step
-        XCTAssertTrue(state.nextStep())
-        XCTAssertEqual(state.currentStepIndex, 2)
-        XCTAssertEqual(state.getCurrentStep()?.id, "step3")
+        #expect(state.nextStep())
+        #expect(state.currentStepIndex == 2)
+        #expect(state.getCurrentStep()?.id == "step3")
         
         // Mark third step as complete
         state.markStepComplete("step3")
         
         // Complete wizard
-        XCTAssertTrue(state.nextStep())
-        XCTAssertTrue(state.isComplete)
+        #expect(state.nextStep())
+        #expect(state.isComplete)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState step completion functionality
     /// TESTING SCOPE: Tests FormWizardState step completion and tracking
     /// METHODOLOGY: Complete steps in FormWizardState and verify completion functionality
-    func testFormWizardStateStepCompletion() {
+    @Test func testFormWizardStateStepCompletion() {
         let state = FormWizardState()
         let steps = [
             FormWizardStep(id: "step1", title: "Step 1", isRequired: true, stepOrder: 0),
@@ -274,19 +274,19 @@ final class FormWizardTests: XCTestCase {
         state.setSteps(steps)
         
         // Initially no steps are complete
-        XCTAssertFalse(state.isStepComplete("step1"))
-        XCTAssertFalse(state.isStepComplete("step2"))
+        #expect(!state.isStepComplete("step1"))
+        #expect(!state.isStepComplete("step2"))
         
         // Mark step as complete
         state.markStepComplete("step1")
-        XCTAssertTrue(state.isStepComplete("step1"))
-        XCTAssertFalse(state.isStepComplete("step2"))
+        #expect(state.isStepComplete("step1"))
+        #expect(!state.isStepComplete("step2"))
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState validation functionality
     /// TESTING SCOPE: Tests FormWizardState validation and error handling
     /// METHODOLOGY: Validate steps in FormWizardState and verify validation functionality
-    func testFormWizardStateValidation() {
+    @Test func testFormWizardStateValidation() {
         let state = FormWizardState()
         let steps = [
             FormWizardStep(id: "step1", title: "Step 1", isRequired: true, stepOrder: 0)
@@ -295,32 +295,32 @@ final class FormWizardTests: XCTestCase {
         state.setSteps(steps)
         
         // Initially can't proceed (required step not complete)
-        XCTAssertFalse(state.canProceedToNextStep())
+        #expect(!state.canProceedToNextStep())
         
         // Mark step as complete
         state.markStepComplete("step1")
-        XCTAssertTrue(state.canProceedToNextStep())
+        #expect(state.canProceedToNextStep())
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState data management functionality
     /// TESTING SCOPE: Tests FormWizardState data management and persistence
     /// METHODOLOGY: Manage data in FormWizardState and verify data management functionality
-    func testFormWizardStateDataManagement() {
+    @Test func testFormWizardStateDataManagement() {
         let state = FormWizardState()
         
         // Test setting and getting step data
         state.setStepData("step1", key: "name", value: "John")
         state.setStepData("step1", key: "age", value: 25)
         
-        XCTAssertEqual(state.getStepData("step1", key: "name") as String?, "John")
-        XCTAssertEqual(state.getStepData("step1", key: "age") as Int?, 25)
-        XCTAssertNil(state.getStepData("step1", key: "nonexistent") as String?)
+        #expect(state.getStepData("step1", key: "name") as String? == "John")
+        #expect(state.getStepData("step1", key: "age") as Int? == 25)
+        #expect(state.getStepData("step1", key: "nonexistent") as String? == nil)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState validation error functionality
     /// TESTING SCOPE: Tests FormWizardState validation error handling and display
     /// METHODOLOGY: Trigger validation errors in FormWizardState and verify error functionality
-    func testFormWizardStateValidationErrors() {
+    @Test func testFormWizardStateValidationErrors() {
         let state = FormWizardState()
         
         // Test validation error management
@@ -329,13 +329,13 @@ final class FormWizardTests: XCTestCase {
         
         // Test error retrieval
         let errors = state.validationErrors["step1"] ?? []
-        XCTAssertEqual(errors.count, 2)
-        XCTAssertTrue(errors.contains("Name is required"))
-        XCTAssertTrue(errors.contains("Name is too short"))
+        #expect(errors.count == 2)
+        #expect(errors.contains("Name is required"))
+        #expect(errors.contains("Name is too short"))
         
         // Test clearing errors
         state.clearValidationErrors(for: "step1")
-        XCTAssertEqual(state.validationErrors["step1"]?.count ?? 0, 0)
+        #expect(state.validationErrors["step1"]?.count ?? 0 == 0)
     }
     
     // MARK: - Form Wizard Progress Tests
@@ -343,32 +343,32 @@ final class FormWizardTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate FormWizardProgress creation functionality
     /// TESTING SCOPE: Tests FormWizardProgress initialization and setup
     /// METHODOLOGY: Create FormWizardProgress and verify progress creation functionality
-    func testFormWizardProgressCreation() {
+    @Test func testFormWizardProgressCreation() {
         let progress = FormWizardProgress(
             currentStep: 2,
             totalSteps: 5,
             completedSteps: 3
         )
         
-        XCTAssertEqual(progress.currentStep, 2)
-        XCTAssertEqual(progress.totalSteps, 5)
-        XCTAssertEqual(progress.completedSteps, 3)
-        XCTAssertEqual(progress.progressPercentage, 0.6, accuracy: 0.01)
+        #expect(progress.currentStep == 2)
+        #expect(progress.totalSteps == 5)
+        #expect(progress.completedSteps == 3)
+        #expect(progress.progressPercentage == 0.6)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardProgress helper functionality
     /// TESTING SCOPE: Tests FormWizardProgress helper methods and calculations
     /// METHODOLOGY: Use FormWizardProgress helper methods and verify helper functionality
-    func testFormWizardProgressHelpers() {
+    @Test func testFormWizardProgressHelpers() {
         let progress = FormWizardProgress(
             currentStep: 0,
             totalSteps: 3,
             completedSteps: 0
         )
         
-        XCTAssertTrue(progress.isFirstStep)
-        XCTAssertFalse(progress.isLastStep)
-        XCTAssertFalse(progress.isComplete)
+        #expect(progress.isFirstStep)
+        #expect(!progress.isLastStep)
+        #expect(!progress.isComplete)
         
         let lastStepProgress = FormWizardProgress(
             currentStep: 2,
@@ -376,22 +376,22 @@ final class FormWizardTests: XCTestCase {
             completedSteps: 3
         )
         
-        XCTAssertFalse(lastStepProgress.isFirstStep)
-        XCTAssertTrue(lastStepProgress.isLastStep)
-        XCTAssertTrue(lastStepProgress.isComplete)
+        #expect(!lastStepProgress.isFirstStep)
+        #expect(lastStepProgress.isLastStep)
+        #expect(lastStepProgress.isComplete)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardProgress edge case functionality
     /// TESTING SCOPE: Tests FormWizardProgress edge cases and boundary conditions
     /// METHODOLOGY: Test FormWizardProgress edge cases and verify edge case functionality
-    func testFormWizardProgressEdgeCases() {
+    @Test func testFormWizardProgressEdgeCases() {
         // Empty wizard
         let emptyProgress = FormWizardProgress(
             currentStep: 0,
             totalSteps: 0,
             completedSteps: 0
         )
-        XCTAssertEqual(emptyProgress.progressPercentage, 0.0)
+        #expect(emptyProgress.progressPercentage == 0.0)
         
         // Single step
         let singleStepProgress = FormWizardProgress(
@@ -399,7 +399,7 @@ final class FormWizardTests: XCTestCase {
             totalSteps: 1,
             completedSteps: 1
         )
-        XCTAssertEqual(singleStepProgress.progressPercentage, 1.0)
+        #expect(singleStepProgress.progressPercentage == 1.0)
     }
     
     // MARK: - Integration Tests
@@ -407,7 +407,7 @@ final class FormWizardTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate FormWizard complete workflow functionality
     /// TESTING SCOPE: Tests FormWizard end-to-end workflow and user experience
     /// METHODOLOGY: Test complete FormWizard workflow and verify end-to-end functionality
-    func testFormWizardCompleteWorkflow() {
+    @Test func testFormWizardCompleteWorkflow() {
         var builder = FormWizardBuilder()
         builder.addStep(id: "personal", title: "Personal Info", isRequired: true)
         builder.addStep(id: "contact", title: "Contact Info", isRequired: true)
@@ -418,36 +418,36 @@ final class FormWizardTests: XCTestCase {
         state.setSteps(steps)
         
         // Navigate through steps
-        XCTAssertEqual(state.currentStepIndex, 0)
-        XCTAssertEqual(state.getCurrentStep()?.id, "personal")
+        #expect(state.currentStepIndex == 0)
+        #expect(state.getCurrentStep()?.id == "personal")
         
         // Complete first step
         state.markStepComplete("personal")
-        XCTAssertTrue(state.canProceedToNextStep())
+        #expect(state.canProceedToNextStep())
         
         // Move to next step
-        XCTAssertTrue(state.nextStep())
-        XCTAssertEqual(state.currentStepIndex, 1)
-        XCTAssertEqual(state.getCurrentStep()?.id, "contact")
+        #expect(state.nextStep())
+        #expect(state.currentStepIndex == 1)
+        #expect(state.getCurrentStep()?.id == "contact")
         
         // Complete second step
         state.markStepComplete("contact")
-        XCTAssertTrue(state.canProceedToNextStep())
+        #expect(state.canProceedToNextStep())
         
         // Move to final step
-        XCTAssertTrue(state.nextStep())
-        XCTAssertEqual(state.currentStepIndex, 2)
-        XCTAssertEqual(state.getCurrentStep()?.id, "preferences")
+        #expect(state.nextStep())
+        #expect(state.currentStepIndex == 2)
+        #expect(state.getCurrentStep()?.id == "preferences")
         
         // Complete wizard
-        XCTAssertTrue(state.nextStep())
-        XCTAssertTrue(state.isComplete)
+        #expect(state.nextStep())
+        #expect(state.isComplete)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizard validation rules functionality
     /// TESTING SCOPE: Tests FormWizard with validation rules and error handling
     /// METHODOLOGY: Test FormWizard with validation rules and verify validation functionality
-    func testFormWizardWithValidationRules() {
+    @Test func testFormWizardWithValidationRules() {
         var builder = FormWizardBuilder()
         builder.addStep(
             id: "personal",
@@ -461,17 +461,17 @@ final class FormWizardTests: XCTestCase {
         state.setSteps(steps)
         
         // Test validation
-        XCTAssertFalse(state.canProceedToNextStep())
+        #expect(!state.canProceedToNextStep())
         
         // Mark step as complete
         state.markStepComplete("personal")
-        XCTAssertTrue(state.canProceedToNextStep())
+        #expect(state.canProceedToNextStep())
     }
     
     /// BUSINESS PURPOSE: Validate FormWizard large step count functionality
     /// TESTING SCOPE: Tests FormWizard with large number of steps and performance
     /// METHODOLOGY: Test FormWizard with many steps and verify performance functionality
-    func testFormWizardLargeNumberOfSteps() {
+    @Test func testFormWizardLargeNumberOfSteps() {
         var builder = FormWizardBuilder()
         
         // Create many steps
@@ -483,29 +483,29 @@ final class FormWizardTests: XCTestCase {
         }
         
         let steps = builder.build()
-        XCTAssertEqual(steps.count, 100)
+        #expect(steps.count == 100)
         
         let state = FormWizardState()
         state.setSteps(steps)
         
         // Test navigation through many steps
         for i in 0..<50 {
-            XCTAssertEqual(state.currentStepIndex, i)
-            XCTAssertEqual(state.getCurrentStep()?.id, "step\(i)")
+            #expect(state.currentStepIndex == i)
+            #expect(state.getCurrentStep()?.id == "step\(i)")
             
             // Mark current step as complete before proceeding
             state.markStepComplete("step\(i)")
             
-            XCTAssertTrue(state.nextStep())
+            #expect(state.nextStep())
         }
         
-        XCTAssertEqual(state.currentStepIndex, 50)
+        #expect(state.currentStepIndex == 50)
     }
     
     /// BUSINESS PURPOSE: Validate FormWizardState persistence functionality
     /// TESTING SCOPE: Tests FormWizardState persistence and state restoration
     /// METHODOLOGY: Test FormWizardState persistence and verify state restoration functionality
-    func testFormWizardStatePersistence() {
+    @Test func testFormWizardStatePersistence() {
         let state = FormWizardState()
         let steps = [
             FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0),
@@ -520,8 +520,8 @@ final class FormWizardTests: XCTestCase {
         state.addValidationError("Error", for: "step2")
         
         // Verify state is maintained
-        XCTAssertEqual(state.getStepData("step1", key: "name") as String?, "John")
-        XCTAssertTrue(state.isStepComplete("step1"))
-        XCTAssertTrue(state.validationErrors["step2"]?.contains("Error") ?? false)
+        #expect(state.getStepData("step1", key: "name") as String? == "John")
+        #expect(state.isStepComplete("step1"))
+        #expect(state.validationErrors["step2"]?.contains("Error") ?? false)
     }
 }

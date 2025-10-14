@@ -6,28 +6,26 @@
 //  Tests the internationalization service business logic
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
-final class InternationalizationServiceTests: XCTestCase {
+final class InternationalizationServiceTests {
     
     // MARK: - Test Data
     
     private var service: InternationalizationService!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         service = InternationalizationService(locale: Locale(identifier: "en-US"))
     }
     
-    override func tearDown() {
+    deinit {
         service = nil
-        super.tearDown()
     }
     
     // MARK: - Business Logic Tests
     
-    func testInternationalizationService_BusinessLogic() {
+    @Test func testInternationalizationService_BusinessLogic() {
         // Given
         let testText = "Hello World"
         
@@ -37,12 +35,12 @@ final class InternationalizationServiceTests: XCTestCase {
         let layoutDirection = service.getLayoutDirection()
         
         // Then: Test actual business logic
-        XCTAssertEqual(direction, .leftToRight, "English text should be left-to-right")
-        XCTAssertEqual(alignment, .leading, "English text should align leading")
-        XCTAssertEqual(layoutDirection, .leftToRight, "English locale should be left-to-right")
+        #expect(direction == .leftToRight, "English text should be left-to-right")
+        #expect(alignment == .leading, "English text should align leading")
+        #expect(layoutDirection == .leftToRight, "English locale should be left-to-right")
     }
     
-    func testInternationalizationService_RTL_BusinessLogic() {
+    @Test func testInternationalizationService_RTL_BusinessLogic() {
         // Given
         let rtlService = InternationalizationService(locale: Locale(identifier: "ar-SA"))
         let arabicText = "مرحبا بالعالم"
@@ -53,12 +51,12 @@ final class InternationalizationServiceTests: XCTestCase {
         let layoutDirection = rtlService.getLayoutDirection()
         
         // Then: Test actual business logic
-        XCTAssertEqual(direction, .rightToLeft, "Arabic text should be right-to-left")
-        XCTAssertEqual(alignment, .trailing, "Arabic text should align trailing")
-        XCTAssertEqual(layoutDirection, .rightToLeft, "Arabic locale should be right-to-left")
+        #expect(direction == .rightToLeft, "Arabic text should be right-to-left")
+        #expect(alignment == .trailing, "Arabic text should align trailing")
+        #expect(layoutDirection == .rightToLeft, "Arabic locale should be right-to-left")
     }
     
-    func testInternationalizationService_MixedText_BusinessLogic() {
+    @Test func testInternationalizationService_MixedText_BusinessLogic() {
         // Given
         let mixedText = "Hello مرحبا World"
         
@@ -68,11 +66,11 @@ final class InternationalizationServiceTests: XCTestCase {
         
         // Then: Test actual business logic
         // Mixed text should return .mixed for English locale
-        XCTAssertEqual(direction, .mixed, "Mixed text should return .mixed for English locale")
-        XCTAssertEqual(alignment, .leading, "Mixed text should align leading for English locale")
+        #expect(direction == .mixed, "Mixed text should return .mixed for English locale")
+        #expect(alignment == .leading, "Mixed text should align leading for English locale")
     }
     
-    func testInternationalizationService_InvalidLocale_BusinessLogic() {
+    @Test func testInternationalizationService_InvalidLocale_BusinessLogic() {
         // Given
         let invalidService = InternationalizationService(locale: Locale(identifier: "invalid-locale"))
         
@@ -81,10 +79,10 @@ final class InternationalizationServiceTests: XCTestCase {
         
         // Then: Test actual business logic
         // Should fallback to LTR for invalid locales
-        XCTAssertEqual(layoutDirection, .leftToRight, "Invalid locale should fallback to left-to-right")
+        #expect(layoutDirection == .leftToRight, "Invalid locale should fallback to left-to-right")
     }
     
-    func testInternationalizationService_EmptyText_BusinessLogic() {
+    @Test func testInternationalizationService_EmptyText_BusinessLogic() {
         // Given
         let emptyText = ""
         
@@ -94,7 +92,7 @@ final class InternationalizationServiceTests: XCTestCase {
         
         // Then: Test actual business logic
         // Empty text should default to LTR for English locale
-        XCTAssertEqual(direction, .leftToRight, "Empty text should default to left-to-right for English locale")
-        XCTAssertEqual(alignment, .leading, "Empty text should align leading for English locale")
+        #expect(direction == .leftToRight, "Empty text should default to left-to-right for English locale")
+        #expect(alignment == .leading, "Empty text should align leading for English locale")
     }
 }

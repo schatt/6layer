@@ -6,29 +6,27 @@
 //  Tests modal form presentation features
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ModalFormL1Tests: XCTestCase {
+final class ModalFormL1Tests {
     
     // MARK: - Test Data
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override func setUp() {
-        super.setUp()
+    init() {
         sampleHints = PresentationHints()
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
     }
     
     // MARK: - Modal Form Tests
     
-    func testPlatformPresentModalForm_L1() {
+    @Test func testPlatformPresentModalForm_L1() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.modal
@@ -40,10 +38,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithDifferentFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithDifferentFormType() {
         // Given
         let formType = DataTypeHint.user
         let context = PresentationContext.modal
@@ -55,10 +53,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with different form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with different form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithDifferentContext() {
+    @Test func testPlatformPresentModalForm_L1_WithDifferentContext() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.create
@@ -70,12 +68,12 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with different context should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with different context should return a view")
     }
     
     // MARK: - Different Form Types
     
-    func testPlatformPresentModalForm_L1_WithUserFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithUserFormType() {
         // Given
         let formType = DataTypeHint.user
         let context = PresentationContext.modal
@@ -87,10 +85,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with user form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with user form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithTransactionFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithTransactionFormType() {
         // Given
         let formType = DataTypeHint.transaction
         let context = PresentationContext.modal
@@ -102,10 +100,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with transaction form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with transaction form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithActionFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithActionFormType() {
         // Given
         let formType = DataTypeHint.action
         let context = PresentationContext.modal
@@ -117,10 +115,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with action form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with action form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithProductFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithProductFormType() {
         // Given
         let formType = DataTypeHint.product
         let context = PresentationContext.modal
@@ -132,10 +130,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with product form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with product form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithCommunicationFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithCommunicationFormType() {
         // Given
         let formType = DataTypeHint.communication
         let context = PresentationContext.modal
@@ -147,10 +145,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with communication form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with communication form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithLocationFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithLocationFormType() {
         // Given
         let formType = DataTypeHint.location
         let context = PresentationContext.modal
@@ -162,10 +160,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with location form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with location form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithNavigationFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithNavigationFormType() {
         // Given
         let formType = DataTypeHint.navigation
         let context = PresentationContext.modal
@@ -177,10 +175,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with navigation form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with navigation form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithCardFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithCardFormType() {
         // Given
         let formType = DataTypeHint.card
         let context = PresentationContext.modal
@@ -192,10 +190,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with card form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with card form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithDetailFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithDetailFormType() {
         // Given
         let formType = DataTypeHint.detail
         let context = PresentationContext.modal
@@ -207,10 +205,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with detail form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with detail form type should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithSheetFormType() {
+    @Test func testPlatformPresentModalForm_L1_WithSheetFormType() {
         // Given
         let formType = DataTypeHint.sheet
         let context = PresentationContext.modal
@@ -222,12 +220,12 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with sheet form type should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with sheet form type should return a view")
     }
     
     // MARK: - Different Contexts
     
-    func testPlatformPresentModalForm_L1_WithCreateContext() {
+    @Test func testPlatformPresentModalForm_L1_WithCreateContext() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.create
@@ -239,10 +237,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with create context should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with create context should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithEditContext() {
+    @Test func testPlatformPresentModalForm_L1_WithEditContext() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.edit
@@ -254,10 +252,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with edit context should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with edit context should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithSettingsContext() {
+    @Test func testPlatformPresentModalForm_L1_WithSettingsContext() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.settings
@@ -269,10 +267,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with settings context should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with settings context should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithProfileContext() {
+    @Test func testPlatformPresentModalForm_L1_WithProfileContext() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.profile
@@ -284,10 +282,10 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with profile context should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with profile context should return a view")
     }
     
-    func testPlatformPresentModalForm_L1_WithSearchContext() {
+    @Test func testPlatformPresentModalForm_L1_WithSearchContext() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.search
@@ -299,12 +297,12 @@ final class ModalFormL1Tests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(view, "platformPresentModalForm_L1 with search context should return a view")
+        #expect(view != nil, "platformPresentModalForm_L1 with search context should return a view")
     }
     
     // MARK: - Performance Tests
     
-    func testPlatformPresentModalForm_L1_Performance() {
+    @Test func testPlatformPresentModalForm_L1_Performance() {
         // Given
         let formType = DataTypeHint.form
         let context = PresentationContext.modal
@@ -315,7 +313,7 @@ final class ModalFormL1Tests: XCTestCase {
                 formType: formType,
                 context: context
             )
-            XCTAssertNotNil(view)
+            #expect(view != nil)
         }
     }
 }

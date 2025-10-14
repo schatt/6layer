@@ -31,12 +31,12 @@
 //  - ✅ Business Logic Focus: Tests actual image processing pipeline functionality, not testing framework
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ImageProcessingPipelineTests: XCTestCase {
+final class ImageProcessingPipelineTests {
     
     // MARK: - Test Data
     
@@ -73,7 +73,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate image processing pipeline OCR functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline processing for OCR purposes
     /// METHODOLOGY: Process image for OCR and verify OCR processing functionality
-    func testImageProcessingPipeline_ProcessForOCR() async throws {
+    @Test func testImageProcessingPipeline_ProcessForOCR() async throws {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -91,10 +91,10 @@ final class ImageProcessingPipelineTests: XCTestCase {
             )
             
             // Then
-            XCTAssertNotNil(processedImage)
-            XCTAssertNotNil(processedImage.originalImage)
-            XCTAssertEqual(processedImage.purpose, purpose)
-            XCTAssertNotNil(processedImage.metadata)
+            #expect(processedImage != nil)
+            #expect(processedImage.originalImage != nil)
+            #expect(processedImage.purpose == purpose)
+            #expect(processedImage.metadata != nil)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -103,7 +103,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate image processing pipeline fuel receipt functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline processing for fuel receipt purposes
     /// METHODOLOGY: Process image for fuel receipt and verify fuel receipt processing functionality
-    func testImageProcessingPipeline_ProcessForFuelReceipt() async throws {
+    @Test func testImageProcessingPipeline_ProcessForFuelReceipt() async throws {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.fuelReceipt
@@ -117,15 +117,15 @@ final class ImageProcessingPipelineTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(processedImage)
-        XCTAssertEqual(processedImage.purpose, purpose)
-        XCTAssertTrue(processedImage.isOptimizedForOCR)
+        #expect(processedImage != nil)
+        #expect(processedImage.purpose == purpose)
+        #expect(processedImage.isOptimizedForOCR)
     }
     
     /// BUSINESS PURPOSE: Validate image processing pipeline document functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline processing for document purposes
     /// METHODOLOGY: Process image for document and verify document processing functionality
-    func testImageProcessingPipeline_ProcessForDocument() async throws {
+    @Test func testImageProcessingPipeline_ProcessForDocument() async throws {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.document
@@ -139,15 +139,15 @@ final class ImageProcessingPipelineTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(processedImage)
-        XCTAssertEqual(processedImage.purpose, purpose)
-        XCTAssertNotNil(processedImage.enhancementResults)
+        #expect(processedImage != nil)
+        #expect(processedImage.purpose == purpose)
+        #expect(processedImage.enhancementResults != nil)
     }
     
     /// BUSINESS PURPOSE: Validate image processing pipeline photo functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline processing for photo purposes
     /// METHODOLOGY: Process image for photo and verify photo processing functionality
-    func testImageProcessingPipeline_ProcessForPhoto() async throws {
+    @Test func testImageProcessingPipeline_ProcessForPhoto() async throws {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.photo
@@ -161,15 +161,15 @@ final class ImageProcessingPipelineTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(processedImage)
-        XCTAssertEqual(processedImage.purpose, purpose)
-        XCTAssertNotNil(processedImage.optimizationResults)
+        #expect(processedImage != nil)
+        #expect(processedImage.purpose == purpose)
+        #expect(processedImage.optimizationResults != nil)
     }
     
     /// BUSINESS PURPOSE: Validate image processing pipeline thumbnail functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline processing for thumbnail purposes
     /// METHODOLOGY: Process image for thumbnail and verify thumbnail processing functionality
-    func testImageProcessingPipeline_ProcessForThumbnail() async throws {
+    @Test func testImageProcessingPipeline_ProcessForThumbnail() async throws {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.thumbnail
@@ -188,15 +188,15 @@ final class ImageProcessingPipelineTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(processedImage)
-        XCTAssertEqual(processedImage.purpose, purpose)
-        XCTAssertTrue(processedImage.isCompressed)
+        #expect(processedImage != nil)
+        #expect(processedImage.purpose == purpose)
+        #expect(processedImage.isCompressed)
     }
     
     /// BUSINESS PURPOSE: Validate image processing pipeline preview functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline processing for preview purposes
     /// METHODOLOGY: Process image for preview and verify preview processing functionality
-    func testImageProcessingPipeline_ProcessForPreview() async throws {
+    @Test func testImageProcessingPipeline_ProcessForPreview() async throws {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.preview
@@ -215,9 +215,9 @@ final class ImageProcessingPipelineTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(processedImage)
-        XCTAssertEqual(processedImage.purpose, purpose)
-        XCTAssertTrue(processedImage.isCompressed)
+        #expect(processedImage != nil)
+        #expect(processedImage.purpose == purpose)
+        #expect(processedImage.isCompressed)
     }
     
     // MARK: - ImageProcessor Tests
@@ -225,7 +225,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate image processor enhancement functionality
     /// TESTING SCOPE: Tests ImageProcessor image enhancement capabilities
     /// METHODOLOGY: Enhance image and verify enhancement functionality
-    func testImageProcessor_EnhanceImage() async throws {
+    @Test func testImageProcessor_EnhanceImage() async throws {
         // Given
         let image = createTestImage()
         let processor = ImageProcessor()
@@ -240,14 +240,14 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let enhancedImage = try await processor.enhance(image, with: options)
         
         // Then
-        XCTAssertNotNil(enhancedImage)
+        #expect(enhancedImage != nil)
         // Note: PlatformImage doesn't conform to Equatable, so we can't directly compare
     }
     
     /// BUSINESS PURPOSE: Validate image processor analysis functionality
     /// TESTING SCOPE: Tests ImageProcessor image analysis capabilities
     /// METHODOLOGY: Analyze image and verify analysis functionality
-    func testImageProcessor_AnalyzeImage() async throws {
+    @Test func testImageProcessor_AnalyzeImage() async throws {
         // Given
         let image = createTestImage()
         let processor = ImageProcessor()
@@ -256,10 +256,10 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let analysis = try await processor.analyze(image)
         
         // Then
-        XCTAssertNotNil(analysis)
-        XCTAssertNotNil(analysis.qualityScore)
-        XCTAssertNotNil(analysis.dimensions)
-        XCTAssertNotNil(analysis.colorPalette)
+        #expect(analysis != nil)
+        #expect(analysis.qualityScore != nil)
+        #expect(analysis.dimensions != nil)
+        #expect(analysis.colorPalette != nil)
     }
     
     // MARK: - Enhancement Strategy Tests
@@ -267,7 +267,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate OCR enhancement strategy functionality
     /// TESTING SCOPE: Tests OCREnhancementStrategy image enhancement
     /// METHODOLOGY: Enhance image for OCR and verify OCR enhancement functionality
-    func testOCREnhancementStrategy_EnhanceImage() async throws {
+    @Test func testOCREnhancementStrategy_EnhanceImage() async throws {
         // Given
         let image = createTestImage()
         let strategy = OCREnhancementStrategy()
@@ -276,14 +276,14 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let enhancedImage = try await strategy.enhance(image)
         
         // Then
-        XCTAssertNotNil(enhancedImage)
-        XCTAssertTrue(strategy.validate(enhancedImage))
+        #expect(enhancedImage != nil)
+        #expect(strategy.validate(enhancedImage))
     }
     
     /// BUSINESS PURPOSE: Validate OCR text region detection functionality
     /// TESTING SCOPE: Tests OCREnhancementStrategy text region detection
     /// METHODOLOGY: Detect text regions and verify detection functionality
-    func testOCREnhancementStrategy_DetectTextRegions() async throws {
+    @Test func testOCREnhancementStrategy_DetectTextRegions() async throws {
         // Given
         let image = createTestImage()
         let strategy = OCREnhancementStrategy()
@@ -292,14 +292,14 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let textRegions = try await strategy.detectTextRegions(image)
         
         // Then
-        XCTAssertNotNil(textRegions)
+        #expect(textRegions != nil)
         // Note: Test image may not have text, so regions could be empty
     }
     
     /// BUSINESS PURPOSE: Validate OCR optimization functionality
     /// TESTING SCOPE: Tests OCREnhancementStrategy OCR optimization
     /// METHODOLOGY: Optimize image for OCR and verify optimization functionality
-    func testOCREnhancementStrategy_OptimizeForOCR() async throws {
+    @Test func testOCREnhancementStrategy_OptimizeForOCR() async throws {
         // Given
         let image = createTestImage()
         let strategy = OCREnhancementStrategy()
@@ -308,8 +308,8 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let optimizedImage = try await strategy.optimizeForOCR(image)
         
         // Then
-        XCTAssertNotNil(optimizedImage)
-        XCTAssertTrue(strategy.validate(optimizedImage))
+        #expect(optimizedImage != nil)
+        #expect(strategy.validate(optimizedImage))
     }
     
     // MARK: - Performance Tests
@@ -317,7 +317,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate image processing performance functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline performance and timing
     /// METHODOLOGY: Test performance metrics and verify performance functionality
-    func testImageProcessingPerformance() async throws {
+    @Test func testImageProcessingPerformance() async throws {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.ocr
@@ -333,15 +333,15 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
-        XCTAssertNotNil(processedImage)
+        #expect(processedImage != nil)
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 1.0) // Should complete in under 1 second
+        #expect(executionTime < 1.0) // Should complete in under 1 second
     }
     
     /// BUSINESS PURPOSE: Validate batch processing performance functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline batch processing performance
     /// METHODOLOGY: Test batch processing performance and verify performance functionality
-    func testBatchProcessingPerformance() async throws {
+    @Test func testBatchProcessingPerformance() async throws {
         // Given
         let images = (0..<10).map { _ in createTestImage() }
         let purpose = ImagePurpose.ocr
@@ -365,9 +365,9 @@ final class ImageProcessingPipelineTests: XCTestCase {
         let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
-        XCTAssertEqual(processedImages.count, images.count)
+        #expect(processedImages.count == images.count)
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 5.0) // Should complete in under 5 seconds
+        #expect(executionTime < 5.0) // Should complete in under 5 seconds
     }
     
     // MARK: - Error Handling Tests
@@ -375,7 +375,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate invalid image handling functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline invalid image handling
     /// METHODOLOGY: Test with invalid image and verify error handling functionality
-    func testImageProcessingPipeline_InvalidImage() async {
+    @Test func testImageProcessingPipeline_InvalidImage() async {
         // Given
         let invalidImage = PlatformImage() // Empty image
         let purpose = ImagePurpose.ocr
@@ -388,16 +388,16 @@ final class ImageProcessingPipelineTests: XCTestCase {
                 for: purpose,
                 with: options
             )
-            XCTFail("Should have thrown an error for invalid image")
+            Issue.record("Should have thrown an error for invalid image")
         } catch {
-            XCTAssertTrue(error is ImageProcessingError)
+            #expect(error is ImageProcessingError)
         }
     }
     
     /// BUSINESS PURPOSE: Validate unsupported purpose handling functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline unsupported purpose handling
     /// METHODOLOGY: Test with unsupported purpose and verify error handling functionality
-    func testImageProcessingPipeline_UnsupportedPurpose() async {
+    @Test func testImageProcessingPipeline_UnsupportedPurpose() async {
         // Given
         let image = createTestImage()
         let purpose = ImagePurpose.ocr
@@ -415,9 +415,9 @@ final class ImageProcessingPipelineTests: XCTestCase {
                 for: purpose,
                 with: options
             )
-            XCTFail("Should have thrown an error for unsupported format")
+            Issue.record("Should have thrown an error for unsupported format")
         } catch {
-            XCTAssertTrue(error is ImageProcessingError)
+            #expect(error is ImageProcessingError)
         }
     }
     
@@ -426,7 +426,7 @@ final class ImageProcessingPipelineTests: XCTestCase {
     /// BUSINESS PURPOSE: Validate integration functionality
     /// TESTING SCOPE: Tests ImageProcessingPipeline end-to-end integration
     /// METHODOLOGY: Test complete integration workflow and verify integration functionality
-    func testImageProcessingPipeline_Integration() async throws {
+    @Test func testImageProcessingPipeline_Integration() async throws {
         // Given
         let image = createTestImage()
         let purposes: [ImagePurpose] = Array(ImagePurpose.allCases.prefix(6)) // Use real enum
@@ -443,10 +443,10 @@ final class ImageProcessingPipelineTests: XCTestCase {
         }
         
         // Then
-        XCTAssertEqual(results.count, purposes.count)
+        #expect(results.count == purposes.count)
         for (index, result) in results.enumerated() {
-            XCTAssertEqual(result.purpose, purposes[index])
-            XCTAssertNotNil(result.originalImage)
+            #expect(result.purpose == purposes[index])
+            #expect(result.originalImage != nil)
         }
     }
 }

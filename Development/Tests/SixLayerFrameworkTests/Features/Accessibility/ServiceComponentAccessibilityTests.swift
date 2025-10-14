@@ -5,16 +5,16 @@
 //  Comprehensive accessibility tests for ALL Service Components
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ServiceComponentAccessibilityTests: XCTestCase {
+final class ServiceComponentAccessibilityTests {
     
     // MARK: - Service Component Tests
     
-    func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
+    @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
         // Given: InternationalizationService
         let testView = InternationalizationService()
         
@@ -25,10 +25,10 @@ final class ServiceComponentAccessibilityTests: XCTestCase {
             componentName: "InternationalizationService"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "InternationalizationService should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "InternationalizationService should generate accessibility identifiers")
     }
     
-    func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityManager
         let testView = AccessibilityManager()
         
@@ -39,10 +39,10 @@ final class ServiceComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityManager"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityManager should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityManager should generate accessibility identifiers")
     }
     
-    func testAccessibilityTestingSuiteGeneratesAccessibilityIdentifiers() async {
+    @Test func testAccessibilityTestingSuiteGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityTestingSuite
         let testView = AccessibilityTestingSuite()
         
@@ -53,7 +53,7 @@ final class ServiceComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityTestingSuite"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "AccessibilityTestingSuite should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityTestingSuite should generate accessibility identifiers")
     }
 }
 

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in OCRDisambiguationView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class OCRDisambiguationViewTests: XCTestCase {
+final class OCRDisambiguationViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class OCRDisambiguationViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class OCRDisambiguationViewTests: XCTestCase {
     
     // MARK: - OCRDisambiguationView Tests
     
-    func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let candidates = [
             OCRDataCandidate(
                 text: "Test Text",
@@ -62,10 +60,10 @@ final class OCRDisambiguationViewTests: XCTestCase {
             componentName: "OCRDisambiguationView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OCRDisambiguationView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "OCRDisambiguationView should generate accessibility identifiers on iOS")
     }
     
-    func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let candidates = [
             OCRDataCandidate(
                 text: "Test Text",
@@ -94,7 +92,7 @@ final class OCRDisambiguationViewTests: XCTestCase {
             componentName: "OCRDisambiguationView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OCRDisambiguationView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "OCRDisambiguationView should generate accessibility identifiers on macOS")
     }
 }
 

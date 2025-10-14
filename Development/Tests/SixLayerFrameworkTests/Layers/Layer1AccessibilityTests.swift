@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,14 +9,14 @@ import ViewInspector
 /// TESTING SCOPE: All Layer 1 presentation functions
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @MainActor
-final class Layer1AccessibilityTests: XCTestCase {
+final class Layer1AccessibilityTests {
     
     // MARK: - Test Setup
     
     private var testItems: [Layer1TestItem]!
     private var testHints: PresentationHints!
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         testItems = [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
@@ -36,7 +36,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         AccessibilityIdentifierConfig.shared.enableViewHierarchyTracking = false
     }
     
-    override func tearDown() async throws {
+    deinit {
         testItems = nil
         testHints = nil
         try await super.tearDown()
@@ -46,7 +46,7 @@ final class Layer1AccessibilityTests: XCTestCase {
     
     /// TDD RED PHASE: platformPresentItemCollection_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -57,7 +57,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // Then: View should be created
-        XCTAssertNotNil(view, "platformPresentItemCollection_L1 should create a view")
+        #expect(view != nil, "platformPresentItemCollection_L1 should create a view")
         
         // TDD RED PHASE: Look for accessibility identifier with current pattern (will be updated to v4.4.0 hierarchical naming)
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
@@ -67,14 +67,14 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern")
+        #expect(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern")
         
         print("🔍 Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
     
     /// TDD RED PHASE: platformPresentFormData_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -85,7 +85,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // Then: View should be created
-        XCTAssertNotNil(view, "platformPresentFormData_L1 should create a view")
+        #expect(view != nil, "platformPresentFormData_L1 should create a view")
         
         // Test that platformPresentFormData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
@@ -95,14 +95,14 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming")
+        #expect(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming")
         
         print("🔍 Testing platformPresentFormData_L1 accessibility identifier generation")
     }
     
     /// TDD RED PHASE: platformPresentNumericData_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -113,7 +113,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // Then: View should be created
-        XCTAssertNotNil(view, "platformPresentNumericData_L1 should create a view")
+        #expect(view != nil, "platformPresentNumericData_L1 should create a view")
         
         // Test that platformPresentNumericData_L1 generates accessibility identifiers
         let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
@@ -123,7 +123,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // THIS SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-        XCTAssertTrue(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern")
+        #expect(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern")
         
         print("🔍 Testing platformPresentNumericData_L1 accessibility identifier generation")
     }
@@ -131,7 +131,7 @@ final class Layer1AccessibilityTests: XCTestCase {
     /// BUSINESS PURPOSE: Document that platformPresentMediaData_L1 currently does NOT generate accessibility identifiers
     /// TESTING SCOPE: Verify the current behavior (no accessibility identifiers)
     /// METHODOLOGY: Test the actual current state, not the desired state
-    func testPlatformPresentMediaDataL1CurrentlyDoesNotGenerateAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentMediaDataL1CurrentlyDoesNotGenerateAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -142,7 +142,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // Then: View should be created
-        XCTAssertNotNil(view, "platformPresentMediaData_L1 should create a view")
+        #expect(view != nil, "platformPresentMediaData_L1 should create a view")
         
         // CURRENT BEHAVIOR: platformPresentMediaData_L1 does NOT generate accessibility identifiers
         // This test documents the current state - the function needs .automaticAccessibilityIdentifiers() added
@@ -153,7 +153,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // EXPECTED CURRENT BEHAVIOR: Should NOT have accessibility identifiers
-        XCTAssertFalse(hasSpecificAccessibilityID, "platformPresentMediaData_L1 currently does NOT generate accessibility identifiers - needs .automaticAccessibilityIdentifiers() added to implementation")
+        #expect(!hasSpecificAccessibilityID, "platformPresentMediaData_L1 currently does NOT generate accessibility identifiers - needs .automaticAccessibilityIdentifiers() added to implementation")
         
         print("🔍 DOCUMENTED: platformPresentMediaData_L1 currently does NOT generate accessibility identifiers")
     }
@@ -161,7 +161,7 @@ final class Layer1AccessibilityTests: XCTestCase {
     /// BUSINESS PURPOSE: Document that platformPresentSettings_L1 currently does NOT generate accessibility identifiers
     /// TESTING SCOPE: Verify the current behavior (no accessibility identifiers)
     /// METHODOLOGY: Test the actual current state, not the desired state
-    func testPlatformPresentSettingsL1CurrentlyDoesNotGenerateAccessibilityIdentifiers() async {
+    @Test func testPlatformPresentSettingsL1CurrentlyDoesNotGenerateAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -180,7 +180,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // Then: View should be created
-        XCTAssertNotNil(view, "platformPresentSettings_L1 should create a view")
+        #expect(view != nil, "platformPresentSettings_L1 should create a view")
         
         // CURRENT BEHAVIOR: platformPresentSettings_L1 does NOT generate accessibility identifiers
         // This test documents the current state - the function needs .automaticAccessibilityIdentifiers() added
@@ -191,7 +191,7 @@ final class Layer1AccessibilityTests: XCTestCase {
         )
         
         // EXPECTED CURRENT BEHAVIOR: Should NOT have accessibility identifiers
-        XCTAssertFalse(hasSpecificAccessibilityID, "platformPresentSettings_L1 currently does NOT generate accessibility identifiers - needs .automaticAccessibilityIdentifiers() added to implementation")
+        #expect(!hasSpecificAccessibilityID, "platformPresentSettings_L1 currently does NOT generate accessibility identifiers - needs .automaticAccessibilityIdentifiers() added to implementation")
         
         print("🔍 DOCUMENTED: platformPresentSettings_L1 currently does NOT generate accessibility identifiers")
     }
