@@ -948,11 +948,7 @@ public struct ExactAccessibilityIdentifierModifier: ViewModifier {
     }
     
     public func body(content: Content) -> some View {
-        // Handle empty string gracefully - don't apply any identifier
-        if identifier.isEmpty {
-            return AnyView(content)
-        }
-        
+        // Handle empty string gracefully - apply empty accessibility identifier
         #if os(macOS)
         return AnyView(
             ExactAccessibilityHostingControllerWrapper(identifier: identifier) {
