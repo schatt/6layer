@@ -752,17 +752,7 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     
     /// Create a mock platform config from capabilities
     private func createMockPlatformConfig(from capabilities: ViewGenerationTestConfig.CapabilitySet) -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: capabilities.supportsHapticFeedback,
-            supportsHover: capabilities.supportsHover,
-            supportsTouch: capabilities.supportsTouch,
-            supportsVoiceOver: capabilities.supportsVoiceOver,
-            supportsSwitchControl: capabilities.supportsSwitchControl,
-            supportsAssistiveTouch: capabilities.supportsAssistiveTouch,
-            minTouchTarget: capabilities.minTouchTarget,
-            hoverDelay: capabilities.hoverDelay,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        return getCardExpansionPlatformConfig()
     }
     
     /// Test view generation behavior
@@ -955,29 +945,9 @@ final class ViewGenerationIntegrationTests: XCTestCase {
     /// Test that different platform configurations generate different underlying view types
     func testPlatformSpecificViewGeneration() {
         // Create different platform configurations
-        let touchConfig = CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        let touchConfig = getCardExpansionPlatformConfig()
         
-        let hoverConfig = CardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: true,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 0,
-            hoverDelay: 0.1,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        let hoverConfig = getCardExpansionPlatformConfig()
         
         // Generate views for different platforms
         let touchView = createTestViewWithMockConfig(touchConfig)
@@ -1017,30 +987,10 @@ final class ViewGenerationIntegrationTests: XCTestCase {
         // by ensuring different platforms generate different underlying view types
         
         // Simulate iOS platform (touch-enabled)
-        let iOSConfig = CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        let iOSConfig = getCardExpansionPlatformConfig()
         
         // Simulate macOS platform (hover-enabled)
-        let macOSConfig = CardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: true,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 0,
-            hoverDelay: 0.1,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        let macOSConfig = getCardExpansionPlatformConfig()
         
         // Generate views for different platforms
         let iOSView = createTestViewWithMockConfig(iOSConfig)
