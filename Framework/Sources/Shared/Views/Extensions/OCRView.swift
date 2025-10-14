@@ -79,7 +79,12 @@ public struct OCRView: View {
         
         Task {
             do {
-                let result = try await service.processImage(image, context: context, strategy: strategy)
+                // Capture values to avoid data races
+                let capturedService = service
+                let capturedContext = context
+                let capturedStrategy = strategy
+                
+                let result = try await capturedService.processImage(image, context: capturedContext, strategy: capturedStrategy)
                 await MainActor.run {
                     self.result = result
                     self.isProcessing = false

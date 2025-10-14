@@ -12,6 +12,7 @@ public struct AppleHIGComplianceExamples {
     // MARK: - Basic Usage Examples
     
     /// Example of a button with automatic Apple HIG compliance
+    @MainActor
     public static func compliantButton() -> some View {
         Button("Save") {
             // Save action
@@ -37,6 +38,7 @@ public struct AppleHIGComplianceExamples {
     }
     
     /// Example of a list with platform-specific patterns
+    @MainActor
     public static func platformSpecificList() -> some View {
         List {
             ForEach(0..<10) { index in
@@ -62,6 +64,7 @@ public struct AppleHIGComplianceExamples {
     // MARK: - Advanced Examples
     
     /// Example of a complex view with all compliance features
+    @MainActor
     public static func complexCompliantView() -> some View {
         NavigationView {
             VStack(spacing: 20) {

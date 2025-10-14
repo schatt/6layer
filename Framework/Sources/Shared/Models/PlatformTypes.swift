@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - Platform Enumeration
 
 /// Represents the target platform for optimization and adaptation
-public enum SixLayerPlatform: String, CaseIterable {
+public enum SixLayerPlatform: String, CaseIterable, Sendable {
     case iOS = "iOS"
     case macOS = "macOS"
     case watchOS = "watchOS"

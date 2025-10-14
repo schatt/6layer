@@ -151,7 +151,7 @@ public struct PlatformOptimizationSettings {
 
 // MARK: - Performance Levels
 
-public enum PerformanceLevel: String, CaseIterable {
+public enum PerformanceLevel: String, CaseIterable, Sendable {
     case low = "low"
     case balanced = "balanced"
     case high = "high"
@@ -169,7 +169,7 @@ public enum PerformanceLevel: String, CaseIterable {
 
 // MARK: - Memory Strategies
 
-public enum MemoryStrategy: String, CaseIterable {
+public enum MemoryStrategy: String, CaseIterable, Sendable {
     case conservative = "conservative"
     case adaptive = "adaptive"
     case aggressive = "aggressive"
@@ -459,7 +459,7 @@ public struct PlatformUIPatterns {
     }
 }
 
-public struct NavigationPatterns {
+public struct NavigationPatterns: Sendable {
     public let platform: SixLayerPlatform
     public var primaryNavigation: NavigationType
     public var secondaryNavigation: NavigationType
@@ -513,7 +513,7 @@ public enum ModalType: String, CaseIterable {
     case modal = "modal"
 }
 
-public struct InteractionPatterns {
+public struct InteractionPatterns: Sendable {
     public let platform: SixLayerPlatform
     public var primaryInput: InputType
     public var secondaryInput: InputType
@@ -838,6 +838,7 @@ public struct UIPatternOptimizationModifier: ViewModifier {
 /// Environment key for platform
 public struct PlatformKey: EnvironmentKey {
     public typealias Value = SixLayerPlatform
+    @MainActor
     public static let defaultValue: SixLayerPlatform = .current
 }
 
@@ -858,26 +859,32 @@ public struct KeyboardNavigationSupportKey: EnvironmentKey {
 
 /// Environment key for performance level
 public struct PerformanceLevelKey: EnvironmentKey {
+    @MainActor
     public static let defaultValue: PerformanceLevel = .balanced
 }
 
 /// Environment key for memory strategy
 public struct MemoryStrategyKey: EnvironmentKey {
+    @MainActor
     public static let defaultValue: MemoryStrategy = .adaptive
 }
 
 /// Environment key for navigation patterns
 public struct NavigationPatternsKey: EnvironmentKey {
+    @MainActor
     public static let defaultValue: NavigationPatterns = NavigationPatterns(for: SixLayerPlatform.current)
 }
 
 /// Environment key for interaction patterns
 public struct InteractionPatternsKey: EnvironmentKey {
+    @MainActor
     public static let defaultValue: InteractionPatterns = InteractionPatterns(for: SixLayerPlatform.current)
 }
 
 /// Environment key for layout patterns
+@MainActor
 public struct LayoutPatternsKey: EnvironmentKey {
+    @MainActor
     public static let defaultValue: LayoutPatterns = LayoutPatterns(for: SixLayerPlatform.current)
 }
 

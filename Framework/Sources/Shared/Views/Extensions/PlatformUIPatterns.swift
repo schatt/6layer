@@ -562,17 +562,19 @@ public enum ButtonStyle {
 
 // ButtonSize is already defined in ThemedViewModifiers.swift
 
-public struct NavigationContext {
+public struct NavigationContext: Sendable {
     let isCompact: Bool
     let isLandscape: Bool
     let hasKeyboard: Bool
     
+    @MainActor
     public static let standard = NavigationContext(
         isCompact: false,
         isLandscape: false,
         hasKeyboard: false
     )
     
+    @MainActor
     public static let compact = NavigationContext(
         isCompact: true,
         isLandscape: false,
@@ -580,17 +582,19 @@ public struct NavigationContext {
     )
 }
 
-public struct ListContext {
+public struct ListContext: Sendable {
     let isCompact: Bool
     let itemCount: Int
     let hasActions: Bool
     
+    @MainActor
     public static let standard = ListContext(
         isCompact: false,
         itemCount: 0,
         hasActions: false
     )
     
+    @MainActor
     public static let compact = ListContext(
         isCompact: true,
         itemCount: 0,

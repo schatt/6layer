@@ -687,6 +687,7 @@ public func platformPresentFormData_L1(
 
 /// Helper function to create a simple field view for DynamicFormField
 @ViewBuilder
+@MainActor
 private func createSimpleFieldView(for field: DynamicFormField) -> some View {
     VStack(alignment: .leading, spacing: 8) {
         Text(field.label)
@@ -1589,6 +1590,7 @@ public struct ModalFormView: View {
     }
     
     @ViewBuilder
+    @MainActor
     private func createFieldView(for field: DynamicFormField) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(field.label)
@@ -1925,6 +1927,7 @@ public struct SimpleFormView: View {
     }
     
     @ViewBuilder
+    @MainActor
     private func createFieldView(for field: DynamicFormField) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             // Field label with required indicator

@@ -73,7 +73,9 @@ public struct DataVisualizationAnalysis {
 // MARK: - Data Presentation Intelligence Engine (Minimal Implementation)
 
 /// Intelligent data presentation engine that analyzes data and recommends optimal presentation strategies
-public class DataPresentationIntelligence: ObservableObject {
+@MainActor
+public class DataPresentationIntelligence: ObservableObject, @unchecked Sendable {
+    @MainActor
     public static let shared = DataPresentationIntelligence()
     
     private init() {}

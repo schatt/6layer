@@ -21,6 +21,7 @@ import Metal
 enum LiquidGlassRuntimeDetection {
     // Optional override for tests/integration: set to true/false to force support
     // Use via LiquidGlassRuntimeDetection.overrideSupport in tests.
+    @MainActor
     static var overrideSupport: Bool? = nil
 
     static func detectSupport() -> Bool {

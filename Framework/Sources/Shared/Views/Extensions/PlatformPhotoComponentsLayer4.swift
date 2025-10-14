@@ -18,6 +18,7 @@ import AppKit
 // MARK: - Layer 4: Photo Component Implementation
 
 /// Cross-platform camera interface implementation
+@MainActor
 public func platformCameraInterface_L4(
     onImageCaptured: @escaping (PlatformImage) -> Void
 ) -> some View {
@@ -35,6 +36,7 @@ public func platformCameraInterface_L4(
 }
 
 /// Cross-platform photo picker implementation
+@MainActor
 public func platformPhotoPicker_L4(
     onImageSelected: @escaping (PlatformImage) -> Void
 ) -> some View {
@@ -52,6 +54,7 @@ public func platformPhotoPicker_L4(
 }
 
 /// Cross-platform photo display component
+@MainActor
 public func platformPhotoDisplay_L4(
     image: PlatformImage?,
     style: PhotoDisplayStyle
@@ -67,6 +70,7 @@ public func platformPhotoDisplay_L4(
 }
 
 /// Cross-platform photo editing interface
+@MainActor
 public func platformPhotoEditor_L4(
     image: PlatformImage,
     onImageEdited: @escaping (PlatformImage) -> Void
@@ -257,6 +261,7 @@ class CameraViewController: NSViewController {
     }
 }
 
+@MainActor
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let imageData = photo.fileDataRepresentation(),
