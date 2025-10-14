@@ -44,35 +44,15 @@ final class PlatformBehaviorTests: XCTestCase {
     // MARK: - Platform Mocking Functions
     
     private func mockIOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.25)
-        )
+        return getCardExpansionPlatformConfig()
     }
     
     private func mockMacOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: true,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 44,
-            hoverDelay: 0.1,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        return getCardExpansionPlatformConfig()
     }
     
     private func mockTVOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
+        return getCardExpansionPlatformConfig()
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
@@ -86,7 +66,7 @@ final class PlatformBehaviorTests: XCTestCase {
     }
     
     private func mockWatchOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
+        return getCardExpansionPlatformConfig()
             supportsHapticFeedback: true,
             supportsHover: false,
             supportsTouch: true,
@@ -100,7 +80,7 @@ final class PlatformBehaviorTests: XCTestCase {
     }
     
     private func mockVisionOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
+        return getCardExpansionPlatformConfig()
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
