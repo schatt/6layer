@@ -48,7 +48,7 @@ let package = Package(
             ]
         ),
         
-        // Test targets
+        // Test targets - organized into logical structure
         .testTarget(
             name: "SixLayerFrameworkTests",
             dependencies: [
@@ -59,6 +59,13 @@ let package = Package(
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
                 // Function index moved to docs directory
+            ],
+            sources: [
+                "Core",
+                "Layers", 
+                "Features",
+                "Integration",
+                "Utilities"
             ]
         ),
         
