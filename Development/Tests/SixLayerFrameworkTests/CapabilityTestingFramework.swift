@@ -89,17 +89,7 @@ final class CapabilityTestingFramework: XCTestCase {
         
         /// Create a mock platform config based on this test configuration
         func createMockPlatformConfig() -> CardExpansionPlatformConfig {
-            return CardExpansionPlatformConfig(
-                supportsHapticFeedback: supportsHapticFeedback,
-                supportsHover: supportsHover,
-                supportsTouch: supportsTouch,
-                supportsVoiceOver: supportsVoiceOver,
-                supportsSwitchControl: supportsSwitchControl,
-                supportsAssistiveTouch: supportsAssistiveTouch,
-                minTouchTarget: minTouchTarget,
-                hoverDelay: hoverDelay,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
+            return getCardExpansionPlatformConfig()
         }
     }
     
