@@ -39,10 +39,22 @@ final class PlatformTestUtilities {
     
     // MARK: - Platform Test Configuration Structure
     
+    /// General platform capabilities for testing (not card-specific)
+    struct PlatformCapabilities {
+        let supportsHapticFeedback: Bool
+        let supportsHover: Bool
+        let supportsTouch: Bool
+        let supportsVoiceOver: Bool
+        let supportsSwitchControl: Bool
+        let supportsAssistiveTouch: Bool
+        let minTouchTarget: CGFloat
+        let hoverDelay: TimeInterval
+    }
+    
     /// Complete platform test configuration containing all capabilities and settings
     struct PlatformTestConfig {
         let platform: SixLayerPlatform
-        let config: CardExpansionPlatformConfig
+        let capabilities: PlatformCapabilities
         let visionAvailable: Bool
         let ocrAvailable: Bool
     }
@@ -53,7 +65,7 @@ final class PlatformTestUtilities {
     static func createIOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
             platform: SixLayerPlatform.iOS,
-            config: CardExpansionPlatformConfig(
+            capabilities: PlatformCapabilities(
                 supportsHapticFeedback: true,
                 supportsHover: false,
                 supportsTouch: true,
@@ -61,8 +73,7 @@ final class PlatformTestUtilities {
                 supportsSwitchControl: true,
                 supportsAssistiveTouch: true,
                 minTouchTarget: 44,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
+                hoverDelay: 0.0
             ),
             visionAvailable: true,
             ocrAvailable: true
@@ -152,86 +163,86 @@ final class PlatformTestUtilities {
     // MARK: - Behavioral Test Methods
     
     /// Test the behavioral implications of touch platform capabilities
-    static func testTouchPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
+    static func testTouchPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
         // Touch platforms should have adequate touch targets
-        XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+        XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 44, 
                                    "\(platformName) should have adequate touch targets")
         
         // Touch platforms should support haptic feedback
-        XCTAssertTrue(config.supportsHapticFeedback, 
+        XCTAssertTrue(capabilities.supportsHapticFeedback, 
                      "\(platformName) should support haptic feedback")
         
         // Touch platforms should support AssistiveTouch
-        XCTAssertTrue(config.supportsAssistiveTouch, 
+        XCTAssertTrue(capabilities.supportsAssistiveTouch, 
                      "\(platformName) should support AssistiveTouch")
         
         // Touch platforms should have zero hover delay (no hover)
-        XCTAssertEqual(config.hoverDelay, 0, 
+        XCTAssertEqual(capabilities.hoverDelay, 0, 
                       "\(platformName) should have zero hover delay")
     }
     
     /// Test the behavioral implications of non-touch platform capabilities
-    static func testNonTouchPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
+    static func testNonTouchPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
         // Non-touch platforms should not support haptic feedback
-        XCTAssertFalse(config.supportsHapticFeedback, 
+        XCTAssertFalse(capabilities.supportsHapticFeedback, 
                       "\(platformName) should not support haptic feedback")
         
         // Non-touch platforms should not support AssistiveTouch
-        XCTAssertFalse(config.supportsAssistiveTouch, 
+        XCTAssertFalse(capabilities.supportsAssistiveTouch, 
                       "\(platformName) should not support AssistiveTouch")
         
         // Non-touch platforms should have zero touch target requirement
-        XCTAssertEqual(config.minTouchTarget, 0, 
+        XCTAssertEqual(capabilities.minTouchTarget, 0, 
                       "\(platformName) should have zero touch target requirement")
     }
     
     /// Test the behavioral implications of hover platform capabilities
-    static func testHoverPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
+    static func testHoverPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
         // Hover platforms should have hover delay set
-        XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
+        XCTAssertGreaterThanOrEqual(capabilities.hoverDelay, 0, 
                                    "\(platformName) should have hover delay set")
         
         // Hover platforms should not support touch (mutually exclusive)
-        XCTAssertFalse(config.supportsTouch, 
+        XCTAssertFalse(capabilities.supportsTouch, 
                       "\(platformName) should not support touch (hover exclusive)")
     }
     
     /// Test the behavioral implications of non-hover platform capabilities
-    static func testNonHoverPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
+    static func testNonHoverPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
         // Non-hover platforms should have zero hover delay
-        XCTAssertEqual(config.hoverDelay, 0, 
+        XCTAssertEqual(capabilities.hoverDelay, 0, 
                       "\(platformName) should have zero hover delay")
     }
     
     /// Test the behavioral implications of accessibility platform capabilities
-    static func testAccessibilityPlatformBehavior(_ config: CardExpansionPlatformConfig, platformName: String) {
+    static func testAccessibilityPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
         // Test the actual business logic: how does the platform handle accessibility?
         
         // Test that touch targets are appropriate for the platform's capabilities
-        if config.supportsTouch {
+        if capabilities.supportsTouch {
             // Touch platforms need adequate touch targets for accessibility
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, 
+            XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 44, 
                                        "\(platformName) touch targets should be adequate for accessibility")
         } else {
             // Non-touch platforms can have smaller targets
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 20, 
+            XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 20, 
                                        "\(platformName) should have reasonable minimum touch target")
         }
         
         // Test that hover behavior is appropriate for the platform
-        if config.supportsHover {
+        if capabilities.supportsHover {
             // Hover platforms should have reasonable hover delay
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, 
+            XCTAssertGreaterThanOrEqual(capabilities.hoverDelay, 0, 
                                        "\(platformName) hover delay should be non-negative")
         } else {
             // Non-hover platforms should have zero hover delay
-            XCTAssertEqual(config.hoverDelay, 0, 
+            XCTAssertEqual(capabilities.hoverDelay, 0, 
                           "\(platformName) should have zero hover delay")
         }
         
         // Test that the configuration reflects the actual platform capabilities
         // This tests the real business logic: does the config match what the platform actually supports?
-        XCTAssertNotNil(config, "\(platformName) should have a valid accessibility configuration")
+        XCTAssertNotNil(capabilities, "\(platformName) should have a valid accessibility configuration")
     }
     
     /// Test the behavioral implications of Vision framework availability
