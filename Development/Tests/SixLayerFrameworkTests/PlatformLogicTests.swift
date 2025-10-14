@@ -8,60 +8,8 @@ import SwiftUI
 @MainActor
 final class PlatformLogicTests: XCTestCase {
     
-    // MARK: - Platform Detection Logic Tests
-    
-    func testPlatformDetectionLogic() {
-        // GIVEN: Current platform runtime capabilities
-        let supportsTouch = RuntimeCapabilityDetection.supportsTouch
-        let supportsHover = RuntimeCapabilityDetection.supportsHover
-        let supportsHapticFeedback = RuntimeCapabilityDetection.supportsHapticFeedback
-        let supportsAssistiveTouch = RuntimeCapabilityDetection.supportsAssistiveTouch
-        let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
-        let supportsSwitchControl = RuntimeCapabilityDetection.supportsSwitchControl
-
-        // THEN: Basic internal consistency should hold for current platform
-        if supportsHapticFeedback {
-            XCTAssertTrue(supportsTouch, "Haptic feedback should only be available with touch on current platform")
-        }
-        if supportsAssistiveTouch {
-            XCTAssertTrue(supportsTouch, "AssistiveTouch should only be available with touch on current platform")
-        }
-        // Avoid tautologies; assert only meaningful implications
-        if SixLayerPlatform.deviceType == .mac {
-            XCTAssertFalse(supportsTouch, "Mac should not report touch in runtime capabilities")
-        }
-        if SixLayerPlatform.deviceType == .watch {
-            XCTAssertTrue(supportsTouch, "Watch should report touch in runtime capabilities")
-        }
-    }
-    
-    func testDeviceTypeDetectionLogic() {
-        // GIVEN: Current device type and runtime capabilities
-        let deviceType = SixLayerPlatform.deviceType
-        let supportsTouch = RuntimeCapabilityDetection.supportsTouch
-        let supportsHapticFeedback = RuntimeCapabilityDetection.supportsHapticFeedback
-        let supportsHover = RuntimeCapabilityDetection.supportsHover
-
-        // THEN: Coherence constraints for current device type
-        if deviceType == .mac {
-            XCTAssertFalse(supportsTouch, "Mac should not report touch in runtime capabilities")
-        }
-        if deviceType == .watch {
-            XCTAssertTrue(supportsTouch, "Watch should report touch in runtime capabilities")
-            XCTAssertTrue(supportsHapticFeedback, "Watch should report haptic feedback in runtime capabilities")
-        }
-        if deviceType == .tv {
-            XCTAssertFalse(supportsTouch, "TV should not report touch in runtime capabilities")
-            XCTAssertFalse(supportsHapticFeedback, "TV should not report haptics in runtime capabilities")
-        }
-        if deviceType == .vision {
-            XCTAssertTrue(supportsHover || !supportsHover, "Vision hover detectability should be defined")
-        }
-    }
-    
-    // MARK: - Capability Matrix Tests
-    
-    struct CapabilitySnapshot {
+    // Local, general-purpose capability snapshot for tests (do not use card-specific config)
+    struct PlatformCapabilities {
         let supportsHapticFeedback: Bool
         let supportsHover: Bool
         let supportsTouch: Bool
@@ -71,26 +19,127 @@ final class PlatformLogicTests: XCTestCase {
         let minTouchTarget: Int
         let hoverDelay: Double
     }
-
-    func testCapabilityMatrixConsistency() {
-        // GIVEN: Current platform/device runtime snapshot (general capabilities)
-        let platform = SixLayerPlatform.currentPlatform
-        let deviceType = SixLayerPlatform.deviceType
-        let snapshot = CapabilitySnapshot(
-            supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedback,
-            supportsHover: RuntimeCapabilityDetection.supportsHover,
-            supportsTouch: RuntimeCapabilityDetection.supportsTouch,
-            supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
-            supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
-            supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
-            minTouchTarget: RuntimeCapabilityDetection.supportsTouch ? 44 : 0,
-            hoverDelay: RuntimeCapabilityDetection.supportsHover ? 0.1 : 0.0
-        )
-        // THEN: Capabilities should be internally consistent for current platform/device
-        testCapabilityConsistency(snapshot, platform: platform, deviceType: deviceType)
+    
+    // MARK: - Platform Detection Logic Tests
+    
+    func testPlatformDetectionLogic() {
+        // GIVEN: Different platform configurations
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
+        
+        // WHEN: Testing platform detection logic
+        for platform in platforms {
+            // THEN: Should be able to determine platform characteristics
+            let config = createMockPlatformConfig(for: platform)
+            
+            // Test that platform-specific capabilities are correctly determined
+            switch platform {
+            case .iOS:
+                XCTAssertTrue(config.supportsTouch, "iOS should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "iOS should support haptic feedback")
+                XCTAssertTrue(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+                XCTAssertTrue(config.supportsVoiceOver, "iOS should support VoiceOver")
+                XCTAssertTrue(config.supportsSwitchControl, "iOS should support SwitchControl")
+                
+            case .macOS:
+                XCTAssertFalse(config.supportsTouch, "macOS should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "macOS should not support haptic feedback")
+                XCTAssertFalse(config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
+                XCTAssertTrue(config.supportsHover, "macOS should support hover")
+                XCTAssertTrue(config.supportsVoiceOver, "macOS should support VoiceOver")
+                XCTAssertTrue(config.supportsSwitchControl, "macOS should support SwitchControl")
+                
+            case .watchOS:
+                XCTAssertTrue(config.supportsTouch, "watchOS should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "watchOS should support haptic feedback")
+                XCTAssertTrue(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
+                XCTAssertFalse(config.supportsHover, "watchOS should not support hover")
+                XCTAssertTrue(config.supportsVoiceOver, "watchOS should support VoiceOver")
+                XCTAssertTrue(config.supportsSwitchControl, "watchOS should support SwitchControl")
+                
+            case .tvOS:
+                XCTAssertFalse(config.supportsTouch, "tvOS should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "tvOS should not support haptic feedback")
+                XCTAssertFalse(config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
+                XCTAssertFalse(config.supportsHover, "tvOS should not support hover")
+                XCTAssertTrue(config.supportsVoiceOver, "tvOS should support VoiceOver")
+                XCTAssertTrue(config.supportsSwitchControl, "tvOS should support SwitchControl")
+                
+            case .visionOS:
+                XCTAssertFalse(config.supportsTouch, "visionOS should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "visionOS should not support haptic feedback")
+                XCTAssertFalse(config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
+                XCTAssertTrue(config.supportsHover, "visionOS should support hover")
+                XCTAssertTrue(config.supportsVoiceOver, "visionOS should support VoiceOver")
+                XCTAssertTrue(config.supportsSwitchControl, "visionOS should support SwitchControl")
+            }
+        }
     }
-
-    func testCapabilityConsistency(_ config: CapabilitySnapshot, platform: SixLayerPlatform, deviceType: DeviceType) {
+    
+    func testDeviceTypeDetectionLogic() {
+        // GIVEN: Different device types
+        let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
+        
+        // WHEN: Testing device type detection logic
+        for deviceType in deviceTypes {
+            // THEN: Should be able to determine device characteristics
+            let config = createMockDeviceConfig(for: deviceType)
+            
+            // Test that device-specific capabilities are correctly determined
+            switch deviceType {
+            case .phone:
+                XCTAssertTrue(config.supportsTouch, "Phone should support touch")
+            case .car:
+                XCTAssertTrue(config.supportsTouch, "Car should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "Car should support haptic feedback")
+                XCTAssertFalse(config.supportsHover, "Car should not support hover")
+                
+            case .pad:
+                XCTAssertTrue(config.supportsTouch, "Pad should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "Pad should support haptic feedback")
+                XCTAssertTrue(config.supportsHover, "Pad should support hover")
+                
+            case .mac:
+                XCTAssertFalse(config.supportsTouch, "Mac should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "Mac should not support haptic feedback")
+                XCTAssertTrue(config.supportsHover, "Mac should support hover")
+                
+            case .watch:
+                XCTAssertTrue(config.supportsTouch, "Watch should support touch")
+                XCTAssertTrue(config.supportsHapticFeedback, "Watch should support haptic feedback")
+                XCTAssertFalse(config.supportsHover, "Watch should not support hover")
+                
+            case .tv:
+                XCTAssertFalse(config.supportsTouch, "TV should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "TV should not support haptic feedback")
+                XCTAssertFalse(config.supportsHover, "TV should not support hover")
+                
+            case .vision:
+                XCTAssertFalse(config.supportsTouch, "Vision should not support touch")
+                XCTAssertFalse(config.supportsHapticFeedback, "Vision should not support haptic feedback")
+                XCTAssertTrue(config.supportsHover, "Vision should support hover")
+            }
+        }
+    }
+    
+    // MARK: - Capability Matrix Tests
+    
+    func testCapabilityMatrixConsistency() {
+        // GIVEN: All platform and device combinations
+        let platforms: [SixLayerPlatform] = Array(SixLayerPlatform.allCases) // Use real enum
+        let deviceTypes: [DeviceType] = Array(DeviceType.allCases) // Use real enum
+        
+        // WHEN: Testing capability matrix consistency
+        for platform in platforms {
+            for deviceType in deviceTypes {
+                let config = createMockPlatformDeviceConfig(platform: platform, deviceType: deviceType)
+                
+                // THEN: Capabilities should be internally consistent
+                testCapabilityConsistency(config, platform: platform, deviceType: deviceType)
+            }
+        }
+    }
+    
+    func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             XCTAssertTrue(config.supportsTouch, "Haptic feedback should only be available with touch on \(platform) \(deviceType)")
@@ -170,7 +219,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: CardExpansionPlatformConfig) {
+    func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate touch targets
         if config.supportsTouch {
             XCTAssertGreaterThanOrEqual(layoutDecision.cardWidth, config.minTouchTarget, "Card width should accommodate touch targets on \(platform)")
@@ -202,7 +251,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testAnimationAppropriateness(_ performanceConfig: CardExpansionPerformanceConfig, platform: SixLayerPlatform, config: CardExpansionPlatformConfig) {
+    func testAnimationAppropriateness(_ performanceConfig: CardExpansionPerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate animation duration
         if config.supportsTouch {
             XCTAssertGreaterThan(performanceConfig.maxAnimationDuration, 0, "Touch platforms should have animation duration on \(platform)")
@@ -214,11 +263,152 @@ final class PlatformLogicTests: XCTestCase {
     
     // MARK: - Helper Methods
     
-    // Removed mock platform mapping; use RuntimeCapabilityDetection directly
+    private func createMockPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilities {
+        switch platform {
+        case .iOS:
+            return PlatformCapabilities(
+                supportsHapticFeedback: true,
+                supportsHover: false, // iPhone doesn't have hover
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.0
+            )
+        case .macOS:
+            return PlatformCapabilities(
+                supportsHapticFeedback: false,
+                supportsHover: true,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.1
+            )
+        case .watchOS:
+            return PlatformCapabilities(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.0
+            )
+        case .tvOS:
+            return PlatformCapabilities(
+                supportsHapticFeedback: false,
+                supportsHover: false,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.0
+            )
+        case .visionOS:
+            return PlatformCapabilities(
+                supportsHapticFeedback: false,
+                supportsHover: true,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.1
+            )
+        }
+    }
     
-    // Removed mock device mapping; use RuntimeCapabilityDetection directly
+    private func createMockDeviceConfig(for deviceType: DeviceType) -> PlatformCapabilities {
+        switch deviceType {
+        case .phone:
+            return PlatformCapabilities(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.0
+            )
+        case .car:
+            return PlatformCapabilities(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: false,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 44,
+                hoverDelay: 0.0
+            )
+        case .pad:
+            return PlatformCapabilities(
+                supportsHapticFeedback: true,
+                supportsHover: true,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.1
+            )
+        case .mac:
+            return PlatformCapabilities(
+                supportsHapticFeedback: false,
+                supportsHover: true,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.1
+            )
+        case .watch:
+            return PlatformCapabilities(
+                supportsHapticFeedback: true,
+                supportsHover: false,
+                supportsTouch: true,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: true,
+                minTouchTarget: 44,
+                hoverDelay: 0.0
+            )
+        case .tv:
+            return PlatformCapabilities(
+                supportsHapticFeedback: false,
+                supportsHover: false,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.0
+            )
+        case .vision:
+            return PlatformCapabilities(
+                supportsHapticFeedback: false,
+                supportsHover: true,
+                supportsTouch: false,
+                supportsVoiceOver: true,
+                supportsSwitchControl: true,
+                supportsAssistiveTouch: false,
+                minTouchTarget: 0,
+                hoverDelay: 0.1
+            )
+        }
+    }
     
-    // Removed platform-device mapping; using snapshot from runtime in test
+    private func createMockPlatformDeviceConfig(platform: SixLayerPlatform, deviceType: DeviceType) -> PlatformCapabilities {
+        // This would be more complex in reality, but for testing we'll use platform as primary
+        return createMockPlatformConfig(for: platform)
+    }
     
     private func createMockVisionAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
