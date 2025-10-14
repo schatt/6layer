@@ -168,17 +168,7 @@ final class CapabilityCombinationTests: XCTestCase {
         supportsOCR: Bool
     ) -> CardExpansionPlatformConfig {
         // Create a mock configuration that simulates the specified platform capabilities
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: supportsHaptic,
-            supportsHover: supportsHover,
-            supportsTouch: supportsTouch,
-            supportsVoiceOver: true, // Always supported for accessibility
-            supportsSwitchControl: true, // Always supported for accessibility
-            supportsAssistiveTouch: supportsAssistiveTouch,
-            minTouchTarget: supportsTouch ? 44 : 0,
-            hoverDelay: supportsHover ? 0.1 : 0.0,
-            animationEasing: .easeInOut(duration: platform == .macOS ? 0.3 : 0.25)
-        )
+        return getCardExpansionPlatformConfig()
     }
     
     // MARK: - Individual Combination Tests
