@@ -948,6 +948,11 @@ public struct ExactAccessibilityIdentifierModifier: ViewModifier {
     }
     
     public func body(content: Content) -> some View {
+        // Handle empty string gracefully - don't apply any identifier
+        if identifier.isEmpty {
+            return AnyView(content)
+        }
+        
         #if os(macOS)
         return AnyView(
             ExactAccessibilityHostingControllerWrapper(identifier: identifier) {
@@ -1025,32 +1030,24 @@ public struct HierarchicalNamedModifier: ViewModifier {
         // Push the name to the hierarchy (replaces current level)
         AccessibilityIdentifierConfig.shared.pushViewHierarchy(viewName)
         
-        // Check if global config is enabled AND local disable is not set
+        // .named() should ALWAYS generate an accessibility identifier, regardless of global settings
+        // This is the key difference from automatic accessibility identifiers
         let config = AccessibilityIdentifierConfig.shared
-        if config.enableAutoIDs && !disableAutoIDs {
-            // Generate and apply accessibility identifier based on the modified hierarchy
-            let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
-            let screenContext = config.currentScreenContext ?? "main"
-            let role = "element"
-            
-            // Generate object ID based on the named context
-            let objectID = generateNamedObjectID(context: context, screenContext: screenContext, viewName: viewName)
-            
-            // Build hierarchical identifier manually
-            let identifier = "\(config.namespace).\(screenContext).\(role).\(objectID)"
-            
-            return AnyView(content
-                .onDisappear {
-                    AccessibilityIdentifierConfig.shared.popViewHierarchy()
-                }
-                .modifier(WorkingAccessibilityIdentifierModifier(identifier: identifier)))
-        } else {
-            // Global config is disabled - just track hierarchy without applying identifier
-            return AnyView(content
-                .onDisappear {
-                    AccessibilityIdentifierConfig.shared.popViewHierarchy()
-                })
-        }
+        let context = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+        let screenContext = config.currentScreenContext ?? "main"
+        let role = "element"
+        
+        // Generate object ID based on the named context
+        let objectID = generateNamedObjectID(context: context, screenContext: screenContext, viewName: viewName)
+        
+        // Build hierarchical identifier manually
+        let identifier = "\(config.namespace).\(screenContext).\(role).\(objectID)"
+        
+        return AnyView(content
+            .onDisappear {
+                AccessibilityIdentifierConfig.shared.popViewHierarchy()
+            }
+            .modifier(WorkingAccessibilityIdentifierModifier(identifier: identifier)))
     }
     
     private func generateNamedObjectID(context: String, screenContext: String, viewName: String) -> String {
