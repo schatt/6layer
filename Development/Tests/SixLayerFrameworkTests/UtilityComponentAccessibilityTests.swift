@@ -330,8 +330,8 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityIdentifierErrorHandling"
         )
         
-        // Then: Should handle errors gracefully
-        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier error handling should work correctly")
+        // Then: Should handle errors gracefully by not generating invalid IDs
+        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier error handling should not generate invalid IDs")
     }
     
     func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
@@ -349,8 +349,8 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityIdentifierNullHandling"
         )
         
-        // Then: Should handle null values gracefully
-        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier null handling should work correctly")
+        // Then: Should handle null values gracefully by not generating invalid IDs
+        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier null handling should not generate invalid IDs")
     }
     
     func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
@@ -368,8 +368,8 @@ final class UtilityComponentAccessibilityTests: XCTestCase {
             componentName: "AccessibilityIdentifierEmptyHandling"
         )
         
-        // Then: Should handle empty patterns gracefully
-        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier empty handling should work correctly")
+        // Then: Should handle empty patterns gracefully by not generating invalid IDs
+        XCTAssertFalse(hasAccessibilityID, "Accessibility identifier empty handling should not generate invalid IDs")
     }
     
     func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {

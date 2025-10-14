@@ -51,7 +51,7 @@ final class TextContentTypeTests: XCTestCase {
                 placeholder: "Enter \(textContentType.rawValue)"
             )
             
-            let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
             let textField = DynamicTextField(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
@@ -117,7 +117,7 @@ final class TextContentTypeTests: XCTestCase {
                 placeholder: "Enter \(textContentType)"
             )
             
-            let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
             let textField = DynamicTextField(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
@@ -140,7 +140,7 @@ final class TextContentTypeTests: XCTestCase {
             placeholder: "Enter 6-digit code"
         )
         
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+        let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
         let textField = DynamicTextField(field: field, formState: formState)
         
         // Verify OTP field configuration
@@ -155,7 +155,7 @@ final class TextContentTypeTests: XCTestCase {
             placeholder: "Enter 6-digit code"
         )
         
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+        let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
         let textField = DynamicTextField(field: field, formState: formState)
         
         // Verify OTP field configuration
@@ -414,7 +414,7 @@ final class TextContentTypeTests: XCTestCase {
                 placeholder: "Enter email"
             )
             
-            let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
             let textField = DynamicTextField(field: field, formState: formState)
             
             XCTAssertNotNil(textField, "Text field should be created on \(platform)")
