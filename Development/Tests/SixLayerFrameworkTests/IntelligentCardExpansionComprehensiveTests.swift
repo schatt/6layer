@@ -581,7 +581,7 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
     func testNativeExpandableCardViewBasicFunctionality() {
         // Test basic native expandable card view
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -598,7 +598,7 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
     func testNativeExpandableCardViewWithDifferentStrategies() {
         // Test with different expansion strategies
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -809,7 +809,7 @@ final class IntelligentCardExpansionComprehensiveTests: XCTestCase {
     
     func testAccessibilitySupport() {
         // Test accessibility support
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
