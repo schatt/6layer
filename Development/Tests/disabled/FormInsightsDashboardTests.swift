@@ -1,0 +1,88 @@
+import XCTest
+import SwiftUI
+@testable import SixLayerFramework
+import ViewInspector
+
+/// Tests for FormInsightsDashboard.swift
+/// 
+/// BUSINESS PURPOSE: Ensure FormInsightsDashboard generates proper accessibility identifiers
+/// TESTING SCOPE: All components in FormInsightsDashboard.swift
+/// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@MainActor
+final class FormInsightsDashboardTests: XCTestCase {
+    
+    // MARK: - Test Setup
+    
+    override func setUp() {
+        super.setUp()
+        setupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = false
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        cleanupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+    }
+    
+    // MARK: - FormInsightsDashboard Tests
+    
+    func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnIOS() async {
+        let insights = FormInsights(
+            formId: "test-form",
+            analytics: nil,
+            performance: nil,
+            errors: [],
+            recommendations: []
+        )
+        
+        // Verify insights are properly configured
+        XCTAssertEqual(insights.formId, "test-form", "Insights should have correct form ID")
+        XCTAssertTrue(insights.errors.isEmpty, "Insights should have empty errors initially")
+        XCTAssertTrue(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
+        
+        let view = FormInsightsDashboard()
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
+            componentName: "FormInsightsDashboard"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers on iOS")
+    }
+    
+    func testFormInsightsDashboardGeneratesAccessibilityIdentifiersOnMacOS() async {
+        let insights = FormInsights(
+            formId: "test-form",
+            analytics: nil,
+            performance: nil,
+            errors: [],
+            recommendations: []
+        )
+        
+        // Verify insights are properly configured
+        XCTAssertEqual(insights.formId, "test-form", "Insights should have correct form ID")
+        XCTAssertTrue(insights.errors.isEmpty, "Insights should have empty errors initially")
+        XCTAssertTrue(insights.recommendations.isEmpty, "Insights should have empty recommendations initially")
+        
+        let view = FormInsightsDashboard()
+        
+        let hasAccessibilityID = hasAccessibilityIdentifier(
+            view, 
+            expectedPattern: "SixLayer.main.element.*", 
+            platform: .macOS,
+            componentName: "FormInsightsDashboard"
+        )
+        
+        XCTAssertTrue(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers on macOS")
+    }
+}
+

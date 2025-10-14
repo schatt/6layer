@@ -134,6 +134,10 @@ public func platformPresentFormData_L1(
         customPreferences: hints.customPreferences,
         extensibleHints: []
     )
+    
+    // Set screen context for accessibility identifier generation
+    AccessibilityIdentifierConfig.shared.setScreenContext("screen")
+    
     return platformPresentFormData_L1(fields: [field], hints: enhancedHints)
         .automaticAccessibilityIdentifiers()
 }
@@ -167,6 +171,9 @@ public func platformPresentMediaData_L1(
     media: [GenericMediaItem],
     hints: PresentationHints
 ) -> some View {
+    // Set screen context for accessibility identifier generation
+    AccessibilityIdentifierConfig.shared.setScreenContext("screen")
+    
     return GenericMediaView(media: media, hints: hints)
         .automaticAccessibilityIdentifiers()
 }
@@ -402,6 +409,9 @@ public func platformPresentSettings_L1(
     onSettingsSaved: (() -> Void)? = nil,
     onSettingsCancelled: (() -> Void)? = nil
 ) -> some View {
+    // Set screen context for accessibility identifier generation
+    AccessibilityIdentifierConfig.shared.setScreenContext("screen")
+    
     return GenericSettingsView(
         settings: settings,
         hints: hints,
@@ -409,6 +419,7 @@ public func platformPresentSettings_L1(
         onSettingsSaved: onSettingsSaved,
         onSettingsCancelled: onSettingsCancelled
     )
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting settings interface with custom views

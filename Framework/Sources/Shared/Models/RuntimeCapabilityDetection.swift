@@ -80,14 +80,15 @@ public struct RuntimeCapabilityDetection {
         Thread.current.threadDictionary["testAssistiveTouch"] = value
     }
     
-    /// Clear all capability overrides
+    /// Clear all capability overrides for testing
     public static func clearAllCapabilityOverrides() {
-        Thread.current.threadDictionary.removeObject(forKey: "testTouchSupport")
-        Thread.current.threadDictionary.removeObject(forKey: "testHapticFeedback")
-        Thread.current.threadDictionary.removeObject(forKey: "testHover")
-        Thread.current.threadDictionary.removeObject(forKey: "testVoiceOver")
-        Thread.current.threadDictionary.removeObject(forKey: "testSwitchControl")
-        Thread.current.threadDictionary.removeObject(forKey: "testAssistiveTouch")
+        setTestTouchSupport(nil)
+        setTestHapticFeedback(nil)
+        setTestHover(nil)
+        setTestVoiceOver(nil)
+        setTestSwitchControl(nil)
+        setTestAssistiveTouch(nil)
+        setTestPlatform(nil)
     }
     
     // MARK: - Private Capability Override Getters
