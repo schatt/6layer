@@ -436,27 +436,31 @@ public struct FileUploadArea: View {
             if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
                 // Handle image files
                 provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { item, error in
-                    if let url = item as? URL {
-                        let fileInfo = FileInfo(
-                            name: url.lastPathComponent,
-                            size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
-                            type: UTType.image,
-                            url: url
-                        )
-                        newFiles.append(fileInfo)
+                    Task { @MainActor in
+                        if let url = item as? URL {
+                            let fileInfo = FileInfo(
+                                name: url.lastPathComponent,
+                                size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
+                                type: UTType.image,
+                                url: url
+                            )
+                            newFiles.append(fileInfo)
+                        }
                     }
                 }
             } else if provider.hasItemConformingToTypeIdentifier(UTType.pdf.identifier) {
                 // Handle PDF files
                 provider.loadItem(forTypeIdentifier: UTType.pdf.identifier, options: nil) { item, error in
-                    if let url = item as? URL {
-                        let fileInfo = FileInfo(
-                            name: url.lastPathComponent,
-                            size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
-                            type: UTType.pdf,
-                            url: url
-                        )
-                        newFiles.append(fileInfo)
+                    Task { @MainActor in
+                        if let url = item as? URL {
+                            let fileInfo = FileInfo(
+                                name: url.lastPathComponent,
+                                size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
+                                type: UTType.pdf,
+                                url: url
+                            )
+                            newFiles.append(fileInfo)
+                        }
                     }
                 }
             }

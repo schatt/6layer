@@ -1,4 +1,4 @@
-import Foundation
+@preconcurrency import Foundation
 import SwiftUI
 
 #if os(macOS)
@@ -52,19 +52,22 @@ public class macOSWindowDetection: ObservableObject, UnifiedWindowDetection.Plat
     }
     
     deinit {
-        // Clean up synchronously to avoid retain cycles
-        resizeTimer?.invalidate()
-        resizeTimer = nil
-        
-        updateTimer?.invalidate()
-        updateTimer = nil
-        
-        notificationObservers.forEach { observer in
-            NotificationCenter.default.removeObserver(observer)
+        // Use weak references to avoid capture issues
+        weak var weakSelf = self
+        Task { @MainActor in
+            weakSelf?.resizeTimer?.invalidate()
+            weakSelf?.resizeTimer = nil
+            
+            weakSelf?.updateTimer?.invalidate()
+            weakSelf?.updateTimer = nil
+            
+            weakSelf?.notificationObservers.forEach { observer in
+                NotificationCenter.default.removeObserver(observer)
+            }
+            weakSelf?.notificationObservers.removeAll()
+            
+            weakSelf?.window = nil
         }
-        notificationObservers.removeAll()
-        
-        window = nil
     }
     
     // MARK: - Public Methods

@@ -14,6 +14,7 @@ import Foundation
 /// Cross-platform semantic OCR intent interface with visual text correction
 /// Provides intelligent text recognition with interactive overlay for corrections
 @ViewBuilder
+@MainActor
 public func platformOCRWithVisualCorrection_L1(
     image: PlatformImage,
     context: OCRContext,
@@ -28,6 +29,7 @@ public func platformOCRWithVisualCorrection_L1(
 
 /// Cross-platform semantic OCR intent interface with custom configuration
 @ViewBuilder
+@MainActor
 public func platformOCRWithVisualCorrection_L1(
     image: PlatformImage,
     context: OCRContext,
@@ -45,6 +47,7 @@ public func platformOCRWithVisualCorrection_L1(
 /// Cross-platform semantic structured data extraction interface
 /// Provides intelligent structured data extraction with pattern matching
 @ViewBuilder
+@MainActor
 public func platformExtractStructuredData_L1(
     image: PlatformImage,
     context: OCRContext,
@@ -63,7 +66,7 @@ public func platformExtractStructuredData_L1(
 public func processOCRForTesting(
     image: PlatformImage,
     context: OCRContext,
-    onResult: @escaping (OCRResult) -> Void
+    onResult: @escaping @Sendable (OCRResult) -> Void
 ) {
     Task {
         do {

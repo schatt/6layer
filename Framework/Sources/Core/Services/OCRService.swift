@@ -48,7 +48,7 @@ public enum OCRError: Error, LocalizedError {
 // MARK: - OCR Service Protocol
 
 /// Protocol defining OCR service capabilities
-public protocol OCRServiceProtocol {
+public protocol OCRServiceProtocol: Sendable {
     /// Process an image for text recognition
     func processImage(
         _ image: PlatformImage,
@@ -91,7 +91,7 @@ public struct OCRCapabilities {
 // MARK: - OCR Service Implementation
 
 /// Main OCR service implementation
-public class OCRService: OCRServiceProtocol {
+public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     
     // MARK: - Properties
     

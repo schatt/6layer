@@ -34,9 +34,11 @@ public enum MacOSPerformanceStrategy: String, CaseIterable {
 
 /// macOS-specific optimization manager
 /// Currently a placeholder for future macOS-specific optimizations
-public class MacOSOptimizationManager {
+@MainActor
+public class MacOSOptimizationManager: @unchecked Sendable {
     
     /// Shared instance for macOS optimizations
+    @MainActor
     public static let shared = MacOSOptimizationManager()
     
     private init() {}

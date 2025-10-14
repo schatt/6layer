@@ -24,6 +24,7 @@ enum LiquidGlassRuntimeDetection {
     @MainActor
     static var overrideSupport: Bool? = nil
 
+    @MainActor
     static func detectSupport() -> Bool {
         // Test override takes precedence
         if let forced = overrideSupport { return forced }

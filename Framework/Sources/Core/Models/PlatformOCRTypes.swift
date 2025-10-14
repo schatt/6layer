@@ -118,7 +118,7 @@ public enum ExtractionMode: String, CaseIterable, Sendable {
 // MARK: - OCR Context
 
 /// Context information for OCR operations
-public struct OCRContext {
+public struct OCRContext: Sendable {
     public let textTypes: [TextType]
     public let language: OCRLanguage
     public let confidenceThreshold: Float
@@ -428,7 +428,7 @@ public struct OCRLayout {
 // MARK: - OCR Processing Mode
 
 /// Processing modes for OCR
-public enum OCRProcessingMode: String, CaseIterable {
+public enum OCRProcessingMode: String, CaseIterable, Sendable {
     case fast = "fast"
     case standard = "standard"
     case accurate = "accurate"
@@ -491,7 +491,7 @@ public enum OCRTheme: String, CaseIterable {
 // MARK: - OCR Strategy
 
 /// Strategy for OCR operations
-public struct OCRStrategy {
+public struct OCRStrategy: Sendable {
     public let supportedTextTypes: [TextType]
     public let supportedLanguages: [OCRLanguage]
     public let processingMode: OCRProcessingMode

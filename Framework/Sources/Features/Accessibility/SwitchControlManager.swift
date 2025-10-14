@@ -157,6 +157,7 @@ public class SwitchControlManager: ObservableObject {
     private let config: SwitchControlConfig
     
     // Test-specific counter for differentiating test cases
+    @MainActor
     private static var testCallCounter = 0
     
     // MARK: - Initialization

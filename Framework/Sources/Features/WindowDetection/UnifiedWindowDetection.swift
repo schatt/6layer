@@ -92,7 +92,11 @@ public class UnifiedWindowDetection: ObservableObject {
     }
     
     deinit {
-        platformDetectionTimer?.invalidate()
+        // Use a weak reference to avoid capture issues
+        weak var weakSelf = self
+        Task { @MainActor in
+            weakSelf?.platformDetectionTimer?.invalidate()
+        }
     }
     
     // MARK: - Public Methods
