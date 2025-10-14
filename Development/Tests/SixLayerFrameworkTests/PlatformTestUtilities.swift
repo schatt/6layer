@@ -39,22 +39,10 @@ final class PlatformTestUtilities {
     
     // MARK: - Platform Test Configuration Structure
     
-    /// General platform capabilities for testing (not card-specific)
-    struct PlatformCapabilities {
-        let supportsHapticFeedback: Bool
-        let supportsHover: Bool
-        let supportsTouch: Bool
-        let supportsVoiceOver: Bool
-        let supportsSwitchControl: Bool
-        let supportsAssistiveTouch: Bool
-        let minTouchTarget: CGFloat
-        let hoverDelay: TimeInterval
-    }
-    
     /// Complete platform test configuration containing all capabilities and settings
     struct PlatformTestConfig {
         let platform: SixLayerPlatform
-        let capabilities: PlatformCapabilities
+        let capabilities: PlatformCapabilitiesTestSnapshot
         let visionAvailable: Bool
         let ocrAvailable: Bool
     }
@@ -84,17 +72,7 @@ final class PlatformTestUtilities {
     static func createMacOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
             platform: SixLayerPlatform.macOS,
-            config: CardExpansionPlatformConfig(
-                supportsHapticFeedback: false,
-                supportsHover: true,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.1,
-                animationEasing: .easeInOut(duration: 0.3)
-            ),
+            capabilities: buildPlatformCapabilitiesSnapshot(),
             visionAvailable: true,
             ocrAvailable: true
         )
@@ -163,7 +141,7 @@ final class PlatformTestUtilities {
     // MARK: - Behavioral Test Methods
     
     /// Test the behavioral implications of touch platform capabilities
-    static func testTouchPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
+    static func testTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Touch platforms should have adequate touch targets
         XCTAssertGreaterThanOrEqual(capabilities.minTouchTarget, 44, 
                                    "\(platformName) should have adequate touch targets")
@@ -182,7 +160,7 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of non-touch platform capabilities
-    static func testNonTouchPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
+    static func testNonTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Non-touch platforms should not support haptic feedback
         XCTAssertFalse(capabilities.supportsHapticFeedback, 
                       "\(platformName) should not support haptic feedback")
@@ -197,7 +175,7 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of hover platform capabilities
-    static func testHoverPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
+    static func testHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Hover platforms should have hover delay set
         XCTAssertGreaterThanOrEqual(capabilities.hoverDelay, 0, 
                                    "\(platformName) should have hover delay set")
@@ -208,14 +186,14 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of non-hover platform capabilities
-    static func testNonHoverPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
+    static func testNonHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Non-hover platforms should have zero hover delay
         XCTAssertEqual(capabilities.hoverDelay, 0, 
                       "\(platformName) should have zero hover delay")
     }
     
     /// Test the behavioral implications of accessibility platform capabilities
-    static func testAccessibilityPlatformBehavior(_ capabilities: PlatformCapabilities, platformName: String) {
+    static func testAccessibilityPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
         // Test the actual business logic: how does the platform handle accessibility?
         
         // Test that touch targets are appropriate for the platform's capabilities
@@ -270,19 +248,8 @@ final class PlatformTestUtilities {
     // MARK: - Platform Configuration Helpers
     
     /// Get platform configuration for a specific platform using centralized helpers
-    static func getPlatformConfig(for platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
-        switch platform {
-        case .iOS:
-            return createIOSPlatformTestConfig().config
-        case .macOS:
-            return createMacOSPlatformTestConfig().config
-        case .watchOS:
-            return createWatchOSPlatformTestConfig().config
-        case .tvOS:
-            return createTVOSPlatformTestConfig().config
-        case .visionOS:
-            return createVisionOSPlatformTestConfig().config
-        }
+    static func getPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilitiesTestSnapshot {
+        return buildPlatformCapabilitiesSnapshot()
     }
     
     /// Get Vision availability for a specific platform using centralized helpers
