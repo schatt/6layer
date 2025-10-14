@@ -16,6 +16,7 @@ struct PlatformCapabilitiesTestSnapshot {
 }
 
 // Build a general capability snapshot from RuntimeCapabilityDetection
+@MainActor
 func buildPlatformCapabilitiesSnapshot() -> PlatformCapabilitiesTestSnapshot {
     let touch = RuntimeCapabilityDetection.supportsTouch
     let hover = RuntimeCapabilityDetection.supportsHover
@@ -33,6 +34,7 @@ func buildPlatformCapabilitiesSnapshot() -> PlatformCapabilitiesTestSnapshot {
 
 // Back-compat for existing tests that still reference CardExpansionPlatformConfig
 // Centralize creation here so we don't duplicate broken constructors across files.
+@MainActor
 func getCardExpansionPlatformConfig() -> CardExpansionPlatformConfig {
     let touch = RuntimeCapabilityDetection.supportsTouch
     let hover = RuntimeCapabilityDetection.supportsHover
