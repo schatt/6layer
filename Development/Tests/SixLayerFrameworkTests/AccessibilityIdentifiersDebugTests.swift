@@ -1,13 +1,13 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
-final class AccessibilityIdentifiersDebugTests: XCTestCase {
+final class AccessibilityIdentifiersDebugTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -17,19 +17,19 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         config.enableAutoIDs = true
     }
     
-    override func tearDown() async throws {
+    deinit {
         try await super.tearDown()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
-    func testDirectAutomaticAccessibilityIdentifiersWorks() async {
+    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
         // Test .automaticAccessibilityIdentifiers() directly
         let testView = Button("Test") { }
             .automaticAccessibilityIdentifiers()
         
         // Should look for button-specific accessibility identifier: "DebugTest.button.Test"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "DirectAutomaticAccessibilityIdentifiers"
@@ -37,14 +37,14 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         print("🔍 Testing direct .automaticAccessibilityIdentifiers()")
     }
     
-    func testNamedModifierWorks() {
+    @Test func testNamedModifierWorks() {
         // Test .named() modifier
         let testView = Button("Test") { }
             .named("TestButton")
             .automaticAccessibilityIdentifiers()
         
         // Should look for named button-specific accessibility identifier: "DebugTest.TestButton.Test"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "NamedModifier"
@@ -52,7 +52,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         print("🔍 Testing .named() + .automaticAccessibilityIdentifiers()")
     }
     
-    func testAutomaticAccessibilityModifierWorks() {
+    @Test func testAutomaticAccessibilityModifierWorks() {
         // Test AutomaticAccessibilityModifier directly
         let testView = Button("Test") { }
             .modifier(SystemAccessibilityModifier(
@@ -61,7 +61,7 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
             ))
         
         // Should look for modifier-specific accessibility identifier: "DebugTest.modifier.Test"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "AutomaticAccessibilityModifier"
@@ -69,13 +69,13 @@ final class AccessibilityIdentifiersDebugTests: XCTestCase {
         print("🔍 Testing AutomaticAccessibilityModifier directly")
     }
     
-    func testAutomaticAccessibilityExtensionWorks() {
+    @Test func testAutomaticAccessibilityExtensionWorks() {
         // Test .automaticAccessibility() extension
         let testView = Button("Test") { }
             .automaticAccessibility()
         
         // Should look for extension-specific accessibility identifier: "DebugTest.extension.Test"
-        XCTAssertTrue(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifier(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "AutomaticAccessibilityExtension"

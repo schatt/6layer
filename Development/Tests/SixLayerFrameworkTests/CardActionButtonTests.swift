@@ -32,7 +32,7 @@
 //  - ✅ Good: Uses proper test data structures and setup
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -40,7 +40,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class CardActionButtonTests: XCTestCase {
+final class CardActionButtonTests {
     
     // MARK: - Test Data
     
@@ -63,8 +63,7 @@ final class CardActionButtonTests: XCTestCase {
     var layoutDecision: IntelligentCardLayoutDecision!
     var strategy: CardExpansionStrategy!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         
         sampleItems = [
             TestItem(
@@ -101,7 +100,7 @@ final class CardActionButtonTests: XCTestCase {
     
     // MARK: - ExpandableCardComponent Action Button Tests
     
-    func testExpandableCardComponentEditButtonCallback() {
+    @Test func testExpandableCardComponentEditButtonCallback() {
         // GIVEN: A test item and edit callback
         let item = sampleItems[0]
         var editCallbackCalled = false
@@ -130,26 +129,26 @@ final class CardActionButtonTests: XCTestCase {
         // THEN: Should have edit button available and callback should be properly configured
         // Test that the card can be hosted and has proper structure
         let hostingView = hostRootPlatformView(card.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "ExpandableCardComponent should be hostable")
+        #expect(hostingView != nil, "ExpandableCardComponent should be hostable")
         
         // Test business logic: Edit callback should be properly stored
         // This tests the actual behavior rather than just existence
-        XCTAssertTrue(card.onItemEdited != nil, "Edit callback should be stored when provided")
+        #expect(card.onItemEdited != nil, "Edit callback should be stored when provided")
         
         // Test business logic: Component should be in expanded state to show buttons
-        XCTAssertTrue(card.isExpanded, "Component should be expanded to show action buttons")
+        #expect(card.isExpanded, "Component should be expanded to show action buttons")
         
         // Test business logic: Strategy should support the required expansion type
-        XCTAssertTrue(strategy.supportedStrategies.contains(.contentReveal), 
+        #expect(strategy.supportedStrategies.contains(.contentReveal), 
                     "Strategy should support contentReveal for edit button visibility")
         
         // Test callback functionality: Call the callback and verify it works
         card.onItemEdited?(item)
-        XCTAssertTrue(editCallbackCalled, "Edit callback should be called when invoked")
-        XCTAssertEqual(editCallbackItem?.id, item.id, "Edit callback should receive the correct item")
+        #expect(editCallbackCalled, "Edit callback should be called when invoked")
+        #expect(editCallbackItem?.id == item.id, "Edit callback should receive the correct item")
     }
     
-    func testExpandableCardComponentDeleteButtonCallback() {
+    @Test func testExpandableCardComponentDeleteButtonCallback() {
         // GIVEN: A test item and delete callback
         let item = sampleItems[0]
         var deleteCallbackCalled = false
@@ -176,16 +175,16 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should have delete button available and callback should be properly configured
-        XCTAssertNotNil(card, "ExpandableCardComponent should be created")
-        XCTAssertTrue(card.onItemDeleted != nil, "Delete callback should be stored when provided")
+        #expect(card != nil, "ExpandableCardComponent should be created")
+        #expect(card.onItemDeleted != nil, "Delete callback should be stored when provided")
         
         // Test callback functionality: Call the callback and verify it works
         card.onItemDeleted?(item)
-        XCTAssertTrue(deleteCallbackCalled, "Delete callback should be called when invoked")
-        XCTAssertEqual(deleteCallbackItem?.id, item.id, "Delete callback should receive the correct item")
+        #expect(deleteCallbackCalled, "Delete callback should be called when invoked")
+        #expect(deleteCallbackItem?.id == item.id, "Delete callback should receive the correct item")
     }
     
-    func testExpandableCardComponentBothActionButtons() {
+    @Test func testExpandableCardComponentBothActionButtons() {
         // GIVEN: A test item and both callbacks
         let item = sampleItems[0]
         let editCallback: (TestItem) -> Void = { _ in
@@ -211,10 +210,10 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should have both action buttons available
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
-    func testExpandableCardComponentNoActionButtons() {
+    @Test func testExpandableCardComponentNoActionButtons() {
         // GIVEN: A test item without callbacks
         let item = sampleItems[0]
         
@@ -234,10 +233,10 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should not have action buttons
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
-    func testExpandableCardComponentActionButtonsOnlyWhenExpanded() {
+    @Test func testExpandableCardComponentActionButtonsOnlyWhenExpanded() {
         // GIVEN: A test item with callbacks but not expanded
         let item = sampleItems[0]
         let editCallback: (TestItem) -> Void = { _ in }
@@ -259,12 +258,12 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should not show action buttons when not expanded
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - SimpleCardComponent Action Button Tests
     
-    func testSimpleCardComponentActionCallbacks() {
+    @Test func testSimpleCardComponentActionCallbacks() {
         // GIVEN: A test item and callbacks
         let item = sampleItems[0]
         let selectedCallback: (TestItem) -> Void = { _ in
@@ -287,12 +286,12 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should have tap gesture for selection
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - ListCardComponent Action Button Tests
     
-    func testListCardComponentActionCallbacks() {
+    @Test func testListCardComponentActionCallbacks() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -300,12 +299,12 @@ final class CardActionButtonTests: XCTestCase {
         let card = ListCardComponent(item: item)
         
         // THEN: Should be created successfully
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - CoverFlowCardComponent Action Button Tests
     
-    func testCoverFlowCardComponentActionCallbacks() {
+    @Test func testCoverFlowCardComponentActionCallbacks() {
         // GIVEN: A test item and callbacks
         let item = sampleItems[0]
         let selectedCallback: (TestItem) -> Void = { _ in
@@ -327,12 +326,12 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should have tap gesture for selection
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - MasonryCardComponent Action Button Tests
     
-    func testMasonryCardComponentActionCallbacks() {
+    @Test func testMasonryCardComponentActionCallbacks() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -340,12 +339,12 @@ final class CardActionButtonTests: XCTestCase {
         let card = MasonryCardComponent(item: item)
         
         // THEN: Should be created successfully
-        XCTAssertNotNil(card)
+        #expect(card != nil)
     }
     
     // MARK: - Edge Cases
     
-    func testActionButtonsWithNilCallbacks() {
+    @Test func testActionButtonsWithNilCallbacks() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -373,11 +372,11 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should handle nil callbacks gracefully
-        XCTAssertNotNil(expandableCard)
-        XCTAssertNotNil(simpleCard)
+        #expect(expandableCard != nil)
+        #expect(simpleCard != nil)
     }
     
-    func testActionButtonsWithEmptyItems() {
+    @Test func testActionButtonsWithEmptyItems() {
         // GIVEN: An empty item
         let emptyItem = TestItem(
             title: "",
@@ -403,12 +402,12 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Should handle empty items gracefully
-        XCTAssertNotNil(expandableCard)
+        #expect(expandableCard != nil)
     }
     
     // MARK: - Performance Tests
     
-    func testActionButtonCreationPerformance() {
+    @Test func testActionButtonCreationPerformance() {
         // GIVEN: A large number of items
         let manyItems = (0..<1000).map { i in
             TestItem(
@@ -443,7 +442,7 @@ final class CardActionButtonTests: XCTestCase {
     
     // MARK: - Platform-Specific Business Logic Tests
     
-    func testActionButtonBehaviorAcrossPlatforms() {
+    @Test func testActionButtonBehaviorAcrossPlatforms() {
         // GIVEN: Test item and platform-specific expectations
         let item = sampleItems[0]
         let platform = SixLayerPlatform.current
@@ -467,37 +466,37 @@ final class CardActionButtonTests: XCTestCase {
         switch platform {
         case .iOS:
             // iOS should support touch interactions and haptic feedback
-            XCTAssertTrue(expandableCard.isExpanded, "iOS cards should support expansion for action buttons")
-            XCTAssertTrue(strategy.supportedStrategies.contains(.contentReveal), 
+            #expect(expandableCard.isExpanded, "iOS cards should support expansion for action buttons")
+            #expect(strategy.supportedStrategies.contains(.contentReveal), 
                         "iOS should support contentReveal strategy for action buttons")
             
         case .macOS:
             // macOS should support hover interactions and keyboard navigation
-            XCTAssertTrue(expandableCard.isExpanded, "macOS cards should support expansion for action buttons")
-            XCTAssertTrue(strategy.supportedStrategies.contains(.hoverExpand), 
+            #expect(expandableCard.isExpanded, "macOS cards should support expansion for action buttons")
+            #expect(strategy.supportedStrategies.contains(.hoverExpand), 
                         "macOS should support hoverExpand strategy for action buttons")
             
         case .watchOS:
             // watchOS should have simplified interactions due to screen size
-            XCTAssertTrue(expandableCard.isExpanded, "watchOS cards should support expansion for action buttons")
-            XCTAssertTrue(strategy.supportedStrategies.contains(.contentReveal), 
+            #expect(expandableCard.isExpanded, "watchOS cards should support expansion for action buttons")
+            #expect(strategy.supportedStrategies.contains(.contentReveal), 
                         "watchOS should support contentReveal strategy for action buttons")
             
         case .tvOS:
             // tvOS should support focus-based navigation
-            XCTAssertTrue(expandableCard.isExpanded, "tvOS cards should support expansion for action buttons")
-            XCTAssertTrue(strategy.supportedStrategies.contains(.focusMode), 
+            #expect(expandableCard.isExpanded, "tvOS cards should support expansion for action buttons")
+            #expect(strategy.supportedStrategies.contains(.focusMode), 
                         "tvOS should support focusMode strategy for action buttons")
             
         case .visionOS:
             // visionOS should support spatial interactions
-            XCTAssertTrue(expandableCard.isExpanded, "visionOS cards should support expansion for action buttons")
-            XCTAssertTrue(strategy.supportedStrategies.contains(.contentReveal), 
+            #expect(expandableCard.isExpanded, "visionOS cards should support expansion for action buttons")
+            #expect(strategy.supportedStrategies.contains(.contentReveal), 
                         "visionOS should support contentReveal strategy for action buttons")
         }
     }
     
-    func testActionButtonVisibilityBasedOnState() {
+    @Test func testActionButtonVisibilityBasedOnState() {
         // GIVEN: Test item and different expansion states
         let item = sampleItems[0]
         
@@ -532,15 +531,15 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Test business logic for button visibility
-        XCTAssertTrue(expandedCard.isExpanded, "Expanded card should be in expanded state")
-        XCTAssertFalse(collapsedCard.isExpanded, "Collapsed card should be in collapsed state")
+        #expect(expandedCard.isExpanded, "Expanded card should be in expanded state")
+        #expect(!collapsedCard.isExpanded, "Collapsed card should be in collapsed state")
         
         // Test that callbacks are available regardless of expansion state
-        XCTAssertNotNil(expandedCard.onItemEdited, "Edit callback should be available in expanded state")
-        XCTAssertNotNil(collapsedCard.onItemEdited, "Edit callback should be available in collapsed state")
+        #expect(expandedCard.onItemEdited != nil, "Edit callback should be available in expanded state")
+        #expect(collapsedCard.onItemEdited != nil, "Edit callback should be available in collapsed state")
     }
     
-    func testActionButtonCallbackTypes() {
+    @Test func testActionButtonCallbackTypes() {
         // GIVEN: Test item and different callback types
         let item = sampleItems[0]
         
@@ -590,22 +589,22 @@ final class CardActionButtonTests: XCTestCase {
         )
         
         // THEN: Test business logic for callback availability
-        XCTAssertNotNil(fullCallbackCard.onItemEdited, "Full callback card should have edit callback")
-        XCTAssertNotNil(fullCallbackCard.onItemDeleted, "Full callback card should have delete callback")
-        XCTAssertNotNil(fullCallbackCard.onItemSelected, "Full callback card should have select callback")
+        #expect(fullCallbackCard.onItemEdited != nil, "Full callback card should have edit callback")
+        #expect(fullCallbackCard.onItemDeleted != nil, "Full callback card should have delete callback")
+        #expect(fullCallbackCard.onItemSelected != nil, "Full callback card should have select callback")
         
-        XCTAssertNotNil(editOnlyCard.onItemEdited, "Edit-only card should have edit callback")
-        XCTAssertNil(editOnlyCard.onItemDeleted, "Edit-only card should not have delete callback")
-        XCTAssertNil(editOnlyCard.onItemSelected, "Edit-only card should not have select callback")
+        #expect(editOnlyCard.onItemEdited != nil, "Edit-only card should have edit callback")
+        #expect(editOnlyCard.onItemDeleted == nil, "Edit-only card should not have delete callback")
+        #expect(editOnlyCard.onItemSelected == nil, "Edit-only card should not have select callback")
         
-        XCTAssertNil(noCallbackCard.onItemEdited, "No-callback card should not have edit callback")
-        XCTAssertNil(noCallbackCard.onItemDeleted, "No-callback card should not have delete callback")
-        XCTAssertNil(noCallbackCard.onItemSelected, "No-callback card should not have select callback")
+        #expect(noCallbackCard.onItemEdited == nil, "No-callback card should not have edit callback")
+        #expect(noCallbackCard.onItemDeleted == nil, "No-callback card should not have delete callback")
+        #expect(noCallbackCard.onItemSelected == nil, "No-callback card should not have select callback")
     }
     
     // MARK: - Accessibility Tests
     
-    func testActionButtonsHaveProperAccessibility() {
+    @Test func testActionButtonsHaveProperAccessibility() {
         // GIVEN: A test item
         let item = sampleItems[0]
         
@@ -627,11 +626,11 @@ final class CardActionButtonTests: XCTestCase {
         // THEN: Should have proper accessibility labels and be created successfully
         // Test that the card can be hosted and has proper structure
         let hostingView = hostRootPlatformView(expandableCard.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "ExpandableCardComponent should be hostable")
+        #expect(hostingView != nil, "ExpandableCardComponent should be hostable")
         
         // Test business logic: Accessibility should be properly configured
-        XCTAssertTrue(expandableCard.isExpanded, "Card should be expanded for accessibility testing")
-        XCTAssertNotNil(expandableCard.onItemEdited, "Edit callback should be available for accessibility")
+        #expect(expandableCard.isExpanded, "Card should be expanded for accessibility testing")
+        #expect(expandableCard.onItemEdited != nil, "Edit callback should be available for accessibility")
     }
 }
 

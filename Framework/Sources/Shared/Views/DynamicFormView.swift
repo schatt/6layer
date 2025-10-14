@@ -920,8 +920,10 @@ struct FieldHoverTooltipModifier: ViewModifier {
                     // Start timer for 0.5 second delay per HIG
                     hoverTimer?.invalidate()
                     hoverTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-                        if isHovering {
-                            showTooltip = true
+                        Task { @MainActor in
+                            if isHovering {
+                                showTooltip = true
+                            }
                         }
                     }
                 } else {

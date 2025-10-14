@@ -6,7 +6,7 @@
 //  Provides DRY patterns for testing each layer's specific responsibilities
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -18,7 +18,7 @@ protocol L1TestPattern {
     associatedtype FunctionType
     associatedtype ParametersType
     
-    func testL1Function(
+    @Test func testL1Function(
         function: FunctionType,
         parameters: ParametersType,
         testName: String
@@ -66,7 +66,7 @@ protocol L2TestPattern {
     associatedtype ContentType
     associatedtype LayoutDecisionType
     
-    func testL2LayoutDecision(
+    @Test func testL2LayoutDecision(
         function: FunctionType,
         content: ContentType,
         expectedDecision: LayoutDecisionType,
@@ -138,7 +138,7 @@ protocol L3TestPattern {
     associatedtype ContentType
     associatedtype StrategyType
     
-    func testL3StrategySelection(
+    @Test func testL3StrategySelection(
         function: FunctionType,
         content: ContentType,
         expectedStrategy: StrategyType,
@@ -219,7 +219,7 @@ protocol L4TestPattern {
     associatedtype ComponentType
     associatedtype ConfigurationType
     
-    func testL4ComponentImplementation(
+    @Test func testL4ComponentImplementation(
         function: FunctionType,
         component: ComponentType,
         configuration: ConfigurationType,
@@ -301,7 +301,7 @@ protocol L5TestPattern {
     associatedtype OptimizationType
     associatedtype PlatformType
     
-    func testL5PlatformOptimization(
+    @Test func testL5PlatformOptimization(
         function: FunctionType,
         optimization: OptimizationType,
         platform: PlatformType,
@@ -381,7 +381,7 @@ protocol L6TestPattern {
     associatedtype SystemType
     associatedtype NativeType
     
-    func testL6PlatformSystem(
+    @Test func testL6PlatformSystem(
         function: FunctionType,
         system: SystemType,
         native: NativeType,
@@ -467,17 +467,17 @@ struct LayeredTestUtilities {
     /// Verify that a view is created successfully
     static func verifyViewCreation<T: View>(_ view: T, testName: String) {
         // Basic verification that view can be created
-        XCTAssertNotNil(view, "\(testName): View should be created successfully")
+        #expect(view != nil, "\(testName): View should be created successfully")
     }
     
     /// Verify that a function returns expected type
     static func verifyReturnType<T>(_ result: T, expectedType: T.Type, testName: String) {
-        XCTAssertTrue(result is T, "\(testName): Function should return expected type")
+        #expect(result is T, "\(testName): Function should return expected type")
     }
     
     /// Verify that parameters are passed correctly
     static func verifyParameters<T: Equatable>(_ actual: T, _ expected: T, testName: String) {
-        XCTAssertEqual(actual, expected, "\(testName): Parameters should match expected values")
+        #expect(actual == expected, "\(testName): Parameters should match expected values")
     }
 }
 

@@ -72,10 +72,12 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Use new OCRService approach for view-based accessibility testing
         let service = OCRServiceFactory.create()
         let view = OCRView(
+            service: service,
             image: testImage,
             context: context,
             strategy: strategy,
-            service: service
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then
@@ -131,10 +133,12 @@ final class PlatformOCRComponentsLayer4AccessibilityTests: XCTestCase {
         // Use new OCRService approach for view-based accessibility testing
         let service = OCRServiceFactory.create()
         let view = OCRView(
+            service: service,
             image: testImage,
             context: context,
             strategy: strategy,
-            service: service
+            onResult: { _ in },
+            onError: { _ in }
         )
         
         // When & Then

@@ -52,7 +52,7 @@ final class PlatformBehaviorTests: XCTestCase {
     }
     
     private func mockTVOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig()
+        return getCardExpansionPlatformConfig(
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
@@ -66,7 +66,7 @@ final class PlatformBehaviorTests: XCTestCase {
     }
     
     private func mockWatchOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig()
+        return getCardExpansionPlatformConfig(
             supportsHapticFeedback: true,
             supportsHover: false,
             supportsTouch: true,

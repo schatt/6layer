@@ -4,7 +4,9 @@ import SwiftUI
 // MARK: - Form Analytics Manager
 
 /// Manages form analytics, performance monitoring, and insights
-public class FormAnalyticsManager: ObservableObject {
+@MainActor
+public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
+    @MainActor
     public static let shared = FormAnalyticsManager()
     
     @Published public var analyticsData: [String: FormAnalytics] = [:]
@@ -308,7 +310,7 @@ public enum FormEventType: String, Codable, CaseIterable {
 }
 
 /// Field interaction types
-public enum FieldInteractionType: String, Codable, CaseIterable {
+public enum FieldInteractionType: String, Codable, CaseIterable, Sendable {
     case focus = "focus"
     case blur = "blur"
     case change = "change"
@@ -340,7 +342,7 @@ public struct FieldAnalytics: Codable {
 // MARK: - Performance Metrics
 
 /// Form performance metrics for rendering and interaction
-public struct FormPerformanceMetrics: Codable {
+public struct FormPerformanceMetrics: Codable, Sendable {
     public let formId: String
     public let timestamp: Date
     public let averageRenderTime: TimeInterval
@@ -361,7 +363,7 @@ public struct FormPerformanceMetrics: Codable {
 // MARK: - Error Tracking
 
 /// Form error information
-public struct FormError: Codable, Identifiable {
+public struct FormError: Codable, Identifiable, Sendable {
     public let id: UUID
     public let formId: String
     public let fieldId: String?
@@ -393,7 +395,7 @@ public enum FormErrorType: String, Codable, CaseIterable {
 // MARK: - A/B Testing
 
 /// A/B test configuration
-public struct ABTest: Codable, Identifiable {
+public struct ABTest: Codable, Identifiable, Sendable {
     public let id: String
     public let formId: String
     public let variantA: FormVariant
@@ -453,7 +455,7 @@ public enum ABTestStatus: String, Codable, CaseIterable {
 }
 
 /// A/B test result
-public struct ABTestResult: Codable, Identifiable {
+public struct ABTestResult: Codable, Identifiable, Sendable {
     public let id: UUID
     public let testId: String
     public let variant: String

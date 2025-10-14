@@ -6,11 +6,11 @@
 //  Tests L1 functions (one test per function) - pure interfaces that don't perform capability checks
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-class L1SemanticTests: XCTestCase {
+class L1SemanticTests {
     
     // MARK: - Test Data
     
@@ -24,8 +24,7 @@ class L1SemanticTests: XCTestCase {
     private var samplePhotoPurpose: PhotoPurpose = .general
     private var samplePhotoContext: PhotoContext = PhotoContext()
     
-    override func setUp() {
-        super.setUp()
+    init() {
         sampleNumericData = createSampleNumericData()
         sampleHints = createSampleHints()
         sampleFormFields = createSampleFormFields()
@@ -37,7 +36,7 @@ class L1SemanticTests: XCTestCase {
         samplePhotoContext = createSamplePhotoContext()
     }
     
-    override func tearDown() {
+    deinit {
         sampleNumericData = []
         sampleHints = PresentationHints()
         sampleFormFields = []
@@ -47,7 +46,6 @@ class L1SemanticTests: XCTestCase {
         sampleOCRContext = OCRContext()
         samplePhotoPurpose = .general
         samplePhotoContext = PhotoContext()
-        super.tearDown()
     }
     
     // MARK: - Test Data Creation
@@ -131,7 +129,7 @@ class L1SemanticTests: XCTestCase {
     
     // MARK: - Core Data Presentation Functions
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentNumericData_L1() {
         // Given
         let data = sampleNumericData
@@ -145,10 +143,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentNumericData_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentNumericData_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformResponsiveCard_L1() {
         // Given
         let hints = sampleHints
@@ -161,10 +159,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformResponsiveCard_L1 view should be hostable")
+        #expect(hostingView != nil, "platformResponsiveCard_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentFormData_L1() {
         // Given
         let fields = sampleFormFields
@@ -178,10 +176,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentFormData_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentFormData_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentModalForm_L1() {
         // Given
         let fields = sampleFormFields
@@ -195,10 +193,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentModalForm_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentModalForm_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentMediaData_L1() {
         // Given
         let mediaItems = sampleMediaItems
@@ -212,10 +210,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentMediaData_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentMediaData_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentHierarchicalData_L1() {
         // Given
         let hierarchicalItems = sampleHierarchicalItems
@@ -229,10 +227,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentHierarchicalData_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentHierarchicalData_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentTemporalData_L1() {
         // Given
         let temporalItems = sampleTemporalItems
@@ -246,10 +244,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentTemporalData_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentTemporalData_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentContent_L1() {
         // Given
         let content = "Test content"
@@ -263,12 +261,12 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentContent_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentContent_L1 view should be hostable")
     }
     
     // MARK: - OCR Functions
     
-    @MainActor
+    @Test @MainActor
     func testPlatformOCRWithVisualCorrection_L1() {
         // Given
         let image = PlatformImage()
@@ -283,10 +281,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformOCRWithVisualCorrection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformOCRWithVisualCorrection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformExtractStructuredData_L1() {
         // Given
         let image = PlatformImage()
@@ -301,12 +299,12 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformExtractStructuredData_L1 view should be hostable")
+        #expect(hostingView != nil, "platformExtractStructuredData_L1 view should be hostable")
     }
     
     // MARK: - Photo Functions
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoCapture_L1() {
         // Given
         let purpose = samplePhotoPurpose
@@ -321,10 +319,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoCapture_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoCapture_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoSelection_L1() {
         // Given
         let purpose = samplePhotoPurpose
@@ -339,10 +337,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoSelection_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPhotoDisplay_L1() {
         // Given
         let purpose = samplePhotoPurpose
@@ -358,12 +356,12 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPhotoDisplay_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPhotoDisplay_L1 view should be hostable")
     }
     
     // MARK: - Internationalization Functions
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedText_L1() {
         // Given
         let text = "Hello World"
@@ -377,10 +375,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedText_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedText_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedNumber_L1() {
         // Given
         let number = 42.5
@@ -394,10 +392,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedNumber_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedNumber_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedCurrency_L1() {
         // Given
         let amount = 99.99
@@ -413,10 +411,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedCurrency_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedCurrency_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedDate_L1() {
         // Given
         let date = Date()
@@ -430,10 +428,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedDate_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedDate_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedTime_L1() {
         // Given
         let time = Date()
@@ -447,10 +445,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedTime_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedTime_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedPercentage_L1() {
         // Given
         let percentage = 0.75
@@ -464,10 +462,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedPercentage_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedPercentage_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedPlural_L1() {
         // Given
         let count = 5
@@ -485,10 +483,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedPlural_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedPlural_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformPresentLocalizedString_L1() {
         // Given
         let string = "Test String"
@@ -502,10 +500,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformPresentLocalizedString_L1 view should be hostable")
+        #expect(hostingView != nil, "platformPresentLocalizedString_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformLocalizedTextField_L1() {
         // Given
         let placeholder = "Enter text"
@@ -519,10 +517,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformLocalizedTextField_L1 view should be hostable")
+        #expect(hostingView != nil, "platformLocalizedTextField_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformLocalizedSecureField_L1() {
         // Given
         let placeholder = "Enter password"
@@ -536,10 +534,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformLocalizedSecureField_L1 view should be hostable")
+        #expect(hostingView != nil, "platformLocalizedSecureField_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformLocalizedTextEditor_L1() {
         // Given
         let placeholder = "Enter long text"
@@ -553,12 +551,12 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformLocalizedTextEditor_L1 view should be hostable")
+        #expect(hostingView != nil, "platformLocalizedTextEditor_L1 view should be hostable")
     }
     
     // MARK: - DataFrame Analysis Functions
     
-    @MainActor
+    @Test @MainActor
     func testPlatformAnalyzeDataFrame_L1() {
         // Given
         let dataFrame = DataFrame()
@@ -572,10 +570,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformAnalyzeDataFrame_L1 view should be hostable")
+        #expect(hostingView != nil, "platformAnalyzeDataFrame_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformCompareDataFrames_L1() {
         // Given
         let dataFrames = [DataFrame()]
@@ -589,10 +587,10 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformCompareDataFrames_L1 view should be hostable")
+        #expect(hostingView != nil, "platformCompareDataFrames_L1 view should be hostable")
     }
     
-    @MainActor
+    @Test @MainActor
     func testPlatformAssessDataQuality_L1() {
         // Given
         let dataFrame = DataFrame()
@@ -606,6 +604,6 @@ class L1SemanticTests: XCTestCase {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        XCTAssertNotNil(hostingView, "platformAssessDataQuality_L1 view should be hostable")
+        #expect(hostingView != nil, "platformAssessDataQuality_L1 view should be hostable")
     }
 }

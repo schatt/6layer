@@ -471,7 +471,7 @@ public struct FileUploadArea: View {
 // MARK: - File Info
 
 /// Information about a selected file
-public struct FileInfo: Identifiable {
+public struct FileInfo: Identifiable, Sendable {
     public let id = UUID()
     public let name: String
     public let size: Int64
@@ -686,7 +686,9 @@ public protocol CustomFieldComponent: View {
 // MARK: - Custom Field Registry
 
 /// Registry for custom field components
-public class CustomFieldRegistry: ObservableObject {
+@MainActor
+public class CustomFieldRegistry: ObservableObject, @unchecked Sendable {
+    @MainActor
     public static let shared = CustomFieldRegistry()
     
     private var customFields: [String: any CustomFieldComponent.Type] = [:]

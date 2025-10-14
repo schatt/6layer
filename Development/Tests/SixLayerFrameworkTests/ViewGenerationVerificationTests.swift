@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -7,7 +7,7 @@ import ViewInspector
 /// Tests that the actual SwiftUI views are generated correctly with the right properties and modifiers
 /// This verifies the view structure using the new testing pattern: view created + contains expected content
 @MainActor
-final class ViewGenerationVerificationTests: XCTestCase {
+final class ViewGenerationVerificationTests {
     
     // MARK: - Test Data
     
@@ -22,8 +22,7 @@ final class ViewGenerationVerificationTests: XCTestCase {
     
     var sampleData: [TestDataItem] = []
     
-    override func setUp() {
-        super.setUp()
+    init() {
         
         sampleData = [
             TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
@@ -37,7 +36,7 @@ final class ViewGenerationVerificationTests: XCTestCase {
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView actually generates views with proper structure
     /// TESTING SCOPE: Tests that the framework returns views with expected content and layout
     /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
-    func testIntelligentDetailViewGeneratesProperStructure() {
+    @Test func testIntelligentDetailViewGeneratesProperStructure() {
         // GIVEN: Test data
         let item = sampleData[0]
         
@@ -47,17 +46,17 @@ final class ViewGenerationVerificationTests: XCTestCase {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        XCTAssertNotNil(detailView, "IntelligentDetailView should be created successfully")
+        #expect(detailView != nil, "IntelligentDetailView should be created successfully")
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         do {
             // The view should be wrapped in AnyView
             let anyView = try detailView.inspect().anyView()
-            XCTAssertNotNil(anyView, "Detail view should be wrapped in AnyView")
+            #expect(anyView != nil, "Detail view should be wrapped in AnyView")
             
             // The view should contain text elements with our data
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            #expect(!viewText.isEmpty, "Detail view should contain text elements")
             
             // Should contain the title from our test data
             let hasTitleContent = viewText.contains { text in
@@ -68,7 +67,7 @@ final class ViewGenerationVerificationTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasTitleContent, "Detail view should contain the title 'Item 1'")
+            #expect(hasTitleContent, "Detail view should contain the title 'Item 1'")
             
             // Should contain the subtitle from our test data
             let hasSubtitleContent = viewText.contains { text in
@@ -79,17 +78,17 @@ final class ViewGenerationVerificationTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasSubtitleContent, "Detail view should contain the subtitle 'Subtitle 1'")
+            #expect(hasSubtitleContent, "Detail view should contain the subtitle 'Subtitle 1'")
             
         } catch {
-            XCTFail("Failed to inspect detail view structure: \(error)")
+            Issue.record("Failed to inspect detail view structure: \(error)")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles different layout strategies
     /// TESTING SCOPE: Tests that different presentation hints result in different view structures
     /// METHODOLOGY: Tests actual framework behavior with different hints
-    func testIntelligentDetailViewWithDifferentHints() {
+    @Test func testIntelligentDetailViewWithDifferentHints() {
         // GIVEN: Test data and different presentation hints
         let item = sampleData[0]
         
@@ -116,8 +115,8 @@ final class ViewGenerationVerificationTests: XCTestCase {
         // THEN: Test the two critical aspects for both views
         
         // 1. Views created - Both views can be instantiated successfully
-        XCTAssertNotNil(compactView, "Compact view should be created successfully")
-        XCTAssertNotNil(detailedView, "Detailed view should be created successfully")
+        #expect(compactView != nil, "Compact view should be created successfully")
+        #expect(detailedView != nil, "Detailed view should be created successfully")
         
         // 2. Contains what it needs to contain - Both views should contain our data
         do {
@@ -125,8 +124,8 @@ final class ViewGenerationVerificationTests: XCTestCase {
             let compactText = try compactView.inspect().findAll(ViewType.Text.self)
             let detailedText = try detailedView.inspect().findAll(ViewType.Text.self)
             
-            XCTAssertFalse(compactText.isEmpty, "Compact view should contain text elements")
-            XCTAssertFalse(detailedText.isEmpty, "Detailed view should contain text elements")
+            #expect(!compactText.isEmpty, "Compact view should contain text elements")
+            #expect(!detailedText.isEmpty, "Detailed view should contain text elements")
             
             // Both should contain the title
             let compactHasTitle = compactText.contains { text in
@@ -146,18 +145,18 @@ final class ViewGenerationVerificationTests: XCTestCase {
                 }
             }
             
-            XCTAssertTrue(compactHasTitle, "Compact view should contain the title")
-            XCTAssertTrue(detailedHasTitle, "Detailed view should contain the title")
+            #expect(compactHasTitle, "Compact view should contain the title")
+            #expect(detailedHasTitle, "Detailed view should contain the title")
             
         } catch {
-            XCTFail("Failed to inspect views with different hints: \(error)")
+            Issue.record("Failed to inspect views with different hints: \(error)")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles custom field views
     /// TESTING SCOPE: Tests that custom field views are actually used in the generated view
     /// METHODOLOGY: Tests that custom content appears in the final view
-    func testIntelligentDetailViewWithCustomFieldView() {
+    @Test func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: Test data and custom field view
         let item = sampleData[0]
         
@@ -172,13 +171,13 @@ final class ViewGenerationVerificationTests: XCTestCase {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        XCTAssertNotNil(detailView, "Detail view with custom field view should be created successfully")
+        #expect(detailView != nil, "Detail view with custom field view should be created successfully")
         
         // 2. Contains what it needs to contain - The view should contain custom field content
         do {
             // The view should contain text elements
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            #expect(!viewText.isEmpty, "Detail view should contain text elements")
             
             // Should contain custom field content
             let hasCustomContent = viewText.contains { text in
@@ -189,17 +188,17 @@ final class ViewGenerationVerificationTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasCustomContent, "Detail view should contain custom field content")
+            #expect(hasCustomContent, "Detail view should contain custom field content")
             
         } catch {
-            XCTFail("Failed to inspect detail view with custom field view: \(error)")
+            Issue.record("Failed to inspect detail view with custom field view: \(error)")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles nil values gracefully
     /// TESTING SCOPE: Tests that views with nil values still generate properly
     /// METHODOLOGY: Tests actual framework behavior with nil data
-    func testIntelligentDetailViewWithNilValues() {
+    @Test func testIntelligentDetailViewWithNilValues() {
         // GIVEN: Test data with nil values
         let item = sampleData[1] // This has nil subtitle
         
@@ -209,13 +208,13 @@ final class ViewGenerationVerificationTests: XCTestCase {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        XCTAssertNotNil(detailView, "Detail view with nil values should be created successfully")
+        #expect(detailView != nil, "Detail view with nil values should be created successfully")
         
         // 2. Contains what it needs to contain - The view should contain available data
         do {
             // The view should contain text elements
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)
-            XCTAssertFalse(viewText.isEmpty, "Detail view should contain text elements")
+            #expect(!viewText.isEmpty, "Detail view should contain text elements")
             
             // Should contain the title (which is not nil)
             let hasTitleContent = viewText.contains { text in
@@ -226,7 +225,7 @@ final class ViewGenerationVerificationTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasTitleContent, "Detail view should contain the title 'Item 2'")
+            #expect(hasTitleContent, "Detail view should contain the title 'Item 2'")
             
             // Should contain the description (which is not nil)
             let hasDescriptionContent = viewText.contains { text in
@@ -237,17 +236,17 @@ final class ViewGenerationVerificationTests: XCTestCase {
                     return false
                 }
             }
-            XCTAssertTrue(hasDescriptionContent, "Detail view should contain the description 'Description 2'")
+            #expect(hasDescriptionContent, "Detail view should contain the description 'Description 2'")
             
         } catch {
-            XCTFail("Failed to inspect detail view with nil values: \(error)")
+            Issue.record("Failed to inspect detail view with nil values: \(error)")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that DataIntrospectionEngine actually analyzes data correctly
     /// TESTING SCOPE: Tests that the data analysis returns expected results
     /// METHODOLOGY: Tests actual analysis results, not just that analysis runs
-    func testDataIntrospectionEngineAnalyzesDataCorrectly() {
+    @Test func testDataIntrospectionEngineAnalyzesDataCorrectly() {
         // GIVEN: Test data
         let item = sampleData[0]
         
@@ -257,26 +256,26 @@ final class ViewGenerationVerificationTests: XCTestCase {
         // THEN: Test the two critical aspects
         
         // 1. Analysis created - The analysis should be created successfully
-        XCTAssertNotNil(analysis, "Data analysis should be created successfully")
+        #expect(analysis != nil, "Data analysis should be created successfully")
         
         // 2. Contains what it needs to contain - The analysis should contain expected data
-        XCTAssertFalse(analysis.fields.isEmpty, "Analysis should contain fields")
-        XCTAssertNotNil(analysis.complexity, "Analysis should have complexity assessment")
-        XCTAssertNotNil(analysis.patterns, "Analysis should have pattern detection")
+        #expect(!analysis.fields.isEmpty, "Analysis should contain fields")
+        #expect(analysis.complexity != nil, "Analysis should have complexity assessment")
+        #expect(analysis.patterns != nil, "Analysis should have pattern detection")
         
         // Should contain fields for our test data properties
         let fieldNames = analysis.fields.map { $0.name }
-        XCTAssertTrue(fieldNames.contains("title"), "Analysis should contain 'title' field")
-        XCTAssertTrue(fieldNames.contains("subtitle"), "Analysis should contain 'subtitle' field")
-        XCTAssertTrue(fieldNames.contains("description"), "Analysis should contain 'description' field")
-        XCTAssertTrue(fieldNames.contains("value"), "Analysis should contain 'value' field")
-        XCTAssertTrue(fieldNames.contains("isActive"), "Analysis should contain 'isActive' field")
+        #expect(fieldNames.contains("title"), "Analysis should contain 'title' field")
+        #expect(fieldNames.contains("subtitle"), "Analysis should contain 'subtitle' field")
+        #expect(fieldNames.contains("description"), "Analysis should contain 'description' field")
+        #expect(fieldNames.contains("value"), "Analysis should contain 'value' field")
+        #expect(fieldNames.contains("isActive"), "Analysis should contain 'isActive' field")
     }
     
     /// BUSINESS PURPOSE: Verify that layout strategy determination works correctly
     /// TESTING SCOPE: Tests that different data complexities result in appropriate layout strategies
     /// METHODOLOGY: Tests actual strategy selection based on data analysis
-    func testLayoutStrategyDeterminationWorksCorrectly() {
+    @Test func testLayoutStrategyDeterminationWorksCorrectly() {
         // GIVEN: Different data complexities
         let simpleData = TestDataItem(
             title: "Simple",
@@ -304,16 +303,16 @@ final class ViewGenerationVerificationTests: XCTestCase {
         // THEN: Test the two critical aspects
         
         // 1. Strategies created - Both strategies should be determined successfully
-        XCTAssertNotNil(simpleStrategy, "Simple data should have a layout strategy")
-        XCTAssertNotNil(complexStrategy, "Complex data should have a layout strategy")
+        #expect(simpleStrategy != nil, "Simple data should have a layout strategy")
+        #expect(complexStrategy != nil, "Complex data should have a layout strategy")
         
         // 2. Contains what it needs to contain - Strategies should be appropriate for data complexity
         // Simple data should get compact or standard layout
-        XCTAssertTrue([DetailLayoutStrategy.compact, DetailLayoutStrategy.standard].contains(simpleStrategy),
+        #expect([DetailLayoutStrategy.compact, DetailLayoutStrategy.standard].contains(simpleStrategy), 
                      "Simple data should get compact or standard layout")
         
         // Complex data should get detailed or tabbed layout
-        XCTAssertTrue([DetailLayoutStrategy.detailed, DetailLayoutStrategy.tabbed].contains(complexStrategy),
+        #expect([DetailLayoutStrategy.detailed, DetailLayoutStrategy.tabbed].contains(complexStrategy), 
                      "Complex data should get detailed or tabbed layout")
     }
 }

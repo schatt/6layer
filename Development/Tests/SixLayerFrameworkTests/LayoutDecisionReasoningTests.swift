@@ -5,14 +5,14 @@
 //  Tests for layout decision reasoning properties
 //
 
-import XCTest
+import Testing
 @testable import SixLayerFramework
 
-final class LayoutDecisionReasoningTests: XCTestCase {
+final class LayoutDecisionReasoningTests {
     
     // MARK: - GenericLayoutDecision Reasoning Tests
     
-    func testGenericLayoutDecisionReasoningContainsApproach() {
+    @Test func testGenericLayoutDecisionReasoningContainsApproach() {
         // Given
         let decision = GenericLayoutDecision(
             approach: .grid,
@@ -23,11 +23,11 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertTrue(decision.reasoning.contains("grid"))
-        XCTAssertTrue(decision.reasoning.contains("2 columns"))
+        #expect(decision.reasoning.contains("grid"))
+        #expect(decision.reasoning.contains("2 columns"))
     }
     
-    func testGenericLayoutDecisionReasoningContainsPerformance() {
+    @Test func testGenericLayoutDecisionReasoningContainsPerformance() {
         // Given
         let decision = GenericLayoutDecision(
             approach: .list,
@@ -38,11 +38,11 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertTrue(decision.reasoning.contains("list"))
-        XCTAssertTrue(decision.reasoning.contains("1 column"))
+        #expect(decision.reasoning.contains("list"))
+        #expect(decision.reasoning.contains("1 column"))
     }
     
-    func testGenericLayoutDecisionReasoningContainsSpacing() {
+    @Test func testGenericLayoutDecisionReasoningContainsSpacing() {
         // Given
         let decision = GenericLayoutDecision(
             approach: .grid,
@@ -53,13 +53,13 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertTrue(decision.reasoning.contains("grid"))
-        XCTAssertTrue(decision.reasoning.contains("3 columns"))
+        #expect(decision.reasoning.contains("grid"))
+        #expect(decision.reasoning.contains("3 columns"))
     }
     
     // MARK: - GenericFormLayoutDecision Reasoning Tests
     
-    func testGenericFormLayoutDecisionReasoningContainsContainer() {
+    @Test func testGenericFormLayoutDecisionReasoningContainsContainer() {
         // Given
         let decision = GenericFormLayoutDecision(
             preferredContainer: .adaptive,
@@ -71,11 +71,11 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertTrue(decision.reasoning.contains("Form layout"))
-        XCTAssertTrue(decision.reasoning.contains("optimized"))
+        #expect(decision.reasoning.contains("Form layout"))
+        #expect(decision.reasoning.contains("optimized"))
     }
     
-    func testGenericFormLayoutDecisionReasoningContainsComplexity() {
+    @Test func testGenericFormLayoutDecisionReasoningContainsComplexity() {
         // Given
         let decision = GenericFormLayoutDecision(
             preferredContainer: .structured,
@@ -87,13 +87,13 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertTrue(decision.reasoning.contains("Form layout"))
-        XCTAssertTrue(decision.reasoning.contains("complexity"))
+        #expect(decision.reasoning.contains("Form layout"))
+        #expect(decision.reasoning.contains("complexity"))
     }
     
     // MARK: - Reasoning Content Validation Tests
     
-    func testReasoningIsNotEmpty() {
+    @Test func testReasoningIsNotEmpty() {
         // Given
         let decision = GenericLayoutDecision(
             approach: .grid,
@@ -104,11 +104,11 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertFalse(decision.reasoning.isEmpty)
-        XCTAssertTrue(decision.reasoning.count > 10)
+        #expect(!decision.reasoning.isEmpty)
+        #expect(decision.reasoning.count > 10)
     }
     
-    func testReasoningIsDescriptive() {
+    @Test func testReasoningIsDescriptive() {
         // Given
         let decision = GenericFormLayoutDecision(
             preferredContainer: .adaptive,
@@ -120,13 +120,13 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertTrue(decision.reasoning.contains("optimized"))
-        XCTAssertTrue(decision.reasoning.contains("based on"))
+        #expect(decision.reasoning.contains("optimized"))
+        #expect(decision.reasoning.contains("based on"))
     }
     
     // MARK: - Reasoning Consistency Tests
     
-    func testReasoningConsistencyAcrossSimilarDecisions() {
+    @Test func testReasoningConsistencyAcrossSimilarDecisions() {
         // Given
         let decision1 = GenericLayoutDecision(
             approach: .grid,
@@ -145,10 +145,10 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(decision1.reasoning, decision2.reasoning)
+        #expect(decision1.reasoning == decision2.reasoning)
     }
     
-    func testReasoningReflectsDifferentApproaches() {
+    @Test func testReasoningReflectsDifferentApproaches() {
         // Given
         let gridDecision = GenericLayoutDecision(
             approach: .grid,
@@ -167,14 +167,14 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotEqual(gridDecision.reasoning, listDecision.reasoning)
-        XCTAssertTrue(gridDecision.reasoning.contains("grid"))
-        XCTAssertTrue(listDecision.reasoning.contains("list"))
+        #expect(gridDecision.reasoning != listDecision.reasoning)
+        #expect(gridDecision.reasoning.contains("grid"))
+        #expect(listDecision.reasoning.contains("list"))
     }
     
     // MARK: - Real Layout Decision Integration Tests
     
-    @MainActor
+    @Test @MainActor
     func testRealLayoutDecisionReasoningGeneration() {
         // Given
         let items = [MockItem(id: 1), MockItem(id: 2), MockItem(id: 3)]
@@ -195,13 +195,13 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         )
         
         // Then
-        XCTAssertFalse(decision.reasoning.isEmpty)
-        XCTAssertTrue(decision.reasoning.contains("Layout optimized"))
-        XCTAssertTrue(decision.reasoning.contains("approach"))
-        XCTAssertTrue(decision.reasoning.contains("columns"))
+        #expect(!decision.reasoning.isEmpty)
+        #expect(decision.reasoning.contains("Layout optimized"))
+        #expect(decision.reasoning.contains("approach"))
+        #expect(decision.reasoning.contains("columns"))
     }
     
-    @MainActor
+    @Test @MainActor
     func testRealFormLayoutDecisionReasoningGeneration() {
         // Given
         let hints = PresentationHints(
@@ -216,8 +216,8 @@ final class LayoutDecisionReasoningTests: XCTestCase {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then
-        XCTAssertFalse(decision.reasoning.isEmpty)
-        XCTAssertTrue(decision.reasoning.contains("Form layout"))
-        XCTAssertTrue(decision.reasoning.contains("optimized"))
+        #expect(!decision.reasoning.isEmpty)
+        #expect(decision.reasoning.contains("Form layout"))
+        #expect(decision.reasoning.contains("optimized"))
     }
 }

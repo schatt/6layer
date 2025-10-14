@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -6,9 +6,9 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoSemanticLayer1.swift functions
 /// Ensures Photo semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
+final class PlatformPhotoSemanticLayer1AccessibilityTests {
     
-    override func setUp() async throws {
+    init() async throws {
         try await super.setUp()
         await setupTestEnvironment()
         await MainActor.run {
@@ -21,7 +21,7 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
         }
     }
     
-    override func tearDown() async throws {
+    deinit {
         await cleanupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
@@ -34,7 +34,7 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
     
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -60,12 +60,12 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -91,14 +91,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - Photo Selection Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoSelection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -124,12 +124,12 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoSelection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -155,14 +155,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on macOS")
     }
     
     // MARK: - Photo Display Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -189,12 +189,12 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -221,7 +221,7 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: XCTestCase {
             )
         }
         
-        XCTAssertTrue(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS")
     }
 }
 

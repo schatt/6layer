@@ -1,6 +1,6 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.3.1 - Metal Rendering Crash Fix + Performance Layer Removal
+// SixLayerFramework v4.3.1 - Metal Rendering Crash Fix + Performance Layer Removal + Swift Testing Migration
 
 import PackageDescription
 
@@ -18,7 +18,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7")
+        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7"),
+        .package(url: "https://github.com/apple/swift-testing", exact: "0.99.0")
     ],
     targets: [
         // Main framework target - includes only the essential framework code
@@ -50,7 +51,11 @@ let package = Package(
         // Test targets
         .testTarget(
             name: "SixLayerFrameworkTests",
-            dependencies: ["SixLayerFramework", "ViewInspector"],
+            dependencies: [
+                "SixLayerFramework",
+                "ViewInspector",
+                .product(name: "Testing", package: "swift-testing")
+            ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
                 // Function index moved to docs directory

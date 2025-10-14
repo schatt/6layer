@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 import UniformTypeIdentifiers
 @testable import SixLayerFramework
@@ -17,15 +17,14 @@ import UniformTypeIdentifiers
  * accessibility validation, and performance benchmarking. Tests both enabled and disabled states of capabilities
  * using RuntimeCapabilityDetection mock framework.
  */
-final class AdvancedFieldTypesTests: XCTestCase {
+final class AdvancedFieldTypesTests {
     
     // MARK: - Test Data Setup
     
     private var testFormState: DynamicFormState!
     private var testConfiguration: DynamicFormConfiguration!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         testConfiguration = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
@@ -37,10 +36,9 @@ final class AdvancedFieldTypesTests: XCTestCase {
         testFormState = DynamicFormState(configuration: testConfiguration)
     }
     
-    override func tearDown() {
+    deinit {
         testFormState = nil
         testConfiguration = nil
-        super.tearDown()
     }
     
     // MARK: - Rich Text Editor Tests
@@ -51,7 +49,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
      * TESTING SCOPE: Tests field initialization, data binding, and platform-specific behavior
      * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
      */
-    func testRichTextEditorFieldInitialization() {
+    @Test func testRichTextEditorFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -64,12 +62,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let richTextField = RichTextEditorField(field: field, formState: testFormState)
         
         // Then
-        XCTAssertNotNil(richTextField)
-        XCTAssertEqual(field.contentType, .richtext)
-        XCTAssertEqual(field.label, "Rich Text Content")
+        #expect(richTextField != nil)
+        #expect(field.contentType == .richtext)
+        #expect(field.label == "Rich Text Content")
     }
     
-    func testRichTextEditorFieldEditingMode() {
+    @Test func testRichTextEditorFieldEditingMode() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -84,10 +82,10 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // Then
         // Test that editing mode can be toggled
         // This tests the internal state management
-        XCTAssertNotNil(richTextField)
+        #expect(richTextField != nil)
     }
     
-    func testRichTextEditorTextBinding() {
+    @Test func testRichTextEditorTextBinding() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -102,11 +100,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let richTextField = RichTextEditorField(field: field, formState: testFormState)
         
         // Then
-        XCTAssertNotNil(richTextField)
-        XCTAssertEqual(testFormState.getValue(for: field.id), testText)
+        #expect(richTextField != nil)
+        #expect(testFormState.getValue(for: field.id) == testText)
     }
     
-    func testRichTextToolbarFormatting() {
+    @Test func testRichTextToolbarFormatting() {
         // Given
         let selectedText = NSRange(location: 0, length: 5)
         
@@ -114,12 +112,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let toolbar = RichTextToolbar(selectedText: .constant(selectedText))
         
         // Then
-        XCTAssertNotNil(toolbar)
+        #expect(toolbar != nil)
         // Test that formatting buttons are present
         // This tests the toolbar UI structure
     }
     
-    func testRichTextPreview() {
+    @Test func testRichTextPreview() {
         // Given
         let testText = "This is **bold** and *italic* text"
         
@@ -127,7 +125,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let preview = RichTextPreview(text: testText)
         
         // Then
-        XCTAssertNotNil(preview)
+        #expect(preview != nil)
         // Test that preview displays the text correctly
     }
     
@@ -139,7 +137,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
      * TESTING SCOPE: Tests field initialization, suggestion filtering, and selection behavior
      * METHODOLOGY: Uses comprehensive test scenarios including empty suggestions and large datasets
      */
-    func testAutocompleteFieldInitialization() {
+    @Test func testAutocompleteFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -157,12 +155,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(autocompleteField)
-        XCTAssertEqual(field.contentType, .autocomplete)
-        XCTAssertEqual(field.label, "Search")
+        #expect(autocompleteField != nil)
+        #expect(field.contentType == .autocomplete)
+        #expect(field.label == "Search")
     }
     
-    func testAutocompleteFieldSuggestionFiltering() {
+    @Test func testAutocompleteFieldSuggestionFiltering() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -180,12 +178,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(autocompleteField)
+        #expect(autocompleteField != nil)
         // Test that suggestions are properly filtered
         // This tests the internal filtering logic
     }
     
-    func testAutocompleteFieldSuggestionSelection() {
+    @Test func testAutocompleteFieldSuggestionSelection() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -203,11 +201,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(autocompleteField)
+        #expect(autocompleteField != nil)
         // Test that suggestion selection updates the form state
     }
     
-    func testAutocompleteSuggestionsDisplay() {
+    @Test func testAutocompleteSuggestionsDisplay() {
         // Given
         let suggestions = ["Apple", "Banana", "Cherry"]
         
@@ -220,7 +218,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(suggestionsView)
+        #expect(suggestionsView != nil)
         // Test that suggestions are displayed correctly
     }
     
@@ -232,7 +230,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
      * TESTING SCOPE: Tests field initialization, file type validation, size limits, and error handling
      * METHODOLOGY: Uses mock file scenarios and comprehensive error condition testing
      */
-    func testEnhancedFileUploadFieldInitialization() {
+    @Test func testEnhancedFileUploadFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -252,12 +250,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
-        XCTAssertEqual(field.contentType, .file)
-        XCTAssertEqual(field.label, "Upload Files")
+        #expect(fileUploadField != nil)
+        #expect(field.contentType == .file)
+        #expect(field.label == "Upload Files")
     }
     
-    func testFileUploadFieldAllowedTypes() {
+    @Test func testFileUploadFieldAllowedTypes() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -276,11 +274,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
+        #expect(fileUploadField != nil)
         // Test that allowed types are properly configured
     }
     
-    func testFileUploadFieldMaxFileSize() {
+    @Test func testFileUploadFieldMaxFileSize() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -299,11 +297,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
+        #expect(fileUploadField != nil)
         // Test that max file size is properly configured
     }
     
-    func testFileUploadAreaDragAndDrop() {
+    @Test func testFileUploadAreaDragAndDrop() {
         // Given
         let allowedTypes = [UTType.image, UTType.pdf]
         let maxFileSize: Int64 = 10 * 1024 * 1024
@@ -321,11 +319,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadArea)
+        #expect(fileUploadArea != nil)
         // Test that drag and drop area is properly configured
     }
     
-    func testFileInfoCreation() {
+    @Test func testFileInfoCreation() {
         // Given
         let name = "test.pdf"
         let size: Int64 = 1024
@@ -336,14 +334,14 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let fileInfo = FileInfo(name: name, size: size, type: type, url: url)
         
         // Then
-        XCTAssertEqual(fileInfo.name, name)
-        XCTAssertEqual(fileInfo.size, size)
-        XCTAssertEqual(fileInfo.type, type)
-        XCTAssertEqual(fileInfo.url, url)
-        XCTAssertNotNil(fileInfo.id)
+        #expect(fileInfo.name == name)
+        #expect(fileInfo.size == size)
+        #expect(fileInfo.type == type)
+        #expect(fileInfo.url == url)
+        #expect(fileInfo.id != nil)
     }
     
-    func testFileListDisplay() {
+    @Test func testFileListDisplay() {
         // Given
         let files = [
             FileInfo(name: "test1.pdf", size: 1024, type: .pdf, url: nil),
@@ -356,11 +354,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         }
         
         // Then
-        XCTAssertNotNil(fileList)
+        #expect(fileList != nil)
         // Test that file list displays files correctly
     }
     
-    func testFileRowDisplay() {
+    @Test func testFileRowDisplay() {
         // Given
         let file = FileInfo(name: "test.pdf", size: 1024, type: .pdf, url: nil)
         
@@ -370,17 +368,17 @@ final class AdvancedFieldTypesTests: XCTestCase {
         }
         
         // Then
-        XCTAssertNotNil(fileRow)
+        #expect(fileRow != nil)
         // Test that file row displays file information correctly
     }
     
     // MARK: - Custom Field Component Tests
     
-    func testCustomFieldComponentProtocol() {
+    @Test func testCustomFieldComponentProtocol() {
         // Given
         let field = DynamicFormField(
             id: "custom",
-            contentType: .custom,
+            contentType: .text,
             label: "Custom Field",
             placeholder: "Custom placeholder"
         )
@@ -399,12 +397,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let customField = TestCustomField(field: field, formState: testFormState)
         
         // Then
-        XCTAssertNotNil(customField)
-        XCTAssertEqual(customField.field.id, field.id)
-        XCTAssertEqual(customField.field.contentType, .custom)
+        #expect(customField != nil)
+        #expect(customField.field.id == field.id)
+        #expect(customField.field.contentType == .custom)
     }
     
-    func testCustomFieldRegistry() {
+    @Test func testCustomFieldRegistry() {
         // Given
         let registry = CustomFieldRegistry.shared
         
@@ -423,11 +421,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         
         // Then
         let retrievedComponent = registry.getComponent(for: "testCustom")
-        XCTAssertNotNil(retrievedComponent)
-        XCTAssertTrue(retrievedComponent is TestCustomField.Type)
+        #expect(retrievedComponent != nil)
+        #expect(retrievedComponent is TestCustomField.Type)
     }
     
-    func testCustomFieldRegistryUnknownType() {
+    @Test func testCustomFieldRegistryUnknownType() {
         // Given
         let registry = CustomFieldRegistry.shared
         
@@ -435,12 +433,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let unknownComponent = registry.getComponent(for: "unknownType")
         
         // Then
-        XCTAssertNil(unknownComponent)
+        #expect(unknownComponent == nil)
     }
     
     // MARK: - Date/Time Picker Tests (To Be Implemented)
     
-    func testDatePickerFieldInitialization() {
+    @Test func testDatePickerFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "date",
@@ -458,10 +456,10 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // XCTAssertEqual(contentType, .date)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(field.contentType, .date)
+        #expect(field.contentType == .date)
     }
     
-    func testTimePickerFieldInitialization() {
+    @Test func testTimePickerFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "time",
@@ -479,10 +477,10 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // XCTAssertEqual(contentType, .time)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(field.contentType, .time)
+        #expect(field.contentType == .time)
     }
     
-    func testDateTimePickerFieldInitialization() {
+    @Test func testDateTimePickerFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "datetime",
@@ -500,12 +498,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         // XCTAssertEqual(contentType, .datetime)
         
         // For now, just test that the field type exists
-        XCTAssertEqual(field.contentType, .datetime)
+        #expect(field.contentType == .datetime)
     }
     
     // MARK: - Integration Tests
     
-    func testAdvancedFieldTypesIntegration() {
+    @Test func testAdvancedFieldTypesIntegration() {
         // Given
         let richTextField = DynamicFormField(
             id: "richText",
@@ -543,17 +541,17 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(richTextComponent)
-        XCTAssertNotNil(autocompleteComponent)
-        XCTAssertNotNil(fileUploadComponent)
+        #expect(richTextComponent != nil)
+        #expect(autocompleteComponent != nil)
+        #expect(fileUploadComponent != nil)
         
         // Test that all components work together in the same form state
-        XCTAssertNotNil(testFormState)
+        #expect(testFormState != nil)
     }
     
     // MARK: - Accessibility Tests
     
-    func testRichTextEditorAccessibility() {
+    @Test func testRichTextEditorAccessibility() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -566,12 +564,12 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let richTextField = RichTextEditorField(field: field, formState: testFormState)
         
         // Then
-        XCTAssertNotNil(richTextField)
+        #expect(richTextField != nil)
         // Test that accessibility labels and hints are properly set
         // This tests the accessibility implementation
     }
     
-    func testAutocompleteFieldAccessibility() {
+    @Test func testAutocompleteFieldAccessibility() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -588,11 +586,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(autocompleteField)
+        #expect(autocompleteField != nil)
         // Test that accessibility labels and hints are properly set
     }
     
-    func testFileUploadFieldAccessibility() {
+    @Test func testFileUploadFieldAccessibility() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -610,13 +608,13 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
+        #expect(fileUploadField != nil)
         // Test that accessibility labels and hints are properly set
     }
     
     // MARK: - Error Handling Tests
     
-    func testFileUploadFieldInvalidFileType() {
+    @Test func testFileUploadFieldInvalidFileType() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -635,11 +633,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
+        #expect(fileUploadField != nil)
         // Test that invalid file types are properly handled
     }
     
-    func testFileUploadFieldFileSizeExceeded() {
+    @Test func testFileUploadFieldFileSizeExceeded() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -658,11 +656,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
+        #expect(fileUploadField != nil)
         // Test that file size limits are properly enforced
     }
     
-    func testAutocompleteFieldEmptySuggestions() {
+    @Test func testAutocompleteFieldEmptySuggestions() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -680,13 +678,13 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(autocompleteField)
+        #expect(autocompleteField != nil)
         // Test that empty suggestions are handled gracefully
     }
     
     // MARK: - Performance Tests
     
-    func testRichTextEditorPerformance() {
+    @Test func testRichTextEditorPerformance() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -701,11 +699,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         let richTextField = RichTextEditorField(field: field, formState: testFormState)
         
         // Then
-        XCTAssertNotNil(richTextField)
+        #expect(richTextField != nil)
         // Test that large text is handled efficiently
     }
     
-    func testAutocompleteFieldPerformance() {
+    @Test func testAutocompleteFieldPerformance() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -723,11 +721,11 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(autocompleteField)
+        #expect(autocompleteField != nil)
         // Test that large suggestion lists are handled efficiently
     }
     
-    func testFileUploadFieldPerformance() {
+    @Test func testFileUploadFieldPerformance() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -745,7 +743,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
         )
         
         // Then
-        XCTAssertNotNil(fileUploadField)
+        #expect(fileUploadField != nil)
         // Test that many files are handled efficiently
     }
     
@@ -754,41 +752,41 @@ final class AdvancedFieldTypesTests: XCTestCase {
     /// BUSINESS PURPOSE: Advanced field types should provide different behavior when accessibility capabilities are enabled vs disabled
     /// TESTING SCOPE: Tests that advanced field types adapt their behavior based on VoiceOver, Switch Control, AssistiveTouch, and keyboard navigation capabilities
     /// METHODOLOGY: Uses mock framework to test both enabled and disabled states, verifying that field types provide appropriate accessibility features
-    func testAdvancedFieldTypesAccessibilityBehavior() async {
+    @Test func testAdvancedFieldTypesAccessibilityBehavior() async {
         await MainActor.run {
             // Test VoiceOver behavior
             RuntimeCapabilityDetection.setTestVoiceOver(true)
             let voiceOverEnabled = RuntimeCapabilityDetection.supportsVoiceOver
-            XCTAssertTrue(voiceOverEnabled, "VoiceOver should be enabled for testing")
+            #expect(voiceOverEnabled, "VoiceOver should be enabled for testing")
             
             RuntimeCapabilityDetection.setTestVoiceOver(false)
             let voiceOverDisabled = RuntimeCapabilityDetection.supportsVoiceOver
-            XCTAssertFalse(voiceOverDisabled, "VoiceOver should be disabled for testing")
+            #expect(!voiceOverDisabled, "VoiceOver should be disabled for testing")
             
             // Test Switch Control behavior
             RuntimeCapabilityDetection.setTestSwitchControl(true)
             let switchControlEnabled = RuntimeCapabilityDetection.supportsSwitchControl
-            XCTAssertTrue(switchControlEnabled, "Switch Control should be enabled for testing")
+            #expect(switchControlEnabled, "Switch Control should be enabled for testing")
             
             RuntimeCapabilityDetection.setTestSwitchControl(false)
             let switchControlDisabled = RuntimeCapabilityDetection.supportsSwitchControl
-            XCTAssertFalse(switchControlDisabled, "Switch Control should be disabled for testing")
+            #expect(!switchControlDisabled, "Switch Control should be disabled for testing")
             
             // Test AssistiveTouch behavior
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             let assistiveTouchEnabled = RuntimeCapabilityDetection.supportsAssistiveTouch
-            XCTAssertTrue(assistiveTouchEnabled, "AssistiveTouch should be enabled for testing")
+            #expect(assistiveTouchEnabled, "AssistiveTouch should be enabled for testing")
             
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)
             let assistiveTouchDisabled = RuntimeCapabilityDetection.supportsAssistiveTouch
-            XCTAssertFalse(assistiveTouchDisabled, "AssistiveTouch should be disabled for testing")
+            #expect(!assistiveTouchDisabled, "AssistiveTouch should be disabled for testing")
         }
     }
     
     /// BUSINESS PURPOSE: Advanced field types should provide enhanced accessibility labels when VoiceOver is enabled
     /// TESTING SCOPE: Tests that field types provide appropriate accessibility labels for VoiceOver users
     /// METHODOLOGY: Creates field types and verifies they have accessibility labels when VoiceOver is enabled
-    func testAdvancedFieldTypesVoiceOverLabels() async {
+    @Test func testAdvancedFieldTypesVoiceOverLabels() async {
         await MainActor.run {
             // Enable VoiceOver
             RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -805,13 +803,13 @@ final class AdvancedFieldTypesTests: XCTestCase {
             
             // Test that field types provide accessibility labels
             // Verify the field has proper configuration for VoiceOver
-            XCTAssertEqual(field.id, "testField", "Field should have correct ID")
-            XCTAssertEqual(field.label, "Test Field", "Field should have correct label")
-            XCTAssertEqual(field.contentType, .text, "Field should have correct content type")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
+            #expect(field.id == "testField", "Field should have correct ID")
+            #expect(field.label == "Test Field", "Field should have correct label")
+            #expect(field.contentType == .text, "Field should have correct content type")
+            #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
             
             // Test that form state is properly configured
-            XCTAssertNotNil(formState, "Form state should be created successfully")
+            #expect(formState != nil, "Form state should be created successfully")
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -821,7 +819,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
     /// BUSINESS PURPOSE: Advanced field types should provide keyboard navigation support when Switch Control is enabled
     /// TESTING SCOPE: Tests that field types support keyboard navigation for Switch Control users
     /// METHODOLOGY: Enables Switch Control and verifies field types provide appropriate keyboard navigation
-    func testAdvancedFieldTypesSwitchControlNavigation() async {
+    @Test func testAdvancedFieldTypesSwitchControlNavigation() async {
         await MainActor.run {
             // Enable Switch Control
             RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -838,13 +836,13 @@ final class AdvancedFieldTypesTests: XCTestCase {
             
             // Test that field types support keyboard navigation
             // Verify the field has proper configuration for Switch Control
-            XCTAssertEqual(field.id, "testField", "Field should have correct ID")
-            XCTAssertEqual(field.label, "Test Field", "Field should have correct label")
-            XCTAssertEqual(field.contentType, .text, "Field should have correct content type")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
+            #expect(field.id == "testField", "Field should have correct ID")
+            #expect(field.label == "Test Field", "Field should have correct label")
+            #expect(field.contentType == .text, "Field should have correct content type")
+            #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
             
             // Test that form state is properly configured
-            XCTAssertNotNil(formState, "Form state should be created successfully")
+            #expect(formState != nil, "Form state should be created successfully")
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestSwitchControl(false)
@@ -854,7 +852,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
     /// BUSINESS PURPOSE: Advanced field types should provide gesture recognition when AssistiveTouch is enabled
     /// TESTING SCOPE: Tests that field types support gesture recognition for AssistiveTouch users
     /// METHODOLOGY: Enables AssistiveTouch and verifies field types provide appropriate gesture support
-    func testAdvancedFieldTypesAssistiveTouchGestures() async {
+    @Test func testAdvancedFieldTypesAssistiveTouchGestures() async {
         await MainActor.run {
             // Enable AssistiveTouch
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
@@ -871,13 +869,13 @@ final class AdvancedFieldTypesTests: XCTestCase {
             
             // Test that field types support gesture recognition
             // Verify the field has proper configuration for AssistiveTouch
-            XCTAssertEqual(field.id, "testField", "Field should have correct ID")
-            XCTAssertEqual(field.label, "Test Field", "Field should have correct label")
-            XCTAssertEqual(field.contentType, .text, "Field should have correct content type")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+            #expect(field.id == "testField", "Field should have correct ID")
+            #expect(field.label == "Test Field", "Field should have correct label")
+            #expect(field.contentType == .text, "Field should have correct content type")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
             
             // Test that form state is properly configured
-            XCTAssertNotNil(formState, "Form state should be created successfully")
+            #expect(formState != nil, "Form state should be created successfully")
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)
@@ -887,7 +885,7 @@ final class AdvancedFieldTypesTests: XCTestCase {
     /// BUSINESS PURPOSE: Advanced field types should provide different behavior when multiple accessibility capabilities are enabled simultaneously
     /// TESTING SCOPE: Tests that field types handle multiple accessibility capabilities correctly
     /// METHODOLOGY: Enables multiple capabilities and verifies field types provide appropriate combined behavior
-    func testAdvancedFieldTypesMultipleAccessibilityCapabilities() async {
+    @Test func testAdvancedFieldTypesMultipleAccessibilityCapabilities() async {
         await MainActor.run {
             // Enable multiple capabilities
             RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -895,9 +893,9 @@ final class AdvancedFieldTypesTests: XCTestCase {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
             // Verify all capabilities are enabled
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
-            XCTAssertTrue(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+            #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
+            #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
             
             // Test that field types handle multiple capabilities
             // Note: In a real implementation, these would check actual combined behavior

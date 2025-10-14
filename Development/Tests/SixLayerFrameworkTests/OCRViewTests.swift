@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,12 +9,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in OCRView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class OCRViewTests: XCTestCase {
+final class OCRViewTests {
     
     // MARK: - Test Setup
     
-    override func setUp() {
-        super.setUp()
+    init() {
         setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -24,8 +23,7 @@ final class OCRViewTests: XCTestCase {
         config.enableDebugLogging = false
     }
     
-    override func tearDown() {
-        super.tearDown()
+    deinit {
         cleanupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
@@ -33,7 +31,7 @@ final class OCRViewTests: XCTestCase {
     
     // MARK: - OCRView Tests
     
-    func testOCRViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testOCRViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let context = OCRContext()
         let strategy = OCRStrategy(
@@ -59,10 +57,10 @@ final class OCRViewTests: XCTestCase {
             componentName: "OCRView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OCRView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "OCRView should generate accessibility identifiers on iOS")
     }
     
-    func testOCRViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test func testOCRViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testImage = PlatformImage()
         let context = OCRContext()
         let strategy = OCRStrategy(
@@ -88,6 +86,6 @@ final class OCRViewTests: XCTestCase {
             componentName: "OCRView"
         )
         
-        XCTAssertTrue(hasAccessibilityID, "OCRView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "OCRView should generate accessibility identifiers on macOS")
     }
 }

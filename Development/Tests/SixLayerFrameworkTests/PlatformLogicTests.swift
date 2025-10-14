@@ -19,6 +19,12 @@ final class PlatformLogicTests: XCTestCase {
         let minTouchTarget: Int
         let hoverDelay: Double
     }
+
+    // Local performance config for animation-related tests (avoid card-specific config)
+    struct PerformanceConfig {
+        let targetFrameRate: Int
+        let maxAnimationDuration: Double
+    }
     
     // MARK: - Platform Detection Logic Tests
     
@@ -222,8 +228,8 @@ final class PlatformLogicTests: XCTestCase {
     func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate touch targets
         if config.supportsTouch {
-            XCTAssertGreaterThanOrEqual(layoutDecision.cardWidth, config.minTouchTarget, "Card width should accommodate touch targets on \(platform)")
-            XCTAssertGreaterThanOrEqual(layoutDecision.cardHeight, config.minTouchTarget, "Card height should accommodate touch targets on \(platform)")
+            XCTAssertGreaterThanOrEqual(layoutDecision.cardWidth, CGFloat(config.minTouchTarget), "Card width should accommodate touch targets on \(platform)")
+            XCTAssertGreaterThanOrEqual(layoutDecision.cardHeight, CGFloat(config.minTouchTarget), "Card height should accommodate touch targets on \(platform)")
         }
         
         // Hover platforms should have appropriate spacing
@@ -251,7 +257,7 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    func testAnimationAppropriateness(_ performanceConfig: CardExpansionPerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
+    func testAnimationAppropriateness(_ performanceConfig: PerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate animation duration
         if config.supportsTouch {
             XCTAssertGreaterThan(performanceConfig.maxAnimationDuration, 0, "Touch platforms should have animation duration on \(platform)")
@@ -473,20 +479,20 @@ final class PlatformLogicTests: XCTestCase {
         }
     }
     
-    private func createMockPerformanceConfig(for platform: SixLayerPlatform) -> CardExpansionPerformanceConfig {
+    private func createMockPerformanceConfig(for platform: SixLayerPlatform) -> PerformanceConfig {
         switch platform {
         case .iOS, .macOS, .visionOS:
-            return CardExpansionPerformanceConfig(
+            return PerformanceConfig(
                 targetFrameRate: 60,
                 maxAnimationDuration: 0.3
             )
         case .watchOS:
-            return CardExpansionPerformanceConfig(
+            return PerformanceConfig(
                 targetFrameRate: 30,
                 maxAnimationDuration: 0.2
             )
         case .tvOS:
-            return CardExpansionPerformanceConfig(
+            return PerformanceConfig(
                 targetFrameRate: 60,
                 maxAnimationDuration: 0.4
             )

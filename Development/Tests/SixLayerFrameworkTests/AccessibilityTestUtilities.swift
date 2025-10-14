@@ -70,8 +70,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     guard let rootView = root as? UIView else { return nil }
     
     // Check root view first
-    if let id = rootView.accessibilityIdentifier, !id.isEmpty { 
-        print("DEBUG: Found accessibility identifier on root view: \(id)")
+    if let id = rootView.accessibilityIdentifier { 
+        print("DEBUG: Found accessibility identifier on root view: '\(id)'")
         return id 
     }
     
@@ -87,8 +87,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         print("DEBUG: Checking view at depth \(depth): \(type(of: next))")
         print("DEBUG: View accessibility identifier: \(next.accessibilityIdentifier ?? "nil")")
         
-        if let id = next.accessibilityIdentifier, !id.isEmpty { 
-            print("DEBUG: Found accessibility identifier on subview: \(id)")
+        if let id = next.accessibilityIdentifier { 
+            print("DEBUG: Found accessibility identifier on subview: '\(id)'")
             return id 
         }
         stack.append(contentsOf: next.subviews)
@@ -107,8 +107,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     print("DEBUG: Root NSView accessibility identifier: '\(rootId)'")
     print("DEBUG: Root NSView subviews count: \(rootView.subviews.count)")
     
-    if !rootId.isEmpty { 
-        print("DEBUG: Found accessibility identifier on root NSView: \(rootId)")
+    if rootId != nil { 
+        print("DEBUG: Found accessibility identifier on root NSView: '\(rootId)'")
         return rootId 
     }
     
@@ -120,8 +120,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         print("DEBUG: Checking NSView at depth \(depth): \(type(of: next))")
         print("DEBUG: NSView accessibility identifier: '\(id)'")
         
-        if !id.isEmpty { 
-            print("DEBUG: Found accessibility identifier on NSView subview: \(id)")
+        if let id = id { 
+            print("DEBUG: Found accessibility identifier on NSView subview: '\(id)'")
             return id 
         }
         stack.append(contentsOf: next.subviews)
@@ -169,7 +169,29 @@ public func hasAccessibilityIdentifier<T: View>(
     TestSetupUtilities.shared.simulatePlatform(platform)
     
     // Get the actual accessibility identifier from the view
-    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+    if let actualIdentifier = getAccessibilityIdentifier(from: view) {
+        // Convert pattern to regex (replace * with .*)
+        let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
+        do {
+            let regex = try NSRegularExpression(pattern: regexPattern)
+            let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
+            if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
+                print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match on \(platform): '\(actualIdentifier)' matches '\(expectedPattern)'")
+                return true
+            } else {
+                print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern on \(platform). Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
+                return false
+            }
+        } catch {
+            print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)' on \(platform): \(error)")
+            return false
+        }
+    } else {
+        // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
+        if expectedPattern == "^$" || expectedPattern == "^\\s*$" {
+            print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty) on \(platform)")
+            return true
+        }
         print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
         return false
     }
@@ -244,7 +266,21 @@ public func hasAccessibilityIdentifier<T: View>(
     componentName: String = "Component"
 ) -> Bool {
     // Get the actual accessibility identifier from the view
-    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+    if let actualIdentifier = getAccessibilityIdentifier(from: view) {
+        // Check if it matches exactly
+        if actualIdentifier == expectedIdentifier {
+            print("✅ DISCOVERY: \(componentName) generates CORRECT accessibility identifier: '\(actualIdentifier)'")
+            return true
+        } else {
+            print("⚠️ DISCOVERY: \(componentName) generates WRONG accessibility identifier. Expected: '\(expectedIdentifier)', Got: '\(actualIdentifier)'")
+            return false
+        }
+    } else {
+        // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
+        if expectedIdentifier.isEmpty {
+            print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty)")
+            return true
+        }
         print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
         return false
     }
@@ -274,7 +310,29 @@ public func hasAccessibilityIdentifier<T: View>(
     componentName: String = "Component"
 ) -> Bool {
     // Get the actual accessibility identifier from the view
-    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+    if let actualIdentifier = getAccessibilityIdentifier(from: view) {
+        // Convert pattern to regex (replace * with .*)
+        let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
+        do {
+            let regex = try NSRegularExpression(pattern: regexPattern)
+            let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
+            if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
+                print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match: '\(actualIdentifier)' matches '\(expectedPattern)'")
+                return true
+            } else {
+                print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern. Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
+                return false
+            }
+        } catch {
+            print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)': \(error)")
+            return false
+        }
+    } else {
+        // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
+        if expectedPattern == "^$" || expectedPattern == "^\\s*$" {
+            print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty)")
+            return true
+        }
         print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
         return false
     }

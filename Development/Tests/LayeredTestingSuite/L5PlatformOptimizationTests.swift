@@ -6,11 +6,11 @@
 //  Tests L5 functions that apply platform-specific enhancements and optimizations
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-class L5PlatformOptimizationTests: XCTestCase {
+class L5PlatformOptimizationTests {
     
     // MARK: - Test Data
     
@@ -24,8 +24,7 @@ class L5PlatformOptimizationTests: XCTestCase {
     private var sampleIOSHapticStyle: IOSHapticStyle = .medium
     private var sampleMacOSPerformanceStrategy: MacOSPerformanceStrategy = .optimized
     
-    override func setUp() {
-        super.setUp()
+    init() {
         samplePlatform = L5TestDataFactory.createSamplePlatform()
         samplePerformanceLevel = L5TestDataFactory.createSamplePerformanceOptimizationLevel()
         sampleCachingStrategy = L5TestDataFactory.createSampleCachingStrategy()
@@ -37,7 +36,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         sampleMacOSPerformanceStrategy = L5TestDataFactory.createSampleMacOSPerformanceStrategy()
     }
     
-    override func tearDown() {
+    deinit {
         samplePlatform = .iOS
         samplePerformanceLevel = .medium
         sampleCachingStrategy = .intelligent
@@ -47,12 +46,11 @@ class L5PlatformOptimizationTests: XCTestCase {
         samplePerformanceMetrics = ViewPerformanceMetrics()
         sampleIOSHapticStyle = .medium
         sampleMacOSPerformanceStrategy = .optimized
-        super.tearDown()
     }
     
     // MARK: - Performance Optimization Functions
     
-    func testPlatformMemoryOptimization() {
+    @Test func testPlatformMemoryOptimization() {
         // Given
         let testView = Text("Test View")
         
@@ -64,7 +62,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply memory optimization (drawingGroup on iOS/macOS)
     }
     
-    func testPlatformLazyLoading() {
+    @Test func testPlatformLazyLoading() {
         // Given
         let testView = Text("Test View")
         
@@ -78,7 +76,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply lazy loading optimization
     }
     
-    func testPlatformRenderingOptimization() {
+    @Test func testPlatformRenderingOptimization() {
         // Given
         let testView = Text("Test View")
         
@@ -90,7 +88,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply rendering optimization (drawingGroup on iOS/macOS)
     }
     
-    func testPlatformAnimationOptimization() {
+    @Test func testPlatformAnimationOptimization() {
         // Given
         let testView = Text("Test View")
         
@@ -102,7 +100,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply animation optimization
     }
     
-    func testPlatformCachingOptimization() {
+    @Test func testPlatformCachingOptimization() {
         // Given
         let testView = Text("Test View")
         
@@ -116,7 +114,7 @@ class L5PlatformOptimizationTests: XCTestCase {
     
     // MARK: - Platform-Specific Optimization Functions
     
-    func testPlatformPerformanceOptimized() {
+    @Test func testPlatformPerformanceOptimized() {
         // Given
         let testView = Text("Test View")
         let platform = samplePlatform
@@ -129,7 +127,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply platform-specific performance optimizations
     }
     
-    func testPlatformMemoryOptimized() {
+    @Test func testPlatformMemoryOptimized() {
         // Given
         let testView = Text("Test View")
         let platform = samplePlatform
@@ -144,7 +142,7 @@ class L5PlatformOptimizationTests: XCTestCase {
     
     // MARK: - iOS-Specific Optimization Functions
     
-    func testPlatformIOSNavigationBar() {
+    @Test func testPlatformIOSNavigationBar() {
         // Given
         let testView = Text("Test View")
         let title = "Test Title"
@@ -161,7 +159,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply iOS-specific navigation bar styling
     }
     
-    func testPlatformIOSToolbar() {
+    @Test func testPlatformIOSToolbar() {
         // Given
         let testView = Text("Test View")
         
@@ -175,7 +173,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should apply iOS-specific toolbar styling
     }
     
-    func testPlatformIOSSwipeGestures() {
+    @Test func testPlatformIOSSwipeGestures() {
         // Given
         let testView = Text("Test View")
         var swipeLeftCalled = false
@@ -197,7 +195,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Note: Actual gesture testing would require UI testing
     }
     
-    func testPlatformIOSHapticFeedback() {
+    @Test func testPlatformIOSHapticFeedback() {
         // Given
         let testView = Text("Test View")
         let style = sampleIOSHapticStyle
@@ -217,7 +215,7 @@ class L5PlatformOptimizationTests: XCTestCase {
     
     // MARK: - macOS-Specific Optimization Functions
     
-    func testMacOSOptimizationManager() {
+    @Test func testMacOSOptimizationManager() {
         // Given
         let manager = MacOSOptimizationManager.shared
         
@@ -227,12 +225,12 @@ class L5PlatformOptimizationTests: XCTestCase {
         let version = manager.macOSVersion
         
         // Then
-        XCTAssertEqual(strategy, .standard, "Should return standard strategy")
-        XCTAssertFalse(isOptimized, "Should not be optimized (placeholder)")
-        XCTAssertFalse(version.isEmpty, "Should return macOS version")
+        #expect(strategy == .standard, "Should return standard strategy")
+        #expect(!isOptimized, "Should not be optimized (placeholder)")
+        #expect(!version.isEmpty, "Should return macOS version")
     }
     
-    func testMacOSPerformanceStrategy() {
+    @Test func testMacOSPerformanceStrategy() {
         // Given
         let strategy = sampleMacOSPerformanceStrategy
         
@@ -240,13 +238,13 @@ class L5PlatformOptimizationTests: XCTestCase {
         let rawValue = strategy.rawValue
         
         // Then
-        XCTAssertEqual(rawValue, "optimized", "Should have correct raw value")
-        XCTAssertTrue(MacOSPerformanceStrategy.allCases.contains(strategy), "Should be valid case")
+        #expect(rawValue == "optimized", "Should have correct raw value")
+        #expect(MacOSPerformanceStrategy.allCases.contains(strategy), "Should be valid case")
     }
     
     // MARK: - Performance Metrics Testing
     
-    func testViewPerformanceMetrics() {
+    @Test func testViewPerformanceMetrics() {
         // Given
         let metrics = samplePerformanceMetrics
         
@@ -257,13 +255,13 @@ class L5PlatformOptimizationTests: XCTestCase {
         let cacheHitRate = metrics.cacheHitRate
         
         // Then
-        XCTAssertEqual(renderTime, 0.016, accuracy: 0.001, "Should have correct render time")
-        XCTAssertEqual(memoryUsage, 1024 * 1024, "Should have correct memory usage")
-        XCTAssertEqual(frameRate, 60.0, "Should have correct frame rate")
-        XCTAssertEqual(cacheHitRate, 0.85, "Should have correct cache hit rate")
+        #expect(renderTime == 0.016)
+        #expect(memoryUsage == 1024 * 1024, "Should have correct memory usage")
+        #expect(frameRate == 60.0, "Should have correct frame rate")
+        #expect(cacheHitRate == 0.85, "Should have correct cache hit rate")
     }
     
-    func testPerformanceOptimizationLevel() {
+    @Test func testPerformanceOptimizationLevel() {
         // Given
         let level = samplePerformanceLevel
         
@@ -271,11 +269,11 @@ class L5PlatformOptimizationTests: XCTestCase {
         let multiplier = level.multiplier
         
         // Then
-        XCTAssertEqual(multiplier, 0.6, "Medium level should have 0.6 multiplier")
-        XCTAssertTrue(PerformanceOptimizationLevel.allCases.contains(level), "Should be valid case")
+        #expect(multiplier == 0.6, "Medium level should have 0.6 multiplier")
+        #expect(PerformanceOptimizationLevel.allCases.contains(level), "Should be valid case")
     }
     
-    func testPerformanceCachingStrategy() {
+    @Test func testPerformanceCachingStrategy() {
         // Given
         let strategy = sampleCachingStrategy
         
@@ -283,11 +281,11 @@ class L5PlatformOptimizationTests: XCTestCase {
         let cacheSize = strategy.cacheSize
         
         // Then
-        XCTAssertEqual(cacheSize, 1000, "Intelligent strategy should have 1000 cache size")
-        XCTAssertTrue(PerformanceCachingStrategy.allCases.contains(strategy), "Should be valid case")
+        #expect(cacheSize == 1000, "Intelligent strategy should have 1000 cache size")
+        #expect(PerformanceCachingStrategy.allCases.contains(strategy), "Should be valid case")
     }
     
-    func testPerformanceRenderingStrategy() {
+    @Test func testPerformanceRenderingStrategy() {
         // Given
         let strategy = sampleRenderingStrategy
         
@@ -295,13 +293,13 @@ class L5PlatformOptimizationTests: XCTestCase {
         let useMetal = strategy.useMetal
         
         // Then
-        XCTAssertTrue(useMetal, "Optimized strategy should use Metal")
-        XCTAssertTrue(PerformanceRenderingStrategy.allCases.contains(strategy), "Should be valid case")
+        #expect(useMetal, "Optimized strategy should use Metal")
+        #expect(PerformanceRenderingStrategy.allCases.contains(strategy), "Should be valid case")
     }
     
     // MARK: - Memory Management Testing
     
-    func testMemoryConfig() {
+    @Test func testMemoryConfig() {
         // Given
         let config = sampleMemoryConfig
         
@@ -311,12 +309,12 @@ class L5PlatformOptimizationTests: XCTestCase {
         let monitorMemoryPressure = config.monitorMemoryPressure
         
         // Then
-        XCTAssertEqual(maxCacheSize, 1024 * 1024, "Should have correct max cache size")
-        XCTAssertEqual(evictionPolicy, .lru, "Should have LRU eviction policy")
-        XCTAssertTrue(monitorMemoryPressure, "Should monitor memory pressure")
+        #expect(maxCacheSize == 1024 * 1024, "Should have correct max cache size")
+        #expect(evictionPolicy == .lru, "Should have LRU eviction policy")
+        #expect(monitorMemoryPressure, "Should monitor memory pressure")
     }
     
-    func testLazyLoadingConfig() {
+    @Test func testLazyLoadingConfig() {
         // Given
         let config = sampleLazyLoadingConfig
         
@@ -327,15 +325,15 @@ class L5PlatformOptimizationTests: XCTestCase {
         let enableVirtualization = config.enableVirtualization
         
         // Then
-        XCTAssertEqual(threshold, 10, "Should have correct threshold")
-        XCTAssertEqual(batchSize, 5, "Should have correct batch size")
-        XCTAssertEqual(preloadDistance, 3, "Should have correct preload distance")
-        XCTAssertTrue(enableVirtualization, "Should enable virtualization")
+        #expect(threshold == 10, "Should have correct threshold")
+        #expect(batchSize == 5, "Should have correct batch size")
+        #expect(preloadDistance == 3, "Should have correct preload distance")
+        #expect(enableVirtualization, "Should enable virtualization")
     }
     
     // MARK: - Platform-Specific Behavior Testing
     
-    func testPlatformSpecificOptimizations() {
+    @Test func testPlatformSpecificOptimizations() {
         // Given
         let testView = Text("Test View")
         
@@ -352,7 +350,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         LayeredTestUtilities.verifyViewCreation(cachingOptimized, testName: "Caching optimization")
     }
     
-    func testOptimizationConsistency() {
+    @Test func testOptimizationConsistency() {
         // Given
         let testView = Text("Test View")
         
@@ -366,7 +364,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Both optimizations should be applied consistently
     }
     
-    func testOptimizationPerformance() {
+    @Test func testOptimizationPerformance() {
         // Given
         let testView = Text("Test View")
         
@@ -378,12 +376,12 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Then
         LayeredTestUtilities.verifyViewCreation(optimizedView, testName: "Optimization performance test")
         let executionTime = endTime - startTime
-        XCTAssertLessThan(executionTime, 0.1, "Optimization should be fast (< 100ms)")
+        #expect(executionTime < 0.1, "Optimization should be fast (< 100ms)")
     }
     
     // MARK: - Edge Case Testing
     
-    func testOptimizationWithEmptyView() {
+    @Test func testOptimizationWithEmptyView() {
         // Given
         let emptyView = EmptyView()
         
@@ -395,7 +393,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should handle empty views gracefully
     }
     
-    func testOptimizationWithComplexView() {
+    @Test func testOptimizationWithComplexView() {
         // Given
         let complexView = VStack {
             Text("Title")
@@ -418,7 +416,7 @@ class L5PlatformOptimizationTests: XCTestCase {
         // Should handle complex views gracefully
     }
     
-    func testIOSHapticStyleCases() {
+    @Test func testIOSHapticStyleCases() {
         // Given
         let allStyles: [IOSHapticStyle] = [.light, .medium, .heavy, .success, .warning, .error]
         
@@ -430,14 +428,14 @@ class L5PlatformOptimizationTests: XCTestCase {
         }
     }
     
-    func testMacOSPerformanceStrategyCases() {
+    @Test func testMacOSPerformanceStrategyCases() {
         // Given
         let allStrategies = MacOSPerformanceStrategy.allCases
         
         // When & Then
         for strategy in allStrategies {
-            XCTAssertFalse(strategy.rawValue.isEmpty, "Strategy should have non-empty raw value")
-            XCTAssertTrue(MacOSPerformanceStrategy.allCases.contains(strategy), "Strategy should be valid")
+            #expect(!strategy.rawValue.isEmpty, "Strategy should have non-empty raw value")
+            #expect(MacOSPerformanceStrategy.allCases.contains(strategy), "Strategy should be valid")
         }
     }
 }

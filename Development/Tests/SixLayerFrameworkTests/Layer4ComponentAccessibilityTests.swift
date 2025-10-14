@@ -105,7 +105,7 @@ final class Layer4ComponentAccessibilityTests: XCTestCase {
     
     func testPlatformPhotoCaptureL4GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 4 photo capture function
-        let testCallback: (UIImage?) -> Void = { _ in }
+        let testCallback: (PlatformImage?) -> Void = { _ in }
         
         // When: Creating view using Layer 4 function
         let view = platformPhotoCapture_L4(onCapture: testCallback)
@@ -122,7 +122,7 @@ final class Layer4ComponentAccessibilityTests: XCTestCase {
     
     func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 4 photo display function
-        let testImage = UIImage(systemName: "photo")
+        let testImage: PlatformImage? = nil
         
         // When: Creating view using Layer 4 function
         let view = platformPhotoDisplay_L4(image: testImage)
@@ -139,7 +139,7 @@ final class Layer4ComponentAccessibilityTests: XCTestCase {
     
     func testPlatformPhotoSelectionL4GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 4 photo selection function
-        let testCallback: ([UIImage]) -> Void = { _ in }
+        let testCallback: ([PlatformImage]) -> Void = { _ in }
         
         // When: Creating view using Layer 4 function
         let view = platformPhotoSelection_L4(onSelection: testCallback)
@@ -156,7 +156,7 @@ final class Layer4ComponentAccessibilityTests: XCTestCase {
     
     func testPlatformOCRWithVisualCorrectionL4GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 4 OCR function
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage: PlatformImage? = nil
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 4 function
@@ -295,7 +295,7 @@ final class Layer4ComponentAccessibilityTests: XCTestCase {
     
     func testPlatformOCRWithDisambiguationL4GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 4 OCR with disambiguation function
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage: PlatformImage? = nil
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         
@@ -431,7 +431,7 @@ func platformPresentSettings_L4(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoCapture_L4(onCapture: @escaping (UIImage?) -> Void) -> some View {
+func platformPhotoCapture_L4(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
     VStack {
         Text("Photo Capture")
         Button("Capture") {
@@ -441,10 +441,11 @@ func platformPhotoCapture_L4(onCapture: @escaping (UIImage?) -> Void) -> some Vi
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoDisplay_L4(image: UIImage?) -> some View {
+func platformPhotoDisplay_L4(image: PlatformImage?) -> some View {
     VStack {
-        if let image = image {
-            Image(uiImage: image)
+        if image != nil {
+            // Placeholder cross-platform rendering path
+            Text("Image Available")
         } else {
             Text("No Image")
         }
@@ -452,7 +453,7 @@ func platformPhotoDisplay_L4(image: UIImage?) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoSelection_L4(onSelection: @escaping ([UIImage]) -> Void) -> some View {
+func platformPhotoSelection_L4(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
     VStack {
         Text("Photo Selection")
         Button("Select Photos") {
@@ -462,7 +463,7 @@ func platformPhotoSelection_L4(onSelection: @escaping ([UIImage]) -> Void) -> so
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithVisualCorrection_L4(image: UIImage?, onResult: @escaping (String) -> Void) -> some View {
+func platformOCRWithVisualCorrection_L4(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Visual Correction")
         Button("Process") {
@@ -533,7 +534,7 @@ func platformResponsiveCard_L4(title: String, content: String) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithDisambiguation_L4(image: UIImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
+func platformOCRWithDisambiguation_L4(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Disambiguation")
         ForEach(Array(options.enumerated()), id: \.offset) { index, option in

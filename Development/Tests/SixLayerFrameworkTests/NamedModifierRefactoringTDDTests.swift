@@ -375,6 +375,10 @@ final class NamedModifierRefactoringTDDTests: XCTestCase {
             let testView = Button("Test") { }
                 .exactNamed("")
             
+            // Debug: Print the test view
+            print("DEBUG: Test view type: \(type(of: testView))")
+            print("DEBUG: About to test empty string accessibility identifier")
+            
             // When: We check the accessibility identifier
             // Then: Should handle empty string gracefully
             XCTAssertTrue(hasAccessibilityIdentifier(

@@ -37,18 +37,22 @@ import SwiftUI
 /// Comprehensive Capability Test Runner
 /// Demonstrates the new testing methodology that tests both sides of every capability branch
 @MainActor
-final class ComprehensiveCapabilityTestRunner: XCTestCase {
-    override func setUp() {
-        super.setUp()
+struct ComprehensiveCapabilityTestRunner {
+    // MARK: - Test Setup
+    
+    /// Setup test environment before each test
+    @MainActor
+    func setupTestEnvironment() {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
     }
     
-    override func tearDown() {
+    /// Cleanup test environment after each test
+    @MainActor
+    func cleanupTestEnvironment() {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        super.tearDown()
     }
     
     // MARK: - Test Runner Configuration
@@ -188,17 +192,17 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     func testCapabilityDetection(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         switch capability {
         case .touch:
-            XCTAssertEqual(config.supportsTouch, enabled, "Touch detection should be \(enabled)")
+            #expect(config.supportsTouch == enabled, "Touch detection should be \(enabled)")
         case .hover:
-            XCTAssertEqual(config.supportsHover, enabled, "Hover detection should be \(enabled)")
+            #expect(config.supportsHover == enabled, "Hover detection should be \(enabled)")
         case .hapticFeedback:
-            XCTAssertEqual(config.supportsHapticFeedback, enabled, "Haptic feedback detection should be \(enabled)")
+            #expect(config.supportsHapticFeedback == enabled, "Haptic feedback detection should be \(enabled)")
         case .assistiveTouch:
-            XCTAssertEqual(config.supportsAssistiveTouch, enabled, "AssistiveTouch detection should be \(enabled)")
+            #expect(config.supportsAssistiveTouch == enabled, "AssistiveTouch detection should be \(enabled)")
         case .voiceOver:
-            XCTAssertEqual(config.supportsVoiceOver, enabled, "VoiceOver detection should be \(enabled)")
+            #expect(config.supportsVoiceOver == enabled, "VoiceOver detection should be \(enabled)")
         case .switchControl:
-            XCTAssertEqual(config.supportsSwitchControl, enabled, "Switch Control detection should be \(enabled)")
+            #expect(config.supportsSwitchControl == enabled, "Switch Control detection should be \(enabled)")
         case .vision:
             // Vision detection would be tested with actual framework calls
             print("       Vision detection test would be implemented with actual framework calls")
@@ -237,35 +241,35 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
         switch capability {
         case .touch:
             // Touch should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsTouch, enabled, "Touch UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
+            #expect(config.supportsTouch, enabled, "Touch UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
             if enabled {
-                XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate")
+                #expect(config.minTouchTarget >= 44, "Touch targets should be adequate")
             }
         case .hover:
             // Hover should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsHover, enabled, "Hover UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
+            #expect(config.supportsHover, enabled, "Hover UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
             if enabled {
-                XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set")
+                #expect(config.hoverDelay >= 0, "Hover delay should be set")
             }
         case .hapticFeedback:
             // Haptic feedback should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsHapticFeedback, enabled, "Haptic feedback UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
+            #expect(config.supportsHapticFeedback, enabled, "Haptic feedback UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
             if enabled {
                 // Haptic feedback requires touch, so touch should also be enabled
-                XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch")
+                #expect(config.supportsTouch, "Haptic feedback requires touch")
             }
         case .assistiveTouch:
             // AssistiveTouch should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsAssistiveTouch, enabled, "AssistiveTouch UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
+            #expect(config.supportsAssistiveTouch, enabled, "AssistiveTouch UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
             if enabled {
-                XCTAssertTrue(config.supportsTouch, "AssistiveTouch requires touch")
+                #expect(config.supportsTouch, "AssistiveTouch requires touch")
             }
         case .voiceOver:
             // VoiceOver should match the enabled state
-            XCTAssertEqual(config.supportsVoiceOver, enabled, "VoiceOver should be \(enabled)")
+            #expect(config.supportsVoiceOver, enabled, "VoiceOver should be \(enabled)")
         case .switchControl:
             // Switch Control should match the enabled state
-            XCTAssertEqual(config.supportsSwitchControl, enabled, "Switch Control should be \(enabled)")
+            #expect(config.supportsSwitchControl, enabled, "Switch Control should be \(enabled)")
         case .vision, .ocr:
             // Vision/OCR would be tested with actual framework calls
             print("       Vision/OCR UI generation test would be implemented with actual framework calls")
@@ -296,37 +300,37 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
         let platformConfig = createPlatformConfig(platform: platform)
         
         // Test that the platform configuration is consistent and functional
-        XCTAssertNotNil(platformConfig, "Platform configuration should be valid for \(platform)")
+        #expect(platformConfig, "Platform configuration should be valid for \(platform)")
         
         // Test that the configuration actually works by creating a test view
         let testView = createTestViewWithConfig(platformConfig)
-        XCTAssertNotNil(testView, "Should be able to create test view with platform config for \(platform)")
+        #expect(testView, "Should be able to create test view with platform config for \(platform)")
         
         // Test platform-specific consistency
         switch platform {
         case .iOS:
             // iOS should support touch and haptic feedback
             if platformConfig.supportsTouch {
-                XCTAssertTrue(platformConfig.supportsHapticFeedback, "iOS should support haptic feedback when touch is enabled")
+                #expect(platformConfig.supportsHapticFeedback, "iOS should support haptic feedback when touch is enabled")
             }
         case .macOS:
             // macOS should support hover but not touch
             if platformConfig.supportsHover {
-                XCTAssertFalse(platformConfig.supportsTouch, "macOS should not support touch when hover is enabled")
+                #expect(platformConfig.supportsTouch, "macOS should not support touch when hover is enabled")
             }
         case .watchOS:
             // watchOS should support touch and haptic feedback
             if platformConfig.supportsTouch {
-                XCTAssertTrue(platformConfig.supportsHapticFeedback, "watchOS should support haptic feedback when touch is enabled")
+                #expect(platformConfig.supportsHapticFeedback, "watchOS should support haptic feedback when touch is enabled")
             }
         case .tvOS:
             // tvOS should not support touch or hover
-            XCTAssertFalse(platformConfig.supportsTouch, "tvOS should not support touch")
-            XCTAssertFalse(platformConfig.supportsHover, "tvOS should not support hover")
+            #expect(platformConfig.supportsTouch, "tvOS should not support touch")
+            #expect(platformConfig.supportsHover, "tvOS should not support hover")
         case .visionOS:
             // visionOS should not support touch or hover
-            XCTAssertFalse(platformConfig.supportsTouch, "visionOS should not support touch")
-            XCTAssertFalse(platformConfig.supportsHover, "visionOS should not support hover")
+            #expect(platformConfig.supportsTouch, "visionOS should not support touch")
+            #expect(platformConfig.supportsHover, "visionOS should not support hover")
         }
     }
     
@@ -352,24 +356,24 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     /// Test view generation integration
     func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
         // Test that the configuration is valid for view generation and actually works
-        XCTAssertNotNil(config, "Configuration should be valid for view generation on \(platform)")
+        #expect(config, "Configuration should be valid for view generation on \(platform)")
         
         // Test that the configuration can actually be used to create a functional view
         let testView = createTestViewWithConfig(config)
-        XCTAssertNotNil(testView, "Should be able to create functional view with config for \(platform)")
+        #expect(testView, "Should be able to create functional view with config for \(platform)")
         
         // Test that the configuration produces appropriate UI behavior
         if config.supportsTouch {
-            XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate on \(platform)")
+            #expect(config.minTouchTarget, 44, "Touch targets should be adequate on \(platform)")
         }
         
         if config.supportsHover {
-            XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set on \(platform)")
+            #expect(config.hoverDelay, 0, "Hover delay should be set on \(platform)")
         }
         
         // Test that accessibility is always supported
-        XCTAssertTrue(config.supportsVoiceOver, "VoiceOver should always be supported on \(platform)")
-        XCTAssertTrue(config.supportsSwitchControl, "Switch Control should always be supported on \(platform)")
+        #expect(config.supportsVoiceOver, "VoiceOver should always be supported on \(platform)")
+        #expect(config.supportsSwitchControl, "Switch Control should always be supported on \(platform)")
     }
     
     // MARK: - Behavior Validation Tests
@@ -402,34 +406,34 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
         switch capability {
         case .touch:
             // Touch should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsTouch, enabled, "Touch behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
+            #expect(config.supportsTouch, enabled, "Touch behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
             if enabled {
-                XCTAssertGreaterThanOrEqual(config.minTouchTarget, 44, "Touch targets should be adequate")
+                #expect(config.minTouchTarget >= 44, "Touch targets should be adequate")
             }
         case .hover:
             // Hover should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsHover, enabled, "Hover behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
+            #expect(config.supportsHover, enabled, "Hover behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
             if enabled {
-                XCTAssertGreaterThanOrEqual(config.hoverDelay, 0, "Hover delay should be set")
+                #expect(config.hoverDelay >= 0, "Hover delay should be set")
             }
         case .hapticFeedback:
             // Haptic feedback should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsHapticFeedback, enabled, "Haptic feedback behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
+            #expect(config.supportsHapticFeedback, enabled, "Haptic feedback behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
             if enabled {
-                XCTAssertTrue(config.supportsTouch, "Haptic feedback requires touch")
+                #expect(config.supportsTouch, "Haptic feedback requires touch")
             }
         case .assistiveTouch:
             // AssistiveTouch should match the enabled state (runtime detection)
-            XCTAssertEqual(config.supportsAssistiveTouch, enabled, "AssistiveTouch behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
+            #expect(config.supportsAssistiveTouch, enabled, "AssistiveTouch behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
             if enabled {
-                XCTAssertTrue(config.supportsTouch, "AssistiveTouch requires touch")
+                #expect(config.supportsTouch, "AssistiveTouch requires touch")
             }
         case .voiceOver:
             // VoiceOver should match the enabled state
-            XCTAssertEqual(config.supportsVoiceOver, enabled, "VoiceOver should be \(enabled)")
+            #expect(config.supportsVoiceOver, enabled, "VoiceOver should be \(enabled)")
         case .switchControl:
             // Switch Control should match the enabled state
-            XCTAssertEqual(config.supportsSwitchControl, enabled, "Switch Control should be \(enabled)")
+            #expect(config.supportsSwitchControl, enabled, "Switch Control should be \(enabled)")
         case .vision, .ocr:
             // Vision/OCR would be tested with actual framework calls
             print("       Vision/OCR behavior validation would be implemented with actual framework calls")
@@ -467,87 +471,6 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
         }
     }
     
-    /// Create a mock configuration for a specific capability and state
-    private func createMockConfig(for capability: TestRunnerConfig.CapabilityType, enabled: Bool) -> CardExpansionPlatformConfig {
-        switch capability {
-        case .touch:
-            return getCardExpansionPlatformConfig()
-                supportsHapticFeedback: enabled,
-                supportsHover: false,
-                supportsTouch: enabled,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: enabled,
-                minTouchTarget: enabled ? 44 : 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .hover:
-            return getCardExpansionPlatformConfig()
-                supportsHapticFeedback: false,
-                supportsHover: enabled,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: enabled ? 0.1 : 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .hapticFeedback:
-            return getCardExpansionPlatformConfig()
-                supportsHapticFeedback: enabled,
-                supportsHover: false,
-                supportsTouch: enabled, // Haptic feedback requires touch
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: enabled,
-                minTouchTarget: enabled ? 44 : 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .assistiveTouch:
-            return getCardExpansionPlatformConfig()
-                supportsHapticFeedback: enabled,
-                supportsHover: false,
-                supportsTouch: enabled, // AssistiveTouch requires touch
-                supportsVoiceOver: true,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: enabled,
-                minTouchTarget: enabled ? 44 : 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .voiceOver:
-            return getCardExpansionPlatformConfig()
-                supportsHapticFeedback: false,
-                supportsHover: false,
-                supportsTouch: false,
-                supportsVoiceOver: enabled,
-                supportsSwitchControl: true,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .switchControl:
-            return getCardExpansionPlatformConfig()
-                supportsHapticFeedback: false,
-                supportsHover: false,
-                supportsTouch: false,
-                supportsVoiceOver: true,
-                supportsSwitchControl: enabled,
-                supportsAssistiveTouch: false,
-                minTouchTarget: 0,
-                hoverDelay: 0.0,
-                animationEasing: .easeInOut(duration: 0.3)
-            )
-        case .vision, .ocr:
-            // These would be tested with actual framework calls
-            return getCardExpansionPlatformConfig()
-        }
-    }
-    
     /// Create a platform configuration for a specific platform using centralized utilities
     private func createPlatformConfig(platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
         return PlatformTestUtilities.getPlatformConfig(for: platform)
@@ -556,31 +479,46 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     // MARK: - Individual Test Runners
     
     /// Run complete capability testing
-    func testCompleteCapabilityTesting() {
+    @Test func completeCapabilityTesting() {
+        setupTestEnvironment()
+        defer { cleanupTestEnvironment() }
+        
         let config = testRunnerConfigurations.first { $0.name == "Complete Capability Testing" }!
         runComprehensiveCapabilityTest(config)
     }
     
     /// Run touch-focused testing
-    func testTouchFocusedTesting() {
+    @Test func touchFocusedTesting() {
+        setupTestEnvironment()
+        defer { cleanupTestEnvironment() }
+        
         let config = testRunnerConfigurations.first { $0.name == "Touch-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
     }
     
     /// Run hover-focused testing
-    func testHoverFocusedTesting() {
+    @Test func hoverFocusedTesting() {
+        setupTestEnvironment()
+        defer { cleanupTestEnvironment() }
+        
         let config = testRunnerConfigurations.first { $0.name == "Hover-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
     }
     
     /// Run accessibility-focused testing
-    func testAccessibilityFocusedTesting() {
+    @Test func accessibilityFocusedTesting() {
+        setupTestEnvironment()
+        defer { cleanupTestEnvironment() }
+        
         let config = testRunnerConfigurations.first { $0.name == "Accessibility-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
     }
     
     /// Run vision-focused testing
-    func testVisionFocusedTesting() {
+    @Test func visionFocusedTesting() {
+        setupTestEnvironment()
+        defer { cleanupTestEnvironment() }
+        
         let config = testRunnerConfigurations.first { $0.name == "Vision-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
     }

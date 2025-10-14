@@ -1,319 +1,319 @@
-import XCTest
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Comprehensive test suite for ShapeStyle System
 /// Tests all ShapeStyle types: Color, Gradient, Material, HierarchicalShapeStyle
-class ShapeStyleSystemTests: XCTestCase {
+class ShapeStyleSystemTests {
     
     // MARK: - Color Support Tests
     
-    func testStandardColorsExist() {
+    @Test func testStandardColorsExist() {
         // Given: StandardColors struct
         // When: Accessing color properties
         // Then: All standard colors should be available
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.primary)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.secondary)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.accent)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.background)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.surface)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.text)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.textSecondary)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.border)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.error)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.warning)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.success)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.info)
+        #expect(ShapeStyleSystem.StandardColors.primary != nil)
+        #expect(ShapeStyleSystem.StandardColors.secondary != nil)
+        #expect(ShapeStyleSystem.StandardColors.accent != nil)
+        #expect(ShapeStyleSystem.StandardColors.background != nil)
+        #expect(ShapeStyleSystem.StandardColors.surface != nil)
+        #expect(ShapeStyleSystem.StandardColors.text != nil)
+        #expect(ShapeStyleSystem.StandardColors.textSecondary != nil)
+        #expect(ShapeStyleSystem.StandardColors.border != nil)
+        #expect(ShapeStyleSystem.StandardColors.error != nil)
+        #expect(ShapeStyleSystem.StandardColors.warning != nil)
+        #expect(ShapeStyleSystem.StandardColors.success != nil)
+        #expect(ShapeStyleSystem.StandardColors.info != nil)
     }
     
-    func testPlatformSpecificColors() {
+    @Test func testPlatformSpecificColors() {
         // Given: Platform-specific color access
         // When: Accessing platform colors
         // Then: Should have platform-appropriate colors
         #if canImport(UIKit)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.systemBackground)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.secondarySystemBackground)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.tertiarySystemBackground)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.systemGroupedBackground)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.secondarySystemGroupedBackground)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.tertiarySystemGroupedBackground)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.label)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.secondaryLabel)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.tertiaryLabel)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.quaternaryLabel)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.separator)
-        XCTAssertNotNil(ShapeStyleSystem.StandardColors.opaqueSeparator)
+        #expect(ShapeStyleSystem.StandardColors.systemBackground != nil)
+        #expect(ShapeStyleSystem.StandardColors.secondarySystemBackground != nil)
+        #expect(ShapeStyleSystem.StandardColors.tertiarySystemBackground != nil)
+        #expect(ShapeStyleSystem.StandardColors.systemGroupedBackground != nil)
+        #expect(ShapeStyleSystem.StandardColors.secondarySystemGroupedBackground != nil)
+        #expect(ShapeStyleSystem.StandardColors.tertiarySystemGroupedBackground != nil)
+        #expect(ShapeStyleSystem.StandardColors.label != nil)
+        #expect(ShapeStyleSystem.StandardColors.secondaryLabel != nil)
+        #expect(ShapeStyleSystem.StandardColors.tertiaryLabel != nil)
+        #expect(ShapeStyleSystem.StandardColors.quaternaryLabel != nil)
+        #expect(ShapeStyleSystem.StandardColors.separator != nil)
+        #expect(ShapeStyleSystem.StandardColors.opaqueSeparator != nil)
         #endif
     }
     
     // MARK: - Gradient Support Tests
     
-    func testGradientCreation() {
+    @Test func testGradientCreation() {
         // Given: Gradients struct
         // When: Accessing gradient properties
         // Then: All gradients should be available
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.primary)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.secondary)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.background)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.success)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.warning)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.error)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.focus)
+        #expect(ShapeStyleSystem.Gradients.primary != nil)
+        #expect(ShapeStyleSystem.Gradients.secondary != nil)
+        #expect(ShapeStyleSystem.Gradients.background != nil)
+        #expect(ShapeStyleSystem.Gradients.success != nil)
+        #expect(ShapeStyleSystem.Gradients.warning != nil)
+        #expect(ShapeStyleSystem.Gradients.error != nil)
+        #expect(ShapeStyleSystem.Gradients.focus != nil)
     }
     
-    func testGradientTypes() {
+    @Test func testGradientTypes() {
         // Given: Gradient instances
         // When: Checking gradient properties
         // Then: Should have valid gradient definitions
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.primary)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.secondary)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.background)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.success)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.warning)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.error)
-        XCTAssertNotNil(ShapeStyleSystem.Gradients.focus)
+        #expect(ShapeStyleSystem.Gradients.primary != nil)
+        #expect(ShapeStyleSystem.Gradients.secondary != nil)
+        #expect(ShapeStyleSystem.Gradients.background != nil)
+        #expect(ShapeStyleSystem.Gradients.success != nil)
+        #expect(ShapeStyleSystem.Gradients.warning != nil)
+        #expect(ShapeStyleSystem.Gradients.error != nil)
+        #expect(ShapeStyleSystem.Gradients.focus != nil)
     }
     
     // MARK: - Material Support Tests
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testMaterialTypes() {
         // Given: Materials struct
         // When: Accessing material properties
         // Then: All materials should be available
-        XCTAssertNotNil(ShapeStyleSystem.Materials.regular)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.thick)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.thin)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.ultraThin)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.ultraThick)
+        #expect(ShapeStyleSystem.Materials.regular != nil)
+        #expect(ShapeStyleSystem.Materials.thick != nil)
+        #expect(ShapeStyleSystem.Materials.thin != nil)
+        #expect(ShapeStyleSystem.Materials.ultraThin != nil)
+        #expect(ShapeStyleSystem.Materials.ultraThick != nil)
     }
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testMaterialTypesCorrect() {
         // Given: Material instances
         // When: Checking material properties
         // Then: Should have valid material definitions
-        XCTAssertNotNil(ShapeStyleSystem.Materials.regular)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.thick)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.thin)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.ultraThin)
-        XCTAssertNotNil(ShapeStyleSystem.Materials.ultraThick)
+        #expect(ShapeStyleSystem.Materials.regular != nil)
+        #expect(ShapeStyleSystem.Materials.thick != nil)
+        #expect(ShapeStyleSystem.Materials.thin != nil)
+        #expect(ShapeStyleSystem.Materials.ultraThin != nil)
+        #expect(ShapeStyleSystem.Materials.ultraThick != nil)
     }
     
     // MARK: - Hierarchical ShapeStyle Support Tests
     
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func testHierarchicalStyles() {
         // Given: HierarchicalStyles struct
         // When: Accessing hierarchical style properties
         // Then: All hierarchical styles should be available
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.primary)
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.secondary)
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.tertiary)
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.quaternary)
+        #expect(ShapeStyleSystem.HierarchicalStyles.primary != nil)
+        #expect(ShapeStyleSystem.HierarchicalStyles.secondary != nil)
+        #expect(ShapeStyleSystem.HierarchicalStyles.tertiary != nil)
+        #expect(ShapeStyleSystem.HierarchicalStyles.quaternary != nil)
     }
     
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func testHierarchicalStylesTypes() {
         // Given: Hierarchical style instances
         // When: Checking hierarchical style properties
         // Then: Should have valid hierarchical style definitions
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.primary)
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.secondary)
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.tertiary)
-        XCTAssertNotNil(ShapeStyleSystem.HierarchicalStyles.quaternary)
+        #expect(ShapeStyleSystem.HierarchicalStyles.primary != nil)
+        #expect(ShapeStyleSystem.HierarchicalStyles.secondary != nil)
+        #expect(ShapeStyleSystem.HierarchicalStyles.tertiary != nil)
+        #expect(ShapeStyleSystem.HierarchicalStyles.quaternary != nil)
     }
     
     // MARK: - Factory Tests
     
-    func testFactoryBackgroundCreation() {
+    @Test func testFactoryBackgroundCreation() {
         // Given: Factory and platform
         // When: Creating background style
         // Then: Should return appropriate background style
         let background = ShapeStyleSystem.Factory.background(for: .iOS)
-        XCTAssertNotNil(background)
+        #expect(background != nil)
     }
     
-    func testFactorySurfaceCreation() {
+    @Test func testFactorySurfaceCreation() {
         // Given: Factory and platform
         // When: Creating surface style
         // Then: Should return appropriate surface style
         let surface = ShapeStyleSystem.Factory.surface(for: .macOS)
-        XCTAssertNotNil(surface)
+        #expect(surface != nil)
     }
     
-    func testFactoryTextCreation() {
+    @Test func testFactoryTextCreation() {
         // Given: Factory and platform
         // When: Creating text style
         // Then: Should return appropriate text style
         let text = ShapeStyleSystem.Factory.text(for: .iOS)
-        XCTAssertNotNil(text)
+        #expect(text != nil)
     }
     
-    func testFactoryBorderCreation() {
+    @Test func testFactoryBorderCreation() {
         // Given: Factory and platform
         // When: Creating border style
         // Then: Should return appropriate border style
         let border = ShapeStyleSystem.Factory.border(for: .macOS)
-        XCTAssertNotNil(border)
+        #expect(border != nil)
     }
     
-    func testFactoryGradientCreation() {
+    @Test func testFactoryGradientCreation() {
         // Given: Factory and platform
         // When: Creating gradient style
         // Then: Should return appropriate gradient style
         let gradient = ShapeStyleSystem.Factory.gradient(for: .iOS, variant: .primary)
-        XCTAssertNotNil(gradient)
+        #expect(gradient != nil)
     }
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testFactoryMaterialCreation() {
         // Given: Factory and platform
         // When: Creating material style
         // Then: Should return appropriate material style
         let material = ShapeStyleSystem.Factory.material(for: .iOS, variant: .regular)
-        XCTAssertNotNil(material)
+        #expect(material != nil)
     }
     
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func testFactoryHierarchicalCreation() {
         // Given: Factory and platform
         // When: Creating hierarchical style
         // Then: Should return appropriate hierarchical style
         let hierarchical = ShapeStyleSystem.Factory.hierarchical(for: .iOS, variant: .primary)
-        XCTAssertNotNil(hierarchical)
+        #expect(hierarchical != nil)
     }
     
     // MARK: - Supporting Types Tests
     
-    func testBackgroundVariantEnum() {
+    @Test func testBackgroundVariantEnum() {
         // Given: BackgroundVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = BackgroundVariant.allCases
-        XCTAssertTrue(cases.contains(.standard))
-        XCTAssertTrue(cases.contains(.grouped))
-        XCTAssertTrue(cases.contains(.elevated))
-        XCTAssertTrue(cases.contains(.transparent))
+        #expect(cases.contains(.standard))
+        #expect(cases.contains(.grouped))
+        #expect(cases.contains(.elevated))
+        #expect(cases.contains(.transparent))
     }
     
-    func testSurfaceVariantEnum() {
+    @Test func testSurfaceVariantEnum() {
         // Given: SurfaceVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = SurfaceVariant.allCases
-        XCTAssertTrue(cases.contains(.standard))
-        XCTAssertTrue(cases.contains(.elevated))
-        XCTAssertTrue(cases.contains(.card))
-        XCTAssertTrue(cases.contains(.modal))
+        #expect(cases.contains(.standard))
+        #expect(cases.contains(.elevated))
+        #expect(cases.contains(.card))
+        #expect(cases.contains(.modal))
     }
     
-    func testTextVariantEnum() {
+    @Test func testTextVariantEnum() {
         // Given: TextVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = TextVariant.allCases
-        XCTAssertTrue(cases.contains(.primary))
-        XCTAssertTrue(cases.contains(.secondary))
-        XCTAssertTrue(cases.contains(.tertiary))
-        XCTAssertTrue(cases.contains(.quaternary))
+        #expect(cases.contains(.primary))
+        #expect(cases.contains(.secondary))
+        #expect(cases.contains(.tertiary))
+        #expect(cases.contains(.quaternary))
     }
     
-    func testBorderVariantEnum() {
+    @Test func testBorderVariantEnum() {
         // Given: BorderVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = BorderVariant.allCases
-        XCTAssertTrue(cases.contains(.standard))
-        XCTAssertTrue(cases.contains(.subtle))
-        XCTAssertTrue(cases.contains(.prominent))
-        XCTAssertTrue(cases.contains(.none))
+        #expect(cases.contains(.standard))
+        #expect(cases.contains(.subtle))
+        #expect(cases.contains(.prominent))
+        #expect(cases.contains(.none))
     }
     
-    func testGradientVariantEnum() {
+    @Test func testGradientVariantEnum() {
         // Given: GradientVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = GradientVariant.allCases
-        XCTAssertTrue(cases.contains(.primary))
-        XCTAssertTrue(cases.contains(.secondary))
-        XCTAssertTrue(cases.contains(.background))
-        XCTAssertTrue(cases.contains(.success))
-        XCTAssertTrue(cases.contains(.warning))
-        XCTAssertTrue(cases.contains(.error))
-        XCTAssertTrue(cases.contains(.focus))
+        #expect(cases.contains(.primary))
+        #expect(cases.contains(.secondary))
+        #expect(cases.contains(.background))
+        #expect(cases.contains(.success))
+        #expect(cases.contains(.warning))
+        #expect(cases.contains(.error))
+        #expect(cases.contains(.focus))
     }
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testMaterialVariantEnum() {
         // Given: MaterialVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = MaterialVariant.allCases
-        XCTAssertTrue(cases.contains(.regular))
-        XCTAssertTrue(cases.contains(.thick))
-        XCTAssertTrue(cases.contains(.thin))
-        XCTAssertTrue(cases.contains(.ultraThin))
-        XCTAssertTrue(cases.contains(.ultraThick))
+        #expect(cases.contains(.regular))
+        #expect(cases.contains(.thick))
+        #expect(cases.contains(.thin))
+        #expect(cases.contains(.ultraThin))
+        #expect(cases.contains(.ultraThick))
     }
     
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func testHierarchicalVariantEnum() {
         // Given: HierarchicalVariant enum
         // When: Accessing all cases
         // Then: Should have all expected cases
         let cases = HierarchicalVariant.allCases
-        XCTAssertTrue(cases.contains(.primary))
-        XCTAssertTrue(cases.contains(.secondary))
-        XCTAssertTrue(cases.contains(.tertiary))
-        XCTAssertTrue(cases.contains(.quaternary))
+        #expect(cases.contains(.primary))
+        #expect(cases.contains(.secondary))
+        #expect(cases.contains(.tertiary))
+        #expect(cases.contains(.quaternary))
     }
     
     // MARK: - AnyShapeStyle Tests
     
-    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    @Test @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
     func testAnyShapeStyleCreation() {
         // Given: A Color
         // When: Creating AnyShapeStyle
         // Then: Should create successfully
         let color = Color.blue
         let anyShapeStyle = AnyShapeStyle(color)
-        XCTAssertNotNil(anyShapeStyle)
+        #expect(anyShapeStyle != nil)
     }
     
-    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    @Test @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
     func testAnyShapeStyleWithGradient() {
         // Given: A LinearGradient
         // When: Creating AnyShapeStyle
         // Then: Should create successfully
         let gradient = LinearGradient(colors: [.blue, .purple], startPoint: .top, endPoint: .bottom)
         let anyShapeStyle = AnyShapeStyle(gradient)
-        XCTAssertNotNil(anyShapeStyle)
+        #expect(anyShapeStyle != nil)
     }
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testAnyShapeStyleWithMaterial() {
         // Given: A Material
         // When: Creating AnyShapeStyle
         // Then: Should create successfully
         let material = Material.regularMaterial
         let anyShapeStyle = AnyShapeStyle(material)
-        XCTAssertNotNil(anyShapeStyle)
+        #expect(anyShapeStyle != nil)
     }
     
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func testAnyShapeStyleWithHierarchical() {
         // Given: A HierarchicalShapeStyle
         // When: Creating AnyShapeStyle
         // Then: Should create successfully
         let hierarchical = HierarchicalShapeStyle.primary
         let anyShapeStyle = AnyShapeStyle(hierarchical)
-        XCTAssertNotNil(anyShapeStyle)
+        #expect(anyShapeStyle != nil)
     }
     
     // MARK: - View Extension Tests
     
-    func testPlatformBackgroundModifier() {
+    @Test func testPlatformBackgroundModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -321,10 +321,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformBackground(for: .iOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    func testPlatformSurfaceModifier() {
+    @Test func testPlatformSurfaceModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -332,10 +332,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformSurface(for: .macOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    func testPlatformTextModifier() {
+    @Test func testPlatformTextModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -343,10 +343,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformText(for: .iOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    func testPlatformBorderModifier() {
+    @Test func testPlatformBorderModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -354,10 +354,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformBorder(for: .macOS, width: 2)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    func testPlatformGradientModifier() {
+    @Test func testPlatformGradientModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -365,10 +365,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformGradient(for: .iOS, variant: .primary)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testPlatformMaterialModifier() {
         // Given: A view
         let testView = Text("Test")
@@ -377,10 +377,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformMaterial(for: .iOS, variant: .regular)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     func testPlatformHierarchicalModifier() {
         // Given: A view
         let testView = Text("Test")
@@ -389,12 +389,12 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.platformHierarchical(for: .iOS, variant: .primary)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
     // MARK: - Material Extension Tests
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testMaterialBackgroundModifier() {
         // Given: A view
         let testView = Text("Test")
@@ -403,10 +403,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.materialBackground(.regularMaterial, for: .iOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func testHierarchicalMaterialBackgroundModifier() {
         // Given: A view
         let testView = Text("Test")
@@ -415,12 +415,12 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.hierarchicalMaterialBackground(1, for: .iOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
     // MARK: - Gradient Extension Tests
     
-    func testGradientBackgroundModifier() {
+    @Test func testGradientBackgroundModifier() {
         // Given: A view and gradient
         let testView = Text("Test")
         let gradient = LinearGradient(colors: [.blue, .purple], startPoint: .top, endPoint: .bottom)
@@ -429,10 +429,10 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.gradientBackground(gradient, for: .iOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    func testRadialGradientBackgroundModifier() {
+    @Test func testRadialGradientBackgroundModifier() {
         // Given: A view and radial gradient
         let testView = Text("Test")
         let gradient = RadialGradient(colors: [.blue, .purple], center: .center, startRadius: 0, endRadius: 100)
@@ -441,12 +441,12 @@ class ShapeStyleSystemTests: XCTestCase {
         let modifiedView = testView.radialGradientBackground(gradient, for: .iOS)
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
     // MARK: - Accessibility Extension Tests
     
-    func testAccessibilityAwareBackgroundModifier() {
+    @Test func testAccessibilityAwareBackgroundModifier() {
         // Given: A view and styles
         let testView = Text("Test")
         let normalStyle = AnyShapeStyle(Color.blue)
@@ -459,10 +459,10 @@ class ShapeStyleSystemTests: XCTestCase {
         )
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
-    func testAccessibilityAwareForegroundModifier() {
+    @Test func testAccessibilityAwareForegroundModifier() {
         // Given: A view and styles
         let testView = Text("Test")
         let normalStyle = AnyShapeStyle(Color.blue)
@@ -475,12 +475,12 @@ class ShapeStyleSystemTests: XCTestCase {
         )
         
         // Then: Should return modified view
-        XCTAssertNotNil(modifiedView)
+        #expect(modifiedView != nil)
     }
     
     // MARK: - Integration Tests
     
-    func testShapeStyleSystemIntegration() {
+    @Test func testShapeStyleSystemIntegration() {
         // Given: A complex view
         let testView = VStack {
             Text("Title")
@@ -496,10 +496,10 @@ class ShapeStyleSystemTests: XCTestCase {
             .platformBorder(for: .iOS, variant: .standard, width: 1)
         
         // Then: Should return modified view
-        XCTAssertNotNil(styledView)
+        #expect(styledView != nil)
     }
     
-    func testAppleHIGComplianceIntegration() {
+    @Test func testAppleHIGComplianceIntegration() {
         // Given: A view that should be Apple HIG compliant
         let testView = Button("Test Button") { }
             .platformBackground(for: .iOS)
@@ -507,12 +507,12 @@ class ShapeStyleSystemTests: XCTestCase {
         
         // When: View is created
         // Then: Should be Apple HIG compliant
-        XCTAssertNotNil(testView)
+        #expect(testView != nil)
     }
     
     // MARK: - Performance Tests
     
-    func testShapeStyleCreationPerformance() {
+    @Test func testShapeStyleCreationPerformance() {
         // Given: Performance test
         // When: Creating many shape styles
         measure {
@@ -525,7 +525,7 @@ class ShapeStyleSystemTests: XCTestCase {
         }
     }
     
-    func testViewModifierPerformance() {
+    @Test func testViewModifierPerformance() {
         // Given: A view
         let testView = Text("Test")
         

@@ -196,7 +196,7 @@ public enum VoiceOverAnnouncementTiming: String, CaseIterable {
 }
 
 /// VoiceOver element traits
-public struct VoiceOverElementTraits: OptionSet {
+public struct VoiceOverElementTraits: OptionSet, Sendable {
     public let rawValue: UInt64
     
     public init(rawValue: UInt64) {
