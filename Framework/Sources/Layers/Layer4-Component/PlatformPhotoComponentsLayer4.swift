@@ -134,7 +134,7 @@ struct CameraView: UIViewControllerRepresentable {
 // MARK: - macOS Camera View
 
 #if os(macOS)
-import AVFoundation
+@preconcurrency import AVFoundation
 import AppKit
 
 struct MacOSCameraView: NSViewControllerRepresentable {
@@ -262,7 +262,7 @@ class CameraViewController: NSViewController {
 }
 
 @MainActor
-extension CameraViewController: AVCapturePhotoCaptureDelegate {
+extension CameraViewController: @preconcurrency AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let imageData = photo.fileDataRepresentation(),
               let nsImage = NSImage(data: imageData) else { return }
@@ -400,6 +400,7 @@ struct LegacyMacOSPhotoPickerView: NSViewControllerRepresentable {
             self.parent = parent
         }
 
+        @MainActor
         @objc func selectPhoto() {
             let panel = NSOpenPanel()
             panel.allowsMultipleSelection = false

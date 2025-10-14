@@ -64,7 +64,7 @@ public enum ProcessingImageFormat: String, CaseIterable, Sendable {
 // MARK: - Processed Image
 
 /// Result of image processing
-public struct ProcessedImage {
+public struct ProcessedImage: Sendable {
     public let originalImage: PlatformImage
     public let processedImage: PlatformImage
     public let purpose: ImagePurpose

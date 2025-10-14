@@ -27,6 +27,7 @@ import AppKit
 /// **DEPRECATED**: Use `OCRService.processImage()` instead
 @available(*, deprecated, message: "Use OCRService.processImage() instead")
 @ViewBuilder
+@MainActor
 public func platformOCRImplementation_L4(
     image: PlatformImage,
     context: OCRContext,

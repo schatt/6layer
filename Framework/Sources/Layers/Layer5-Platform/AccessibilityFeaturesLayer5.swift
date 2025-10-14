@@ -173,17 +173,19 @@ public enum ContrastLevel: String, CaseIterable {
 // MARK: - Accessibility Testing
 
 /// Accessibility testing manager
+@MainActor
 public class AccessibilityTestingManager: ObservableObject {
     @Published public var testResults: [AccessibilityTestResult] = []
     @Published public var isRunningTests: Bool = false
     
     public init() {}
     
-        func runAccessibilityTests() {
+    func runAccessibilityTests() {
         isRunningTests = true
         
         // Simulate running accessibility tests
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
             self.generateTestResults()
             self.isRunningTests = false
         }

@@ -14,7 +14,7 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     @Published public var errorLogs: [FormError] = []
     @Published public var abTestResults: [ABTestResult] = []
     
-    private let analyticsQueue = DispatchQueue(label: "com.sixlayer.formanalytics", qos: .utility)
+    // Removed DispatchQueue - using Task-based concurrency instead
     private let storage = AnalyticsStorage()
     
     private init() {
@@ -24,8 +24,8 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     // MARK: - Analytics Tracking
     
     /// Track form view event
-        func trackFormView(formId: String, userId: String? = nil) {
-        analyticsQueue.async {
+    func trackFormView(formId: String, userId: String? = nil) {
+        Task { @MainActor in
             let event = FormEvent(
                 formId: formId,
                 eventType: .view,
@@ -38,8 +38,8 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     }
     
     /// Track form submission event
-        func trackFormSubmission(formId: String, userId: String? = nil, success: Bool, validationErrors: [String] = []) {
-        analyticsQueue.async {
+    func trackFormSubmission(formId: String, userId: String? = nil, success: Bool, validationErrors: [String] = []) {
+        Task { @MainActor in
             let event = FormEvent(
                 formId: formId,
                 eventType: .submission,
@@ -56,8 +56,8 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     }
     
     /// Track field interaction event
-        func trackFieldInteraction(formId: String, fieldId: String, userId: String? = nil, interactionType: FieldInteractionType) {
-        analyticsQueue.async {
+    func trackFieldInteraction(formId: String, fieldId: String, userId: String? = nil, interactionType: FieldInteractionType) {
+        Task { @MainActor in
             let event = FormEvent(
                 formId: formId,
                 eventType: .fieldInteraction,
@@ -73,16 +73,16 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     }
     
     /// Track form performance metrics
-        func trackPerformance(formId: String, metrics: FormPerformanceMetrics) {
-        analyticsQueue.async {
+    func trackPerformance(formId: String, metrics: FormPerformanceMetrics) {
+        Task { @MainActor in
             self.performanceMetrics[formId] = metrics
             self.storage.savePerformanceMetrics(metrics, for: formId)
         }
     }
     
     /// Track form error
-        func trackError(formId: String, error: FormError) {
-        analyticsQueue.async {
+    func trackError(formId: String, error: FormError) {
+        Task { @MainActor in
             self.errorLogs.append(error)
             self.storage.saveError(error)
         }
@@ -91,7 +91,7 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     // MARK: - A/B Testing
     
     /// Start A/B test for a form
-        func startABTest(formId: String, variantA: FormVariant, variantB: FormVariant) -> ABTest {
+    func startABTest(formId: String, variantA: FormVariant, variantB: FormVariant) -> ABTest {
         let test = ABTest(
             id: UUID().uuidString,
             formId: formId,
@@ -101,7 +101,7 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
             status: .active
         )
         
-        analyticsQueue.async {
+        Task { @MainActor in
             self.storage.saveABTest(test)
         }
         
@@ -109,7 +109,7 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     }
     
     /// Record A/B test result
-        func recordABTestResult(testId: String, variant: String, result: ABTestMetric) {
+    func recordABTestResult(testId: String, variant: String, result: ABTestMetric) {
         let testResult = ABTestResult(
             testId: testId,
             variant: variant,
@@ -117,7 +117,7 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
             timestamp: Date()
         )
         
-        analyticsQueue.async {
+        Task { @MainActor in
             self.abTestResults.append(testResult)
             self.storage.saveABTestResult(testResult)
         }
@@ -126,17 +126,17 @@ public class FormAnalyticsManager: ObservableObject, @unchecked Sendable {
     // MARK: - Analytics Retrieval
     
     /// Get analytics for a specific form
-        func getAnalytics(for formId: String) -> FormAnalytics? {
+    func getAnalytics(for formId: String) -> FormAnalytics? {
         return analyticsData[formId]
     }
     
     /// Get performance metrics for a form
-        func getPerformanceMetrics(for formId: String) -> FormPerformanceMetrics? {
+    func getPerformanceMetrics(for formId: String) -> FormPerformanceMetrics? {
         return performanceMetrics[formId]
     }
     
     /// Get form insights and recommendations
-        func getFormInsights(formId: String) -> FormInsights {
+    func getFormInsights(formId: String) -> FormInsights {
         let analytics = analyticsData[formId]
         let performance = performanceMetrics[formId]
         let errors = errorLogs.filter { $0.formId == formId }
@@ -384,7 +384,7 @@ public struct FormError: Codable, Identifiable, Sendable {
 }
 
 /// Types of form errors
-public enum FormErrorType: String, Codable, CaseIterable {
+public enum FormErrorType: String, Codable, CaseIterable, Sendable {
     case validation = "validation"
     case submission = "submission"
     case rendering = "rendering"
@@ -415,12 +415,12 @@ public struct ABTest: Codable, Identifiable, Sendable {
 }
 
 /// Form variant for A/B testing
-public struct FormVariant: Codable {
+public struct FormVariant: Codable, Sendable {
     public let name: String
-    public let configuration: [String: Any]
+    public let configuration: [String: String] // Changed from Any to String for Sendable conformance
     public let description: String
     
-    public init(name: String, configuration: [String: Any], description: String) {
+    public init(name: String, configuration: [String: String], description: String) {
         self.name = name
         self.configuration = configuration
         self.description = description
@@ -447,7 +447,7 @@ public struct FormVariant: Codable {
 }
 
 /// A/B test status
-public enum ABTestStatus: String, Codable, CaseIterable {
+public enum ABTestStatus: String, Codable, CaseIterable, Sendable {
     case active = "active"
     case paused = "paused"
     case completed = "completed"
@@ -472,7 +472,7 @@ public struct ABTestResult: Codable, Identifiable, Sendable {
 }
 
 /// A/B test metric
-public struct ABTestMetric: Codable {
+public struct ABTestMetric: Codable, Sendable {
     public let name: String
     public let value: Double
     public let unit: String

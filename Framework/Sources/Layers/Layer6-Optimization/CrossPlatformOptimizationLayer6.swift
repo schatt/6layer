@@ -572,7 +572,7 @@ public enum GestureType: String, CaseIterable, Sendable {
     case eyeTracking = "eyeTracking"
 }
 
-public struct LayoutPatterns {
+public struct LayoutPatterns: Sendable {
     public let platform: SixLayerPlatform
     public var primaryLayout: LayoutType
     public var secondaryLayout: LayoutType
@@ -606,7 +606,7 @@ public struct LayoutPatterns {
     }
 }
 
-public enum LayoutType: String, CaseIterable {
+public enum LayoutType: String, CaseIterable, Sendable {
     case adaptive = "adaptive"
     case stack = "stack"
     case grid = "grid"

@@ -245,6 +245,7 @@ public class SwitchControlManager: ObservableObject {
     // MARK: - Compliance Checking
     
     /// Check Switch Control compliance for a view
+    @MainActor
     public static func checkCompliance(for view: some View) -> SwitchControlCompliance {
         // Simulate compliance checking
         // In a real implementation, this would analyze the view's Switch Control support

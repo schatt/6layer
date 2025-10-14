@@ -436,8 +436,8 @@ public struct FileUploadArea: View {
             if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
                 // Handle image files
                 provider.loadItem(forTypeIdentifier: UTType.image.identifier, options: nil) { item, error in
-                    Task { @MainActor in
-                        if let url = item as? URL {
+                    if let url = item as? URL {
+                        Task { @MainActor in
                             let fileInfo = FileInfo(
                                 name: url.lastPathComponent,
                                 size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),
@@ -451,8 +451,8 @@ public struct FileUploadArea: View {
             } else if provider.hasItemConformingToTypeIdentifier(UTType.pdf.identifier) {
                 // Handle PDF files
                 provider.loadItem(forTypeIdentifier: UTType.pdf.identifier, options: nil) { item, error in
-                    Task { @MainActor in
-                        if let url = item as? URL {
+                    if let url = item as? URL {
+                        Task { @MainActor in
                             let fileInfo = FileInfo(
                                 name: url.lastPathComponent,
                                 size: Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0),

@@ -42,17 +42,20 @@ enum LiquidGlassRuntimeDetection {
 public struct LiquidGlassCapabilityDetection {
     
     /// Check if Liquid Glass is supported on the current platform
+    @MainActor
     public static var isSupported: Bool {
         return LiquidGlassRuntimeDetection.detectSupport()
     }
     
     /// Get the current platform's Liquid Glass support level
+    @MainActor
     public static var supportLevel: LiquidGlassSupportLevel {
         // Current platforms should use fallback support level
         return isSupported ? .full : .fallback
     }
     
     /// Check if specific Liquid Glass features are available
+    @MainActor
     public static func isFeatureAvailable(_ feature: LiquidGlassFeature) -> Bool {
         // Features are only available when Liquid Glass is supported
         guard isSupported else { return false }
@@ -113,6 +116,7 @@ public struct LiquidGlassCapabilityInfo {
     public let availableFeatures: [LiquidGlassFeature]
     public let fallbackBehaviors: [LiquidGlassFeature: LiquidGlassFallbackBehavior]
     
+    @MainActor
     public init() {
         self.isSupported = LiquidGlassCapabilityDetection.isSupported
         self.supportLevel = LiquidGlassCapabilityDetection.supportLevel
@@ -132,6 +136,7 @@ public struct LiquidGlassCapabilityInfo {
 extension LiquidGlassCapabilityDetection {
     
     /// Get platform-specific capability information
+    @MainActor
     public static func getPlatformCapabilities() -> LiquidGlassCapabilityInfo {
         return LiquidGlassCapabilityInfo()
     }
@@ -150,6 +155,7 @@ extension LiquidGlassCapabilityDetection {
     }
     
     /// Get recommended fallback UI approach
+    @MainActor
     public static var recommendedFallbackApproach: String {
         // Tests expect mention of standard UI components on unsupported platforms
         if isSupported {

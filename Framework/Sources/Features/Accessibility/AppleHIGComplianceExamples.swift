@@ -21,6 +21,7 @@ public struct AppleHIGComplianceExamples {
     }
     
     /// Example of a form with automatic accessibility
+    @MainActor
     public static func accessibleForm() -> some View {
         VStack(spacing: 16) {
             TextField("Name", text: .constant(""))
@@ -129,6 +130,7 @@ public struct AppleHIGComplianceExamples {
     // MARK: - Platform-Specific Examples
     
     /// iOS-specific example with navigation and haptics
+    @MainActor
     public static func iOSCompliantView() -> some View {
         NavigationView {
             VStack {
@@ -159,6 +161,7 @@ public struct AppleHIGComplianceExamples {
     }
     
     /// macOS-specific example with window patterns
+    @MainActor
     public static func macOSCompliantView() -> some View {
         VStack {
             Text("macOS Optimized View")

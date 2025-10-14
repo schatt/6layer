@@ -128,7 +128,7 @@ public class VisualDesignSystem: ObservableObject {
 
 // MARK: - Theme Definitions
 
-public enum Theme: String, CaseIterable {
+public enum Theme: String, CaseIterable, Sendable {
     case light = "light"
     case dark = "dark"
     case auto = "auto"
@@ -141,7 +141,7 @@ public enum Theme: String, CaseIterable {
     }
 }
 
-public enum PlatformStyle: String, CaseIterable {
+public enum PlatformStyle: String, CaseIterable, Sendable {
     case ios = "ios"
     case macOS = "macOS"
     case watchOS = "watchOS"
@@ -151,7 +151,7 @@ public enum PlatformStyle: String, CaseIterable {
 
 // MARK: - Color System
 
-public struct ColorSystem {
+public struct ColorSystem: Sendable {
     public let primary: Color
     public let secondary: Color
     public let accent: Color
@@ -248,7 +248,7 @@ public struct ColorSystem {
 
 // MARK: - Typography System
 
-public struct TypographySystem {
+public struct TypographySystem: Sendable {
     public let largeTitle: Font
     public let title1: Font
     public let title2: Font

@@ -237,6 +237,7 @@ public class AssistiveTouchManager: ObservableObject {
     // MARK: - Compliance Checking
     
     /// Check AssistiveTouch compliance for a view
+    @MainActor
     public static func checkCompliance(for view: some View) -> AssistiveTouchCompliance {
         // Simulate compliance checking
         // In a real implementation, this would analyze the view's AssistiveTouch support
