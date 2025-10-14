@@ -471,7 +471,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
     private func createMockConfig(for capability: TestRunnerConfig.CapabilityType, enabled: Bool) -> CardExpansionPlatformConfig {
         switch capability {
         case .touch:
-            return CardExpansionPlatformConfig(
+            return getCardExpansionPlatformConfig()
                 supportsHapticFeedback: enabled,
                 supportsHover: false,
                 supportsTouch: enabled,
@@ -483,7 +483,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
                 animationEasing: .easeInOut(duration: 0.3)
             )
         case .hover:
-            return CardExpansionPlatformConfig(
+            return getCardExpansionPlatformConfig()
                 supportsHapticFeedback: false,
                 supportsHover: enabled,
                 supportsTouch: false,
@@ -495,7 +495,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
                 animationEasing: .easeInOut(duration: 0.3)
             )
         case .hapticFeedback:
-            return CardExpansionPlatformConfig(
+            return getCardExpansionPlatformConfig()
                 supportsHapticFeedback: enabled,
                 supportsHover: false,
                 supportsTouch: enabled, // Haptic feedback requires touch
@@ -507,7 +507,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
                 animationEasing: .easeInOut(duration: 0.3)
             )
         case .assistiveTouch:
-            return CardExpansionPlatformConfig(
+            return getCardExpansionPlatformConfig()
                 supportsHapticFeedback: enabled,
                 supportsHover: false,
                 supportsTouch: enabled, // AssistiveTouch requires touch
@@ -519,7 +519,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
                 animationEasing: .easeInOut(duration: 0.3)
             )
         case .voiceOver:
-            return CardExpansionPlatformConfig(
+            return getCardExpansionPlatformConfig()
                 supportsHapticFeedback: false,
                 supportsHover: false,
                 supportsTouch: false,
@@ -531,7 +531,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
                 animationEasing: .easeInOut(duration: 0.3)
             )
         case .switchControl:
-            return CardExpansionPlatformConfig(
+            return getCardExpansionPlatformConfig()
                 supportsHapticFeedback: false,
                 supportsHover: false,
                 supportsTouch: false,
@@ -544,7 +544,7 @@ final class ComprehensiveCapabilityTestRunner: XCTestCase {
             )
         case .vision, .ocr:
             // These would be tested with actual framework calls
-            return CardExpansionPlatformConfig()
+            return getCardExpansionPlatformConfig()
         }
     }
     
