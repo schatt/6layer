@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  OCRComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL OCR Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

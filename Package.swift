@@ -17,10 +17,10 @@ let package = Package(
             targets: ["SixLayerFramework"]
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7"),
-        .package(url: "https://github.com/apple/swift-testing", exact: "0.99.0")
-    ],
+        dependencies: [
+            .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7"),
+            .package(url: "https://github.com/apple/swift-testing", from: "0.8.0")
+        ],
     targets: [
         // Main framework target - organized into logical structure
         .target(

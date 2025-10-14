@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformTestUtilities.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Provides centralized platform testing infrastructure
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

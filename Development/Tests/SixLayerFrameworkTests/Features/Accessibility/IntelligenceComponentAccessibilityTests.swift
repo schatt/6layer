@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  IntelligenceComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Intelligence Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

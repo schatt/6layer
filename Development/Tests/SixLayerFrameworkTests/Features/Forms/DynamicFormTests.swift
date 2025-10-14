@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DynamicFormTests.swift
 //  SixLayerFrameworkTests
@@ -32,7 +35,6 @@
 //  - ✅ Business Logic Focus: Tests actual dynamic form functionality, not testing framework
 //
 
-import Testing
 @testable import SixLayerFramework
 
 @MainActor

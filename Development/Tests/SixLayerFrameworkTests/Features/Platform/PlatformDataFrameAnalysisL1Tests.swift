@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformDataFrameAnalysisL1Tests.swift
 //  SixLayerFrameworkTests
@@ -31,7 +34,6 @@
 //  - 🔧 Action Required: Add validation of DataFrame analysis accuracy
 //
 
-import Testing
 @testable import SixLayerFramework
 import TabularData
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  IntelligentCardExpansionLayer6Tests.swift
 //  SixLayerFrameworkTests
@@ -7,7 +10,6 @@
 //  visionOSExpandableCardView, and PlatformAwareExpandableCardView
 //
 
-import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework

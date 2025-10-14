@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  MacOSComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL macOS Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

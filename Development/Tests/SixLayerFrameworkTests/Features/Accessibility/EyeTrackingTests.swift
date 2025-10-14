@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  EyeTrackingTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Business Logic Focus: Tests actual eye tracking functionality, not testing framework
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

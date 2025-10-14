@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformMessagingLayer5ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Platform Messaging Layer 5 Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

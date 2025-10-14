@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CardActionButtonTests.swift
 //  SixLayerFrameworkTests
@@ -32,7 +35,6 @@
 //  - ✅ Good: Uses proper test data structures and setup
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DRYCoreViewFunctionTests.swift
 //  SixLayerFrameworkTests
@@ -33,7 +36,6 @@
 //  - ✅ Excellent: Tests all DRY core view function components and behavior
 //
 
-import Testing
 import SwiftUI
 
 // Import types from DRYTestPatterns

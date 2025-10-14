@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  TabularDataAPITest.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Test to understand TabularData API
 //
 
-import Testing
 import TabularData
 
 final class TabularDataAPITest {

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  IntelligentCardExpansionComprehensiveTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive tests for the Intelligent Card Expansion System
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

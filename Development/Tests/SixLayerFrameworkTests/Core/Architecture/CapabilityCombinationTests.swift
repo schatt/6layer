@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CapabilityCombinationTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all possible capability combinations
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

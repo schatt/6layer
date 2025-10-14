@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PhotoComponentsLayer4Tests.swift
 //  SixLayerFrameworkTests
@@ -23,7 +26,6 @@
 //  - Test edge cases and error handling for photo component logic
 //
 
-import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -36,7 +38,6 @@ final class PhotoComponentsLayer4Tests {
     private var testImage: PlatformImage!
     
     init() async throws {
-        try await super.setUp()
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         // Create a test image (placeholder for now)
         #if os(iOS)
@@ -50,8 +51,9 @@ final class PhotoComponentsLayer4Tests {
     
     deinit {
         testImage = nil
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-        try await super.tearDown()
+        Task {
+            await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+        }
     }
     
     // MARK: - Layer 4 Photo Component Tests

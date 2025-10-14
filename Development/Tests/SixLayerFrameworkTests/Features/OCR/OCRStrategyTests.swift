@@ -23,7 +23,6 @@
 //  view creation and hosting, not actual OCR strategy functionality.
 //  Real tests need to be written that test actual OCR strategy behavior.
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

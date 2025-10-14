@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DynamicFormViewComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL DynamicFormView components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

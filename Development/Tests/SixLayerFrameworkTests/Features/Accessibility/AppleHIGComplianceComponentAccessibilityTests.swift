@@ -1,3 +1,5 @@
+import Testing
+
 //
 //  AppleHIGComplianceComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +7,6 @@
 //  Comprehensive accessibility tests for ALL AppleHIGCompliance components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -479,39 +480,37 @@ final class AppleHIGComplianceComponentAccessibilityTests {
 
 extension View {
     func appleHIGCompliance() -> some View {
-        self.modifier(AppleHIGComplianceModifier())
+        self.modifier(AppleHIGComplianceModifier(
+            manager: AppleHIGComplianceManager(),
+            complianceLevel: .enhanced
+        ))
     }
     
     func systemAccessibility() -> some View {
-        self.modifier(SystemAccessibilityModifier())
+        self.modifier(SystemAccessibilityModifier(
+            accessibilityState: SixLayerFramework.AccessibilitySystemState(),
+            platform: .iOS
+        ))
     }
     
-    func platformPatterns() -> some View {
-        self.modifier(PlatformPatternModifier())
-    }
-    
-    func visualConsistency() -> some View {
-        self.modifier(VisualConsistencyModifier())
-    }
-    
-    func interactionPatterns() -> some View {
-        self.modifier(InteractionPatternModifier())
-    }
     
     func voiceOverSupport() -> some View {
-        self.modifier(VoiceOverSupportModifier())
+        self.modifier(VoiceOverSupportModifier(isEnabled: true))
     }
     
     func keyboardNavigation() -> some View {
-        self.modifier(KeyboardNavigationModifier())
+        self.modifier(KeyboardNavigationModifier(
+            hasKeyboardSupport: true,
+            hasFullKeyboardAccess: true
+        ))
     }
     
     func highContrast() -> some View {
-        self.modifier(HighContrastModifier())
+        self.modifier(HighContrastModifier(isEnabled: true))
     }
     
     func reducedMotion() -> some View {
-        self.modifier(ReducedMotionModifier())
+        self.modifier(ReducedMotionModifier(isEnabled: true))
     }
     
     func dynamicType() -> some View {
@@ -519,43 +518,53 @@ extension View {
     }
     
     func platformNavigation() -> some View {
-        self.modifier(PlatformNavigationModifier())
+        self.modifier(PlatformNavigationModifier(platform: .iOS))
     }
     
     func platformStyling() -> some View {
-        self.modifier(PlatformStylingModifier())
+        self.modifier(PlatformStylingModifier(
+            designSystem: PlatformDesignSystem(for: .iOS)
+        ))
     }
     
     func platformIcon() -> some View {
-        self.modifier(PlatformIconModifier())
+        self.modifier(PlatformIconModifier(
+            iconSystem: HIGIconSystem(for: .iOS)
+        ))
     }
     
     func systemColor() -> some View {
-        self.modifier(SystemColorModifier())
+        self.modifier(SystemColorModifier(
+            colorSystem: HIGColorSystem(for: .iOS)
+        ))
     }
     
     func systemTypography() -> some View {
-        self.modifier(SystemTypographyModifier())
+        self.modifier(SystemTypographyModifier(
+            typographySystem: HIGTypographySystem(for: .iOS)
+        ))
     }
     
     func spacing() -> some View {
-        self.modifier(SpacingModifier())
+        self.modifier(SpacingModifier(
+            spacingSystem: HIGSpacingSystem(for: .iOS)
+        ))
     }
     
     func touchTarget() -> some View {
-        self.modifier(TouchTargetModifier())
+        self.modifier(TouchTargetModifier(platform: .iOS))
     }
     
     func platformInteraction() -> some View {
-        self.modifier(PlatformInteractionModifier())
+        self.modifier(PlatformInteractionModifier(platform: .iOS))
     }
     
     func hapticFeedback() -> some View {
-        self.modifier(HapticFeedbackModifier())
+        self.modifier(HapticFeedbackModifier(platform: .iOS))
     }
     
     func gestureRecognition() -> some View {
-        self.modifier(GestureRecognitionModifier())
+        self.modifier(GestureRecognitionModifier(platform: .iOS))
     }
 }
 

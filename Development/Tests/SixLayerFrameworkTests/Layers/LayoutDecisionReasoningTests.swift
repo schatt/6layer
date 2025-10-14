@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  LayoutDecisionReasoningTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Tests for layout decision reasoning properties
 //
 
-import Testing
 @testable import SixLayerFramework
 
 final class LayoutDecisionReasoningTests {

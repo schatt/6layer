@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  FormWizardTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Business Logic Focus: Tests actual form wizard functionality, not testing framework
 //
 
-import Testing
 @testable import SixLayerFramework
 
 @MainActor

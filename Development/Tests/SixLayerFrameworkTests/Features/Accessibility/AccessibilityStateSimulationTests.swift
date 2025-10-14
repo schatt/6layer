@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  AccessibilityStateSimulationTests.swift
 //  SixLayerFrameworkTests
@@ -21,7 +24,6 @@
 //  - Test edge cases and error handling
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DataFrameAnalysisEngineTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Tests for DataFrame analysis engine extending DataIntrospectionEngine
 //
 
-import Testing
 @testable import SixLayerFramework
 import TabularData
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  AccessibilityPreferenceTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Good: Validates accessibility configuration management
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

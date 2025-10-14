@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformRoutingLayer5ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Platform Routing Layer 5 Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

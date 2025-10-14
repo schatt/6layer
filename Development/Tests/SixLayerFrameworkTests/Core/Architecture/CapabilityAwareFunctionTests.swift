@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CapabilityAwareFunctionTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests both enabled and disabled capability scenarios
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

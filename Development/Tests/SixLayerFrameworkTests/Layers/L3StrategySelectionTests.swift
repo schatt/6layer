@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  L3StrategySelectionTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests strategy selection logic with hardcoded platform, capabilities, and accessibility
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

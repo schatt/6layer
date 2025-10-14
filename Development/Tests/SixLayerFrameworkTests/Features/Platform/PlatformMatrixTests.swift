@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformMatrixTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all platform combinations and device types
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

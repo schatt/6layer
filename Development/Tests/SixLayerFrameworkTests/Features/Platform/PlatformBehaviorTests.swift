@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformBehaviorTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests both supported and unsupported platform scenarios
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

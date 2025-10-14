@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  VisionSafetyComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Vision Safety Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  NativeTypesTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Cross-platform compatible tests using mocking
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

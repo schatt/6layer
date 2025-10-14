@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  IntelligentCardExpansionComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL IntelligentCardExpansion components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

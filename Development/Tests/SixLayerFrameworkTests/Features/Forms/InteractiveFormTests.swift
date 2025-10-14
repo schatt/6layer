@@ -36,7 +36,6 @@
 //  Tests the features that v2.9.1 was trying to implement
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

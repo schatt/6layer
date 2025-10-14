@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  SharedComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Shared Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

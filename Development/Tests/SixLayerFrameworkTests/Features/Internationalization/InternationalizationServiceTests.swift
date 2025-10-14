@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  InternationalizationServiceTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests the internationalization service business logic
 //
 
-import Testing
 @testable import SixLayerFramework
 
 final class InternationalizationServiceTests {

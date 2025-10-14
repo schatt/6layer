@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ModalContainerTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests modal container functionality and strategy handling
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  AccessibilityFeaturesLayer5Tests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests accessibility features with proper business logic testing
 //
 
-import Testing
 import SwiftUI
 import Combine
 @testable import SixLayerFramework

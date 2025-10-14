@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformColorsTests.swift
 //  SixLayerFrameworkTests
@@ -31,7 +34,6 @@
 //  - 🔧 Action Required: Add validation of platform color behavior accuracy
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

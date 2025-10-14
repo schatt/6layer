@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  LiquidGlassCapabilityDetectionTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all liquid glass capability scenarios
 //
 
-import Testing
 @testable import SixLayerFramework
 
 final class LiquidGlassCapabilityDetectionTests {

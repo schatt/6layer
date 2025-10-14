@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  Layer6RedPhaseTDDTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  These tests define the desired behavior for unimplemented features
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

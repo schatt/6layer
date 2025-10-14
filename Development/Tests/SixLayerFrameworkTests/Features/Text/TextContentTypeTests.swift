@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  TextContentTypeTests.swift
 //  SixLayerFrameworkTests
@@ -19,7 +22,6 @@
 //  - Validate UITextContentType enum completeness
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

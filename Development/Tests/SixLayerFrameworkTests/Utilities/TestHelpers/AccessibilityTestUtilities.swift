@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import Testing
 #if canImport(UIKit)
 import UIKit
 #endif

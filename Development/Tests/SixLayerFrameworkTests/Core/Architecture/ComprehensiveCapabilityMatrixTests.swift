@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ComprehensiveCapabilityMatrixTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all possible platform capability combinations
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

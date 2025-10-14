@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CoreArchitectureTests.swift
 //  SixLayerFrameworkTests
@@ -33,7 +36,6 @@
 //  - ✅ Excellent: Tests all core architecture components and business logic
 //
 
-import Testing
 @testable import SixLayerFramework
 
 @MainActor

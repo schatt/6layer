@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  InternationalizationTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests RTL support, number formatting, date/time formatting, currency formatting
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

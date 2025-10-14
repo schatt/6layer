@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CapabilityCombinationValidationTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all capability combination validation scenarios
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

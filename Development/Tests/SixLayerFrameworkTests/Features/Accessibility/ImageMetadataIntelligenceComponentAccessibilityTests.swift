@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ImageMetadataIntelligenceComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Image Metadata Intelligence Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

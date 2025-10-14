@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DataIntrospectionTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Tests for the Data Introspection Engine
 //
 
-import Testing
 import SixLayerFramework
 
 final class DataIntrospectionTests {

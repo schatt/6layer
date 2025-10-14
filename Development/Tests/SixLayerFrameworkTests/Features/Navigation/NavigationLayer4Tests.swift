@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  NavigationLayer4Tests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests platformNavigationLink_L4, platformNavigationBarItems_L4, and related functions
 //
 
-import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework

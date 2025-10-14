@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DataFrameAnalysisEngineComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL DataFrame Analysis Engine Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

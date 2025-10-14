@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformColorEncodeTests.swift
 //  SixLayerFrameworkTests
@@ -32,7 +35,6 @@
 //  Tests for platformColorEncode() function that enables cross-platform color persistence
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

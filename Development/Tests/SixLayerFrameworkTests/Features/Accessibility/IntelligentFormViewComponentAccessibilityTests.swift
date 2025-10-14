@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  IntelligentFormViewComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL IntelligentFormView components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

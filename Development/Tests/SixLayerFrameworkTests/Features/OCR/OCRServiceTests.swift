@@ -22,7 +22,6 @@
 //  TODO: This file has been emptied because the previous tests were empty TODO comments.
 //  Real tests need to be written that test actual OCR service functionality.
 
-import Testing
 @testable import SixLayerFramework
 
 /// Tests for OCR service functionality

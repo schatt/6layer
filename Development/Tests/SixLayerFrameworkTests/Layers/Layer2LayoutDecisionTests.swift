@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  Layer2LayoutDecisionTests.swift
 //  SixLayerFrameworkTests
@@ -20,7 +23,6 @@
 //    - Validate business logic algorithms rather than just testing existence
 //
 
-import Testing
 @testable import SixLayerFramework
 
 @MainActor

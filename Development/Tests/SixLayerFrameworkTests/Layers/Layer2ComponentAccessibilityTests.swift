@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  Layer2ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Layer 2 components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

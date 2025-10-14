@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  L2LayoutDecisionTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests layout decision logic with hardcoded platform, capabilities, and accessibility
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

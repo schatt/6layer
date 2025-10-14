@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  WorkflowComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Workflow Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

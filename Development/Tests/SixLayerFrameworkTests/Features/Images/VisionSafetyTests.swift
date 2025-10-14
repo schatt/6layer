@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  VisionSafetyTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Tests for safe Vision framework integration with availability checks
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

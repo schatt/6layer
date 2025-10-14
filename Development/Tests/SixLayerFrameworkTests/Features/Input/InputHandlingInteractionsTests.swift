@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  InputHandlingInteractionsTests.swift
 //  SixLayerFrameworkTests
@@ -31,7 +34,6 @@
 //  - ✅ Business Logic Focus: Tests actual input handling functionality, not testing framework
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CapabilityMatrixTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests both supported and unsupported capability scenarios
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

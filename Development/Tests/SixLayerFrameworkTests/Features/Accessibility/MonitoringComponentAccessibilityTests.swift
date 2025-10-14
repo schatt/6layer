@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  MonitoringComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Monitoring Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

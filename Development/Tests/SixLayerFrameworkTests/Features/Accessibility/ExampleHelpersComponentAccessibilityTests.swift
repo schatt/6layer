@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ExampleHelpersComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL ExampleHelpers components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

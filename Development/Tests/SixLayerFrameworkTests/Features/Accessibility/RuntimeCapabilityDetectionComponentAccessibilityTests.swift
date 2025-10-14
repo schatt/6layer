@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  RuntimeCapabilityDetectionComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Runtime Capability Detection Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

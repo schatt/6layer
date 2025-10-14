@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PhotoFunctionalityPhase1Tests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests for enhanced PlatformImage, Layer 4 components, and cross-platform support
 //
 
-import Testing
 import SwiftUI
 #if os(iOS)
 import UIKit

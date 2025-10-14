@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  GenericLayoutDecisionTests.swift
 //  SixLayerFrameworkTests
@@ -22,7 +25,6 @@
 //    - Test edge cases like empty item arrays
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

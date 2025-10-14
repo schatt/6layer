@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DynamicFormLabelTests.swift
 //  SixLayerFrameworkTests
@@ -27,7 +30,6 @@
 //  - ✅ Excellent: Follows TDD methodology
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

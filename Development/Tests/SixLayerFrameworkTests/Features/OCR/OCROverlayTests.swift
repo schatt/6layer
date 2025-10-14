@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  OCROverlayTests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Test-Driven Development approach for visual text correction
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

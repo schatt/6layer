@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ItemCollectionL1Tests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests generic item collection presentation features
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

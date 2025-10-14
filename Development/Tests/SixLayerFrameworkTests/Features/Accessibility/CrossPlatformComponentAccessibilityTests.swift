@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CrossPlatformComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Cross-Platform Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

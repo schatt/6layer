@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  LiquidGlassDesignSystemTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Tests for Liquid Glass design system integration
 //
 
-import Testing
 @testable import SixLayerFramework
 
 @available(iOS 26.0, macOS 26.0, *)

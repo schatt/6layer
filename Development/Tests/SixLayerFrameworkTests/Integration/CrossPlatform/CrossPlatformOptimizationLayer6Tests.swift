@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CrossPlatformOptimizationLayer6Tests.swift
 //  SixLayerFrameworkTests
@@ -7,7 +10,6 @@
 //  CrossPlatformPerformanceMetrics, PlatformUIPatterns, and related functions
 //
 
-import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework

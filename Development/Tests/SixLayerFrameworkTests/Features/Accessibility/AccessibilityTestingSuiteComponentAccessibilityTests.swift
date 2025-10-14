@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  AccessibilityTestingSuiteComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Accessibility Testing Suite Components
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

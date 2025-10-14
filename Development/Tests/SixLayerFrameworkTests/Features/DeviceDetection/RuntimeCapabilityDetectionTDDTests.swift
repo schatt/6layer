@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  RuntimeCapabilityDetectionTDDTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all runtime capability detection scenarios
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  DynamicFormGridLayoutTests.swift
 //  SixLayerFrameworkTests
@@ -26,7 +29,6 @@
 //  - ✅ Excellent: Follows TDD methodology
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

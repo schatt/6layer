@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PhotoSelectionL1Tests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests photo selection and gallery features
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

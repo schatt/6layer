@@ -25,7 +25,6 @@
 //  instead of real OCR functionality. Real tests need to be written that test actual
 //  OCR service behavior with real Vision framework integration.
 
-import Testing
 import SwiftUI
 @preconcurrency @testable import SixLayerFramework
 

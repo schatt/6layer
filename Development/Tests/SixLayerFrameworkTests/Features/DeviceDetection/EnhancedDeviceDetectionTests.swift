@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  EnhancedDeviceDetectionTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive tests for enhanced device capability detection system
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

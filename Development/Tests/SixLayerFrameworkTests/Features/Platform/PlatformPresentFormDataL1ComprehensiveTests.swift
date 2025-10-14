@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformPresentFormDataL1ComprehensiveTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests all form field types and edge cases
 //
 
-import Testing
 @testable import SixLayerFramework
 
 @MainActor

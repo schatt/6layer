@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CrossPlatformColorTests.swift
 //  SixLayerFrameworkTests
@@ -31,7 +34,6 @@
 //  - 🔧 Action Required: Add validation of cross-platform color accuracy
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

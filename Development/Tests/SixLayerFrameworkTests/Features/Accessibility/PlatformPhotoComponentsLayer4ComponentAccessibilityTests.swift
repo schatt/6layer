@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformPhotoComponentsLayer4ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -5,7 +8,6 @@
 //  Comprehensive accessibility tests for ALL Platform Photo Components Layer 4
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

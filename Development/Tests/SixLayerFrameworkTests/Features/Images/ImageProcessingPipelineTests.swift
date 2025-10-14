@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ImageProcessingPipelineTests.swift
 //  SixLayerFrameworkTests
@@ -31,7 +34,6 @@
 //  - ✅ Business Logic Focus: Tests actual image processing pipeline functionality, not testing framework
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

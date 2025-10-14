@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  CapabilityTestingFramework.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests both sides of every capability branch
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

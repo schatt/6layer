@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  RuntimeCapabilityDetectionTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - ✅ Excellent: Tests both default and override capability scenarios
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

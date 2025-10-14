@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  PlatformPresentContentL1Tests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - 🔧 Action Required: Add platform-specific behavior testing
 //
 
-import Testing
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework

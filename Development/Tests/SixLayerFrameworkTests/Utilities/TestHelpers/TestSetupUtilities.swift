@@ -6,7 +6,6 @@
 //  Following DRY principles to avoid duplicating setup code across test files
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

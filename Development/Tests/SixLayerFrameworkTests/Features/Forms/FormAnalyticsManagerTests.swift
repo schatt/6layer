@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  FormAnalyticsManagerTests.swift
 //  SixLayerFrameworkTests
@@ -27,7 +30,6 @@
 //  - ✅ Business Logic Focus: Tests actual form analytics functionality, not testing framework
 //
 
-import Testing
 @testable import SixLayerFramework
 
 final class FormAnalyticsManagerTests {

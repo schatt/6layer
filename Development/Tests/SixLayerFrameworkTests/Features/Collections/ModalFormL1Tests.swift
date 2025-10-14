@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  ModalFormL1Tests.swift
 //  SixLayerFrameworkTests
@@ -6,7 +9,6 @@
 //  Tests modal form presentation features
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 

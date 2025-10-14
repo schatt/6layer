@@ -1,3 +1,6 @@
+import Testing
+
+
 //
 //  AccessibilityTypesTests.swift
 //  SixLayerFrameworkTests
@@ -30,7 +33,6 @@
 //  - 🔧 Action Required: Add accessibility type conversion testing
 //
 
-import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
