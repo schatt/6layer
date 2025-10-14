@@ -624,17 +624,7 @@ final class UIGenerationVerificationTests: XCTestCase {
     
     /// Create a mock platform config from capabilities
     private func createMockPlatformConfig(from capabilities: UIGenerationTestConfig.CapabilitySet) -> CardExpansionPlatformConfig {
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: capabilities.supportsHapticFeedback,
-            supportsHover: capabilities.supportsHover,
-            supportsTouch: capabilities.supportsTouch,
-            supportsVoiceOver: capabilities.supportsVoiceOver,
-            supportsSwitchControl: capabilities.supportsSwitchControl,
-            supportsAssistiveTouch: capabilities.supportsAssistiveTouch,
-            minTouchTarget: capabilities.minTouchTarget,
-            hoverDelay: capabilities.hoverDelay,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
+        return getCardExpansionPlatformConfig()
     }
     
     /// Test UI generation behavior
