@@ -22,29 +22,21 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-testing", exact: "0.99.0")
     ],
     targets: [
-        // Main framework target - includes only the essential framework code
+        // Main framework target - organized into logical structure
         .target(
             name: "SixLayerFramework",
             dependencies: [],
             path: "Framework/Sources",
             exclude: [
-                "Shared/ProjectHelpers/ExampleHelpers.swift",
-                "Shared/ProjectHelpers/ExtensibleHintsExample.swift"
+                "Core/ExampleHelpers.swift",
+                "Core/ExtensibleHintsExample.swift"
             ],
             sources: [
-                "Shared/Models",
-                "Shared/Services",
-                "Shared/Views",
-                "Shared/Views/Extensions",
-                "Shared/WindowDetection",
-                "iOS/Views",
-                "iOS/Views/Extensions", 
-                "iOS/ProjectHelpers",
-                "iOS/WindowDetection",
-                "macOS/Views",
-                "macOS/Views/Extensions",
-                "macOS/ProjectHelpers",
-                "macOS/WindowDetection"
+                "Core",
+                "Layers",
+                "Features", 
+                "Platform",
+                "Extensions"
             ]
         ),
         
