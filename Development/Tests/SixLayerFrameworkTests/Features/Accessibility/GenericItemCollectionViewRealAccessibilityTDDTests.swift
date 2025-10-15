@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import AppKit
 import ViewInspector
@@ -9,10 +8,11 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for GenericItemCollectionView
 /// This test SHOULD FAIL - proving GenericItemCollectionView doesn't generate accessibility IDs
 @MainActor
-final class GenericItemCollectionViewRealAccessibilityTDDTests {
+final class GenericItemCollectionViewRealAccessibilityTDDTests: BaseAccessibilityTestClass {
     
-    init() async throws {
-        try await super.setUp()
+    override init() {
+        super.init()
+        // Additional setup if needed
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TDDTest"
@@ -22,9 +22,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnIOS() {
