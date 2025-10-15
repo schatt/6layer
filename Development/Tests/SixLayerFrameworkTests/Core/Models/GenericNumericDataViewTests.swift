@@ -34,11 +34,11 @@ final class GenericNumericDataViewTests {
     // MARK: - GenericNumericDataView Tests
     
     
-    override func setupTestEnvironment() async {
+    func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func cleanupTestEnvironment() async {
+    func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     

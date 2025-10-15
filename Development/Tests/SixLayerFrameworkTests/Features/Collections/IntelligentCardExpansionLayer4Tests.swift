@@ -34,11 +34,11 @@ final class IntelligentCardExpansionLayer4Tests {
     // MARK: - ExpandableCardCollectionView Tests
     
     
-    override func setupTestEnvironment() async {
+    private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func cleanupTestEnvironment() async {
+    private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     

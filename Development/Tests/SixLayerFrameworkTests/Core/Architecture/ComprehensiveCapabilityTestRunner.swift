@@ -126,11 +126,11 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run all comprehensive capability tests
     
-    override func setupTestEnvironment() async {
+    private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func cleanupTestEnvironment() async {
+    private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     

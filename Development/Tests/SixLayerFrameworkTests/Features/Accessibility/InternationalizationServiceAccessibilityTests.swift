@@ -34,11 +34,11 @@ final class InternationalizationServiceAccessibilityTests {
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    override func setupTestEnvironment() async {
+    private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func cleanupTestEnvironment() async {
+    private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     

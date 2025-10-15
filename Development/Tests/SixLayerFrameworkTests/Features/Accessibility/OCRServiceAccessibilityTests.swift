@@ -34,11 +34,11 @@ final class OCRServiceAccessibilityTests {
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    override func setupTestEnvironment() async {
+    private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    override func cleanupTestEnvironment() async {
+    private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
@@ -121,11 +121,11 @@ final class OCRServiceAccessibilityTests {
 
 // MARK: - Test Extensions
 extension OCRServiceAccessibilityTests {
-    override func await setupTestEnvironment() {
+    private func setupTestEnvironment() async {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func await cleanupTestEnvironment() {
+    private func cleanupTestEnvironment() async {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }
