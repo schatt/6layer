@@ -128,7 +128,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
 
         // Create fields for each type
         let fields = allContentTypes.enumerated().map { index, contentType in
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Field \(index + 1)",
                 placeholder: "Enter value for \(contentType.rawValue)",
                 value: getDefaultValue(for: contentType),
@@ -160,19 +160,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_FieldTypeSpecificBehavior() {
         // Given: Fields with different behaviors
         let fieldsWithOptions = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Select Field",
                 value: "option1", contentType: .select
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Multiselect Field",
                 value: "option1,option2", contentType: .multiselect
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Radio Field",
                 value: "option1", contentType: .radio
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Checkbox Field",
                 value: "true", contentType: .checkbox
             )
@@ -195,11 +195,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_MultiValueFields() {
         // Given: Fields that support multiple values
         let multiValueFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Multiselect Field",
                 value: "option1,option2,option3", contentType: .multiselect
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Checkbox Field",
                 value: "true", contentType: .checkbox
             )
@@ -247,9 +247,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         )
 
         let fields = [
-            createTestField(label: "Name", contentType: .text),
-            createTestField(label: "Email", contentType: .email),
-            createTestField(label: "Age", contentType: .number)
+            TestSetupUtilities.createTestField(label: "Name", contentType: .text),
+            TestSetupUtilities.createTestField(label: "Email", contentType: .email),
+            TestSetupUtilities.createTestField(label: "Age", contentType: .number)
         ]
 
         // When: Creating form presentation with enhanced hints
@@ -290,8 +290,8 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         )
 
         let fields = [
-            createTestField(label: "Title", contentType: .text),
-            createTestField(label: "Description", contentType: .textarea)
+            TestSetupUtilities.createTestField(label: "Title", contentType: .text),
+            TestSetupUtilities.createTestField(label: "Description", contentType: .textarea)
         ]
 
         // When: Creating form with multiple extensible hints
@@ -308,22 +308,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_CrossPlatformCompatibility() {
         // Given: Fields that work across platforms
         let crossPlatformFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Name",
                 placeholder: "Enter your name",
                 isRequired: true, contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Email",
                 placeholder: "Enter your email",
                 isRequired: true, contentType: .email
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Phone",
                 placeholder: "Enter your phone",
                 contentType: .phone
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Date of Birth",
                 placeholder: "Select your date of birth",
                 contentType: .date
@@ -355,11 +355,11 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_PlatformSpecificKeyboardTypes() {
         // Given: Fields that should use different keyboard types on iOS
         let keyboardTestFields = [
-            createTestField(label: "Text", contentType: .text),
-            createTestField(label: "Email", contentType: .email),
-            createTestField(label: "Number", contentType: .number),
-            createTestField(label: "Phone", contentType: .phone),
-            createTestField(label: "URL", contentType: .url)
+            TestSetupUtilities.createTestField(label: "Text", contentType: .text),
+            TestSetupUtilities.createTestField(label: "Email", contentType: .email),
+            TestSetupUtilities.createTestField(label: "Number", contentType: .number),
+            TestSetupUtilities.createTestField(label: "Phone", contentType: .phone),
+            TestSetupUtilities.createTestField(label: "URL", contentType: .url)
         ]
 
         // When: Creating form presentation
@@ -381,7 +381,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_LargeFieldSetPerformance() {
         // Given: Very large field set for performance testing
         let largeFieldSet = (1...1000).map { i in
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Field \(i)",
                 placeholder: "Value \(i)",
                 value: "default\(i)",
@@ -405,7 +405,7 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_MemoryEfficiency() {
         // Given: Memory-intensive field set
         let memoryFields = (1...500).map { i in
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Rich Text Field \(i)",
                 placeholder: "Enter rich content \(i)",
                 value: String(repeating: "Long content ", count: 100), // 1.3KB per field
@@ -429,19 +429,19 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_ValidationScenarios() {
         // Given: Fields with various validation requirements
         let validationFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Required Text",
                 value: "", isRequired: true, contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Required Email",
                 value: "", isRequired: true, contentType: .email
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Optional Number",
                 value: "123", isRequired: false, contentType: .number
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Invalid Email",
                 value: "invalid-email", contentType: .email
             )
@@ -464,22 +464,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_EmptyAndNilValues() {
         // Given: Fields with empty and nil values
         let edgeCaseFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Empty Label",
                 value: "", contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Nil Placeholder",
                 placeholder: nil,
                 contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Empty Everything",
                 placeholder: nil,
                 value: "",
                 contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Whitespace Only",
                 value: "   ",
                 contentType: .text
@@ -503,25 +503,25 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_SpecialCharacterHandling() {
         // Given: Fields with special characters and Unicode
         let specialCharFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Emoji Field 🚀",
                 placeholder: "Enter with emoji 🎉",
                 value: "Unicode: ñáéíóú",
                 contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "RTL Text",
                 placeholder: "نص عربي",
                 value: "عربي",
                 contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Symbols & Punctuation",
                 placeholder: "!@#$%^&*()",
                 value: "©®™€¥£¢",
                 contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Math Symbols",
                 placeholder: "∑∆∏√∞",
                 value: "αβγδε",
@@ -555,9 +555,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         ]
 
         let fields = [
-            createTestField(label: "Name", contentType: .text),
-            createTestField(label: "Email", contentType: .email),
-            createTestField(label: "Phone", contentType: .phone)
+            TestSetupUtilities.createTestField(label: "Name", contentType: .text),
+            TestSetupUtilities.createTestField(label: "Email", contentType: .email),
+            TestSetupUtilities.createTestField(label: "Phone", contentType: .phone)
         ]
 
         // When: Testing all hint combinations
@@ -586,9 +586,9 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         )
 
         let fields = [
-            createTestField(label: "Title", contentType: .text),
-            createTestField(label: "Description", contentType: .textarea),
-            createTestField(label: "Category", contentType: .select)
+            TestSetupUtilities.createTestField(label: "Title", contentType: .text),
+            TestSetupUtilities.createTestField(label: "Description", contentType: .textarea),
+            TestSetupUtilities.createTestField(label: "Category", contentType: .select)
         ]
 
         // When: Creating form with custom preferences
@@ -605,22 +605,22 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_AccessibilitySupport() {
         // Given: Fields with accessibility considerations
         let accessibilityFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Name (Required)",
                 placeholder: "Enter your full name",
                 isRequired: true, contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Email Address",
                 placeholder: "your.email@example.com",
                 isRequired: true, contentType: .email
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Phone Number",
                 placeholder: "(555) 123-4567",
                 contentType: .phone
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "Date of Birth",
                 placeholder: "MM/DD/YYYY",
                 contentType: .date
@@ -660,13 +660,13 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
     @Test func testPlatformPresentFormData_L1_ErrorRecovery() {
         // Given: Fields with potentially problematic data
         let problematicFields = [
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: "",
                 placeholder: "",
                 value: String(repeating: "x", count: 10000), // Very long value
                 contentType: .text
             ),
-            createTestField(
+            TestSetupUtilities.createTestField(
                 label: String(repeating: "Label", count: 1000), // Very long label
                 contentType: .text
             )

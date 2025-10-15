@@ -230,5 +230,26 @@ public final class TestSetupUtilities {
             #expect(config.supportsAssistiveTouch == assistiveTouch, "Card config AssistiveTouch support should be \(assistiveTouch)", )
         }
     }
+    
+    // MARK: - Test Field Creation Utilities
+    
+    /// Helper function to create DynamicFormField with proper binding for tests
+    /// DRY principle: Centralized field creation to avoid duplication across test files
+    public static func createTestField(
+        label: String,
+        placeholder: String? = nil,
+        value: String = "",
+        isRequired: Bool = false,
+        contentType: DynamicContentType = .text
+    ) -> DynamicFormField {
+        return DynamicFormField(
+            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
+            contentType: contentType,
+            label: label,
+            placeholder: placeholder,
+            isRequired: isRequired,
+            defaultValue: value
+        )
+    }
 }
 
