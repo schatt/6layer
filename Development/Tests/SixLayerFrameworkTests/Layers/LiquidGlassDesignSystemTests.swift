@@ -16,12 +16,14 @@ final class LiquidGlassDesignSystemTests {
     
     var liquidGlassSystem: LiquidGlassDesignSystem!
     
-    init() {
+    init() async throws {
         liquidGlassSystem = LiquidGlassDesignSystem.shared
     }
     
     deinit {
-        liquidGlassSystem = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Material Tests

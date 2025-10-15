@@ -33,11 +33,14 @@ final class OCRStrategyTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
         // TODO: Set up real OCR strategy tests
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Real OCR Strategy Tests (To Be Implemented)

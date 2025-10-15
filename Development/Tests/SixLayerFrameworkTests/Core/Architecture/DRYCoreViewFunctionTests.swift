@@ -62,7 +62,7 @@ final class DRYCoreViewFunctionTests {
     
     var sampleData: [TestDataItem] = []
     
-    init() {
+    init() async throws {
         sampleData = [
             DRYTestPatterns.createTestItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
             DRYTestPatterns.createTestItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),

@@ -12,8 +12,7 @@ final class SwitchControlManagerAccessibilityTests {
     
     @MainActor
     init() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
+                await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -24,10 +23,9 @@ final class SwitchControlManagerAccessibilityTests {
     
     @MainActor
     deinit {
-        try await super.tearDown()
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - SwitchControlManager Tests
@@ -85,11 +83,11 @@ final class SwitchControlManagerAccessibilityTests {
 
 // MARK: - Test Extensions
 extension SwitchControlManagerAccessibilityTests {
-    override func setupTestEnvironment() {
+    override func await setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func cleanupTestEnvironment() {
+    override func await cleanupTestEnvironment() {
         TestSetupUtilities.shared.cleanupTestingEnvironment()
     }
 }

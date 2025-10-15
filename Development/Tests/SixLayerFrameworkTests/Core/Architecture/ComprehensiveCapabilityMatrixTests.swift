@@ -55,7 +55,7 @@ final class ComprehensiveCapabilityMatrixTests {
     
     var sampleData: [TestDataItem] = []
     
-    init() {
+    init() async throws {
         
         sampleData = [
             TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),

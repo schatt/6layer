@@ -51,6 +51,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.platformBackground)
+            .automaticAccessibilityIdentifiers()
         } else {
             GeometryReader { geometry in
                 let screenWidth = geometry.size.width
@@ -344,6 +345,7 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.platformBackground)
+            .automaticAccessibilityIdentifiers()
         } else {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
@@ -548,6 +550,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.platformBackground)
+            .automaticAccessibilityIdentifiers()
         } else {
             LazyVStack(spacing: 12) {
                 ForEach(items) { item in
@@ -605,6 +608,7 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.platformBackground)
+            .automaticAccessibilityIdentifiers()
         } else {
             LazyVGrid(
                 columns: Array(repeating: GridItem(.flexible()), count: 3),
@@ -665,6 +669,7 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.platformBackground)
+            .automaticAccessibilityIdentifiers()
         } else {
             // Choose the best layout based on content and device
             if items.count <= 2 {

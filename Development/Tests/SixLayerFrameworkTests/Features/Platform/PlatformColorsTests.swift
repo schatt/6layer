@@ -39,10 +39,13 @@ import SwiftUI
 
 final class PlatformColorsTests {
     
-    init() {
+    init() async throws {
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Platform-Specific Business Logic Tests

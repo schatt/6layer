@@ -15,8 +15,8 @@ final class IntelligentCardExpansionLayer4Tests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class IntelligentCardExpansionLayer4Tests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - ExpandableCardCollectionView Tests
     
-    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
             IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
             IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")

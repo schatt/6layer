@@ -30,18 +30,19 @@ import SwiftUI
 
 /// Test suite for AccessibilityTestingSuite with proper TDD practices
 @MainActor
-final class AccessibilityTestingSuiteTests {
+final class AccessibilityTestingSuiteTests: BaseAccessibilityTestClass {
     
     var testingSuite: AccessibilityTestingSuite!
     
     init() async throws {
-        try await super.setUp()
+        try await super.init()
         testingSuite = AccessibilityTestingSuite()
     }
     
     deinit {
-        testingSuite = nil
-        try await super.tearDown()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Initialization Tests

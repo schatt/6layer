@@ -15,8 +15,8 @@ final class OCROverlayViewTests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class OCROverlayViewTests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - OCROverlayView Tests
     
-    @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
         let testResult = OCRResult(
             extractedText: "Test OCR Text",

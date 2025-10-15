@@ -30,11 +30,14 @@ final class MockOCRServiceTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
         // TODO: Set up real mock service tests
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Real Mock Service Tests (To Be Implemented)

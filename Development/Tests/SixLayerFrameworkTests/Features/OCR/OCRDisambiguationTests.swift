@@ -29,15 +29,10 @@ import SwiftUI
 /// Tests for OCR disambiguation functionality
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
 @MainActor
-final class OCRDisambiguationTests {
+class OCRDisambiguationTests: BaseAccessibilityTestClass {
     
-    // MARK: - Test Setup
-    
-    init() {
-        // TODO: Set up real OCR disambiguation tests
-    }
-    
-    deinit {
+    init() async throws {
+        try await super.init()
     }
     
     // MARK: - Real OCR Disambiguation Tests (To Be Implemented)

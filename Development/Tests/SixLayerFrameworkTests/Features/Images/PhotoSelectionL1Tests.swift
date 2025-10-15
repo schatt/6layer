@@ -25,7 +25,7 @@ final class PhotoSelectionL1Tests: BaseAccessibilityTestClass {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override init() {
+    override init() async throws {
         super.init()
         samplePhotoContext = PhotoContext(
             screenSize: CGSize(width: 375, height: 667),
@@ -37,6 +37,9 @@ final class PhotoSelectionL1Tests: BaseAccessibilityTestClass {
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Photo Selection Tests

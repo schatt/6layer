@@ -15,8 +15,8 @@ final class ResponsiveLayoutTests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class ResponsiveLayoutTests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - ResponsiveLayout Tests
     
-    @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = ResponsiveLayout.adaptiveGrid {
             Text("Test Content")
         }

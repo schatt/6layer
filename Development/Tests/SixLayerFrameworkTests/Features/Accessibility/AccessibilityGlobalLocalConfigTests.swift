@@ -10,8 +10,7 @@ import ViewInspector
 final class AccessibilityGlobalLocalConfigTests {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
+                let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
         // namespace is automatically detected as "SixLayer" for tests
@@ -20,9 +19,9 @@ final class AccessibilityGlobalLocalConfigTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Global Config Tests

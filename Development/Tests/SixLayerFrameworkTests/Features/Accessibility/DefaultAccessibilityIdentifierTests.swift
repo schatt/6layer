@@ -14,13 +14,13 @@ import SwiftUI
 final class DefaultAccessibilityIdentifierTests {
     
     init() async throws {
-        try await super.setUp()
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+                await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
     deinit {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-        try await super.tearDown()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     /// BUSINESS PURPOSE: Verify that automatic identifiers work by default

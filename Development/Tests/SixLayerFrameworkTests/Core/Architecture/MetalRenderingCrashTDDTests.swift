@@ -12,7 +12,7 @@ import ViewInspector
 @MainActor
 final class MetalRenderingCrashTDDTests {
     
-    init() {
+    init() async throws {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "MetalTest"
@@ -22,8 +22,9 @@ final class MetalRenderingCrashTDDTests {
     }
     
     deinit {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - TDD Green Phase: Tests That Now Pass After Performance Layer Removal

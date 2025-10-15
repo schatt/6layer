@@ -31,7 +31,7 @@ final class CardContentDisplayTests: BaseAccessibilityTestClass {
     var sampleItemsWithData: [TestItemWithData] = []
     var layoutDecision: IntelligentCardLayoutDecision!
     
-    init() {
+    init() async throws {
         
         sampleItems = [
             TestItem(title: "Test Item 1", subtitle: "Subtitle 1", description: "Description 1", icon: "star.fill", color: .blue),

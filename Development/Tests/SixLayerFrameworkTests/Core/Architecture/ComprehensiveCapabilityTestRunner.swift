@@ -44,8 +44,7 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Setup test environment before each test
     @MainActor
-    func setupTestEnvironment() {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+    func setupTestEnvironment() async {
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -53,8 +52,10 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Cleanup test environment after each test
     @MainActor
-    func cleanupTestEnvironment() {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+    func cleanupTestEnvironment() async {
+        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.setTestVoiceOver(nil)
+        RuntimeCapabilityDetection.setTestSwitchControl(nil)
     }
     
     // MARK: - Test Runner Configuration
@@ -124,7 +125,16 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - Comprehensive Test Execution
     
     /// Run all comprehensive capability tests
-    @Test func testAllComprehensiveCapabilityTests() {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testAllComprehensiveCapabilityTests() {
         for config in testRunnerConfigurations {
             runComprehensiveCapabilityTest(config)
         }
@@ -482,8 +492,8 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run complete capability testing
     @Test func completeCapabilityTesting() {
-        setupTestEnvironment()
-        defer { cleanupTestEnvironment() }
+        await setupTestEnvironment()
+        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Complete Capability Testing" }!
         runComprehensiveCapabilityTest(config)
@@ -491,8 +501,8 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run touch-focused testing
     @Test func touchFocusedTesting() {
-        setupTestEnvironment()
-        defer { cleanupTestEnvironment() }
+        await setupTestEnvironment()
+        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Touch-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
@@ -500,8 +510,8 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run hover-focused testing
     @Test func hoverFocusedTesting() {
-        setupTestEnvironment()
-        defer { cleanupTestEnvironment() }
+        await setupTestEnvironment()
+        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Hover-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
@@ -509,8 +519,8 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run accessibility-focused testing
     @Test func accessibilityFocusedTesting() {
-        setupTestEnvironment()
-        defer { cleanupTestEnvironment() }
+        await setupTestEnvironment()
+        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Accessibility-Focused Testing" }!
         runComprehensiveCapabilityTest(config)
@@ -518,8 +528,8 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run vision-focused testing
     @Test func visionFocusedTesting() {
-        setupTestEnvironment()
-        defer { cleanupTestEnvironment() }
+        await setupTestEnvironment()
+        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Vision-Focused Testing" }!
         runComprehensiveCapabilityTest(config)

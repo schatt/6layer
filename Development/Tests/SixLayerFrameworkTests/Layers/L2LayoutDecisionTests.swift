@@ -26,7 +26,7 @@ final class L2LayoutDecisionTests {
         deviceCapabilities: PhotoDeviceCapabilities()
     )
     
-    init() {
+    init() async throws {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
         sampleOCRContext = OCRContext()
@@ -39,7 +39,9 @@ final class L2LayoutDecisionTests {
     }
     
     deinit {
-        sampleItems = []
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Generic Layout Decision Tests
@@ -602,3 +604,5 @@ final class L2LayoutDecisionTests {
             )
         // Performance test removed - performance monitoring was removed from framework
     }
+
+}}

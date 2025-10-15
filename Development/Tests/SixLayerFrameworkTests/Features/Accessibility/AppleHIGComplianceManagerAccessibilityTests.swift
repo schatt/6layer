@@ -8,26 +8,10 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AppleHIGComplianceManager.swift classes
 /// Ensures AppleHIGComplianceManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class AppleHIGComplianceManagerAccessibilityTests {
+class AppleHIGComplianceManagerAccessibilityTests: BaseAccessibilityTestClass {
     
-    @MainActor
     init() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
-    
-    @MainActor
-    deinit {
-        try await super.tearDown()
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        try await super.init()
     }
     
     // MARK: - AppleHIGComplianceManager Tests
@@ -67,13 +51,3 @@ final class AppleHIGComplianceManagerAccessibilityTests {
     }
 }
 
-// MARK: - Test Extensions
-extension AppleHIGComplianceManagerAccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.cleanupTestingEnvironment()
-    }
-}

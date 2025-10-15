@@ -11,8 +11,7 @@ import ViewInspector
 final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
+                await await setupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.resetToDefaults()
@@ -24,19 +23,26 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
     }
     
     deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
-        try await super.tearDown()
     }
+            }
     
     // MARK: - Photo Layout Decision Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -81,4 +87,4 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
         #expect(result.width > 0, "Layout decision should have valid width")
         #expect(result.height > 0, "Layout decision should have valid height")
     }
-}
+

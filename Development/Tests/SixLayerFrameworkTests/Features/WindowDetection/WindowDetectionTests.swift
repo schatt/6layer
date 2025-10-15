@@ -14,14 +14,15 @@ final class WindowDetectionTests {
     
     var windowDetection: UnifiedWindowDetection!
     
-    init() {
+    init() async throws {
         // Implementation exists and is ready for testing
         windowDetection = UnifiedWindowDetection()
     }
     
     deinit {
-        windowDetection?.stopMonitoring()
-        windowDetection = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Basic Functionality Tests (Positive Cases)

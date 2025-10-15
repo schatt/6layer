@@ -19,13 +19,15 @@ final class ItemCollectionL1Tests: BaseAccessibilityTestClass {
     private var sampleItems: [GenericDataItem] = []
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override init() {
+    override init() async throws {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
     }
     
     deinit {
-        sampleItems = []
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Item Collection Tests

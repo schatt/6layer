@@ -15,8 +15,8 @@ final class CrossPlatformNavigationTests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class CrossPlatformNavigationTests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - CrossPlatformNavigation Tests
     
-    @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = Text("Test Navigation")
         
         let hasAccessibilityID = hasAccessibilityIdentifier(

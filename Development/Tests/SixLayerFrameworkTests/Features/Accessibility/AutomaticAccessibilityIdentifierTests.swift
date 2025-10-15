@@ -45,8 +45,7 @@ final class AutomaticAccessibilityIdentifierTests {
     private var testHints: PresentationHints!
     
     init() async throws {
-        try await super.setUp()
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+                await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         testItems = [
             TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
@@ -61,10 +60,9 @@ final class AutomaticAccessibilityIdentifierTests {
     }
     
     deinit {
-        testItems = nil
-        testHints = nil
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-        try await super.tearDown()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Global Configuration Tests

@@ -57,13 +57,13 @@ final class NativeTypesTests: BaseAccessibilityTestClass {
     var formState: DynamicFormState!
     var configuration: DynamicFormConfiguration!
     
-    override init() {
+    override init() async throws {
         super.init()
-        setupTestEnvironment()
+        await setupTestEnvironment()
     }
     
-    override func setupTestEnvironment() {
-        super.setupTestEnvironment()
+    override func setupTestEnvironment() async {
+        await super.setupTestEnvironment()
         configuration = DynamicFormConfiguration(
             id: "test",
             title: "Test Form",
@@ -75,15 +75,15 @@ final class NativeTypesTests: BaseAccessibilityTestClass {
         formState = DynamicFormState(configuration: configuration)
     }
     
-    override func cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() async {
         formState = nil
         configuration = nil
-        super.cleanupTestEnvironment()
+        await super.cleanupTestEnvironment()
     }
     
     // MARK: - High Priority Tests
     
-    @Test func testImageFieldTypeExists() {
+@Test func testImageFieldTypeExists() {
         // Given
         let contentType = DynamicContentType.image
         

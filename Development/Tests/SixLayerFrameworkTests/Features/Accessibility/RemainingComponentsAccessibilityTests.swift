@@ -11,26 +11,10 @@ import ViewInspector
 /// TESTING SCOPE: Layer 4 components and other remaining components in the framework
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class RemainingComponentsAccessibilityTests {
-    
-    // MARK: - Test Setup
+class RemainingComponentsAccessibilityTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
-    
-    deinit {
-        try await super.tearDown()
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        try await super.init()
     }
     
     // MARK: - ExpandableCardComponent Tests

@@ -12,7 +12,11 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer2ComponentAccessibilityTests {
+class Layer2ComponentAccessibilityTests: BaseAccessibilityTestClass {
+    
+    init() async throws {
+        try await super.init()
+    }
     
     // MARK: - Layer 2 Semantic Functions Tests
     

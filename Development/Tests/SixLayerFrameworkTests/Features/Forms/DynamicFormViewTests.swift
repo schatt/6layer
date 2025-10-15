@@ -15,8 +15,8 @@ final class DynamicFormViewTests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class DynamicFormViewTests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - DynamicFormView Tests
     
-    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,

@@ -11,8 +11,7 @@ import ViewInspector
 final class FrameworkComponentAccessibilityBaselineTests {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
+                let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "FrameworkTest"
         config.mode = .automatic
@@ -21,9 +20,9 @@ final class FrameworkComponentAccessibilityBaselineTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - TDD Green Phase: Components That SHOULD Work (Have .automaticAccessibility())

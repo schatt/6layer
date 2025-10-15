@@ -21,7 +21,7 @@ class L2LayoutDecisionTests {
     private var sampleContentComplexity: ContentComplexity = .moderate
     private var sampleDeviceType: DeviceType = .phone
     
-    init() {
+    init() async throws {
         sampleContent = L2TestDataFactory.createSampleContent()
         sampleHints = L2TestDataFactory.createSampleHints()
         sampleOCRContext = L2TestDataFactory.createSampleOCRContext()
@@ -31,12 +31,9 @@ class L2LayoutDecisionTests {
     }
     
     deinit {
-        sampleContent = []
-        sampleHints = PresentationHints()
-        sampleOCRContext = OCRContext()
-        samplePhotoContext = PhotoContext()
-        sampleContentComplexity = .moderate
-        sampleDeviceType = .phone
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Card Layout Decision Functions

@@ -5,13 +5,15 @@ import Testing
 @MainActor
 final class SixLayerFrameworkTests: BaseAccessibilityTestClass {
     
-    override init() {
+    override init() async throws {
         super.init()
         // Additional setup if needed
     }
 
     deinit {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
 
     @Test func testExample() throws {

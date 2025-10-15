@@ -8,35 +8,33 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoSemanticLayer1.swift functions
 /// Ensures Photo semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoSemanticLayer1AccessibilityTests {
+final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
+        try await super.init()
     }
     
     deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
-        try await super.tearDown()
     }
+            }
     
     // MARK: - Photo Capture Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -225,15 +223,5 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests {
         
         #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS")
     }
-}
 
-// MARK: - Test Extensions
-extension PlatformPhotoSemanticLayer1AccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-}
+

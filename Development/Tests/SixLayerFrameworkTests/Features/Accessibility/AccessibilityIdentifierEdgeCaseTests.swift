@@ -8,22 +8,16 @@ import ViewInspector
 /// Edge case tests for accessibility identifier generation bug fix
 /// These tests ensure our fix handles all edge cases properly
 @MainActor
-final class AccessibilityIdentifierEdgeCaseTests {
+final class AccessibilityIdentifierEdgeCaseTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "CarManager"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        try await super.init()
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Edge Case 1: Empty String Parameters

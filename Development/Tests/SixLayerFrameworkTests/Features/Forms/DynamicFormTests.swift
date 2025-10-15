@@ -576,3 +576,6 @@ final class DynamicFormTests: BaseAccessibilityTestClass {
             let _ = state.formData
             let _ = state.isValid
             // Performance test removed - performance monitoring was removed from framework
+        }
+    
+

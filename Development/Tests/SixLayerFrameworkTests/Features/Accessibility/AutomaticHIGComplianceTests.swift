@@ -25,7 +25,7 @@ final class AutomaticHIGComplianceTests {
     private var testItems: [AutomaticHIGComplianceTestItem]!
     private var testHints: PresentationHints!
     
-    init() {
+    init() async throws {
         testItems = [
             AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
             AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2"),
@@ -41,8 +41,9 @@ final class AutomaticHIGComplianceTests {
     }
     
     deinit {
-        testItems = nil
-        testHints = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Automatic HIG Compliance Tests

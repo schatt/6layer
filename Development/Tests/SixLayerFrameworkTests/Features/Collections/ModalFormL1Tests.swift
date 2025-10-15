@@ -18,11 +18,14 @@ final class ModalFormL1Tests: BaseAccessibilityTestClass {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    init() {
+    init() async throws {
         sampleHints = PresentationHints()
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Modal Form Tests
@@ -309,9 +312,11 @@ final class ModalFormL1Tests: BaseAccessibilityTestClass {
         let context = PresentationContext.modal
         
         // When & Then
-                formType: formType,
-                context: context
-            )
-            #expect(view != nil)
+        let view = ModalFormL1View(
+            formType: formType,
+            context: context
+        )
+        #expect(view != nil)
         // Performance test removed - performance monitoring was removed from framework
     }
+}

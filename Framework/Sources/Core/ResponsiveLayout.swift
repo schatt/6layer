@@ -31,6 +31,7 @@ public struct ResponsiveGrid<Content: View>: View {
         LazyVGrid(columns: columns, spacing: spacing) {
             content()
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -62,6 +63,7 @@ public struct ResponsiveNavigation<Content: View>: View {
         ResponsiveContainer { horizontal, _ in
             content(horizontal)
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -87,6 +89,7 @@ public struct ResponsiveStack<Content: View>: View {
                 })
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 

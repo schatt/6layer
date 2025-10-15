@@ -12,7 +12,11 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AccessibilityManagerComponentAccessibilityTests {
+final class AccessibilityManagerComponentAccessibilityTests: BaseAccessibilityTestClass {
+    
+    init() async throws {
+        try await super.init()
+    }
     
     // MARK: - AccessibilityManager Tests
     

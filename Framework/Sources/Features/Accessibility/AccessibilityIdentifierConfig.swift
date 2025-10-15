@@ -14,6 +14,13 @@
 
 import Foundation
 
+/// Accessibility configuration mode
+public enum AccessibilityMode: String, CaseIterable, Sendable {
+    case automatic = "automatic"
+    case manual = "manual"
+    case disabled = "disabled"
+}
+
 /// Configuration manager for accessibility identifier generation
 @MainActor
 public class AccessibilityIdentifierConfig: ObservableObject {
@@ -41,6 +48,12 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Current screen context for identifier generation
     @Published public var currentScreenContext: String? = nil
     
+    /// Debug logging mode
+    @Published public var enableDebugLogging: Bool = false
+    
+    /// Configuration mode
+    @Published public var mode: AccessibilityMode = .automatic
+    
     private init() {}
     
     /// Reset configuration to defaults
@@ -52,6 +65,8 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         includeElementTypes = true
         currentViewHierarchy = []
         currentScreenContext = nil
+        enableDebugLogging = false
+        mode = .automatic
     }
     
     /// Configure for testing mode

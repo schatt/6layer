@@ -11,8 +11,7 @@ import ViewInspector
 final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
+                await await setupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.resetToDefaults()
@@ -24,19 +23,26 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
     }
     
     deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
-        try await super.tearDown()
     }
+            }
     
     // MARK: - Photo Strategy Selection Tests
     
     /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -75,4 +81,4 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
         #expect(captureStrategy != nil, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
         #expect(displayStrategy != nil, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
     }
-}
+

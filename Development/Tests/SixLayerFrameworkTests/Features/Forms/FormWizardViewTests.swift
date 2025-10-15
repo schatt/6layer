@@ -15,8 +15,8 @@ final class FormWizardViewTests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class FormWizardViewTests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - FormWizardView Tests
     
-    @Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
         let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         

@@ -18,7 +18,7 @@ final class OCROverlayTests: BaseAccessibilityTestClass {
     var testOCRResult: OCRResult!
     var testBoundingBoxes: [CGRect]!
     
-    override init() {
+    override init() async throws {
         super.init()
         
         // Create test image
@@ -47,9 +47,9 @@ final class OCROverlayTests: BaseAccessibilityTestClass {
     }
     
     deinit {
-        testImage = nil
-        testOCRResult = nil
-        testBoundingBoxes = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - OCR Overlay View Tests

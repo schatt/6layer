@@ -26,7 +26,7 @@ final class AdvancedFieldTypesTests {
     private var testFormState: DynamicFormState!
     private var testConfiguration: DynamicFormConfiguration!
     
-    init() {
+    init() async throws {
         testConfiguration = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
@@ -39,8 +39,9 @@ final class AdvancedFieldTypesTests {
     }
     
     deinit {
-        testFormState = nil
-        testConfiguration = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Rich Text Editor Tests

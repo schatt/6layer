@@ -15,14 +15,15 @@ import SwiftUI
 @MainActor
 final class IntelligentCardExpansionComprehensiveTests: BaseAccessibilityTestClass {
     
-    override init() {
+    override init() async throws {
         super.init()
         // Additional setup if needed
     }
     
     deinit {
-        // Use centralized test cleanup
-        cleanupTestEnvironment()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Test Data

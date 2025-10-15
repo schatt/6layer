@@ -30,11 +30,14 @@ final class OCRServiceTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
         // TODO: Set up real OCR service tests
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Real OCR Service Tests (To Be Implemented)

@@ -12,8 +12,7 @@ import ViewInspector
 final class OCROverlayViewRealAccessibilityTDDTests {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
+                let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TDDTest"
         config.mode = .automatic
@@ -22,9 +21,9 @@ final class OCROverlayViewRealAccessibilityTDDTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testOCROverlayView_AppliesCorrectModifiersOnIOS() {

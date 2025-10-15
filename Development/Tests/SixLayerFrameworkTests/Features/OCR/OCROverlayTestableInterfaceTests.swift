@@ -33,11 +33,14 @@ final class OCROverlayTestableInterfaceTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
         // TODO: Set up real OCR overlay testable interface tests
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Real OCR Overlay Testable Interface Tests (To Be Implemented)

@@ -18,10 +18,13 @@ final class InternationalizationTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Helper Methods

@@ -8,35 +8,33 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoComponentsLayer4AccessibilityTests {
+final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
+        try await super.init()
     }
     
     deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
-        try await super.tearDown()
     }
+            }
     
     // MARK: - Photo Picker Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let view = platformPhotoPicker_L4(
             onImageSelected: { _ in }
@@ -171,15 +169,5 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests {
         
         #expect(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS")
     }
-}
 
-// MARK: - Test Extensions
-extension PlatformPhotoComponentsLayer4AccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-}
+

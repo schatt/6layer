@@ -40,12 +40,14 @@ import SwiftUI
 @MainActor
 final class RuntimeCapabilityDetectionTests {
     
-    init() {
+    init() async throws {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     deinit {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Touch Detection Tests

@@ -11,8 +11,7 @@ import ViewInspector
 final class AccessibilityIdentifierPersistenceTests {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
+                let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
         config.namespace = "CarManager"
@@ -21,9 +20,9 @@ final class AccessibilityIdentifierPersistenceTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - TDD Red Phase: Tests That Should Fail

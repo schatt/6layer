@@ -11,8 +11,7 @@ import ViewInspector
 final class AssistiveTouchManagerAccessibilityTests {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
+                await await setupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.resetToDefaults()
@@ -24,19 +23,26 @@ final class AssistiveTouchManagerAccessibilityTests {
     }
     
     deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
-        try await super.tearDown()
     }
+            }
     
     // MARK: - AssistiveTouchManager Tests
     
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
@@ -85,4 +91,4 @@ final class AssistiveTouchManagerAccessibilityTests {
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
     }
-}
+

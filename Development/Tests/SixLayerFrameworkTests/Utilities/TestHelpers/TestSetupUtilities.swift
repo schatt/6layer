@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Testing
 @testable import SixLayerFramework
 
 /// Centralized test setup utilities for consistent platform mocking across all tests
@@ -231,48 +232,3 @@ public final class TestSetupUtilities {
     }
 }
 
-// MARK: - XCTestCase Extension
-
-/// Convenience extension for XCTestCase to easily use TestSetupUtilities
-public extension XCTestCase {
-    
-    /// Sets up the testing environment using centralized utilities
-    @MainActor
-    func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    /// Cleans up the testing environment using centralized utilities
-    @MainActor
-    func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.cleanupTestingEnvironment()
-    }
-    
-    /// Simulates a specific platform for testing
-    /// - Parameter platform: The platform to simulate
-    @MainActor
-    func simulatePlatform(_ platform: SixLayerPlatform) {
-        TestSetupUtilities.shared.simulatePlatform(platform)
-    }
-    
-    /// Sets up common test scenarios
-    @MainActor
-    func setupTouchEnabledPlatform() {
-        TestSetupUtilities.shared.setupTouchEnabledPlatform()
-    }
-    
-    @MainActor
-    func setupHoverEnabledPlatform() {
-        TestSetupUtilities.shared.setupHoverEnabledPlatform()
-    }
-    
-    @MainActor
-    func setupAccessibilityOnlyPlatform() {
-        TestSetupUtilities.shared.setupAccessibilityOnlyPlatform()
-    }
-    
-    @MainActor
-    func setupVisionEnabledPlatform() {
-        TestSetupUtilities.shared.setupVisionEnabledPlatform()
-    }
-}

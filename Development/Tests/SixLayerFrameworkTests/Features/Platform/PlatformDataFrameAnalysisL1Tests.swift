@@ -42,11 +42,14 @@ final class PlatformDataFrameAnalysisL1Tests {
     
     var testDataFrame: DataFrame = DataFrame()
     
-    init() {
+    init() async throws {
         testDataFrame = createTestDataFrame()
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Basic DataFrame Analysis Tests

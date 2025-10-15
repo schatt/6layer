@@ -9,7 +9,7 @@ import ViewInspector
 @MainActor
 final class FrameworkComponentGlobalConfigTests {
     
-    init() {
+    init() async throws {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -19,8 +19,9 @@ final class FrameworkComponentGlobalConfigTests {
     }
     
     deinit {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {

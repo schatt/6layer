@@ -43,7 +43,7 @@ final class RuntimeCapabilityDetectionTDDTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
         // Clear any overrides before each test
         CapabilityOverride.touchSupport = nil
         CapabilityOverride.hapticSupport = nil
@@ -51,10 +51,9 @@ final class RuntimeCapabilityDetectionTDDTests {
     }
     
     deinit {
-        // Clean up overrides after each test
-        CapabilityOverride.touchSupport = nil
-        CapabilityOverride.hapticSupport = nil
-        CapabilityOverride.hoverSupport = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Testing Mode Detection Tests

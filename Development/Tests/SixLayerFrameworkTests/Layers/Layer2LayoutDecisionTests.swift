@@ -508,3 +508,5 @@ final class Layer2LayoutDecisionTests {
     // MARK: - Performance Tests
     
     // Performance test removed - performance monitoring was removed from framework
+
+}

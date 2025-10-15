@@ -23,7 +23,7 @@ class L3StrategyTests {
     private var sampleInteractionStyle: InteractionStyle = .interactive
     private var sampleContentDensity: ContentDensity = .balanced
     
-    init() {
+    init() async throws {
         sampleTextTypes = L3TestDataFactory.createSampleTextTypes()
         sampleDocumentType = L3TestDataFactory.createSampleDocumentType()
         samplePlatform = L3TestDataFactory.createSamplePlatform()
@@ -35,14 +35,9 @@ class L3StrategyTests {
     }
     
     deinit {
-        sampleTextTypes = []
-        sampleDocumentType = .receipt
-        samplePlatform = .iOS
-        samplePhotoPurpose = .document
-        samplePhotoContext = PhotoContext()
-        sampleDeviceType = .phone
-        sampleInteractionStyle = .interactive
-        sampleContentDensity = .balanced
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - OCR Strategy Selection Functions

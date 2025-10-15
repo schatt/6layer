@@ -45,7 +45,7 @@ final class EyeTrackingTests: BaseAccessibilityTestClass {
     
     // MARK: - Setup and Teardown
     
-    init() {
+    init() async throws {
         testConfig = EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,
@@ -56,8 +56,9 @@ final class EyeTrackingTests: BaseAccessibilityTestClass {
     }
     
     deinit {
-        eyeTrackingManager = nil
-        testConfig = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Configuration Tests

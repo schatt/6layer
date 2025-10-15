@@ -20,23 +20,52 @@ import SwiftUI
 /// Modifier that automatically generates accessibility identifiers for views
 /// This is the core modifier that all framework components should use
 public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
-    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalEnabled
-    @Environment(\.accessibilityIdentifierPrefix) private var prefix
-    
+    @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
+    @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
+    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
+
     public func body(content: Content) -> some View {
-        content
-            .accessibilityIdentifier(generateAccessibilityIdentifier())
+        if AccessibilityIdentifierConfig.shared.enableAutoIDs && globalAutomaticAccessibilityIdentifiers {
+            content
+                .accessibilityIdentifier(generateIdentifier())
+        } else {
+            content
+        }
     }
     
-    private func generateAccessibilityIdentifier() -> String {
-        guard globalEnabled else { return "" }
+    @MainActor
+    private func generateIdentifier() -> String {
+        let config = AccessibilityIdentifierConfig.shared
         
-        let basePrefix = prefix ?? "SixLayer"
-        let componentName = "main"
-        let elementType = "element"
-        let uniqueId = UUID().uuidString.prefix(8)
+        // Use the configured global prefix
+        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
         
-        return "\(basePrefix).\(componentName).\(elementType).\(uniqueId)"
+        // Use the configured namespace (legacy support, can be same as prefix)
+        let namespace = config.namespace.isEmpty ? "main" : config.namespace
+        
+        // Use the current screen context
+        let screenContext = config.currentScreenContext ?? "main"
+        
+        // Build the view hierarchy path
+        let viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+        
+        // Determine component name
+        let componentName = accessibilityIdentifierName ?? "element"
+        
+        // Determine element type
+        let elementType = accessibilityIdentifierElementType ?? "View" // Default to "View" if not specified
+        
+        var identifierComponents: [String] = [prefix, namespace, screenContext, viewHierarchyPath]
+        
+        if config.includeComponentNames {
+            identifierComponents.append(componentName)
+        }
+        
+        if config.includeElementTypes {
+            identifierComponents.append(elementType)
+        }
+        
+        return identifierComponents.joined(separator: ".")
     }
 }
 
@@ -77,6 +106,16 @@ public struct AccessibilityIdentifierPrefixKey: EnvironmentKey {
     public static let defaultValue: String? = nil
 }
 
+/// Environment key for accessibility identifier name hint
+public struct AccessibilityIdentifierNameKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
+/// Environment key for accessibility identifier element type hint
+public struct AccessibilityIdentifierElementTypeKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
 // MARK: - Environment Extensions
 
 extension EnvironmentValues {
@@ -88,6 +127,16 @@ extension EnvironmentValues {
     public var accessibilityIdentifierPrefix: String? {
         get { self[AccessibilityIdentifierPrefixKey.self] }
         set { self[AccessibilityIdentifierPrefixKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierName: String? {
+        get { self[AccessibilityIdentifierNameKey.self] }
+        set { self[AccessibilityIdentifierNameKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierElementType: String? {
+        get { self[AccessibilityIdentifierElementTypeKey.self] }
+        set { self[AccessibilityIdentifierElementTypeKey.self] = newValue }
     }
 }
 

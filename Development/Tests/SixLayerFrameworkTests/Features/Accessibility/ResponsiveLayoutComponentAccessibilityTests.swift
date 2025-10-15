@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ResponsiveLayoutComponentAccessibilityTests {
+class ResponsiveLayoutComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - ResponsiveGrid Tests
     
@@ -48,7 +48,7 @@ final class ResponsiveLayoutComponentAccessibilityTests {
     
     @Test func testResponsiveNavigationGeneratesAccessibilityIdentifiers() async {
         // Given: Test navigation content
-        let navigationContent: (Bool) -> some View = { _ in
+        let navigationContent = { (isHorizontal: Bool) in
             VStack {
                 Text("Navigation Content")
                 Button("Test Button") { }

@@ -21,7 +21,7 @@ class L4ComponentTests {
     private var samplePhotoDisplayStyle: PhotoDisplayStyle = .aspectFit
     private var sampleTextRecognitionOptions: TextRecognitionOptions = TextRecognitionOptions()
     
-    init() {
+    init() async throws {
         sampleOCRContext = L4TestDataFactory.createSampleOCRContext()
         sampleOCRStrategy = L4TestDataFactory.createSampleOCRStrategy()
         sampleOCRLayout = L4TestDataFactory.createSampleOCRLayout()
@@ -31,12 +31,9 @@ class L4ComponentTests {
     }
     
     deinit {
-        sampleOCRContext = OCRContext()
-        sampleOCRStrategy = OCRStrategy()
-        sampleOCRLayout = OCRLayout()
-        samplePlatformImage = PlatformImage()
-        samplePhotoDisplayStyle = .aspectFit
-        sampleTextRecognitionOptions = TextRecognitionOptions()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - OCR Component Implementation Functions

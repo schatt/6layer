@@ -13,7 +13,7 @@ final class SingleInstanceLayer1Tests {
     
     private var testHints: PresentationHints!
     
-    init() {
+    init() async throws {
         testHints = PresentationHints(
             dataType: .numeric,
             presentationPreference: .card,

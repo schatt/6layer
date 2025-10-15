@@ -50,10 +50,10 @@ final class PhotoComponentsLayer4Tests {
     }
     
     deinit {
-        testImage = nil
-        Task {
-            await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
+    }
     }
     
     // MARK: - Layer 4 Photo Component Tests
@@ -309,4 +309,4 @@ final class PhotoComponentsLayer4Tests {
             #endif
         }
     }
-}
+

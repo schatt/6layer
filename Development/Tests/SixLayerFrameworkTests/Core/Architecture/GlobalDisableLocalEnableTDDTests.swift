@@ -10,7 +10,7 @@ import ViewInspector
 @MainActor
 final class GlobalDisableLocalEnableTDDTests {
     
-    init() {
+    init() async throws {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TestApp"
@@ -19,8 +19,9 @@ final class GlobalDisableLocalEnableTDDTests {
     }
     
     deinit {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - TDD Red Phase: Tests That Should Fail Initially

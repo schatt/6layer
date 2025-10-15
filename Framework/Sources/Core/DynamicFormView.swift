@@ -49,6 +49,7 @@ public struct DynamicFormView: View {
         .navigationBarTitleDisplayMode(.large)
         #endif
         .automaticAccessibility()
+        .automaticAccessibilityIdentifiers()
         .platformPatterns()
         .visualConsistency()
     }
@@ -155,6 +156,7 @@ public struct DynamicFormSectionView: View {
         .padding()
         .background(Color.secondaryBackground)
         .cornerRadius(12)
+        .automaticAccessibilityIdentifiers()
         .onChange(of: isCollapsed) { newValue in
             formState.toggleSection(section.id)
         }
@@ -232,6 +234,7 @@ public struct DynamicFormFieldView: View {
                 }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder

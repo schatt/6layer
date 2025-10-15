@@ -12,7 +12,11 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformSynchronizationLayer5ComponentAccessibilityTests {
+final class PlatformSynchronizationLayer5ComponentAccessibilityTests: BaseAccessibilityTestClass {
+    
+    init() async throws {
+        try await super.init()
+    }
     
     // MARK: - Platform Synchronization Layer 5 Component Tests
     

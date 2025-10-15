@@ -20,8 +20,7 @@ import SwiftUI
 final class NamedModifierRefactoringTDDTests {
     
     init() async throws {
-        try await super.setUp()
-        // Reset configuration to known state
+                // Reset configuration to known state
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
@@ -33,8 +32,9 @@ final class NamedModifierRefactoringTDDTests {
     }
     
     deinit {
-        try await super.tearDown()
-        // Clean up any test state - no cleanup method exists, so we skip it
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - RED PHASE TESTS (Should FAIL initially)

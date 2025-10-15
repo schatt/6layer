@@ -11,12 +11,14 @@ class AppleHIGComplianceTests {
     
     var complianceManager: AppleHIGComplianceManager!
     
-    init() {
+    init() async throws {
         complianceManager = AppleHIGComplianceManager()
     }
     
     deinit {
-        complianceManager = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Apple HIG Compliance Manager Tests

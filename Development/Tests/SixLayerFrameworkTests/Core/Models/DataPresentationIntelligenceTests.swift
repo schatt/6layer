@@ -7,24 +7,24 @@ final class DataPresentationIntelligenceTests: BaseAccessibilityTestClass {
     
     var intelligence: DataPresentationIntelligence!
     
-    override init() {
+    override init() async throws {
         super.init()
         intelligence = DataPresentationIntelligence.shared
     }
     
-    override func setupTestEnvironment() {
-        super.setupTestEnvironment()
+    override func setupTestEnvironment() async {
+        await super.setupTestEnvironment()
         intelligence = DataPresentationIntelligence.shared
     }
     
-    override func cleanupTestEnvironment() {
+    override func cleanupTestEnvironment() async {
         intelligence = nil
-        super.cleanupTestEnvironment()
+        await super.cleanupTestEnvironment()
     }
     
     // MARK: - TDD: Red Phase - Failing Tests
     
-    @Test func testDataPresentationIntelligenceExists() {
+@Test func testDataPresentationIntelligenceExists() {
         // Given & When
         let intelligence = DataPresentationIntelligence.shared
         
@@ -413,4 +413,4 @@ final class DataPresentationIntelligenceTests: BaseAccessibilityTestClass {
         #expect(result1.visualizationType == result2.visualizationType)
         #expect(result1.recommendedChartType == result2.recommendedChartType)
     }
-}
+

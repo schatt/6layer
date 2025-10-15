@@ -37,10 +37,13 @@ import Testing
 
 final class LiquidGlassCapabilityDetectionTests {
     
-    init() {
+    init() async throws {
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Basic Capability Tests

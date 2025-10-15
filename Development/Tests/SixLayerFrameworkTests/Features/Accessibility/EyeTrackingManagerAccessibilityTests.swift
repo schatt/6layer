@@ -8,35 +8,18 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for EyeTrackingManager.swift classes
 /// Ensures EyeTrackingManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class EyeTrackingManagerAccessibilityTests {
+class EyeTrackingManagerAccessibilityTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
-    }
-    
-    deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-        }
-        try await super.tearDown()
+        try await super.init()
     }
     
     // MARK: - EyeTrackingManager Tests
     
     /// BUSINESS PURPOSE: Validates that EyeTrackingManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+@Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let manager = await MainActor.run { EyeTrackingManager() }
         
@@ -69,4 +52,4 @@ final class EyeTrackingManagerAccessibilityTests {
             #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
         }
     }
-}
+

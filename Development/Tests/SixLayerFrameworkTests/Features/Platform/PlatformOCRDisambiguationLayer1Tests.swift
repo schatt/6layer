@@ -15,8 +15,8 @@ final class PlatformOCRDisambiguationLayer1Tests {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
+    init() async throws {
+        await setupTestEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -26,14 +26,23 @@ final class PlatformOCRDisambiguationLayer1Tests {
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - platformOCRDisambiguation_L1 Tests
     
-    @Test func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
         // Verify alternatives are properly configured

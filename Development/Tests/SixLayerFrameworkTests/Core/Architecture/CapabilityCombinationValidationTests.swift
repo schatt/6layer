@@ -40,7 +40,7 @@ import SwiftUI
 /// Validates that capability combinations work correctly on the current platform
 @MainActor
 final class CapabilityCombinationValidationTests {
-    init() {
+    init() async throws {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
         RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -48,7 +48,9 @@ final class CapabilityCombinationValidationTests {
     }
     
     deinit {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Current Platform Combination Tests

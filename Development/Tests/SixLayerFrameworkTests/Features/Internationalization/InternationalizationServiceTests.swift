@@ -17,12 +17,14 @@ final class InternationalizationServiceTests {
     
     private var service: InternationalizationService!
     
-    init() {
+    init() async throws {
         service = InternationalizationService(locale: Locale(identifier: "en-US"))
     }
     
     deinit {
-        service = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Business Logic Tests

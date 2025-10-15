@@ -9,7 +9,7 @@ import ViewInspector
 @MainActor
 final class SimpleAccessibilityTest {
     
-    init() {
+    init() async throws {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "SimpleTest"
@@ -19,8 +19,9 @@ final class SimpleAccessibilityTest {
     }
     
     deinit {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testManualAccessibilityIdentifierWorks() {

@@ -40,13 +40,15 @@ import SwiftUI
 /// Tests all possible combinations of capabilities to ensure they work together correctly
 @MainActor
 final class CapabilityCombinationTests {
-    init() {
+    init() async throws {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
     }
     
     deinit {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Capability Combination Matrix

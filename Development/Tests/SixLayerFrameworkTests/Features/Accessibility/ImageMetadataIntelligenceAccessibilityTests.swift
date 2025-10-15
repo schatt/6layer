@@ -10,13 +10,15 @@ import ViewInspector
 @MainActor
 final class ImageMetadataIntelligenceAccessibilityTests: BaseAccessibilityTestClass {
     
-    override init() {
+    override init() async throws {
         super.init()
         // Additional setup if needed
     }
     
     deinit {
-        // Cleanup handled by BaseAccessibilityTestClass
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - ImageMetadataIntelligence Tests

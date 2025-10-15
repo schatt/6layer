@@ -611,21 +611,6 @@ struct DynamicFormSection {
     let fields: [DynamicFormField]
 }
 
-struct DynamicFormField {
-    let id: String
-    let label: String
-    let type: DynamicFormFieldType
-    let value: String
-    let options: [String]?
-    
-    init(id: String, label: String, type: DynamicFormFieldType, value: String, options: [String]? = nil) {
-        self.id = id
-        self.label = label
-        self.type = type
-        self.value = value
-        self.options = options
-    }
-}
 
 enum DynamicFormFieldType {
     case text

@@ -16,12 +16,14 @@ final class DataFrameAnalysisEngineTests {
     
     var analysisEngine: DataFrameAnalysisEngine!
     
-    init() {
+    init() async throws {
         analysisEngine = DataFrameAnalysisEngine()
     }
     
     deinit {
-        analysisEngine = nil
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Basic DataFrame Analysis Tests

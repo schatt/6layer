@@ -8,23 +8,26 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for MaterialAccessibilityManager.swift classes
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class MaterialAccessibilityManagerAccessibilityTests {
+class MaterialAccessibilityManagerAccessibilityTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    deinit {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-        try await super.tearDown()
+        try await super.init()
     }
     
     // MARK: - MaterialAccessibilityManager Tests
     
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let manager = MaterialAccessibilityManager()
         
@@ -59,13 +62,3 @@ final class MaterialAccessibilityManagerAccessibilityTests {
     }
 }
 
-// MARK: - Test Extensions
-extension MaterialAccessibilityManagerAccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-}

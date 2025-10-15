@@ -11,8 +11,7 @@ import ViewInspector
 final class OCRServiceAccessibilityTests {
     
     init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
+                await await setupTestEnvironment()
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.resetToDefaults()
@@ -24,19 +23,26 @@ final class OCRServiceAccessibilityTests {
     }
     
     deinit {
-        try await super.tearDown()
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
         }
+    }
     }
     
     // MARK: - OCRService Tests
     
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+@Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let service = OCRService()
         
@@ -111,15 +117,15 @@ final class OCRServiceAccessibilityTests {
             #expect(config.namespace == "SixLayer", "OCRServiceFactory should use correct namespace")
         }
     }
-}
+
 
 // MARK: - Test Extensions
 extension OCRServiceAccessibilityTests {
-    override func setupTestEnvironment() {
+    override func await setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
     
-    override func cleanupTestEnvironment() {
+    override func await cleanupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.build/master.swiftdeps"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.derived/runner.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.build/runner.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.build/runner.dia"
+  }
+}

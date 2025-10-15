@@ -42,7 +42,9 @@ import SwiftUI
 final class CapabilityAwareFunctionTests {
     
     deinit {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Touch-Dependent Function Tests

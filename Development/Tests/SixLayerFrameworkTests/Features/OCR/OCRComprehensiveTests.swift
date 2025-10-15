@@ -31,15 +31,10 @@ import SwiftUI
 /// Comprehensive tests for OCR functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
-final class OCRComprehensiveTests {
+class OCRComprehensiveTests: BaseAccessibilityTestClass {
     
-    // MARK: - Test Setup
-    
-    init() {
-        // TODO: Set up real OCR comprehensive tests
-    }
-    
-    deinit {
+    init() async throws {
+        try await super.init()
     }
     
     // MARK: - Real OCR Comprehensive Tests (To Be Implemented)

@@ -1,0 +1,180 @@
+{
+  "": {
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/master.swiftdeps"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/ConditionMacro.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionMacro.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionMacro.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionMacro~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionMacro.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionMacro.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/SourceLocationMacro.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationMacro.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationMacro.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationMacro~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationMacro.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationMacro.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/SuiteDeclarationMacro.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SuiteDeclarationMacro.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SuiteDeclarationMacro.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SuiteDeclarationMacro~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SuiteDeclarationMacro.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SuiteDeclarationMacro.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/DeclGroupSyntaxAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DeclGroupSyntaxAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DeclGroupSyntaxAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DeclGroupSyntaxAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DeclGroupSyntaxAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DeclGroupSyntaxAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/EditorPlaceholderExprSyntaxAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/EditorPlaceholderExprSyntaxAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/EditorPlaceholderExprSyntaxAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/EditorPlaceholderExprSyntaxAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/EditorPlaceholderExprSyntaxAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/EditorPlaceholderExprSyntaxAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/FunctionDeclSyntaxAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/FunctionDeclSyntaxAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/FunctionDeclSyntaxAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/FunctionDeclSyntaxAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/FunctionDeclSyntaxAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/FunctionDeclSyntaxAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/MacroExpansionContextAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/MacroExpansionContextAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/MacroExpansionContextAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/MacroExpansionContextAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/MacroExpansionContextAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/MacroExpansionContextAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/TokenSyntaxAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TokenSyntaxAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TokenSyntaxAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TokenSyntaxAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TokenSyntaxAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TokenSyntaxAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/TriviaPieceAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TriviaPieceAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TriviaPieceAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TriviaPieceAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TriviaPieceAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TriviaPieceAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/TypeSyntaxProtocolAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TypeSyntaxProtocolAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TypeSyntaxProtocolAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TypeSyntaxProtocolAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TypeSyntaxProtocolAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TypeSyntaxProtocolAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/VersionTupleSyntaxAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/VersionTupleSyntaxAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/VersionTupleSyntaxAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/VersionTupleSyntaxAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/VersionTupleSyntaxAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/VersionTupleSyntaxAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Additions/WithAttributesSyntaxAdditions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/WithAttributesSyntaxAdditions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/WithAttributesSyntaxAdditions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/WithAttributesSyntaxAdditions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/WithAttributesSyntaxAdditions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/WithAttributesSyntaxAdditions.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/Argument.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/Argument.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/Argument.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/Argument~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/Argument.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/Argument.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/AttributeDiscovery.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AttributeDiscovery.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AttributeDiscovery.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AttributeDiscovery~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AttributeDiscovery.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AttributeDiscovery.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/AvailabilityGuards.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AvailabilityGuards.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AvailabilityGuards.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AvailabilityGuards~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AvailabilityGuards.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/AvailabilityGuards.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/CRC32.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CRC32.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CRC32.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CRC32~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CRC32.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CRC32.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/CommentParsing.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CommentParsing.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CommentParsing.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CommentParsing~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CommentParsing.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/CommentParsing.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/ConditionArgumentParsing.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionArgumentParsing.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionArgumentParsing.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionArgumentParsing~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionArgumentParsing.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/ConditionArgumentParsing.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/DiagnosticMessage+Diagnosing.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage+Diagnosing.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage+Diagnosing.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage+Diagnosing~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage+Diagnosing.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage+Diagnosing.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/DiagnosticMessage.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/DiagnosticMessage.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/SourceCodeCapturing.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceCodeCapturing.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceCodeCapturing.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceCodeCapturing~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceCodeCapturing.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceCodeCapturing.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/Support/SourceLocationGeneration.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationGeneration.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationGeneration.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationGeneration~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationGeneration.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/SourceLocationGeneration.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/TagMacro.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TagMacro.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TagMacro.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TagMacro~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TagMacro.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TagMacro.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/TestDeclarationMacro.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestDeclarationMacro.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestDeclarationMacro.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestDeclarationMacro~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestDeclarationMacro.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestDeclarationMacro.dia"
+  },
+  "/Users/schatt/code/github/6layer/.build-clean/checkouts/swift-testing/Sources/TestingMacros/TestingMacrosMain.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestingMacrosMain.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestingMacrosMain.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestingMacrosMain~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestingMacrosMain.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/TestingMacros-tool.build/TestingMacrosMain.dia"
+  }
+}

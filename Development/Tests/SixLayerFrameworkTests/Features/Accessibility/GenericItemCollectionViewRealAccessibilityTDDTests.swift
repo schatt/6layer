@@ -10,7 +10,7 @@ import ViewInspector
 @MainActor
 final class GenericItemCollectionViewRealAccessibilityTDDTests: BaseAccessibilityTestClass {
     
-    override init() {
+    override init() async throws {
         super.init()
         // Additional setup if needed
         let config = AccessibilityIdentifierConfig.shared
@@ -22,7 +22,9 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests: BaseAccessibilit
     }
     
     deinit {
-        // Cleanup handled by BaseAccessibilityTestClass
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnIOS() {

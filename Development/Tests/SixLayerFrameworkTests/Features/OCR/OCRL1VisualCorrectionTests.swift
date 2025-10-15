@@ -33,11 +33,14 @@ final class OCRL1VisualCorrectionTests {
     
     // MARK: - Test Setup
     
-    init() {
+    init() async throws {
         // TODO: Set up real Layer 1 OCR visual correction tests
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Real Layer 1 OCR Visual Correction Tests (To Be Implemented)

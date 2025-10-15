@@ -33,7 +33,7 @@ class L6PlatformSystemTests {
     private var sampleInteractionPatterns: InteractionPatterns = InteractionPatterns(for: .iOS)
     private var sampleLayoutPatterns: LayoutPatterns = LayoutPatterns(for: .iOS)
     
-    init() {
+    init() async throws {
         samplePlatform = L6TestDataFactory.createSamplePlatform()
         samplePlatformOptimizationSettings = L6TestDataFactory.createSamplePlatformOptimizationSettings()
         sampleCrossPlatformPerformanceMetrics = L6TestDataFactory.createSampleCrossPlatformPerformanceMetrics()
@@ -49,24 +49,9 @@ class L6PlatformSystemTests {
     }
     
     deinit {
-        samplePlatform = .iOS
-        samplePlatformOptimizationSettings = PlatformOptimizationSettings(for: .iOS)
-        sampleCrossPlatformPerformanceMetrics = CrossPlatformPerformanceMetrics()
-        samplePlatformUIPatterns = PlatformUIPatterns(for: .iOS)
-        samplePlatformRecommendation = PlatformRecommendation(
-            title: "Test Recommendation",
-            description: "Test Description",
-            category: .performance,
-            priority: .medium,
-            platform: .iOS
-        )
-        sampleRecommendationCategory = .performance
-        samplePerformanceLevel = .balanced
-        sampleMemoryStrategy = .adaptive
-        sampleRenderingOptimizations = RenderingOptimizations(for: .iOS)
-        sampleNavigationPatterns = NavigationPatterns(for: .iOS)
-        sampleInteractionPatterns = InteractionPatterns(for: .iOS)
-        sampleLayoutPatterns = LayoutPatterns(for: .iOS)
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Cross-Platform Optimization Manager Tests

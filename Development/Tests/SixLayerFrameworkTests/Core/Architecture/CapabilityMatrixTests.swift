@@ -41,7 +41,7 @@ import SwiftUI
 /// AND that capabilities work when supported and are disabled when not supported
 @MainActor
 final class CapabilityMatrixTests {
-    init() {
+    init() async throws {
         // Establish deterministic baseline for current platform
         let platform = SixLayerPlatform.current
         RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -77,7 +77,9 @@ final class CapabilityMatrixTests {
     }
 
     deinit {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Capability Test Matrix

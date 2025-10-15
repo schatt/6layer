@@ -24,7 +24,7 @@ class L5PlatformOptimizationTests {
     private var sampleIOSHapticStyle: IOSHapticStyle = .medium
     private var sampleMacOSPerformanceStrategy: MacOSPerformanceStrategy = .optimized
     
-    init() {
+    init() async throws {
         samplePlatform = L5TestDataFactory.createSamplePlatform()
         samplePerformanceLevel = L5TestDataFactory.createSamplePerformanceOptimizationLevel()
         sampleCachingStrategy = L5TestDataFactory.createSampleCachingStrategy()
@@ -37,15 +37,9 @@ class L5PlatformOptimizationTests {
     }
     
     deinit {
-        samplePlatform = .iOS
-        samplePerformanceLevel = .medium
-        sampleCachingStrategy = .intelligent
-        sampleRenderingStrategy = .optimized
-        sampleMemoryConfig = MemoryConfig()
-        sampleLazyLoadingConfig = LazyLoadingConfig()
-        samplePerformanceMetrics = ViewPerformanceMetrics()
-        sampleIOSHapticStyle = .medium
-        sampleMacOSPerformanceStrategy = .optimized
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Performance Optimization Functions

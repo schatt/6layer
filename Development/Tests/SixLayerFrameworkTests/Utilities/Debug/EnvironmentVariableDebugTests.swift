@@ -9,7 +9,7 @@ import ViewInspector
 @MainActor
 final class EnvironmentVariableDebugTests {
     
-    init() {
+    init() async throws {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TestApp"
@@ -18,8 +18,9 @@ final class EnvironmentVariableDebugTests {
     }
     
     deinit {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testEnvironmentVariablePropagation() {

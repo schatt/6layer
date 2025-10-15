@@ -24,7 +24,7 @@ class L1SemanticTests {
     private var samplePhotoPurpose: PhotoPurpose = .general
     private var samplePhotoContext: PhotoContext = PhotoContext()
     
-    init() {
+    init() async throws {
         sampleNumericData = createSampleNumericData()
         sampleHints = createSampleHints()
         sampleFormFields = createSampleFormFields()
@@ -37,15 +37,9 @@ class L1SemanticTests {
     }
     
     deinit {
-        sampleNumericData = []
-        sampleHints = PresentationHints()
-        sampleFormFields = []
-        sampleMediaItems = []
-        sampleHierarchicalItems = []
-        sampleTemporalItems = []
-        sampleOCRContext = OCRContext()
-        samplePhotoPurpose = .general
-        samplePhotoContext = PhotoContext()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Test Data Creation

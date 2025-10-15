@@ -44,6 +44,7 @@ public struct FormWizardView: View {
             )
             .padding()
         }
+        .automaticAccessibilityIdentifiers()
         .onAppear {
             wizardState.setSteps(steps)
         }
@@ -101,6 +102,7 @@ public struct FormWizardProgressView: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     private var progress: FormWizardProgress {
@@ -140,6 +142,7 @@ public struct FormWizardStepIndicator: View {
                 .lineLimit(2)
         }
         .frame(maxWidth: 80)
+        .automaticAccessibilityIdentifiers()
     }
     
     private var stepColor: Color {
@@ -184,6 +187,7 @@ public struct FormWizardErrorView: View {
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .automaticAccessibilityIdentifiers()
     }
 }
 

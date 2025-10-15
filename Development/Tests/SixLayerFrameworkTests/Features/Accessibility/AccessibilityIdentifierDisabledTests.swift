@@ -10,8 +10,7 @@ import ViewInspector
 final class AccessibilityIdentifierDisabledTests {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
+                let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = false  // ← DISABLED
         config.namespace = "CarManager"
@@ -20,9 +19,9 @@ final class AccessibilityIdentifierDisabledTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testAutomaticIDsDisabled_NoIdentifiersGenerated() {

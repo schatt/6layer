@@ -11,8 +11,7 @@ import ViewInspector
 final class AccessibilityIdentifierTDDTests {
     
     init() async throws {
-        try await super.setUp()
-        // Reset configuration to known state
+                // Reset configuration to known state
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -22,9 +21,9 @@ final class AccessibilityIdentifierTDDTests {
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior

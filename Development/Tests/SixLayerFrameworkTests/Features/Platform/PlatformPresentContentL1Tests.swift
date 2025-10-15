@@ -369,3 +369,4 @@ final class PlatformPresentContentL1Tests {
             #expect(hostingView != nil, "Performance test should successfully render the view")
         // Performance test removed - performance monitoring was removed from framework
     }
+}

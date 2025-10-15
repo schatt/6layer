@@ -1,0 +1,915 @@
+{
+  "": {
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/master.swiftdeps"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/CrossPlatformNavigation.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformNavigation.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformNavigation.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformNavigation~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformNavigation.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformNavigation.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/DynamicFormView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/FormInsightsDashboard.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormInsightsDashboard.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormInsightsDashboard.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormInsightsDashboard~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormInsightsDashboard.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormInsightsDashboard.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/FormWizardView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/IntelligentDetailView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentDetailView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentDetailView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentDetailView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentDetailView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/IntelligentFormView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentFormView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentFormView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentFormView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentFormView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentFormView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/CardDisplayable.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CardDisplayable.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CardDisplayable.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CardDisplayable~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CardDisplayable.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CardDisplayable.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/DataBinding.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataBinding.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataBinding.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataBinding~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataBinding.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataBinding.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/DataFrameAnalysisEngine.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataFrameAnalysisEngine.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataFrameAnalysisEngine.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataFrameAnalysisEngine~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataFrameAnalysisEngine.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataFrameAnalysisEngine.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/DataIntrospection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataIntrospection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataIntrospection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataIntrospection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataIntrospection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataIntrospection.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/DynamicFormTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DynamicFormTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/EnhancedDeviceDetection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EnhancedDeviceDetection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EnhancedDeviceDetection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EnhancedDeviceDetection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EnhancedDeviceDetection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EnhancedDeviceDetection.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/ExtensibleHints.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ExtensibleHints.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ExtensibleHints.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ExtensibleHints~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ExtensibleHints.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ExtensibleHints.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/FormAnalytics.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormAnalytics.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormAnalytics.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormAnalytics~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormAnalytics.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormAnalytics.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/FormStateManagement.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormStateManagement.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormStateManagement.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormStateManagement~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormStateManagement.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormStateManagement.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/FormWizardTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormWizardTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/GenericDataItem.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/GenericDataItem.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/GenericDataItem.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/GenericDataItem~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/GenericDataItem.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/GenericDataItem.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/ImageMetadataTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/ImageProcessingTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/InternationalizationTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/MockTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MockTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MockTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MockTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MockTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MockTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/OCRDisambiguationTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/PlatformImageExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformImageExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformImageExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformImageExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformImageExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformImageExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/PlatformOCRTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/PlatformPhotoTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/PlatformTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Models/RuntimeCapabilityDetection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/RuntimeCapabilityDetection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/RuntimeCapabilityDetection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/RuntimeCapabilityDetection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/RuntimeCapabilityDetection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/RuntimeCapabilityDetection.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/ResponsiveContainer.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveContainer.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveContainer.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveContainer~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveContainer.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveContainer.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/ResponsiveLayout.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveLayout.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveLayout.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveLayout~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveLayout.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveLayout.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Services/ImageMetadataIntelligence.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataIntelligence.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataIntelligence.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataIntelligence~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataIntelligence.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageMetadataIntelligence.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Services/ImageProcessingPipeline.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingPipeline.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingPipeline.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingPipeline~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingPipeline.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ImageProcessingPipeline.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Services/InternationalizationService.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationService.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationService.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationService~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationService.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InternationalizationService.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Core/Services/OCRService.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRService.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRService.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRService~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRService.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRService.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformAdaptiveFrameModifier.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdaptiveFrameModifier.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdaptiveFrameModifier.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdaptiveFrameModifier~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdaptiveFrameModifier.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdaptiveFrameModifier.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformAdvancedContainerExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdvancedContainerExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdvancedContainerExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdvancedContainerExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdvancedContainerExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAdvancedContainerExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformAnimationSystemExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnimationSystemExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnimationSystemExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnimationSystemExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnimationSystemExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnimationSystemExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformAnyShapeStyle.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnyShapeStyle.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnyShapeStyle.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnyShapeStyle~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnyShapeStyle.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAnyShapeStyle.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformBasicContainerExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformBasicContainerExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformBasicContainerExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformBasicContainerExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformBasicContainerExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformBasicContainerExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformButtonExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformColorEncodeExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorEncodeExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorEncodeExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorEncodeExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorEncodeExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorEncodeExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformColorExamples.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorExamples.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorExamples.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorExamples~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorExamples.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorExamples.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformColorSystemExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorSystemExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorSystemExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorSystemExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorSystemExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformColorSystemExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformContextMenuExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformContextMenuExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformContextMenuExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformContextMenuExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformContextMenuExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformContextMenuExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformDragDropExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDragDropExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDragDropExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDragDropExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDragDropExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDragDropExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformGraphicsExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformGraphicsExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformGraphicsExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformGraphicsExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformGraphicsExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformGraphicsExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformListExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformLocationExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLocationExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLocationExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLocationExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLocationExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLocationExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformMenuSystemExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMenuSystemExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMenuSystemExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMenuSystemExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMenuSystemExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMenuSystemExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformOCRSafetyExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSafetyExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSafetyExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSafetyExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSafetyExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSafetyExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSemanticLayer1.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSemanticLayer1.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSemanticLayer1~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSemanticLayer1.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRSemanticLayer1.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformScrollViewExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformScrollViewExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformScrollViewExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformScrollViewExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformScrollViewExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformScrollViewExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformSpacing.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpacing.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpacing.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpacing~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpacing.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpacing.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformSpecificSecureFieldExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificSecureFieldExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificSecureFieldExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificSecureFieldExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificSecureFieldExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificSecureFieldExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformSpecificTextFieldExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificTextFieldExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificTextFieldExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificTextFieldExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificTextFieldExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificTextFieldExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformSpecificViewExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificViewExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificViewExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificViewExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificViewExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSpecificViewExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformTabViewExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabViewExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabViewExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabViewExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabViewExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabViewExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformUIExamples.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIExamples.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIExamples.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIExamples~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIExamples.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIExamples.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformUIIntegration.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIIntegration.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIIntegration.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIIntegration~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIIntegration.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIIntegration.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformUIPatterns.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIPatterns.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIPatterns.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIPatterns~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIPatterns.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUIPatterns.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/Platform/PlatformUITypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUITypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUITypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUITypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUITypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformUITypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/DataPresentationIntelligence.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataPresentationIntelligence.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataPresentationIntelligence.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataPresentationIntelligence~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataPresentationIntelligence.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/DataPresentationIntelligence.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/LabelPolicy.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LabelPolicy.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LabelPolicy.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LabelPolicy~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LabelPolicy.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LabelPolicy.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/LiquidGlassCapabilityDetection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassCapabilityDetection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassCapabilityDetection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassCapabilityDetection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassCapabilityDetection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassCapabilityDetection.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/LiquidGlassDesignSystem.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassDesignSystem.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassDesignSystem.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassDesignSystem~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassDesignSystem.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassDesignSystem.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/LiquidGlassExampleUsage.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassExampleUsage.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassExampleUsage.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassExampleUsage~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassExampleUsage.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/LiquidGlassExampleUsage.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/ShapeStyleSystem.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ShapeStyleSystem.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ShapeStyleSystem.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ShapeStyleSystem~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ShapeStyleSystem.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ShapeStyleSystem.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/ThemedViewModifiers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemedViewModifiers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemedViewModifiers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemedViewModifiers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemedViewModifiers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemedViewModifiers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/ThemingIntegration.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemingIntegration.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemingIntegration.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemingIntegration~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemingIntegration.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ThemingIntegration.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Extensions/SwiftUI/VisualDesignSystem.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/VisualDesignSystem.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/VisualDesignSystem.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/VisualDesignSystem~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/VisualDesignSystem.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/VisualDesignSystem.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AccessibilityIdentifierConfig.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityIdentifierConfig.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityIdentifierConfig.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityIdentifierConfig~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityIdentifierConfig.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityIdentifierConfig.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AccessibilityTestingSuite.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTestingSuite.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTestingSuite.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTestingSuite~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTestingSuite.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTestingSuite.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AccessibilityTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AppleHIGComplianceExamples.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceExamples.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceExamples.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceExamples~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceExamples.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceExamples.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AppleHIGComplianceManager.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceManager.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceManager.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceManager.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceManager.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AppleHIGComplianceModifiers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceModifiers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceModifiers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceModifiers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceModifiers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AppleHIGComplianceModifiers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AssistiveTouchManager.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AssistiveTouchManager.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AssistiveTouchManager.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AssistiveTouchManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AssistiveTouchManager.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AssistiveTouchManager.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/AutomaticAccessibilityIdentifiers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AutomaticAccessibilityIdentifiers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AutomaticAccessibilityIdentifiers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AutomaticAccessibilityIdentifiers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AutomaticAccessibilityIdentifiers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AutomaticAccessibilityIdentifiers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/EyeTrackingManager.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EyeTrackingManager.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EyeTrackingManager.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EyeTrackingManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EyeTrackingManager.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/EyeTrackingManager.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/MaterialAccessibilityManager.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MaterialAccessibilityManager.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MaterialAccessibilityManager.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MaterialAccessibilityManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MaterialAccessibilityManager.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/MaterialAccessibilityManager.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/PlatformAccessibilityExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAccessibilityExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAccessibilityExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAccessibilityExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAccessibilityExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformAccessibilityExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Accessibility/SwitchControlManager.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/SwitchControlManager.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/SwitchControlManager.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/SwitchControlManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/SwitchControlManager.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/SwitchControlManager.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Collections/ResponsiveCardsView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveCardsView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveCardsView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveCardsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveCardsView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/ResponsiveCardsView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Forms/AdvancedFieldTypes.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AdvancedFieldTypes.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AdvancedFieldTypes.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AdvancedFieldTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AdvancedFieldTypes.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AdvancedFieldTypes.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Forms/FormUsageExample.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormUsageExample.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormUsageExample.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormUsageExample~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormUsageExample.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/FormUsageExample.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Input/InputHandlingInteractions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InputHandlingInteractions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InputHandlingInteractions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InputHandlingInteractions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InputHandlingInteractions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/InputHandlingInteractions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Input/PlatformHapticFeedbackExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformHapticFeedbackExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformHapticFeedbackExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformHapticFeedbackExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformHapticFeedbackExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformHapticFeedbackExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Input/PlatformInputExtensions.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInputExtensions.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInputExtensions.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInputExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInputExtensions.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInputExtensions.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Navigation/PlatformNavigationHelpers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationHelpers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationHelpers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationHelpers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationHelpers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Navigation/PlatformSidebarHelpers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSidebarHelpers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSidebarHelpers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSidebarHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSidebarHelpers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSidebarHelpers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Navigation/PlatformTabStrip.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabStrip.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabStrip.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabStrip~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabStrip.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformTabStrip.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Navigation/PlatformToolbarHelpers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarHelpers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarHelpers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarHelpers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarHelpers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/Navigation/PlatformToolbarPlacement.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarPlacement.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarPlacement.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarPlacement~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarPlacement.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformToolbarPlacement.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/OCR/OCRDisambiguationView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRDisambiguationView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/OCR/OCROverlayView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCROverlayView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCROverlayView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCROverlayView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCROverlayView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCROverlayView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/OCR/OCRView.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRView.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRView.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRView~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRView.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/OCRView.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Features/WindowDetection/UnifiedWindowDetection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/UnifiedWindowDetection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/UnifiedWindowDetection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/UnifiedWindowDetection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/UnifiedWindowDetection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/UnifiedWindowDetection.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer1-Semantic/PlatformDataFrameAnalysisL1.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDataFrameAnalysisL1.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDataFrameAnalysisL1.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDataFrameAnalysisL1~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDataFrameAnalysisL1.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformDataFrameAnalysisL1.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer1-Semantic/PlatformInternationalizationL1.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInternationalizationL1.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInternationalizationL1.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInternationalizationL1~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInternationalizationL1.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformInternationalizationL1.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer1-Semantic/PlatformOCRDisambiguationLayer1.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRDisambiguationLayer1.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRDisambiguationLayer1.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRDisambiguationLayer1~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRDisambiguationLayer1.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRDisambiguationLayer1.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer1-Semantic/PlatformPhotoSemanticLayer1.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoSemanticLayer1.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoSemanticLayer1.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoSemanticLayer1~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoSemanticLayer1.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoSemanticLayer1.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSemanticLayer1.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSemanticLayer1.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSemanticLayer1~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSemanticLayer1.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformSemanticLayer1.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer2-Layout/IntelligentCardExpansionLayer2.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer2.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer2.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer2~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer2.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer2.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer2-Layout/PlatformLayoutDecisionLayer2.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLayoutDecisionLayer2.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLayoutDecisionLayer2.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLayoutDecisionLayer2~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLayoutDecisionLayer2.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformLayoutDecisionLayer2.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer2-Layout/PlatformOCRLayoutDecisionLayer2.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRLayoutDecisionLayer2.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRLayoutDecisionLayer2.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRLayoutDecisionLayer2~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRLayoutDecisionLayer2.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRLayoutDecisionLayer2.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer2-Layout/PlatformPhotoLayoutDecisionLayer2.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoLayoutDecisionLayer2.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoLayoutDecisionLayer2.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoLayoutDecisionLayer2~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoLayoutDecisionLayer2.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoLayoutDecisionLayer2.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer3-Strategy/IntelligentCardExpansionLayer3.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer3.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer3.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer3~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer3.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer3.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer3-Strategy/PlatformOCRStrategySelectionLayer3.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRStrategySelectionLayer3.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRStrategySelectionLayer3.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRStrategySelectionLayer3~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRStrategySelectionLayer3.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRStrategySelectionLayer3.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer3-Strategy/PlatformPhotoStrategySelectionLayer3.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoStrategySelectionLayer3.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoStrategySelectionLayer3.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoStrategySelectionLayer3~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoStrategySelectionLayer3.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoStrategySelectionLayer3.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer3-Strategy/PlatformStrategySelectionLayer3.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStrategySelectionLayer3.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStrategySelectionLayer3.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStrategySelectionLayer3~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStrategySelectionLayer3.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStrategySelectionLayer3.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformButtonsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformButtonsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformFormsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformFormsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformFormsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformFormsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformFormsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformListsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformModalsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformModalsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformModalsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformModalsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformModalsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformModalsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformNavigationLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformOCRComponentsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRComponentsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRComponentsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRComponentsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRComponentsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformOCRComponentsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoComponentsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoComponentsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoComponentsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoComponentsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformPhotoComponentsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformResponsiveCardsLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformResponsiveCardsLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformResponsiveCardsLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformResponsiveCardsLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformResponsiveCardsLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformResponsiveCardsLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStylingLayer4.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStylingLayer4.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStylingLayer4~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStylingLayer4.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformStylingLayer4.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer5-Platform/AccessibilityFeaturesLayer5.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityFeaturesLayer5.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityFeaturesLayer5.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityFeaturesLayer5~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityFeaturesLayer5.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/AccessibilityFeaturesLayer5.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer5-Platform/IntelligentCardExpansionLayer5.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer5.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer5.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer5~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer5.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer5.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer5-Platform/IntelligentCardExpansionLayer6.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer6.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer6.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer6~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer6.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/IntelligentCardExpansionLayer6.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformOptimizationLayer6.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformOptimizationLayer6.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformOptimizationLayer6~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformOptimizationLayer6.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/CrossPlatformOptimizationLayer6.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/iOS/ProjectHelpers/iOSSpecificHelpers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSSpecificHelpers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSSpecificHelpers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSSpecificHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSSpecificHelpers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSSpecificHelpers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/iOS/Views/Extensions/PlatformIOSOptimizationsLayer5.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformIOSOptimizationsLayer5.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformIOSOptimizationsLayer5.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformIOSOptimizationsLayer5~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformIOSOptimizationsLayer5.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformIOSOptimizationsLayer5.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/iOS/WindowDetection/iOSWindowDetection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSWindowDetection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSWindowDetection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSWindowDetection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSWindowDetection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/iOSWindowDetection.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/macOS/ProjectHelpers/macOSSpecificHelpers.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSSpecificHelpers.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSSpecificHelpers.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSSpecificHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSSpecificHelpers.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSSpecificHelpers.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/macOS/Views/Extensions/PlatformListDetailDecisionLayer2.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListDetailDecisionLayer2.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListDetailDecisionLayer2.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListDetailDecisionLayer2~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListDetailDecisionLayer2.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformListDetailDecisionLayer2.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/macOS/Views/Extensions/PlatformMacOSOptimizationsLayer5.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMacOSOptimizationsLayer5.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMacOSOptimizationsLayer5.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMacOSOptimizationsLayer5~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMacOSOptimizationsLayer5.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/PlatformMacOSOptimizationsLayer5.dia"
+  },
+  "/Users/schatt/code/github/6layer/Framework/Sources/Platform/macOS/WindowDetection/macOSWindowDetection.swift": {
+    "dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSWindowDetection.d",
+    "object": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSWindowDetection.swift.o",
+    "swiftmodule": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSWindowDetection~partial.swiftmodule",
+    "swift-dependencies": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSWindowDetection.swiftdeps",
+    "diagnostics": "/Users/schatt/code/github/6layer/.build-clean/arm64-apple-macosx/debug/SixLayerFramework.build/macOSWindowDetection.dia"
+  }
+}

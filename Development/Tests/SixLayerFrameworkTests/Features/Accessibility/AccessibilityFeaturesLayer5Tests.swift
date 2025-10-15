@@ -45,17 +45,15 @@ final class AccessibilityFeaturesLayer5Tests {
     private var cancellables: Set<AnyCancellable>!
     
     init() async throws {
-        try await super.setUp()
-        keyboardManager = KeyboardNavigationManager()
+                keyboardManager = KeyboardNavigationManager()
         highContrastManager = HighContrastManager()
         cancellables = Set<AnyCancellable>()
     }
     
     deinit {
-        cancellables = nil
-        highContrastManager = nil
-        keyboardManager = nil
-        try await super.tearDown()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - KeyboardNavigationManager Focus Management Tests

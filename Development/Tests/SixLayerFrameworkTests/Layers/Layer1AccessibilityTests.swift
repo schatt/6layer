@@ -11,7 +11,11 @@ import ViewInspector
 /// TESTING SCOPE: All Layer 1 presentation functions
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @MainActor
-final class Layer1AccessibilityTests {
+class Layer1AccessibilityTests: BaseAccessibilityTestClass {
+    
+    init() async throws {
+        try await super.init()
+    }
     
     // MARK: - Test Setup
     
@@ -19,8 +23,7 @@ final class Layer1AccessibilityTests {
     private var testHints: PresentationHints!
     
     init() async throws {
-        try await super.setUp()
-        testItems = [
+                testItems = [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
         ]
@@ -39,9 +42,9 @@ final class Layer1AccessibilityTests {
     }
     
     deinit {
-        testItems = nil
-        testHints = nil
-        try await super.tearDown()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Layer 1 Function Tests

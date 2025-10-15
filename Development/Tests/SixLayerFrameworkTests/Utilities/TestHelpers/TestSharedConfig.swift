@@ -32,23 +32,8 @@ func buildPlatformCapabilitiesSnapshot() -> PlatformCapabilitiesTestSnapshot {
     )
 }
 
-// Back-compat for existing tests that still reference CardExpansionPlatformConfig
-// Centralize creation here so we don't duplicate broken constructors across files.
-@MainActor
-func getCardExpansionPlatformConfig() -> CardExpansionPlatformConfig {
-    let touch = RuntimeCapabilityDetection.supportsTouch
-    let hover = RuntimeCapabilityDetection.supportsHover
-    return CardExpansionPlatformConfig(
-        supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedback,
-        supportsHover: hover,
-        supportsTouch: touch,
-        supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
-        supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
-        supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
-        minTouchTarget: touch ? 44 : 0,
-        hoverDelay: hover ? 0.1 : 0.0,
-        animationEasing: Animation.easeInOut(duration: 0.3)
-    )
-}
+// Note: Card-specific configuration functions have been moved to their respective test utilities
+// to maintain proper separation of concerns. Use the framework's getCardExpansionPlatformConfig()
+// directly or import the appropriate card-specific test utilities.
 
 

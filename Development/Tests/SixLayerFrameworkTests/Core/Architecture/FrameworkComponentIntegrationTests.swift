@@ -10,7 +10,7 @@ import ViewInspector
 @MainActor
 final class FrameworkComponentIntegrationTests {
     
-    init() {
+    init() async throws {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "IntegrationTest"
@@ -20,8 +20,9 @@ final class FrameworkComponentIntegrationTests {
     }
     
     deinit {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - TDD Red Phase: Components That SHOULD Work (Have .automaticAccessibility())

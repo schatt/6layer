@@ -950,6 +950,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
             return AnyView(CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
                 .appleHIGCompliant()
                 .automaticAccessibility()
+                .automaticAccessibilityIdentifiers()
                 .platformPatterns()
                 .visualConsistency())
         }
@@ -1018,6 +1019,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
         return AnyView(baseView
             .appleHIGCompliant()
             .automaticAccessibility()
+            .automaticAccessibilityIdentifiers()
             .platformPatterns()
             .visualConsistency())
     }
@@ -1148,6 +1150,7 @@ public struct CollectionEmptyStateView: View {
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .automaticAccessibilityIdentifiers()
     }
     
     private var emptyStateIcon: String {

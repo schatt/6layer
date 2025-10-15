@@ -23,7 +23,7 @@ final class L3StrategySelectionTests {
         deviceCapabilities: PhotoDeviceCapabilities()
     )
     
-    init() {
+    init() async throws {
         samplePhotoContext = PhotoContext(
             screenSize: CGSize(width: 375, height: 667),
             availableSpace: CGSize(width: 375, height: 667),
@@ -33,6 +33,9 @@ final class L3StrategySelectionTests {
     }
     
     deinit {
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - Card Layout Strategy Tests
@@ -866,3 +869,5 @@ final class L3StrategySelectionTests {
         .accessibilityLabel("Test view for card layout strategy")
         .accessibilityHint("Strategy: \(strategy.columns) columns, approach: \(strategy.approach.rawValue)")
     }
+
+}

@@ -574,6 +574,7 @@ private struct DefaultPlatformFieldView: View {
                 errorDisplayView
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder

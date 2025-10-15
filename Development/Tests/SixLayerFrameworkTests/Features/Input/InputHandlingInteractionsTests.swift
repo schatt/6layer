@@ -44,13 +44,15 @@ final class InputHandlingInteractionsTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Setup
     
-    override init() {
+    override init() async throws {
         super.init()
         // Additional setup if needed
     }
     
     deinit {
-        // Cleanup handled by BaseAccessibilityTestClass
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     // MARK: - InputHandlingManager Tests
@@ -725,5 +727,7 @@ final class InputHandlingInteractionsTests: BaseAccessibilityTestClass {
         
         #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS")
         // Performance test removed - performance monitoring was removed from framework
+    }
+}
 
 // MARK: - Test Extensions

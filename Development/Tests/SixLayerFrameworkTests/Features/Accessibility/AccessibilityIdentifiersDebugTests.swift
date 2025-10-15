@@ -7,22 +7,16 @@ import ViewInspector
 
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
-final class AccessibilityIdentifiersDebugTests {
+final class AccessibilityIdentifiersDebugTests: BaseAccessibilityTestClass {
     
     init() async throws {
-        try await super.setUp()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "DebugTest"
-        config.mode = .automatic
-        config.enableDebugLogging = true // Enable debug logging
-        config.enableAutoIDs = true
+        try await super.init()
     }
     
     deinit {
-        try await super.tearDown()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        Task { [weak self] in
+            await self?.cleanupTestEnvironment()
+        }
     }
     
     @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {

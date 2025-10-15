@@ -7,6 +7,7 @@ public struct ResponsiveContainer<Content: View>: View {
 
     public var body: some View {
         content(hSizeClass == .regular, vSizeClass == .regular)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
