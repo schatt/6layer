@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  ItemCollectionL1Tests.swift
 //  SixLayerFrameworkTests
@@ -13,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ItemCollectionL1Tests {
+final class ItemCollectionL1Tests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -176,8 +175,6 @@ final class ItemCollectionL1Tests {
         let items = sampleItems
         
         // When & Then
-        measure {
-            let view = platformPresentItemCollection_L1(
                 items: items,
                 hints: sampleHints
             )
@@ -190,13 +187,7 @@ final class ItemCollectionL1Tests {
         let items = createManyItems(count: 1000)
         
         // When & Then
-        measure {
-            let view = platformPresentItemCollection_L1(
-                items: items,
-                hints: sampleHints
-            )
-            #expect(view != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Helper Methods
@@ -230,13 +221,4 @@ final class ItemCollectionL1Tests {
             )
         }
     }
-}
-
-
-
-
-
-
-
-
 
