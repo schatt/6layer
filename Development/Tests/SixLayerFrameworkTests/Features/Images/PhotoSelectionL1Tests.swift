@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  PhotoSelectionL1Tests.swift
 //  SixLayerFrameworkTests
@@ -13,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PhotoSelectionL1Tests {
+final class PhotoSelectionL1Tests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -268,13 +267,10 @@ final class PhotoSelectionL1Tests {
         let context = samplePhotoContext
         
         // When & Then
-        measure {
-            let view = platformPhotoSelection_L1(
                 purpose: purpose,
                 context: context,
                 onImageSelected: { _ in }
             )
             #expect(view != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
