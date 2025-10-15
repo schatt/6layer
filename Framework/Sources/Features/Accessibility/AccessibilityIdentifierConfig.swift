@@ -1,0 +1,77 @@
+//
+//  AccessibilityIdentifierConfig.swift
+//  SixLayerFramework
+//
+//  BUSINESS PURPOSE:
+//  Configuration management for accessibility identifier generation
+//  Provides centralized control over accessibility identifier behavior
+//
+//  FEATURES:
+//  - Global enable/disable for accessibility identifiers
+//  - Configuration management
+//  - Testing support
+//
+
+import Foundation
+
+/// Configuration manager for accessibility identifier generation
+@MainActor
+public class AccessibilityIdentifierConfig: ObservableObject {
+    /// Shared instance for global configuration
+    public static let shared = AccessibilityIdentifierConfig()
+    
+    /// Whether automatic accessibility identifiers are enabled
+    @Published public var enableAutoIDs: Bool = true
+    
+    /// Global prefix for accessibility identifiers
+    @Published public var globalPrefix: String = "SixLayer"
+    
+    /// Namespace for accessibility identifiers (legacy support)
+    @Published public var namespace: String = "SixLayer"
+    
+    /// Whether to include component names in identifiers
+    @Published public var includeComponentNames: Bool = true
+    
+    /// Whether to include element types in identifiers
+    @Published public var includeElementTypes: Bool = true
+    
+    /// Current view hierarchy for context-aware identifier generation
+    @Published public var currentViewHierarchy: [String] = []
+    
+    /// Current screen context for identifier generation
+    @Published public var currentScreenContext: String? = nil
+    
+    private init() {}
+    
+    /// Reset configuration to defaults
+    public func resetToDefaults() {
+        enableAutoIDs = true
+        globalPrefix = "SixLayer"
+        namespace = "SixLayer"
+        includeComponentNames = true
+        includeElementTypes = true
+        currentViewHierarchy = []
+        currentScreenContext = nil
+    }
+    
+    /// Configure for testing mode
+    public func configureForTesting() {
+        enableAutoIDs = true
+        globalPrefix = "DebugTest"
+        namespace = "DebugTest"
+        includeComponentNames = true
+        includeElementTypes = true
+        currentViewHierarchy = []
+        currentScreenContext = "main"
+    }
+    
+    /// Set the current screen context for accessibility identifier generation
+    public func setScreenContext(_ context: String) {
+        currentScreenContext = context
+    }
+    
+    /// Set the current view hierarchy for accessibility identifier generation
+    public func setViewHierarchy(_ hierarchy: [String]) {
+        currentViewHierarchy = hierarchy
+    }
+}
