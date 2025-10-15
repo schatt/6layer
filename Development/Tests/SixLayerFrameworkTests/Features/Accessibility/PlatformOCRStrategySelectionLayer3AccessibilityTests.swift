@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -8,28 +7,16 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRStrategySelectionLayer3.swift functions
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformOCRStrategySelectionLayer3AccessibilityTests {
+@MainActor
+final class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
     deinit {
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-        }
-        try await super.tearDown()
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     // MARK: - OCR Strategy Selection Tests
