@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -8,28 +7,16 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRSemanticLayer1.swift functions
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformOCRSemanticLayer1AccessibilityTests {
+@MainActor
+final class PlatformOCRSemanticLayer1AccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
     deinit {
-        try await super.tearDown()
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-        }
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     // MARK: - OCR Visual Correction Tests
