@@ -18,7 +18,7 @@ final class RuntimeCapabilityDetectionComponentAccessibilityTests {
     
     @Test func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
         // Given: RuntimeCapabilityDetection
-        let testView = RuntimeCapabilityDetection()
+        let testView = RuntimeCapabilityDetectionView()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -33,7 +33,7 @@ final class RuntimeCapabilityDetectionComponentAccessibilityTests {
 
 // MARK: - Mock Runtime Capability Detection Components (Placeholder implementations)
 
-struct RuntimeCapabilityDetection: View {
+struct RuntimeCapabilityDetectionView: View {
     var body: some View {
         VStack {
             Text("Runtime Capability Detection")

@@ -264,17 +264,11 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardTitle
-        }
-        return "Item"
+        CardDisplayHelper.extractTitle(from: item)
     }
     
     private var cardSubtitle: String? {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardSubtitle
-        }
-        return nil
+        CardDisplayHelper.extractSubtitle(from: item)
     }
     
     private var cardDescription: String? {
@@ -285,17 +279,11 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     }
     
     private var cardIcon: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardIcon ?? "star.fill"
-        }
-        return "star.fill"
+        CardDisplayHelper.extractIcon(from: item)
     }
     
     private var cardColor: Color {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardColor ?? .blue
-        }
-        return .blue
+        CardDisplayHelper.extractColor(from: item)
     }
 }
 
@@ -401,31 +389,19 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardTitle
-        }
-        return "Item"
+        CardDisplayHelper.extractTitle(from: item)
     }
     
     private var cardSubtitle: String? {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardSubtitle
-        }
-        return nil
+        CardDisplayHelper.extractSubtitle(from: item)
     }
     
     private var cardIcon: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardIcon ?? "star.fill"
-        }
-        return "star.fill"
+        CardDisplayHelper.extractIcon(from: item)
     }
     
     private var cardColor: Color {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardColor ?? .blue
-        }
-        return .blue
+        CardDisplayHelper.extractColor(from: item)
     }
 }
 
@@ -796,31 +772,19 @@ public struct ListCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardTitle
-        }
-        return "Item"
+        CardDisplayHelper.extractTitle(from: item)
     }
     
     private var cardSubtitle: String? {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardSubtitle
-        }
-        return nil
+        CardDisplayHelper.extractSubtitle(from: item)
     }
     
     private var cardIcon: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardIcon ?? "star.fill"
-        }
-        return "star.fill"
+        CardDisplayHelper.extractIcon(from: item)
     }
     
     private var cardColor: Color {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardColor ?? .blue
-        }
-        return .blue
+        CardDisplayHelper.extractColor(from: item)
     }
 }
 
