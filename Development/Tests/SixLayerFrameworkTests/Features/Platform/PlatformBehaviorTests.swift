@@ -82,7 +82,7 @@ final class PlatformBehaviorTests {
     }
     
     private func mockVisionOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig()
+        return getCardExpansionPlatformConfig(
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,

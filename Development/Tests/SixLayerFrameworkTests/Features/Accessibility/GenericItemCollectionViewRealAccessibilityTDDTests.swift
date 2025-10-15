@@ -119,7 +119,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests {
     
     // MARK: - Simulator Testing Methods
     
-    @Test private func testIOSSimulatorBehavior<T: View>(_ view: T) {
+    private func testIOSSimulatorBehavior<T: View>(_ view: T) {
         // Test iOS-specific behavior in iOS simulator
         // This would run the view in an iOS simulator and test actual behavior
         
@@ -136,7 +136,7 @@ final class GenericItemCollectionViewRealAccessibilityTDDTests {
         #expect(viewDescription.contains("ExpandableCardCollectionView"), "Should return ExpandableCardCollectionView for iOS")
     }
     
-    @Test private func testMacOSSimulatorBehavior<T: View>(_ view: T) {
+    private func testMacOSSimulatorBehavior<T: View>(_ view: T) {
         // Test macOS-specific behavior in macOS simulator
         // This would run the view in a macOS simulator and test actual behavior
         
