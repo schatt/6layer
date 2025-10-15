@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -8,28 +7,16 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for hierarchical and temporal data functions in PlatformSemanticLayer1.swift
 /// Ensures hierarchical and temporal data presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests {
+@MainActor
+final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
     deinit {
-        try await super.tearDown()
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-        }
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     // MARK: - Test Data Models
