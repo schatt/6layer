@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  ModalFormL1Tests.swift
 //  SixLayerFrameworkTests
@@ -13,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ModalFormL1Tests {
+final class ModalFormL1Tests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -310,12 +309,9 @@ final class ModalFormL1Tests {
         let context = PresentationContext.modal
         
         // When & Then
-        measure {
-            let view = platformPresentModalForm_L1(
                 formType: formType,
                 context: context
             )
             #expect(view != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

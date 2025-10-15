@@ -1,12 +1,13 @@
 import Testing
 
-
 @testable import SixLayerFramework
 
-final class SixLayerFrameworkTests {
+@MainActor
+final class SixLayerFrameworkTests: BaseAccessibilityTestClass {
     
-    init() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
 
     deinit {
@@ -23,8 +24,6 @@ final class SixLayerFrameworkTests {
 
     @Test func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
 }
