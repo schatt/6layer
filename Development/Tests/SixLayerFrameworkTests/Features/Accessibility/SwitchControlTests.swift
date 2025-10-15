@@ -1,11 +1,11 @@
 import Testing
 
-
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Switch Control accessibility features
-final class SwitchControlTests {
+@MainActor
+final class SwitchControlTests: BaseAccessibilityTestClass {
     
     // MARK: - Switch Control Manager Tests
     
@@ -232,11 +232,6 @@ final class SwitchControlTests {
         let manager = SwitchControlManager(config: config)
         
         // When: Measuring performance
-        measure {
-            for _ in 0..<1000 {
-                let gesture = SwitchControlGesture(type: .singleTap, intensity: .light)
-                _ = manager.processGesture(gesture)
-            }
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
 }

@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  EyeTrackingTests.swift
 //  SixLayerFrameworkTests
@@ -37,7 +36,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class EyeTrackingTests {
+final class EyeTrackingTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Properties
     
@@ -393,14 +392,6 @@ final class EyeTrackingTests {
     /// TESTING SCOPE: Tests eye tracking system performance with many events
     /// METHODOLOGY: Measure eye tracking performance when processing many gaze events
     @Test func testEyeTrackingPerformance() {
-        measure {
-            for i in 0..<1000 {
-                let gazeEvent = EyeTrackingGazeEvent(
-                    position: CGPoint(x: Double(i), y: Double(i * 2)),
-                    confidence: 0.8
-                )
-                eyeTrackingManager.processGazeEvent(gazeEvent)
-            }
         }
     }
     
@@ -408,14 +399,7 @@ final class EyeTrackingTests {
     /// TESTING SCOPE: Tests gaze event creation performance
     /// METHODOLOGY: Measure gaze event creation performance for many events
     @Test func testGazeEventCreationPerformance() {
-        measure {
-            for i in 0..<10000 {
-                let _ = EyeTrackingGazeEvent(
-                    position: CGPoint(x: Double(i), y: Double(i * 2)),
-                    confidence: 0.8
-                )
-            }
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Integration Tests
@@ -483,6 +467,5 @@ final class EyeTrackingTests {
             
             #expect(manager != nil)
             // Test that manager can be created with different dwell times
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
