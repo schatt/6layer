@@ -334,3 +334,4 @@ final class AssistiveTouchTests: BaseAccessibilityTestClass {
         // When: Measuring performance
         // Performance test removed - performance monitoring was removed from framework
     }
+}

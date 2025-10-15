@@ -469,3 +469,4 @@ final class EyeTrackingTests: BaseAccessibilityTestClass {
             // Test that manager can be created with different dwell times
         // Performance test removed - performance monitoring was removed from framework
     }
+}
