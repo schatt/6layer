@@ -1096,8 +1096,8 @@ final class IntelligentCardExpansionComprehensiveTests: BaseAccessibilityTestCla
         // Test all cases
         let allCases = ContentDensity.allCases
         #expect(allCases.count == 3)
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
 
 // MARK: - Test Helper Types
 

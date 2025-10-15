@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  IntelligentCardExpansionLayer6Tests.swift
 //  SixLayerFrameworkTests
@@ -15,7 +14,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class IntelligentCardExpansionLayer6Tests {
+final class IntelligentCardExpansionLayer6Tests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -331,8 +330,6 @@ final class IntelligentCardExpansionLayer6Tests {
         )
         
         // When: Measuring performance
-        measure {
-            // Create multiple cards to test performance
             for _ in 0..<10 {
                 let _ = PlatformAwareExpandableCardView(
                     item: testItem,
@@ -343,5 +340,5 @@ final class IntelligentCardExpansionLayer6Tests {
         
         // Then: Performance should be acceptable
         #expect(cardView != nil, "Card should be created for performance test")
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
