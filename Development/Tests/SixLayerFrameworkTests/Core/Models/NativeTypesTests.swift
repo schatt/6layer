@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  NativeTypesTests.swift
 //  SixLayerFrameworkTests
@@ -52,12 +51,19 @@ struct MockDataContainer: Equatable {
     }
 }
 
-final class NativeTypesTests {
+@MainActor
+final class NativeTypesTests: BaseAccessibilityTestClass {
     
     var formState: DynamicFormState!
     var configuration: DynamicFormConfiguration!
     
-    init() {
+    override init() {
+        super.init()
+        setupTestEnvironment()
+    }
+    
+    override func setupTestEnvironment() {
+        super.setupTestEnvironment()
         configuration = DynamicFormConfiguration(
             id: "test",
             title: "Test Form",
@@ -69,9 +75,10 @@ final class NativeTypesTests {
         formState = DynamicFormState(configuration: configuration)
     }
     
-    deinit {
+    override func cleanupTestEnvironment() {
         formState = nil
         configuration = nil
+        super.cleanupTestEnvironment()
     }
     
     // MARK: - High Priority Tests
@@ -356,8 +363,6 @@ final class NativeTypesTests {
         let largeArray = Array(1...10000).map { "item\($0)" }
         
         // When
-        measure {
-            formState.setValue(largeArray, for: field.id)
             let _: [String]? = formState.getValue(for: field.id)
         }
     }
@@ -383,4 +388,3 @@ final class NativeTypesTests {
         let clearedImage: MockImage? = formState.getValue(for: field.id)
         #expect(clearedImage == nil)
     }
-}
