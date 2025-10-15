@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  NavigationLayer4Tests.swift
 //  SixLayerFrameworkTests
@@ -533,8 +532,6 @@ final class NavigationLayer4Tests {
         let isActive = Binding<Bool>(get: { false }, set: { _ in })
         
         // When: Measuring performance
-        measure {
-            let _ = Text("Content")
                 .platformNavigation {
                     Text("Navigation Content")
                 }
@@ -555,6 +552,5 @@ final class NavigationLayer4Tests {
             
             let _ = Text("Bar Items")
                 .platformNavigationBarItems_L4(trailing: Button("Action") { })
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

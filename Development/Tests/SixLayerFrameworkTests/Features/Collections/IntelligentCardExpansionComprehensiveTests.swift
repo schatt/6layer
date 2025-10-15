@@ -730,12 +730,7 @@ final class IntelligentCardExpansionComprehensiveTests: BaseAccessibilityTestCla
             )
         }
         
-                items: largeDataSet,
-                hints: expandableHints
-            )
-            
-            #expect(view != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     @Test func testLayoutDecisionPerformance() {
@@ -1106,4 +1101,5 @@ private struct MenuItem: Identifiable {
     let title: String
     let icon: String
     let color: Color
+}
 }

@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  OCROverlayTests.swift
 //  SixLayerFrameworkTests
@@ -38,7 +37,7 @@ final class OCROverlayTests {
             textTypes: [
                 .general: "Hello World",
                 .price: "Test Text", 
-                .number: "Another Line"
+                    .number: "Another Line"
             ],
             processingTime: 1.2,
             language: .english
@@ -310,10 +309,10 @@ final class OCROverlayTests {
         // Then: Should provide different visual indicators
         // Test high confidence (above high threshold)
         #expect(0.95 >= configuration.highConfidenceThreshold, "High confidence should be above high threshold")
-
+        
         // Test low confidence (below low threshold)
         #expect(0.3 < configuration.lowConfidenceThreshold, "Low confidence should be below low threshold")
-
+        
         // Test that overlays can be created with different confidence levels
         #expect(highConfidenceOverlay != nil)
         #expect(lowConfidenceOverlay != nil)
@@ -357,37 +356,7 @@ final class OCROverlayTests {
         // but we can verify the view can be hosted and the modifiers are applied
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testOverlayRenderingPerformance() {
-        // Given: Large OCR result with many bounding boxes
-        let largeBoundingBoxes = (0..<100).map { i in
-            CGRect(x: CGFloat(i * 10), y: CGFloat(i * 5), width: 50, height: 20)
-        }
-        
-        let largeResult = OCRResult(
-            extractedText: String(repeating: "Text ", count: 100),
-            confidence: 0.8,
-            boundingBoxes: largeBoundingBoxes,
-            textTypes: [.general: "Large Result"],
-            processingTime: 2.0,
-            language: .english
-        )
-        
-        let overlayView = OCROverlayView(
-            image: testImage,
-            result: largeResult,
-            onTextEdit: { _, _ in },
-            onTextDelete: { _ in }
-        )
-        
-        // When: Measuring rendering performance
-        measure {
-            // Simulate view rendering
-            _ = overlayView.body
-        }
-    }
-    
+}
     // MARK: - Edge Cases Tests
     
     @Test func testOverlappingBoundingBoxes() {
@@ -515,5 +484,5 @@ final class OCROverlayTests {
         
         // Then: Should create overlay successfully
         #expect(overlayView != nil, "Should create overlay from disambiguation result")
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

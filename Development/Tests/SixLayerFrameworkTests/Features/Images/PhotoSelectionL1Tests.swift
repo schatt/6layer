@@ -25,7 +25,8 @@ final class PhotoSelectionL1Tests: BaseAccessibilityTestClass {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    init() {
+    override init() {
+        super.init()
         samplePhotoContext = PhotoContext(
             screenSize: CGSize(width: 375, height: 667),
             availableSpace: CGSize(width: 375, height: 667),
@@ -259,18 +260,4 @@ final class PhotoSelectionL1Tests: BaseAccessibilityTestClass {
         #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testPlatformPhotoSelection_L1_Performance() {
-        // Given
-        let purpose = PhotoPurpose.vehiclePhoto
-        let context = samplePhotoContext
-        
-        // When & Then
-                purpose: purpose,
-                context: context,
-                onImageSelected: { _ in }
-            )
-            #expect(view != nil)
-        // Performance test removed - performance monitoring was removed from framework
-    }
+}

@@ -175,11 +175,7 @@ final class ItemCollectionL1Tests: BaseAccessibilityTestClass {
         let items = sampleItems
         
         // When & Then
-                items: items,
-                hints: sampleHints
-            )
-            #expect(view != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     @Test func testPlatformPresentItemCollection_L1_LargeDatasetPerformance() {
