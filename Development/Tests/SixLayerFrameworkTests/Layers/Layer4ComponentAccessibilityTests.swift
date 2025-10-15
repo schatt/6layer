@@ -14,7 +14,7 @@ import SwiftUI
 @MainActor
 class Layer4ComponentAccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
     }
     

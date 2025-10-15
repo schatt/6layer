@@ -34,11 +34,11 @@ final class PlatformPhotoComponentsLayer4Tests {
     // MARK: - platformCameraInterface_L4 Tests
     
     
-    private func setupTestEnvironment() async {
+    override func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    private func cleanupTestEnvironment() async {
+    override func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     

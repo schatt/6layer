@@ -13,7 +13,7 @@ import ViewInspector
 @MainActor
 class Layer1AccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
     }
     
@@ -22,7 +22,7 @@ class Layer1AccessibilityTests: BaseAccessibilityTestClass {
     private var testItems: [Layer1TestItem]!
     private var testHints: PresentationHints!
     
-    init() async throws {
+    override init() async throws {
                 testItems = [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")

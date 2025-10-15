@@ -13,7 +13,7 @@ import ViewInspector
 @MainActor
 class RemainingComponentsAccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
     }
     

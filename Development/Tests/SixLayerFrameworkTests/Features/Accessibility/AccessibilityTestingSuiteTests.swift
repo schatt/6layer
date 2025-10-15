@@ -34,7 +34,7 @@ final class AccessibilityTestingSuiteTests: BaseAccessibilityTestClass {
     
     var testingSuite: AccessibilityTestingSuite!
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
         testingSuite = AccessibilityTestingSuite()
     }

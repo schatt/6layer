@@ -64,7 +64,7 @@ final class CardActionButtonTests: BaseAccessibilityTestClass {
     var layoutDecision: IntelligentCardLayoutDecision!
     var strategy: CardExpansionStrategy!
     
-    init() async throws {
+    override init() async throws {
         
         sampleItems = [
             TestItem(

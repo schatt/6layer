@@ -10,7 +10,7 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
     }
     
@@ -26,11 +26,11 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    private func setupTestEnvironment() async {
+    override func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    private func cleanupTestEnvironment() async {
+    override func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     

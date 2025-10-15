@@ -18,7 +18,7 @@ final class ModalFormL1Tests: BaseAccessibilityTestClass {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    init() async throws {
+    override init() async throws {
         sampleHints = PresentationHints()
     }
     

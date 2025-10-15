@@ -45,7 +45,7 @@ final class EyeTrackingTests: BaseAccessibilityTestClass {
     
     // MARK: - Setup and Teardown
     
-    init() async throws {
+    override init() async throws {
         testConfig = EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,

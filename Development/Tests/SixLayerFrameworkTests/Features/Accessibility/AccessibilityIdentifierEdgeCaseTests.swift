@@ -10,7 +10,7 @@ import ViewInspector
 @MainActor
 final class AccessibilityIdentifierEdgeCaseTests: BaseAccessibilityTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
     }
     

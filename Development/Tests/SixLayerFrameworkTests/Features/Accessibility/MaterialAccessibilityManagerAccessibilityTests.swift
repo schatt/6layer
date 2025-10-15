@@ -10,7 +10,7 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 class MaterialAccessibilityManagerAccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
     }
     
@@ -19,11 +19,11 @@ class MaterialAccessibilityManagerAccessibilityTests: BaseAccessibilityTestClass
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    private func setupTestEnvironment() async {
+    override func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    private func cleanupTestEnvironment() async {
+    override func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
