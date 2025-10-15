@@ -507,23 +507,4 @@ final class Layer2LayoutDecisionTests {
     
     // MARK: - Performance Tests
     
-    @Test func testDetermineOptimalLayout_L2_Performance() {
-        // Given: Large dataset
-        let items = (1...1000).map { i in
-            TestItem(title: "Item \(i)", content: "Content")
-        }
-        let hints = PresentationHints(
-            dataType: .collection,
-            presentationPreference: .grid,
-            complexity: .complex,
-            context: .dashboard
-        )
-        
-        // When: Measuring performance
-                items: items,
-                hints: hints,
-                screenWidth: 1024,
-                deviceType: .mac
-            )
-        // Performance test removed - performance monitoring was removed from framework
-    }
+    // Performance test removed - performance monitoring was removed from framework

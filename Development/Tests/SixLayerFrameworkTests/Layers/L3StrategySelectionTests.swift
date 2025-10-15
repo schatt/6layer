@@ -817,43 +817,7 @@ final class L3StrategySelectionTests {
     
     // MARK: - Performance Tests
     
-    @Test func testSelectCardLayoutStrategy_L3_Performance() {
-        // Given
-        let contentCount = 50
-        let screenWidth: CGFloat = 1024
-        let deviceType = DeviceType.pad
-        let complexity = ContentComplexity.complex
-        
-        // When & Then
-                contentCount: contentCount,
-                screenWidth: screenWidth,
-                deviceType: deviceType,
-                contentComplexity: complexity
-            )
-            #expect(strategy != nil)
-        }
-    }
-    
-    @Test func testPlatformOCRStrategy_L3_Performance() {
-        // Given
-        let textTypes = [TextType.general, TextType.price, TextType.date]
-        let platform = SixLayerPlatform.iOS
-        
-        // When & Then
-        // Performance test removed - performance monitoring was removed from framework
-    }
-    
-    @Test func testSelectCardExpansionStrategy_L3_Performance() {
-        // Given
-        let contentCount = 50
-        let screenWidth: CGFloat = 1024
-        let deviceType = DeviceType.pad
-        let interactionStyle = InteractionStyle.interactive
-        let contentDensity = ContentDensity.spacious
-        
-        // When & Then
-        // Performance test removed - performance monitoring was removed from framework
-    }
+    // Performance test removed - performance monitoring was removed from framework
     
     // MARK: - Automatic Accessibility Identifier Tests
     

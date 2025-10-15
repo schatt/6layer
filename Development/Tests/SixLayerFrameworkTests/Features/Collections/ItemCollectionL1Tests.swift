@@ -19,7 +19,7 @@ final class ItemCollectionL1Tests: BaseAccessibilityTestClass {
     private var sampleItems: [GenericDataItem] = []
     private var sampleHints: PresentationHints = PresentationHints()
     
-    init() {
+    override init() {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
     }
@@ -168,23 +168,6 @@ final class ItemCollectionL1Tests: BaseAccessibilityTestClass {
         #expect(view != nil, "platformPresentItemCollection_L1 with list hints should return a view")
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testPlatformPresentItemCollection_L1_Performance() {
-        // Given
-        let items = sampleItems
-        
-        // When & Then
-        // Performance test removed - performance monitoring was removed from framework
-    }
-    
-    @Test func testPlatformPresentItemCollection_L1_LargeDatasetPerformance() {
-        // Given
-        let items = createManyItems(count: 1000)
-        
-        // When & Then
-        // Performance test removed - performance monitoring was removed from framework
-    }
     
     // MARK: - Helper Methods
     
@@ -217,4 +200,5 @@ final class ItemCollectionL1Tests: BaseAccessibilityTestClass {
             )
         }
     }
-
+    
+}

@@ -727,4 +727,5 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         case .custom:
             return "custom_value"
         // Performance test removed - performance monitoring was removed from framework
+        }
     }

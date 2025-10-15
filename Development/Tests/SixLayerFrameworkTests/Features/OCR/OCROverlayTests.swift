@@ -11,13 +11,15 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class OCROverlayTests {
+@MainActor
+final class OCROverlayTests: BaseAccessibilityTestClass {
     
     var testImage: PlatformImage!
     var testOCRResult: OCRResult!
     var testBoundingBoxes: [CGRect]!
     
-    init() {
+    override init() {
+        super.init()
         
         // Create test image
         testImage = PlatformImage()
@@ -484,5 +486,5 @@ final class OCROverlayTests {
         
         // Then: Should create overlay successfully
         #expect(overlayView != nil, "Should create overlay from disambiguation result")
-        // Performance test removed - performance monitoring was removed from framework
-    }
+     }
+

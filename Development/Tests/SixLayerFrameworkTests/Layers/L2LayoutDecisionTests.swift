@@ -536,31 +536,9 @@ final class L2LayoutDecisionTests {
     
     // MARK: - Performance Tests
     
-    @Test func testDetermineOptimalLayout_L2_Performance() {
-        // Given
-        let items = createManyItems(count: 100)
-        let hints = PresentationHints()
-        
-        // When & Then
-                items: items,
-                hints: hints,
-                screenWidth: 375,
-                deviceType: .phone
-            )
-            #expect(decision != nil)
-        }
-    }
+    // Performance test removed - performance monitoring was removed from framework
     
-    @Test func testDetermineIntelligentCardLayout_L2_Performance() {
-        // Given
-        let contentCount = 50
-        let screenWidth: CGFloat = 1024
-        let deviceType = DeviceType.pad
-        let complexity = ContentComplexity.complex
-        
-        // When & Then
-        // Performance test removed - performance monitoring was removed from framework
-    }
+    // Performance test removed - performance monitoring was removed from framework
     
     // MARK: - Helper Methods
     
