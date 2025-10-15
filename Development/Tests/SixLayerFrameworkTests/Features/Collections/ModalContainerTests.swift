@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  ModalContainerTests.swift
 //  SixLayerFrameworkTests
@@ -13,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ModalContainerTests {
+final class ModalContainerTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -370,8 +369,6 @@ final class ModalContainerTests {
         let strategy = createTestModalStrategy()
         
         // When: Measuring performance
-        measure {
-            let _ = platformModalContainer_Form_L4(strategy: strategy)
         }
     }
     
@@ -400,9 +397,7 @@ final class ModalContainerTests {
         )
         
         // When: Measuring performance
-        measure {
-            let _ = platformModalContainer_Form_L4(strategy: strategy)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Integration Tests
@@ -439,6 +434,6 @@ final class ModalContainerTests {
         
         // Then: Should create cross-platform compatible container
         #expect(container != nil, "Modal container should be cross-platform compatible")
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
 
