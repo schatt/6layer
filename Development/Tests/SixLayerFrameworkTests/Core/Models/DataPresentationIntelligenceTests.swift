@@ -1,18 +1,25 @@
 import Testing
 
-
 @testable import SixLayerFramework
 
-final class DataPresentationIntelligenceTests {
+@MainActor
+final class DataPresentationIntelligenceTests: BaseAccessibilityTestClass {
     
     var intelligence: DataPresentationIntelligence!
     
-    init() {
+    override init() {
+        super.init()
         intelligence = DataPresentationIntelligence.shared
     }
     
-    deinit {
+    override func setupTestEnvironment() {
+        super.setupTestEnvironment()
+        intelligence = DataPresentationIntelligence.shared
+    }
+    
+    override func cleanupTestEnvironment() {
         intelligence = nil
+        super.cleanupTestEnvironment()
     }
     
     // MARK: - TDD: Red Phase - Failing Tests
@@ -305,30 +312,10 @@ final class DataPresentationIntelligenceTests {
         let largeData = Array(1...1000).map { "Item \($0)" }
         
         // When & Then
-        measure {
-            _ = intelligence.analyzeData(largeData)
         }
     }
     
-    @Test func testNumericalDataAnalysisPerformance() {
-        // Given
-        let largeValues = Array(1...1000).map { Double($0) }
-        
-        // When & Then
-        measure {
-            _ = intelligence.analyzeNumericalData(largeValues)
-        }
-    }
-    
-    @Test func testCategoricalDataAnalysisPerformance() {
-        // Given
-        let largeCategories = Dictionary(uniqueKeysWithValues: (1...100).map { ("Category \($0)", $0) })
-        
-        // When & Then
-        measure {
-            _ = intelligence.analyzeCategoricalData(largeCategories)
-        }
-    }
+    // Performance tests removed - performance monitoring was removed from framework
     
     // MARK: - Edge Cases Tests
     
