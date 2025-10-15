@@ -45,16 +45,16 @@ final class PlatformBehaviorTests {
     
     // MARK: - Platform Mocking Functions
     
-    private func mockIOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig()
+    private func mockIOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
+        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
     }
     
-    private func mockMacOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig()
+    private func mockMacOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
+        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
     }
     
-    private func mockTVOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig(
+    private func mockTVOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
+        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig(
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
@@ -67,8 +67,8 @@ final class PlatformBehaviorTests {
         )
     }
     
-    private func mockWatchOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig(
+    private func mockWatchOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
+        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig(
             supportsHapticFeedback: true,
             supportsHover: false,
             supportsTouch: true,
@@ -81,8 +81,8 @@ final class PlatformBehaviorTests {
         )
     }
     
-    private func mockVisionOSCardExpansionConfig() -> CardExpansionPlatformConfig {
-        return getCardExpansionPlatformConfig(
+    private func mockVisionOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
+        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig(
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
@@ -141,7 +141,7 @@ final class PlatformBehaviorTests {
     
     @Test func testIOSPlatformBehavior() {
         // Mock iOS platform behavior
-        let config = mockIOSCardExpansionConfig()
+        let config = await mockIOSCardExpansionConfig()
         
         // iOS should have touch capabilities
         #expect(config.supportsTouch, "iOS should support touch")
@@ -158,7 +158,7 @@ final class PlatformBehaviorTests {
     
     @Test func testMacOSPlatformBehavior() {
         // Mock macOS platform behavior
-        let config = mockMacOSCardExpansionConfig()
+        let config = await mockMacOSCardExpansionConfig()
         
         // macOS should have hover capabilities
         #expect(config.supportsHover, "macOS should support hover")
@@ -177,7 +177,7 @@ final class PlatformBehaviorTests {
     
     @Test func testWatchOSPlatformBehavior() {
         // Mock watchOS platform behavior
-        let config = mockWatchOSCardExpansionConfig()
+        let config = await mockWatchOSCardExpansionConfig()
         
         // watchOS should have touch capabilities
         #expect(config.supportsTouch, "watchOS should support touch")
@@ -192,7 +192,7 @@ final class PlatformBehaviorTests {
     
     @Test func testTVOSPlatformBehavior() {
         // Mock tvOS platform behavior
-        let config = mockTVOSCardExpansionConfig()
+        let config = await mockTVOSCardExpansionConfig()
         
         // tvOS should only have accessibility capabilities
         #expect(config.supportsVoiceOver, "tvOS should support VoiceOver")
@@ -209,7 +209,7 @@ final class PlatformBehaviorTests {
     
     @Test func testVisionOSPlatformBehavior() {
         // Mock visionOS platform behavior
-        let config = mockVisionOSCardExpansionConfig()
+        let config = await mockVisionOSCardExpansionConfig()
         
         // visionOS should have Vision and accessibility capabilities
         #expect(mockIsVisionFrameworkAvailable(), "visionOS should have Vision framework")
@@ -368,7 +368,7 @@ final class PlatformBehaviorTests {
         // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
         // Test that accessibility behavior works on all platforms
-        let config = getCardExpansionPlatformConfig()
+        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         #expect(config.supportsVoiceOver, "VoiceOver should be supported on all platforms")
         #expect(config.supportsSwitchControl, "Switch Control should be supported on all platforms")
     }
@@ -377,7 +377,7 @@ final class PlatformBehaviorTests {
     
     
     @Test func testPlatformSystemTouchBehavior(testView: some View) {
-        let config = getCardExpansionPlatformConfig()
+        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
             // Touch platforms should have touch-appropriate behavior
@@ -391,7 +391,7 @@ final class PlatformBehaviorTests {
     }
     
     @Test func testPlatformSystemHoverBehavior(testView: some View) {
-        let config = getCardExpansionPlatformConfig()
+        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         if config.supportsHover {
             // Hover platforms should have hover-appropriate behavior
@@ -405,7 +405,7 @@ final class PlatformBehaviorTests {
     }
     
     @Test func testPlatformSystemAccessibilityBehavior(testView: some View) {
-        let config = getCardExpansionPlatformConfig()
+        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         // All platforms should support accessibility
         #expect(config.supportsVoiceOver, "VoiceOver should be supported on all platforms")
@@ -423,7 +423,7 @@ final class PlatformBehaviorTests {
         // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
         // Test that accessibility behavior can handle high contrast scenarios
-        let config = getCardExpansionPlatformConfig()
+        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         #expect(config.supportsVoiceOver, "VoiceOver should be supported for high contrast scenarios")
     }
     
@@ -448,7 +448,7 @@ final class PlatformBehaviorTests {
     
     
     @Test func testPlatformSpecificInputOutput(platform: SixLayerPlatform, input: String) {
-        let config = getCardExpansionPlatformConfig()
+        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         switch input {
         case "touch_input":

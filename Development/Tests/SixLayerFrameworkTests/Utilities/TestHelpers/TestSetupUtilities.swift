@@ -251,5 +251,24 @@ public final class TestSetupUtilities {
             defaultValue: value
         )
     }
+    
+    // MARK: - Card Expansion Configuration Utilities
+    
+    /// Get card expansion platform configuration for testing
+    /// DRY principle: Centralized card configuration to avoid duplication
+    public static func getCardExpansionPlatformConfig(
+        supportsHapticFeedback: Bool? = nil,
+        supportsHover: Bool? = nil,
+        supportsTouch: Bool? = nil,
+        supportsVoiceOver: Bool? = nil,
+        supportsSwitchControl: Bool? = nil,
+        supportsAssistiveTouch: Bool? = nil,
+        minTouchTarget: CGFloat? = nil,
+        hoverDelay: TimeInterval? = nil,
+        animationEasing: Animation? = nil
+    ) async -> CardExpansionPlatformConfig {
+        // Use the framework's getCardExpansionPlatformConfig function
+        return await SixLayerFramework.getCardExpansionPlatformConfig()
+    }
 }
 

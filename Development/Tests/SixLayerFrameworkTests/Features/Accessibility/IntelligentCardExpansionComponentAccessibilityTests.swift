@@ -262,7 +262,7 @@ final class IntelligentCardExpansionComponentAccessibilityTests {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Native Card")
         let expansionStrategy = ExpansionStrategy.automatic
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -291,7 +291,7 @@ final class IntelligentCardExpansionComponentAccessibilityTests {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "iOS Card")
         let expansionStrategy = ExpansionStrategy.automatic
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -320,7 +320,7 @@ final class IntelligentCardExpansionComponentAccessibilityTests {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "macOS Card")
         let expansionStrategy = ExpansionStrategy.automatic
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -349,7 +349,7 @@ final class IntelligentCardExpansionComponentAccessibilityTests {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "visionOS Card")
         let expansionStrategy = ExpansionStrategy.automatic
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -378,7 +378,7 @@ final class IntelligentCardExpansionComponentAccessibilityTests {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Platform Aware Card")
         let expansionStrategy = ExpansionStrategy.automatic
-        let platformConfig = CardExpansionPlatformConfig()
+        let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -415,7 +415,7 @@ enum ExpansionStrategy {
     case hybrid
 }
 
-struct CardExpansionPlatformConfig {
+struct MockCardExpansionPlatformConfig {
     let animationEasing: Animation = .easeInOut
     let minTouchTarget: CGFloat = 44.0
     let supportsHover: Bool = true
