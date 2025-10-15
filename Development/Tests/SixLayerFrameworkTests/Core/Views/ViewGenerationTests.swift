@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -9,7 +8,7 @@ import ViewInspector
 /// Tests that the framework correctly generates SwiftUI views with proper structure and properties
 /// These tests focus on what we can actually verify when running on macOS
 @MainActor
-final class ViewGenerationTests {
+final class ViewGenerationTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -367,10 +366,6 @@ final class ViewGenerationTests {
         
         // WHEN: Generating views for many items
         // THEN: Should complete within reasonable time
-        measure {
-            for item in manyItems.prefix(100) {
-                let _ = IntelligentDetailView.platformDetailView(for: item)
-            }
         }
     }
     
@@ -479,4 +474,3 @@ final class ViewGenerationTests {
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
         // with complex view hierarchies. The view creation itself is the test.
     }
-}

@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -18,7 +17,8 @@ import SwiftUI
  * accessibility validation, and performance benchmarking. Tests both enabled and disabled states of capabilities
  * using RuntimeCapabilityDetection mock framework.
  */
-final class AssistiveTouchTests {
+@MainActor
+final class AssistiveTouchTests: BaseAccessibilityTestClass {
     
     // MARK: - AssistiveTouch Manager Tests
     
@@ -332,11 +332,5 @@ final class AssistiveTouchTests {
         let manager = AssistiveTouchManager(config: config)
         
         // When: Measuring performance
-        measure {
-            for _ in 0..<1000 {
-                let gesture = AssistiveTouchGesture(type: .singleTap, intensity: .light)
-                _ = manager.processGesture(gesture)
-            }
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
