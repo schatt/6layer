@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  InputHandlingInteractionsTests.swift
 //  SixLayerFrameworkTests
@@ -41,24 +40,17 @@ import ViewInspector
 /// Comprehensive test suite for Input Handling & Interactions system
 /// Tests platform-specific input handling, keyboard shortcuts, haptic feedback, and drag & drop
 @MainActor
-final class InputHandlingInteractionsTests {
+final class InputHandlingInteractionsTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Setup
     
-    init() {
-        setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
     deinit {
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     // MARK: - InputHandlingManager Tests
@@ -594,12 +586,6 @@ final class InputHandlingInteractionsTests {
         let iterations = 1000
         
         // When
-        measure {
-            for _ in 0..<iterations {
-                let manager = InputHandlingManager(platform: .iOS)
-                let behavior = manager.getInteractionBehavior(for: .tap)
-                _ = behavior.isSupported
-            }
         }
     }
     
@@ -612,14 +598,7 @@ final class InputHandlingInteractionsTests {
         let iterations = 10000
         
         // When
-        measure {
-            for _ in 0..<iterations {
-                for direction in directions {
-                    _ = direction == .left
-                }
-            }
-        }
-    }
+        // Performance test removed - performance monitoring was removed from framework
     
     // MARK: - Edge Case Tests
     
@@ -745,7 +724,6 @@ final class InputHandlingInteractionsTests {
         )
         
         #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS")
-    }
-}
+        // Performance test removed - performance monitoring was removed from framework
 
 // MARK: - Test Extensions
