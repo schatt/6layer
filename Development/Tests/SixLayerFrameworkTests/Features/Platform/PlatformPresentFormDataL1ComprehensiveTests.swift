@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  PlatformPresentFormDataL1ComprehensiveTests.swift
 //  SixLayerFrameworkTests
@@ -400,8 +399,6 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         )
 
         // When: Measuring performance with large dataset
-        measure {
-            let view = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
             #expect(view != nil)
         }
     }
@@ -730,6 +727,5 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
             return "autocomplete_value"
         case .custom:
             return "custom_value"
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

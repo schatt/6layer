@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  PlatformPresentContentL1Tests.swift
 //  SixLayerFrameworkTests
@@ -361,8 +360,6 @@ final class PlatformPresentContentL1Tests {
         let hints = createTestHints()
         
         // When & Then - Actually render the view to measure real SwiftUI performance
-        measure {
-            let view = platformPresentContent_L1(
                 content: content,
                 hints: hints
             )
@@ -370,6 +367,5 @@ final class PlatformPresentContentL1Tests {
             // Force SwiftUI to actually render the view by hosting it
             let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
             #expect(hostingView != nil, "Performance test should successfully render the view")
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

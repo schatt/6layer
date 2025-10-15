@@ -554,3 +554,4 @@ final class NavigationLayer4Tests {
                 .platformNavigationBarItems_L4(trailing: Button("Action") { })
         // Performance test removed - performance monitoring was removed from framework
     }
+}
