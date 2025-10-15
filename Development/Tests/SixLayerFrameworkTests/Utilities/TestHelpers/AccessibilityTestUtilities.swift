@@ -294,6 +294,15 @@ public func hasAccessibilityIdentifier<T: View>(
     }
 }
 
+/// Get the accessibility identifier from a SwiftUI view by hosting it and searching the view hierarchy
+/// - Parameter view: The SwiftUI view to inspect
+/// - Returns: The first accessibility identifier found, or nil if none exists
+@MainActor
+public func getAccessibilityIdentifier<T: View>(from view: T) -> String? {
+    let hostedView = hostRootPlatformView(view)
+    return firstAccessibilityIdentifier(inHosted: hostedView)
+}
+
 /// CRITICAL: Test if a view has an accessibility identifier matching a pattern
 /// This function REQUIRES an expected pattern - no more generic testing!
 /// 
@@ -333,25 +342,6 @@ public func hasAccessibilityIdentifier<T: View>(
             return true
         }
         print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
-        return false
-    }
-    
-    // Convert pattern to regex (replace * with .*)
-    let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
-    
-    do {
-        let regex = try NSRegularExpression(pattern: regexPattern)
-        let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
-        
-        if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
-            print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match: '\(actualIdentifier)' matches '\(expectedPattern)'")
-            return true
-        } else {
-            print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern. Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
-            return false
-        }
-    } catch {
-        print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)': \(error)")
         return false
     }
 }
