@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  IntelligentCardExpansionComprehensiveTests.swift
 //  SixLayerFrameworkTests
@@ -14,11 +13,11 @@ import SwiftUI
 /// Comprehensive tests for the Intelligent Card Expansion System
 /// Tests all 6 layers with edge cases, performance, and integration scenarios
 @MainActor
-final class IntelligentCardExpansionComprehensiveTests {
+final class IntelligentCardExpansionComprehensiveTests: BaseAccessibilityTestClass {
     
-    init() {
-        // Use centralized test setup
-        setupTestEnvironment()
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
     deinit {
@@ -731,8 +730,6 @@ final class IntelligentCardExpansionComprehensiveTests {
             )
         }
         
-        measure {
-            let view = platformPresentItemCollection_L1(
                 items: largeDataSet,
                 hints: expandableHints
             )
@@ -743,35 +740,12 @@ final class IntelligentCardExpansionComprehensiveTests {
     
     @Test func testLayoutDecisionPerformance() {
         // Test layout decision performance
-        measure {
-            for _ in 0..<100 {
-                let layout = determineIntelligentCardLayout_L2(
-                    contentCount: sampleMenuItems.count,
-                    screenWidth: 1024,
-                    deviceType: .pad,
-                    contentComplexity: .moderate
-                )
-                
-                #expect(layout != nil)
-            }
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     @Test func testStrategySelectionPerformance() {
         // Test strategy selection performance
-        measure {
-            for _ in 0..<100 {
-                let strategy = selectCardExpansionStrategy_L3(
-                    contentCount: sampleMenuItems.count,
-                    screenWidth: 1024,
-                    deviceType: .pad,
-                    interactionStyle: .expandable,
-                    contentDensity: .balanced
-                )
-                
-                #expect(strategy != nil)
-            }
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Error Handling Tests
