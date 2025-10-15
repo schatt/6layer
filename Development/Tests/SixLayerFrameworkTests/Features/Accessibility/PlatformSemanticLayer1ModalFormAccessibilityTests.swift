@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -8,26 +7,16 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformSemanticLayer1.swift modal form functions
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformSemanticLayer1ModalFormAccessibilityTests {
+@MainActor
+final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseAccessibilityTestClass {
     
-    @MainActor
-    init() async throws {
-        try await super.setUp()
-        setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
-    @MainActor
     deinit {
-        try await super.tearDown()
-        cleanupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     // MARK: - Test Data Models
