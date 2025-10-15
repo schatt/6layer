@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  L3StrategySelectionTests.swift
 //  SixLayerFrameworkTests
@@ -826,8 +825,6 @@ final class L3StrategySelectionTests {
         let complexity = ContentComplexity.complex
         
         // When & Then
-        measure {
-            let strategy = selectCardLayoutStrategy_L3(
                 contentCount: contentCount,
                 screenWidth: screenWidth,
                 deviceType: deviceType,
@@ -843,13 +840,7 @@ final class L3StrategySelectionTests {
         let platform = SixLayerPlatform.iOS
         
         // When & Then
-        measure {
-            let strategy = platformOCRStrategy_L3(
-                textTypes: textTypes,
-                platform: platform
-            )
-            #expect(strategy != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     @Test func testSelectCardExpansionStrategy_L3_Performance() {
@@ -861,8 +852,6 @@ final class L3StrategySelectionTests {
         let contentDensity = ContentDensity.spacious
         
         // When & Then
-        measure {
-            let strategy = selectCardExpansionStrategy_L3(
                 contentCount: contentCount,
                 screenWidth: screenWidth,
                 deviceType: deviceType,
@@ -870,7 +859,7 @@ final class L3StrategySelectionTests {
                 contentDensity: contentDensity
             )
             #expect(strategy != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Automatic Accessibility Identifier Tests
@@ -920,4 +909,3 @@ final class L3StrategySelectionTests {
         .accessibilityLabel("Test view for card layout strategy")
         .accessibilityHint("Strategy: \(strategy.columns) columns, approach: \(strategy.approach.rawValue)")
     }
-}

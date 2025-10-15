@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  L2LayoutDecisionTests.swift
 //  SixLayerFrameworkTests
@@ -543,8 +542,6 @@ final class L2LayoutDecisionTests {
         let hints = PresentationHints()
         
         // When & Then
-        measure {
-            let decision = determineOptimalLayout_L2(
                 items: items,
                 hints: hints,
                 screenWidth: 375,
@@ -562,15 +559,7 @@ final class L2LayoutDecisionTests {
         let complexity = ContentComplexity.complex
         
         // When & Then
-        measure {
-            let decision = determineIntelligentCardLayout_L2(
-                contentCount: contentCount,
-                screenWidth: screenWidth,
-                deviceType: deviceType,
-                contentComplexity: complexity
-            )
-            #expect(decision != nil)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Helper Methods
@@ -633,6 +622,5 @@ final class L2LayoutDecisionTests {
                 placeholder: "Enter value \(index)",
                 isRequired: index % 2 == 0
             )
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
