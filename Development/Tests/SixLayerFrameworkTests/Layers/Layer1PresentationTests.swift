@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  Layer1PresentationTests.swift
 //  SixLayerFrameworkTests
@@ -400,8 +399,6 @@ final class Layer1PresentationTests {
         let hints = testHints
         
         // When: Measuring performance
-        measure {
-            _ = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
         }
     }
     
@@ -411,8 +408,5 @@ final class Layer1PresentationTests {
         let context = PresentationContext.form
         
         // When: Measuring performance
-        measure {
-            _ = platformPresentModalForm_L1(formType: formType, context: context)
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

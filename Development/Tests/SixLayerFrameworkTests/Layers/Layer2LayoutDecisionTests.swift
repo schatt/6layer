@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  Layer2LayoutDecisionTests.swift
 //  SixLayerFrameworkTests
@@ -521,13 +520,10 @@ final class Layer2LayoutDecisionTests {
         )
         
         // When: Measuring performance
-        measure {
-            _ = determineOptimalLayout_L2(
                 items: items,
                 hints: hints,
                 screenWidth: 1024,
                 deviceType: .mac
             )
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

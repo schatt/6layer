@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  Layer4FormContainerTests.swift
 //  SixLayerFrameworkTests
@@ -511,10 +510,6 @@ final class Layer4FormContainerTests {
         )
         
         // When: Measuring performance
-        measure {
-            _ = platformFormContainer_L4(strategy: strategy) {
-                self.testContent
-            }
         }
     }
     
@@ -533,10 +528,5 @@ final class Layer4FormContainerTests {
         )
         
         // When: Measuring performance
-        measure {
-            _ = platformFormContainer_L4(strategy: strategy) {
-                complexContent
-            }
-        }
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
