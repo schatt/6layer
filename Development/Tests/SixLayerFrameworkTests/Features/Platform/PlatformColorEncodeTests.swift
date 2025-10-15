@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  PlatformColorEncodeTests.swift
 //  SixLayerFrameworkTests
@@ -235,23 +234,6 @@ final class PlatformColorEncodeTests {
         }
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testPlatformColorEncodePerformance() {
-        // Given: A color to encode
-        let color = Color(red: 0.5, green: 0.5, blue: 0.5, opacity: 0.5)
-        
-        // When: Measuring encoding performance
-        measure {
-            for _ in 0..<100 {
-                do {
-                    _ = try platformColorEncode(color)
-                } catch {
-                    Issue.record("Performance test failed: \(error)")
-                }
-            }
-        }
-    }
     
     // MARK: - Memory Tests
     
@@ -286,7 +268,7 @@ final class PlatformColorEncodeTests {
 // MARK: - Helper Functions for Testing
 
 /// Decode a color from encoded data (for testing purposes)
-@Test private func testPlatformColorDecode(_ data: Data) throws -> Color? {
+private func testPlatformColorDecode(_ data: Data) throws -> Color? {
     do {
         #if os(iOS)
         if let uiColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {

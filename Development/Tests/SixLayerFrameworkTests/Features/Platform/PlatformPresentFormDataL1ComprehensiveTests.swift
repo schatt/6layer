@@ -80,7 +80,6 @@ final class PlatformPresentFormDataL1ComprehensiveTests {
         let expectedFieldCount: Int
         let shouldTestFieldTypes: Bool
         let shouldTestAccessibility: Bool
-        let shouldTestPerformance: Bool
     }
 
     /// Enhanced hints test configuration

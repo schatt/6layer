@@ -852,13 +852,6 @@ final class L3StrategySelectionTests {
         let contentDensity = ContentDensity.spacious
         
         // When & Then
-                contentCount: contentCount,
-                screenWidth: screenWidth,
-                deviceType: deviceType,
-                interactionStyle: interactionStyle,
-                contentDensity: contentDensity
-            )
-            #expect(strategy != nil)
         // Performance test removed - performance monitoring was removed from framework
     }
     
