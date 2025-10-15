@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -8,28 +7,16 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for ImageMetadataIntelligence.swift classes
 /// Ensures ImageMetadataIntelligence classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class ImageMetadataIntelligenceAccessibilityTests {
+@MainActor
+final class ImageMetadataIntelligenceAccessibilityTests: BaseAccessibilityTestClass {
     
-    init() async throws {
-        try await super.setUp()
-        await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
+    override init() {
+        super.init()
+        // Additional setup if needed
     }
     
     deinit {
-        try await super.tearDown()
-        await cleanupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-        }
+        // Cleanup handled by BaseAccessibilityTestClass
     }
     
     // MARK: - ImageMetadataIntelligence Tests
@@ -71,13 +58,3 @@ final class ImageMetadataIntelligenceAccessibilityTests {
     }
 }
 
-// MARK: - Test Extensions
-extension ImageMetadataIntelligenceAccessibilityTests {
-    override func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-}
