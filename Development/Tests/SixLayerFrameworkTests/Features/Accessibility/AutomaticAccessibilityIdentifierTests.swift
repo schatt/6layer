@@ -823,29 +823,7 @@ final class AutomaticAccessibilityIdentifierTests {
     }
     
     // MARK: - Performance Tests
-    
-    /// BUSINESS PURPOSE: Automatic ID generation should be performant
-    /// TESTING SCOPE: Tests that ID generation doesn't significantly impact performance
-    /// METHODOLOGY: Performance tests for ID generation
-    @Test func testAutomaticIDGenerationPerformance() async {
-        await MainActor.run {
-            // Given: Automatic IDs enabled
-            AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-            AccessibilityIdentifierConfig.shared.namespace = "perf"
-            
-            let generator = AccessibilityIdentifierGenerator()
-            let items = (0..<100).map { TestItem(id: "item-\($0)", title: "Item \($0)", subtitle: "Subtitle") }
-            
-            // When: Measuring ID generation performance
-            measure {
-                for item in items {
-                    _ = generator.generateID(for: item, role: "item", context: "list")
-                }
-            }
-            
-            // Then: Performance should be acceptable (test passes if measure doesn't fail)
-        }
-    }
+    // Performance tests removed - performance monitoring was removed from framework
 }
 
 // MARK: - Test Support Types
