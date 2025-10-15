@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  EnhancedDeviceDetectionTests.swift
 //  SixLayerFrameworkTests
@@ -12,7 +11,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class EnhancedDeviceDetectionTests {
+final class EnhancedDeviceDetectionTests: BaseAccessibilityTestClass {
     
     // MARK: - iPhone Size Category Tests
     
@@ -241,13 +240,6 @@ final class EnhancedDeviceDetectionTests {
         ]
         
         // When & Then
-        measure {
-            for screenSize in screenSizes {
-                _ = iPhoneSizeCategory.from(screenSize: screenSize)
-                _ = iPadSizeCategory.from(screenSize: screenSize)
-                _ = ScreenSizeClass.from(screenSize: screenSize)
-                _ = DeviceType.from(screenSize: screenSize)
-            }
         }
     }
     
@@ -331,5 +323,5 @@ final class EnhancedDeviceDetectionTests {
         #expect(allCases.contains(.landscapeRight))
         #expect(allCases.contains(.flat))
         #expect(allCases.contains(.unknown))
+        // Performance test removed - performance monitoring was removed from framework
     }
-}

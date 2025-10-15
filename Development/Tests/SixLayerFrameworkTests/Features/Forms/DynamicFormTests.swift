@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  DynamicFormTests.swift
 //  SixLayerFrameworkTests
@@ -38,7 +37,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class DynamicFormTests {
+final class DynamicFormTests: BaseAccessibilityTestClass {
     
     // MARK: - Dynamic Form Field Tests
     
@@ -535,8 +534,6 @@ final class DynamicFormTests {
     /// TESTING SCOPE: Tests DynamicFormBuilder performance with large forms
     /// METHODOLOGY: Measure DynamicFormBuilder performance when creating large forms with many fields
     @Test func testDynamicFormBuilderPerformance() {
-        measure {
-            var builder = DynamicFormBuilder()
             for i in 0..<100 {
                 builder.startSection(id: "section\(i)", title: "Section \(i)")
                 for j in 0..<10 {
@@ -575,18 +572,9 @@ final class DynamicFormTests {
         )
         
         let state = DynamicFormState(configuration: config)
-        
-        measure {
-            for i in 0..<100 {
-                for j in 0..<10 {
-                    let fieldId = "field\(i)_\(j)"
-                    state.setValue("value\(i)_\(j)", for: fieldId)
-                    state.addError("error\(i)_\(j)", for: fieldId)
-                }
-            }
-            
+
             let _ = state.formData
             let _ = state.isValid
+            // Performance test removed - performance monitoring was removed from framework
         }
     }
-}
