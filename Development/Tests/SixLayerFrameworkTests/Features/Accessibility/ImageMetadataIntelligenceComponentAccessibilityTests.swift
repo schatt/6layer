@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  ImageMetadataIntelligenceComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
@@ -18,7 +17,7 @@ final class ImageMetadataIntelligenceComponentAccessibilityTests {
     
     @Test func testImageMetadataIntelligenceGeneratesAccessibilityIdentifiers() async {
         // Given: ImageMetadataIntelligence
-        let testView = ImageMetadataIntelligence()
+        let testView = ImageMetadataIntelligenceComponent()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -33,7 +32,7 @@ final class ImageMetadataIntelligenceComponentAccessibilityTests {
 
 // MARK: - Mock Image Metadata Intelligence Components (Placeholder implementations)
 
-struct ImageMetadataIntelligence: View {
+struct ImageMetadataIntelligenceComponent: View {
     var body: some View {
         VStack {
             Text("Image Metadata Intelligence")
