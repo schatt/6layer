@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  CardActionButtonTests.swift
 //  SixLayerFrameworkTests
@@ -42,7 +41,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class CardActionButtonTests {
+final class CardActionButtonTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -423,22 +422,6 @@ final class CardActionButtonTests {
         
         // WHEN: Creating many card components with callbacks
         // THEN: Should complete within reasonable time
-        measure {
-            for item in manyItems.prefix(100) {
-                _ = ExpandableCardComponent(
-                    item: item,
-                    layoutDecision: layoutDecision,
-                    strategy: strategy,
-                    isExpanded: true,
-                    isHovered: false,
-                    onExpand: {},
-                    onCollapse: {},
-                    onHover: { _ in },
-                    onItemSelected: { _ in },
-                    onItemDeleted: { _ in },
-                    onItemEdited: { _ in }
-                )
-            }
         }
     }
     
@@ -633,8 +616,6 @@ final class CardActionButtonTests {
         // Test business logic: Accessibility should be properly configured
         #expect(expandableCard.isExpanded, "Card should be expanded for accessibility testing")
         #expect(expandableCard.onItemEdited != nil, "Edit callback should be available for accessibility")
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
-
-
 

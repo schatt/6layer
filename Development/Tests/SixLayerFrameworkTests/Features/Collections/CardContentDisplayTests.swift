@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -8,7 +7,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class CardContentDisplayTests {
+final class CardContentDisplayTests: BaseAccessibilityTestClass {
     
     // MARK: - Test Data
     
@@ -327,16 +326,6 @@ final class CardContentDisplayTests {
         
         // WHEN: Creating many card components
         // THEN: Should complete within reasonable time
-        measure {
-            for item in manyItems.prefix(100) {
-                _ = SimpleCardComponent(
-                    item: item,
-                    layoutDecision: layoutDecision,
-                    onItemSelected: nil,
-                    onItemDeleted: nil,
-                    onItemEdited: nil
-                )
-            }
         }
     }
     
@@ -362,5 +351,5 @@ final class CardContentDisplayTests {
         #expect(simpleCard != nil)
         #expect(listCard != nil)
         #expect(masonryCard != nil)
+        // Performance test removed - performance monitoring was removed from framework
     }
-}
