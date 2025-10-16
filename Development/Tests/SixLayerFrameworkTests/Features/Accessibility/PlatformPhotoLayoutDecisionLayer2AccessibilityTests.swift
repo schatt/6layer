@@ -32,7 +32,7 @@ class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        #expect(result != nil, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
+        // result is non-optional, so no need to check for nil
         #expect(result.width > 0, "Layout decision should have valid width")
         #expect(result.height > 0, "Layout decision should have valid height")
     }
@@ -56,7 +56,7 @@ class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        #expect(result != nil, "determineOptimalPhotoLayout_L2 should return a valid layout decision")
+        // result is non-optional, so no need to check for nil
         #expect(result.width > 0, "Layout decision should have valid width")
         #expect(result.height > 0, "Layout decision should have valid height")
     }

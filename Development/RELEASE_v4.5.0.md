@@ -28,8 +28,8 @@ let collectionView = GenericItemCollectionView(
 ```
 
 #### 2. **Intelligent Fallback System**
-- **Priority 1**: CardDisplayable protocol (if item conforms)
-- **Priority 2**: Custom property names specified in hints
+- **Priority 1**: Custom property names specified in hints (developer's explicit intent)
+- **Priority 2**: CardDisplayable protocol (if item conforms)
 - **Priority 3**: Reflection-based property discovery
 - **Priority 4**: Generic fallback ("Item")
 

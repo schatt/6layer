@@ -93,8 +93,8 @@ let view = GenericItemCollectionView(items: items, hints: nil)
 ### Fallback Priority System
 The CardDisplayHelper follows this priority order:
 
-1. **CardDisplayable protocol** (if item conforms)
-2. **Custom property names** specified in hints
+1. **Custom property names** specified in hints (developer's explicit intent)
+2. **CardDisplayable protocol** (if item conforms)
 3. **Reflection-based discovery** of common property names
 4. **Generic fallback** ("Item")
 

@@ -42,7 +42,7 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass 
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        #expect(result != nil, "platformOCRStrategy_L3 should return a valid strategy")
+        // result is non-optional, so no need to check for nil
         #expect(!result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
         #expect(!result.supportedLanguages.isEmpty, "Strategy should have supported languages")
     }
@@ -66,7 +66,7 @@ final class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass 
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        #expect(result != nil, "platformOCRStrategy_L3 should return a valid strategy")
+        // result is non-optional, so no need to check for nil
         #expect(!result.supportedTextTypes.isEmpty, "Strategy should have supported text types")
         #expect(!result.supportedLanguages.isEmpty, "Strategy should have supported languages")
     }

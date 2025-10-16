@@ -30,8 +30,7 @@ class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        #expect(captureStrategy != nil, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
-        #expect(displayStrategy != nil, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
+        // strategies are non-optional, so no need to check for nil
     }
     
     /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
@@ -51,8 +50,7 @@ class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass {
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
-        #expect(captureStrategy != nil, "selectPhotoCaptureStrategy_L3 should return a valid strategy")
-        #expect(displayStrategy != nil, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
+        // strategies are non-optional, so no need to check for nil
     }
 
 }

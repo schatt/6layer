@@ -35,12 +35,7 @@ public struct CardDisplayHelper {
     
     /// Extract meaningful title from any item using hints or reflection
     public static func extractTitle(from item: Any, hints: PresentationHints? = nil) -> String {
-        // First try CardDisplayable protocol
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardTitle
-        }
-        
-        // Check for configured title property in hints
+        // Priority 1: Check for configured title property in hints (developer's explicit intent)
         if let hints = hints,
            let titleProperty = hints.customPreferences["itemTitleProperty"],
            !titleProperty.isEmpty {
@@ -50,7 +45,12 @@ public struct CardDisplayHelper {
             }
         }
         
-        // Use reflection to find common title properties
+        // Priority 2: Try CardDisplayable protocol
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardTitle
+        }
+        
+        // Priority 3: Use reflection to find common title properties
         let mirror = Mirror(reflecting: item)
         
         // Look for common title property names (expanded list)
@@ -126,12 +126,7 @@ public struct CardDisplayHelper {
     
     /// Extract meaningful subtitle from any item using hints or reflection
     public static func extractSubtitle(from item: Any, hints: PresentationHints? = nil) -> String? {
-        // First try CardDisplayable protocol
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardSubtitle
-        }
-        
-        // Check for configured subtitle property in hints
+        // Priority 1: Check for configured subtitle property in hints (developer's explicit intent)
         if let hints = hints,
            let subtitleProperty = hints.customPreferences["itemSubtitleProperty"],
            !subtitleProperty.isEmpty {
@@ -141,7 +136,12 @@ public struct CardDisplayHelper {
             }
         }
         
-        // Use reflection to find common subtitle properties
+        // Priority 2: Try CardDisplayable protocol
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardSubtitle
+        }
+        
+        // Priority 3: Use reflection to find common subtitle properties
         let mirror = Mirror(reflecting: item)
         
         // Look for common subtitle property names (expanded list)
@@ -206,12 +206,7 @@ public struct CardDisplayHelper {
     
     /// Extract meaningful icon from any item using hints or reflection
     public static func extractIcon(from item: Any, hints: PresentationHints? = nil) -> String {
-        // First try CardDisplayable protocol
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardIcon ?? "star.fill"
-        }
-        
-        // Check for configured icon property in hints
+        // Priority 1: Check for configured icon property in hints (developer's explicit intent)
         if let hints = hints,
            let iconProperty = hints.customPreferences["itemIconProperty"],
            !iconProperty.isEmpty {
@@ -221,7 +216,12 @@ public struct CardDisplayHelper {
             }
         }
         
-        // Use reflection to find icon-related properties
+        // Priority 2: Try CardDisplayable protocol
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardIcon ?? "star.fill"
+        }
+        
+        // Priority 3: Use reflection to find icon-related properties
         let mirror = Mirror(reflecting: item)
         
         // Look for icon properties
@@ -241,12 +241,7 @@ public struct CardDisplayHelper {
     
     /// Extract meaningful color from any item using hints or reflection
     public static func extractColor(from item: Any, hints: PresentationHints? = nil) -> Color {
-        // First try CardDisplayable protocol
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardColor ?? .blue
-        }
-        
-        // Check for configured color property in hints
+        // Priority 1: Check for configured color property in hints (developer's explicit intent)
         if let hints = hints,
            let colorProperty = hints.customPreferences["itemColorProperty"],
            !colorProperty.isEmpty {
@@ -255,7 +250,12 @@ public struct CardDisplayHelper {
             }
         }
         
-        // Use reflection to find color-related properties
+        // Priority 2: Try CardDisplayable protocol
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardColor ?? .blue
+        }
+        
+        // Priority 3: Use reflection to find color-related properties
         let mirror = Mirror(reflecting: item)
         
         // Look for color properties

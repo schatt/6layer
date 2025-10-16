@@ -48,7 +48,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTe
             customPreferences: [:]
         )
         
-        let view = await platformPresentHierarchicalData_L1(
+        let view = platformPresentHierarchicalData_L1(
             items: [testData],
             hints: hints
         )
@@ -87,7 +87,7 @@ final class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTe
             customPreferences: [:]
         )
         
-        let view = await platformPresentHierarchicalData_L1(
+        let view = platformPresentHierarchicalData_L1(
             items: [testData],
             hints: hints
         )

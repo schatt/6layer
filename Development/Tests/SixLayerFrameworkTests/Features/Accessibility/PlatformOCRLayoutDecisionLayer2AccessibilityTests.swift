@@ -34,7 +34,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
         )
         
         // Verify test image is properly configured
-        #expect(testImage != nil, "Test image should be created")
+        // testImage is non-optional, so no need to check for nil
         
         let result = platformOCRLayout_L2(
             context: context
@@ -42,7 +42,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        #expect(result != nil, "platformOCRLayout_L2 should return a valid layout decision")
+        // result is non-optional, so no need to check for nil
         #expect(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
         #expect(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
     }
@@ -58,7 +58,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
         )
         
         // Verify test image is properly configured
-        #expect(testImage != nil, "Test image should be created")
+        // testImage is non-optional, so no need to check for nil
         
         let result = platformOCRLayout_L2(
             context: context
@@ -66,7 +66,7 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
         
         // When & Then
         // Layer 2 functions return data structures, not views, so we test the result structure
-        #expect(result != nil, "platformOCRLayout_L2 should return a valid layout decision")
+        // result is non-optional, so no need to check for nil
         #expect(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
         #expect(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
     }
