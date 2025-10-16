@@ -5,7 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class AutomaticAccessibilityIdentifiersComponentAccessibilityTests {
+class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Automatic Accessibility Identifier Component Tests
     

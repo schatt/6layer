@@ -8,25 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoStrategySelectionLayer3.swift functions
 /// Ensures Photo strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
-    
-    init() async throws {
-                await await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Photo Strategy Selection Tests
     
