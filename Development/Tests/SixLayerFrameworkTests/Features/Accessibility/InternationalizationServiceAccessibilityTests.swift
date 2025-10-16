@@ -8,25 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for InternationalizationService.swift classes
 /// Ensures InternationalizationService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class InternationalizationServiceAccessibilityTests {
-    
-    init() async throws {
-                await await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+class InternationalizationServiceAccessibilityTests: BaseAccessibilityTestClass {
             }
     
     // MARK: - InternationalizationService Tests
