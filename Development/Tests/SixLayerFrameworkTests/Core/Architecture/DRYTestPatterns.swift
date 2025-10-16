@@ -262,6 +262,7 @@ final class DRYTestPatterns {
         return SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil

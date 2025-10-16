@@ -392,6 +392,7 @@ final class IntelligentCardExpansionComprehensiveTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -433,6 +434,7 @@ final class IntelligentCardExpansionComprehensiveTests: BaseTestClass {
         let hoverCard = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: hoverStrategy,
             isExpanded: false,
             isHovered: false,
@@ -447,6 +449,7 @@ final class IntelligentCardExpansionComprehensiveTests: BaseTestClass {
         let contentRevealCard = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: contentRevealStrategy,
             isExpanded: false,
             isHovered: false,

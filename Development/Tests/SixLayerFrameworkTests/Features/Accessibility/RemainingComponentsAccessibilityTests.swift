@@ -44,6 +44,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         let view = ExpandableCardComponent(
             item: testItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -90,6 +91,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         let view = ExpandableCardComponent(
             item: testItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -452,6 +454,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
             item: testItem,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -483,6 +486,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         let view = SimpleCardComponent(
             item: testItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,

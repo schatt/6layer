@@ -170,6 +170,7 @@ final class MetalRenderingCrashTDDTests {
         let view = SimpleCardComponent(
             item: mockItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil

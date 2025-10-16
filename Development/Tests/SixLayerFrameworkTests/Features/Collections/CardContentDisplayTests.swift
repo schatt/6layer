@@ -63,6 +63,8 @@ final class CardContentDisplayTests: BaseTestClass {
         let card = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -82,6 +84,8 @@ final class CardContentDisplayTests: BaseTestClass {
         let card = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -99,6 +103,8 @@ final class CardContentDisplayTests: BaseTestClass {
         let card = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -124,6 +130,8 @@ final class CardContentDisplayTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -153,6 +161,8 @@ final class CardContentDisplayTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -175,7 +185,7 @@ final class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating a ListCardComponent
-        let card = ListCardComponent(item: item)
+        let card = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should display the item's title and subtitle instead of hardcoded text
         #expect(card != nil)
@@ -186,7 +196,7 @@ final class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[2] // This item has subtitle: nil
         
         // WHEN: Creating a ListCardComponent
-        let card = ListCardComponent(item: item)
+        let card = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should handle missing subtitle gracefully
         #expect(card != nil)
@@ -199,7 +209,7 @@ final class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating a MasonryCardComponent
-        let card = MasonryCardComponent(item: item)
+        let card = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should display the item's title instead of hardcoded text
         #expect(card != nil)
@@ -218,13 +228,15 @@ final class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: genericItems[0],
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: genericItems[0])
-        let masonryCard = MasonryCardComponent(item: genericItems[0])
+        let listCard = ListCardComponent(item: genericItems[0], hints: PresentationHints())
+        let masonryCard = MasonryCardComponent(item: genericItems[0], hints: PresentationHints())
         
         // THEN: Should display the generic item's title and subtitle
         #expect(simpleCard != nil)
@@ -243,13 +255,15 @@ final class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: vehicles[0],
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: vehicles[0])
-        let masonryCard = MasonryCardComponent(item: vehicles[0])
+        let listCard = ListCardComponent(item: vehicles[0], hints: PresentationHints())
+        let masonryCard = MasonryCardComponent(item: vehicles[0], hints: PresentationHints())
         
         // THEN: Should display the vehicle's name and description
         #expect(simpleCard != nil)
@@ -267,13 +281,15 @@ final class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: emptyItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: emptyItem)
-        let masonryCard = MasonryCardComponent(item: emptyItem)
+        let listCard = ListCardComponent(item: emptyItem, hints: PresentationHints())
+        let masonryCard = MasonryCardComponent(item: emptyItem, hints: PresentationHints())
         
         // THEN: Should handle empty strings gracefully
         #expect(simpleCard != nil)
@@ -296,13 +312,15 @@ final class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: longItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: longItem)
-        let masonryCard = MasonryCardComponent(item: longItem)
+        let listCard = ListCardComponent(item: longItem, hints: PresentationHints())
+        let masonryCard = MasonryCardComponent(item: longItem, hints: PresentationHints())
         
         // THEN: Should handle long text with proper truncation
         #expect(simpleCard != nil)
@@ -339,13 +357,15 @@ final class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: item)
-        let masonryCard = MasonryCardComponent(item: item)
+        let listCard = ListCardComponent(item: item, hints: PresentationHints())
+        let masonryCard = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should have proper accessibility labels
         #expect(simpleCard != nil)

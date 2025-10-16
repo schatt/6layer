@@ -116,6 +116,7 @@ final class CardActionButtonTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
@@ -164,6 +165,7 @@ final class CardActionButtonTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
@@ -199,6 +201,7 @@ final class CardActionButtonTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
@@ -222,6 +225,7 @@ final class CardActionButtonTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
@@ -247,6 +251,7 @@ final class CardActionButtonTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false, // Not expanded
             isHovered: false,
@@ -281,6 +286,8 @@ final class CardActionButtonTests: BaseTestClass {
         let card = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: selectedCallback,
             onItemDeleted: deleteCallback,
             onItemEdited: editCallback
@@ -297,7 +304,7 @@ final class CardActionButtonTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating a ListCardComponent
-        let card = ListCardComponent(item: item)
+        let card = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should be created successfully
         #expect(card != nil)
@@ -337,7 +344,7 @@ final class CardActionButtonTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating a MasonryCardComponent
-        let card = MasonryCardComponent(item: item)
+        let card = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should be created successfully
         #expect(card != nil)
@@ -353,6 +360,7 @@ final class CardActionButtonTests: BaseTestClass {
         let expandableCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -367,6 +375,8 @@ final class CardActionButtonTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -391,6 +401,7 @@ final class CardActionButtonTests: BaseTestClass {
         let expandableCard = ExpandableCardComponent(
             item: emptyItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -436,6 +447,7 @@ final class CardActionButtonTests: BaseTestClass {
         let expandableCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -489,6 +501,7 @@ final class CardActionButtonTests: BaseTestClass {
         let expandedCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -504,6 +517,7 @@ final class CardActionButtonTests: BaseTestClass {
         let collapsedCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -532,6 +546,7 @@ final class CardActionButtonTests: BaseTestClass {
         let fullCallbackCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -547,6 +562,7 @@ final class CardActionButtonTests: BaseTestClass {
         let editOnlyCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -562,6 +578,7 @@ final class CardActionButtonTests: BaseTestClass {
         let noCallbackCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -597,6 +614,7 @@ final class CardActionButtonTests: BaseTestClass {
         let expandableCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
