@@ -37,7 +37,6 @@ class DefaultAccessibilityIdentifierTests: BaseTestClass {
             .automaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully with accessibility identifier
-            #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "SixLayer.main.element.*", 
@@ -85,7 +84,7 @@ class DefaultAccessibilityIdentifierTests: BaseTestClass {
             let config = AccessibilityIdentifierConfig.shared
             
             // Verify config is properly configured
-            #expect(config != nil, "AccessibilityIdentifierConfig should be available")
+            // config is non-optional, so no need to check for nil
             
             // When: Using manual accessibility identifier
             let testView = Button(action: {}) {
@@ -94,7 +93,6 @@ class DefaultAccessibilityIdentifierTests: BaseTestClass {
             .accessibilityIdentifier("manual-test-button")
             
             // Then: The view should be created successfully with manual accessibility identifier
-            #expect(testView != nil, "View with manual accessibility identifier should be created successfully")
             #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedIdentifier: "manual-test-button", 
@@ -121,7 +119,7 @@ class DefaultAccessibilityIdentifierTests: BaseTestClass {
             .disableAutomaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully
-            #expect(testView != nil, "View with opt-out modifier should be created successfully")
+            // testView is non-optional, so no need to check for nil
             
             // Opt-out should work even with automatic identifiers enabled by default
         }

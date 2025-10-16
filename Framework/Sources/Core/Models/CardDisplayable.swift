@@ -33,11 +33,21 @@ public extension CardDisplayable {
 /// Uses reflection to extract meaningful content instead of generic "Item"
 public struct CardDisplayHelper {
     
-    /// Extract meaningful title from any item using reflection
-    public static func extractTitle(from item: Any) -> String {
+    /// Extract meaningful title from any item using hints or reflection
+    public static func extractTitle(from item: Any, hints: PresentationHints? = nil) -> String {
         // First try CardDisplayable protocol
         if let displayable = item as? CardDisplayable {
             return displayable.cardTitle
+        }
+        
+        // Check for configured title property in hints
+        if let hints = hints,
+           let titleProperty = hints.customPreferences["itemTitleProperty"],
+           !titleProperty.isEmpty {
+            if let value = extractPropertyValue(from: item, propertyName: titleProperty) as? String,
+               !value.isEmpty {
+                return value
+            }
         }
         
         // Use reflection to find common title properties
@@ -114,8 +124,8 @@ public struct CardDisplayHelper {
         return description.isEmpty ? "Item" : description
     }
     
-    /// Extract meaningful subtitle from any item using reflection
-    public static func extractSubtitle(from item: Any) -> String? {
+    /// Extract meaningful subtitle from any item using hints or reflection
+    public static func extractSubtitle(from item: Any, hints: PresentationHints? = nil) -> String? {
         // First try CardDisplayable protocol
         if let displayable = item as? CardDisplayable {
             return displayable.cardSubtitle

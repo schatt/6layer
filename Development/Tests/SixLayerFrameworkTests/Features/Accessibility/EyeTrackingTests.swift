@@ -151,7 +151,7 @@ final class EyeTrackingTests: BaseTestClass {
             // Note: In test environment, eye tracking may not be available
             // So we test that enable() was called (state may or may not change)
             // The important thing is that enable() doesn't crash
-            #expect(eyeTrackingManager.isEnabled != nil)
+            // isEnabled is non-optional, so we just verify the method was called
         }
     }
     
