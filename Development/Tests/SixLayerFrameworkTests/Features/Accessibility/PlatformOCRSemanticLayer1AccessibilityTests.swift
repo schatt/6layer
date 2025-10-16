@@ -11,7 +11,7 @@ import ViewInspector
 final class PlatformOCRSemanticLayer1AccessibilityTests: BaseAccessibilityTestClass {
     
     override init() async throws {
-        super.init()
+        try await super.init()
         // Additional setup if needed
     }
     

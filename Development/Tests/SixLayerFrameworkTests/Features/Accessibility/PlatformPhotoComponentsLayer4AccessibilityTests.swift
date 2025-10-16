@@ -26,19 +26,13 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    override func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let view = platformPhotoPicker_L4(
-            onImageSelected: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoPicker_L4(
+                onImageSelected: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -57,9 +51,11 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let view = platformPhotoPicker_L4(
-            onImageSelected: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoPicker_L4(
+                onImageSelected: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -80,10 +76,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on iOS
     @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let view = platformPhotoDisplay_L4(
-            image: PlatformImage(),
-            style: .thumbnail
-        )
+        let view = await MainActor.run {
+            platformPhotoDisplay_L4(
+                image: PlatformImage(),
+                style: .thumbnail
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -102,10 +100,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let view = platformPhotoDisplay_L4(
-            image: PlatformImage(),
-            style: .thumbnail
-        )
+        let view = await MainActor.run {
+            platformPhotoDisplay_L4(
+                image: PlatformImage(),
+                style: .thumbnail
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -152,10 +152,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
         // Given
         let testPhoto = PlatformImage()
         
-        let view = platformPhotoEditor_L4(
-            image: testPhoto,
-            onImageEdited: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoEditor_L4(
+                image: testPhoto,
+                onImageEdited: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {

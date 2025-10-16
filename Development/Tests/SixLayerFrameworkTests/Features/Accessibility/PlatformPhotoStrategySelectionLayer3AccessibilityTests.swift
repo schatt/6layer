@@ -27,22 +27,13 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
             await self?.cleanupTestEnvironment()
         }
     }
-            }
     
     // MARK: - Photo Strategy Selection Tests
     
     /// BUSINESS PURPOSE: Validates that photo strategy selection functions generate proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(

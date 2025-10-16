@@ -26,15 +26,7 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    override func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -44,11 +36,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = platformPhotoCapture_L1(
-            purpose: purpose,
-            context: context,
-            onImageCaptured: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoCapture_L1(
+                purpose: purpose,
+                context: context,
+                onImageCaptured: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -75,11 +69,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = platformPhotoCapture_L1(
-            purpose: purpose,
-            context: context,
-            onImageCaptured: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoCapture_L1(
+                purpose: purpose,
+                context: context,
+                onImageCaptured: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -108,11 +104,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = platformPhotoSelection_L1(
-            purpose: purpose,
-            context: context,
-            onImageSelected: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoSelection_L1(
+                purpose: purpose,
+                context: context,
+                onImageSelected: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -139,11 +137,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = platformPhotoSelection_L1(
-            purpose: purpose,
-            context: context,
-            onImageSelected: { _ in }
-        )
+        let view = await MainActor.run {
+            platformPhotoSelection_L1(
+                purpose: purpose,
+                context: context,
+                onImageSelected: { _ in }
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -173,11 +173,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
         )
         let testImage = PlatformImage()
         
-        let view = platformPhotoDisplay_L1(
-            purpose: purpose,
-            context: context,
-            image: testImage
-        )
+        let view = await MainActor.run {
+            platformPhotoDisplay_L1(
+                purpose: purpose,
+                context: context,
+                image: testImage
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
@@ -205,11 +207,13 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
         )
         let testImage = PlatformImage()
         
-        let view = platformPhotoDisplay_L1(
-            purpose: purpose,
-            context: context,
-            image: testImage
-        )
+        let view = await MainActor.run {
+            platformPhotoDisplay_L1(
+                purpose: purpose,
+                context: context,
+                image: testImage
+            )
+        }
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {

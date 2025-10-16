@@ -27,22 +27,13 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
             await self?.cleanupTestEnvironment()
         }
     }
-            }
     
     // MARK: - Photo Layout Decision Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
