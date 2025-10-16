@@ -8,25 +8,10 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for OCRService.swift classes
 /// Ensures OCRService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class OCRServiceAccessibilityTests {
+class OCRServiceAccessibilityTests: BaseAccessibilityTestClass {
     
     init() async throws {
-                await await setupTestEnvironment()
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.resetToDefaults()
-            config.enableAutoIDs = true
-            config.namespace = "SixLayer"
-            config.mode = .automatic
-            config.enableDebugLogging = false
-        }
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+        try await super.init()
     }
     
     // MARK: - OCRService Tests
@@ -34,15 +19,7 @@ final class OCRServiceAccessibilityTests {
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let service = OCRService()
         
@@ -116,16 +93,5 @@ final class OCRServiceAccessibilityTests {
             #expect(config.enableAutoIDs, "OCRServiceFactory should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "OCRServiceFactory should use correct namespace")
         }
-    }
-
-
-// MARK: - Test Extensions
-extension OCRServiceAccessibilityTests {
-    private func setupTestEnvironment() async {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        TestSetupUtilities.shared.setupTestingEnvironment()
     }
 }

@@ -52,4 +52,4 @@ class EyeTrackingManagerAccessibilityTests: BaseAccessibilityTestClass {
             #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
         }
     }
-
+}

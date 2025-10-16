@@ -360,6 +360,7 @@ final class PlatformPresentContentL1Tests {
         let hints = createTestHints()
         
         // When & Then - Actually render the view to measure real SwiftUI performance
+        let view = platformPresentContent_L1(
                 content: content,
                 hints: hints
             )
