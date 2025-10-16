@@ -19,7 +19,7 @@ struct TestImage {
 }
 
 @MainActor
-final class SharedComponentAccessibilityTests {
+class SharedComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Shared Component Tests
     

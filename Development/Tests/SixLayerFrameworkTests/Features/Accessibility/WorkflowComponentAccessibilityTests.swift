@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class WorkflowComponentAccessibilityTests {
+class WorkflowComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Workflow Component Tests
     
