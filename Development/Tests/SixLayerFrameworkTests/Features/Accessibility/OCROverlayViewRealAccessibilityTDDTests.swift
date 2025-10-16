@@ -9,7 +9,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
 @MainActor
-class OCROverlayViewRealAccessibilityTDDTests: BaseAccessibilityTestClass {
+class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
     
     init() async throws {
         try await super.init()

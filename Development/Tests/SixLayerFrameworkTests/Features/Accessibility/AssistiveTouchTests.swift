@@ -18,7 +18,7 @@ import SwiftUI
  * using RuntimeCapabilityDetection mock framework.
  */
 @MainActor
-final class AssistiveTouchTests: BaseAccessibilityTestClass {
+final class AssistiveTouchTests: BaseTestClass {
     
     // MARK: - AssistiveTouch Manager Tests
     

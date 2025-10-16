@@ -31,7 +31,7 @@ import SwiftUI
 /// Comprehensive tests for OCR functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
-class OCRComprehensiveTests: BaseAccessibilityTestClass {
+class OCRComprehensiveTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

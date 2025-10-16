@@ -7,7 +7,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class CardContentDisplayTests: BaseAccessibilityTestClass {
+final class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Test Data
     

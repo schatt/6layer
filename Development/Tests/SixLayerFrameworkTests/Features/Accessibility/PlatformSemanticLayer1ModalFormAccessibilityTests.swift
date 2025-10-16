@@ -8,7 +8,7 @@ import ViewInspector
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseAccessibilityTestClass {
+final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
     
     
     // MARK: - Test Data Models

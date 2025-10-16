@@ -4,7 +4,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PhotoSemanticLayerTests: BaseAccessibilityTestClass {
+final class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Layer 1: Semantic Photo Functions Tests
     

@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All Layer 1 presentation functions
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @MainActor
-class Layer1AccessibilityTests: BaseAccessibilityTestClass {
+class Layer1AccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

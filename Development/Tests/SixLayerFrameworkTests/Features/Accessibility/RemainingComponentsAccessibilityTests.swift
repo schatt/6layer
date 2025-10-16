@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: Layer 4 components and other remaining components in the framework
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-class RemainingComponentsAccessibilityTests: BaseAccessibilityTestClass {
+class RemainingComponentsAccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

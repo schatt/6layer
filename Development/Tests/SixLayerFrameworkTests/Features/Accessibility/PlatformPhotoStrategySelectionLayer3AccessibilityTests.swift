@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoStrategySelectionLayer3.swift functions
 /// Ensures Photo strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseAccessibilityTestClass {
+class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass {
     
     // MARK: - Photo Strategy Selection Tests
     

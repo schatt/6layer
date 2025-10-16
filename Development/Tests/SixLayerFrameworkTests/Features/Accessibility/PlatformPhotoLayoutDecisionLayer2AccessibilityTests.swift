@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoLayoutDecisionLayer2.swift functions
 /// Ensures Photo layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: BaseAccessibilityTestClass {
+class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
     
     // MARK: - Photo Layout Decision Tests
     

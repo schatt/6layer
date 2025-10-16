@@ -11,7 +11,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class EnhancedDeviceDetectionTests: BaseAccessibilityTestClass {
+final class EnhancedDeviceDetectionTests: BaseTestClass {
     
     // MARK: - iPhone Size Category Tests
     

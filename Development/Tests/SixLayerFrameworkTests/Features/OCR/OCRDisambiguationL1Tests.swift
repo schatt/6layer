@@ -29,7 +29,7 @@ import SwiftUI
 /// Tests for Layer 1 OCR disambiguation functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR disambiguation functionality
 @MainActor
-class OCRDisambiguationL1Tests: BaseAccessibilityTestClass {
+class OCRDisambiguationL1Tests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

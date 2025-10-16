@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ModalFormL1Tests: BaseAccessibilityTestClass {
+final class ModalFormL1Tests: BaseTestClass {
     
     // MARK: - Test Data
     

@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PhotoSelectionL1Tests: BaseAccessibilityTestClass {
+final class PhotoSelectionL1Tests: BaseTestClass {
     
     // MARK: - Test Data
     

@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class OCROverlayTests: BaseAccessibilityTestClass {
+final class OCROverlayTests: BaseTestClass {
     
     var testImage: PlatformImage!
     var testOCRResult: OCRResult!

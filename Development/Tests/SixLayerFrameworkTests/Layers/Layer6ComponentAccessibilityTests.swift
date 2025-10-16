@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class Layer6ComponentAccessibilityTests: BaseAccessibilityTestClass {
+class Layer6ComponentAccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

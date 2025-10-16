@@ -5,7 +5,7 @@ import SwiftUI
 
 /// Tests for Switch Control accessibility features
 @MainActor
-final class SwitchControlTests: BaseAccessibilityTestClass {
+final class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control Manager Tests
     

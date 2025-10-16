@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for ImageProcessingPipeline.swift classes
 /// Ensures ImageProcessingPipeline classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class ImageProcessingPipelineAccessibilityTests: BaseAccessibilityTestClass {
+class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             }
     
     // MARK: - ImageProcessor Tests

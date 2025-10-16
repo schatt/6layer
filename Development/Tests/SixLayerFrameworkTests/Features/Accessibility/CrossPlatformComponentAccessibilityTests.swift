@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class CrossPlatformComponentAccessibilityTests: BaseAccessibilityTestClass {
+class CrossPlatformComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Cross-Platform Component Tests
     

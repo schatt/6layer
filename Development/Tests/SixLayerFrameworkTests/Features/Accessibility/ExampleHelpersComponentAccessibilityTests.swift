@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class ExampleHelpersComponentAccessibilityTests: BaseAccessibilityTestClass {
+class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - ExampleProjectCard Tests
     

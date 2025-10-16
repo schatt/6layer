@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for MaterialAccessibilityManager.swift classes
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class MaterialAccessibilityManagerAccessibilityTests: BaseAccessibilityTestClass {
+class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

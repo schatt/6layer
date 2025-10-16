@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoSemanticLayer1.swift functions
 /// Ensures Photo semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTestClass {
+final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

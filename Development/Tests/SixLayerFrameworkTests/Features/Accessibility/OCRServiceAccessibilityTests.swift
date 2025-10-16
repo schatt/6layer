@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for OCRService.swift classes
 /// Ensures OCRService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class OCRServiceAccessibilityTests: BaseAccessibilityTestClass {
+class OCRServiceAccessibilityTests: BaseTestClass {
         
     // MARK: - OCRService Tests
     

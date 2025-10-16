@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class DynamicFormViewComponentAccessibilityTests: BaseAccessibilityTestClass {
+class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFormView Tests
     

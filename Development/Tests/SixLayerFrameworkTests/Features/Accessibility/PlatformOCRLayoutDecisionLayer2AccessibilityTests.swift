@@ -8,7 +8,7 @@ import ViewInspector
 /// Ensures OCR layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseAccessibilityTestClass {
+final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

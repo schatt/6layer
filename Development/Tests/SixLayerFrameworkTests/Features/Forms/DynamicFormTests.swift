@@ -37,7 +37,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class DynamicFormTests: BaseAccessibilityTestClass {
+final class DynamicFormTests: BaseTestClass {
     
     // MARK: - Dynamic Form Field Tests
     

@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AppleHIGComplianceManager.swift classes
 /// Ensures AppleHIGComplianceManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class AppleHIGComplianceManagerAccessibilityTests: BaseAccessibilityTestClass {
+class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

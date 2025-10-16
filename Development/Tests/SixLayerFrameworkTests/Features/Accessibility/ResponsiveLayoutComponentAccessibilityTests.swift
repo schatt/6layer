@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class ResponsiveLayoutComponentAccessibilityTests: BaseAccessibilityTestClass {
+class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - ResponsiveGrid Tests
     

@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
-final class AccessibilityIdentifiersDebugTests: BaseAccessibilityTestClass {
+final class AccessibilityIdentifiersDebugTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

@@ -1,10 +1,10 @@
 import Testing
 @testable import SixLayerFramework
 
-/// Base class for accessibility tests following DRY principle
-/// Provides common setup and teardown functionality for all accessibility test classes
+/// Base class for all tests following DRY principle
+/// Provides common setup and teardown functionality for all test classes
 @MainActor
-open class BaseAccessibilityTestClass {
+open class BaseTestClass {
     
     // MARK: - Test Setup
     
@@ -35,5 +35,5 @@ open class BaseAccessibilityTestClass {
             await self?.cleanupTestEnvironment()
         }
     }
-    }
+}
 

@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for InternationalizationService.swift classes
 /// Ensures InternationalizationService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class InternationalizationServiceAccessibilityTests: BaseAccessibilityTestClass {
+class InternationalizationServiceAccessibilityTests: BaseTestClass {
             }
     
     // MARK: - InternationalizationService Tests

@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for EyeTrackingManager.swift classes
 /// Ensures EyeTrackingManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class EyeTrackingManagerAccessibilityTests: BaseAccessibilityTestClass {
+class EyeTrackingManagerAccessibilityTests: BaseTestClass {
     
     override init() async throws {
         try await super.init()

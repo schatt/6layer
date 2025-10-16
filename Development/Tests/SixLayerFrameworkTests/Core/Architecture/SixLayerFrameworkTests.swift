@@ -3,7 +3,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class SixLayerFrameworkTests: BaseAccessibilityTestClass {
+final class SixLayerFrameworkTests: BaseTestClass {
     
     override init() async throws {
         super.init()
