@@ -8,10 +8,10 @@ import ViewInspector
 /// Ensures ImageMetadataIntelligence classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-final class ImageMetadataIntelligenceAccessibilityTests: BaseTestClass {
+class ImageMetadataIntelligenceAccessibilityTests: BaseTestClass {
     
     override init() async throws {
-        super.init()
+        try await super.init()
         // Additional setup if needed
     }
     

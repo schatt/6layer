@@ -8,10 +8,11 @@ import ViewInspector
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
 @MainActor
-final class FrameworkComponentAccessibilityBaselineTests {
+class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {
     
     init() async throws {
-                let config = AccessibilityIdentifierConfig.shared
+        try await super.init()
+        let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "FrameworkTest"
         config.mode = .automatic
