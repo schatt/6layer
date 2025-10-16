@@ -9,11 +9,7 @@ import ViewInspector
 /// Ensures OCRService classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 class OCRServiceAccessibilityTests: BaseAccessibilityTestClass {
-    
-    init() async throws {
-        try await super.init()
-    }
-    
+        
     // MARK: - OCRService Tests
     
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
