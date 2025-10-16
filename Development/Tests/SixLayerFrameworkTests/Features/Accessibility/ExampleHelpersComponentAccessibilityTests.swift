@@ -67,11 +67,10 @@ class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
     
     @Test func testExampleProjectFormFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test form field data
-        let formFieldData = ExampleFormFieldData(
-            id: "example-field",
+        let formFieldData = FormFieldData(
             label: "Example Form Field",
-            value: "",
-            type: .text
+            placeholder: "Enter text here",
+            value: ""
         )
         
         // When: Creating ExampleProjectFormField
@@ -86,41 +85,6 @@ class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
         
         #expect(hasAccessibilityID, "ExampleProjectFormField should generate accessibility identifiers")
     }
-}
-
-// MARK: - Test Data Types
-
-struct ExampleProjectData {
-    let id: String
-    let title: String
-    let description: String
-    let status: ProjectStatus
-}
-
-enum ProjectStatus {
-    case active
-    case inactive
-    case completed
-    case archived
-}
-
-struct ExampleProjectItem: Identifiable {
-    let id: String
-    let title: String
-}
-
-struct ExampleFormFieldData {
-    let id: String
-    let label: String
-    let value: String
-    let type: ExampleFormFieldType
-}
-
-enum ExampleFormFieldType {
-    case text
-    case number
-    case email
-    case password
 }
 
 

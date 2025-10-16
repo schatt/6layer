@@ -29,6 +29,24 @@ public struct ExampleProjectCard: View {
         self.action = action
     }
     
+    /// Convenience initializer that takes project data
+    public init(project: ExampleProjectData) {
+        self.title = project.title
+        self.subtitle = project.description
+        self.content = AnyView(
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Status: \(project.status.rawValue)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Text("ID: \(project.id)")
+                    .font(.caption2)
+                    .foregroundColor(.tertiary)
+            }
+        )
+        self.action = nil
+    }
+    
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
@@ -99,6 +117,13 @@ public struct ExampleProjectFormField: View {
         self._text = text
     }
     
+    /// Convenience initializer that takes form field data
+    public init(field: FormFieldData) {
+        self.label = field.label
+        self.placeholder = field.placeholder
+        self._text = Binding.constant(field.value)
+    }
+    
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(label)
@@ -137,6 +162,41 @@ public struct ExampleProjectItem: Identifiable {
         self.title = title
         self.description = description
         self.isActive = isActive
+    }
+}
+
+/// Example project data model for testing
+public struct ExampleProjectData: Identifiable {
+    public let id: String
+    public let title: String
+    public let description: String
+    public let status: ProjectStatus
+    
+    public init(id: String, title: String, description: String, status: ProjectStatus) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.status = status
+    }
+}
+
+/// Project status enum
+public enum ProjectStatus: String, CaseIterable {
+    case active = "active"
+    case inactive = "inactive"
+    case pending = "pending"
+}
+
+/// Form field data model for testing
+public struct FormFieldData {
+    public let label: String
+    public let placeholder: String
+    public let value: String
+    
+    public init(label: String, placeholder: String, value: String) {
+        self.label = label
+        self.placeholder = placeholder
+        self.value = value
     }
 }
 
