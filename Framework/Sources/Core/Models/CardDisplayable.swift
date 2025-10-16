@@ -43,8 +43,15 @@ public struct CardDisplayHelper {
         // Use reflection to find common title properties
         let mirror = Mirror(reflecting: item)
         
-        // Look for common title property names
-        let titleProperties = ["title", "name", "label", "text", "heading", "caption"]
+        // Look for common title property names (expanded list)
+        let titleProperties = [
+            "title", "name", "label", "text", "heading", "caption", 
+            "displayName", "displayTitle", "itemName", "itemTitle",
+            "content", "value", "description", "summary", "info",
+            "identifier", "id", "key", "primary", "main"
+        ]
+        
+        // First pass: look for exact property name matches
         for child in mirror.children {
             if let label = child.label,
                titleProperties.contains(label.lowercased()),
@@ -54,13 +61,46 @@ public struct CardDisplayHelper {
             }
         }
         
-        // Look for String properties that might be titles
+        // Second pass: look for any String property that might be meaningful
+        var stringCandidates: [(String, String)] = []
         for child in mirror.children {
             if let value = child.value as? String,
                !value.isEmpty,
-               value.count < 100 { // Reasonable title length
-                return value
+               value.count < 200, // Reasonable length
+               !value.contains("@"), // Skip email-like strings
+               !value.contains("://"), // Skip URLs
+               !value.hasPrefix("0x"), // Skip memory addresses
+               value != "Optional" { // Skip Swift optional descriptions
+                
+                let label = child.label ?? "unnamed"
+                stringCandidates.append((label, value))
             }
+        }
+        
+        // Sort candidates by preference (shorter labels first, then by length)
+        stringCandidates.sort { first, second in
+            let firstLabel = first.0.lowercased()
+            let secondLabel = second.0.lowercased()
+            
+            // Prefer properties that sound like titles
+            let firstIsTitleLike = titleProperties.contains(where: { firstLabel.contains($0) })
+            let secondIsTitleLike = titleProperties.contains(where: { secondLabel.contains($0) })
+            
+            if firstIsTitleLike && !secondIsTitleLike { return true }
+            if !firstIsTitleLike && secondIsTitleLike { return false }
+            
+            // Then prefer shorter labels
+            if first.0.count != second.0.count {
+                return first.0.count < second.0.count
+            }
+            
+            // Finally prefer shorter values
+            return first.1.count < second.1.count
+        }
+        
+        // Return the best candidate
+        if let bestCandidate = stringCandidates.first {
+            return bestCandidate.1
         }
         
         // Last resort: use String(describing:) but clean it up
@@ -84,8 +124,14 @@ public struct CardDisplayHelper {
         // Use reflection to find common subtitle properties
         let mirror = Mirror(reflecting: item)
         
-        // Look for common subtitle property names
-        let subtitleProperties = ["subtitle", "description", "detail", "summary", "info"]
+        // Look for common subtitle property names (expanded list)
+        let subtitleProperties = [
+            "subtitle", "description", "detail", "summary", "info",
+            "secondary", "secondaryText", "detailText", "caption",
+            "explanation", "notes", "comment", "message"
+        ]
+        
+        // First pass: look for exact property name matches
         for child in mirror.children {
             if let label = child.label,
                subtitleProperties.contains(label.lowercased()),
@@ -95,7 +141,47 @@ public struct CardDisplayHelper {
             }
         }
         
-        return nil
+        // Second pass: look for String properties that might be subtitles
+        // (longer strings that weren't used as titles)
+        var subtitleCandidates: [(String, String)] = []
+        for child in mirror.children {
+            if let value = child.value as? String,
+               !value.isEmpty,
+               value.count > 10, // Subtitles should be longer than titles
+               value.count < 300, // But not too long
+               !value.contains("@"), // Skip email-like strings
+               !value.contains("://"), // Skip URLs
+               !value.hasPrefix("0x"), // Skip memory addresses
+               value != "Optional" { // Skip Swift optional descriptions
+                
+                let label = child.label ?? "unnamed"
+                subtitleCandidates.append((label, value))
+            }
+        }
+        
+        // Sort candidates by preference
+        subtitleCandidates.sort { first, second in
+            let firstLabel = first.0.lowercased()
+            let secondLabel = second.0.lowercased()
+            
+            // Prefer properties that sound like subtitles
+            let firstIsSubtitleLike = subtitleProperties.contains(where: { firstLabel.contains($0) })
+            let secondIsSubtitleLike = subtitleProperties.contains(where: { secondLabel.contains($0) })
+            
+            if firstIsSubtitleLike && !secondIsSubtitleLike { return true }
+            if !firstIsSubtitleLike && secondIsSubtitleLike { return false }
+            
+            // Then prefer shorter labels
+            if first.0.count != second.0.count {
+                return first.0.count < second.0.count
+            }
+            
+            // Finally prefer shorter values
+            return first.1.count < second.1.count
+        }
+        
+        // Return the best candidate
+        return subtitleCandidates.first?.1
     }
     
     /// Extract meaningful icon from any item using reflection

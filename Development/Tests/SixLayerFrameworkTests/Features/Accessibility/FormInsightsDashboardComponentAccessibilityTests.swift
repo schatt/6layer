@@ -25,7 +25,7 @@ class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating FormInsightsDashboard
-        let view = FormInsightsDashboard(analytics: analyticsData)
+        let view = FormInsightsDashboard()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -48,7 +48,12 @@ class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating OverviewCard
-        let view = OverviewCard(data: overviewData)
+        let view = OverviewCard(
+            title: "Form Overview",
+            value: "100",
+            icon: "doc.text",
+            color: .blue
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -70,7 +75,10 @@ class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating SectionHeader
-        let view = SectionHeader(data: headerData)
+        let view = SectionHeader(
+            title: "Performance Metrics",
+            icon: "chart.bar.fill"
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -94,7 +102,11 @@ class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating PerformanceMetricRow
-        let view = PerformanceMetricRow(metric: metricData)
+        let view = PerformanceMetricRow(
+            label: "Completion Rate",
+            value: "85%",
+            status: .good
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
