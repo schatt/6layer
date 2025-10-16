@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 
 //
 //  Layer2LayoutDecisionTests.swift
