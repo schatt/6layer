@@ -47,7 +47,19 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating ExpandableCardComponent
-        let view = ExpandableCardComponent(item: testItem, hints: hints)
+        let view = ExpandableCardComponent(
+            item: testItem,
+            layoutDecision: .grid,
+            strategy: .manual,
+            isExpanded: false,
+            isHovered: false,
+            onExpand: { },
+            onCollapse: { },
+            onHover: { _ in },
+            onItemSelected: { _ in },
+            onItemDeleted: { _ in },
+            onItemEdited: { _ in }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -70,7 +82,12 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating CoverFlowCollectionView
-        let view = CoverFlowCollectionView(items: testItems, hints: hints)
+        let view = CoverFlowCollectionView(
+            items: testItems,
+            onItemSelected: { _ in },
+            onItemDeleted: { _ in },
+            onItemEdited: { _ in }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -182,7 +199,13 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating AdaptiveCollectionView
-        let view = AdaptiveCollectionView(items: testItems, hints: hints)
+        let view = AdaptiveCollectionView(
+            items: testItems,
+            layoutDecision: .grid,
+            onItemSelected: { _ in },
+            onItemDeleted: { _ in },
+            onItemEdited: { _ in }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -202,7 +225,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating SimpleCardComponent
-        let view = SimpleCardComponent(item: testItem, hints: hints)
+        let view = SimpleCardComponent(item: testItem)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -222,7 +245,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating ListCardComponent
-        let view = ListCardComponent(item: testItem, hints: hints)
+        let view = ListCardComponent(item: testItem)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -242,7 +265,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating MasonryCardComponent
-        let view = MasonryCardComponent(item: testItem, hints: hints)
+        let view = MasonryCardComponent(item: testItem)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -261,8 +284,8 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testNativeExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Native Card")
-        let expansionStrategy = ExpansionStrategy.automatic
-        let platformConfig = MockCardExpansionPlatformConfig()
+        let expansionStrategy = ExpansionStrategy.manual
+        let platformConfig = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -290,7 +313,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testIOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "iOS Card")
-        let expansionStrategy = ExpansionStrategy.automatic
+        let expansionStrategy = ExpansionStrategy.manual
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -319,7 +342,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testMacOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "macOS Card")
-        let expansionStrategy = ExpansionStrategy.automatic
+        let expansionStrategy = ExpansionStrategy.manual
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -348,7 +371,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testVisionOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "visionOS Card")
-        let expansionStrategy = ExpansionStrategy.automatic
+        let expansionStrategy = ExpansionStrategy.manual
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -377,7 +400,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testPlatformAwareExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Platform Aware Card")
-        let expansionStrategy = ExpansionStrategy.automatic
+        let expansionStrategy = ExpansionStrategy.manual
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -407,12 +430,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
 struct CardTestItem: Identifiable {
     let id: String
     let title: String
-}
-
-enum ExpansionStrategy {
-    case automatic
-    case manual
-    case hybrid
 }
 
 struct MockCardExpansionPlatformConfig {
