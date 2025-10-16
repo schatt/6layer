@@ -1,18 +1,101 @@
 # SixLayer Framework Testing Rules - MANDATORY
 
-## Core Principle
+## Core Principles
 
-**MANDATORY**: Every function must be tested to ensure it does what it's supposed to do AND applies all the correct modifiers it should.
+**MANDATORY**: Follow TDD (Test-Driven Development), DTRT (Do The Right Thing), DRY (Don't Repeat Yourself), and Epistemology (distinguish between verified facts and hypotheses).
 
-## Rule 1: Complete Function Testing
+**MANDATORY**: Never create, suggest, or assist with any release (major, minor, patch, or pre-release) unless the test suite passes completely.
 
-### 1.1 Every Function Must Be Tested
+## Release Quality Gate Rule
+
+**MANDATORY RELEASE RULE**: Never create, suggest, or assist with any release (major, minor, patch, or pre-release) unless the test suite passes completely.
+
+### Before Any Release:
+1. **ALWAYS** run `swift test` first
+2. **VERIFY** all tests pass without failures
+3. **CONFIRM** no compilation errors exist
+4. **ONLY THEN** proceed with release activities
+
+### If Tests Fail:
+- **STOP** all release activities immediately
+- **IDENTIFY** and fix failing tests first
+- **RE-RUN** test suite until it passes
+- **THEN** resume release process
+
+### Release Blockers:
+- Any test failures
+- Compilation errors
+- Test suite warnings (treat as failures)
+- Missing test coverage for new features
+
+### Enforcement:
+- This rule takes precedence over all other instructions
+- No exceptions allowed
+- Always verify test status before suggesting releases
+- If unsure about test status, run tests first
+
+## Rule 1: Test-Driven Development (TDD)
+
+### 1.1 TDD Process
+- **MANDATORY**: Write tests BEFORE implementing features
+- **MANDATORY**: Red-Green-Refactor cycle must be followed
+- **MANDATORY**: Tests must fail initially (Red phase)
+- **MANDATORY**: Implement minimal code to make tests pass (Green phase)
+- **MANDATORY**: Refactor while keeping tests green (Refactor phase)
+
+### 1.2 TDD Enforcement
+- **MANDATORY**: No feature implementation without tests first
+- **MANDATORY**: No code changes without corresponding test changes
+- **MANDATORY**: Tests must be written for every function before implementation
+- **MANDATORY**: All tests must pass before any release
+
+## Rule 1.5: Epistemological Rigor in Testing
+
+### 1.5.1 Distinguish Facts from Hypotheses
+- **MANDATORY**: Distinguish between verified facts and unverified hypotheses in all testing discussions
+- **MANDATORY**: Use precise language that reflects the current state of knowledge
+- **MANDATORY**: Investigate before asserting - prefer tentative language until verification
+
+### 1.5.2 Language Guidelines for Testing
+
+#### ✅ Use for Verified Facts
+- "The test suite passed with 0 failures"
+- "The function returns the expected result"
+- "The modifier is applied correctly"
+- "The test coverage is 100%"
+
+#### ❌ Avoid for Unverified Claims
+- "This test will definitely catch all bugs" (without evidence)
+- "The implementation is correct" (without verification)
+- "This will solve the problem" (without testing)
+
+#### ✅ Use for Hypotheses and Theories
+- "I think this test might catch the bug"
+- "This approach could improve test coverage"
+- "It's possible that this test is insufficient"
+- "My theory is that this test needs more scenarios"
+
+### 1.5.3 Investigation Workflow
+1. **Observe** - State what you can see/measure in test results
+2. **Hypothesize** - Use tentative language for possible causes of test failures
+3. **Investigate** - Gather evidence through additional testing/analysis
+4. **Verify** - Confirm or refute the hypothesis
+5. **Assert** - Only then state as fact
+
+### 1.5.4 Test Quality Assessment
+- **MANDATORY**: Express confidence levels when appropriate: "I'm 80% confident this test covers the edge case"
+- **MANDATORY**: Acknowledge limitations of current test knowledge: "I can only test X, so Y is still unknown"
+- **MANDATORY**: Distinguish between partial and complete test coverage: "I know the happy path is tested but not the error cases"
+
+## Rule 2: Complete Function Testing
+
+### 2.1 Every Function Must Be Tested
 - **MANDATORY**: Every public function in the framework must have comprehensive tests
 - **MANDATORY**: Every function must be tested for its complete functionality
 - **MANDATORY**: Every function must be tested for all modifiers it applies
 - **MANDATORY**: No function can be released without complete test coverage
 
-### 1.2 Function Behavior Testing
+### 2.2 Function Behavior Testing
 - **MANDATORY**: Tests must validate actual behavior, not just function existence
 - **MANDATORY**: Tests must fail when functionality is broken
 - **MANDATORY**: Tests must pass when functionality works correctly

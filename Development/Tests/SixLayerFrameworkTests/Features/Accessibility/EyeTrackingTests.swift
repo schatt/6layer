@@ -488,4 +488,4 @@ final class EyeTrackingTests: BaseTestClass {
             // Test that manager can be created with different dwell times
         }
     }
-}
+

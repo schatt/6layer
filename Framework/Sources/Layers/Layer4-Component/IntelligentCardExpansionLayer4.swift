@@ -468,6 +468,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
                         SimpleCardComponent(
                             item: item, 
                             layoutDecision: layoutDecision,
+                            hints: hints,
                             onItemSelected: onItemSelected,
                             onItemDeleted: onItemDeleted,
                             onItemEdited: onItemEdited
@@ -530,7 +531,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
         } else {
             LazyVStack(spacing: 12) {
                 ForEach(items) { item in
-                    ListCardComponent(item: item)
+                    ListCardComponent(item: item, hints: hints)
                 }
             }
             .padding(16)
@@ -591,7 +592,7 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
                 spacing: 16
             ) {
                 ForEach(items) { item in
-                    MasonryCardComponent(item: item)
+                    MasonryCardComponent(item: item, hints: hints)
                 }
             }
             .padding(16)
@@ -802,6 +803,12 @@ public struct ListCardComponent<Item: Identifiable>: View {
 /// Masonry card component
 public struct MasonryCardComponent<Item: Identifiable>: View {
     let item: Item
+    let hints: PresentationHints
+    
+    public init(item: Item, hints: PresentationHints) {
+        self.item = item
+        self.hints = hints
+    }
     
     public var body: some View {
         VStack {
@@ -832,18 +839,18 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item)
+        CardDisplayHelper.extractTitle(from: item, hints: hints)
     }
     
     private var cardDescription: String? {
-        CardDisplayHelper.extractSubtitle(from: item)
+        CardDisplayHelper.extractSubtitle(from: item, hints: hints)
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item)
+        CardDisplayHelper.extractIcon(from: item, hints: hints)
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item)
+        CardDisplayHelper.extractColor(from: item, hints: hints)
     }
 }

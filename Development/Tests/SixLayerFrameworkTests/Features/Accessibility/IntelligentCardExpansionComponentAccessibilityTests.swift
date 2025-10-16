@@ -245,6 +245,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
                 cardHeight: 100,
                 padding: 16
             ),
+            hints: PresentationHints(),
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
@@ -267,7 +268,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "List Card")
         
         // When: Creating ListCardComponent
-        let view = ListCardComponent(item: testItem)
+        let view = ListCardComponent(item: testItem, hints: PresentationHints())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -286,7 +287,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "Masonry Card")
         
         // When: Creating MasonryCardComponent
-        let view = MasonryCardComponent(item: testItem)
+        let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

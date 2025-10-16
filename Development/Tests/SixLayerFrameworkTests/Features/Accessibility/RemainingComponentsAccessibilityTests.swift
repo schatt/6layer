@@ -451,6 +451,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         let view = SimpleCardComponent(
             item: testItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -482,6 +483,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         let view = SimpleCardComponent(
             item: testItem,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -504,6 +506,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         
         let view = ListCardComponent(
             item: testItem,
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -524,6 +527,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
         
         let view = ListCardComponent(
             item: testItem,
+            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -544,7 +548,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
     @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
-        let view = MasonryCardComponent(item: testItem)
+        let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -559,7 +563,7 @@ class RemainingComponentsAccessibilityTests: BaseTestClass {
     @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
-        let view = MasonryCardComponent(item: testItem)
+        let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

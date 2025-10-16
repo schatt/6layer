@@ -1,0 +1,40 @@
+---
+description: Required principles to follow for all agents.
+globs: **/*.swift, **/*.m, **/*.h, **/*.pl, **/*.pm, **/*.yml, **/*.yaml, **/*.json, **/*.md
+alwaysApply: true
+---
+
+# Always follow these principles.
+
+## **Core Principles**
+TDD. DTRT. DRY. Epistemology
+
+## **TDD (Test-Driven Development)**
+- **MANDATORY**: Write tests BEFORE implementing features
+- **MANDATORY**: Follow Red-Green-Refactor cycle
+- **MANDATORY**: No feature implementation without tests first
+- **MANDATORY**: All tests must pass before any release
+
+## **DTRT (Do The Right Thing)**
+- **MANDATORY**: Implement proper solutions, not quick fixes
+- **MANDATORY**: Follow established patterns and best practices
+- **MANDATORY**: Write maintainable, readable code
+- **MANDATORY**: Consider long-term implications of decisions
+
+## **DRY (Don't Repeat Yourself)**
+- **MANDATORY**: Eliminate code duplication
+- **MANDATORY**: Extract common functionality into reusable components
+- **MANDATORY**: Use abstractions appropriately
+- **MANDATORY**: Refactor when patterns emerge
+
+## **Epistemology (Distinguish Facts from Hypotheses)**
+- **MANDATORY**: Distinguish between verified facts and unverified hypotheses
+- **MANDATORY**: Use precise language that reflects current knowledge
+- **MANDATORY**: Investigate before asserting - prefer tentative language until verification
+- **MANDATORY**: Acknowledge limitations and uncertainties
+
+## **Release Quality Gate**
+- **MANDATORY**: Never create or suggest with any release unless the test suite passes completely
+- **MANDATORY**: Always run `swift test` first before any release activities
+- **MANDATORY**: Stop all release activities if tests fail
+- **MANDATORY**: Fix failing tests before proceeding with releases
