@@ -17,9 +17,6 @@ class InternationalizationServiceComponentAccessibilityTests: BaseTestClass {
     // MARK: - InternationalizationService Tests
     
     @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
-        // Given: InternationalizationService
-        let i18nService = InternationalizationService()
-        
         // When: Creating a view with InternationalizationService
         let view = VStack {
             Text("Internationalization Service Content")

@@ -17,14 +17,6 @@ class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - IntelligentFormView Tests
     
     @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form configuration
-        let formConfig = IntelligentFormConfiguration(
-            id: "intelligent-form",
-            title: "Intelligent Form",
-            fields: [],
-            intelligenceLevel: .advanced
-        )
-        
         // When: Creating IntelligentFormView
         let view = IntelligentFormView()
         

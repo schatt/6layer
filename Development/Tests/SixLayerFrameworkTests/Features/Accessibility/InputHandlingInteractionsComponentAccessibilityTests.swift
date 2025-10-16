@@ -66,9 +66,6 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - KeyboardShortcutManager Tests
     
     @Test func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
-        // Given: KeyboardShortcutManager
-        let manager = KeyboardShortcutManager(for: .iOS)
-        
         // When: Creating a view with KeyboardShortcutManager
         let view = VStack {
             Text("Keyboard Shortcut Manager Content")
@@ -88,9 +85,6 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - HapticFeedbackManager Tests
     
     @Test func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
-        // Given: HapticFeedbackManager
-        let manager = HapticFeedbackManager(for: .iOS)
-        
         // When: Creating a view with HapticFeedbackManager
         let view = VStack {
             Text("Haptic Feedback Manager Content")
@@ -110,9 +104,6 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - DragDropManager Tests
     
     @Test func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
-        // Given: DragDropManager
-        let manager = DragDropManager(for: .iOS)
-        
         // When: Creating a view with DragDropManager
         let view = VStack {
             Text("Drag Drop Manager Content")
