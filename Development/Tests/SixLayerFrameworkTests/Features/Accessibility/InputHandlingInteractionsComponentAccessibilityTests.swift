@@ -73,7 +73,6 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let view = VStack {
             Text("Keyboard Shortcut Manager Content")
         }
-        .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -96,7 +95,6 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let view = VStack {
             Text("Haptic Feedback Manager Content")
         }
-        .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -119,7 +117,6 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let view = VStack {
             Text("Drag Drop Manager Content")
         }
-        .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

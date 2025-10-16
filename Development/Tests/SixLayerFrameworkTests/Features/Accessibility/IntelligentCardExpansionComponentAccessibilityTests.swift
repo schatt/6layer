@@ -119,7 +119,12 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating CoverFlowCardComponent
-        let view = CoverFlowCardComponent(item: testItem, hints: hints)
+        let view = CoverFlowCardComponent(
+            item: testItem,
+            onItemSelected: { _ in },
+            onItemDeleted: { _ in },
+            onItemEdited: { _ in }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -335,17 +340,14 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "iOS Card")
         let expansionStrategy = ExpansionStrategy.hoverExpand
-        let platformConfig = MockCardExpansionPlatformConfig()
+        let platformConfig = await TestSetupUtilities.getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
         // When: Creating iOSExpandableCardView
         let view = iOSExpandableCardView(
             item: testItem,
-            expansionStrategy: expansionStrategy,
-            platformConfig: platformConfig,
-            performanceConfig: performanceConfig,
-            accessibilityConfig: accessibilityConfig
+            expansionStrategy: expansionStrategy
         )
         
         // Then: Should generate accessibility identifiers
@@ -364,17 +366,14 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "macOS Card")
         let expansionStrategy = ExpansionStrategy.hoverExpand
-        let platformConfig = MockCardExpansionPlatformConfig()
+        let platformConfig = await TestSetupUtilities.getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
         // When: Creating macOSExpandableCardView
         let view = macOSExpandableCardView(
             item: testItem,
-            expansionStrategy: expansionStrategy,
-            platformConfig: platformConfig,
-            performanceConfig: performanceConfig,
-            accessibilityConfig: accessibilityConfig
+            expansionStrategy: expansionStrategy
         )
         
         // Then: Should generate accessibility identifiers
@@ -393,17 +392,14 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "visionOS Card")
         let expansionStrategy = ExpansionStrategy.hoverExpand
-        let platformConfig = MockCardExpansionPlatformConfig()
+        let platformConfig = await TestSetupUtilities.getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
         // When: Creating visionOSExpandableCardView
         let view = visionOSExpandableCardView(
             item: testItem,
-            expansionStrategy: expansionStrategy,
-            platformConfig: platformConfig,
-            performanceConfig: performanceConfig,
-            accessibilityConfig: accessibilityConfig
+            expansionStrategy: expansionStrategy
         )
         
         // Then: Should generate accessibility identifiers
@@ -422,17 +418,14 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Platform Aware Card")
         let expansionStrategy = ExpansionStrategy.hoverExpand
-        let platformConfig = MockCardExpansionPlatformConfig()
+        let platformConfig = await TestSetupUtilities.getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
         // When: Creating PlatformAwareExpandableCardView
         let view = PlatformAwareExpandableCardView(
             item: testItem,
-            expansionStrategy: expansionStrategy,
-            platformConfig: platformConfig,
-            performanceConfig: performanceConfig,
-            accessibilityConfig: accessibilityConfig
+            expansionStrategy: expansionStrategy
         )
         
         // Then: Should generate accessibility identifiers
