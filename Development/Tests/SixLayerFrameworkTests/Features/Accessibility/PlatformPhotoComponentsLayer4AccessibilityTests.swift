@@ -28,7 +28,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     
     @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPhotoPicker_L4(
                 onImageSelected: { _ in }
             )
@@ -51,7 +51,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPhotoPicker_L4(
                 onImageSelected: { _ in }
             )
@@ -76,7 +76,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on iOS
     @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPhotoDisplay_L4(
                 image: PlatformImage(),
                 style: .thumbnail
@@ -100,7 +100,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPhotoDisplay_L4(
                 image: PlatformImage(),
                 style: .thumbnail
@@ -152,7 +152,7 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
         // Given
         let testPhoto = PlatformImage()
         
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPhotoEditor_L4(
                 image: testPhoto,
                 onImageEdited: { _ in }

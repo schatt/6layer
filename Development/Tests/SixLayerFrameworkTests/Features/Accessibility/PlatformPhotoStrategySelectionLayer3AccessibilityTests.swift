@@ -73,3 +73,4 @@ final class PlatformPhotoStrategySelectionLayer3AccessibilityTests {
         #expect(displayStrategy != nil, "selectPhotoDisplayStrategy_L3 should return a valid strategy")
     }
 
+}

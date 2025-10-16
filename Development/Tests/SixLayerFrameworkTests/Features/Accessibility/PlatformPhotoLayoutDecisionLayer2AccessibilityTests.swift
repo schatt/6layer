@@ -79,3 +79,4 @@ final class PlatformPhotoLayoutDecisionLayer2AccessibilityTests {
         #expect(result.height > 0, "Layout decision should have valid height")
     }
 
+}
