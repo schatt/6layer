@@ -11,10 +11,11 @@ import SwiftUI
  * TESTING SCOPE: Tests that the default behavior now enables automatic identifiers
  * METHODOLOGY: Tests that views get automatic identifiers without explicit enabling
  */
-final class DefaultAccessibilityIdentifierTests {
+@MainActor
+class DefaultAccessibilityIdentifierTests: BaseTestClass {
     
     init() async throws {
-                await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+        try await super.init()
     }
     
     deinit {

@@ -24,7 +24,6 @@ class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestClass 
         let view = VStack {
             Text("Cross Platform Optimization Manager Content")
         }
-        .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -40,13 +39,16 @@ class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestClass 
     
     @Test func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOptimizationSettings
-        let settings = PlatformOptimizationSettings(for: .macOS)
+        let settings = PlatformOptimizationSettings(
+            enableGPUAcceleration: true,
+            cacheSizeMB: 100,
+            threadCount: 4
+        )
         
         // When: Creating a view with PlatformOptimizationSettings
         let view = VStack {
             Text("Platform Optimization Settings Content")
         }
-        .environmentObject(settings)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -84,13 +86,12 @@ class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestClass 
     
     @Test func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformUIPatterns
-        let patterns = PlatformUIPatterns(for: .macOS)
+        let patterns = PlatformUIPatterns()
         
         // When: Creating a view with PlatformUIPatterns
         let view = VStack {
             Text("Platform UI Patterns Content")
         }
-        .environmentObject(patterns)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -112,7 +113,6 @@ class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestClass 
         let view = VStack {
             Text("Platform Recommendation Engine Content")
         }
-        .environmentObject(engine)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -134,7 +134,6 @@ class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestClass 
         let view = VStack {
             Text("Cross Platform Testing Content")
         }
-        .environmentObject(testing)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
