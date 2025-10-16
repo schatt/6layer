@@ -40,7 +40,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseAccessibility
         #expect(hints.dataType == .form, "Hints should have correct data type")
         #expect(hints.context == .modal, "Hints should have correct context")
         
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPresentModalForm_L1(
                 formType: .form,
                 context: .modal
@@ -80,7 +80,7 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseAccessibility
         #expect(hints.dataType == .form, "Hints should have correct data type")
         #expect(hints.context == .modal, "Hints should have correct context")
         
-        let view = await MainActor.run {
+        let view = await MainActor.run { @MainActor in
             platformPresentModalForm_L1(
                 formType: .form,
                 context: .modal
