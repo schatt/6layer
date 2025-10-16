@@ -663,9 +663,26 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
 public struct SimpleCardComponent<Item: Identifiable>: View {
     let item: Item
     let layoutDecision: IntelligentCardLayoutDecision
+    let hints: PresentationHints
     let onItemSelected: ((Item) -> Void)?
     let onItemDeleted: ((Item) -> Void)?
     let onItemEdited: ((Item) -> Void)?
+    
+    public init(
+        item: Item,
+        layoutDecision: IntelligentCardLayoutDecision,
+        hints: PresentationHints,
+        onItemSelected: ((Item) -> Void)? = nil,
+        onItemDeleted: ((Item) -> Void)? = nil,
+        onItemEdited: ((Item) -> Void)? = nil
+    ) {
+        self.item = item
+        self.layoutDecision = layoutDecision
+        self.hints = hints
+        self.onItemSelected = onItemSelected
+        self.onItemDeleted = onItemDeleted
+        self.onItemEdited = onItemEdited
+    }
     
     public var body: some View {
         VStack {
@@ -692,32 +709,35 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item)
+        CardDisplayHelper.extractTitle(from: item, hints: hints)
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item)
+        CardDisplayHelper.extractIcon(from: item, hints: hints)
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item)
+        CardDisplayHelper.extractColor(from: item, hints: hints)
     }
 }
 
 /// List card component
 public struct ListCardComponent<Item: Identifiable>: View {
     let item: Item
+    let hints: PresentationHints
     let onItemSelected: ((Item) -> Void)?
     let onItemDeleted: ((Item) -> Void)?
     let onItemEdited: ((Item) -> Void)?
     
     public init(
         item: Item,
+        hints: PresentationHints,
         onItemSelected: ((Item) -> Void)? = nil,
         onItemDeleted: ((Item) -> Void)? = nil,
         onItemEdited: ((Item) -> Void)? = nil
     ) {
         self.item = item
+        self.hints = hints
         self.onItemSelected = onItemSelected
         self.onItemDeleted = onItemDeleted
         self.onItemEdited = onItemEdited

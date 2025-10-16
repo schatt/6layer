@@ -61,26 +61,6 @@ class ExampleComponentAccessibilityTests: BaseTestClass {
 
 // MARK: - Mock Example Components (Placeholder implementations)
 
-struct FormUsageExample: View {
-    var body: some View {
-        VStack {
-            Text("Form Usage Example")
-            Button("Submit") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct FormInsightsDashboard: View {
-    var body: some View {
-        VStack {
-            Text("Form Insights Dashboard")
-            Button("View Insights") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
 struct ExampleHelpers: View {
     var body: some View {
         VStack {
