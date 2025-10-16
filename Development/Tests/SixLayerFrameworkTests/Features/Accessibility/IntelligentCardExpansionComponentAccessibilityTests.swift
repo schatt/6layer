@@ -44,7 +44,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "Test Card")
-        let hints = PresentationHints()
         
         // When: Creating ExpandableCardComponent
         let view = ExpandableCardComponent(
@@ -116,7 +115,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "CoverFlow Card")
-        let hints = PresentationHints()
         
         // When: Creating CoverFlowCardComponent
         let view = CoverFlowCardComponent(
@@ -236,7 +234,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "Simple Card")
-        let hints = PresentationHints()
         
         // When: Creating SimpleCardComponent
         let view = SimpleCardComponent(
@@ -268,7 +265,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testListCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "List Card")
-        let hints = PresentationHints()
         
         // When: Creating ListCardComponent
         let view = ListCardComponent(item: testItem)
@@ -288,7 +284,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiers() async {
         // Given: Test item
         let testItem = CardTestItem(id: "1", title: "Masonry Card")
-        let hints = PresentationHints()
         
         // When: Creating MasonryCardComponent
         let view = MasonryCardComponent(item: testItem)
