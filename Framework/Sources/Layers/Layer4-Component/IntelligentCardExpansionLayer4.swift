@@ -692,24 +692,15 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardTitle
-        }
-        return "Item"
+        CardDisplayHelper.extractTitle(from: item)
     }
     
     private var cardIcon: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardIcon ?? "star.fill"
-        }
-        return "star.fill"
+        CardDisplayHelper.extractIcon(from: item)
     }
     
     private var cardColor: Color {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardColor ?? .blue
-        }
-        return .blue
+        CardDisplayHelper.extractColor(from: item)
     }
 }
 
@@ -821,30 +812,18 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardTitle
-        }
-        return "Item"
+        CardDisplayHelper.extractTitle(from: item)
     }
     
     private var cardDescription: String? {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardDescription
-        }
-        return nil
+        CardDisplayHelper.extractSubtitle(from: item)
     }
     
     private var cardIcon: String {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardIcon ?? "star.fill"
-        }
-        return "star.fill"
+        CardDisplayHelper.extractIcon(from: item)
     }
     
     private var cardColor: Color {
-        if let displayable = item as? CardDisplayable {
-            return displayable.cardColor ?? .blue
-        }
-        return .blue
+        CardDisplayHelper.extractColor(from: item)
     }
 }

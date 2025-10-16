@@ -46,13 +46,16 @@ final class EyeTrackingTests: BaseTestClass {
     // MARK: - Setup and Teardown
     
     override init() async throws {
+        try await super.init()
         testConfig = EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,
             visualFeedback: true,
             hapticFeedback: true
         )
-        eyeTrackingManager = EyeTrackingManager(config: testConfig)
+        eyeTrackingManager = await MainActor.run {
+            EyeTrackingManager(config: testConfig)
+        }
     }
     
     deinit {
@@ -140,33 +143,37 @@ final class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingManager enable functionality
     /// TESTING SCOPE: Tests EyeTrackingManager enabling and state management
     /// METHODOLOGY: Enable EyeTrackingManager and verify enabled state and tracking behavior
-    @Test func testEyeTrackingManagerEnable() {
-        let _ = eyeTrackingManager.isEnabled
-        eyeTrackingManager.enable()
-        
-        // Note: In test environment, eye tracking may not be available
-        // So we test that enable() was called (state may or may not change)
-        // The important thing is that enable() doesn't crash
-        #expect(eyeTrackingManager.isEnabled != nil)
+    @Test func testEyeTrackingManagerEnable() async {
+        await MainActor.run {
+            let _ = eyeTrackingManager.isEnabled
+            eyeTrackingManager.enable()
+            
+            // Note: In test environment, eye tracking may not be available
+            // So we test that enable() was called (state may or may not change)
+            // The important thing is that enable() doesn't crash
+            #expect(eyeTrackingManager.isEnabled != nil)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate EyeTrackingManager disable functionality
     /// TESTING SCOPE: Tests EyeTrackingManager disabling and state cleanup
     /// METHODOLOGY: Disable EyeTrackingManager and verify disabled state and cleanup behavior
-    @Test func testEyeTrackingManagerDisable() {
-        eyeTrackingManager.enable()
-        eyeTrackingManager.disable()
-        
-        #expect(!eyeTrackingManager.isEnabled)
-        #expect(!eyeTrackingManager.isTracking)
-        #expect(eyeTrackingManager.dwellTarget == nil)
-        #expect(eyeTrackingManager.dwellProgress == 0.0)
+    @Test func testEyeTrackingManagerDisable() async {
+        await MainActor.run {
+            eyeTrackingManager.enable()
+            eyeTrackingManager.disable()
+            
+            #expect(!eyeTrackingManager.isEnabled)
+            #expect(!eyeTrackingManager.isTracking)
+            #expect(eyeTrackingManager.dwellTarget == nil)
+            #expect(eyeTrackingManager.dwellProgress == 0.0)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate EyeTrackingManager config update functionality
     /// TESTING SCOPE: Tests EyeTrackingManager configuration updates
     /// METHODOLOGY: Update EyeTrackingManager config and verify configuration changes
-    @Test func testEyeTrackingManagerConfigUpdate() {
+    @Test func testEyeTrackingManagerConfigUpdate() async {
         let newConfig = EyeTrackingConfig(
             sensitivity: .high,
             dwellTime: 2.0,
@@ -174,11 +181,13 @@ final class EyeTrackingTests: BaseTestClass {
             hapticFeedback: false
         )
         
-        eyeTrackingManager.updateConfig(newConfig)
-        
-        // Test that config was updated (we can't directly access the private config)
-        // but we can test the calibration state
-        #expect(!eyeTrackingManager.isCalibrated)
+        await MainActor.run {
+            eyeTrackingManager.updateConfig(newConfig)
+            
+            // Test that config was updated (we can't directly access the private config)
+            // but we can test the calibration state
+            #expect(!eyeTrackingManager.isCalibrated)
+        }
     }
     
     // MARK: - Gaze Event Tests
@@ -279,29 +288,30 @@ final class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate calibration start functionality
     /// TESTING SCOPE: Tests eye tracking calibration initiation
     /// METHODOLOGY: Start calibration and verify calibration state and process
-    @Test func testStartCalibration() {
-        let expectation = XCTestExpectation(description: "Calibration completed")
-        
-        eyeTrackingManager.startCalibration()
-        
-        // Wait for calibration to complete (simulated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            #expect(self.eyeTrackingManager.isCalibrated)
-            expectation.fulfill()
+    @Test func testStartCalibration() async {
+        await MainActor.run {
+            eyeTrackingManager.startCalibration()
         }
         
-        wait(for: [expectation], timeout: 3.0)
+        // Wait for calibration to complete (simulated)
+        try? await Task.sleep(nanoseconds: 2_500_000_000) // 2.5 seconds
+        
+        await MainActor.run {
+            #expect(eyeTrackingManager.isCalibrated)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate calibration completion functionality
     /// TESTING SCOPE: Tests eye tracking calibration completion and accuracy
     /// METHODOLOGY: Complete calibration and verify calibration state and accuracy values
-    @Test func testCompleteCalibration() {
-        #expect(!eyeTrackingManager.isCalibrated)
-        
-        eyeTrackingManager.completeCalibration()
-        
-        #expect(eyeTrackingManager.isCalibrated)
+    @Test func testCompleteCalibration() async {
+        await MainActor.run {
+            #expect(!eyeTrackingManager.isCalibrated)
+            
+            eyeTrackingManager.completeCalibration()
+            
+            #expect(eyeTrackingManager.isCalibrated)
+        }
     }
     
     // MARK: - View Modifier Tests
@@ -408,7 +418,7 @@ final class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eye tracking integration functionality
     /// TESTING SCOPE: Tests eye tracking end-to-end integration
     /// METHODOLOGY: Test complete eye tracking workflow from initialization to event processing
-    @Test func testEyeTrackingIntegration() {
+    @Test func testEyeTrackingIntegration() async {
         // Test the complete eye tracking workflow
         let config = EyeTrackingConfig(
             sensitivity: .medium,
@@ -417,39 +427,45 @@ final class EyeTrackingTests: BaseTestClass {
             hapticFeedback: true
         )
         
-        let manager = EyeTrackingManager(config: config)
-        
-        // Enable tracking (force for testing)
-        manager.isEnabled = true
-        #expect(manager.isEnabled)
-        
-        // Process gaze events
-        for i in 0..<10 {
-            let gazeEvent = EyeTrackingGazeEvent(
-                position: CGPoint(x: Double(i * 10), y: Double(i * 10)),
-                confidence: 0.8
-            )
-            manager.processGazeEvent(gazeEvent)
+        let manager = await MainActor.run {
+            EyeTrackingManager(config: config)
         }
         
-        // Complete calibration
-        manager.completeCalibration()
-        #expect(manager.isCalibrated)
-        
-        // Disable tracking
-        manager.disable()
-        #expect(!manager.isEnabled)
+        await MainActor.run {
+            // Enable tracking (force for testing)
+            manager.isEnabled = true
+            #expect(manager.isEnabled)
+            
+            // Process gaze events
+            for i in 0..<10 {
+                let gazeEvent = EyeTrackingGazeEvent(
+                    position: CGPoint(x: Double(i * 10), y: Double(i * 10)),
+                    confidence: 0.8
+                )
+                manager.processGazeEvent(gazeEvent)
+            }
+            
+            // Complete calibration
+            manager.completeCalibration()
+            #expect(manager.isCalibrated)
+            
+            // Disable tracking
+            manager.disable()
+            #expect(!manager.isEnabled)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate eye tracking sensitivity variations functionality
     /// TESTING SCOPE: Tests eye tracking behavior with different sensitivity levels
     /// METHODOLOGY: Test eye tracking with various sensitivity settings and verify behavior
-    @Test func testEyeTrackingWithDifferentSensitivities() {
+    @Test func testEyeTrackingWithDifferentSensitivities() async {
         let sensitivities: [EyeTrackingSensitivity] = Array(EyeTrackingSensitivity.allCases) // Use real enum
         
         for sensitivity in sensitivities {
             let config = EyeTrackingConfig(sensitivity: sensitivity)
-            let manager = EyeTrackingManager(config: config)
+            let manager = await MainActor.run {
+                EyeTrackingManager(config: config)
+            }
             
             #expect(manager != nil)
             // Test that manager can be created with different sensitivities
@@ -459,15 +475,17 @@ final class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eye tracking dwell time variations functionality
     /// TESTING SCOPE: Tests eye tracking behavior with different dwell time settings
     /// METHODOLOGY: Test eye tracking with various dwell time settings and verify behavior
-    @Test func testEyeTrackingWithDifferentDwellTimes() {
+    @Test func testEyeTrackingWithDifferentDwellTimes() async {
         let dwellTimes: [TimeInterval] = [0.5, 1.0, 1.5, 2.0]
         
         for dwellTime in dwellTimes {
             let config = EyeTrackingConfig(dwellTime: dwellTime)
-            let manager = EyeTrackingManager(config: config)
+            let manager = await MainActor.run {
+                EyeTrackingManager(config: config)
+            }
             
             #expect(manager != nil)
             // Test that manager can be created with different dwell times
-        // Performance test removed - performance monitoring was removed from framework
+        }
     }
 }
