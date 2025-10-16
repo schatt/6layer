@@ -28,15 +28,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     
     @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let view = await MainActor.run { @MainActor in
-            platformPhotoPicker_L4(
-                onImageSelected: { _ in }
-            )
-        }
-        
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            let view = platformPhotoPicker_L4(
+                onImageSelected: { _ in }
+            )
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -51,15 +48,12 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoPickerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let view = await MainActor.run { @MainActor in
-            platformPhotoPicker_L4(
-                onImageSelected: { _ in }
-            )
-        }
-        
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            let view = platformPhotoPicker_L4(
+                onImageSelected: { _ in }
+            )
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -76,16 +70,13 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on iOS
     @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let view = await MainActor.run { @MainActor in
-            platformPhotoDisplay_L4(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoDisplay_L4(
                 image: PlatformImage(),
                 style: .thumbnail
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -100,16 +91,13 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let view = await MainActor.run { @MainActor in
-            platformPhotoDisplay_L4(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoDisplay_L4(
                 image: PlatformImage(),
                 style: .thumbnail
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -128,14 +116,13 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
         // Given
         let testPhoto = PlatformImage()
         
-        let view = platformPhotoEditor_L4(
-            image: testPhoto,
-            onImageEdited: { _ in }
-        )
-        
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            let view = platformPhotoEditor_L4(
+                image: testPhoto,
+                onImageEdited: { _ in }
+            )
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -152,16 +139,13 @@ final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseAccessibilityTe
         // Given
         let testPhoto = PlatformImage()
         
-        let view = await MainActor.run { @MainActor in
-            platformPhotoEditor_L4(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoEditor_L4(
                 image: testPhoto,
                 onImageEdited: { _ in }
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,

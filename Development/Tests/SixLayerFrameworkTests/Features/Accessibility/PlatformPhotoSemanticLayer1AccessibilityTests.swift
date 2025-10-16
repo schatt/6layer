@@ -36,17 +36,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = await MainActor.run {
-            platformPhotoCapture_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoCapture_L1(
                 purpose: purpose,
                 context: context,
                 onImageCaptured: { _ in }
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -69,17 +66,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = await MainActor.run {
-            platformPhotoCapture_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoCapture_L1(
                 purpose: purpose,
                 context: context,
                 onImageCaptured: { _ in }
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -104,17 +98,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = await MainActor.run {
-            platformPhotoSelection_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoSelection_L1(
                 purpose: purpose,
                 context: context,
                 onImageSelected: { _ in }
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -137,17 +128,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let view = await MainActor.run {
-            platformPhotoSelection_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoSelection_L1(
                 purpose: purpose,
                 context: context,
                 onImageSelected: { _ in }
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -173,17 +161,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
         )
         let testImage = PlatformImage()
         
-        let view = await MainActor.run {
-            platformPhotoDisplay_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoDisplay_L1(
                 purpose: purpose,
                 context: context,
                 image: testImage
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -207,17 +192,14 @@ final class PlatformPhotoSemanticLayer1AccessibilityTests: BaseAccessibilityTest
         )
         let testImage = PlatformImage()
         
-        let view = await MainActor.run {
-            platformPhotoDisplay_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPhotoDisplay_L1(
                 purpose: purpose,
                 context: context,
                 image: testImage
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
