@@ -22,7 +22,6 @@ import SwiftUI
 public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
     @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
-    @Environment(\.accessibilityIdentifierScreenContext) private var accessibilityIdentifierScreenContext
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
 
     public func body(content: Content) -> some View {
@@ -44,8 +43,8 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Use the configured namespace (legacy support, can be same as prefix)
         let namespace = config.namespace.isEmpty ? "main" : config.namespace
         
-        // Use the current screen context from environment or config
-        let screenContext = accessibilityIdentifierScreenContext ?? config.currentScreenContext ?? "main"
+        // Use the current screen context from config
+        let screenContext = config.currentScreenContext ?? "main"
         
         // Build the view hierarchy path
         let viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
@@ -117,11 +116,6 @@ public struct AccessibilityIdentifierElementTypeKey: EnvironmentKey {
     public static let defaultValue: String? = nil
 }
 
-/// Environment key for accessibility identifier screen context
-public struct AccessibilityIdentifierScreenContextKey: EnvironmentKey {
-    public static let defaultValue: String? = nil
-}
-
 // MARK: - Environment Extensions
 
 extension EnvironmentValues {
@@ -144,11 +138,6 @@ extension EnvironmentValues {
         get { self[AccessibilityIdentifierElementTypeKey.self] }
         set { self[AccessibilityIdentifierElementTypeKey.self] = newValue }
     }
-    
-    public var accessibilityIdentifierScreenContext: String? {
-        get { self[AccessibilityIdentifierScreenContextKey.self] }
-        set { self[AccessibilityIdentifierScreenContextKey.self] = newValue }
-    }
 }
 
 // MARK: - View Extensions
@@ -164,11 +153,5 @@ extension View {
     /// This allows for more specific component identification
     public func named(_ name: String) -> some View {
         self.modifier(NamedModifier(name: name))
-    }
-    
-    /// Apply screen context for accessibility identifier generation
-    /// This sets the current screen context for more specific identifier generation
-    public func screenContext(_ context: String) -> some View {
-        self.environment(\.accessibilityIdentifierScreenContext, context)
     }
 }
