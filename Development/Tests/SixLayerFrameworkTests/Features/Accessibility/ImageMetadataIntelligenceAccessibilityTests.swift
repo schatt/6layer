@@ -10,17 +10,6 @@ import ViewInspector
 @MainActor
 class ImageMetadataIntelligenceAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
-        // Additional setup if needed
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
     // MARK: - ImageMetadataIntelligence Tests
     
     /// BUSINESS PURPOSE: Validates that ImageMetadataIntelligence generates proper accessibility identifiers

@@ -24,9 +24,11 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // When: Creating PlatformInteractionButton
-        let view = PlatformInteractionButton(label: testLabel) {
+        let view = PlatformInteractionButton(style: .primary, action: {
             // Button action
-        }
+        }, label: {
+            testLabel
+        })
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -54,6 +56,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
+            for: .iOS,
             componentName: "InputHandlingManager"
         )
         
@@ -76,6 +79,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
+            for: .iOS,
             componentName: "KeyboardShortcutManager"
         )
         
@@ -98,6 +102,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
+            for: .iOS,
             componentName: "HapticFeedbackManager"
         )
         
