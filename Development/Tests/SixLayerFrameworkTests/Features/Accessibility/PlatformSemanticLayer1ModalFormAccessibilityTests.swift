@@ -40,16 +40,13 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseAccessibility
         #expect(hints.dataType == .form, "Hints should have correct data type")
         #expect(hints.context == .modal, "Hints should have correct context")
         
-        let view = await MainActor.run { @MainActor in
-            platformPresentModalForm_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPresentModalForm_L1(
                 formType: .form,
                 context: .modal
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -80,16 +77,13 @@ final class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseAccessibility
         #expect(hints.dataType == .form, "Hints should have correct data type")
         #expect(hints.context == .modal, "Hints should have correct context")
         
-        let view = await MainActor.run { @MainActor in
-            platformPresentModalForm_L1(
+        // When & Then
+        let hasAccessibilityID = await MainActor.run {
+            let view = platformPresentModalForm_L1(
                 formType: .form,
                 context: .modal
             )
-        }
-        
-        // When & Then
-        let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifier(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
