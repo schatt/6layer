@@ -14,15 +14,24 @@ import SwiftUI
 @MainActor
 class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
+    // MARK: - Shared Test Data (DRY Principle)
+    
+    private var testFormConfig: DynamicFormConfiguration {
+        DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            description: "Test form for accessibility testing",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+    }
+    
     // MARK: - DynamicFormView Tests
     
     @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test form configuration
-        let formConfig = DynamicFormConfiguration(
-            id: "test-form",
-            title: "Test Form",
-            fields: []
-        )
+        let formConfig = testFormConfig
         
         // When: Creating DynamicFormView
         let view = DynamicFormView(
@@ -44,11 +53,7 @@ class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     @Test func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
         // Given: Test form configuration
-        let formConfig = DynamicFormConfiguration(
-            id: "test-form",
-            title: "Test Form",
-            fields: []
-        )
+        let formConfig = testFormConfig
         
         // When: Creating DynamicFormHeader
         let view = DynamicFormHeader(configuration: formConfig)
@@ -66,7 +71,16 @@ class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormSectionView Tests
     
     @Test func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form section
+        // Given: Test form configuration and section
+        let formConfig = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            description: "Test form for accessibility testing",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+        
         let section = DynamicFormSection(
             id: "test-section",
             title: "Test Section",
@@ -115,11 +129,7 @@ class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     @Test func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
         // Given: Test form configuration
-        let formConfig = DynamicFormConfiguration(
-            id: "test-form",
-            title: "Test Form",
-            fields: []
-        )
+        let formConfig = testFormConfig
         
         // When: Creating DynamicFormActions
         let formState = DynamicFormState(configuration: formConfig)
