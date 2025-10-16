@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformSecurityLayer5ComponentAccessibilityTests {
+class PlatformSecurityLayer5ComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Platform Security Layer 5 Component Tests
     
