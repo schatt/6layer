@@ -608,44 +608,4 @@ class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
 }
 
 // MARK: - Test Data Types
-
-struct DynamicFormConfiguration {
-    let id: String
-    let title: String
-    let fields: [DynamicFormField]
-}
-
-struct DynamicFormSection {
-    let id: String
-    let title: String
-    let fields: [DynamicFormField]
-}
-
-
-enum DynamicFormFieldType {
-    case text
-    case number
-    case integer
-    case textarea
-    case select
-    case multiselect
-    case radio
-    case checkbox
-    case toggle
-    case date
-    case time
-    case datetime
-    case color
-    case file
-    case image
-    case url
-    case array
-    case data
-}
-
-struct DynamicFormActions {
-    let submitTitle: String
-    let cancelTitle: String
-    let onSubmit: () -> Void
-    let onCancel: () -> Void
-}
+// Using framework types instead of duplicates
