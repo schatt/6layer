@@ -14,10 +14,6 @@ import SwiftUI
 @MainActor
 class DefaultAccessibilityIdentifierTests: BaseTestClass {
     
-    init() async throws {
-        try await super.init()
-    }
-    
     deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
