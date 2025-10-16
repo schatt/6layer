@@ -24,7 +24,6 @@ class InternationalizationServiceComponentAccessibilityTests: BaseTestClass {
         let view = VStack {
             Text("Internationalization Service Content")
         }
-        .environmentObject(i18nService)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

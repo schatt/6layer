@@ -26,7 +26,7 @@ class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating IntelligentFormView
-        let view = IntelligentFormView(configuration: formConfig)
+        let view = IntelligentFormView()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -50,7 +50,7 @@ class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating IntelligentDetailView
-        let view = IntelligentDetailView(data: detailData)
+        let view = IntelligentDetailView()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
