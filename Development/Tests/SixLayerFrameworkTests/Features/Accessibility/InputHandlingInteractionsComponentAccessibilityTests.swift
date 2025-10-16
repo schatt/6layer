@@ -56,7 +56,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            for: .iOS,
+            platform: .iOS,
             componentName: "InputHandlingManager"
         )
         
@@ -67,7 +67,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     @Test func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
         // Given: KeyboardShortcutManager
-        let manager = KeyboardShortcutManager()
+        let manager = KeyboardShortcutManager(for: .iOS)
         
         // When: Creating a view with KeyboardShortcutManager
         let view = VStack {
@@ -79,7 +79,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            for: .iOS,
+            platform: .iOS,
             componentName: "KeyboardShortcutManager"
         )
         
@@ -90,7 +90,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     @Test func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
         // Given: HapticFeedbackManager
-        let manager = HapticFeedbackManager()
+        let manager = HapticFeedbackManager(for: .iOS)
         
         // When: Creating a view with HapticFeedbackManager
         let view = VStack {
@@ -102,7 +102,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            for: .iOS,
+            platform: .iOS,
             componentName: "HapticFeedbackManager"
         )
         
@@ -113,7 +113,7 @@ class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     @Test func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
         // Given: DragDropManager
-        let manager = DragDropManager()
+        let manager = DragDropManager(for: .iOS)
         
         // When: Creating a view with DragDropManager
         let view = VStack {

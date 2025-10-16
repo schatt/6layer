@@ -56,7 +56,7 @@ class IntelligenceComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             testView,
             expectedPattern: "*.main.element.*",
-            for: .iOS,
+            platform: .iOS,
             componentName: "RuntimeCapabilityDetection"
         )
         

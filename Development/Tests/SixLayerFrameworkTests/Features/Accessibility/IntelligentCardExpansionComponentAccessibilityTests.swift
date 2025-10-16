@@ -49,8 +49,19 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // When: Creating ExpandableCardComponent
         let view = ExpandableCardComponent(
             item: testItem,
-            layoutDecision: .grid,
-            strategy: .manual,
+            layoutDecision: IntelligentCardLayoutDecision(
+                columns: 2,
+                spacing: 16,
+                cardWidth: 200,
+                cardHeight: 150,
+                padding: 16
+            ),
+            strategy: CardExpansionStrategy(
+                supportedStrategies: [.hoverExpand],
+                primaryStrategy: .hoverExpand,
+                expansionScale: 1.15,
+                animationDuration: 0.3
+            ),
             isExpanded: false,
             isHovered: false,
             onExpand: { },
@@ -84,6 +95,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // When: Creating CoverFlowCollectionView
         let view = CoverFlowCollectionView(
             items: testItems,
+            hints: hints,
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
@@ -201,10 +213,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         // When: Creating AdaptiveCollectionView
         let view = AdaptiveCollectionView(
             items: testItems,
-            layoutDecision: .grid,
-            onItemSelected: { _ in },
-            onItemDeleted: { _ in },
-            onItemEdited: { _ in }
+            hints: hints
         )
         
         // Then: Should generate accessibility identifiers
@@ -225,7 +234,19 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating SimpleCardComponent
-        let view = SimpleCardComponent(item: testItem)
+        let view = SimpleCardComponent(
+            item: testItem,
+            layoutDecision: IntelligentCardLayoutDecision(
+                columns: 1,
+                spacing: 8,
+                cardWidth: 300,
+                cardHeight: 100,
+                padding: 16
+            ),
+            onItemSelected: { _ in },
+            onItemDeleted: { _ in },
+            onItemEdited: { _ in }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -284,8 +305,8 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testNativeExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Native Card")
-        let expansionStrategy = ExpansionStrategy.manual
-        let platformConfig = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
+        let expansionStrategy = ExpansionStrategy.hoverExpand
+        let platformConfig = await TestSetupUtilities.getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -313,7 +334,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testIOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "iOS Card")
-        let expansionStrategy = ExpansionStrategy.manual
+        let expansionStrategy = ExpansionStrategy.hoverExpand
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -342,7 +363,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testMacOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "macOS Card")
-        let expansionStrategy = ExpansionStrategy.manual
+        let expansionStrategy = ExpansionStrategy.hoverExpand
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -371,7 +392,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testVisionOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "visionOS Card")
-        let expansionStrategy = ExpansionStrategy.manual
+        let expansionStrategy = ExpansionStrategy.hoverExpand
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -400,7 +421,7 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     @Test func testPlatformAwareExpandableCardViewGeneratesAccessibilityIdentifiers() async {
         // Given: Test item and configurations
         let testItem = CardTestItem(id: "1", title: "Platform Aware Card")
-        let expansionStrategy = ExpansionStrategy.manual
+        let expansionStrategy = ExpansionStrategy.hoverExpand
         let platformConfig = MockCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -430,22 +451,6 @@ class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
 struct CardTestItem: Identifiable {
     let id: String
     let title: String
-}
-
-struct MockCardExpansionPlatformConfig {
-    let animationEasing: Animation = .easeInOut
-    let minTouchTarget: CGFloat = 44.0
-    let supportsHover: Bool = true
-}
-
-struct CardExpansionPerformanceConfig {
-    let maxItems: Int = 100
-    let enableLazyLoading: Bool = true
-}
-
-struct CardExpansionAccessibilityConfig {
-    let enableVoiceOver: Bool = true
-    let enableKeyboardNavigation: Bool = true
 }
 
 

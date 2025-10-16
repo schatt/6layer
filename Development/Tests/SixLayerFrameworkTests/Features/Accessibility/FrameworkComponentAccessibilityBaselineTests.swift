@@ -10,7 +10,7 @@ import ViewInspector
 @MainActor
 class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {
     
-    init() async throws {
+    override init() async throws {
         try await super.init()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

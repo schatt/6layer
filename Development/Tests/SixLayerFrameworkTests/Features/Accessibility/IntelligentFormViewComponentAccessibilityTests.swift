@@ -50,7 +50,7 @@ class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating IntelligentDetailView
-        let view = IntelligentDetailView()
+        let view = IntelligentDetailView.platformDetailView(for: detailData)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
