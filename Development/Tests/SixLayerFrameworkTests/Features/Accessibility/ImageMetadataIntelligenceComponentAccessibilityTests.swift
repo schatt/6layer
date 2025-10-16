@@ -11,7 +11,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ImageMetadataIntelligenceComponentAccessibilityTests {
+class ImageMetadataIntelligenceComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Image Metadata Intelligence Component Tests
     

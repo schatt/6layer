@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformOCRComponentsLayer4ComponentAccessibilityTests {
+class PlatformOCRComponentsLayer4ComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Platform OCR Components Layer 4 Tests
     
