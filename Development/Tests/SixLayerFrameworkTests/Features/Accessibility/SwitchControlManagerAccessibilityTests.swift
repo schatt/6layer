@@ -8,25 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for SwitchControlManager.swift classes
 /// Ensures SwitchControlManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class SwitchControlManagerAccessibilityTests {
-    
-    @MainActor
-    init() async throws {
-                await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
-    
-    @MainActor
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+class SwitchControlManagerAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - SwitchControlManager Tests
     
