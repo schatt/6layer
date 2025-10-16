@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class MacOSComponentAccessibilityTests {
+class MacOSComponentAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - macOS Component Tests
     
