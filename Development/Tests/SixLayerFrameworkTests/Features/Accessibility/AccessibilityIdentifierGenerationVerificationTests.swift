@@ -95,10 +95,10 @@ final class AccessibilityIdentifierGenerationVerificationTests {
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that combined breadcrumb modifiers actually generate identifiers
-    /// TESTING SCOPE: Tests that multiple breadcrumb modifiers work together end-to-end
+    /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers actually generate identifiers
+    /// TESTING SCOPE: Tests that automatic accessibility identifiers work together end-to-end
     /// METHODOLOGY: Tests the exact scenario from the bug report with multiple modifiers
-    @Test func testCombinedBreadcrumbModifiersActuallyGenerateIdentifiers() async {
+    @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIdentifiers() async {
         await MainActor.run {
             // Given: Configuration matching the bug report exactly
             let config = AccessibilityIdentifierConfig.shared
@@ -114,12 +114,11 @@ final class AccessibilityIdentifierGenerationVerificationTests {
                 Label("Add Fuel", systemImage: "plus")
             }
             .named("AddFuelButton")
-            .screenContext("FuelView")
             
             // Then: Test the two critical aspects
             
             // 1. View created - The view can be instantiated successfully
-            #expect(testView != nil, "Combined breadcrumb modifiers should create view successfully")
+            #expect(testView != nil, "Automatic accessibility identifiers should create view successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
             #expect(hasAccessibilityIdentifier(

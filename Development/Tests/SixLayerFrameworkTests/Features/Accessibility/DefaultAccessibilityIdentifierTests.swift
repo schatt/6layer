@@ -50,17 +50,16 @@ class DefaultAccessibilityIdentifierTests: BaseTestClass {
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that breadcrumb modifiers work by default
-    /// TESTING SCOPE: Tests that Enhanced Breadcrumb System works without explicit enabling
-    /// METHODOLOGY: Tests that .trackViewHierarchy() works out of the box
-    @Test func testBreadcrumbModifiersWorkByDefault() async {
+    /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers work by default
+    /// TESTING SCOPE: Tests that automatic accessibility identifiers work without explicit enabling
+    @Test func testAutomaticAccessibilityIdentifiersWorkByDefault() async {
         await MainActor.run {
             // Given: Default configuration
             let config = AccessibilityIdentifierConfig.shared
             config.enableDebugLogging = true
             // clearDebugLog method doesn't exist, so we skip that
             
-            // When: Using breadcrumb modifiers without explicit global enabling
+            // When: Using automatic accessibility identifiers without explicit global enabling
             let testView = Button(action: {}) {
                 Label("Test Button", systemImage: "plus")
             }
@@ -71,7 +70,7 @@ class DefaultAccessibilityIdentifierTests: BaseTestClass {
             // testView is non-optional, so no need to check for nil
             
             // Verify that the modifiers work without explicit global enabling
-            // The fix ensures breadcrumb modifiers set globalAutomaticAccessibilityIdentifiers = true
+            // The fix ensures automatic accessibility identifiers work by default
         }
     }
     

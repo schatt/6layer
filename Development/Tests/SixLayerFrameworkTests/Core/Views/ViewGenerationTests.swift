@@ -24,7 +24,7 @@ final class ViewGenerationTests: BaseTestClass {
     var sampleData: [TestDataItem] = []
     var layoutDecision: IntelligentCardLayoutDecision!
     
-    override init() async throws {
+    override init() {
         
         sampleData = [
             TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),

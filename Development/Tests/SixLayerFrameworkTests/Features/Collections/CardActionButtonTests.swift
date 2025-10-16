@@ -64,7 +64,7 @@ final class CardActionButtonTests: BaseTestClass {
     var layoutDecision: IntelligentCardLayoutDecision!
     var strategy: CardExpansionStrategy!
     
-    override init() async throws {
+    override init() {
         
         sampleItems = [
             TestItem(

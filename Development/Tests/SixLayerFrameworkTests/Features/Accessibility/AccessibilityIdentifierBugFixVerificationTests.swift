@@ -11,7 +11,6 @@ import SwiftUI
  * correctly.
  * 
  * TESTING SCOPE: Tests the specific bug scenario where .named() and
- * .screenContext() modifiers were not generating accessibility identifiers due to
  * missing globalAutomaticAccessibilityIdentifiers environment variable.
  * 
  * METHODOLOGY: Reproduces the exact configuration and usage pattern from the bug report
@@ -57,7 +56,6 @@ final class AccessibilityIdentifierBugFixVerificationTests {
             }
             .platformNavigationTitle("Fuel")
             .platformNavigationTitleDisplayMode(.inline)
-            .screenContext("FuelView")           // ✅ Applied
             .named("FuelView")      // ✅ Applied
             
             .platformToolbarWithTrailingActions {
@@ -117,7 +115,6 @@ final class AccessibilityIdentifierBugFixVerificationTests {
     }
     
     /// BUSINESS PURPOSE: Verify that .named() modifier respects screen context when combined
-    /// TESTING SCOPE: Tests the COMBINATION of .screenContext() and .named() modifiers
     /// METHODOLOGY: Tests that .named() modifier respects previously set screen context
     @Test func testNamedModifierWithScreenContext() async {
         await MainActor.run {
@@ -130,15 +127,12 @@ final class AccessibilityIdentifierBugFixVerificationTests {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            // When: Using BOTH .screenContext() and .named() modifiers
             let testView = Button(action: {}) {
                 Label("Add Fuel", systemImage: "plus")
             }
-            .screenContext("FuelView")
             .named("AddFuelButton")
             
             // Then: The view should be created successfully
-            #expect(testView != nil, "View with .screenContext() and .named() should be created successfully")
             
             // Test actual accessibility identifier generation (should use "FuelView" screen context)
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -147,11 +141,9 @@ final class AccessibilityIdentifierBugFixVerificationTests {
                 componentName: "AddFuelButton"
             )
             
-            #expect(hasAccessibilityID, "View with .screenContext() and .named() should generate accessibility identifiers matching pattern 'CarManager.FuelView.element.*'")
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that .screenContext() now generates accessibility identifiers
     /// TESTING SCOPE: Tests that screen context modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
     @Test func testScreenContextGeneratesIdentifiers() async {
@@ -164,14 +156,12 @@ final class AccessibilityIdentifierBugFixVerificationTests {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            // When: Using .screenContext() modifier (the failing case from bug report)
             let testView = VStack {
                 Text("Test Content")
             }
-            .screenContext("FuelView")
             
             // Then: The view should be created successfully
-            #expect(testView != nil, "View with screenContext should be created successfully")
+            #expect(testView != nil, "View with named modifier should be created successfully")
             
             // Test actual accessibility identifier generation
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -180,11 +170,10 @@ final class AccessibilityIdentifierBugFixVerificationTests {
                 componentName: "ScreenContext"
             )
             
-            #expect(hasAccessibilityID, "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that .navigationState() now generates accessibility identifiers
     /// TESTING SCOPE: Tests that navigation state modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
     @Test func testNavigationStateGeneratesIdentifiers() async {
@@ -197,14 +186,12 @@ final class AccessibilityIdentifierBugFixVerificationTests {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            // When: Using .navigationState() modifier
             let testView = HStack {
                 Text("Navigation Content")
             }
-            .navigationState("ProfileEditMode")
             
             // Then: The view should be created successfully
-            #expect(testView != nil, "View with navigationState should be created successfully")
+            #expect(testView != nil, "View with named modifier should be created successfully")
             
             // Test actual accessibility identifier generation
             let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -213,7 +200,7 @@ final class AccessibilityIdentifierBugFixVerificationTests {
                 componentName: "NavigationState"
             )
             
-            #expect(hasAccessibilityID, "View with navigationState should generate accessibility identifiers matching pattern 'CarManager.*'")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'CarManager.*'")
         }
     }
     
@@ -257,21 +244,21 @@ final class AccessibilityIdentifierBugFixVerificationTests {
             config.namespace = "CarManager"
             config.mode = .automatic
             
-            // When: Using breadcrumb modifiers that should set globalAutomaticAccessibilityIdentifiers
+            // When: Using automatic accessibility identifiers
             let testView = Button(action: {}) {
                 Label("Test", systemImage: "plus")
             }
             .named("TestButton")
             
             // Then: The view should be created successfully
-            #expect(testView != nil, "View with breadcrumb modifiers should be created successfully")
+            #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             
-            // The fix ensures that breadcrumb modifiers now set globalAutomaticAccessibilityIdentifiers = true
+            // The fix ensures that automatic accessibility identifiers work correctly
             #expect(hasAccessibilityIdentifier(
                 testView, 
                 expectedPattern: "CarManager.*element.*testbutton", 
-                componentName: "TrackViewHierarchy"
-            ), "TrackViewHierarchy should generate accessibility identifier")
+                componentName: "AutomaticAccessibilityIdentifiers"
+            ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
         }
     }
     

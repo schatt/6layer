@@ -123,7 +123,6 @@ final class AccessibilityIdentifierPersistenceTests {
         for (buttonName, screenContext) in testCases {
             let view = Button("Test") { }
                 .named(buttonName)
-                .screenContext(screenContext)
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             ids[buttonName] = generateIDForView(view)
@@ -140,7 +139,6 @@ final class AccessibilityIdentifierPersistenceTests {
         for (buttonName, screenContext) in testCases {
             let view = Button("Test") { }
                 .named(buttonName)
-                .screenContext(screenContext)
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             let newID = generateIDForView(view)
@@ -159,7 +157,6 @@ final class AccessibilityIdentifierPersistenceTests {
         
         let view1 = Button("Add Fuel") { }
             .named("AddFuelButton")
-            .screenContext("FuelView")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let id1 = generateIDForView(view1)
@@ -169,7 +166,6 @@ final class AccessibilityIdentifierPersistenceTests {
         
         let view2 = Button("Add Fuel") { }
             .named("AddFuelButton")
-            .screenContext("FuelView")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let id2 = generateIDForView(view2)
@@ -182,11 +178,9 @@ final class AccessibilityIdentifierPersistenceTests {
     
     @Test func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
         // TDD: This test focuses ONLY on persistence - truly identical views
-        // Same button text, same .named(), same .screenContext(), same everything
         
         let createIdenticalView = {
             Button("Add Fuel") { }
-                .screenContext("FuelView")
                 .named("AddFuelButton")
         }
         
@@ -215,7 +209,6 @@ final class AccessibilityIdentifierPersistenceTests {
         
         let createTestView = {
             Button("Test Button") { }
-                .screenContext("TestScreen")
                 .named("TestButton")
         }
         

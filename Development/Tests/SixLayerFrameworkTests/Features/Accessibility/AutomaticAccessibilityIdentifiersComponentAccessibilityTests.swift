@@ -107,20 +107,6 @@ class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTestClas
         #expect(hasAccessibilityID, "ScreenContextModifier should generate accessibility identifiers")
     }
     
-    @Test func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: NavigationStateModifier
-        let testView = NavigationStateModifier(navigationState: "TestState")
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            testView,
-            expectedPattern: "*.main.element.*",
-            componentName: "NavigationStateModifier"
-        )
-        
-        #expect(hasAccessibilityID, "NavigationStateModifier should generate accessibility identifiers")
-    }
-    
     @Test func testWorkingAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
         // Given: WorkingAccessibilityIdentifierModifier
         let testView = WorkingAccessibilityIdentifierModifier(identifier: "TestIdentifier")
@@ -268,15 +254,6 @@ struct ViewHierarchyTrackingModifier: ViewModifier {
 
 struct ScreenContextModifier: ViewModifier {
     let screenName: String
-    
-    func body(content: Content) -> some View {
-        content
-            .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct NavigationStateModifier: ViewModifier {
-    let navigationState: String
     
     func body(content: Content) -> some View {
         content

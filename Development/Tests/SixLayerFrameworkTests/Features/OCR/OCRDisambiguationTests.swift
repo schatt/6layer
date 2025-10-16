@@ -31,8 +31,8 @@ import SwiftUI
 @MainActor
 class OCRDisambiguationTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - Real OCR Disambiguation Tests (To Be Implemented)

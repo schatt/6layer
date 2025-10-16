@@ -33,9 +33,8 @@ final class AccessibilityGlobalLocalConfigTests {
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = false
         
-        // Create a view with breadcrumb modifiers (should NOT generate ID)
+        // Create a view with local disable modifier (should NOT generate ID)
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
         
         // Try to inspect for accessibility identifier
@@ -60,9 +59,8 @@ final class AccessibilityGlobalLocalConfigTests {
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
         
-        // Create a view with breadcrumb modifiers (should generate ID)
+        // Create a view with local enable modifier (should generate ID)
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
         
         // Test that the view has an accessibility identifier using the same method as working tests
@@ -88,10 +86,9 @@ final class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = true
         config.enableDebugLogging = true  // ← Enable debug logging
         
-        // Create a view with local disable modifier (apply disable BEFORE breadcrumb modifiers)
+        // Create a view with local disable modifier (apply disable BEFORE other modifiers)
         let view = Button("Test") { }
             .disableAutomaticAccessibilityIdentifiers()  // ← Apply disable FIRST
-            .screenContext("TestScreen")
             .named("TestButton")
         
         // Try to inspect for accessibility identifier
@@ -118,7 +115,6 @@ final class AccessibilityGlobalLocalConfigTests {
         
         // Create a view with local enable modifier
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
             .automaticAccessibilityIdentifiers()  // ← Local enable
         
@@ -146,7 +142,6 @@ final class AccessibilityGlobalLocalConfigTests {
         
         // Create a view with local disable (should override global enable)
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
             .disableAutomaticAccessibilityIdentifiers()  // ← Should override global enable
         
@@ -173,7 +168,6 @@ final class AccessibilityGlobalLocalConfigTests {
         
         // Create a view with local enable (should override global disable)
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
             .automaticAccessibilityIdentifiers()  // ← Should override global disable
         
@@ -201,7 +195,6 @@ final class AccessibilityGlobalLocalConfigTests {
         
         // Create a view with environment variable override
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
             .environment(\.disableAutomaticAccessibilityIdentifiers, true)  // ← Environment override
         

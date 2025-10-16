@@ -84,7 +84,7 @@ final class AccessibilityIdentifierTDDTests {
             Button("Edit") { }
                 .named("EditButton")
         }
-        .screenContext("UserProfile")
+        .named("UserProfile")
         .named("ProfileView")
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -123,7 +123,7 @@ final class AccessibilityIdentifierTDDTests {
             }
             .named("ItemList")
         }
-        .screenContext("ComplexView")
+        .named("ComplexView")
         .named("ComplexContainer")
         .enableGlobalAutomaticAccessibilityIdentifiers()
         

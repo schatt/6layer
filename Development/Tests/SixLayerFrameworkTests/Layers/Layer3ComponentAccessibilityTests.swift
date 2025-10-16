@@ -14,8 +14,8 @@ import SwiftUI
 @MainActor
 class Layer3ComponentAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - Layer 3 Semantic Functions Tests

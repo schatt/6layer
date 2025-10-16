@@ -10,8 +10,8 @@ import ViewInspector
 @MainActor
 final class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     deinit {
@@ -23,10 +23,8 @@ final class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 1: Empty String Parameters
     
     @Test func testEmptyStringParameters() {
-        // Test: What happens with empty strings in .named() and .screenContext()
         let view = Button("Test") { }
             .named("")  // ← Empty string
-            .screenContext("")  // ← Empty string
         
         do {
             let inspectedView = try view.inspect()
@@ -49,7 +47,6 @@ final class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
         // Test: How are special characters handled in names?
         let view = Button("Test") { }
             .named("Button@#$%^&*()")  // ← Special characters
-            .screenContext("Screen-With_Dots.and spaces")  // ← Mixed characters
         
         do {
             let inspectedView = try view.inspect()
@@ -162,12 +159,9 @@ final class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 6: Multiple Screen Contexts
     
     @Test func testMultipleScreenContexts() {
-        // Test: Which context wins when multiple .screenContext() calls?
         let view = VStack {
             Text("Content")
         }
-        .screenContext("FirstScreen")
-        .screenContext("SecondScreen")  // ← Multiple contexts
         .named("TestView")
         
         do {
@@ -283,7 +277,6 @@ final class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
         // Test: How are Unicode characters handled?
         let view = Button("Test") { }
             .named("按钮")  // ← Chinese characters
-            .screenContext("écran")  // ← French with accent
         
         do {
             let inspectedView = try view.inspect()

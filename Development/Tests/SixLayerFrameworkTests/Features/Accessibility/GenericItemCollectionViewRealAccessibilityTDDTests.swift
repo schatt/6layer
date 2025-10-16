@@ -10,8 +10,8 @@ import ViewInspector
 @MainActor
 class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
         // Additional setup if needed
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

@@ -13,16 +13,12 @@ import ViewInspector
 @MainActor
 class Layer1AccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
-    }
-    
-    // MARK: - Test Setup
+     // MARK: - Test Setup
     
     private var testItems: [Layer1TestItem]!
     private var testHints: PresentationHints!
     
-    override init() async throws {
+    override init() {
                 testItems = [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")

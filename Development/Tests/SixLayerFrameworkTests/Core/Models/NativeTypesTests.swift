@@ -57,7 +57,7 @@ final class NativeTypesTests: BaseTestClass {
     var formState: DynamicFormState!
     var configuration: DynamicFormConfiguration!
     
-    override init() async throws {
+    override init() {
         super.init()
         await setupTestEnvironment()
     }

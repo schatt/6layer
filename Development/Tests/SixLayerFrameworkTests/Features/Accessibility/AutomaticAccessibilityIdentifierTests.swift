@@ -461,34 +461,6 @@ final class AutomaticAccessibilityIdentifierTests {
         }
     }
     
-    /// BUSINESS PURPOSE: Screen context should be tracked correctly
-    /// TESTING SCOPE: Tests that screen context is properly set and tracked
-    /// METHODOLOGY: Unit tests for screen context management
-    @Test func testScreenContextTracking() async {
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            
-            // Enable UI test integration and debug logging
-            config.enableUITestIntegration = true
-            config.enableDebugLogging = true
-            config.clearDebugLog()
-            
-            // Set screen context
-            config.setScreenContext("UserProfile")
-            config.setNavigationState("ProfileEditMode")
-            
-            // Generate an ID
-            let generator = AccessibilityIdentifierGenerator()
-            let _ = generator.generateID(for: "test", role: "button", context: "ui")
-            
-            // Check that the enhanced log contains screen context
-            #expect(!config.enhancedDebugLog.isEmpty)
-            let entry = config.enhancedDebugLog.first!
-            #expect(entry.screenContext == "UserProfile")
-            #expect(entry.navigationState == "ProfileEditMode")
-        }
-    }
-    
     /// BUSINESS PURPOSE: UI test code generation should work correctly
     /// TESTING SCOPE: Tests that UI test code is generated properly
     /// METHODOLOGY: Unit tests for UI test code generation
@@ -525,40 +497,6 @@ final class AutomaticAccessibilityIdentifierTests {
             // Check that test code includes view context information
             #expect(testCode.contains("// Element is in:"), "Generated code should include view context comment")
             #expect(testCode.contains("should exist in"), "Assertion message should include containing view name")
-        }
-    }
-    
-    /// BUSINESS PURPOSE: Breadcrumb trail should be generated correctly
-    /// TESTING SCOPE: Tests that breadcrumb trail is formatted properly
-    /// METHODOLOGY: Unit tests for breadcrumb trail generation
-    @Test func testBreadcrumbTrailGeneration() async {
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            
-            // Enable enhanced features
-            config.enableUITestIntegration = true
-            config.enableViewHierarchyTracking = true
-            config.enableDebugLogging = true
-            config.clearDebugLog()
-            
-            // Set up context
-            config.setScreenContext("UserProfile")
-            config.setNavigationState("ProfileEditMode")
-            config.pushViewHierarchy("NavigationView")
-            config.pushViewHierarchy("ProfileSection")
-            
-            // Generate an ID
-            let generator = AccessibilityIdentifierGenerator()
-            let _ = generator.generateID(for: "test", role: "button", context: "ui")
-            
-            // Generate breadcrumb trail
-            let breadcrumb = config.generateBreadcrumbTrail()
-            
-            // Check that breadcrumb contains expected elements
-            #expect(breadcrumb.contains("🍞 Accessibility ID Breadcrumb Trail:"))
-            #expect(breadcrumb.contains("📱 Screen: UserProfile"))
-            #expect(breadcrumb.contains("📍 Path: NavigationView → ProfileSection"))
-            #expect(breadcrumb.contains("🧭 Navigation: ProfileEditMode"))
         }
     }
     
@@ -675,7 +613,6 @@ final class AutomaticAccessibilityIdentifierTests {
     // MARK: - Integration Tests (TDD for Bug Fix)
     
     /// TDD RED PHASE: Reproduces the user's bug report
-    /// Tests that .trackViewHierarchy() automatically applies accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
     @Test func testTrackViewHierarchyAutomaticallyAppliesAccessibilityIdentifiers() async {
         await MainActor.run {
@@ -705,60 +642,6 @@ final class AutomaticAccessibilityIdentifierTests {
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
             #expect(config.namespace == "CarManager", "Namespace should be set correctly")
             #expect(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
-        }
-    }
-    
-    /// TDD RED PHASE: Tests that .screenContext() automatically applies accessibility identifiers
-    /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    @Test func testScreenContextAutomaticallyAppliesAccessibilityIdentifiers() async {
-        await MainActor.run {
-            // Given: Configuration is enabled
-            let config = AccessibilityIdentifierConfig.shared
-            config.enableAutoIDs = true
-            config.namespace = "CarManager"
-            config.mode = .automatic
-            
-            // When: A view uses .screenContext() modifier
-            let testView = VStack {
-                Text("Test Content")
-            }
-            .screenContext("UserProfile")
-            
-            // Test that screenContext generates accessibility identifiers
-            #expect(hasAccessibilityIdentifier(
-                testView, 
-                expectedPattern: "CarManager.UserProfile.element.*", 
-                componentName: "ScreenContext"
-            ), "View with screenContext should generate accessibility identifiers matching pattern 'CarManager.UserProfile.element.*'")
-            
-            // Also verify configuration is correct
-            #expect(config.enableAutoIDs, "Auto IDs should be enabled")
-            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
-        }
-    }
-    
-    /// TDD Test: Tests that .navigationState() automatically applies accessibility identifiers
-    @Test func testNavigationStateAutomaticallyAppliesAccessibilityIdentifiers() async {
-        await MainActor.run {
-            // Given: Configuration is enabled
-            let config = AccessibilityIdentifierConfig.shared
-            config.enableAutoIDs = true
-            config.namespace = "CarManager"
-            config.mode = .automatic
-            
-            // When: A view uses .navigationState() modifier
-            let testView = HStack {
-                Text("Navigation Content")
-            }
-            .navigationState("ProfileEditMode")
-            
-            // Then: The view should have automatic accessibility identifier configuration
-            #expect(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
-            #expect(testViewWithGlobalModifier(testView), "View with navigationState should work with global modifier")
-            
-            // Also verify configuration is correct
-            #expect(config.enableAutoIDs, "Auto IDs should be enabled")
-            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
         }
     }
     

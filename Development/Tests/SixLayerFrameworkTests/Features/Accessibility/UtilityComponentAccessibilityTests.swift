@@ -155,7 +155,6 @@ class UtilityComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .screenContext("TestScreen")
         .automaticAccessibilityIdentifiers()
         
         // When: Testing screen matching
@@ -195,7 +194,6 @@ class UtilityComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .navigationState("TestState")
         .automaticAccessibilityIdentifiers()
         
         // When: Testing state matching
@@ -215,9 +213,7 @@ class UtilityComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .screenContext("TestScreen")
         .named("TestElement")
-        .navigationState("TestState")
         .automaticAccessibilityIdentifiers()
         
         // When: Testing hierarchy matching

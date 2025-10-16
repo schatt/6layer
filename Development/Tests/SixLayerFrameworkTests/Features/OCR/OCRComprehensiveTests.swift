@@ -33,8 +33,8 @@ import SwiftUI
 @MainActor
 class OCRComprehensiveTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - Real OCR Comprehensive Tests (To Be Implemented)

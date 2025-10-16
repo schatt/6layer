@@ -68,20 +68,20 @@ final class AccessibilityIdentifierLogicVerificationTests {
         }
     }
     
-    /// BUSINESS PURPOSE: Verify that breadcrumb modifiers properly set globalAutomaticAccessibilityIdentifiers
-    /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifiers enable identifier generation
-    /// METHODOLOGY: Tests that breadcrumb modifiers set the required environment variable
-    @Test func testBreadcrumbModifiersSetGlobalAutomaticAccessibilityIdentifiers() async {
+    /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers work properly
+    /// TESTING SCOPE: Tests that automatic accessibility identifiers work correctly
+    /// METHODOLOGY: Tests that automatic accessibility identifiers work correctly
+    @Test func testAutomaticAccessibilityIdentifiersWorkCorrectly() async {
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
             config.namespace = "test"
             
-            // Test that breadcrumb modifiers now include the environment variable setting
+            // Test that automatic accessibility identifiers work correctly
             // This is the fix that was applied to resolve the bug
             
-            // Before the fix, breadcrumb modifiers did NOT set globalAutomaticAccessibilityIdentifiers
-            // After the fix, they DO set it to true
+            // Before the fix, automatic accessibility identifiers did NOT work correctly
+            // After the fix, they DO work correctly
             
             // We can't easily test the environment variable directly in unit tests,
             // but we can verify that the modifier chain compiles and the configuration is correct
@@ -94,17 +94,15 @@ final class AccessibilityIdentifierLogicVerificationTests {
             let testView2 = Button(action: {}) {
                 Label("Test", systemImage: "plus")
             }
-            .screenContext("TestScreen")
             
             let testView3 = Button(action: {}) {
                 Label("Test", systemImage: "plus")
             }
-            .navigationState("TestState")
             
             // Verify that all modifier chains compile successfully
-            #expect(testView1 != nil, "trackViewHierarchy modifier should compile successfully")
-            #expect(testView2 != nil, "screenContext modifier should compile successfully")
-            #expect(testView3 != nil, "navigationState modifier should compile successfully")
+            #expect(testView1 != nil, "named modifier should compile successfully")
+            #expect(testView2 != nil, "automatic accessibility identifiers should compile successfully")
+            #expect(testView3 != nil, "automatic accessibility identifiers should compile successfully")
             
             // Verify configuration is correct
             #expect(config.enableAutoIDs, "Automatic IDs should be enabled")
@@ -176,7 +174,6 @@ final class AccessibilityIdentifierLogicVerificationTests {
                 Label("Add Fuel", systemImage: "plus")
             }
             .named("AddFuelButton")
-            .screenContext("FuelView")
             
             // Then: The view should be created successfully
             #expect(testView != nil, "The exact bug scenario should now work correctly")
@@ -188,7 +185,7 @@ final class AccessibilityIdentifierLogicVerificationTests {
             #expect(config.enableUITestIntegration, "UI test integration should be enabled")
             #expect(config.enableDebugLogging, "Debug logging should be enabled")
             
-            // The key fix was that breadcrumb modifiers now set globalAutomaticAccessibilityIdentifiers = true
+            // The key fix was that automatic accessibility identifiers now work correctly
             // This ensures that the AccessibilityIdentifierAssignmentModifier evaluates shouldApplyAutoIDs as true
         }
     }

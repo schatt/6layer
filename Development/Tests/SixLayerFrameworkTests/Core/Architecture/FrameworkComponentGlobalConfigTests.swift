@@ -33,7 +33,6 @@ final class FrameworkComponentGlobalConfigTests {
         
         // Create a framework component (this should NOT generate an ID)
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
         
         // Try to inspect for accessibility identifier
@@ -60,7 +59,6 @@ final class FrameworkComponentGlobalConfigTests {
         
         // Create a framework component (this SHOULD generate an ID)
         let view = Button("Test") { }
-            .screenContext("TestScreen")
             .named("TestButton")
         
         // Try to inspect for accessibility identifier

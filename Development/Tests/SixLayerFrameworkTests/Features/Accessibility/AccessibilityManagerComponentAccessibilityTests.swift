@@ -14,8 +14,8 @@ import SwiftUI
 @MainActor
 final class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - AccessibilityManager Tests

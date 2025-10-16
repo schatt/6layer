@@ -10,8 +10,8 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 class EyeTrackingManagerAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - EyeTrackingManager Tests

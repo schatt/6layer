@@ -19,7 +19,7 @@ final class ItemCollectionL1Tests: BaseTestClass {
     private var sampleItems: [GenericDataItem] = []
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override init() async throws {
+    override init() {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
     }

@@ -45,8 +45,8 @@ final class EyeTrackingTests: BaseTestClass {
     
     // MARK: - Setup and Teardown
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
         testConfig = EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,

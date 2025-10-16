@@ -472,16 +472,16 @@ final class CrossPlatformOptimizationLayer6Tests {
         let manager = CrossPlatformOptimizationManager()
         
         // When: Measuring optimization performance
-        measure {
-            // Create and optimize multiple views
-            for _ in 0..<10 {
-                let testView = Text("Performance Test View")
-                let _ = manager.optimizeView(testView)
-            }
+        let startTime = CFAbsoluteTimeGetCurrent()
+        // Create and optimize multiple views
+        for _ in 0..<10 {
+            let testView = Text("Performance Test View")
+            let _ = manager.optimizeView(testView)
         }
+        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
         
         // Then: Performance should be acceptable
-        #expect(manager != nil, "Manager should exist for performance test")
+        #expect(executionTime < 1.0, "Cross-platform optimization should complete within 1 second")
     }
     
     // MARK: - Platform Detection Tests

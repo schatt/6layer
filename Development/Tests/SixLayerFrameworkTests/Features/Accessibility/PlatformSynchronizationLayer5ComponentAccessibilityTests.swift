@@ -14,8 +14,8 @@ import SwiftUI
 @MainActor
 final class PlatformSynchronizationLayer5ComponentAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - Platform Synchronization Layer 5 Component Tests

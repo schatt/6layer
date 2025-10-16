@@ -9,8 +9,8 @@ import ViewInspector
 @MainActor
 final class AccessibilityIdentifiersDebugTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     deinit {

@@ -31,7 +31,7 @@ final class CardContentDisplayTests: BaseTestClass {
     var sampleItemsWithData: [TestItemWithData] = []
     var layoutDecision: IntelligentCardLayoutDecision!
     
-    override init() async throws {
+    override init() {
         
         sampleItems = [
             TestItem(title: "Test Item 1", subtitle: "Subtitle 1", description: "Description 1", icon: "star.fill", color: .blue),

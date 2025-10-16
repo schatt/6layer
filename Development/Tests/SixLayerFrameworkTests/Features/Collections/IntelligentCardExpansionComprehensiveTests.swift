@@ -15,7 +15,7 @@ import SwiftUI
 @MainActor
 final class IntelligentCardExpansionComprehensiveTests: BaseTestClass {
     
-    override init() async throws {
+    override init() {
         super.init()
         // Additional setup if needed
     }

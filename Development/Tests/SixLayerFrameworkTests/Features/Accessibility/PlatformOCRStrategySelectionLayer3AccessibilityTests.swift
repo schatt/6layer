@@ -10,8 +10,8 @@ import ViewInspector
 @MainActor
 final class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
         // Additional setup if needed
     }
     

@@ -9,13 +9,13 @@ open class BaseTestClass {
     // MARK: - Test Setup
     
     @MainActor
-    public init() async throws {
-        await setupTestEnvironment()
+    public init() {
+        // Base class initialization - individual tests handle their own setup
     }
     
     @MainActor
-    open func setupTestEnvironment() async {
-        await TestSetupUtilities.shared.setupTestingEnvironment()
+    open func setupTestEnvironment() {
+        TestSetupUtilities.shared.setupTestingEnvironment()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
@@ -25,14 +25,14 @@ open class BaseTestClass {
     }
     
     @MainActor
-    open func cleanupTestEnvironment() async {
+    open func cleanupTestEnvironment() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
     
     deinit {
         Task { [weak self] in
-            await self?.cleanupTestEnvironment()
+            self?.cleanupTestEnvironment()
         }
     }
 }

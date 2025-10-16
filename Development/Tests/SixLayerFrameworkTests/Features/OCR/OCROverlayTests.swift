@@ -18,7 +18,7 @@ final class OCROverlayTests: BaseTestClass {
     var testOCRResult: OCRResult!
     var testBoundingBoxes: [CGRect]!
     
-    override init() async throws {
+    override init() {
         super.init()
         
         // Create test image

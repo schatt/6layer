@@ -18,7 +18,7 @@ final class ModalFormL1Tests: BaseTestClass {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override init() async throws {
+    override init() {
         sampleHints = PresentationHints()
     }
     

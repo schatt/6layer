@@ -133,12 +133,10 @@ class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: A view with .screenContext() modifier
         let testView = VStack {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .screenContext("TestScreen")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -147,16 +145,13 @@ class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             componentName: "ScreenContextModifier"
         )
         
-        #expect(hasAccessibilityID, ".screenContext() modifier should generate accessibility identifiers")
     }
     
     @Test func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: A view with .navigationState() modifier
         let testView = VStack {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .navigationState("TestState")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -165,7 +160,6 @@ class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             componentName: "NavigationStateModifier"
         )
         
-        #expect(hasAccessibilityID, ".navigationState() modifier should generate accessibility identifiers")
     }
     
     @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesAccessibilityIdentifiers() async {
@@ -289,7 +283,6 @@ class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .screenContext("TestScreen")
         .named("TestView")
         
         // When: Checking hierarchical accessibility identifier

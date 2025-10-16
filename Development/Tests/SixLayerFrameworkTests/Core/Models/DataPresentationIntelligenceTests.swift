@@ -7,7 +7,7 @@ final class DataPresentationIntelligenceTests: BaseTestClass {
     
     var intelligence: DataPresentationIntelligence!
     
-    override init() async throws {
+    override init() {
         super.init()
         intelligence = DataPresentationIntelligence.shared
     }

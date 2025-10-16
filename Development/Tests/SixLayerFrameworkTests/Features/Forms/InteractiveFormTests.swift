@@ -404,12 +404,12 @@ final class InteractiveFormTests: XCTestCase {
         }
         
         // When & Then
-        measure {
-            let formView = // MARK: - DEPRECATED: SimpleFormView uses GenericFormField which has been deprecated
-        // TODO: Replace with DynamicFormView using DynamicFormField
-        Text("Form functionality temporarily disabled - needs DynamicFormField migration")
+        let startTime = CFAbsoluteTimeGetCurrent()
+        let formView = Text("Form functionality temporarily disabled - needs DynamicFormField migration")
             .foregroundColor(.secondary)
             .padding()
+        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+        #expect(executionTime < 0.1, "Form view creation should be fast")
         // SimpleFormView(
                 fields: largeFieldSet,
                 hints: testHints,

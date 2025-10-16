@@ -307,11 +307,12 @@ final class WindowDetectionTests {
         // GIVEN: A window detection instance
         // WHEN: Update window info is called many times
         // THEN: Should complete within reasonable time
-        measure {
-            for _ in 0..<1000 {
-                windowDetection.updateWindowInfo()
-            }
+        let startTime = CFAbsoluteTimeGetCurrent()
+        for _ in 0..<1000 {
+            windowDetection.updateWindowInfo()
         }
+        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+        #expect(executionTime < 1.0, "Window detection should complete within 1 second")
     }
     
     @Test func testScreenSizeClassCalculationPerformance() {
@@ -327,13 +328,14 @@ final class WindowDetectionTests {
         
         // WHEN: Screen size class is calculated many times
         // THEN: Should complete within reasonable time
-        measure {
-            for _ in 0..<10000 {
-                for size in testSizes {
-                    _ = ScreenSizeClass.from(screenSize: size)
-                }
+        let startTime = CFAbsoluteTimeGetCurrent()
+        for _ in 0..<10000 {
+            for size in testSizes {
+                _ = ScreenSizeClass.from(screenSize: size)
             }
         }
+        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+        #expect(executionTime < 1.0, "Screen size class calculation should complete within 1 second")
     }
     
     // MARK: - Memory Management Tests

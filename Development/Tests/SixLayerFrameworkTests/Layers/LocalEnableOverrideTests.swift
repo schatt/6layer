@@ -97,7 +97,6 @@ final class LocalEnableOverrideTests {
         // 2. Create a framework component (should NOT generate ID)
         let view = Button("Framework Button") { }
             .named("FrameworkButton")
-            .screenContext("FrameworkScreen")
         
         // 3. Try to inspect for accessibility identifier
         do {

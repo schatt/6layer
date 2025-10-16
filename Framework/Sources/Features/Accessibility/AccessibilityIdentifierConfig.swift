@@ -51,6 +51,12 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Debug logging mode
     @Published public var enableDebugLogging: Bool = false
     
+    /// Debug log entries
+    @Published private var debugLogEntries: [String] = []
+    
+    /// Maximum number of debug log entries to keep
+    private let maxDebugLogEntries = 1000
+    
     /// Configuration mode
     @Published public var mode: AccessibilityMode = .automatic
     
@@ -89,4 +95,41 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     public func setViewHierarchy(_ hierarchy: [String]) {
         currentViewHierarchy = hierarchy
     }
+    
+    // MARK: - Debug Logging Methods
+    
+    /// Get the current debug log as a formatted string
+    public func getDebugLog() -> String {
+        return debugLogEntries.joined(separator: "\n")
+    }
+    
+    /// Clear the debug log
+    public func clearDebugLog() {
+        debugLogEntries.removeAll()
+    }
+    
+    /// Add an entry to the debug log (internal method)
+    internal func addDebugLogEntry(_ entry: String) {
+        guard enableDebugLogging else { return }
+        
+        let timestamp = DateFormatter.debugTimestamp.string(from: Date())
+        let formattedEntry = "[\(timestamp)] \(entry)"
+        
+        debugLogEntries.append(formattedEntry)
+        
+        // Keep only the most recent entries
+        if debugLogEntries.count > maxDebugLogEntries {
+            debugLogEntries.removeFirst(debugLogEntries.count - maxDebugLogEntries)
+        }
+    }
+}
+
+// MARK: - DateFormatter Extension
+
+private extension DateFormatter {
+    static let debugTimestamp: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        return formatter
+    }()
 }

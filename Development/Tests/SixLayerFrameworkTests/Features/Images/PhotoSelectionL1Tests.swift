@@ -25,7 +25,7 @@ final class PhotoSelectionL1Tests: BaseTestClass {
     
     private var sampleHints: PresentationHints = PresentationHints()
     
-    override init() async throws {
+    override init() {
         super.init()
         samplePhotoContext = PhotoContext(
             screenSize: CGSize(width: 375, height: 667),

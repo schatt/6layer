@@ -14,8 +14,8 @@ import SwiftUI
 @MainActor
 final class PlatformInformationLayer5ComponentAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - Platform Information Layer 5 Component Tests

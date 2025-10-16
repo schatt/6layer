@@ -5,7 +5,7 @@ import Testing
 @MainActor
 final class SixLayerFrameworkTests: BaseTestClass {
     
-    override init() async throws {
+    override init() {
         super.init()
         // Additional setup if needed
     }

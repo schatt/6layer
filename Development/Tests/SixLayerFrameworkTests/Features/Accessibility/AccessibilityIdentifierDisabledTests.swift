@@ -62,12 +62,11 @@ final class AccessibilityIdentifierDisabledTests {
     }
     
     @Test func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
-        // Test: Breadcrumb modifiers (.named, .screenContext) should still work for tracking
+        // Test: Named modifiers should still work for tracking
         let view = VStack {
             Text("Content")
         }
         .named("TestView")
-        .screenContext("TestScreen")
         
         // Even with automatic IDs disabled, the modifiers should not crash
         do {

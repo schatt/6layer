@@ -13,8 +13,8 @@ import ViewInspector
 @MainActor
 class RemainingComponentsAccessibilityTests: BaseTestClass {
     
-    override init() async throws {
-        try await super.init()
+    override init() {
+        super.init()
     }
     
     // MARK: - ExpandableCardComponent Tests
