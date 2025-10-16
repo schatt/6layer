@@ -7,7 +7,7 @@ import SwiftUI
 /// Tests for Material Accessibility features
 /// Ensures materials are accessible and comply with accessibility standards
 @MainActor
-final class MaterialAccessibilityTests {
+class MaterialAccessibilityTests: BaseAccessibilityTestClass {
     
     // MARK: - Material Contrast Validation Tests
     
