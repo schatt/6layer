@@ -227,7 +227,8 @@ open class PlatformBehaviorTests {
     // MARK: - Layer 2: Card Expansion Behavior Tests
     
     
-    @Test func testCardExpansionTouchBehavior(config: CardExpansionPlatformConfig) {
+    @Test func testCardExpansionTouchBehavior() {
+        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
         if config.supportsTouch {
             // Touch platforms should have appropriate touch targets
             #expect(config.minTouchTarget >= 44, 
@@ -251,7 +252,8 @@ open class PlatformBehaviorTests {
         }
     }
     
-    @Test func testCardExpansionHoverBehavior(config: CardExpansionPlatformConfig) {
+    @Test func testCardExpansionHoverBehavior() {
+        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
         if config.supportsHover {
             // Hover platforms should have hover delay
             #expect(config.hoverDelay >= 0, 
@@ -263,7 +265,8 @@ open class PlatformBehaviorTests {
         }
     }
     
-    @Test func testCardExpansionAccessibilityBehavior(config: CardExpansionPlatformConfig) {
+    @Test func testCardExpansionAccessibilityBehavior() {
+        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
         // All platforms should support accessibility
         #expect(config.supportsVoiceOver, 
                      "All platforms should support VoiceOver")
@@ -271,7 +274,9 @@ open class PlatformBehaviorTests {
                      "All platforms should support SwitchControl")
     }
     
-    @Test func testCardExpansionPerformanceBehavior(config: CardExpansionPlatformConfig, performanceConfig: CardExpansionPerformanceConfig) {
+    @Test func testCardExpansionPerformanceBehavior() {
+        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
+        let performanceConfig = CardExpansionPerformanceConfig()
         // Test that performance settings match platform capabilities
         if config.supportsTouch {
             // Touch platforms should have appropriate animation settings
@@ -289,7 +294,10 @@ open class PlatformBehaviorTests {
     // MARK: - Layer 3: OCR Behavior Tests
     
     
-    @Test func testOCREnabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy) {
+    @Test func testOCREnabledBehavior() {
+        let image = PlatformImage(systemName: "doc.text")
+        let context = OCRContext(confidence: 0.8, language: .english)
+        let strategy = OCRStrategy.vision
         // OCR should be available
         #expect(isVisionOCRAvailable(), "OCR should be available")
         
@@ -313,7 +321,10 @@ open class PlatformBehaviorTests {
         // Just verify the function can be called without crashing
     }
     
-    @Test func testOCRDisabledBehavior(image: PlatformImage, context: OCRContext, strategy: OCRStrategy) {
+    @Test func testOCRDisabledBehavior() {
+        let image = PlatformImage(systemName: "doc.text")
+        let context = OCRContext(confidence: 0.8, language: .english)
+        let strategy = OCRStrategy.vision
         // OCR should not be available
         #expect(!isVisionOCRAvailable(), "OCR should not be available")
         
@@ -376,7 +387,8 @@ open class PlatformBehaviorTests {
     // MARK: - Layer 6: Platform System Behavior Tests
     
     
-    @Test func testPlatformSystemTouchBehavior(testView: some View) {
+    @Test func testPlatformSystemTouchBehavior() {
+        let testView = Text("Test")
         let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
@@ -390,7 +402,8 @@ open class PlatformBehaviorTests {
         }
     }
     
-    @Test func testPlatformSystemHoverBehavior(testView: some View) {
+    @Test func testPlatformSystemHoverBehavior() {
+        let testView = Text("Test")
         let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         if config.supportsHover {
@@ -404,7 +417,8 @@ open class PlatformBehaviorTests {
         }
     }
     
-    @Test func testPlatformSystemAccessibilityBehavior(testView: some View) {
+    @Test func testPlatformSystemAccessibilityBehavior() {
+        let testView = Text("Test")
         let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         // All platforms should support accessibility

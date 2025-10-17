@@ -34,11 +34,7 @@ open class OCRServiceTests {
         // TODO: Set up real OCR service tests
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // Cleanup handled by BaseTestClass
     
     // MARK: - Real OCR Service Tests (To Be Implemented)
     

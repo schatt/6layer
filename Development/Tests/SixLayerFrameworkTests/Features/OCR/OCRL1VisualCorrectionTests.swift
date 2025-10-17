@@ -29,19 +29,11 @@ import SwiftUI
 /// Tests for Layer 1 OCR visual correction functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR visual correction functionality
 @MainActor
-open class OCRL1VisualCorrectionTests {
+open class OCRL1VisualCorrectionTests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        // TODO: Set up real Layer 1 OCR visual correction tests
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+
     
     // MARK: - Real Layer 1 OCR Visual Correction Tests (To Be Implemented)
     

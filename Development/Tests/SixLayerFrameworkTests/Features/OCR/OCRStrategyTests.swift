@@ -29,20 +29,9 @@ import SwiftUI
 /// Tests for OCR strategy functionality
 /// TODO: Implement real tests that test actual OCR strategy functionality
 @MainActor
-open class OCRStrategyTests {
+open class OCRStrategyTests: BaseTestClass {
     
-    // MARK: - Test Setup
-    
-    init() async throws {
-        // TODO: Set up real OCR strategy tests
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
+
     // MARK: - Real OCR Strategy Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test OCR strategy functionality:

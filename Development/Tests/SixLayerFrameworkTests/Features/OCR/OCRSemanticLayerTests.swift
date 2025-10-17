@@ -37,20 +37,8 @@ import AppKit
 /// Tests for OCR semantic layer functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
-open class OCRSemanticLayerTests {
-    
-    // MARK: - Test Setup
-    
-    init() async throws {
-        // TODO: Set up real OCR service tests
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
+open class OCRSemanticLayerTests: BaseTestClass {
+        
     // MARK: - Real OCR Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test OCR functionality:

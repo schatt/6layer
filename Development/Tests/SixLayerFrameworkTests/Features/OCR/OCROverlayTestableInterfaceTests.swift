@@ -29,19 +29,8 @@ import SwiftUI
 /// Tests for OCR overlay testable interface functionality
 /// TODO: Implement real tests that test actual OCR overlay testable interface functionality
 @MainActor
-open class OCROverlayTestableInterfaceTests {
+open class OCROverlayTestableInterfaceTests: BaseTestClass {
     
-    // MARK: - Test Setup
-    
-    init() async throws {
-        // TODO: Set up real OCR overlay testable interface tests
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
     
     // MARK: - Real OCR Overlay Testable Interface Tests (To Be Implemented)
     

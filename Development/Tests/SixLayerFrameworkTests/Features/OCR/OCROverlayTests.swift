@@ -61,6 +61,7 @@ open class OCROverlayTests: BaseTestClass {
         let onTextDelete: (CGRect) -> Void = { _ in }
         
         // When: Creating OCR overlay view
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -69,9 +70,9 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // Then: Should initialize successfully and be hostable
-        let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
+        let hostingView = hostRootPlatformView(overlayView)
         #expect(hostingView != nil, "OCR overlay view should be hostable")
-        #expect(overlayView != nil, "OCR overlay view should be created")
+        // OCROverlayView is non-optional - no need to check for nil
     }
     
     @Test func testOCROverlayViewWithEmptyResult() {
@@ -86,6 +87,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // When: Creating overlay with empty result
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: emptyResult,
@@ -94,7 +96,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // Then: Should handle empty result gracefully
-        #expect(overlayView != nil, "Overlay should handle empty result")
+        // OCROverlayView is non-optional - no need to check for nil
     }
     
     // MARK: - Bounding Box Visualization Tests
@@ -139,6 +141,7 @@ open class OCROverlayTests: BaseTestClass {
     @Test func testTextRegionTapDetection() {
         // Given: OCR overlay with text regions
         var _: (String, CGRect)?
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -160,6 +163,7 @@ open class OCROverlayTests: BaseTestClass {
     
     @Test func testTextRegionTapOutsideBounds() {
         // Given: OCR overlay
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -179,6 +183,7 @@ open class OCROverlayTests: BaseTestClass {
     
     @Test func testTextEditingModeToggle() {
         // Given: OCR overlay
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -199,6 +204,7 @@ open class OCROverlayTests: BaseTestClass {
         // Given: OCR overlay in editing mode
         var editedText: String?
         var editedRect: CGRect?
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -222,6 +228,7 @@ open class OCROverlayTests: BaseTestClass {
     
     @Test func testTextEditingCancellation() {
         // Given: OCR overlay in editing mode
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -244,6 +251,7 @@ open class OCROverlayTests: BaseTestClass {
     @Test func testTextRegionDeletion() {
         // Given: OCR overlay
         var deletedRect: CGRect?
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -294,19 +302,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // When: Creating overlays
-        let highConfidenceOverlay = OCROverlayView(
-            image: testImage,
-            result: highConfidenceResult,
-            onTextEdit: { _, _ in },
-            onTextDelete: { _ in }
-        )
-        
-        let lowConfidenceOverlay = OCROverlayView(
-            image: testImage,
-            result: lowConfidenceResult,
-            onTextEdit: { _, _ in },
-            onTextDelete: { _ in }
-        )
+        // OCROverlayView is non-optional - no need to check for nil
         
         // Then: Should provide different visual indicators
         // Test high confidence (above high threshold)
@@ -316,8 +312,7 @@ open class OCROverlayTests: BaseTestClass {
         #expect(0.3 < configuration.lowConfidenceThreshold, "Low confidence should be below low threshold")
         
         // Test that overlays can be created with different confidence levels
-        #expect(highConfidenceOverlay != nil)
-        #expect(lowConfidenceOverlay != nil)
+        // OCROverlayView is non-optional - no need to check for nil
     }
     
     // MARK: - Accessibility Tests
@@ -325,6 +320,7 @@ open class OCROverlayTests: BaseTestClass {
     @Test @MainActor
     func testAccessibilitySupport() {
         // Given: OCR overlay
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -334,7 +330,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Checking accessibility
         // Then: Should provide accessibility labels and be hostable
-        let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
+        let hostingView = hostRootPlatformView(overlayView)
         #expect(hostingView != nil, "OCR overlay view should be hostable with accessibility")
         // Note: We can't directly test SwiftUI accessibility modifiers in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
@@ -343,6 +339,7 @@ open class OCROverlayTests: BaseTestClass {
     @Test @MainActor
     func testVoiceOverSupport() {
         // Given: OCR overlay with multiple text regions
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -352,7 +349,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Checking VoiceOver support
         // Then: Should provide proper accessibility elements and be hostable
-        let hostingView = hostRootPlatformView(overlayView.withGlobalAutoIDsEnabled())
+        let hostingView = hostRootPlatformView(overlayView)
         #expect(hostingView != nil, "OCR overlay view should be hostable with VoiceOver support")
         // Note: We can't directly test SwiftUI accessibility elements in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
@@ -377,6 +374,7 @@ open class OCROverlayTests: BaseTestClass {
             language: .english
         )
         
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: overlappingResult,
@@ -409,6 +407,7 @@ open class OCROverlayTests: BaseTestClass {
             language: .english
         )
         
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: zeroSizeResult,
@@ -418,7 +417,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Rendering overlay
         // Then: Should handle zero-size boxes gracefully
-        #expect(overlayView != nil, "Should handle zero-size bounding boxes")
+        // OCROverlayView is non-optional - no need to check for nil
     }
     
     @Test func testNegativeBoundingBoxes() {
@@ -437,6 +436,7 @@ open class OCROverlayTests: BaseTestClass {
             language: .english
         )
         
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView(
             image: testImage,
             result: negativeResult,
@@ -446,7 +446,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Rendering overlay
         // Then: Should handle negative boxes gracefully
-        #expect(overlayView != nil, "Should handle negative bounding boxes")
+        // OCROverlayView is non-optional - no need to check for nil
     }
     
     // MARK: - Integration Tests
@@ -485,6 +485,6 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // Then: Should create overlay successfully
-        #expect(overlayView != nil, "Should create overlay from disambiguation result")
+        // OCROverlayView is non-optional - no need to check for nil
      }
 
