@@ -22,29 +22,11 @@ final class AutomaticHIGComplianceTests {
     
     // MARK: - Test Data Setup
     
-    private var testItems: [AutomaticHIGComplianceTestItem]!
-    private var testHints: PresentationHints!
+    // No shared instance variables - tests run in parallel and should be isolated
     
-    init() async throws {
-        testItems = [
-            AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-            AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2"),
-            AutomaticHIGComplianceTestItem(id: "3", title: "Test Item 3", subtitle: "Subtitle 3")
-        ]
-        testHints = PresentationHints(
-            dataType: .generic,
-            presentationPreference: .grid,
-            complexity: .moderate,
-            context: .list,
-            customPreferences: [:]
-        )
-    }
+    // Setup and teardown should be in individual test methods, not initializers
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // Cleanup should be handled by individual test methods or BaseTestClass
     
     // MARK: - Automatic HIG Compliance Tests
     

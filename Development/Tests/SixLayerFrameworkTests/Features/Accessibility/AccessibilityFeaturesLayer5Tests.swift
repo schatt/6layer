@@ -40,21 +40,9 @@ final class AccessibilityFeaturesLayer5Tests {
     
     // MARK: - Test Data Setup
     
-    private var keyboardManager: KeyboardNavigationManager!
-    private var highContrastManager: HighContrastManager!
-    private var cancellables: Set<AnyCancellable>!
+    // No shared instance variables - tests run in parallel and should be isolated
     
-    init() async throws {
-                keyboardManager = KeyboardNavigationManager()
-        highContrastManager = HighContrastManager()
-        cancellables = Set<AnyCancellable>()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // Setup and teardown should be in individual test methods, not initializers
     
     // MARK: - KeyboardNavigationManager Focus Management Tests
     
@@ -67,6 +55,10 @@ final class AccessibilityFeaturesLayer5Tests {
      */
     @Test func testAddFocusableItemSuccess() {
         // GIVEN: Empty keyboard manager
+        let keyboardManager = KeyboardNavigationManager()
+        let highContrastManager = HighContrastManager()
+        let cancellables = Set<AnyCancellable>()
+        
         #expect(keyboardManager.focusableItems.count == 0)
         
         // WHEN: Adding a focusable item

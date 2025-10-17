@@ -15,11 +15,7 @@ import SwiftUI
 @MainActor
 class Layer2ComponentAccessibilityTests: BaseTestClass {
     
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Layer 2 Semantic Functions Tests
+// MARK: - Layer 2 Semantic Functions Tests
     
     @Test func testPlatformPresentItemCollectionL2GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 2 item collection function
@@ -112,7 +108,7 @@ class Layer2ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testPlatformPhotoCaptureL2GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 2 photo capture function
-        let testCallback: (UIImage?) -> Void = { _ in }
+        let testCallback: (PlatformImage?) -> Void = { _ in }
         
         // When: Creating view using Layer 2 function
         let view = platformPhotoCapture_L2(onCapture: testCallback)

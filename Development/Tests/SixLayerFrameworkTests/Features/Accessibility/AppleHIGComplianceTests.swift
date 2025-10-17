@@ -9,22 +9,14 @@ import SwiftUI
 @MainActor
 class AppleHIGComplianceTests: BaseTestClass {
     
-    var complianceManager: AppleHIGComplianceManager!
-    
-    init() async throws {
-        complianceManager = AppleHIGComplianceManager()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            self?.cleanupTestEnvironment()
-        }
-    }
+    // No shared instance variables - tests run in parallel and should be isolated
     
     // MARK: - Apple HIG Compliance Manager Tests
     
     @Test func testComplianceManagerInitialization() {
         // Given: A new AppleHIGComplianceManager
+        let complianceManager = AppleHIGComplianceManager()
+        
         // When: Initialized
         // Then: Should have default compliance level and platform detection
         #expect(complianceManager.complianceLevel == .automatic)
@@ -33,6 +25,8 @@ class AppleHIGComplianceTests: BaseTestClass {
     
     @Test func testPlatformDetection() {
         // Given: AppleHIGComplianceManager
+        let complianceManager = AppleHIGComplianceManager()
+        
         // When: Platform is detected
         // Then: Should detect correct platform
         #if os(iOS)
@@ -48,6 +42,8 @@ class AppleHIGComplianceTests: BaseTestClass {
     
     @Test func testAccessibilityStateMonitoring() {
         // Given: AppleHIGComplianceManager
+        let complianceManager = AppleHIGComplianceManager()
+        
         // When: Accessibility state is monitored
         // Then: Should track system accessibility settings
         let state = complianceManager.accessibilityState
@@ -58,6 +54,8 @@ class AppleHIGComplianceTests: BaseTestClass {
     
     @Test func testDesignSystemInitialization() {
         // Given: AppleHIGComplianceManager
+        let complianceManager = AppleHIGComplianceManager()
+        
         // When: Design system is initialized
         // Then: Should have platform-appropriate design system
         let designSystem = complianceManager.designSystem
@@ -158,6 +156,7 @@ class AppleHIGComplianceTests: BaseTestClass {
     
     @Test func testHIGComplianceCheck() async {
         // Given: A test view
+        let complianceManager = AppleHIGComplianceManager()
         let testView = Button("Test") { }
         
         // When: HIG compliance is checked
