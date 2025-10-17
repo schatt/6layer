@@ -41,11 +41,7 @@ import SwiftUI
 @MainActor
 open class CapabilityAwareFunctionTests {
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // BaseTestClass handles cleanup automatically
     
     // MARK: - Touch-Dependent Function Tests
     

@@ -53,7 +53,7 @@ open class TextContentTypeTests {
                 placeholder: "Enter \(textContentType.rawValue)"
             )
             
-            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
+            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
             let textField = DynamicTextField(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
@@ -119,7 +119,7 @@ open class TextContentTypeTests {
                 placeholder: "Enter \(textContentType)"
             )
             
-            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
+            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
             let textField = DynamicTextField(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
@@ -142,7 +142,7 @@ open class TextContentTypeTests {
             placeholder: "Enter 6-digit code"
         )
         
-        let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
+        let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
         let textField = DynamicTextField(field: field, formState: formState)
         
         // Verify OTP field configuration
@@ -157,7 +157,7 @@ open class TextContentTypeTests {
             placeholder: "Enter 6-digit code"
         )
         
-        let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
+        let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
         let textField = DynamicTextField(field: field, formState: formState)
         
         // Verify OTP field configuration
@@ -416,7 +416,7 @@ open class TextContentTypeTests {
                 placeholder: "Enter email"
             )
             
-            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", fields: [field]))
+            let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
             let textField = DynamicTextField(field: field, formState: formState)
             
             #expect(textField != nil, "Text field should be created on \(platform)")

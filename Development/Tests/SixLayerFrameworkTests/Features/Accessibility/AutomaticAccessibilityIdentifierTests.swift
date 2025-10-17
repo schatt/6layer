@@ -22,7 +22,7 @@ import AppKit
  * Layer 1 functions and verifies they have proper accessibility identifiers generated automatically
  * based on configuration settings and object identity.
  */
-open class AutomaticAccessibilityIdentifierTests {
+open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     
     // MARK: - Test Helpers
     

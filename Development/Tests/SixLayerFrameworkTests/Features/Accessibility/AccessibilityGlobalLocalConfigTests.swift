@@ -18,11 +18,7 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableDebugLogging = false
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // BaseTestClass handles cleanup automatically
     
     // MARK: - Global Config Tests
     
@@ -88,7 +84,7 @@ open class AccessibilityGlobalLocalConfigTests {
         
         // Create a view with local disable modifier (apply disable BEFORE other modifiers)
         let view = Button("Test") { }
-            .disableAutomaticAccessibilityIdentifiers()  // ← Apply disable FIRST
+            .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Apply disable FIRST
             .named("TestButton")
         
         // Try to inspect for accessibility identifier
@@ -143,7 +139,7 @@ open class AccessibilityGlobalLocalConfigTests {
         // Create a view with local disable (should override global enable)
         let view = Button("Test") { }
             .named("TestButton")
-            .disableAutomaticAccessibilityIdentifiers()  // ← Should override global enable
+            .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Should override global enable
         
         // Try to inspect for accessibility identifier
         do {
@@ -196,7 +192,7 @@ open class AccessibilityGlobalLocalConfigTests {
         // Create a view with environment variable override
         let view = Button("Test") { }
             .named("TestButton")
-            .environment(\.disableAutomaticAccessibilityIdentifiers, true)  // ← Environment override
+            .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Environment override
         
         // Try to inspect for accessibility identifier
         do {

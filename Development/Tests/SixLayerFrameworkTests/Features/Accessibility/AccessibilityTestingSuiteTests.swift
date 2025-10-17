@@ -32,18 +32,7 @@ import SwiftUI
 @MainActor
 open class AccessibilityTestingSuiteTests: BaseTestClass {
     
-    var testingSuite: AccessibilityTestingSuite!
-    
-    override init() {
-        super.init()
-        testingSuite = AccessibilityTestingSuite()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // Test data will be created locally in each test method for parallel execution
     
     // MARK: - Initialization Tests
     
@@ -177,16 +166,9 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let suite = AccessibilityTestingSuite()
         
         // When: Running tests
-        let expectation = XCTestExpectation(description: "Test execution completes")
-        
-        Task {
-            await suite.runAllTests()
-            expectation.fulfill()
-        }
+        await suite.runAllTests()
         
         // Then: Test business logic for progress tracking
-        await fulfillment(of: [expectation], timeout: 10.0)
-        
         #expect(!suite.isRunning, "Testing suite should not be running after completion")
         #expect(suite.progress == 1.0, "Testing suite should have 100% progress after completion")
         #expect(!suite.testResults.isEmpty, "Testing suite should have test results")

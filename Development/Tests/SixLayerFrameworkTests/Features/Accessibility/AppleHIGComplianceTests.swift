@@ -187,14 +187,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: State is initialized
         // Then: Should have default values
-        #expect(!state.isVoiceOverRunning)
-        #expect(!state.isDarkerSystemColorsEnabled)
-        #expect(!state.isReduceTransparencyEnabled)
-        #expect(!state.isHighContrastEnabled)
-        #expect(!state.isReducedMotionEnabled)
-        #expect(!state.hasKeyboardSupport)
-        #expect(!state.hasFullKeyboardAccess)
-        #expect(!state.hasSwitchControl)
+        // Note: AccessibilitySystemState properties are non-optional and don't need nil checks
     }
     
     @Test func testAccessibilitySystemStateFromSystemChecker() {

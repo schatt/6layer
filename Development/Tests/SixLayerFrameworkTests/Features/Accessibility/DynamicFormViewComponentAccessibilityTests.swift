@@ -34,10 +34,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let formConfig = testFormConfig
         
         // When: Creating DynamicFormView
-        let view = DynamicFormView(
-            configuration: formConfig,
-            onSubmit: { _ in }
-        )
+        let view = DynamicFormView()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -113,7 +110,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicFormFieldView
-        let view = DynamicFormFieldView(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicFormFieldView(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -165,7 +163,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let formConfig = DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form",
-            fields: [field]
+            description: "Test form for accessibility",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
         )
         let formState = DynamicFormState(configuration: formConfig)
         let view = DynamicTextField(field: field, formState: formState)
@@ -192,7 +193,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicNumberField
-        let view = DynamicNumberField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicNumberField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -216,7 +218,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicTextAreaField
-        let view = DynamicTextAreaField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicTextAreaField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -241,7 +244,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicSelectField
-        let view = DynamicSelectField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

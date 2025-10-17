@@ -46,15 +46,15 @@ open class PlatformBehaviorTests {
     // MARK: - Platform Mocking Functions
     
     private func mockIOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
+        return await TestSetupUtilities.getCardExpansionPlatformConfig()
     }
     
     private func mockMacOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
+        return await TestSetupUtilities.getCardExpansionPlatformConfig()
     }
     
     private func mockTVOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig(
+        return await TestSetupUtilities.getCardExpansionPlatformConfig(
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
@@ -68,7 +68,7 @@ open class PlatformBehaviorTests {
     }
     
     private func mockWatchOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig(
+        return await TestSetupUtilities.getCardExpansionPlatformConfig(
             supportsHapticFeedback: true,
             supportsHover: false,
             supportsTouch: true,
@@ -82,7 +82,7 @@ open class PlatformBehaviorTests {
     }
     
     private func mockVisionOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.shared.getCardExpansionPlatformConfig(
+        return await TestSetupUtilities.getCardExpansionPlatformConfig(
             supportsHapticFeedback: false,
             supportsHover: false,
             supportsTouch: false,
@@ -461,7 +461,12 @@ open class PlatformBehaviorTests {
     // MARK: - Platform-Specific Input/Output Tests
     
     
-    @Test func testPlatformSpecificInputOutput(platform: SixLayerPlatform, input: String) {
+    @Test(arguments: [
+        (SixLayerPlatform.iOS, "iOS Input"),
+        (SixLayerPlatform.macOS, "macOS Input"),
+        (SixLayerPlatform.visionOS, "visionOS Input")
+    ])
+    func testPlatformSpecificInputOutput(platform: SixLayerPlatform, input: String) {
         let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
         
         switch input {

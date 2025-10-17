@@ -147,7 +147,11 @@ open class PlatformLogicTests {
         }
     }
     
-    @Test func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
+    @Test(arguments: [
+        (PlatformCapabilities(supportsHapticFeedback: true, supportsHover: false, supportsTouch: true, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0), SixLayerPlatform.iOS, DeviceType.phone),
+        (PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0), SixLayerPlatform.macOS, DeviceType.computer)
+    ])
+    func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             #expect(config.supportsTouch, "Haptic feedback should only be available with touch on \(platform) \(deviceType)")
@@ -227,7 +231,11 @@ open class PlatformLogicTests {
         }
     }
     
-    @Test func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
+    @Test(arguments: [
+        (IntelligentCardLayoutDecision(primaryLayout: .grid, secondaryLayout: .list), SixLayerPlatform.iOS, PlatformCapabilities(supportsHapticFeedback: true, supportsHover: false, supportsTouch: true, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0)),
+        (IntelligentCardLayoutDecision(primaryLayout: .list, secondaryLayout: .grid), SixLayerPlatform.macOS, PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0))
+    ])
+    func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate touch targets
         if config.supportsTouch {
             #expect(layoutDecision.cardWidth >= CGFloat(config.minTouchTarget), "Card width should accommodate touch targets on \(platform)")
