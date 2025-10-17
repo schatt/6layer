@@ -7,7 +7,7 @@ import SwiftUI
 /// Comprehensive test suite for Apple HIG Compliance system
 /// Tests automatic application of Apple Human Interface Guidelines
 @MainActor
-class AppleHIGComplianceTests {
+class AppleHIGComplianceTests: BaseTestClass {
     
     var complianceManager: AppleHIGComplianceManager!
     
@@ -28,9 +28,7 @@ class AppleHIGComplianceTests {
         // When: Initialized
         // Then: Should have default compliance level and platform detection
         #expect(complianceManager.complianceLevel == .automatic)
-        #expect(complianceManager.accessibilityState != nil)
-        #expect(complianceManager.designSystem != nil)
-        #expect(complianceManager.currentPlatform != nil)
+        // accessibilityState, designSystem, and currentPlatform are non-optional
     }
     
     @Test func testPlatformDetection() {
@@ -53,11 +51,7 @@ class AppleHIGComplianceTests {
         // When: Accessibility state is monitored
         // Then: Should track system accessibility settings
         let state = complianceManager.accessibilityState
-        #expect(state.isVoiceOverRunning != nil)
-        #expect(state.isDarkerSystemColorsEnabled != nil)
-        #expect(state.isReduceTransparencyEnabled != nil)
-        #expect(state.isHighContrastEnabled != nil)
-        #expect(state.isReducedMotionEnabled != nil)
+        // All AccessibilitySystemState properties are Bool (non-optional) - no need to check for nil
     }
     
     // MARK: - Design System Tests
@@ -68,10 +62,7 @@ class AppleHIGComplianceTests {
         // Then: Should have platform-appropriate design system
         let designSystem = complianceManager.designSystem
         #expect(designSystem.platform == complianceManager.currentPlatform)
-        #expect(designSystem.colorSystem != nil)
-        #expect(designSystem.typographySystem != nil)
-        #expect(designSystem.spacingSystem != nil)
-        #expect(designSystem.iconSystem != nil)
+        // Design system components are non-optional - no need to check for nil
     }
     
     @Test func testColorSystemPlatformSpecific() {
@@ -82,21 +73,7 @@ class AppleHIGComplianceTests {
         let macOSColorSystem = ColorSystem(theme: .light, platform: .macOS)
         
         // Both should have system colors but may be different
-        #expect(iOSColorSystem.primary != nil)
-        #expect(iOSColorSystem.secondary != nil)
-        #expect(iOSColorSystem.accent != nil)
-        #expect(iOSColorSystem.background != nil)
-        #expect(iOSColorSystem.surface != nil)
-        #expect(iOSColorSystem.text != nil)
-        #expect(iOSColorSystem.textSecondary != nil)
-        
-        #expect(macOSColorSystem.primary != nil)
-        #expect(macOSColorSystem.secondary != nil)
-        #expect(macOSColorSystem.accent != nil)
-        #expect(macOSColorSystem.background != nil)
-        #expect(macOSColorSystem.surface != nil)
-        #expect(macOSColorSystem.text != nil)
-        #expect(macOSColorSystem.textSecondary != nil)
+        // Color types are non-optional in SwiftUI - no need to check for nil
     }
     
     @Test func testTypographySystemPlatformSpecific() {
@@ -107,24 +84,7 @@ class AppleHIGComplianceTests {
         let iOSTypography = TypographySystem(platform: .ios, accessibility: accessibilitySettings)
         let macOSTypography = TypographySystem(platform: .macOS, accessibility: accessibilitySettings)
         
-        // Both should have system fonts
-        #expect(iOSTypography.largeTitle != nil)
-        #expect(iOSTypography.title1 != nil)
-        #expect(iOSTypography.headline != nil)
-        #expect(iOSTypography.body != nil)
-        #expect(iOSTypography.callout != nil)
-        #expect(iOSTypography.subheadline != nil)
-        #expect(iOSTypography.footnote != nil)
-        #expect(iOSTypography.caption1 != nil)
-        
-        #expect(macOSTypography.largeTitle != nil)
-        #expect(macOSTypography.title1 != nil)
-        #expect(macOSTypography.headline != nil)
-        #expect(macOSTypography.body != nil)
-        #expect(macOSTypography.callout != nil)
-        #expect(macOSTypography.subheadline != nil)
-        #expect(macOSTypography.footnote != nil)
-        #expect(macOSTypography.caption1 != nil)
+        // Font types are non-optional in SwiftUI - no need to check for nil
     }
     
     @Test func testSpacingSystem8ptGrid() {
@@ -151,8 +111,7 @@ class AppleHIGComplianceTests {
         // When: Apple HIG compliance is applied
         let compliantView = testView.appleHIGCompliant()
         
-        // Then: Should return a modified view
-        #expect(compliantView != nil)
+        // Then: Should return a modified view (some View is non-optional)
     }
     
     @Test func testAutomaticAccessibilityModifier() {
@@ -162,8 +121,7 @@ class AppleHIGComplianceTests {
         // When: Automatic accessibility is applied
         let accessibleView = testView.automaticAccessibility()
         
-        // Then: Should return a modified view
-        #expect(accessibleView != nil)
+        // Then: Should return a modified view (some View is non-optional)
     }
     
     @Test func testPlatformPatternsModifier() {
@@ -173,8 +131,7 @@ class AppleHIGComplianceTests {
         // When: Platform patterns are applied
         let patternedView = testView.platformPatterns()
         
-        // Then: Should return a modified view
-        #expect(patternedView != nil)
+        // Then: Should return a modified view (some View is non-optional)
     }
     
     @Test func testVisualConsistencyModifier() {
@@ -184,8 +141,7 @@ class AppleHIGComplianceTests {
         // When: Visual consistency is applied
         let consistentView = testView.visualConsistency()
         
-        // Then: Should return a modified view
-        #expect(consistentView != nil)
+        // Then: Should return a modified view (some View is non-optional)
     }
     
     @Test func testInteractionPatternsModifier() {
@@ -195,8 +151,7 @@ class AppleHIGComplianceTests {
         // When: Interaction patterns are applied
         let interactiveView = testView.interactionPatterns()
         
-        // Then: Should return a modified view
-        #expect(interactiveView != nil)
+        // Then: Should return a modified view (some View is non-optional)
     }
     
     // MARK: - Compliance Checking Tests
@@ -208,8 +163,7 @@ class AppleHIGComplianceTests {
         // When: HIG compliance is checked
         let report = complianceManager.checkHIGCompliance(testView)
         
-        // Then: Should return a compliance report
-        #expect(report != nil)
+        // Then: Should return a compliance report (HIGComplianceReport is non-optional)
         #expect(report.overallScore >= 0.0)
         #expect(report.overallScore <= 100.0)
         #expect(report.accessibilityScore >= 0.0)
@@ -220,7 +174,7 @@ class AppleHIGComplianceTests {
         #expect(report.interactionScore <= 100.0)
         #expect(report.platformScore >= 0.0)
         #expect(report.platformScore <= 100.0)
-        #expect(report.recommendations != nil)
+        // recommendations is non-optional array
     }
     
     @Test func testComplianceReportStructure() {
@@ -497,7 +451,7 @@ class AppleHIGComplianceTests {
         .appleHIGCompliant()
         
         // The view should be compliant without developer configuration
-        #expect(businessView != nil)
+        // businessView is some View (non-optional)
     }
     
     @Test func testPlatformAdaptationBusinessPurpose() {
@@ -509,7 +463,7 @@ class AppleHIGComplianceTests {
             .appleHIGCompliant()
         
         // Should work on all platforms with appropriate adaptations
-        #expect(crossPlatformView != nil)
+        // crossPlatformView is some View (non-optional)
     }
     
     @Test func testAccessibilityInclusionBusinessPurpose() {
@@ -521,7 +475,7 @@ class AppleHIGComplianceTests {
             .automaticAccessibility()
         
         // Should automatically include accessibility features
-        #expect(inclusiveView != nil)
+        // inclusiveView is some View (non-optional)
     }
     
     @Test func testDesignConsistencyBusinessPurpose() {
@@ -536,7 +490,7 @@ class AppleHIGComplianceTests {
         .visualConsistency()
         
         // Should automatically maintain design consistency
-        #expect(consistentView != nil)
+        // consistentView is some View (non-optional)
     }
     
     @Test func testDeveloperProductivityBusinessPurpose() {
@@ -549,7 +503,7 @@ class AppleHIGComplianceTests {
             .appleHIGCompliant()
         
         // One line of code should provide comprehensive compliance
-        #expect(productiveView != nil)
+        // productiveView is some View (non-optional)
     }
 }
 
