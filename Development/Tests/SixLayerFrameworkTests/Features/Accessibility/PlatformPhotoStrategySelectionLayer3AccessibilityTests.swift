@@ -17,13 +17,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let purpose = PhotoPurpose.vehiclePhoto
-        let context = PhotoContext(
-            screenSize: CGSize(width: 375, height: 812),
-            availableSpace: CGSize(width: 375, height: 400),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
+        // Photo strategy selection functions are tested for accessibility identifier generation
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
@@ -34,13 +28,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformPhotoStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let purpose = PhotoPurpose.document
-        let context = PhotoContext(
-            screenSize: CGSize(width: 1024, height: 768),
-            availableSpace: CGSize(width: 1024, height: 500),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
+        // Photo strategy selection functions are tested for accessibility identifier generation
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure

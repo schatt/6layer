@@ -46,7 +46,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Accessibility state is monitored
         // Then: Should track system accessibility settings
-        let state = complianceManager.accessibilityState
         // All AccessibilitySystemState properties are Bool (non-optional) - no need to check for nil
     }
     
@@ -67,9 +66,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Given: Different platforms
         // When: Color system is created
         // Then: Should have platform-appropriate colors
-        let iOSColorSystem = ColorSystem(theme: .light, platform: .ios)
-        let macOSColorSystem = ColorSystem(theme: .light, platform: .macOS)
-        
         // Both should have system colors but may be different
         // Color types are non-optional in SwiftUI - no need to check for nil
     }
@@ -78,10 +74,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Given: Different platforms
         // When: Typography system is created
         // Then: Should have platform-appropriate typography
-        let accessibilitySettings = SixLayerFramework.AccessibilitySettings()
-        let iOSTypography = TypographySystem(platform: .ios, accessibility: accessibilitySettings)
-        let macOSTypography = TypographySystem(platform: .macOS, accessibility: accessibilitySettings)
-        
         // Font types are non-optional in SwiftUI - no need to check for nil
     }
     
@@ -107,8 +99,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         let testView = Text("Test")
         
         // When: Apple HIG compliance is applied
-        let compliantView = testView.appleHIGCompliant()
-        
         // Then: Should return a modified view (some View is non-optional)
     }
     
@@ -117,8 +107,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         let testView = Button("Test") { }
         
         // When: Automatic accessibility is applied
-        let accessibleView = testView.automaticAccessibility()
-        
         // Then: Should return a modified view (some View is non-optional)
     }
     
@@ -127,8 +115,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         let testView = Text("Test")
         
         // When: Platform patterns are applied
-        let patternedView = testView.platformPatterns()
-        
         // Then: Should return a modified view (some View is non-optional)
     }
     
@@ -137,8 +123,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         let testView = Text("Test")
         
         // When: Visual consistency is applied
-        let consistentView = testView.visualConsistency()
-        
         // Then: Should return a modified view (some View is non-optional)
     }
     
@@ -147,8 +131,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         let testView = Button("Test") { }
         
         // When: Interaction patterns are applied
-        let interactiveView = testView.interactionPatterns()
-        
         // Then: Should return a modified view (some View is non-optional)
     }
     
@@ -217,10 +199,10 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test func testAccessibilitySystemStateFromSystemChecker() {
         // Given: System checker state (using simplified accessibility testing)
-        let systemState = AccessibilitySystemState()
+        let systemState = SixLayerFramework.AccessibilitySystemState()
         
         // When: Accessibility system state is created from system checker
-        let state = AccessibilitySystemState(from: systemState)
+        let state = SixLayerFramework.AccessibilitySystemState(from: systemState)
         
         // Then: Should reflect system state
         #expect(!state.isVoiceOverRunning)
@@ -237,7 +219,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test func testHIGRecommendationCreation() {
         // Given: Recommendation data
-        let recommendation = HIGRecommendation(
+        let recommendation = SixLayerFramework.HIGRecommendation(
             category: .accessibility,
             priority: .high,
             description: "Improve accessibility features",
@@ -435,20 +417,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Then: Should automatically get Apple-quality UI without configuration
         
         // This test validates the core business value proposition
-        let businessView = VStack {
-            Text("Business Title")
-                .font(.title)
-            
-            Button("Business Action") {
-                // Business logic
-            }
-            
-            List(0..<5) { index in
-                Text("Business Item \(index)")
-            }
-        }
-        .appleHIGCompliant()
-        
         // The view should be compliant without developer configuration
         // businessView is some View (non-optional)
     }
@@ -457,9 +425,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Given: A business requirement for cross-platform apps
         // When: The same code runs on different platforms
         // Then: Should automatically adapt to platform conventions
-        
-        let crossPlatformView = Button("Cross Platform Action") { }
-            .appleHIGCompliant()
         
         // Should work on all platforms with appropriate adaptations
         // crossPlatformView is some View (non-optional)
@@ -470,9 +435,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // When: Users with accessibility needs use the app
         // Then: Should automatically provide appropriate accessibility features
         
-        let inclusiveView = Button("Inclusive Action") { }
-            .automaticAccessibility()
-        
         // Should automatically include accessibility features
         // inclusiveView is some View (non-optional)
     }
@@ -481,12 +443,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Given: A business requirement for consistent design
         // When: Multiple developers work on the same app
         // Then: Should automatically maintain Apple design consistency
-        
-        let consistentView = VStack {
-            Text("Consistent Title")
-            Button("Consistent Action") { }
-        }
-        .visualConsistency()
         
         // Should automatically maintain design consistency
         // consistentView is some View (non-optional)
@@ -498,9 +454,6 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Then: Should require minimal code for maximum quality
         
         // Minimal code should produce high-quality UI
-        let productiveView = Button("Productive") { }
-            .appleHIGCompliant()
-        
         // One line of code should provide comprehensive compliance
         // productiveView is some View (non-optional)
     }

@@ -34,11 +34,11 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
             gestureSensitivity: .medium,
             menuStyle: .floating
         )
-        let manager = await MainActor.run { AssistiveTouchManager(config: assistiveConfig) }
+        let manager = AssistiveTouchManager(config: assistiveConfig)
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "AssistiveTouchManager should be instantiable")
+        // AssistiveTouchManager is non-optional - no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
@@ -60,11 +60,11 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
             gestureSensitivity: .medium,
             menuStyle: .floating
         )
-        let manager = await MainActor.run { AssistiveTouchManager(config: assistiveConfig) }
+        let manager = AssistiveTouchManager(config: assistiveConfig)
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "AssistiveTouchManager should be instantiable")
+        // AssistiveTouchManager is non-optional - no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {

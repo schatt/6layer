@@ -18,24 +18,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     
     // MARK: - Test Data Setup
     
-    private var testItems: [AutomaticHIGComplianceTestItem]!
-    private var testHints: PresentationHints!
-    
-    init() async throws {
-        testItems = [
-            AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-            AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
-        ]
-        testHints = PresentationHints(
-            dataType: .generic,
-            presentationPreference: .grid,
-            complexity: .moderate,
-            context: .list,
-            customPreferences: [:]
-        )
-    }
-    
-    // Cleanup handled by BaseTestClass
+    // Test setup moved to individual test methods for parallel execution
     
     // MARK: - Demonstration Tests
     
@@ -52,9 +35,21 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             //     .visualConsistency()          // Manual
             
             // NEW WAY (what developers do now):
+            let testItems = [
+                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+            ]
+            let testHints = PresentationHints(
+                dataType: .generic,
+                presentationPreference: .grid,
+                complexity: .moderate,
+                context: .list,
+                customPreferences: [:]
+            )
+            
             let view = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: testItems,
+                hints: testHints
             )
             // That's it! HIG compliance is automatically applied.
             

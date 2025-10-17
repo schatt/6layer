@@ -36,8 +36,8 @@ open class AutomaticHIGComplianceTests {
     @Test func testPlatformPresentItemCollection_L1_AutomaticHIGCompliance() async {
         await MainActor.run {
             // Given: Test items and hints
-            let items = testItems!
-            let hints = testHints!
+            let items = [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")]
+            let hints = PresentationHints()
             
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(
@@ -66,8 +66,8 @@ open class AutomaticHIGComplianceTests {
             
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             
             // Then: View should automatically have VoiceOver support
@@ -96,7 +96,7 @@ open class AutomaticHIGComplianceTests {
                 // When: Creating view using Layer 1 function
                 let view = platformPresentItemCollection_L1(
                     items: testItems!,
-                    hints: testHints!
+                    hints: PresentationHints()
                 )
                 
             // Then: View should automatically have platform-specific patterns
@@ -116,8 +116,8 @@ open class AutomaticHIGComplianceTests {
         await MainActor.run {
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             
             // Then: View should automatically have visual consistency applied
@@ -136,8 +136,8 @@ open class AutomaticHIGComplianceTests {
         await MainActor.run {
             // Test platformPresentItemCollection_L1
             let collectionView = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             // Test that collection view can be hosted and has proper structure
             let collectionHostingView = hostRootPlatformView(collectionView.withGlobalAutoIDsEnabled())
@@ -149,7 +149,7 @@ open class AutomaticHIGComplianceTests {
             ]
             let numericView = platformPresentNumericData_L1(
                 data: numericData,
-                hints: testHints!
+                hints: PresentationHints()
             )
             
             // Test that numeric view can be hosted and has proper structure
@@ -174,8 +174,8 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)
             
             let viewWithVoiceOver = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             // Test that VoiceOver-enabled view can be hosted
             let voiceOverHostingView = hostRootPlatformView(viewWithVoiceOver.withGlobalAutoIDsEnabled())
@@ -187,8 +187,8 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)
             
             let viewWithSwitchControl = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             
             // Test that Switch Control-enabled view can be hosted
@@ -201,8 +201,8 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
             let viewWithAssistiveTouch = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             
             // Test that AssistiveTouch-enabled view can be hosted
@@ -215,8 +215,8 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
             let viewWithAllAccessibility = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                hints: PresentationHints()
             )
             
             // Test that all-accessibility view can be hosted

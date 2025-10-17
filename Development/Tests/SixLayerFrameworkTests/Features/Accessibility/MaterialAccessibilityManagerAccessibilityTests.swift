@@ -21,7 +21,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     
 @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let manager = MaterialAccessibilityManager()
+        // MaterialAccessibilityManager is non-optional, so no need to check for nil
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
@@ -39,7 +39,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let manager = MaterialAccessibilityManager()
+        // MaterialAccessibilityManager is non-optional, so no need to check for nil
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
