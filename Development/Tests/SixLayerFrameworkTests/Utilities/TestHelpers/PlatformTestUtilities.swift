@@ -143,7 +143,10 @@ final class PlatformTestUtilities {
     // MARK: - Behavioral Test Methods
     
     /// Test the behavioral implications of touch platform capabilities
-    @Test static func testTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testTouchPlatformBehavior() {
+        let capabilities = PlatformCapabilitiesTestSnapshot()
+        let platformName = "Touch Platform"
+        
         // Touch platforms should have adequate touch targets
         #expect(capabilities.minTouchTarget >= 44, 
                                    "\(platformName) should have adequate touch targets")
@@ -162,7 +165,9 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of non-touch platform capabilities
-    @Test static func testNonTouchPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testNonTouchPlatformBehavior() {
+        let capabilities = PlatformCapabilitiesTestSnapshot()
+        let platformName = "Non-Touch Platform"
         // Non-touch platforms should not support haptic feedback
         #expect(!capabilities.supportsHapticFeedback, 
                       "\(platformName) should not support haptic feedback")
@@ -177,7 +182,9 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of hover platform capabilities
-    @Test static func testHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testHoverPlatformBehavior() {
+        let capabilities = PlatformCapabilitiesTestSnapshot()
+        let platformName = "Hover Platform"
         // Hover platforms should have hover delay set
         #expect(capabilities.hoverDelay >= 0, 
                                    "\(platformName) should have hover delay set")
@@ -188,14 +195,18 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of non-hover platform capabilities
-    @Test static func testNonHoverPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testNonHoverPlatformBehavior() {
+        let capabilities = PlatformCapabilitiesTestSnapshot()
+        let platformName = "Non-Hover Platform"
         // Non-hover platforms should have zero hover delay
         #expect(capabilities.hoverDelay == 0, 
                       "\(platformName) should have zero hover delay")
     }
     
     /// Test the behavioral implications of accessibility platform capabilities
-    @Test static func testAccessibilityPlatformBehavior(_ capabilities: PlatformCapabilitiesTestSnapshot, platformName: String) {
+    @Test static func testAccessibilityPlatformBehavior() {
+        let capabilities = PlatformCapabilitiesTestSnapshot()
+        let platformName = "Accessibility Platform"
         // Test the actual business logic: how does the platform handle accessibility?
         
         // Test that touch targets are appropriate for the platform's capabilities
@@ -226,7 +237,9 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of Vision framework availability
-    @Test static func testVisionAvailableBehavior(_ testConfig: PlatformTestConfig, platformName: String) {
+    @Test static func testVisionAvailableBehavior() {
+        let testConfig = PlatformTestConfig()
+        let platformName = "Vision Available Platform"
         // Vision-available platforms should have OCR
         #expect(testConfig.ocrAvailable, 
                      "\(platformName) should have OCR available")
@@ -237,7 +250,9 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of Vision framework unavailability
-    @Test static func testVisionUnavailableBehavior(_ testConfig: PlatformTestConfig, platformName: String) {
+    @Test static func testVisionUnavailableBehavior() {
+        let testConfig = PlatformTestConfig()
+        let platformName = "Vision Unavailable Platform"
         // Vision-unavailable platforms should not have OCR
         #expect(!testConfig.ocrAvailable, 
                       "\(platformName) should not have OCR available")
