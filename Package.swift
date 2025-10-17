@@ -18,8 +18,7 @@ let package = Package(
         )
     ],
         dependencies: [
-            .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7"),
-            .package(url: "https://github.com/apple/swift-testing", from: "0.8.0")
+            .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7")
         ],
     targets: [
         // Main framework target - organized into logical structure
@@ -45,8 +44,7 @@ let package = Package(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                "ViewInspector",
-                "Testing"
+                "ViewInspector"
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
@@ -63,4 +61,3 @@ let package = Package(
         
     ]
 )
-
