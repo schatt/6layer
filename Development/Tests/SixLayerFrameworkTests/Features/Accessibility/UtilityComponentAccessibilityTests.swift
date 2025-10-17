@@ -79,7 +79,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .exactNamed("ExactTestView")
+        .accessibilityIdentifier("ExactTestView")
         
         // When: Testing exact matching
         let hasAccessibilityID = hasAccessibilityIdentifier(

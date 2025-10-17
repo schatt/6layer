@@ -7,21 +7,16 @@ import ViewInspector
 
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
-open class SimpleAccessibilityTest {
+open class SimpleAccessibilityTest: BaseTestClass {
     
-    init() async throws {
+    override init() {
+        super.init()
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "SimpleTest"
         config.mode = .automatic
         config.enableDebugLogging = true
         config.enableAutoIDs = true
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
     }
     
     @Test func testManualAccessibilityIdentifierWorks() {

@@ -45,7 +45,8 @@ let package = Package(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                "ViewInspector"
+                "ViewInspector",
+                "Testing"
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
@@ -62,3 +63,4 @@ let package = Package(
         
     ]
 )
+
