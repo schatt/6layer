@@ -39,18 +39,13 @@ import SwiftUI
 /// Capability combination validation testing
 /// Validates that capability combinations work correctly on the current platform
 @MainActor
-open class CapabilityCombinationValidationTests {
-    init() async throws {
+open class CapabilityCombinationValidationTests: BaseTestClass {
+    override init() {
+        super.init()
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
     }
     
     // MARK: - Current Platform Combination Tests
@@ -139,13 +134,14 @@ open class CapabilityCombinationValidationTests {
         let config = getCardExpansionPlatformConfig()
         
         // Test that dependent capabilities are properly handled
-        testTouchDependencies(config: config)
-        testHoverDependencies(config: config)
-        testVisionDependencies(config: config)
-        testAccessibilityDependencies(config: config)
+        testTouchDependencies()
+        testHoverDependencies()
+        testVisionDependencies()
+        testAccessibilityDependencies()
     }
     
-    @Test func testTouchDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testTouchDependencies() {
+        let config = getCardExpansionPlatformConfig()
         if config.supportsTouch {
             // Touch should enable haptic feedback
             #expect(config.supportsHapticFeedback, 
@@ -165,7 +161,8 @@ open class CapabilityCombinationValidationTests {
         }
     }
     
-    @Test func testHoverDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testHoverDependencies() {
+        let config = getCardExpansionPlatformConfig()
         if config.supportsHover {
             // Hover should have appropriate delay
             #expect(config.hoverDelay >= 0, 
@@ -177,7 +174,8 @@ open class CapabilityCombinationValidationTests {
         }
     }
     
-    @Test func testVisionDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testVisionDependencies() {
+        let config = getCardExpansionPlatformConfig()
         let visionAvailable = isVisionFrameworkAvailable()
         let ocrAvailable = isVisionOCRAvailable()
         
@@ -186,7 +184,8 @@ open class CapabilityCombinationValidationTests {
                      "OCR availability should match Vision framework availability")
     }
     
-    @Test func testAccessibilityDependencies(config: CardExpansionPlatformConfig) {
+    @Test func testAccessibilityDependencies() {
+        let config = getCardExpansionPlatformConfig()
         // VoiceOver and SwitchControl should always be available
         #expect(config.supportsVoiceOver, 
                      "VoiceOver should be available on all platforms")
@@ -201,12 +200,14 @@ open class CapabilityCombinationValidationTests {
         let platform = SixLayerPlatform.current
         
         // Test that capabilities interact correctly
-        testTouchHoverInteraction(config: config, platform: platform)
-        testTouchHapticInteraction(config: config)
+        testTouchHoverInteraction()
+        testTouchHapticInteraction()
         testVisionOCRInteraction()
     }
     
-    @Test func testTouchHoverInteraction(config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
+    @Test func testTouchHoverInteraction() {
+        let config = getCardExpansionPlatformConfig()
+        let platform = SixLayerPlatform.current
         if platform == .iOS {
             // iPad can have both touch and hover
             // This is a special case that we allow
@@ -227,7 +228,8 @@ open class CapabilityCombinationValidationTests {
         }
     }
     
-    @Test func testTouchHapticInteraction(config: CardExpansionPlatformConfig) {
+    @Test func testTouchHapticInteraction() {
+        let config = getCardExpansionPlatformConfig()
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             #expect(config.supportsTouch, 
@@ -273,11 +275,12 @@ open class CapabilityCombinationValidationTests {
         let config = getCardExpansionPlatformConfig()
         
         // Test that impossible combinations are handled gracefully
-        testImpossibleCombinations(config: config)
-        testConflictingCombinations(config: config)
+        testImpossibleCombinations()
+        testConflictingCombinations()
     }
     
-    @Test func testImpossibleCombinations(config: CardExpansionPlatformConfig) {
+    @Test func testImpossibleCombinations() {
+        let config = getCardExpansionPlatformConfig()
         // Haptic feedback without touch should never occur
         if config.supportsHapticFeedback {
             #expect(config.supportsTouch, 
@@ -291,7 +294,8 @@ open class CapabilityCombinationValidationTests {
         }
     }
     
-    @Test func testConflictingCombinations(config: CardExpansionPlatformConfig) {
+    @Test func testConflictingCombinations() {
+        let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
         if platform != SixLayerPlatform.iOS {

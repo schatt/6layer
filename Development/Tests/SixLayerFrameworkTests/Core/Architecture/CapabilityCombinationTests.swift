@@ -39,16 +39,11 @@ import SwiftUI
 /// Capability combination testing
 /// Tests all possible combinations of capabilities to ensure they work together correctly
 @MainActor
-open class CapabilityCombinationTests {
-    init() async throws {
+open class CapabilityCombinationTests: BaseTestClass {
+    override init() {
+        super.init()
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
     }
     
     // MARK: - Capability Combination Matrix
@@ -466,7 +461,14 @@ open class CapabilityCombinationTests {
     /// BUSINESS PURPOSE: Validate comprehensive capability combination functionality across all defined combinations
     /// TESTING SCOPE: Capability combination matrix testing, platform matching, combination behavior validation
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test all capability combinations
-    @Test func testCapabilityCombination(_ combination: CapabilityCombination) {
+    @Test(arguments: [
+        CapabilityCombination(name: "Touch + Haptic + AssistiveTouch", capabilities: ["touch": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS, .watchOS]),
+        CapabilityCombination(name: "Touch + Hover + Haptic + AssistiveTouch", capabilities: ["touch": true, "hover": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS]),
+        CapabilityCombination(name: "Hover + VoiceOver + SwitchControl", capabilities: ["hover": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.macOS]),
+        CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
+        CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
+    ])
+    func testCapabilityCombination(_ combination: CapabilityCombination) {
         let platform = SixLayerPlatform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
         
@@ -487,7 +489,14 @@ open class CapabilityCombinationTests {
     /// BUSINESS PURPOSE: Validate capability combination behavior logic for specific combination types
     /// TESTING SCOPE: Combination behavior validation, platform-specific logic, capability interaction testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test combination-specific behaviors
-    @Test func testCombinationBehavior(_ combination: CapabilityCombination) {
+    @Test(arguments: [
+        CapabilityCombination(name: "Touch + Haptic + AssistiveTouch", capabilities: ["touch": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS, .watchOS]),
+        CapabilityCombination(name: "Touch + Hover + Haptic + AssistiveTouch", capabilities: ["touch": true, "hover": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS]),
+        CapabilityCombination(name: "Hover + VoiceOver + SwitchControl", capabilities: ["hover": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.macOS]),
+        CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
+        CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
+    ])
+    func testCombinationBehavior(_ combination: CapabilityCombination) {
         switch combination.name {
         case "Touch + Haptic + AssistiveTouch":
             testTouchHapticAssistiveTouchCombination()
@@ -509,7 +518,14 @@ open class CapabilityCombinationTests {
     /// BUSINESS PURPOSE: Validate capability combination matching functionality for expected platform combinations
     /// TESTING SCOPE: Platform combination matching, capability value validation, combination accuracy testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to verify combination matches platform
-    @Test func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
+    @Test(arguments: [
+        CapabilityCombination(name: "Touch + Haptic + AssistiveTouch", capabilities: ["touch": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS, .watchOS]),
+        CapabilityCombination(name: "Touch + Hover + Haptic + AssistiveTouch", capabilities: ["touch": true, "hover": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS]),
+        CapabilityCombination(name: "Hover + VoiceOver + SwitchControl", capabilities: ["hover": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.macOS]),
+        CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
+        CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
+    ])
+    func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
         // Test that all capabilities match the expected combination
@@ -523,7 +539,14 @@ open class CapabilityCombinationTests {
     /// BUSINESS PURPOSE: Validate capability combination exclusion functionality for non-matching platform combinations
     /// TESTING SCOPE: Platform combination exclusion, capability mismatch detection, combination accuracy testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to verify combination doesn't match platform
-    @Test func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
+    @Test(arguments: [
+        CapabilityCombination(name: "Touch + Haptic + AssistiveTouch", capabilities: ["touch": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS, .watchOS]),
+        CapabilityCombination(name: "Touch + Hover + Haptic + AssistiveTouch", capabilities: ["touch": true, "hover": true, "haptic": true, "assistiveTouch": true], expectedPlatforms: [.iOS]),
+        CapabilityCombination(name: "Hover + VoiceOver + SwitchControl", capabilities: ["hover": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.macOS]),
+        CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
+        CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
+    ])
+    func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
         let config = getCardExpansionPlatformConfig()
         
         // Test that at least one capability doesn't match
