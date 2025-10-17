@@ -19,7 +19,7 @@ open class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
     
     @Test func testExampleProjectCardGeneratesAccessibilityIdentifiers() async {
         // Given: Test project data
-        let projectData = ExampleProjectData(
+        let projectData = SixLayerFramework.ExampleProjectData(
             id: "1",
             title: "Example Project",
             description: "This is an example project",
@@ -27,7 +27,7 @@ open class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating ExampleProjectCard
-        let view = ExampleProjectCard(project: projectData)
+        let view = SixLayerFramework.ExampleProjectCard(project: projectData)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -44,12 +44,12 @@ open class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
     @Test func testExampleProjectListGeneratesAccessibilityIdentifiers() async {
         // Given: Test project items
         let projectItems = [
-            ExampleProjectItem(id: "1", title: "Project 1"),
-            ExampleProjectItem(id: "2", title: "Project 2")
+            SixLayerFramework.ExampleProjectItem(id: "1", title: "Project 1"),
+            SixLayerFramework.ExampleProjectItem(id: "2", title: "Project 2")
         ]
         
         // When: Creating ExampleProjectList
-        let view = ExampleProjectList(items: projectItems) { item in
+        let view = SixLayerFramework.ExampleProjectList(items: projectItems) { item in
             Text(item.title)
         }
         
@@ -67,14 +67,14 @@ open class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
     
     @Test func testExampleProjectFormFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test form field data
-        let formFieldData = FormFieldData(
+        let formFieldData = SixLayerFramework.FormFieldData(
             label: "Example Form Field",
             placeholder: "Enter text here",
             value: ""
         )
         
         // When: Creating ExampleProjectFormField
-        let view = ExampleProjectFormField(field: formFieldData)
+        let view = SixLayerFramework.ExampleProjectFormField(field: formFieldData)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

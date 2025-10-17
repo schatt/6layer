@@ -30,9 +30,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormView Tests
     
     @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form configuration
-        let formConfig = testFormConfig
-        
         // When: Creating DynamicFormView
         let view = DynamicFormView()
         
@@ -270,7 +267,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicMultiSelectField
-        let view = DynamicMultiSelectField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicMultiSelectField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -295,7 +293,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicRadioField
-        let view = DynamicRadioField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicRadioField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -319,7 +318,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicCheckboxField
-        let view = DynamicCheckboxField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicCheckboxField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -343,7 +343,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicToggleField
-        let view = DynamicToggleField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicToggleField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -367,7 +368,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicDateField
-        let view = DynamicDateField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicDateField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -391,7 +393,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicTimeField
-        let view = DynamicTimeField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicTimeField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -415,7 +418,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicDateTimeField
-        let view = DynamicDateTimeField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicDateTimeField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -439,7 +443,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicColorField
-        let view = DynamicColorField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicColorField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -463,7 +468,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicFileField
-        let view = DynamicFileField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicFileField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -487,7 +493,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicIntegerField
-        let view = DynamicIntegerField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicIntegerField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -511,7 +518,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicImageField
-        let view = DynamicImageField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicImageField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -535,7 +543,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicURLField
-        let view = DynamicURLField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicURLField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -559,7 +568,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicArrayField
-        let view = DynamicArrayField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicArrayField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -583,7 +593,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicDataField
-        let view = DynamicDataField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicDataField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -608,7 +619,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating DynamicEnumField
-        let view = DynamicEnumField(field: field)
+        let formState = DynamicFormState(configuration: testFormConfig)
+        let view = DynamicEnumField(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
