@@ -6,7 +6,7 @@ import ViewInspector
 /// DRY Test Patterns
 /// Provides reusable patterns to eliminate duplication in tests
 @MainActor
-final class DRYTestPatterns {
+open class DRYTestPatterns {
     
     // MARK: - Test Data Types
     

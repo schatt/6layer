@@ -13,7 +13,7 @@ import Foundation
 import TabularData
 
 @MainActor
-final class DataFrameAnalysisEngineTests {
+open class DataFrameAnalysisEngineTests {
     
     var analysisEngine: DataFrameAnalysisEngine!
     

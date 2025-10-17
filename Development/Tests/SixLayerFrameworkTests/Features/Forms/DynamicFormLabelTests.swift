@@ -36,7 +36,7 @@ import SwiftUI
 /// Tests for DynamicFormView label behavior
 /// Ensures single visible label per field, preventing duplication
 @MainActor
-final class DynamicFormLabelTests {
+open class DynamicFormLabelTests {
     
     // MARK: - Test Data
     

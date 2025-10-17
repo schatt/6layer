@@ -52,7 +52,7 @@ struct MockDataContainer: Equatable {
 }
 
 @MainActor
-final class NativeTypesTests: BaseTestClass {
+open class NativeTypesTests: BaseTestClass {
     
     var formState: DynamicFormState!
     var configuration: DynamicFormConfiguration!

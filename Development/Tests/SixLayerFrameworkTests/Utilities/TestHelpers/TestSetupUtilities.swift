@@ -11,7 +11,7 @@ import Testing
 @testable import SixLayerFramework
 
 /// Centralized test setup utilities for consistent platform mocking across all tests
-public final class TestSetupUtilities {
+public class TestSetupUtilities {
     
     // MARK: - Singleton
     

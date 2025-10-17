@@ -40,7 +40,7 @@ import ViewInspector
 /// Comprehensive test suite for Input Handling & Interactions system
 /// Tests platform-specific input handling, keyboard shortcuts, haptic feedback, and drag & drop
 @MainActor
-final class InputHandlingInteractionsTests: BaseTestClass {
+open class InputHandlingInteractionsTests: BaseTestClass {
     
     // MARK: - Test Setup
     

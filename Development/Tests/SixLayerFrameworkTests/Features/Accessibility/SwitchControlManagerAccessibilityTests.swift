@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for SwitchControlManager.swift classes
 /// Ensures SwitchControlManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-class SwitchControlManagerAccessibilityTests: BaseTestClass {
+open class SwitchControlManagerAccessibilityTests: BaseTestClass {
     
     // MARK: - SwitchControlManager Tests
     

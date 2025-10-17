@@ -32,7 +32,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-final class FormAnalyticsManagerTests {
+open class FormAnalyticsManagerTests {
     
     /// BUSINESS PURPOSE: Validate FormAnalyticsManager initialization functionality
     /// TESTING SCOPE: Tests FormAnalyticsManager initialization and setup

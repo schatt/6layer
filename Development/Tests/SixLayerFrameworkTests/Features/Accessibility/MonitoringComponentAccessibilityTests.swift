@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class MonitoringComponentAccessibilityTests: BaseTestClass {
+open class MonitoringComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Monitoring Component Tests
     

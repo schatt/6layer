@@ -3,7 +3,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class SixLayerFrameworkTests: BaseTestClass {
+open class SixLayerFrameworkTests: BaseTestClass {
     
     override init() {
         super.init()

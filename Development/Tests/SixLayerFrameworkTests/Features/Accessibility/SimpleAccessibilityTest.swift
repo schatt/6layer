@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
-final class SimpleAccessibilityTest {
+open class SimpleAccessibilityTest {
     
     init() async throws {
         let config = AccessibilityIdentifierConfig.shared

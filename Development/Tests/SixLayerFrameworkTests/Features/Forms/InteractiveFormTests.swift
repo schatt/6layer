@@ -43,7 +43,7 @@ import SwiftUI
 // TODO: Replace with DynamicFormView tests using DynamicFormField
 /*
 @MainActor
-final class InteractiveFormTests: XCTestCase {
+open class InteractiveFormTests: XCTestCase {
     
     // MARK: - Test Helpers
     

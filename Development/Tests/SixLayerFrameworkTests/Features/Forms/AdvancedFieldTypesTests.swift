@@ -19,7 +19,7 @@ import UniformTypeIdentifiers
  * accessibility validation, and performance benchmarking. Tests both enabled and disabled states of capabilities
  * using RuntimeCapabilityDetection mock framework.
  */
-final class AdvancedFieldTypesTests {
+open class AdvancedFieldTypesTests {
     
     // MARK: - Test Data Setup
     

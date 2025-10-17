@@ -41,7 +41,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class CardActionButtonTests: BaseTestClass {
+open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Test Data
     

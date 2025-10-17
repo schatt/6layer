@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformOCRSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformOCRSemanticLayer1Tests {
+open class PlatformOCRSemanticLayer1Tests {
     
     // MARK: - Test Setup
     

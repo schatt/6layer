@@ -8,7 +8,7 @@ import ViewInspector
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 @MainActor
-final class GlobalDisableLocalEnableTDDTests {
+open class GlobalDisableLocalEnableTDDTests {
     
     init() async throws {
         let config = AccessibilityIdentifierConfig.shared

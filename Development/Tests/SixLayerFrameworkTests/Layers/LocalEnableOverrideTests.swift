@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Test the "global disable, local enable" functionality
 @MainActor
-final class LocalEnableOverrideTests {
+open class LocalEnableOverrideTests {
     
     init() async throws {
         let config = AccessibilityIdentifierConfig.shared

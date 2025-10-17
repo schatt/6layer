@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestClass {
+open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Photo Components Layer 4 Tests
     

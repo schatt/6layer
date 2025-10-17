@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All components in PlatformPhotoComponentsLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformPhotoComponentsLayer4Tests {
+open class PlatformPhotoComponentsLayer4Tests {
     
     // MARK: - Test Setup
     

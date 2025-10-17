@@ -11,7 +11,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer1PresentationTests {
+open class Layer1PresentationTests {
     
     // MARK: - Test Helpers
     

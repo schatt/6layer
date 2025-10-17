@@ -19,7 +19,7 @@ struct PlatformResponsiveCardsTestItem: Identifiable {
 /// TESTING SCOPE: All components in PlatformResponsiveCardsLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformResponsiveCardsLayer4Tests {
+open class PlatformResponsiveCardsLayer4Tests {
     
     // MARK: - Test Setup
     

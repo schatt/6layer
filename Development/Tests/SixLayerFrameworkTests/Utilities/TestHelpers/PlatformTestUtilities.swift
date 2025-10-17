@@ -38,7 +38,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Centralized platform test utilities for consistent capability testing
-final class PlatformTestUtilities {
+open class PlatformTestUtilities {
     
     // MARK: - Platform Test Configuration Structure
     

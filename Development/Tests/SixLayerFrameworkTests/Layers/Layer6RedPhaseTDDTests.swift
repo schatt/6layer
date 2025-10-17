@@ -13,7 +13,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer6RedPhaseTDDTests {
+open class Layer6RedPhaseTDDTests {
     
     // MARK: - Cross-Platform Benchmarking Tests (RED PHASE)
     

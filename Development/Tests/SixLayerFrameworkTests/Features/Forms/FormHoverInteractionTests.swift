@@ -11,7 +11,7 @@ import SwiftUI
 /// - iOS: Help text should be accessible via accessibility features
 /// - Cross-platform: Consistent behavior where possible
 /// - Accessibility: Screen readers should announce help text
-final class FormHoverInteractionTests {
+open class FormHoverInteractionTests {
     
     // MARK: - Test Data
     

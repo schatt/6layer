@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All components in DynamicFormView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class DynamicFormViewTests {
+open class DynamicFormViewTests {
     
     // MARK: - Test Setup
     

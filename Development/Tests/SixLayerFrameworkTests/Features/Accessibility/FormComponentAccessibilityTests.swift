@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class FormComponentAccessibilityTests: BaseTestClass {
+open class FormComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Form Component Tests
     

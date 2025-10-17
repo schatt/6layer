@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class L2LayoutDecisionTests {
+open class L2LayoutDecisionTests {
     
     // MARK: - Test Data
     

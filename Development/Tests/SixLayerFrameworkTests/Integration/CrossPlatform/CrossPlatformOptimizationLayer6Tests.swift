@@ -15,7 +15,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class CrossPlatformOptimizationLayer6Tests {
+open class CrossPlatformOptimizationLayer6Tests {
     
     // MARK: - CrossPlatformOptimizationManager Tests
     

@@ -39,7 +39,7 @@ import SwiftUI
 /// Capability combination testing
 /// Tests all possible combinations of capabilities to ensure they work together correctly
 @MainActor
-final class CapabilityCombinationTests {
+open class CapabilityCombinationTests {
     init() async throws {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)

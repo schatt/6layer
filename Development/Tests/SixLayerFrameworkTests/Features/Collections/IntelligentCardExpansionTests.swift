@@ -7,7 +7,7 @@ import SwiftUI
 /// Tests for the Intelligent Card Expansion System
 /// Tests all 6 layers of the expandable card functionality
 @MainActor
-final class IntelligentCardExpansionTests {
+open class IntelligentCardExpansionTests {
     
     // MARK: - Test Data
     

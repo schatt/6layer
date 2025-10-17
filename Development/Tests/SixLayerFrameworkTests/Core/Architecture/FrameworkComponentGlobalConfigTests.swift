@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Test that framework components respect global accessibility config
 @MainActor
-final class FrameworkComponentGlobalConfigTests {
+open class FrameworkComponentGlobalConfigTests {
     
     init() async throws {
         let config = AccessibilityIdentifierConfig.shared

@@ -8,7 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-final class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {
+open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {
     
     override init() {
         super.init()

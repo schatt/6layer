@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
+open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Core Framework Component Tests
     
@@ -372,7 +372,7 @@ struct PlatformOptimizationSettings {
     let threadCount: Int
 }
 
-class CrossPlatformOptimizationManager {
+open class CrossPlatformOptimizationManager {
     static func benchmarkPerformance(for view: some View) -> BenchmarkResult {
         return BenchmarkResult(
             cpuUsage: 0.0,

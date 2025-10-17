@@ -37,7 +37,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class PlatformPresentContentL1Tests {
+open class PlatformPresentContentL1Tests {
     
     // MARK: - Test Data Setup
     

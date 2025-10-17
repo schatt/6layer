@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class PlatformSimulationComponentAccessibilityTests: BaseTestClass {
+open class PlatformSimulationComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Simulation Component Tests
     

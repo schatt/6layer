@@ -8,7 +8,7 @@ import ViewInspector
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
 @MainActor
-class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {
+open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {
     
     override init() {
         super.init()

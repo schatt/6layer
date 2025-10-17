@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class DataFrameAnalysisEngineComponentAccessibilityTests: BaseTestClass {
+open class DataFrameAnalysisEngineComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DataFrame Analysis Engine Component Tests
     

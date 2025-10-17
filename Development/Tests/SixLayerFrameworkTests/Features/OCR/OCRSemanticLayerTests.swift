@@ -37,7 +37,7 @@ import AppKit
 /// Tests for OCR semantic layer functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
-final class OCRSemanticLayerTests {
+open class OCRSemanticLayerTests {
     
     // MARK: - Test Setup
     

@@ -38,7 +38,7 @@ import SwiftUI
 /// Tests for Form Field Interaction Functionality
 /// Tests that form fields properly handle user interactions and data binding
 @MainActor
-final class FormFieldInteractionTests {
+open class FormFieldInteractionTests {
     
     // MARK: - Test Data
     

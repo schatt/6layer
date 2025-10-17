@@ -39,7 +39,7 @@ import SwiftUI
 /// Platform simulation tests that can test different platform combinations
 /// without requiring actual hardware for each platform
 @MainActor
-final class PlatformSimulationTests {
+open class PlatformSimulationTests {
     
     // MARK: - Platform Simulation Data
     

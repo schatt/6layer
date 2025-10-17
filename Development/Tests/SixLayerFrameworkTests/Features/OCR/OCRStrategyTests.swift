@@ -29,7 +29,7 @@ import SwiftUI
 /// Tests for OCR strategy functionality
 /// TODO: Implement real tests that test actual OCR strategy functionality
 @MainActor
-final class OCRStrategyTests {
+open class OCRStrategyTests {
     
     // MARK: - Test Setup
     

@@ -32,7 +32,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-final class ExtensibleHintsTests {
+open class ExtensibleHintsTests {
     
     /// BUSINESS PURPOSE: Validate ExtensibleHints initialization functionality
     /// TESTING SCOPE: Tests ExtensibleHints system initialization and setup

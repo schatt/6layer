@@ -11,7 +11,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-final class InternationalizationServiceTests {
+open class InternationalizationServiceTests {
     
     // MARK: - Test Data
     

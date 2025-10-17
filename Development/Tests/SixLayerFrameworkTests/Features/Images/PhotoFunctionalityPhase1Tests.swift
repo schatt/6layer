@@ -17,7 +17,7 @@ import AppKit
 #endif
 @testable import SixLayerFramework
 
-final class PhotoFunctionalityPhase1Tests {
+open class PhotoFunctionalityPhase1Tests {
     
     // MARK: - Enhanced PlatformImage Tests
     

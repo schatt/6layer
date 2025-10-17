@@ -38,7 +38,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ImageProcessingPipelineTests {
+open class ImageProcessingPipelineTests {
     
     // MARK: - Test Data
     

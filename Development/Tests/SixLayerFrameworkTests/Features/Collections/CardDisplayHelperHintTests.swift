@@ -8,7 +8,7 @@ import SwiftUI
 /// TESTING SCOPE: CardDisplayHelper hint system from CardDisplayable.swift
 /// METHODOLOGY: Test hint-based extraction with different item types and hint configurations
 @MainActor
-final class CardDisplayHelperHintTests {
+open class CardDisplayHelperHintTests {
     
     // MARK: - Test Data Structures
     

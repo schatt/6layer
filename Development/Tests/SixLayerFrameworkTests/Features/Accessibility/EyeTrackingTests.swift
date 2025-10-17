@@ -36,7 +36,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class EyeTrackingTests: BaseTestClass {
+open class EyeTrackingTests: BaseTestClass {
     
     // MARK: - Test Properties
     

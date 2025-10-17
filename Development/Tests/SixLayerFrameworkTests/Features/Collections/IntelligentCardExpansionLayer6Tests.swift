@@ -14,7 +14,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class IntelligentCardExpansionLayer6Tests: BaseTestClass {
+open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Test Data
     

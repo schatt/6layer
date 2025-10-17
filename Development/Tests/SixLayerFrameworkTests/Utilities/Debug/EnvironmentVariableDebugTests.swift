@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Debug test to understand environment variable propagation
 @MainActor
-final class EnvironmentVariableDebugTests {
+open class EnvironmentVariableDebugTests {
     
     init() async throws {
         let config = AccessibilityIdentifierConfig.shared

@@ -8,7 +8,7 @@ import SwiftUI
 /// Tests the platform detection and configuration logic without relying on runtime platform detection
 /// These tests focus on the logic that determines platform-specific behavior
 @MainActor
-final class PlatformLogicTests {
+open class PlatformLogicTests {
     
     // Local, general-purpose capability snapshot for tests (do not use card-specific config)
     struct PlatformCapabilities {

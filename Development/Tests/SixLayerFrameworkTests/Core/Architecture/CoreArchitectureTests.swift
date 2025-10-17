@@ -39,7 +39,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class CoreArchitectureTests {
+open class CoreArchitectureTests {
     
     // MARK: - Test Helpers
     

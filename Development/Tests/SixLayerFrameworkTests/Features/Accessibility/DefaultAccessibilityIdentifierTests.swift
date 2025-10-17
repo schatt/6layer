@@ -12,7 +12,7 @@ import SwiftUI
  * METHODOLOGY: Tests that views get automatic identifiers without explicit enabling
  */
 @MainActor
-class DefaultAccessibilityIdentifierTests: BaseTestClass {
+open class DefaultAccessibilityIdentifierTests: BaseTestClass {
     
     deinit {
         Task { [weak self] in

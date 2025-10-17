@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All functions in IntelligentCardExpansionLayer2.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class IntelligentCardExpansionLayer2Tests {
+open class IntelligentCardExpansionLayer2Tests {
     
     // MARK: - Test Setup
     

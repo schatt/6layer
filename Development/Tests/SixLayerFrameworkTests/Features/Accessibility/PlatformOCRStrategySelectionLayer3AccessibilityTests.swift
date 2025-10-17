@@ -8,7 +8,7 @@ import ViewInspector
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-final class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {
+open class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {
     
     override init() {
         super.init()

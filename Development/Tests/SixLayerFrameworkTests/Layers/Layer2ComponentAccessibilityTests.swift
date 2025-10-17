@@ -13,7 +13,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class Layer2ComponentAccessibilityTests: BaseTestClass {
+open class Layer2ComponentAccessibilityTests: BaseTestClass {
     
 // MARK: - Layer 2 Semantic Functions Tests
     

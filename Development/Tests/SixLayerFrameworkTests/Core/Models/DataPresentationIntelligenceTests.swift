@@ -3,7 +3,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
-final class DataPresentationIntelligenceTests: BaseTestClass {
+open class DataPresentationIntelligenceTests: BaseTestClass {
     
     var intelligence: DataPresentationIntelligence!
     

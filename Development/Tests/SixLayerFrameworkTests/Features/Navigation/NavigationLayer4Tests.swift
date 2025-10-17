@@ -13,7 +13,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class NavigationLayer4Tests {
+open class NavigationLayer4Tests {
     
     // MARK: - Test Types
     

@@ -51,7 +51,7 @@ typealias MockAccessibilityFeatureChecker = DRYTestPatterns.MockAccessibilityFea
 /// DRY Core View Function Tests
 /// Demonstrates how to eliminate duplication using reusable patterns
 @MainActor
-final class DRYCoreViewFunctionTests {
+open class DRYCoreViewFunctionTests {
     
     // MARK: - Test Data Types
     // TestDataItem is now imported from DRYTestPatterns

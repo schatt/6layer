@@ -39,7 +39,7 @@ import SwiftUI
 /// Comprehensive capability testing framework
 /// Tests both sides of every capability branch and verifies UI generation
 @MainActor
-final class CapabilityTestingFramework {
+open class CapabilityTestingFramework {
     
     // MARK: - Test Configuration
     

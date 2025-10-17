@@ -13,7 +13,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer4FormContainerTests {
+open class Layer4FormContainerTests {
     
     // MARK: - Test Data
     

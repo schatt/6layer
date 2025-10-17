@@ -31,7 +31,7 @@ import ViewInspector
 @testable import SixLayerFramework
 
 @MainActor
-final class PhotoComponentsLayer4Tests {
+open class PhotoComponentsLayer4Tests {
     
     // MARK: - Test Data Setup
     

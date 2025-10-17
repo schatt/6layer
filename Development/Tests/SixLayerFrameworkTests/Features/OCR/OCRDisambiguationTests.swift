@@ -29,7 +29,7 @@ import SwiftUI
 /// Tests for OCR disambiguation functionality
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
 @MainActor
-class OCRDisambiguationTests: BaseTestClass {
+open class OCRDisambiguationTests: BaseTestClass {
     
     override init() {
         super.init()

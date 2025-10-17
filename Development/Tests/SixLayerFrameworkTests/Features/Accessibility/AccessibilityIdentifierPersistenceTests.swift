@@ -8,7 +8,7 @@ import ViewInspector
 /// TDD Tests for Accessibility Identifier Persistence
 /// Following proper TDD: Write failing tests first to prove the issue exists
 @MainActor
-final class AccessibilityIdentifierPersistenceTests {
+open class AccessibilityIdentifierPersistenceTests {
     
     init() async throws {
                 let config = AccessibilityIdentifierConfig.shared

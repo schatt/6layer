@@ -17,7 +17,7 @@ import SwiftUI
 /// 
 /// TESTING SCOPE: These tests define the new behavior and should FAIL initially
 /// (RED phase) until the implementation is updated to match.
-final class NamedModifierRefactoringTDDTests {
+open class NamedModifierRefactoringTDDTests {
     
     init() async throws {
                 // Reset configuration to known state

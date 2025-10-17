@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Test what happens when automatic accessibility IDs are disabled
 @MainActor
-final class AccessibilityIdentifierDisabledTests {
+open class AccessibilityIdentifierDisabledTests {
     
     init() async throws {
                 let config = AccessibilityIdentifierConfig.shared

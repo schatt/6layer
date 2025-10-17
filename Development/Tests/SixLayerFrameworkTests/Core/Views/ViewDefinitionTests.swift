@@ -8,7 +8,7 @@ import SwiftUI
 /// Tests that the correct view definitions are generated based on input capabilities and features
 /// We test the view structure/properties, not runtime behavior
 @MainActor
-final class ViewDefinitionTests {
+open class ViewDefinitionTests {
     
     // MARK: - Test Data
     

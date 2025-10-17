@@ -14,7 +14,7 @@ import SwiftUI
 
 /// Comprehensive tests for Internationalization & Localization
 @MainActor
-final class InternationalizationTests {
+open class InternationalizationTests {
     
     // MARK: - Test Setup
     

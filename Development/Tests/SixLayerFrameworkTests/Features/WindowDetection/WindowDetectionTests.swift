@@ -8,7 +8,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-final class WindowDetectionTests {
+open class WindowDetectionTests {
     
     // MARK: - Test Setup
     

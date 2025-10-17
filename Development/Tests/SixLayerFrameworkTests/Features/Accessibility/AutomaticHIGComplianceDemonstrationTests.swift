@@ -14,7 +14,7 @@ import SwiftUI
  * METHODOLOGY: Creates views using Layer 1 functions and verifies they automatically have
  * compliance features without requiring manual modifier application
  */
-final class AutomaticHIGComplianceDemonstrationTests {
+open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     
     // MARK: - Test Data Setup
     
@@ -35,11 +35,7 @@ final class AutomaticHIGComplianceDemonstrationTests {
         )
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // Cleanup handled by BaseTestClass
     
     // MARK: - Demonstration Tests
     

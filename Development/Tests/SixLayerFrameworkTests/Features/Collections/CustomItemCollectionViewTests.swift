@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: CustomItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class CustomItemCollectionViewTests {
+open class CustomItemCollectionViewTests {
     
     // MARK: - Test Setup
     

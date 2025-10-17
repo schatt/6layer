@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: CollectionEmptyStateView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class CollectionEmptyStateViewTests {
+open class CollectionEmptyStateViewTests {
     
     // MARK: - Test Setup
     

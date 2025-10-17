@@ -13,7 +13,7 @@ import SwiftUI
 /// Comprehensive tests for the Intelligent Card Expansion System
 /// Tests all 6 layers with edge cases, performance, and integration scenarios
 @MainActor
-final class IntelligentCardExpansionComprehensiveTests: BaseTestClass {
+open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {
     
     override init() {
         super.init()

@@ -10,7 +10,7 @@ import Testing
 
 import TabularData
 
-final class TabularDataAPITest {
+open class TabularDataAPITest {
     
     @Test func testTabularDataAPI() throws {
         // Create a simple DataFrame to understand the API

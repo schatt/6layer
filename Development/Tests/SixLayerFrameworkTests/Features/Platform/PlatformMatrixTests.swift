@@ -39,7 +39,7 @@ import SwiftUI
 /// Comprehensive platform matrix testing for cross-platform framework
 /// Tests all platform combinations, device types, and capability matrices
 @MainActor
-final class PlatformMatrixTests {
+open class PlatformMatrixTests {
     
     // MARK: - Platform Detection Tests
     

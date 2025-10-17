@@ -38,7 +38,7 @@ import SwiftUI
 
 /// Tests for runtime capability detection
 @MainActor
-final class RuntimeCapabilityDetectionTests {
+open class RuntimeCapabilityDetectionTests {
     
     init() async throws {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()

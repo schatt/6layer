@@ -26,7 +26,7 @@
 
 /// Tests for OCR service functionality
 /// TODO: Implement real tests that test actual OCR service behavior
-final class OCRServiceTests {
+open class OCRServiceTests {
     
     // MARK: - Test Setup
     

@@ -37,7 +37,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class CrossPlatformColorTests {
+open class CrossPlatformColorTests {
     
     // MARK: - Cross-Platform Color Tests
     

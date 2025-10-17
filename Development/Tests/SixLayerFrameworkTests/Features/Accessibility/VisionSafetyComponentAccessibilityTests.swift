@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class VisionSafetyComponentAccessibilityTests: BaseTestClass {
+open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Vision Safety Component Tests
     

@@ -30,7 +30,7 @@ import SwiftUI
 
 /// Test suite for AccessibilityTestingSuite with proper TDD practices
 @MainActor
-final class AccessibilityTestingSuiteTests: BaseTestClass {
+open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     var testingSuite: AccessibilityTestingSuite!
     

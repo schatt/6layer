@@ -40,7 +40,7 @@ import SwiftUI
 /// Tests that platform detection correctly determines capability support
 /// AND that capabilities work when supported and are disabled when not supported
 @MainActor
-final class CapabilityMatrixTests {
+open class CapabilityMatrixTests {
     init() async throws {
         // Establish deterministic baseline for current platform
         let platform = SixLayerPlatform.current

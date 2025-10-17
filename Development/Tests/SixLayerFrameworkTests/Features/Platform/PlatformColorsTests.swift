@@ -37,7 +37,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class PlatformColorsTests {
+open class PlatformColorsTests {
     
     init() async throws {
     }

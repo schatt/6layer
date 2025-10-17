@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Minimal test to debug accessibility identifier issues
 @MainActor
-final class MinimalAccessibilityTest {
+open class MinimalAccessibilityTest {
     
     @Test func testMinimalAccessibilityIdentifier() async {
         // Given: A simple view with automatic accessibility identifiers

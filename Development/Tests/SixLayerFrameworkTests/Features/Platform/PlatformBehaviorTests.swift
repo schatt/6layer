@@ -39,7 +39,7 @@ import SwiftUI
 /// Platform behavior testing
 /// Tests that every function behaves correctly based on platform capabilities
 @MainActor
-final class PlatformBehaviorTests {
+open class PlatformBehaviorTests {
     
     // MARK: - Test Data Setup
     

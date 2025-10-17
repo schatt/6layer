@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformSemanticLayer1Tests {
+open class PlatformSemanticLayer1Tests {
     
     // MARK: - Test Setup
     

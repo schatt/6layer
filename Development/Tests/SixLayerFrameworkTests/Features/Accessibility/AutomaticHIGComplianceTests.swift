@@ -18,7 +18,7 @@ import SwiftUI
  * functions and verifies they have proper accessibility features, platform-specific behavior, and HIG compliance
  * without requiring manual modifier application.
  */
-final class AutomaticHIGComplianceTests {
+open class AutomaticHIGComplianceTests {
     
     // MARK: - Test Data Setup
     

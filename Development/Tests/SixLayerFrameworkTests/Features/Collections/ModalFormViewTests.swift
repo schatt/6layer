@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: ModalFormView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class ModalFormViewTests {
+open class ModalFormViewTests {
     
     // MARK: - Test Setup
     

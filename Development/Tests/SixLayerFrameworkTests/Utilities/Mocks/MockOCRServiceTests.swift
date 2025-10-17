@@ -26,7 +26,7 @@
 
 /// Tests for MockOCRService functionality
 /// TODO: Implement real tests that test actual mock service behavior
-final class MockOCRServiceTests {
+open class MockOCRServiceTests {
     
     // MARK: - Test Setup
     

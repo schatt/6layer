@@ -10,7 +10,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-final class LayoutDecisionReasoningTests {
+open class LayoutDecisionReasoningTests {
     
     // MARK: - GenericLayoutDecision Reasoning Tests
     

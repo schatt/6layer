@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All components in PlatformStylingLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformStylingLayer4Tests {
+open class PlatformStylingLayer4Tests {
     
     // MARK: - Test Setup
     

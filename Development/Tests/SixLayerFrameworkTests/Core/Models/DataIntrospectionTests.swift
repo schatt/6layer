@@ -11,7 +11,7 @@ import Foundation
 
 import SixLayerFramework
 
-final class DataIntrospectionTests {
+open class DataIntrospectionTests {
     
     // MARK: - Test Data Models
     

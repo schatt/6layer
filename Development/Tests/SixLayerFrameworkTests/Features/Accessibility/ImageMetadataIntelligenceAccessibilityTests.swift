@@ -8,7 +8,7 @@ import ViewInspector
 /// Ensures ImageMetadataIntelligence classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-class ImageMetadataIntelligenceAccessibilityTests: BaseTestClass {
+open class ImageMetadataIntelligenceAccessibilityTests: BaseTestClass {
     
     // MARK: - ImageMetadataIntelligence Tests
     

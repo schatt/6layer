@@ -17,7 +17,7 @@ import ViewInspector
  * identifiers are present and have the expected format. This addresses the gap in original
  * tests that only verified views could be created, not that identifiers were actually assigned.
  */
-final class AccessibilityIdentifierGenerationVerificationTests {
+open class AccessibilityIdentifierGenerationVerificationTests {
     
     init() async throws {
                 await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()

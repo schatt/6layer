@@ -38,7 +38,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ImageMetadataIntelligenceTests {
+open class ImageMetadataIntelligenceTests {
     
     // MARK: - Test Data
     

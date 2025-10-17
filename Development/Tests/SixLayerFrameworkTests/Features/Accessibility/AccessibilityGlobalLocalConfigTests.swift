@@ -7,7 +7,7 @@ import ViewInspector
 
 /// Test that accessibility functions respect both global and local configuration options
 @MainActor
-final class AccessibilityGlobalLocalConfigTests {
+open class AccessibilityGlobalLocalConfigTests {
     
     init() async throws {
                 let config = AccessibilityIdentifierConfig.shared

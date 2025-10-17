@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformOCRDisambiguationLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformOCRDisambiguationLayer1Tests {
+open class PlatformOCRDisambiguationLayer1Tests {
     
     // MARK: - Test Setup
     

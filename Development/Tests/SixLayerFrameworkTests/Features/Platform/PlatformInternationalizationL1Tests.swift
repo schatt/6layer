@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformInternationalizationL1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class PlatformInternationalizationL1Tests {
+open class PlatformInternationalizationL1Tests {
     
     // MARK: - Test Setup
     

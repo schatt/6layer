@@ -7,7 +7,7 @@ import SwiftUI
 /// Tests for single-instance Layer 1 functions
 /// Following TDD principles - these tests define the expected behavior
 @MainActor
-final class SingleInstanceLayer1Tests {
+open class SingleInstanceLayer1Tests {
     
     // MARK: - Test Setup
     

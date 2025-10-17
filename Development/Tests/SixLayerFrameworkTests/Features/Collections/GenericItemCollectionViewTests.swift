@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: GenericItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class GenericItemCollectionViewTests {
+open class GenericItemCollectionViewTests {
     
     // MARK: - Test Setup
     

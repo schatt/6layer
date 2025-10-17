@@ -39,7 +39,7 @@ import SwiftUI
 /// Capability-aware function testing
 /// Tests every function that depends on capabilities in both enabled and disabled states
 @MainActor
-final class CapabilityAwareFunctionTests {
+open class CapabilityAwareFunctionTests {
     
     deinit {
         Task { [weak self] in

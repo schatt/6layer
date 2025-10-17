@@ -37,7 +37,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-final class PlatformColorEncodeTests {
+open class PlatformColorEncodeTests {
     
     // MARK: - Basic Color Encoding Tests
     

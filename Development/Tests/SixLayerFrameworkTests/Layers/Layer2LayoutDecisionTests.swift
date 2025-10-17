@@ -26,7 +26,7 @@ import Foundation
 @testable import SixLayerFramework
 
 @MainActor
-final class Layer2LayoutDecisionTests {
+open class Layer2LayoutDecisionTests {
     
     // MARK: - Test Data
     

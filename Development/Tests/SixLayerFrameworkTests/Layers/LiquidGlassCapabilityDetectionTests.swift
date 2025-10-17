@@ -36,7 +36,7 @@ import Foundation
 
 @testable import SixLayerFramework
 
-final class LiquidGlassCapabilityDetectionTests {
+open class LiquidGlassCapabilityDetectionTests {
     
     init() async throws {
     }

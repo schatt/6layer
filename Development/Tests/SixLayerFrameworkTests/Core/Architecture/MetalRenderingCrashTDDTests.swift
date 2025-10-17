@@ -10,7 +10,7 @@ import ViewInspector
 /// 
 /// UPDATE: Performance layer has been removed entirely, eliminating the Metal crash bug
 @MainActor
-final class MetalRenderingCrashTDDTests {
+open class MetalRenderingCrashTDDTests {
     
     init() async throws {
         let config = AccessibilityIdentifierConfig.shared

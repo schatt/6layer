@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All components in FormInsightsDashboard.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class FormInsightsDashboardTests {
+open class FormInsightsDashboardTests {
     
     // MARK: - Test Setup
     

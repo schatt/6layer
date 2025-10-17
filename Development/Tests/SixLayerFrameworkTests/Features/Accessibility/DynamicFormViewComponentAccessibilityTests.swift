@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
+open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Shared Test Data (DRY Principle)
     

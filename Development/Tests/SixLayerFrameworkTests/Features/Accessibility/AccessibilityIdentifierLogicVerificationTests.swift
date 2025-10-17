@@ -17,7 +17,7 @@ import SwiftUI
  * generating identifiers, including the critical globalAutomaticAccessibilityIdentifiers
  * environment variable.
  */
-final class AccessibilityIdentifierLogicVerificationTests {
+open class AccessibilityIdentifierLogicVerificationTests {
     
     init() async throws {
                 await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()

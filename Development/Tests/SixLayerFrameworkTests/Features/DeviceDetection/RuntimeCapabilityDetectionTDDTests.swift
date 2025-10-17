@@ -39,7 +39,7 @@ import SwiftUI
 /// TDD Tests for Runtime Capability Detection
 /// These tests define the expected behavior and will initially fail
 @MainActor
-final class RuntimeCapabilityDetectionTDDTests {
+open class RuntimeCapabilityDetectionTDDTests {
     
     // MARK: - Test Setup
     

@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All Layer 1 presentation functions
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @MainActor
-class Layer1AccessibilityTests: BaseTestClass {
+open class Layer1AccessibilityTests: BaseTestClass {
     
      // MARK: - Test Setup
     

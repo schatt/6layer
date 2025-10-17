@@ -8,7 +8,7 @@ import ViewInspector
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-final class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {
+open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {
     
     override init() {
         super.init()

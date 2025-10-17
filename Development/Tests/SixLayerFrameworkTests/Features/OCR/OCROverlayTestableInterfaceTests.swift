@@ -29,7 +29,7 @@ import SwiftUI
 /// Tests for OCR overlay testable interface functionality
 /// TODO: Implement real tests that test actual OCR overlay testable interface functionality
 @MainActor
-final class OCROverlayTestableInterfaceTests {
+open class OCROverlayTestableInterfaceTests {
     
     // MARK: - Test Setup
     

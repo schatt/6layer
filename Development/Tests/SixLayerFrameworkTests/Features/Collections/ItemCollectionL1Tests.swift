@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class ItemCollectionL1Tests: BaseTestClass {
+open class ItemCollectionL1Tests: BaseTestClass {
     
     // MARK: - Test Data
     

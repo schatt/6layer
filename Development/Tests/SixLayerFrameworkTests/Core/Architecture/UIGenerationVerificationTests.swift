@@ -8,7 +8,7 @@ import ViewInspector
 /// UI Generation Verification Tests
 /// Tests that the correct UI components are generated based on capabilities
 @MainActor
-final class UIGenerationVerificationTests {
+open class UIGenerationVerificationTests {
     
     // MARK: - Test Configuration
     

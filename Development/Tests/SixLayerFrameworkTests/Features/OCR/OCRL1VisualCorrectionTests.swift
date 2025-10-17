@@ -29,7 +29,7 @@ import SwiftUI
 /// Tests for Layer 1 OCR visual correction functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR visual correction functionality
 @MainActor
-final class OCRL1VisualCorrectionTests {
+open class OCRL1VisualCorrectionTests {
     
     // MARK: - Test Setup
     

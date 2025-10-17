@@ -37,7 +37,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-final class DataBindingTests {
+open class DataBindingTests {
     
     // MARK: - DataBinder Tests
     

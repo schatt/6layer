@@ -11,7 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: All functions in AutomaticAccessibilityIdentifiers.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-final class AutomaticAccessibilityIdentifiersTests {
+open class AutomaticAccessibilityIdentifiersTests {
     
     // MARK: - Test Setup
     

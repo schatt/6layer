@@ -8,7 +8,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for GenericItemCollectionView
 /// This test SHOULD FAIL - proving GenericItemCollectionView doesn't generate accessibility IDs
 @MainActor
-class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {
+open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {
     
     override init() {
         super.init()
