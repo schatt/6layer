@@ -14,43 +14,7 @@ import SwiftUI
 @MainActor
 open class OCROverlayTests: BaseTestClass {
     
-    var testImage: PlatformImage!
-    var testOCRResult: OCRResult!
-    var testBoundingBoxes: [CGRect]!
-    
-    override init() {
-        super.init()
-        
-        // Create test image
-        testImage = PlatformImage()
-        
-        // Create test bounding boxes
-        testBoundingBoxes = [
-            CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
-            CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
-            CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
-        ]
-        
-        // Create test OCR result
-        testOCRResult = OCRResult(
-            extractedText: "Hello World\nTest Text\nAnother Line",
-            confidence: 0.85,
-            boundingBoxes: testBoundingBoxes,
-            textTypes: [
-                .general: "Hello World",
-                .price: "Test Text", 
-                    .number: "Another Line"
-            ],
-            processingTime: 1.2,
-            language: .english
-        )
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // Test data will be created locally in each test method for parallel execution
     
     // MARK: - OCR Overlay View Tests
     
@@ -60,8 +24,26 @@ open class OCROverlayTests: BaseTestClass {
         let onTextEdit: (String, CGRect) -> Void = { _, _ in }
         let onTextDelete: (CGRect) -> Void = { _ in }
         
-        // When: Creating OCR overlay view
+        // Create test data locally
         let testImage = PlatformImage()
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: [
+                CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+                CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+                CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+            ],
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
+        // When: Creating OCR overlay view
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -103,6 +85,24 @@ open class OCROverlayTests: BaseTestClass {
     
     @Test func testBoundingBoxRendering() {
         // Given: OCR result with bounding boxes
+        let testImage = PlatformImage()
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: [
+                CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+                CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+                CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+            ],
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         _ = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -140,8 +140,25 @@ open class OCROverlayTests: BaseTestClass {
     
     @Test func testTextRegionTapDetection() {
         // Given: OCR overlay with text regions
-        var _: (String, CGRect)?
         let testImage = PlatformImage()
+        let testBoundingBoxes = [
+            CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+            CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+            CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+        ]
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: testBoundingBoxes,
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -164,6 +181,23 @@ open class OCROverlayTests: BaseTestClass {
     @Test func testTextRegionTapOutsideBounds() {
         // Given: OCR overlay
         let testImage = PlatformImage()
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: [
+                CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+                CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+                CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+            ],
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -184,6 +218,24 @@ open class OCROverlayTests: BaseTestClass {
     @Test func testTextEditingModeToggle() {
         // Given: OCR overlay
         let testImage = PlatformImage()
+        let testBoundingBoxes = [
+            CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+            CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+            CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+        ]
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: testBoundingBoxes,
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -205,6 +257,24 @@ open class OCROverlayTests: BaseTestClass {
         var editedText: String?
         var editedRect: CGRect?
         let testImage = PlatformImage()
+        let testBoundingBoxes = [
+            CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+            CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+            CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+        ]
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: testBoundingBoxes,
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -229,6 +299,24 @@ open class OCROverlayTests: BaseTestClass {
     @Test func testTextEditingCancellation() {
         // Given: OCR overlay in editing mode
         let testImage = PlatformImage()
+        let testBoundingBoxes = [
+            CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+            CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+            CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+        ]
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: testBoundingBoxes,
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -252,6 +340,24 @@ open class OCROverlayTests: BaseTestClass {
         // Given: OCR overlay
         var deletedRect: CGRect?
         let testImage = PlatformImage()
+        let testBoundingBoxes = [
+            CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+            CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+            CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+        ]
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: testBoundingBoxes,
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -302,7 +408,20 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // When: Creating overlays
-        // OCROverlayView is non-optional - no need to check for nil
+        let testImage = PlatformImage()
+        _ = OCROverlayView(
+            image: testImage,
+            result: highConfidenceResult,
+            onTextEdit: { _, _ in },
+            onTextDelete: { _ in }
+        )
+        
+        _ = OCROverlayView(
+            image: testImage,
+            result: lowConfidenceResult,
+            onTextEdit: { _, _ in },
+            onTextDelete: { _ in }
+        )
         
         // Then: Should provide different visual indicators
         // Test high confidence (above high threshold)
@@ -321,6 +440,23 @@ open class OCROverlayTests: BaseTestClass {
     func testAccessibilitySupport() {
         // Given: OCR overlay
         let testImage = PlatformImage()
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: [
+                CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+                CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+                CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+            ],
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -340,6 +476,23 @@ open class OCROverlayTests: BaseTestClass {
     func testVoiceOverSupport() {
         // Given: OCR overlay with multiple text regions
         let testImage = PlatformImage()
+        let testOCRResult = OCRResult(
+            extractedText: "Hello World\nTest Text\nAnother Line",
+            confidence: 0.85,
+            boundingBoxes: [
+                CGRect(x: 10, y: 20, width: 100, height: 30),  // First text region
+                CGRect(x: 50, y: 60, width: 80, height: 25),   // Second text region
+                CGRect(x: 120, y: 100, width: 60, height: 20)  // Third text region
+            ],
+            textTypes: [
+                .general: "Hello World",
+                .price: "Test Text", 
+                .number: "Another Line"
+            ],
+            processingTime: 1.2,
+            language: .english
+        )
+        
         let overlayView = OCROverlayView(
             image: testImage,
             result: testOCRResult,
@@ -477,6 +630,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // When: Creating overlay from disambiguation result
+        let testImage = PlatformImage()
         let overlayView = OCROverlayView.fromDisambiguationResult(
             image: testImage,
             result: disambiguationResult,
