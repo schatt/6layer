@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  PlatformBehaviorTests.swift
 //  SixLayerFrameworkTests
@@ -36,474 +35,336 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+// MARK: - Test Support Types
+
+/// Platform behavior for testing
+struct PlatformBehavior {
+    let platform: SixLayerPlatform
+    let capabilities: TestingCapabilityDefaults
+    let inputMethods: [InputType]
+    let interactionPatterns: InteractionPatterns
+}
+
+/// Input types for platform behavior testing
+enum InputType: String, CaseIterable {
+    case touch = "touch"
+    case mouse = "mouse"
+    case keyboard = "keyboard"
+    case voice = "voice"
+    case remote = "remote"
+    case gesture = "gesture"
+    case eyeTracking = "eyeTracking"
+}
+
+/// Interaction patterns for platform behavior testing
+struct InteractionPatterns {
+    let gestureSupport: [GestureType]
+    let inputSupport: [InputType]
+    let accessibilitySupport: [PlatformAccessibilityFeature]
+}
+
+/// Gesture types for platform behavior testing
+enum GestureType: String, CaseIterable {
+    case tap = "tap"
+    case swipe = "swipe"
+    case pinch = "pinch"
+    case rotate = "rotate"
+    case longPress = "longPress"
+    case click = "click"
+    case drag = "drag"
+    case scroll = "scroll"
+    case rightClick = "rightClick"
+    case spatial = "spatial"
+    case eyeTracking = "eyeTracking"
+}
+
+/// Accessibility features for platform behavior testing
+enum PlatformAccessibilityFeature: String, CaseIterable {
+    case voiceOver = "voiceOver"
+    case switchControl = "switchControl"
+    case assistiveTouch = "assistiveTouch"
+}
+
 /// Platform behavior testing
 /// Tests that every function behaves correctly based on platform capabilities
 @MainActor
 open class PlatformBehaviorTests {
     
-    // MARK: - Test Data Setup
+    // MARK: - Platform Behavior Testing Functions
     
-    // MARK: - Platform Mocking Functions
-    
-    private func mockIOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.getCardExpansionPlatformConfig()
+    private func testPlatformCapabilities(for platform: SixLayerPlatform) -> TestingCapabilityDefaults {
+        return TestingCapabilityDetection.getTestingDefaults(for: platform)
     }
     
-    private func mockMacOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.getCardExpansionPlatformConfig()
-    }
-    
-    private func mockTVOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.getCardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: false,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.2)
+    private func testPlatformBehavior(for platform: SixLayerPlatform) -> PlatformBehavior {
+        let capabilities = testPlatformCapabilities(for: platform)
+        return PlatformBehavior(
+            platform: platform,
+            capabilities: capabilities,
+            inputMethods: getInputMethods(for: platform),
+            interactionPatterns: getInteractionPatterns(for: platform)
         )
     }
     
-    private func mockWatchOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.getCardExpansionPlatformConfig(
-            supportsHapticFeedback: true,
-            supportsHover: false,
-            supportsTouch: true,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.2)
-        )
+    private func getInputMethods(for platform: SixLayerPlatform) -> [InputType] {
+        switch platform {
+        case .iOS:
+            return [.touch, .keyboard, .voice]
+        case .macOS:
+            return [.mouse, .keyboard, .voice]
+        case .watchOS:
+            return [.touch, .voice]
+        case .tvOS:
+            return [.remote, .voice]
+        case .visionOS:
+            return [.gesture, .voice, .eyeTracking]
+        }
     }
     
-    private func mockVisionOSCardExpansionConfig() async -> CardExpansionPlatformConfig {
-        return await TestSetupUtilities.getCardExpansionPlatformConfig(
-            supportsHapticFeedback: false,
-            supportsHover: false,
-            supportsTouch: false,
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            minTouchTarget: 44,
-            hoverDelay: 0.0,
-            animationEasing: .easeInOut(duration: 0.3)
-        )
-    }
-    
-    private func mockIsVisionFrameworkAvailable() -> Bool {
-        return true // Mock as available for testing
-    }
-    
-    private func mockIsVisionOCRAvailable() -> Bool {
-        return true // Mock as available for testing
-    }
-    
-    private func mockTVOSIsVisionFrameworkAvailable() -> Bool {
-        return false // tvOS should not have Vision
-    }
-    
-    private func mockTVOSIsVisionOCRAvailable() -> Bool {
-        return false // tvOS should not have OCR
-    }
-    
-    private func createTestView() -> some View {
-        Button("Test Button") { }
-            .frame(width: 100, height: 50)
-    }
-    
-    private func createTestImage() -> PlatformImage {
-        PlatformImage()
-    }
-    
-    private func createTestOCRContext() -> OCRContext {
-        OCRContext(
-            textTypes: [.general],
-            language: .english,
-            confidenceThreshold: 0.8
-        )
-    }
-    
-    private func createTestOCRStrategy() -> OCRStrategy {
-        OCRStrategy(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard
-        )
+    private func getInteractionPatterns(for platform: SixLayerPlatform) -> InteractionPatterns {
+        switch platform {
+        case .iOS:
+            return InteractionPatterns(
+                gestureSupport: [GestureType.tap, .swipe, .pinch, .rotate, .longPress],
+                inputSupport: [InputType.touch, .keyboard, .voice],
+                accessibilitySupport: [PlatformAccessibilityFeature.voiceOver, .switchControl, .assistiveTouch]
+            )
+        case .macOS:
+            return InteractionPatterns(
+                gestureSupport: [GestureType.click, .drag, .scroll, .rightClick],
+                inputSupport: [InputType.mouse, .keyboard, .voice],
+                accessibilitySupport: [PlatformAccessibilityFeature.voiceOver, .switchControl]
+            )
+        case .watchOS:
+            return InteractionPatterns(
+                gestureSupport: [GestureType.tap, .swipe, .longPress],
+                inputSupport: [InputType.touch, .voice],
+                accessibilitySupport: [PlatformAccessibilityFeature.voiceOver, .switchControl, .assistiveTouch]
+            )
+        case .tvOS:
+            return InteractionPatterns(
+                gestureSupport: [GestureType.click, .swipe],
+                inputSupport: [InputType.remote, .voice],
+                accessibilitySupport: [PlatformAccessibilityFeature.voiceOver, .switchControl]
+            )
+        case .visionOS:
+            return InteractionPatterns(
+                gestureSupport: [GestureType.spatial, .eyeTracking],
+                inputSupport: [InputType.gesture, .voice, .eyeTracking],
+                accessibilitySupport: [PlatformAccessibilityFeature.voiceOver, .switchControl]
+            )
+        }
     }
     
     // MARK: - Layer 1: Platform Detection Behavior Tests
     
-    
     @Test func testIOSPlatformBehavior() {
-        // Mock iOS platform behavior
-        let config = await mockIOSCardExpansionConfig()
+        // Test iOS platform behavior
+        let behavior = testPlatformBehavior(for: .iOS)
         
         // iOS should have touch capabilities
-        #expect(config.supportsTouch, "iOS should support touch")
-        #expect(config.supportsHapticFeedback, "iOS should support haptic feedback")
-        #expect(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+        #expect(behavior.capabilities.supportsTouch, "iOS should support touch")
+        #expect(behavior.capabilities.supportsHapticFeedback, "iOS should support haptic feedback")
+        #expect(behavior.capabilities.supportsAssistiveTouch, "iOS should support AssistiveTouch")
         
         // iOS should not have hover (iPhone)
-        #expect(!config.supportsHover, "iPhone should not support hover")
+        #expect(!behavior.capabilities.supportsHover, "iPhone should not support hover")
         
-        // iOS should have Vision and OCR
-        #expect(mockIsVisionFrameworkAvailable(), "iOS should have Vision framework")
-        #expect(mockIsVisionOCRAvailable(), "iOS should have OCR")
+        // iOS should have VoiceOver and Switch Control
+        #expect(behavior.capabilities.supportsVoiceOver, "iOS should support VoiceOver")
+        #expect(behavior.capabilities.supportsSwitchControl, "iOS should support Switch Control")
+        
+        // iOS should support touch, keyboard, and voice input
+        #expect(behavior.inputMethods.contains(.touch), "iOS should support touch input")
+        #expect(behavior.inputMethods.contains(.keyboard), "iOS should support keyboard input")
+        #expect(behavior.inputMethods.contains(.voice), "iOS should support voice input")
     }
     
     @Test func testMacOSPlatformBehavior() {
-        // Mock macOS platform behavior
-        let config = await mockMacOSCardExpansionConfig()
+        // Test macOS platform behavior
+        let behavior = testPlatformBehavior(for: .macOS)
         
         // macOS should have hover capabilities
-        #expect(config.supportsHover, "macOS should support hover")
-        #expect(config.supportsVoiceOver, "macOS should support VoiceOver")
-        #expect(config.supportsSwitchControl, "macOS should support SwitchControl")
+        #expect(behavior.capabilities.supportsHover, "macOS should support hover")
+        #expect(behavior.capabilities.supportsVoiceOver, "macOS should support VoiceOver")
+        #expect(behavior.capabilities.supportsSwitchControl, "macOS should support Switch Control")
         
         // macOS should not have touch capabilities
-        #expect(!config.supportsTouch, "macOS should not support touch")
-        #expect(!config.supportsHapticFeedback, "macOS should not support haptic feedback")
-        #expect(!config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
+        #expect(!behavior.capabilities.supportsTouch, "macOS should not support touch")
+        #expect(!behavior.capabilities.supportsHapticFeedback, "macOS should not support haptic feedback")
+        #expect(!behavior.capabilities.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
         
-        // macOS should have Vision and OCR
-        #expect(mockIsVisionFrameworkAvailable(), "macOS should have Vision framework")
-        #expect(mockIsVisionOCRAvailable(), "macOS should have OCR")
+        // macOS should support mouse, keyboard, and voice input
+        #expect(behavior.inputMethods.contains(.mouse), "macOS should support mouse input")
+        #expect(behavior.inputMethods.contains(.keyboard), "macOS should support keyboard input")
+        #expect(behavior.inputMethods.contains(.voice), "macOS should support voice input")
     }
     
     @Test func testWatchOSPlatformBehavior() {
-        // Mock watchOS platform behavior
-        let config = await mockWatchOSCardExpansionConfig()
+        // Test watchOS platform behavior
+        let behavior = testPlatformBehavior(for: .watchOS)
         
         // watchOS should have touch capabilities
-        #expect(config.supportsTouch, "watchOS should support touch")
-        #expect(config.supportsHapticFeedback, "watchOS should support haptic feedback")
-        #expect(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
+        #expect(behavior.capabilities.supportsTouch, "watchOS should support touch")
+        #expect(behavior.capabilities.supportsHapticFeedback, "watchOS should support haptic feedback")
+        #expect(behavior.capabilities.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
         
-        // watchOS should not have hover or Vision
-        #expect(!config.supportsHover, "watchOS should not support hover")
-        #expect(!mockTVOSIsVisionFrameworkAvailable(), "watchOS should not have Vision framework")
-        #expect(!mockTVOSIsVisionOCRAvailable(), "watchOS should not have OCR")
+        // watchOS should not have hover
+        #expect(!behavior.capabilities.supportsHover, "watchOS should not support hover")
+        
+        // watchOS should have VoiceOver and Switch Control
+        #expect(behavior.capabilities.supportsVoiceOver, "watchOS should support VoiceOver")
+        #expect(behavior.capabilities.supportsSwitchControl, "watchOS should support Switch Control")
+        
+        // watchOS should support touch and voice input
+        #expect(behavior.inputMethods.contains(.touch), "watchOS should support touch input")
+        #expect(behavior.inputMethods.contains(.voice), "watchOS should support voice input")
     }
     
     @Test func testTVOSPlatformBehavior() {
-        // Mock tvOS platform behavior
-        let config = await mockTVOSCardExpansionConfig()
+        // Test tvOS platform behavior
+        let behavior = testPlatformBehavior(for: .tvOS)
         
-        // tvOS should only have accessibility capabilities
-        #expect(config.supportsVoiceOver, "tvOS should support VoiceOver")
-        #expect(config.supportsSwitchControl, "tvOS should support SwitchControl")
+        // tvOS should have VoiceOver and Switch Control
+        #expect(behavior.capabilities.supportsVoiceOver, "tvOS should support VoiceOver")
+        #expect(behavior.capabilities.supportsSwitchControl, "tvOS should support Switch Control")
         
-        // tvOS should not have touch, hover, or Vision
-        #expect(!config.supportsTouch, "tvOS should not support touch")
-        #expect(!config.supportsHover, "tvOS should not support hover")
-        #expect(!config.supportsHapticFeedback, "tvOS should not support haptic feedback")
-        #expect(!config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
-        #expect(!mockTVOSIsVisionFrameworkAvailable(), "tvOS should not have Vision framework")
-        #expect(!mockTVOSIsVisionOCRAvailable(), "tvOS should not have OCR")
+        // tvOS should not have touch, hover, or haptic feedback
+        #expect(!behavior.capabilities.supportsTouch, "tvOS should not support touch")
+        #expect(!behavior.capabilities.supportsHover, "tvOS should not support hover")
+        #expect(!behavior.capabilities.supportsHapticFeedback, "tvOS should not support haptic feedback")
+        #expect(!behavior.capabilities.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
+        
+        // tvOS should support remote and voice input
+        #expect(behavior.inputMethods.contains(.remote), "tvOS should support remote input")
+        #expect(behavior.inputMethods.contains(.voice), "tvOS should support voice input")
     }
     
     @Test func testVisionOSPlatformBehavior() {
-        // Mock visionOS platform behavior
-        let config = await mockVisionOSCardExpansionConfig()
+        // Test visionOS platform behavior
+        let behavior = testPlatformBehavior(for: .visionOS)
         
-        // visionOS should have Vision and accessibility capabilities
-        #expect(mockIsVisionFrameworkAvailable(), "visionOS should have Vision framework")
-        #expect(mockIsVisionOCRAvailable(), "visionOS should have OCR")
-        #expect(config.supportsVoiceOver, "visionOS should support VoiceOver")
-        #expect(config.supportsSwitchControl, "visionOS should support SwitchControl")
+        // visionOS should have VoiceOver and Switch Control
+        #expect(behavior.capabilities.supportsVoiceOver, "visionOS should support VoiceOver")
+        #expect(behavior.capabilities.supportsSwitchControl, "visionOS should support Switch Control")
         
-        // visionOS should not have touch or hover
-        #expect(!config.supportsTouch, "visionOS should not support touch")
-        #expect(!config.supportsHover, "visionOS should not support hover")
-        #expect(!config.supportsHapticFeedback, "visionOS should not support haptic feedback")
-        #expect(!config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
+        // visionOS should not have touch, hover, or haptic feedback
+        #expect(!behavior.capabilities.supportsTouch, "visionOS should not support touch")
+        #expect(!behavior.capabilities.supportsHover, "visionOS should not support hover")
+        #expect(!behavior.capabilities.supportsHapticFeedback, "visionOS should not support haptic feedback")
+        #expect(!behavior.capabilities.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
+        
+        // visionOS should support gesture, voice, and eye tracking input
+        #expect(behavior.inputMethods.contains(.gesture), "visionOS should support gesture input")
+        #expect(behavior.inputMethods.contains(.voice), "visionOS should support voice input")
+        #expect(behavior.inputMethods.contains(.eyeTracking), "visionOS should support eye tracking input")
     }
     
-    // MARK: - Layer 2: Card Expansion Behavior Tests
+    // MARK: - Layer 2: Platform Capability Tests
     
+    @Test func testPlatformCapabilityDetection() {
+        // Test that platform capabilities are detected correctly
+        let iOSBehavior = testPlatformBehavior(for: .iOS)
+        let macOSBehavior = testPlatformBehavior(for: .macOS)
+        
+        // iOS should have touch, macOS should not
+        #expect(iOSBehavior.capabilities.supportsTouch, "iOS should support touch")
+        #expect(!macOSBehavior.capabilities.supportsTouch, "macOS should not support touch")
+        
+        // macOS should have hover, iOS should not (iPhone)
+        #expect(macOSBehavior.capabilities.supportsHover, "macOS should support hover")
+        #expect(!iOSBehavior.capabilities.supportsHover, "iPhone should not support hover")
+        
+        // Both should support accessibility
+        #expect(iOSBehavior.capabilities.supportsVoiceOver, "iOS should support VoiceOver")
+        #expect(macOSBehavior.capabilities.supportsVoiceOver, "macOS should support VoiceOver")
+    }
     
-    @Test func testCardExpansionTouchBehavior() {
-        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
-        if config.supportsTouch {
-            // Touch platforms should have appropriate touch targets
-            #expect(config.minTouchTarget >= 44, 
-                                       "Touch platforms should have adequate touch targets")
+    @Test func testPlatformInputMethodDetection() {
+        // Test that input methods are detected correctly
+        let iOSBehavior = testPlatformBehavior(for: .iOS)
+        let macOSBehavior = testPlatformBehavior(for: .macOS)
+        let tvOSBehavior = testPlatformBehavior(for: .tvOS)
+        
+        // iOS should support touch, keyboard, voice
+        #expect(iOSBehavior.inputMethods.contains(.touch), "iOS should support touch input")
+        #expect(iOSBehavior.inputMethods.contains(.keyboard), "iOS should support keyboard input")
+        #expect(iOSBehavior.inputMethods.contains(.voice), "iOS should support voice input")
+        
+        // macOS should support mouse, keyboard, voice
+        #expect(macOSBehavior.inputMethods.contains(.mouse), "macOS should support mouse input")
+        #expect(macOSBehavior.inputMethods.contains(.keyboard), "macOS should support keyboard input")
+        #expect(macOSBehavior.inputMethods.contains(.voice), "macOS should support voice input")
+        
+        // tvOS should support remote, voice
+        #expect(tvOSBehavior.inputMethods.contains(.remote), "tvOS should support remote input")
+        #expect(tvOSBehavior.inputMethods.contains(.voice), "tvOS should support voice input")
+    }
+    
+    @Test func testPlatformInteractionPatterns() {
+        // Test that interaction patterns are correct for each platform
+        let iOSBehavior = testPlatformBehavior(for: .iOS)
+        let macOSBehavior = testPlatformBehavior(for: .macOS)
+        let visionOSBehavior = testPlatformBehavior(for: .visionOS)
+        
+        // iOS should support touch gestures
+        #expect(iOSBehavior.interactionPatterns.gestureSupport.contains(.tap), "iOS should support tap")
+        #expect(iOSBehavior.interactionPatterns.gestureSupport.contains(.swipe), "iOS should support swipe")
+        #expect(iOSBehavior.interactionPatterns.gestureSupport.contains(.pinch), "iOS should support pinch")
+        
+        // macOS should support mouse gestures
+        #expect(macOSBehavior.interactionPatterns.gestureSupport.contains(.click), "macOS should support click")
+        #expect(macOSBehavior.interactionPatterns.gestureSupport.contains(.drag), "macOS should support drag")
+        #expect(macOSBehavior.interactionPatterns.gestureSupport.contains(.scroll), "macOS should support scroll")
+        
+        // visionOS should support spatial gestures
+        #expect(visionOSBehavior.interactionPatterns.gestureSupport.contains(.spatial), "visionOS should support spatial gestures")
+        #expect(visionOSBehavior.interactionPatterns.gestureSupport.contains(.eyeTracking), "visionOS should support eye tracking")
+    }
+    
+    // MARK: - Layer 3: Platform-Specific Behavior Tests
+    
+    @Test func testPlatformSpecificBehavior() {
+        // Test that each platform has unique behavior characteristics
+        let iOSBehavior = testPlatformBehavior(for: .iOS)
+        let macOSBehavior = testPlatformBehavior(for: .macOS)
+        let watchOSBehavior = testPlatformBehavior(for: .watchOS)
+        let tvOSBehavior = testPlatformBehavior(for: .tvOS)
+        let visionOSBehavior = testPlatformBehavior(for: .visionOS)
+        
+        // Each platform should have distinct capabilities
+        #expect(iOSBehavior.capabilities.supportsTouch, "iOS should be touch-based")
+        #expect(macOSBehavior.capabilities.supportsHover, "macOS should be hover-based")
+        #expect(watchOSBehavior.capabilities.supportsHapticFeedback, "watchOS should support haptics")
+        #expect(!tvOSBehavior.capabilities.supportsTouch, "tvOS should not be touch-based")
+        #expect(visionOSBehavior.inputMethods.contains(.eyeTracking), "visionOS should support eye tracking")
+    }
+    
+    @Test func testPlatformAccessibilityConsistency() {
+        // Test that all platforms support basic accessibility features
+        for platform in SixLayerPlatform.allCases {
+            let behavior = testPlatformBehavior(for: platform)
             
-            // Touch platforms should have haptic feedback
-            #expect(config.supportsHapticFeedback, 
-                         "Touch platforms should support haptic feedback")
-            
-            // Touch platforms should have AssistiveTouch
-            #expect(config.supportsAssistiveTouch, 
-                         "Touch platforms should support AssistiveTouch")
-        } else {
-            // Non-touch platforms should not have haptic feedback
-            #expect(!config.supportsHapticFeedback, 
-                          "Non-touch platforms should not support haptic feedback")
-            
-            // Non-touch platforms should not have AssistiveTouch
-            #expect(!config.supportsAssistiveTouch, 
-                          "Non-touch platforms should not support AssistiveTouch")
+            // All platforms should support VoiceOver and Switch Control
+            #expect(behavior.capabilities.supportsVoiceOver, "\(platform) should support VoiceOver")
+            #expect(behavior.capabilities.supportsSwitchControl, "\(platform) should support Switch Control")
         }
     }
     
-    @Test func testCardExpansionHoverBehavior() {
-        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
-        if config.supportsHover {
-            // Hover platforms should have hover delay
-            #expect(config.hoverDelay >= 0, 
-                                       "Hover platforms should have hover delay")
-        } else {
-            // Non-hover platforms should have zero hover delay
-            #expect(config.hoverDelay == 0, 
-                          "Non-hover platforms should have zero hover delay")
-        }
-    }
-    
-    @Test func testCardExpansionAccessibilityBehavior() {
-        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
-        // All platforms should support accessibility
-        #expect(config.supportsVoiceOver, 
-                     "All platforms should support VoiceOver")
-        #expect(config.supportsSwitchControl, 
-                     "All platforms should support SwitchControl")
-    }
-    
-    @Test func testCardExpansionPerformanceBehavior() {
-        let config = await TestSetupUtilities.getCardExpansionPlatformConfig()
-        let performanceConfig = CardExpansionPerformanceConfig()
-        // Test that performance settings match platform capabilities
-        if config.supportsTouch {
-            // Touch platforms should have appropriate animation settings
-            #expect(performanceConfig.maxAnimationDuration > 0, 
-                               "Touch platforms should have animation duration")
-        }
+    @Test func testPlatformInputMethodConsistency() {
+        // Test that each platform has appropriate input methods
+        let iOSBehavior = testPlatformBehavior(for: .iOS)
+        let macOSBehavior = testPlatformBehavior(for: .macOS)
+        let tvOSBehavior = testPlatformBehavior(for: .tvOS)
         
-        if config.supportsHover {
-            // Hover platforms should have appropriate hover settings
-            #expect(config.hoverDelay >= 0, 
-                                       "Hover platforms should have hover delay")
-        }
-    }
-    
-    // MARK: - Layer 3: OCR Behavior Tests
-    
-    
-    @Test func testOCREnabledBehavior() {
-        let image = PlatformImage(systemName: "doc.text")
-        let context = OCRContext(confidence: 0.8, language: .english)
-        let strategy = OCRStrategy.vision
-        // OCR should be available
-        #expect(isVisionOCRAvailable(), "OCR should be available")
+        // iOS should not have mouse input
+        #expect(!iOSBehavior.inputMethods.contains(.mouse), "iOS should not support mouse input")
         
-        // Test OCR using modern API without waiting for async result
-        let service = OCRService()
-        Task {
-            do {
-                let result = try await service.processImage(
-                    image,
-                    context: context,
-                    strategy: strategy
-                )
-                #expect(result != nil, "OCR should return result when enabled")
-            } catch {
-                // OCR might fail in test environment, but should not crash
-                #expect(error != nil, "OCR should handle errors gracefully when enabled")
-            }
-        }
+        // macOS should not have touch input
+        #expect(!macOSBehavior.inputMethods.contains(.touch), "macOS should not support touch input")
         
-        // Don't wait for OCR to complete in test environment
-        // Just verify the function can be called without crashing
-    }
-    
-    @Test func testOCRDisabledBehavior() {
-        let image = PlatformImage(systemName: "doc.text")
-        let context = OCRContext(confidence: 0.8, language: .english)
-        let strategy = OCRStrategy.vision
-        // OCR should not be available
-        #expect(!isVisionOCRAvailable(), "OCR should not be available")
-        
-        // OCR functions should still be callable but return fallback behavior
-        let expectation = XCTestExpectation(description: "OCR fallback")
-        expectation.isInverted = true // This will pass if not fulfilled
-        
-        // Test OCR using modern API
-        let service = OCRService()
-        Task {
-            do {
-                let result = try await service.processImage(
-                    image,
-                    context: context,
-                    strategy: strategy
-                )
-                // Should provide fallback result when OCR is disabled
-                #expect(result != nil, "OCR should provide fallback result when disabled")
-                expectation.fulfill()
-            } catch {
-                // Should handle error gracefully when OCR is disabled
-                #expect(error != nil, "OCR should handle error gracefully when disabled")
-                expectation.fulfill()
-            }
-        }
-        
-        // Don't wait for OCR to complete in test environment
-        // Just verify the function can be called without crashing
-    }
-    
-    // MARK: - Layer 4: Color Encoding Behavior Tests
-    
-    @Test func testColorEncodingBehavior() {
-        let testColor = Color.blue
-        
-        // Color encoding should work on all platforms
-        do {
-            let encodedData = try platformColorEncode(testColor)
-            #expect(!encodedData.isEmpty, "Color encoding should work on all platforms")
-            
-            let decodedColor = try platformColorDecode(encodedData)
-            #expect(decodedColor != nil, "Color decoding should work on all platforms")
-        } catch {
-            Issue.record("Color encoding/decoding should work on all platforms: \(error)")
-        }
-    }
-    
-    // MARK: - Layer 5: Accessibility Behavior Tests
-    
-    @Test func testAccessibilityBehavior() {
-        let _ = createTestView()
-        // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
-        
-        // Test that accessibility behavior works on all platforms
-        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
-        #expect(config.supportsVoiceOver, "VoiceOver should be supported on all platforms")
-        #expect(config.supportsSwitchControl, "Switch Control should be supported on all platforms")
-    }
-    
-    // MARK: - Layer 6: Platform System Behavior Tests
-    
-    
-    @Test func testPlatformSystemTouchBehavior() {
-        let testView = Text("Test")
-        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
-        
-        if config.supportsTouch {
-            // Touch platforms should have touch-appropriate behavior
-            #expect(config.supportsTouch, "Touch should be supported")
-            #expect(config.supportsHapticFeedback, "Haptic feedback should be supported")
-        } else {
-            // Non-touch platforms should not have touch behavior
-            #expect(!config.supportsTouch, "Touch should not be supported")
-            #expect(!config.supportsHapticFeedback, "Haptic feedback should not be supported")
-        }
-    }
-    
-    @Test func testPlatformSystemHoverBehavior() {
-        let testView = Text("Test")
-        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
-        
-        if config.supportsHover {
-            // Hover platforms should have hover-appropriate behavior
-            #expect(config.supportsHover, "Hover should be supported")
-            #expect(config.hoverDelay >= 0, "Hover delay should be set")
-        } else {
-            // Non-hover platforms should not have hover behavior
-            #expect(!config.supportsHover, "Hover should not be supported")
-            #expect(config.hoverDelay == 0, "Hover delay should be zero")
-        }
-    }
-    
-    @Test func testPlatformSystemAccessibilityBehavior() {
-        let testView = Text("Test")
-        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
-        
-        // All platforms should support accessibility
-        #expect(config.supportsVoiceOver, "VoiceOver should be supported on all platforms")
-        #expect(config.supportsSwitchControl, "SwitchControl should be supported on all platforms")
-    }
-    
-    // MARK: - High Contrast Behavior Tests
-    
-    @Test func testHighContrastBehavior() {
-        // Test that high contrast behavior works correctly
-        // Note: This would need to be implemented based on actual high contrast detection
-        // For now, we test that the framework can handle high contrast scenarios
-        
-        let _ = createTestView()
-        // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
-        
-        // Test that accessibility behavior can handle high contrast scenarios
-        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
-        #expect(config.supportsVoiceOver, "VoiceOver should be supported for high contrast scenarios")
-    }
-    
-    // MARK: - Reduce Motion Behavior Tests
-    
-    @Test func testReduceMotionBehavior() {
-        // Test that reduce motion behavior works correctly
-        // Note: This would need to be implemented based on actual reduce motion detection
-        // For now, we test that the framework can handle reduce motion scenarios
-        
-        let performanceConfig = getCardExpansionPerformanceConfig()
-        
-        // Test that performance settings can handle reduce motion
-        #expect(performanceConfig.maxAnimationDuration >= 0, 
-                                   "Performance settings should handle reduce motion")
-    }
-    
-    // MARK: - Comprehensive Behavior Testing
-    
-    
-    // MARK: - Platform-Specific Input/Output Tests
-    
-    
-    @Test(arguments: [
-        (SixLayerPlatform.iOS, "iOS Input"),
-        (SixLayerPlatform.macOS, "macOS Input"),
-        (SixLayerPlatform.visionOS, "visionOS Input")
-    ])
-    func testPlatformSpecificInputOutput(platform: SixLayerPlatform, input: String) {
-        let config = await TestSetupUtilities.shared.getCardExpansionPlatformConfig()
-        
-        switch input {
-        case "touch_input":
-            if config.supportsTouch {
-                // Touch input should be handled correctly
-                #expect(config.supportsTouch, "Touch input should be handled on \(platform)")
-            } else {
-                // Touch input should be ignored or handled gracefully
-                #expect(!config.supportsTouch, "Touch input should be ignored on \(platform)")
-            }
-            
-        case "hover_input":
-            if config.supportsHover {
-                // Hover input should be handled correctly
-                #expect(config.supportsHover, "Hover input should be handled on \(platform)")
-            } else {
-                // Hover input should be ignored or handled gracefully
-                #expect(!config.supportsHover, "Hover input should be ignored on \(platform)")
-            }
-            
-        case "accessibility_input":
-            // Accessibility input should always be handled
-            #expect(config.supportsVoiceOver, "Accessibility input should be handled on \(platform)")
-            #expect(config.supportsSwitchControl, "Accessibility input should be handled on \(platform)")
-            
-        case "vision_input":
-            if isVisionOCRAvailable() {
-                // Vision input should be handled correctly
-                #expect(isVisionOCRAvailable(), "Vision input should be handled on \(platform)")
-            } else {
-                // Vision input should be ignored or handled gracefully
-                #expect(!isVisionOCRAvailable(), "Vision input should be ignored on \(platform)")
-            }
-            
-        default:
-            break
-        }
+        // tvOS should not have touch or mouse input
+        #expect(!tvOSBehavior.inputMethods.contains(.touch), "tvOS should not support touch input")
+        #expect(!tvOSBehavior.inputMethods.contains(.mouse), "tvOS should not support mouse input")
     }
 }

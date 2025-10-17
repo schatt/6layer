@@ -5,16 +5,6 @@ import Testing
 @MainActor
 open class SixLayerFrameworkTests: BaseTestClass {
     
-    override init() {
-        super.init()
-        // Additional setup if needed
-    }
-
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
 
     @Test func testExample() throws {
         // This is an example of a functional test case.
