@@ -17,13 +17,6 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
     // MARK: - FormInsightsDashboard Tests
     
     @Test func testFormInsightsDashboardGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form analytics data
-        let analyticsData = FormAnalyticsData(
-            totalSubmissions: 100,
-            completionRate: 0.85,
-            averageTimeToComplete: 300
-        )
-        
         // When: Creating FormInsightsDashboard
         let view = FormInsightsDashboard()
         
@@ -40,13 +33,6 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
     // MARK: - OverviewCard Tests
     
     @Test func testOverviewCardGeneratesAccessibilityIdentifiers() async {
-        // Given: Test overview data
-        let overviewData = OverviewData(
-            title: "Form Overview",
-            value: "100",
-            subtitle: "Total Submissions"
-        )
-        
         // When: Creating OverviewCard
         let view = OverviewCard(
             title: "Form Overview",
@@ -68,12 +54,6 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
     // MARK: - SectionHeader Tests
     
     @Test func testSectionHeaderGeneratesAccessibilityIdentifiers() async {
-        // Given: Test section header data
-        let headerData = SectionHeaderData(
-            title: "Performance Metrics",
-            subtitle: "Key indicators"
-        )
-        
         // When: Creating SectionHeader
         let view = SectionHeader(
             title: "Performance Metrics",
@@ -93,14 +73,6 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
     // MARK: - PerformanceMetricRow Tests
     
     @Test func testPerformanceMetricRowGeneratesAccessibilityIdentifiers() async {
-        // Given: Test performance metric data
-        let metricData = PerformanceMetricData(
-            name: "Completion Rate",
-            value: 0.85,
-            unit: "%",
-            trend: .up
-        )
-        
         // When: Creating PerformanceMetricRow
         let view = PerformanceMetricRow(
             label: "Completion Rate",
@@ -128,9 +100,7 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating ChartCard
-        let view = ChartCard(chart: chartData) {
-            Text("Chart Content")
-        }
+        let view = ChartCard(title: "Chart Title", chart: Text("Chart Content"))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -152,7 +122,8 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating ErrorRow
-        let view = ErrorRow(error: errorData)
+        let formError = FormError(message: "Form validation failed", severity: .warning)
+        let view = ErrorRow(error: formError)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -176,7 +147,8 @@ open class FormInsightsDashboardComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating ABTestResultRow
-        let view = ABTestResultRow(result: abTestData)
+        let abTestResult = ABTestResult(testName: "Button Color Test", variantA: "Red Button", variantB: "Blue Button", winner: "Blue Button")
+        let view = ABTestResultRow(result: abTestResult)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
