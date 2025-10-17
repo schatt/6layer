@@ -25,9 +25,6 @@ class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass {
             deviceCapabilities: PhotoDeviceCapabilities()
         )
         
-        let captureStrategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
-        let displayStrategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
-        
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure
         // strategies are non-optional, so no need to check for nil
@@ -44,9 +41,6 @@ class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass {
             userPreferences: PhotoPreferences(),
             deviceCapabilities: PhotoDeviceCapabilities()
         )
-        
-        let captureStrategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
-        let displayStrategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
         
         // When & Then
         // Layer 3 functions return data structures, not views, so we test the result structure

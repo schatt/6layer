@@ -17,7 +17,7 @@ class AppleHIGComplianceTests {
     
     deinit {
         Task { [weak self] in
-            await self?.cleanupTestEnvironment()
+            self?.cleanupTestEnvironment()
         }
     }
     

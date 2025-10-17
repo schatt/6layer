@@ -27,7 +27,6 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
     @Test func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [TextType.general],
             language: OCRLanguage.english
@@ -51,7 +50,6 @@ final class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [TextType.general],
             language: OCRLanguage.english
