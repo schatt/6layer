@@ -19,21 +19,13 @@ class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    override func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    override func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
 @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let manager = MaterialAccessibilityManager()
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "MaterialAccessibilityManager should be instantiable")
+        // MaterialAccessibilityManager is non-optional, so no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
@@ -51,7 +43,7 @@ class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "MaterialAccessibilityManager should be instantiable")
+        // MaterialAccessibilityManager is non-optional, so no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {

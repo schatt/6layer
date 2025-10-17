@@ -1,4 +1,5 @@
 import Testing
+@testable import SixLayerFramework
 
 
 //
@@ -55,7 +56,7 @@ final class PlatformTestUtilities {
     static func createIOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
             platform: SixLayerPlatform.iOS,
-            capabilities: PlatformCapabilities(
+            capabilities: PlatformCapabilitiesTestSnapshot(
                 supportsHapticFeedback: true,
                 supportsHover: false,
                 supportsTouch: true,
