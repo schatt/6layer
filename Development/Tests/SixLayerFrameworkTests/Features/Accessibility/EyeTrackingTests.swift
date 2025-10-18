@@ -326,7 +326,6 @@ open class EyeTrackingTests: BaseTestClass {
     /// TESTING SCOPE: Tests SwiftUI eye tracking modifier with custom configuration
     /// METHODOLOGY: Apply eye tracking modifier with config and verify configuration
     @Test func testEyeTrackingModifierWithConfig() {
-        let config = EyeTrackingConfig(sensitivity: .high)
         #expect(true, "Modifier should be created successfully")
     }
     
@@ -426,10 +425,6 @@ open class EyeTrackingTests: BaseTestClass {
             
             // Process gaze events
             for i in 0..<10 {
-                let gazeEvent = EyeTrackingGazeEvent(
-                    position: CGPoint(x: Double(i * 10), y: Double(i * 10)),
-                    confidence: 0.8
-                )
                 // Process gaze event
                 #expect(true, "Gaze event should be processed")
             }
