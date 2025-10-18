@@ -64,7 +64,7 @@ open class PlatformSimulationTests {
     
     // MARK: - Platform Simulation Matrix
     
-    public static let simulatedPlatforms: [SimulatedPlatform] = [
+    static let simulatedPlatforms: [SimulatedPlatform] = [
         // iOS Platforms
         SimulatedPlatform(
             platform: SixLayerPlatform.iOS,
@@ -191,7 +191,7 @@ open class PlatformSimulationTests {
     // MARK: - Comprehensive Platform Testing
     
     @Test func testAllPlatformCombinations() {
-        for simulatedPlatform in PlatformSimulationTests.simulatedPlatforms {
+        for _ in PlatformSimulationTests.simulatedPlatforms {
             testPlatformConfiguration()
         }
     }
