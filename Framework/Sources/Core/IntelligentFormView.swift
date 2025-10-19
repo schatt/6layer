@@ -38,8 +38,6 @@ public struct IntelligentFormView {
                             analysis: analysis,
                             initialData: initialData,
                             dataBinder: dataBinder,
-                            formStateManager: formStateManager,
-                            analyticsManager: analyticsManager,
                             inputHandlingManager: inputHandlingManager,
                             customFieldView: customFieldView,
                             formStrategy: formStrategy
@@ -62,8 +60,6 @@ public struct IntelligentFormView {
                             analysis: analysis,
                             initialData: initialData,
                             dataBinder: dataBinder,
-                            formStateManager: formStateManager,
-                            analyticsManager: analyticsManager,
                             inputHandlingManager: inputHandlingManager,
                             customFieldView: customFieldView,
                             formStrategy: formStrategy
@@ -277,8 +273,6 @@ public struct IntelligentFormView {
                             field: fields[0],
                             initialData: initialData,
                             dataBinder: dataBinder,
-                            formStateManager: formStateManager,
-                            analyticsManager: analyticsManager,
                             inputHandlingManager: inputHandlingManager,
                             customFieldView: customFieldView
                         )
