@@ -444,8 +444,8 @@ open class EyeTrackingTests: BaseTestClass {
         let sensitivities: [EyeTrackingSensitivity] = Array(EyeTrackingSensitivity.allCases) // Use real enum
         
         for sensitivity in sensitivities {
-            let config = EyeTrackingConfig(sensitivity: sensitivity)
             _ = await MainActor.run {
+                let config = EyeTrackingConfig(sensitivity: sensitivity)
                 EyeTrackingManager(config: config)
             }
             
@@ -461,8 +461,8 @@ open class EyeTrackingTests: BaseTestClass {
         let dwellTimes: [TimeInterval] = [0.5, 1.0, 1.5, 2.0]
         
         for dwellTime in dwellTimes {
-            let config = EyeTrackingConfig(dwellTime: dwellTime)
             _ = await MainActor.run {
+                let config = EyeTrackingConfig(dwellTime: dwellTime)
                 EyeTrackingManager(config: config)
             }
             

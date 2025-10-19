@@ -14,8 +14,6 @@ public struct IntelligentFormView {
         for dataType: T.Type,
         initialData: T? = nil,
         dataBinder: DataBinder<T>? = nil,
-        formStateManager: FormStateManager? = nil,
-        analyticsManager: FormAnalyticsManager? = nil,
         inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onSubmit: @escaping (T) -> Void = { _ in },
@@ -87,8 +85,6 @@ public struct IntelligentFormView {
         static func generateForm<T>(
         for data: T,
         dataBinder: DataBinder<T>? = nil,
-        formStateManager: FormStateManager? = nil,
-        analyticsManager: FormAnalyticsManager? = nil,
         inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
