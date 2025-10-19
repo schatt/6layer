@@ -11,15 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+// MARK: - Test Data Types
+struct TestData {
+    let name: String
+    let email: String
+}
+
 @MainActor
 open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
-    
-    // MARK: - Test Data
-    
-    struct TestData {
-        let name: String
-        let email: String
-    }
     
     // MARK: - Shared Test Data (DRY Principle)
     
@@ -239,77 +238,39 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicMultiSelectField Tests
     
     @Test func testDynamicMultiSelectFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test multi-select field configuration
-        let field = DynamicFormField(
-            id: "multiselect-field",
-            label: "Multi-Select Field",
-            type: .multiselect,
-            value: "",
-            options: ["Option 1", "Option 2", "Option 3"]
-        )
-        
-        // When: Creating DynamicMultiSelectField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicMultiSelectField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+        // When: Testing multiselect field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .multiselect,
             componentName: "DynamicMultiSelectField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicMultiSelectField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicRadioField Tests
     
     @Test func testDynamicRadioFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test radio field configuration
-        let field = DynamicFormField(
-            id: "radio-field",
-            label: "Radio Field",
-            type: .radio,
-            value: "",
-            options: ["Option 1", "Option 2", "Option 3"]
-        )
-        
-        // When: Creating DynamicRadioField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicRadioField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+        // When: Testing radio field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .radio,
             componentName: "DynamicRadioField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicRadioField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicCheckboxField Tests
     
     @Test func testDynamicCheckboxFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test checkbox field configuration
-        let field = DynamicFormField(
-            id: "checkbox-field",
-            label: "Checkbox Field",
-            type: .checkbox,
-            value: "false"
-        )
-        
-        // When: Creating DynamicCheckboxField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicCheckboxField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+        // When: Testing checkbox field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .checkbox,
             componentName: "DynamicCheckboxField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicCheckboxField should generate accessibility identifiers")
     }
     
@@ -327,14 +288,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicToggleField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicToggleField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicToggleFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing toggle field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .toggle,
             componentName: "DynamicToggleField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicToggleField should generate accessibility identifiers")
     }
     
@@ -352,14 +313,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicDateField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicDateField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicDateFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing date field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .date,
             componentName: "DynamicDateField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicDateField should generate accessibility identifiers")
     }
     
@@ -377,14 +338,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicTimeField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicTimeField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicTimeFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing time field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .time,
             componentName: "DynamicTimeField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicTimeField should generate accessibility identifiers")
     }
     
@@ -402,14 +363,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicDateTimeField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicDateTimeField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicDateTimeFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing datetime field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .datetime,
             componentName: "DynamicDateTimeField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicDateTimeField should generate accessibility identifiers")
     }
     
@@ -427,14 +388,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicColorField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicColorField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicColorFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing color field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .color,
             componentName: "DynamicColorField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicColorField should generate accessibility identifiers")
     }
     
@@ -452,14 +413,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicFileField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicFileField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicFileFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing file field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .file,
             componentName: "DynamicFileField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicFileField should generate accessibility identifiers")
     }
     
@@ -477,14 +438,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicIntegerField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicIntegerField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicIntegerFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing integer field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .integer,
             componentName: "DynamicIntegerField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicIntegerField should generate accessibility identifiers")
     }
     
@@ -502,14 +463,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicImageField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicImageField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicImageFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing image field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .image,
             componentName: "DynamicImageField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicImageField should generate accessibility identifiers")
     }
     
@@ -527,90 +488,53 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Creating DynamicURLField
         let formState = DynamicFormState(configuration: testFormConfig)
         let view = DynamicURLField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+    @Test func testDynamicURLFieldGeneratesAccessibilityIdentifiers() async {
+        // When: Testing url field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .url,
             componentName: "DynamicURLField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicURLField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicArrayField Tests
     
     @Test func testDynamicArrayFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test array field configuration
-        let field = DynamicFormField(
-            id: "array-field",
-            label: "Array Field",
-            type: .array,
-            value: "[]"
-        )
-        
-        // When: Creating DynamicArrayField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicArrayField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+        // When: Testing array field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .array,
             componentName: "DynamicArrayField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicArrayField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicDataField Tests
     
     @Test func testDynamicDataFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test data field configuration
-        let field = DynamicFormField(
-            id: "data-field",
-            label: "Data Field",
-            type: .data,
-            value: ""
-        )
-        
-        // When: Creating DynamicDataField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicDataField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+        // When: Testing data field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .data,
             componentName: "DynamicDataField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicDataField should generate accessibility identifiers")
     }
     
     // MARK: - DynamicEnumField Tests
     
     @Test func testDynamicEnumFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test enum field configuration
-        let field = DynamicFormField(
-            id: "enum-field",
-            label: "Enum Field",
-            type: .select,
-            value: "",
-            options: ["Option 1", "Option 2", "Option 3"]
-        )
-        
-        // When: Creating DynamicEnumField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicEnumField(field: field, formState: formState)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
+        // When: Testing enum field accessibility through CustomFieldView
+        let hasAccessibilityID = testFieldAccessibility(
+            fieldType: .enum,
             componentName: "DynamicEnumField"
         )
         
+        // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicEnumField should generate accessibility identifiers")
     }
 }
