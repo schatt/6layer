@@ -17,8 +17,21 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - IntelligentFormView Tests
     
     @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
-        // When: Creating IntelligentFormView
-        let view = IntelligentFormView()
+        // Given: Sample data for form generation
+        struct SampleData {
+            let name: String
+            let email: String
+        }
+        
+        let sampleData = SampleData(name: "Test User", email: "test@example.com")
+        
+        // When: Creating IntelligentFormView using static method
+        let view = IntelligentFormView.generateForm(
+            for: SampleData.self,
+            initialData: sampleData,
+            onSubmit: { _ in },
+            onCancel: { }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
