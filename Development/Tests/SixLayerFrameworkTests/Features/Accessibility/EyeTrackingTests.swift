@@ -445,7 +445,7 @@ open class EyeTrackingTests: BaseTestClass {
         
         for i in 0..<sensitivities.count {
             _ = await MainActor.run {
-                let localSensitivities = sensitivities
+                let localSensitivities = Array(EyeTrackingSensitivity.allCases)
                 let sensitivity = localSensitivities[i]
                 let config = EyeTrackingConfig(sensitivity: sensitivity)
                 _ = EyeTrackingManager(config: config)
