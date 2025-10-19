@@ -443,8 +443,9 @@ open class EyeTrackingTests: BaseTestClass {
     @Test func testEyeTrackingWithDifferentSensitivities() async {
         let sensitivities: [EyeTrackingSensitivity] = Array(EyeTrackingSensitivity.allCases) // Use real enum
         
-        for sensitivity in sensitivities {
+        for i in 0..<sensitivities.count {
             _ = await MainActor.run {
+                let sensitivity = sensitivities[i]
                 let config = EyeTrackingConfig(sensitivity: sensitivity)
                 _ = EyeTrackingManager(config: config)
             }
