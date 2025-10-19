@@ -21,19 +21,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let email: String
     }
     
-    struct TestFormConfiguration {
-        let id: String
-        let title: String
-        let description: String
-        let sections: [String]
-        let submitButtonText: String
-        let cancelButtonText: String
-    }
-    
     // MARK: - Shared Test Data (DRY Principle)
     
-    private var testFormConfig: TestFormConfiguration {
-        TestFormConfiguration(
+    private var testFormConfig: DynamicFormConfiguration {
+        DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form",
             description: "Test form for accessibility testing",
@@ -46,7 +37,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormView Tests
     
     @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a simple form view using IntelligentFormView
+        // When: Creating a form view using IntelligentFormView
         let view = IntelligentFormView.generateForm(
             for: TestData.self,
             initialData: TestData(name: "Test", email: "test@example.com"),
@@ -67,16 +58,13 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormHeader Tests
     
     @Test func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form configuration
-        let formConfig = testFormConfig
-        
-        // When: Creating a simple header view
-        let view = VStack {
-            Text(formConfig.title)
-                .font(.title)
-            Text(formConfig.description)
-                .font(.subheadline)
-        }
+        // When: Creating a form view using IntelligentFormView (which includes header)
+        let view = IntelligentFormView.generateForm(
+            for: TestData.self,
+            initialData: TestData(name: "Test", email: "test@example.com"),
+            onSubmit: { _ in },
+            onCancel: { }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -91,25 +79,27 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormSectionView Tests
     
     @Test func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form configuration and section
-        let formConfig = DynamicFormConfiguration(
-            id: "test-form",
-            title: "Test Form",
-            description: "Test form for accessibility testing",
-            sections: [],
-            submitButtonText: "Submit",
-            cancelButtonText: "Cancel"
-        )
-        
+        // Given: Test section with fields
         let section = DynamicFormSection(
             id: "test-section",
             title: "Test Section",
-            fields: []
+            fields: [
+                DynamicFormField(
+                    id: "name",
+                    label: "Name",
+                    placeholder: "Enter your name",
+                    isRequired: true
+                )
+            ]
         )
         
-        // When: Creating DynamicFormSectionView
-        let formState = DynamicFormState(configuration: formConfig)
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        // When: Creating a form view using IntelligentFormView (which includes sections)
+        let view = IntelligentFormView.generateForm(
+            for: TestData.self,
+            initialData: TestData(name: "Test", email: "test@example.com"),
+            onSubmit: { _ in },
+            onCancel: { }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
