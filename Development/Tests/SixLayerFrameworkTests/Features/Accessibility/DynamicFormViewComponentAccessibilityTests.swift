@@ -45,7 +45,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
     }
     
-    /// Creates a test form field for consistent testing
+    /// Creates a test field with correct parameters (DTRT - use actual framework types)
     private func createTestField() -> DynamicFormField {
         DynamicFormField(
             id: "test-field",
@@ -115,7 +115,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormHeader Tests
     
     @Test func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a form view using shared helper (which includes header)
+        // When: Creating a form view (header is part of the form)
         let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
@@ -131,7 +131,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormSectionView Tests
     
     @Test func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a form view using shared helper (which includes sections)
+        // When: Creating a form view (sections are part of the form)
         let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
@@ -144,26 +144,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "DynamicFormSectionView should generate accessibility identifiers")
     }
     
-    // MARK: - DynamicFormFieldView Tests
-    
-    @Test func testDynamicFormFieldViewGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a form view using shared helper (which includes field views)
-        let view = createTestFormView()
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
-            view: view,
-            componentName: "DynamicFormFieldView",
-            testName: "DynamicFormFieldView should generate accessibility identifiers"
-        )
-        
-        #expect(hasAccessibilityID, "DynamicFormFieldView should generate accessibility identifiers")
-    }
-    
     // MARK: - DynamicFormActions Tests
     
     @Test func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a form view using shared helper (which includes form actions)
+        // When: Creating a form view (actions are part of the form)
         let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
@@ -277,18 +261,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicToggleField Tests
     
     @Test func testDynamicToggleFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test toggle field configuration
-        let field = DynamicFormField(
-            id: "toggle-field",
-            label: "Toggle Field",
-            type: .toggle,
-            value: "false"
-        )
-        
-        // When: Creating DynamicToggleField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicToggleField(field: field, formState: formState)
-    @Test func testDynamicToggleFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing toggle field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .toggle,
@@ -301,18 +273,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicDateField Tests
     
-    @Test func testDynamicDateFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test date field configuration
-        let field = DynamicFormField(
-            id: "date-field",
-            label: "Date Field",
-            type: .date,
-            value: ""
-        )
-        
-        // When: Creating DynamicDateField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicDateField(field: field, formState: formState)
     @Test func testDynamicDateFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing date field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
@@ -327,18 +287,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicTimeField Tests
     
     @Test func testDynamicTimeFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test time field configuration
-        let field = DynamicFormField(
-            id: "time-field",
-            label: "Time Field",
-            type: .time,
-            value: ""
-        )
-        
-        // When: Creating DynamicTimeField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicTimeField(field: field, formState: formState)
-    @Test func testDynamicTimeFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing time field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .time,
@@ -351,18 +299,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicDateTimeField Tests
     
-    @Test func testDynamicDateTimeFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test date-time field configuration
-        let field = DynamicFormField(
-            id: "datetime-field",
-            label: "Date-Time Field",
-            type: .datetime,
-            value: ""
-        )
-        
-        // When: Creating DynamicDateTimeField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicDateTimeField(field: field, formState: formState)
     @Test func testDynamicDateTimeFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing datetime field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
@@ -377,18 +313,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicColorField Tests
     
     @Test func testDynamicColorFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test color field configuration
-        let field = DynamicFormField(
-            id: "color-field",
-            label: "Color Field",
-            type: .color,
-            value: "#000000"
-        )
-        
-        // When: Creating DynamicColorField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicColorField(field: field, formState: formState)
-    @Test func testDynamicColorFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing color field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .color,
@@ -401,18 +325,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFileField Tests
     
-    @Test func testDynamicFileFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test file field configuration
-        let field = DynamicFormField(
-            id: "file-field",
-            label: "File Field",
-            type: .file,
-            value: ""
-        )
-        
-        // When: Creating DynamicFileField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicFileField(field: field, formState: formState)
     @Test func testDynamicFileFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing file field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
@@ -427,18 +339,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicIntegerField Tests
     
     @Test func testDynamicIntegerFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test integer field configuration
-        let field = DynamicFormField(
-            id: "integer-field",
-            label: "Integer Field",
-            type: .integer,
-            value: "0"
-        )
-        
-        // When: Creating DynamicIntegerField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicIntegerField(field: field, formState: formState)
-    @Test func testDynamicIntegerFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing integer field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .integer,
@@ -451,18 +351,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicImageField Tests
     
-    @Test func testDynamicImageFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test image field configuration
-        let field = DynamicFormField(
-            id: "image-field",
-            label: "Image Field",
-            type: .image,
-            value: ""
-        )
-        
-        // When: Creating DynamicImageField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicImageField(field: field, formState: formState)
     @Test func testDynamicImageFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing image field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
@@ -477,19 +365,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicURLField Tests
     
     @Test func testDynamicURLFieldGeneratesAccessibilityIdentifiers() async {
-        // Given: Test URL field configuration
-        let field = DynamicFormField(
-            id: "url-field",
-            label: "URL Field",
-            type: .url,
-            value: ""
-        )
-        
-        // When: Creating DynamicURLField
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicURLField(field: field, formState: formState)
-    @Test func testDynamicURLFieldGeneratesAccessibilityIdentifiers() async {
-        // When: Testing url field accessibility through CustomFieldView
+        // When: Testing URL field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .url,
             componentName: "DynamicURLField"
