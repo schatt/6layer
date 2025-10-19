@@ -141,23 +141,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormActions Tests
     
     @Test func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form configuration
-        let formConfig = testFormConfig
-        
-        // When: Creating DynamicFormActions
-        let formState = DynamicFormState(configuration: formConfig)
-        let view = DynamicFormActions(
-            formState: formState,
-            configuration: formConfig,
-            onSubmit: {},
-            onCancel: {}
-        )
+        // When: Creating a form view using shared helper (which includes form actions)
+        let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "DynamicFormActions"
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view: view,
+            componentName: "DynamicFormActions",
+            testName: "DynamicFormActions should generate accessibility identifiers"
         )
         
         #expect(hasAccessibilityID, "DynamicFormActions should generate accessibility identifiers")
@@ -167,30 +158,17 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     @Test func testDynamicTextFieldGeneratesAccessibilityIdentifiers() async {
         // Given: Test text field configuration
-        let field = DynamicFormField(
-            id: "text-field",
-            label: "Text Field",
-            type: .text,
-            value: ""
-        )
+        let field = createTestField()
+        let formState = DynamicFormState(configuration: testFormConfig)
         
-        // When: Creating DynamicTextField
-        let formConfig = DynamicFormConfiguration(
-            id: "test-form",
-            title: "Test Form",
-            description: "Test form for accessibility",
-            sections: [],
-            submitButtonText: "Submit",
-            cancelButtonText: "Cancel"
-        )
-        let formState = DynamicFormState(configuration: formConfig)
-        let view = DynamicTextField(field: field, formState: formState)
+        // When: Creating CustomFieldView (which handles text fields)
+        let view = CustomFieldView(field: field, formState: formState)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "DynamicTextField"
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view: view,
+            componentName: "DynamicTextField",
+            testName: "DynamicTextField should generate accessibility identifiers"
         )
         
         #expect(hasAccessibilityID, "DynamicTextField should generate accessibility identifiers")
