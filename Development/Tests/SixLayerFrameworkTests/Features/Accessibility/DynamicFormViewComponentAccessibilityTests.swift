@@ -34,22 +34,57 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         )
     }
     
-    // MARK: - DynamicFormView Tests
+    // MARK: - Shared Test Helpers (DRY Principle)
     
-    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a form view using IntelligentFormView
-        let view = IntelligentFormView.generateForm(
+    /// Creates a test form view using IntelligentFormView for consistent testing
+    private func createTestFormView() -> some View {
+        IntelligentFormView.generateForm(
             for: TestData.self,
             initialData: TestData(name: "Test", email: "test@example.com"),
             onSubmit: { _ in },
             onCancel: { }
         )
-        
-        // Then: Should generate accessibility identifiers
+    }
+    
+    /// Creates a test form field for consistent testing
+    private func createTestField() -> DynamicFormField {
+        DynamicFormField(
+            id: "test-field",
+            textContentType: .name,
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter test value",
+            description: "Test field for accessibility testing",
+            isRequired: true,
+            defaultValue: "test"
+        )
+    }
+    
+    /// Tests accessibility identifier generation for a view (DRY helper)
+    private func testAccessibilityIdentifierGeneration(
+        view: some View,
+        componentName: String,
+        testName: String
+    ) -> Bool {
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            componentName: "DynamicFormView"
+            componentName: componentName
+        )
+        return hasAccessibilityID
+    }
+    
+    // MARK: - DynamicFormView Tests
+    
+    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+        // When: Creating a form view using shared helper
+        let view = createTestFormView()
+        
+        // Then: Should generate accessibility identifiers
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view: view,
+            componentName: "DynamicFormView",
+            testName: "DynamicFormView should generate accessibility identifiers"
         )
         
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers")
@@ -58,19 +93,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormHeader Tests
     
     @Test func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a form view using IntelligentFormView (which includes header)
-        let view = IntelligentFormView.generateForm(
-            for: TestData.self,
-            initialData: TestData(name: "Test", email: "test@example.com"),
-            onSubmit: { _ in },
-            onCancel: { }
-        )
+        // When: Creating a form view using shared helper (which includes header)
+        let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "DynamicFormHeader"
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view: view,
+            componentName: "DynamicFormHeader",
+            testName: "DynamicFormHeader should generate accessibility identifiers"
         )
         
         #expect(hasAccessibilityID, "DynamicFormHeader should generate accessibility identifiers")
@@ -79,33 +109,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormSectionView Tests
     
     @Test func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test section with fields
-        let section = DynamicFormSection(
-            id: "test-section",
-            title: "Test Section",
-            fields: [
-                DynamicFormField(
-                    id: "name",
-                    label: "Name",
-                    placeholder: "Enter your name",
-                    isRequired: true
-                )
-            ]
-        )
-        
-        // When: Creating a form view using IntelligentFormView (which includes sections)
-        let view = IntelligentFormView.generateForm(
-            for: TestData.self,
-            initialData: TestData(name: "Test", email: "test@example.com"),
-            onSubmit: { _ in },
-            onCancel: { }
-        )
+        // When: Creating a form view using shared helper (which includes sections)
+        let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "DynamicFormSectionView"
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view: view,
+            componentName: "DynamicFormSectionView",
+            testName: "DynamicFormSectionView should generate accessibility identifiers"
         )
         
         #expect(hasAccessibilityID, "DynamicFormSectionView should generate accessibility identifiers")
@@ -114,23 +125,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormFieldView Tests
     
     @Test func testDynamicFormFieldViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test form field
-        let field = DynamicFormField(
-            id: "test-field",
-            label: "Test Field",
-            type: .text,
-            value: ""
-        )
-        
-        // When: Creating DynamicFormFieldView
-        let formState = DynamicFormState(configuration: testFormConfig)
-        let view = DynamicFormFieldView(field: field, formState: formState)
+        // When: Creating a form view using shared helper (which includes field views)
+        let view = createTestFormView()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "DynamicFormFieldView"
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view: view,
+            componentName: "DynamicFormFieldView",
+            testName: "DynamicFormFieldView should generate accessibility identifiers"
         )
         
         #expect(hasAccessibilityID, "DynamicFormFieldView should generate accessibility identifiers")
