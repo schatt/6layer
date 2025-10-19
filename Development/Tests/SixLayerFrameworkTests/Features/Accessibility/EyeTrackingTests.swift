@@ -446,7 +446,7 @@ open class EyeTrackingTests: BaseTestClass {
         for sensitivity in sensitivities {
             _ = await MainActor.run {
                 let config = EyeTrackingConfig(sensitivity: sensitivity)
-                EyeTrackingManager(config: config)
+                _ = EyeTrackingManager(config: config)
             }
             
             #expect(true, "Manager should be created successfully")
@@ -463,7 +463,7 @@ open class EyeTrackingTests: BaseTestClass {
         for dwellTime in dwellTimes {
             _ = await MainActor.run {
                 let config = EyeTrackingConfig(dwellTime: dwellTime)
-                EyeTrackingManager(config: config)
+                _ = EyeTrackingManager(config: config)
             }
             
             #expect(true, "Manager should be created successfully")

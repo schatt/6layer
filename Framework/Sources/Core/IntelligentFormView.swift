@@ -167,8 +167,6 @@ public struct IntelligentFormView {
         analysis: DataAnalysisResult,
         initialData: T?,
         dataBinder: DataBinder<T>?,
-        formStateManager: FormStateManager?,
-        analyticsManager: FormAnalyticsManager?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         formStrategy: FormStrategy
@@ -239,8 +237,6 @@ public struct IntelligentFormView {
         analysis: DataAnalysisResult,
         initialData: T?,
         dataBinder: DataBinder<T>?,
-        formStateManager: FormStateManager?,
-        analyticsManager: FormAnalyticsManager?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
@@ -297,8 +293,6 @@ public struct IntelligentFormView {
         analysis: DataAnalysisResult,
         initialData: T?,
         dataBinder: DataBinder<T>?,
-        formStateManager: FormStateManager?,
-        analyticsManager: FormAnalyticsManager?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
@@ -325,8 +319,6 @@ public struct IntelligentFormView {
         analysis: DataAnalysisResult,
         initialData: T?,
         dataBinder: DataBinder<T>?,
-        formStateManager: FormStateManager?,
-        analyticsManager: FormAnalyticsManager?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
@@ -352,8 +344,6 @@ public struct IntelligentFormView {
         analysis: DataAnalysisResult,
         initialData: T?,
         dataBinder: DataBinder<T>?,
-        formStateManager: FormStateManager?,
-        analyticsManager: FormAnalyticsManager?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         formStrategy: FormStrategy
@@ -427,8 +417,6 @@ public struct IntelligentFormView {
         field: DataField,
         initialData: T?,
         dataBinder: DataBinder<T>?,
-        formStateManager: FormStateManager?,
-        analyticsManager: FormAnalyticsManager?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
@@ -548,16 +536,15 @@ private struct DefaultPlatformFieldView: View {
     let field: DataField
     let value: Any
     let onValueChange: (Any) -> Void
-    let formStateManager: FormStateManager?
     
     // Computed property to get field errors
-    private var fieldErrors: [ValidationError] {
-        formStateManager?.fields[field.name]?.errors ?? []
+    private var fieldErrors: [String] {
+        [] // No validation errors without FormStateManager
     }
     
     // Computed property to check if field is valid
     private var isValid: Bool {
-        formStateManager?.fields[field.name]?.isValid ?? true
+        true // Always valid without FormStateManager
     }
     
     public var body: some View {
@@ -697,19 +684,21 @@ private struct DefaultPlatformFieldView: View {
         .padding(.horizontal, 4)
     }
     
-    private func errorIcon(for severity: ValidationSeverity) -> String {
+    private func errorIcon(for severity: String) -> String {
         switch severity {
-        case .info: return "info.circle"
-        case .warning: return "exclamationmark.triangle"
-        case .error: return "xmark.circle"
+        case "info": return "info.circle"
+        case "warning": return "exclamationmark.triangle"
+        case "error": return "xmark.circle"
+        default: return "info.circle"
         }
     }
     
-    private func errorColor(for severity: ValidationSeverity) -> Color {
+    private func errorColor(for severity: String) -> Color {
         switch severity {
-        case .info: return .blue
-        case .warning: return .orange
-        case .error: return .red
+        case "info": return .blue
+        case "warning": return .orange
+        case "error": return .red
+        default: return .blue
         }
     }
 }
