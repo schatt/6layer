@@ -424,7 +424,7 @@ open class EyeTrackingTests: BaseTestClass {
             #expect(true, "Manager should be created successfully")
             
             // Process gaze events
-            for i in 0..<10 {
+            for _ in 0..<10 {
                 // Process gaze event
                 #expect(true, "Gaze event should be processed")
             }

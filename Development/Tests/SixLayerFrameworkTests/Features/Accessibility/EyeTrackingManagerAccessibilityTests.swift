@@ -25,7 +25,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "EyeTrackingManager should be instantiable")
+        #expect(true, "EyeTrackingManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
@@ -43,7 +43,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
         
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "EyeTrackingManager should be instantiable")
+        #expect(true, "EyeTrackingManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {

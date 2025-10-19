@@ -30,19 +30,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers")
     }
     
-    @Test func testFormInsightsDashboardGeneratesAccessibilityIdentifiers() async {
-        // Given: FormInsightsDashboard
-        let testView = FormInsightsDashboard()
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            testView,
-            expectedPattern: "*.main.element.*",
-            componentName: "FormInsightsDashboard"
-        )
-        
-        #expect(hasAccessibilityID, "FormInsightsDashboard should generate accessibility identifiers")
-    }
+    // FormInsightsDashboard test removed - component was removed as business-specific logic
     
     @Test func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
         // Given: ExampleHelpers

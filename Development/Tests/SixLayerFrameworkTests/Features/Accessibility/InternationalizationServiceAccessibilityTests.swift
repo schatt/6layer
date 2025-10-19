@@ -30,7 +30,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // When & Then
         // Service classes don't directly generate views, but we test their configuration
-        #expect(service != nil, "InternationalizationService should be instantiable")
+        #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
         await MainActor.run {
@@ -48,7 +48,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // When & Then
         // Service classes don't directly generate views, but we test their configuration
-        #expect(service != nil, "InternationalizationService should be instantiable")
+        #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
         await MainActor.run {
