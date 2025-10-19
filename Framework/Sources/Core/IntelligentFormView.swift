@@ -96,8 +96,6 @@ public struct IntelligentFormView {
                     analysis: analysis,
                     initialData: data,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView,
                     formStrategy: formStrategy
@@ -174,8 +172,6 @@ public struct IntelligentFormView {
                     analysis: analysis,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
@@ -185,8 +181,6 @@ public struct IntelligentFormView {
                     analysis: analysis,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
@@ -196,8 +190,6 @@ public struct IntelligentFormView {
                     analysis: analysis,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
@@ -207,8 +199,6 @@ public struct IntelligentFormView {
                     analysis: analysis,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView,
                     formStrategy: formStrategy
@@ -219,8 +209,6 @@ public struct IntelligentFormView {
                     analysis: analysis,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
@@ -239,7 +227,7 @@ public struct IntelligentFormView {
         VStack(spacing: 16) {
             let groupedFields = groupFieldsByType(analysis.fields)
             
-            ForEach(Array(groupedFields.keys.sorted(by: { $0.rawValue < $1.rawValue })), id: \.self) { fieldType in
+            ForEach(groupedFields.keys.sorted(by: { $0.rawValue < $1.rawValue }), id: \.self) { fieldType in
                 if let fields = groupedFields[fieldType] {
                     if fields.count > 1 {
                         // Group multiple fields of the same type
@@ -256,8 +244,6 @@ public struct IntelligentFormView {
                                         field: field,
                                         initialData: initialData,
                                         dataBinder: dataBinder,
-                                        formStateManager: formStateManager,
-                                        analyticsManager: analyticsManager,
                                         inputHandlingManager: inputHandlingManager,
                                         customFieldView: customFieldView
                                     )
@@ -299,8 +285,6 @@ public struct IntelligentFormView {
                     field: field,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
@@ -324,8 +308,6 @@ public struct IntelligentFormView {
                     field: field,
                     initialData: initialData,
                     dataBinder: dataBinder,
-                    formStateManager: formStateManager,
-                    analyticsManager: analyticsManager,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView
                 )
@@ -347,8 +329,6 @@ public struct IntelligentFormView {
                 analysis: analysis,
                 initialData: initialData,
                 dataBinder: dataBinder,
-                formStateManager: formStateManager,
-                analyticsManager: analyticsManager,
                 inputHandlingManager: inputHandlingManager,
                 customFieldView: customFieldView
             ))
@@ -357,8 +337,6 @@ public struct IntelligentFormView {
                 analysis: analysis,
                 initialData: initialData,
                 dataBinder: dataBinder,
-                formStateManager: formStateManager,
-                analyticsManager: analyticsManager,
                 inputHandlingManager: inputHandlingManager,
                 customFieldView: customFieldView
             ))
@@ -367,8 +345,6 @@ public struct IntelligentFormView {
                 analysis: analysis,
                 initialData: initialData,
                 dataBinder: dataBinder,
-                formStateManager: formStateManager,
-                analyticsManager: analyticsManager,
                 inputHandlingManager: inputHandlingManager,
                 customFieldView: customFieldView
             ))
@@ -662,15 +638,15 @@ private struct DefaultPlatformFieldView: View {
     @ViewBuilder
     private var errorDisplayView: some View {
         VStack(alignment: .leading, spacing: 2) {
-            ForEach(fieldErrors, id: \.id) { error in
+            ForEach(Array(fieldErrors.enumerated()), id: \.offset) { index, error in
                 HStack(alignment: .top, spacing: 4) {
-                    Image(systemName: errorIcon(for: error.severity))
-                        .foregroundColor(errorColor(for: error.severity))
+                    Image(systemName: errorIcon(for: "error"))
+                        .foregroundColor(errorColor(for: "error"))
                         .font(.caption)
                     
-                    Text(error.message)
+                    Text(error)
                         .font(.caption)
-                        .foregroundColor(errorColor(for: error.severity))
+                        .foregroundColor(errorColor(for: "error"))
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
