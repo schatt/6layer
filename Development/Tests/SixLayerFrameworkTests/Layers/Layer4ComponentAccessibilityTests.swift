@@ -54,7 +54,9 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let testTextField = TextField("Placeholder", text: .constant(""))
         
         // When: Applying platform form field wrapper
-        let formField = testTextField.platformFormField(label: "Test Field")
+        let formField = testTextField.platformFormField(label: "Test Field") {
+            testTextField
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -74,7 +76,9 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // When: Applying platform list row wrapper
-        let listRow = testContent.platformListRow()
+        let listRow = testContent.platformListRow {
+            testContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -114,7 +118,10 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // When: Applying platform sheet wrapper
-        let sheet = testSheetContent.platformSheet(isPresented: .constant(true)) {
+        let sheet = testSheetContent.platformSheet(
+            isPresented: .constant(true),
+            onDismiss: nil
+        ) {
             testSheetContent
         }
         
@@ -154,12 +161,14 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // When: Creating platform card grid
         let cardGrid = EmptyView().platformCardGrid(
-            items: testItems,
             columns: 2,
-            spacing: 16
-        ) { item in
-            Text(item)
-        }
+            spacing: 16,
+            content: {
+                ForEach(testItems, id: \.self) { item in
+                    Text(item)
+                }
+            }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
