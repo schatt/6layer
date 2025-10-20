@@ -14,7 +14,7 @@ import Foundation
 
 /// Represents a text region that can be edited
 /// Semantic layer: defines what a text region is
-public struct OCRTextRegion: Identifiable, Equatable {
+public struct OCRTextRegion: Identifiable, Equatable, Sendable {
     public let id: UUID
     public let text: String
     public let boundingBox: CGRect

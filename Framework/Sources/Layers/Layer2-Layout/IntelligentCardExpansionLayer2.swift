@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - Layer 2: Layout Decision Engine for Intelligent Card Expansion
 
 /// Layout decision result for intelligent card expansion
-public struct IntelligentCardLayoutDecision {
+public struct IntelligentCardLayoutDecision: Sendable {
     public let columns: Int
     public let spacing: CGFloat
     public let cardWidth: CGFloat

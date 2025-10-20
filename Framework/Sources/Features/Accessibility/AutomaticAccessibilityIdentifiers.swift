@@ -149,6 +149,18 @@ extension View {
         self.modifier(AutomaticAccessibilityIdentifiersModifier())
     }
     
+    /// Enable global automatic accessibility identifiers (alias for automaticAccessibilityIdentifiers)
+    /// This is provided for backward compatibility with tests
+    public func enableGlobalAutomaticAccessibilityIdentifiers() -> some View {
+        self.automaticAccessibilityIdentifiers()
+    }
+    
+    /// Disable automatic accessibility identifiers
+    /// This is provided for backward compatibility with tests
+    public func disableAutomaticAccessibilityIdentifiers() -> some View {
+        self.environment(\.globalAutomaticAccessibilityIdentifiers, false)
+    }
+    
     /// Apply a named accessibility identifier to a view
     /// This allows for more specific component identification
     public func named(_ name: String) -> some View {

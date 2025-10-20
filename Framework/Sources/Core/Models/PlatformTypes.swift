@@ -81,7 +81,7 @@ public enum SixLayerPlatform: String, CaseIterable, Sendable {
 // MARK: - Device Type Enumeration
 
 /// Represents the device type for responsive design and optimization
-public enum DeviceType: String, CaseIterable {
+public enum DeviceType: String, CaseIterable, Sendable {
     case phone = "phone"
     case pad = "pad"
     case mac = "mac"

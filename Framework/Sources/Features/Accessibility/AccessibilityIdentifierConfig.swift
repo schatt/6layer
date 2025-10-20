@@ -19,6 +19,7 @@ public enum AccessibilityMode: String, CaseIterable, Sendable {
     case automatic = "automatic"
     case manual = "manual"
     case disabled = "disabled"
+    case semantic = "semantic"
 }
 
 /// Configuration manager for accessibility identifier generation
@@ -59,6 +60,14 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     
     /// Configuration mode
     @Published public var mode: AccessibilityMode = .automatic
+    
+    /// Whether to enable view hierarchy tracking (for testing)
+    @Published public var enableViewHierarchyTracking: Bool = false
+    
+    /// Push view hierarchy (for testing)
+    public func pushViewHierarchy(_ viewName: String) {
+        currentViewHierarchy.append(viewName)
+    }
     
     private init() {}
     
