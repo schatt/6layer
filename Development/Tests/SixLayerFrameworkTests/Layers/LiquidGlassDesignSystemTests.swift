@@ -16,14 +16,18 @@ import Foundation
 
 struct LiquidGlassDesignSystemTests {
     
-    private let liquidGlassSystem = LiquidGlassDesignSystem.shared
-    private let system = LiquidGlassSystem()
-    
     // MARK: - Material Tests
     
     @MainActor
     @Test func testLiquidGlassMaterialCreation() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            // Skip test on older platforms - this is expected behavior
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // Then
@@ -35,7 +39,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassMaterialVariants() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given & When
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let primary = liquidGlassSystem.createMaterial(.primary)
         let secondary = liquidGlassSystem.createMaterial(.secondary)
         let tertiary = liquidGlassSystem.createMaterial(.tertiary)
@@ -50,7 +60,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassMaterialAdaptiveProperties() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
@@ -65,7 +81,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testDynamicReflectionGeneration() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
@@ -79,7 +101,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testReflectionIntensityScaling() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
@@ -94,7 +122,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testFloatingControlCreation() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given & When
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let control = FloatingControl(
             type: .navigation,
             position: .top,
@@ -111,7 +145,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testFloatingControlExpansion() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let control = FloatingControl(
             type: .navigation,
             position: .top,
@@ -127,7 +167,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testFloatingControlCollapse() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let control = FloatingControl(
             type: .navigation,
             position: .top,
@@ -146,7 +192,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testContextualMenuCreation() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given & When
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {}),
@@ -164,7 +216,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testContextualMenuShow() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {})
@@ -181,7 +239,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testContextualMenuHide() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {})
@@ -201,7 +265,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassMaterialPlatformCompatibility() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
@@ -215,7 +285,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testFloatingControlPlatformSupport() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let control = FloatingControl(
             type: .navigation,
             position: .top,
@@ -235,7 +311,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassMaterialPerformance() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
@@ -251,7 +333,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testFloatingControlPerformance() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let control = FloatingControl(
             type: .navigation,
             position: .top,
@@ -273,7 +361,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassMaterialAccessibility() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
@@ -286,7 +380,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testFloatingControlAccessibility() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let control = FloatingControl(
             type: .navigation,
             position: .top,
@@ -302,7 +402,14 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassSystemIntegration() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given
+        let liquidGlassSystem = LiquidGlassDesignSystem.shared
+        let system = LiquidGlassSystem()
         let material = liquidGlassSystem.createMaterial(.primary)
         let control = FloatingControl(
             type: .navigation,
@@ -325,7 +432,13 @@ struct LiquidGlassDesignSystemTests {
     
     @MainActor
     @Test func testLiquidGlassFallbackBehaviors() {
+        // Check availability before testing
+        guard #available(iOS 26.0, macOS 26.0, *) else {
+            return
+        }
+        
         // Given & When
+        let system = LiquidGlassSystem()
         for feature in LiquidGlassFeature.allCases {
             let fallbackBehavior = system.getFallbackBehavior(for: feature)
             
