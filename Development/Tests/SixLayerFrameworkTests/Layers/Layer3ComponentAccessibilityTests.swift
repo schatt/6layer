@@ -59,15 +59,16 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testSelectFormStrategyAddFuelViewL3CreatesFormStrategy() async {
         // Given: Layer 3 form strategy function
-        let fieldCount = 3
-        let availableSpace = CGSize(width: 400, height: 300)
-        let platform = SixLayerPlatform.currentPlatform
+        let formLayoutDecision = FormLayoutDecision(
+            containerType: .vertical,
+            fieldLayout: .stacked,
+            spacing: .standard,
+            validation: .inline
+        )
         
         // When: Creating form strategy
         let formStrategy = selectFormStrategy_AddFuelView_L3(
-            fieldCount: fieldCount,
-            availableSpace: availableSpace,
-            platform: platform
+            layout: formLayoutDecision
         )
         
         // Then: Should return valid form strategy struct
@@ -78,15 +79,16 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testSelectModalStrategyFormL3CreatesModalStrategy() async {
         // Given: Layer 3 modal strategy function
-        let contentSize = CGSize(width: 300, height: 200)
-        let availableSpace = CGSize(width: 400, height: 300)
-        let platform = SixLayerPlatform.currentPlatform
+        let modalLayoutDecision = ModalLayoutDecision(
+            presentationType: .sheet,
+            sizing: .medium,
+            detents: [],
+            platformConstraints: [:]
+        )
         
         // When: Creating modal strategy
         let modalStrategy = selectModalStrategy_Form_L3(
-            contentSize: contentSize,
-            availableSpace: availableSpace,
-            platform: platform
+            layout: modalLayoutDecision
         )
         
         // Then: Should return valid modal strategy struct
@@ -98,15 +100,19 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testSelectCardExpansionStrategyL3CreatesExpansionStrategy() async {
         // Given: Layer 3 card expansion strategy function
-        let content = "Test content for expansion"
-        let availableSpace = CGSize(width: 400, height: 300)
-        let platform = SixLayerPlatform.currentPlatform
+        let contentCount = 5
+        let screenWidth: CGFloat = 400
+        let deviceType = DeviceType.current
+        let interactionStyle = InteractionStyle.tap
+        let contentDensity = ContentDensity.standard
         
         // When: Creating expansion strategy
         let expansionStrategy = selectCardExpansionStrategy_L3(
-            content: content,
-            availableSpace: availableSpace,
-            platform: platform
+            contentCount: contentCount,
+            screenWidth: screenWidth,
+            deviceType: deviceType,
+            interactionStyle: interactionStyle,
+            contentDensity: contentDensity
         )
         
         // Then: Should return valid expansion strategy struct
