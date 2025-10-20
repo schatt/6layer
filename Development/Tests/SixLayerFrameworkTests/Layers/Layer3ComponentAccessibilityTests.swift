@@ -60,10 +60,10 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
     @Test func testSelectFormStrategyAddFuelViewL3CreatesFormStrategy() async {
         // Given: Layer 3 form strategy function
         let formLayoutDecision = FormLayoutDecision(
-            containerType: .vertical,
-            fieldLayout: .stacked,
+            containerType: .standard,
+            fieldLayout: .vertical,
             spacing: .standard,
-            validation: .inline
+            validation: .realTime
         )
         
         // When: Creating form strategy
@@ -92,10 +92,9 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should return valid modal strategy struct
-        #expect(modalStrategy.presentationStyle != nil, "Modal strategy should have a presentation style")
-        #expect(modalStrategy.size.width > 0 && modalStrategy.size.height > 0, 
-                "Modal strategy should have positive size")
-        #expect(!modalStrategy.reasoning.isEmpty, "Modal strategy should have reasoning")
+        #expect(modalStrategy.presentationType != nil, "Modal strategy should have a presentation type")
+        #expect(modalStrategy.sizing != nil, "Modal strategy should have sizing")
+        #expect(modalStrategy.detents != nil, "Modal strategy should have detents")
     }
     
     @Test func testSelectCardExpansionStrategyL3CreatesExpansionStrategy() async {
@@ -103,8 +102,8 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         let contentCount = 5
         let screenWidth: CGFloat = 400
         let deviceType = DeviceType.current
-        let interactionStyle = InteractionStyle.tap
-        let contentDensity = ContentDensity.standard
+        let interactionStyle = InteractionStyle.interactive
+        let contentDensity = ContentDensity.balanced
         
         // When: Creating expansion strategy
         let expansionStrategy = selectCardExpansionStrategy_L3(
