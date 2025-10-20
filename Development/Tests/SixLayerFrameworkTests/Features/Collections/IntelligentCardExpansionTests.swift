@@ -416,16 +416,6 @@ private struct CardExpansionAccessibilityConfig {
     let supportsAssistiveTouch: Bool = true
 }
 
-private struct NativeExpandableCardView {
-    let item: MenuItem
-    let expansionStrategy: ExpansionStrategy
-    
-    init(item: MenuItem, expansionStrategy: ExpansionStrategy) {
-        self.item = item
-        self.expansionStrategy = expansionStrategy
-    }
-}
-
 #if os(iOS)
 private struct iOSCardExpansionConfig {
     let supportsHapticFeedback: Bool = true

@@ -402,31 +402,6 @@ struct BenchmarkResult {
     let isMockData: Bool
 }
 
-struct NativeExpandableCardView<Content: View>: View {
-    let title: String
-    let content: Content
-    @State private var isExpanded = false
-    
-    init(title: String, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
-    }
-    
-    var body: some View {
-        VStack {
-            Text(title)
-            if isExpanded {
-                content
-            }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-    
-    func toggleExpansion() {
-        isExpanded.toggle()
-    }
-}
-
 struct PlatformUIPatterns {
     static func platformSpecificButton(title: String, action: @escaping () -> Void) -> some View {
         Button(title, action: action)
