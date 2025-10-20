@@ -7,7 +7,7 @@ import ViewInspector
 
 // MARK: - Mock Data for Testing
 
-struct MockTaskItemReal {
+struct MockTaskItemReal: Identifiable {
     let id: String
     let title: String
 }

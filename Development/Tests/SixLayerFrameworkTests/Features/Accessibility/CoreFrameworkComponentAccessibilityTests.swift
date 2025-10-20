@@ -84,7 +84,10 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .modifier(SystemAccessibilityModifier())
+        .modifier(SystemAccessibilityModifier(
+            accessibilityState: AccessibilitySystemState(),
+            platform: .iOS
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

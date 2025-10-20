@@ -33,12 +33,8 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
     // FormInsightsDashboard test removed - component was removed as business-specific logic
     
     @Test func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
-        // Given: ExampleProjectCard (from ExampleHelpers)
-        let testView = ExampleProjectCard(
-            title: "Test Project",
-            description: "Test Description",
-            onTap: {}
-        )
+        // Given: ExampleHelpers
+        let testView = ExampleHelpers()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
