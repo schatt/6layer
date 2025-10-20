@@ -66,11 +66,18 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// METHODOLOGY: Tests automatic compliance with VoiceOver, Switch Control, and AssistiveTouch
     @Test func testDemonstrateAutomaticComplianceWithAccessibilityStates() async {
         await MainActor.run {
+            // Setup test data
+            let testItems = [
+                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+            ]
+            let testHints = PresentationHints()
+            
             // Test with VoiceOver enabled
             RuntimeCapabilityDetection.setTestVoiceOver(true)
             let voiceOverView = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: testItems,
+                hints: testHints
             )
             #expect(voiceOverView != nil, "View should work with VoiceOver enabled")
             #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
@@ -79,8 +86,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             RuntimeCapabilityDetection.setTestVoiceOver(false)
             RuntimeCapabilityDetection.setTestSwitchControl(true)
             let switchControlView = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: testItems,
+                hints: testHints
             )
             #expect(switchControlView != nil, "View should work with Switch Control enabled")
             #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
@@ -89,8 +96,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             RuntimeCapabilityDetection.setTestSwitchControl(false)
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             let assistiveTouchView = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: testItems,
+                hints: testHints
             )
             #expect(assistiveTouchView != nil, "View should work with AssistiveTouch enabled")
             #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
@@ -107,13 +114,20 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// METHODOLOGY: Tests automatic compliance across all supported platforms
     @Test func testDemonstrateAutomaticComplianceAcrossPlatforms() async {
         await MainActor.run {
+            // Setup test data
+            let testItems = [
+                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+            ]
+            let testHints = PresentationHints()
+            
             // Test across all platforms
             for platform in SixLayerPlatform.allCases {
                 RuntimeCapabilityDetection.setTestPlatform(platform)
                 
                 let view = platformPresentItemCollection_L1(
-                    items: testItems!,
-                    hints: testHints!
+                    items: testItems,
+                    hints: testHints
                 )
                 
                 #expect(view != nil, "View should work on \(platform)")
@@ -127,10 +141,17 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// METHODOLOGY: Tests multiple Layer 1 functions to verify they all have automatic compliance
     @Test func testDemonstrateAllLayer1FunctionsHaveAutomaticCompliance() async {
         await MainActor.run {
+            // Setup test data
+            let testItems = [
+                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+            ]
+            let testHints = PresentationHints()
+            
             // Test platformPresentItemCollection_L1
             let collectionView = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: testItems,
+                hints: testHints
             )
             #expect(collectionView != nil, "Collection view should have automatic compliance")
             
@@ -140,7 +161,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             ]
             let numericView = platformPresentNumericData_L1(
                 data: numericData,
-                hints: testHints!
+                hints: testHints
             )
             #expect(numericView != nil, "Numeric view should have automatic compliance")
             

@@ -4,6 +4,32 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+// MARK: - Test Data Structures
+
+struct TestItem: Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String
+    
+    init(id: String, title: String, subtitle: String) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+    }
+}
+
+struct AutomaticHIGComplianceTestItem: Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String
+    
+    init(id: String, title: String, subtitle: String) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+    }
+}
+
 /**
  * BUSINESS PURPOSE: SixLayer framework should automatically apply Apple HIG compliance to all views created
  * by Layer 1 functions, ensuring developers don't need to manually add accessibility or compliance modifiers.
@@ -36,7 +62,7 @@ open class AutomaticHIGComplianceTests {
     @Test func testPlatformPresentItemCollection_L1_AutomaticHIGCompliance() async {
         await MainActor.run {
             // Given: Test items and hints
-            let items = [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")]
+            let items = [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")]
             let hints = PresentationHints()
             
             // When: Creating view using Layer 1 function
@@ -66,7 +92,7 @@ open class AutomaticHIGComplianceTests {
             
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             
@@ -88,6 +114,12 @@ open class AutomaticHIGComplianceTests {
     /// METHODOLOGY: Tests automatic platform pattern application across iOS, macOS, watchOS, tvOS, and visionOS
     @Test func testPlatformPresentItemCollection_L1_AutomaticPlatformPatterns() async {
         await MainActor.run {
+            // Setup test data
+            let testItems = [
+                TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1"),
+                TestItem(id: "2", title: "Test Item 2", subtitle: "Test Description 2")
+            ]
+            
             // Test across all platforms
             for platform in SixLayerPlatform.allCases {
                 // Given: Platform set
@@ -95,7 +127,7 @@ open class AutomaticHIGComplianceTests {
                 
                 // When: Creating view using Layer 1 function
                 let view = platformPresentItemCollection_L1(
-                    items: testItems!,
+                    items: testItems,
                     hints: PresentationHints()
                 )
                 
@@ -116,7 +148,7 @@ open class AutomaticHIGComplianceTests {
         await MainActor.run {
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             
@@ -136,7 +168,7 @@ open class AutomaticHIGComplianceTests {
         await MainActor.run {
             // Test platformPresentItemCollection_L1
             let collectionView = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             // Test that collection view can be hosted and has proper structure
@@ -174,7 +206,7 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)
             
             let viewWithVoiceOver = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             // Test that VoiceOver-enabled view can be hosted
@@ -187,7 +219,7 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)
             
             let viewWithSwitchControl = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             
@@ -201,7 +233,7 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
             let viewWithAssistiveTouch = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             
@@ -215,7 +247,7 @@ open class AutomaticHIGComplianceTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             
             let viewWithAllAccessibility = platformPresentItemCollection_L1(
-                items: [TestItem(id: "1", title: "Test Item 1", description: "Test Description 1")],
+                items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
                 hints: PresentationHints()
             )
             
