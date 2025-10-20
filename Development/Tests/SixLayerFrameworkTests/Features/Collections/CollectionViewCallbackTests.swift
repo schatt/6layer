@@ -249,7 +249,6 @@ open class CollectionViewCallbackTests {
         let view = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -281,8 +280,6 @@ open class CollectionViewCallbackTests {
         let view = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            hints: PresentationHints(),
             onItemSelected: { item in self.selectedItems.append(item) },
             onItemDeleted: { item in self.deletedItems.append(item) },
             onItemEdited: { item in self.editedItems.append(item) }

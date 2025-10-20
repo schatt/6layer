@@ -402,20 +402,6 @@ struct GenericSettingsView: View {
     }
 }
 
-struct GenericItemCollectionView: View {
-    let items: [String]
-    let hints: [String]
-    
-    var body: some View {
-        VStack {
-            ForEach(Array(items.enumerated()), id: \.offset) { index, item in
-                Text(item)
-            }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
 struct GenericPhotoCaptureView: View {
     let onCapture: (TestImage?) -> Void
     
