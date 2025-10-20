@@ -389,7 +389,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
 
 // MARK: - Mock Layer 2 Functions (Placeholder implementations)
 
-func platformPresentItemCollection_L2(items: [String], hints: [String]) -> some View {
+@MainActor @MainActor funcPresentItemCollection_L2(items: [String], hints: [String]) -> some View {
     VStack {
         ForEach(Array(items.enumerated()), id: \.offset) { index, item in
             Text(item)
@@ -398,7 +398,7 @@ func platformPresentItemCollection_L2(items: [String], hints: [String]) -> some 
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentNumericData_L2(data: [Double]) -> some View {
+@MainActor @MainActor funcPresentNumericData_L2(data: [Double]) -> some View {
     VStack {
         ForEach(Array(data.enumerated()), id: \.offset) { index, value in
             Text("\(value)")
@@ -407,7 +407,7 @@ func platformPresentNumericData_L2(data: [Double]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentFormData_L2(formData: [String: String]) -> some View {
+@MainActor @MainActor funcPresentFormData_L2(formData: [String: String]) -> some View {
     VStack {
         ForEach(Array(formData.keys), id: \.self) { key in
             Text("\(key): \(formData[key] ?? "")")
@@ -416,7 +416,7 @@ func platformPresentFormData_L2(formData: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentMediaData_L2(mediaData: [String]) -> some View {
+@MainActor @MainActor funcPresentMediaData_L2(mediaData: [String]) -> some View {
     VStack {
         ForEach(Array(mediaData.enumerated()), id: \.offset) { index, media in
             Text(media)
@@ -425,7 +425,7 @@ func platformPresentMediaData_L2(mediaData: [String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentSettings_L2(settings: [String: String]) -> some View {
+@MainActor @MainActor funcPresentSettings_L2(settings: [String: String]) -> some View {
     VStack {
         ForEach(Array(settings.keys), id: \.self) { key in
             Text("\(key): \(settings[key] ?? "")")
@@ -434,7 +434,7 @@ func platformPresentSettings_L2(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor func platformPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
+@MainActor @MainActor funcPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
     VStack {
         Text("Photo Capture")
         Button("Capture") {
@@ -444,7 +444,7 @@ func platformPresentSettings_L2(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor func platformPhotoDisplay_L2(image: PlatformImage?) -> some View {
+@MainActor @MainActor funcPhotoDisplay_L2(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
             Image(platformImage: image)
@@ -455,7 +455,7 @@ func platformPresentSettings_L2(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoSelection_L2(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
+@MainActor @MainActor funcPhotoSelection_L2(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
     VStack {
         Text("Photo Selection")
         Button("Select Photos") {
@@ -465,7 +465,7 @@ func platformPhotoSelection_L2(onSelection: @escaping ([PlatformImage]) -> Void)
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithVisualCorrection_L2(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
+@MainActor @MainActor funcOCRWithVisualCorrection_L2(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Visual Correction")
         Button("Process") {
@@ -475,7 +475,7 @@ func platformOCRWithVisualCorrection_L2(image: PlatformImage?, onResult: @escapi
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentModalForm_L2(formData: [String: String], onSubmit: @escaping ([String: String]) -> Void) -> some View {
+@MainActor @MainActor funcPresentModalForm_L2(formData: [String: String], onSubmit: @escaping ([String: String]) -> Void) -> some View {
     VStack {
         Text("Modal Form")
         Button("Submit") {
@@ -485,7 +485,7 @@ func platformPresentModalForm_L2(formData: [String: String], onSubmit: @escaping
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentHierarchicalData_L2(hierarchy: [String: Any]) -> some View {
+@MainActor funcPresentHierarchicalData_L2(hierarchy: [String: Any]) -> some View {
     VStack {
         Text("Hierarchical Data")
         ForEach(Array(hierarchy.keys), id: \.self) { key in
@@ -495,7 +495,7 @@ func platformPresentHierarchicalData_L2(hierarchy: [String: Any]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentTemporalData_L2(temporalData: [Date]) -> some View {
+@MainActor funcPresentTemporalData_L2(temporalData: [Date]) -> some View {
     VStack {
         Text("Temporal Data")
         ForEach(Array(temporalData.enumerated()), id: \.offset) { index, date in
@@ -505,21 +505,21 @@ func platformPresentTemporalData_L2(temporalData: [Date]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentContent_L2(content: String) -> some View {
+@MainActor funcPresentContent_L2(content: String) -> some View {
     VStack {
         Text(content)
     }
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentBasicValue_L2(value: Int) -> some View {
+@MainActor funcPresentBasicValue_L2(value: Int) -> some View {
     VStack {
         Text("\(value)")
     }
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentBasicArray_L2(array: [Int]) -> some View {
+@MainActor funcPresentBasicArray_L2(array: [Int]) -> some View {
     VStack {
         ForEach(Array(array.enumerated()), id: \.offset) { index, value in
             Text("\(value)")
@@ -528,7 +528,7 @@ func platformPresentBasicArray_L2(array: [Int]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformResponsiveCard_L2(title: String, content: String) -> some View {
+@MainActor funcResponsiveCard_L2(title: String, content: String) -> some View {
     VStack {
         Text(title)
         Text(content)
@@ -536,7 +536,7 @@ func platformResponsiveCard_L2(title: String, content: String) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithDisambiguation_L2(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
+@MainActor funcOCRWithDisambiguation_L2(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Disambiguation")
         ForEach(Array(options.enumerated()), id: \.offset) { index, option in
@@ -548,7 +548,7 @@ func platformOCRWithDisambiguation_L2(image: PlatformImage?, options: [String], 
     .automaticAccessibilityIdentifiers()
 }
 
-func platformExtractStructuredData_L2(data: [String: String]) -> some View {
+@MainActor funcExtractStructuredData_L2(data: [String: String]) -> some View {
     VStack {
         Text("Structured Data")
         ForEach(Array(data.keys), id: \.self) { key in
@@ -558,21 +558,21 @@ func platformExtractStructuredData_L2(data: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentLocalizedContent_L2(content: String, locale: Locale) -> some View {
+@MainActor funcPresentLocalizedContent_L2(content: String, locale: Locale) -> some View {
     VStack {
         Text(content)
     }
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentLocalizedText_L2(text: String, locale: Locale) -> some View {
+@MainActor funcPresentLocalizedText_L2(text: String, locale: Locale) -> some View {
     VStack {
         Text(text)
     }
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPresentLocalizedNumber_L2(number: Double, locale: Locale) -> some View {
+@MainActor funcPresentLocalizedNumber_L2(number: Double, locale: Locale) -> some View {
     VStack {
         Text("\(number)")
     }
