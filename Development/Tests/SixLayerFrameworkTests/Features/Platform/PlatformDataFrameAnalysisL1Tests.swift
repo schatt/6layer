@@ -47,12 +47,6 @@ open class PlatformDataFrameAnalysisL1Tests {
         testDataFrame = createTestDataFrame()
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
     // MARK: - Basic DataFrame Analysis Tests
     
     @Test func testPlatformAnalyzeDataFrame_L1_Basic() {

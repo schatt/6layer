@@ -23,11 +23,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         deviceCapabilities: PhotoDeviceCapabilities()
     )
     
-    private var sampleHints: PresentationHints = PresentationHints()deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    private var sampleHints: PresentationHints = PresentationHints()
     
     // MARK: - Photo Selection Tests
     

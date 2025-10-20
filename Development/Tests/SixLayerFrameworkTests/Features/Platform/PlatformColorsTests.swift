@@ -42,12 +42,6 @@ open class PlatformColorsTests {
     init() async throws {
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
     // MARK: - Platform-Specific Business Logic Tests
     
     @Test @MainActor
