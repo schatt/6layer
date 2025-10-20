@@ -147,7 +147,7 @@ open class Layer6RedPhaseTDDTests {
         #expect(performanceRecs.count > 0, "Should have performance recommendations")
         
         // Should include UI pattern recommendations
-        let uiRecs = recommendations.filter { $0.category == .uiPatterns }
+        let uiRecs = recommendations.filter { $0.category == .uiPattern }
         #expect(uiRecs.count > 0, "Should have UI pattern recommendations")
         
         // THIS SHOULD FAIL - Current implementation may not generate real recommendations
