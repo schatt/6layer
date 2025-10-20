@@ -158,7 +158,7 @@ public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has an identifier matching the pattern on the specified platform
 @MainActor
-public func hasAccessibilityIdentifier<T: View>(
+public func hasAccessibilityIdentifierWithPattern<T: View>(
     _ view: T, 
     expectedPattern: String,
     platform: SixLayerPlatform,
@@ -225,7 +225,7 @@ public func hasAccessibilityIdentifier<T: View>(
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has the exact expected identifier on the specified platform
 @MainActor
-public func hasAccessibilityIdentifier<T: View>(
+public func hasAccessibilityIdentifierExact<T: View>(
     _ view: T, 
     expectedIdentifier: String,
     platform: SixLayerPlatform,
@@ -259,7 +259,7 @@ public func hasAccessibilityIdentifier<T: View>(
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has the exact expected identifier
 @MainActor
-public func hasAccessibilityIdentifier<T: View>(
+public func hasAccessibilityIdentifierSimple<T: View>(
     _ view: T, 
     expectedIdentifier: String,
     componentName: String = "Component"
@@ -312,7 +312,7 @@ public func getAccessibilityIdentifier<T: View>(from view: T) -> String? {
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has an identifier matching the pattern
 @MainActor
-public func hasAccessibilityIdentifier<T: View>(
+public func hasAccessibilityIdentifierPattern<T: View>(
     _ view: T, 
     expectedPattern: String,
     componentName: String = "Component"

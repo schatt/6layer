@@ -60,8 +60,8 @@ open class EnvironmentVariableDebugTests {
         
         // 2. Create a view with direct environment variable setting
         let view = Button("Test") { }
-            .environment(\.automaticAccessibilityIdentifiersEnabled, true)  // ← Direct environment setting
-            .modifier(AccessibilityIdentifierAssignmentModifier())
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true)  // ← Direct environment setting
+            .modifier(AutomaticAccessibilityIdentifierModifier())
         
         // 3. Try to inspect for accessibility identifier
         do {
