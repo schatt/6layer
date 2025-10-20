@@ -1,393 +1,316 @@
 import Testing
 import Foundation
-#if canImport(UIKit)
-import UIKit
-#endif
-
+import SwiftUI
+@testable import SixLayerFramework
 
 //
 //  Layer5ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
 //
-//  Comprehensive accessibility tests for ALL Layer 5 components
+//  Tests Layer 5 platform components for accessibility
 //
 
-import SwiftUI
-@testable import SixLayerFramework
-
 @MainActor
-open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 Semantic Functions Tests
+open class Layer5ComponentAccessibilityTests: BaseTestClass {
     
-    @Test func testPlatformPresentItemCollectionL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 item collection function
-        let testItems = ["Item 1", "Item 2", "Item 3"]
-        let testHints = ["Hint 1", "Hint 2", "Hint 3"]
+    // MARK: - Layer 5 Platform Component Tests
+    
+    @Test func testPlatformMessagingLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 messaging component
+        let messagingLayer = PlatformMessagingLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentItemCollection_L5(
-            items: testItems,
-            hints: testHints
+        // When: Creating alert button view
+        let alertButtonView = messagingLayer.createAlertButton(
+            title: "Test Alert",
+            message: "Test Message",
+            action: {}
         )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            alertButtonView,
             expectedPattern: "*.main.element.*",
-            componentName: "ItemCollectionL5"
+            componentName: "PlatformMessagingLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 item collection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformMessagingLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentNumericDataL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 numeric data function
-        let testData = [1.0, 2.0, 3.0]
+    @Test func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 notification component
+        let notificationLayer = PlatformNotificationLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentNumericData_L5(data: testData)
+        // When: Creating toast notification view
+        let toastView = notificationLayer.createToastNotification(
+            message: "Test Toast",
+            duration: 3.0
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            toastView,
             expectedPattern: "*.main.element.*",
-            componentName: "NumericDataL5"
+            componentName: "PlatformNotificationLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 numeric data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformNotificationLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentFormDataL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 form data function
-        let testFormData = ["field1": "value1", "field2": "value2"]
+    @Test func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 resource component
+        let resourceLayer = PlatformResourceLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentFormData_L5(formData: testFormData)
+        // When: Creating resource button view
+        let resourceButtonView = resourceLayer.createResourceButton(
+            title: "Test Resource",
+            action: {}
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            resourceButtonView,
             expectedPattern: "*.main.element.*",
-            componentName: "FormDataL5"
+            componentName: "PlatformResourceLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 form data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformResourceLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentMediaDataL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 media data function
-        let testMediaData = ["image1.jpg", "video1.mp4"]
-        
-        // When: Creating view using Layer 5 function
-        let view = platformPresentMediaData_L5(mediaData: testMediaData)
+    @Test func testPlatformWisdomLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 wisdom component
+        let wisdomView = PlatformWisdomLayer5()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            wisdomView,
             expectedPattern: "*.main.element.*",
-            componentName: "MediaDataL5"
+            componentName: "PlatformWisdomLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 media data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformWisdomLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentSettingsL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 settings function
-        let testSettings = ["setting1": "value1", "setting2": "value2"]
+    @Test func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 safety component
+        let safetyLayer = PlatformSafetyLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentSettings_L5(settings: testSettings)
+        // When: Creating safety view
+        let safetyView = safetyLayer.createSafetyAlert(
+            title: "Safety Alert",
+            message: "Safety Message"
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            safetyView,
             expectedPattern: "*.main.element.*",
-            componentName: "SettingsL5"
+            componentName: "PlatformSafetyLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 settings function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformSafetyLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPhotoCaptureL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 photo capture function
-        let testCallback: (PlatformImage?) -> Void = { _ in }
+    @Test func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 privacy component
+        let privacyLayer = PlatformPrivacyLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPhotoCapture_L5(onCapture: testCallback)
+        // When: Creating privacy view
+        let privacyView = privacyLayer.createPrivacyNotice(
+            title: "Privacy Notice",
+            message: "Privacy Message"
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            privacyView,
             expectedPattern: "*.main.element.*",
-            componentName: "PhotoCaptureL5"
+            componentName: "PlatformPrivacyLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 photo capture function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPrivacyLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPhotoDisplayL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 photo display function
-        let testImage = PlatformImage()
+    @Test func testPlatformProfilingLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 profiling component
+        let profilingLayer = PlatformProfilingLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPhotoDisplay_L5(image: testImage)
+        // When: Creating profiling view
+        let profilingView = profilingLayer.createProfilingDashboard()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            profilingView,
             expectedPattern: "*.main.element.*",
-            componentName: "PhotoDisplayL5"
+            componentName: "PlatformProfilingLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 photo display function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformProfilingLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPhotoSelectionL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 photo selection function
-        let testCallback: ([PlatformImage]) -> Void = { _ in }
+    @Test func testPlatformLoggingLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 logging component
+        let loggingLayer = PlatformLoggingLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPhotoSelection_L5(onSelection: testCallback)
+        // When: Creating logging view
+        let loggingView = loggingLayer.createLoggingInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            loggingView,
             expectedPattern: "*.main.element.*",
-            componentName: "PhotoSelectionL5"
+            componentName: "PlatformLoggingLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 photo selection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformLoggingLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformOCRWithVisualCorrectionL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 OCR function
-        let testImage = PlatformImage()
-        let testCallback: (String) -> Void = { _ in }
+    @Test func testPlatformInterpretationLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 interpretation component
+        let interpretationLayer = PlatformInterpretationLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformOCRWithVisualCorrection_L5(image: testImage, onResult: testCallback)
+        // When: Creating interpretation view
+        let interpretationView = interpretationLayer.createInterpretationInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            interpretationView,
             expectedPattern: "*.main.element.*",
-            componentName: "OCRL5"
+            componentName: "PlatformInterpretationLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 OCR function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformInterpretationLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentModalFormL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 modal form function
-        let testFormData = ["field1": "value1"]
-        let testCallback: ([String: String]) -> Void = { _ in }
+    @Test func testPlatformKnowledgeLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 knowledge component
+        let knowledgeLayer = PlatformKnowledgeLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentModalForm_L5(formData: testFormData, onSubmit: testCallback)
+        // When: Creating knowledge view
+        let knowledgeView = knowledgeLayer.createKnowledgeBase()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            knowledgeView,
             expectedPattern: "*.main.element.*",
-            componentName: "ModalFormL5"
+            componentName: "PlatformKnowledgeLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 modal form function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformKnowledgeLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentHierarchicalDataL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 hierarchical data function
-        let testHierarchy = ["root": ["child1": [], "child2": []]]
+    @Test func testPlatformMaintenanceLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 maintenance component
+        let maintenanceLayer = PlatformMaintenanceLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentHierarchicalData_L5(hierarchy: testHierarchy)
+        // When: Creating maintenance view
+        let maintenanceView = maintenanceLayer.createMaintenanceInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            maintenanceView,
             expectedPattern: "*.main.element.*",
-            componentName: "HierarchicalDataL5"
+            componentName: "PlatformMaintenanceLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 hierarchical data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformMaintenanceLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentTemporalDataL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 temporal data function
-        let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
+    @Test func testPlatformOptimizationLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 optimization component
+        let optimizationLayer = PlatformOptimizationLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentTemporalData_L5(temporalData: testTemporalData)
+        // When: Creating optimization view
+        let optimizationView = optimizationLayer.createOptimizationInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            optimizationView,
             expectedPattern: "*.main.element.*",
-            componentName: "TemporalDataL5"
+            componentName: "PlatformOptimizationLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 temporal data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOptimizationLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentContentL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 content function
-        let testContent = "Sample content"
+    @Test func testPlatformOrchestrationLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 orchestration component
+        let orchestrationLayer = PlatformOrchestrationLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentContent_L5(content: testContent)
+        // When: Creating orchestration view
+        let orchestrationView = orchestrationLayer.createOrchestrationInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            orchestrationView,
             expectedPattern: "*.main.element.*",
-            componentName: "ContentL5"
+            componentName: "PlatformOrchestrationLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 content function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOrchestrationLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentBasicValueL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 basic value function
-        let testValue = 42
+    @Test func testPlatformOrganizationLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 organization component
+        let organizationLayer = PlatformOrganizationLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentBasicValue_L5(value: testValue)
+        // When: Creating organization view
+        let organizationView = organizationLayer.createOrganizationInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            organizationView,
             expectedPattern: "*.main.element.*",
-            componentName: "BasicValueL5"
+            componentName: "PlatformOrganizationLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 basic value function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformOrganizationLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentBasicArrayL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 basic array function
-        let testArray = [1, 2, 3, 4, 5]
+    @Test func testPlatformRecognitionLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 recognition component
+        let recognitionLayer = PlatformRecognitionLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformPresentBasicArray_L5(array: testArray)
+        // When: Creating recognition view
+        let recognitionView = recognitionLayer.createRecognitionInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            recognitionView,
             expectedPattern: "*.main.element.*",
-            componentName: "BasicArrayL5"
+            componentName: "PlatformRecognitionLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 basic array function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformRecognitionLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformResponsiveCardL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 responsive card function
-        let testTitle = "Card Title"
-        let testContent = "Card Content"
+    @Test func testPlatformRoutingLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 routing component
+        let routingLayer = PlatformRoutingLayer5()
         
-        // When: Creating view using Layer 5 function
-        let view = platformResponsiveCard_L5(title: testTitle, content: testContent)
+        // When: Creating routing view
+        let routingView = routingLayer.createRoutingInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            routingView,
             expectedPattern: "*.main.element.*",
-            componentName: "ResponsiveCardL5"
+            componentName: "PlatformRoutingLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 responsive card function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformRoutingLayer5 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformOCRWithDisambiguationL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 OCR with disambiguation function
-        let testImage = PlatformImage()
-        let testOptions = ["Option 1", "Option 2", "Option 3"]
-        let testCallback: (String) -> Void = { _ in }
-        
-        // When: Creating view using Layer 5 function
-        let view = platformOCRWithDisambiguation_L5(image: testImage, options: testOptions, onResult: testCallback)
+    @Test func testAccessibilityFeaturesLayer5GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 5 accessibility features component
+        let accessibilityFeatures = AccessibilityFeaturesLayer5()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            accessibilityFeatures,
             expectedPattern: "*.main.element.*",
-            componentName: "OCRDisambiguationL5"
+            componentName: "AccessibilityFeaturesLayer5"
         )
         
-        #expect(hasAccessibilityID, "Layer 5 OCR with disambiguation function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformExtractStructuredDataL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 structured data extraction function
-        let testData = ["key1": "value1", "key2": "value2"]
-        
-        // When: Creating view using Layer 5 function
-        let view = platformExtractStructuredData_L5(data: testData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "StructuredDataL5"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 5 structured data extraction function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedContentL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 localized content function
-        let testContent = "Localized content"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 5 function
-        let view = platformPresentLocalizedContent_L5(content: testContent, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedContentL5"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 5 localized content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedTextL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 localized text function
-        let testText = "Localized text"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 5 function
-        let view = platformPresentLocalizedText_L5(text: testText, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedTextL5"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 5 localized text function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedNumberL5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 localized number function
-        let testNumber = 123.45
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 5 function
-        let view = platformPresentLocalizedNumber_L5(number: testNumber, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedNumberL5"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 5 localized number function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityFeaturesLayer5 should generate accessibility identifiers")
     }
 }
-
-
-
-

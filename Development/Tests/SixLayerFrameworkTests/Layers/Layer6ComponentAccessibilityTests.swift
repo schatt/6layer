@@ -1,393 +1,65 @@
 import Testing
 import Foundation
-#if canImport(UIKit)
-import UIKit
-#endif
-
+import SwiftUI
+@testable import SixLayerFramework
 
 //
 //  Layer6ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
 //
-//  Comprehensive accessibility tests for ALL Layer 6 components
+//  Tests Layer 6 optimization components for accessibility
 //
 
-import SwiftUI
-@testable import SixLayerFramework
-
 @MainActor
-open class Layer6ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 6 Semantic Functions Tests
+open class Layer6ComponentAccessibilityTests: BaseTestClass {
     
-    @Test func testPlatformPresentItemCollectionL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 item collection function
-        let testItems = ["Item 1", "Item 2", "Item 3"]
-        let testHints = ["Hint 1", "Hint 2", "Hint 3"]
+    // MARK: - Layer 6 Optimization Component Tests
+    
+    @Test func testCrossPlatformOptimizationLayer6GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 6 cross-platform optimization component
+        let crossPlatformOptimization = CrossPlatformOptimizationLayer6()
         
-        // When: Creating view using Layer 6 function
-        let view = platformPresentItemCollection_L6(
-            items: testItems,
-            hints: testHints
-        )
+        // When: Creating optimization view
+        let optimizationView = crossPlatformOptimization.createOptimizationInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            optimizationView,
             expectedPattern: "*.main.element.*",
-            componentName: "ItemCollectionL6"
+            componentName: "CrossPlatformOptimizationLayer6"
         )
         
-        #expect(hasAccessibilityID, "Layer 6 item collection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CrossPlatformOptimizationLayer6 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentNumericDataL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 numeric data function
-        let testData = [1.0, 2.0, 3.0]
+    @Test func testPlatformPerformanceLayer6GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 6 platform performance component
+        let performanceLayer = PlatformPerformanceLayer6()
         
-        // When: Creating view using Layer 6 function
-        let view = platformPresentNumericData_L6(data: testData)
+        // When: Creating performance view
+        let performanceView = performanceLayer.createPerformanceInterface()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            performanceView,
             expectedPattern: "*.main.element.*",
-            componentName: "NumericDataL6"
+            componentName: "PlatformPerformanceLayer6"
         )
         
-        #expect(hasAccessibilityID, "Layer 6 numeric data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPerformanceLayer6 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentFormDataL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 form data function
-        let testFormData = ["field1": "value1", "field2": "value2"]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentFormData_L6(formData: testFormData)
+    @Test func testCrossPlatformOptimizationViewGeneratesAccessibilityIdentifiers() async {
+        // Given: Cross-platform optimization view component
+        let optimizationView = CrossPlatformOptimization()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            optimizationView,
             expectedPattern: "*.main.element.*",
-            componentName: "FormDataL6"
+            componentName: "CrossPlatformOptimization"
         )
         
-        #expect(hasAccessibilityID, "Layer 6 form data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentMediaDataL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 media data function
-        let testMediaData = ["image1.jpg", "video1.mp4"]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentMediaData_L6(mediaData: testMediaData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "MediaDataL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 media data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentSettingsL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 settings function
-        let testSettings = ["setting1": "value1", "setting2": "value2"]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentSettings_L6(settings: testSettings)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "SettingsL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 settings function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPhotoCaptureL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 photo capture function
-        let testCallback: (PlatformImage?) -> Void = { _ in }
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPhotoCapture_L6(onCapture: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "PhotoCaptureL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 photo capture function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPhotoDisplayL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 photo display function
-        let testImage = PlatformImage()
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPhotoDisplay_L6(image: testImage)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "PhotoDisplayL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 photo display function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPhotoSelectionL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 photo selection function
-        let testCallback: ([PlatformImage]) -> Void = { _ in }
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPhotoSelection_L6(onSelection: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "PhotoSelectionL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 photo selection function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformOCRWithVisualCorrectionL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 OCR function
-        let testImage = PlatformImage()
-        let testCallback: (String) -> Void = { _ in }
-        
-        // When: Creating view using Layer 6 function
-        let view = platformOCRWithVisualCorrection_L6(image: testImage, onResult: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "OCRL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 OCR function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentModalFormL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 modal form function
-        let testFormData = ["field1": "value1"]
-        let testCallback: ([String: String]) -> Void = { _ in }
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentModalForm_L6(formData: testFormData, onSubmit: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "ModalFormL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 modal form function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentHierarchicalDataL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 hierarchical data function
-        let testHierarchy = ["root": ["child1": [], "child2": []]]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentHierarchicalData_L6(hierarchy: testHierarchy)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "HierarchicalDataL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 hierarchical data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentTemporalDataL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 temporal data function
-        let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentTemporalData_L6(temporalData: testTemporalData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "TemporalDataL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 temporal data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentContentL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 content function
-        let testContent = "Sample content"
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentContent_L6(content: testContent)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "ContentL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentBasicValueL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 basic value function
-        let testValue = 42
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentBasicValue_L6(value: testValue)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "BasicValueL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 basic value function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentBasicArrayL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 basic array function
-        let testArray = [1, 2, 3, 4, 5]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentBasicArray_L6(array: testArray)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "BasicArrayL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 basic array function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformResponsiveCardL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 responsive card function
-        let testTitle = "Card Title"
-        let testContent = "Card Content"
-        
-        // When: Creating view using Layer 6 function
-        let view = platformResponsiveCard_L6(title: testTitle, content: testContent)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "ResponsiveCardL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 responsive card function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformOCRWithDisambiguationL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 OCR with disambiguation function
-        let testImage = PlatformImage()
-        let testOptions = ["Option 1", "Option 2", "Option 3"]
-        let testCallback: (String) -> Void = { _ in }
-        
-        // When: Creating view using Layer 6 function
-        let view = platformOCRWithDisambiguation_L6(image: testImage, options: testOptions, onResult: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "OCRDisambiguationL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 OCR with disambiguation function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformExtractStructuredDataL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 structured data extraction function
-        let testData = ["key1": "value1", "key2": "value2"]
-        
-        // When: Creating view using Layer 6 function
-        let view = platformExtractStructuredData_L6(data: testData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "StructuredDataL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 structured data extraction function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedContentL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 localized content function
-        let testContent = "Localized content"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentLocalizedContent_L6(content: testContent, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedContentL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 localized content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedTextL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 localized text function
-        let testText = "Localized text"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentLocalizedText_L6(text: testText, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedTextL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 localized text function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedNumberL6GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 6 localized number function
-        let testNumber = 123.45
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 6 function
-        let view = platformPresentLocalizedNumber_L6(number: testNumber, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedNumberL6"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 6 localized number function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "CrossPlatformOptimization view should generate accessibility identifiers")
     }
 }
-
-
-
-
