@@ -15,7 +15,9 @@ open class LocalEnableOverrideTests {
         config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = true  // Enable debug to see what's happening
-    }    @Test func testGlobalDisableLocalEnable() {
+    }
+    
+    @Test func testGlobalDisableLocalEnable() {
         // Test: Global disabled, but local enable should work
         
         // 1. Disable global config
