@@ -43,11 +43,7 @@ open class EyeTrackingTests: BaseTestClass {
     var eyeTrackingManager: EyeTrackingManager!
     var testConfig: EyeTrackingConfig!
     
-    // MARK: - Setup and Teardowndeinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // MARK: - Setup and Teardown
     
     // MARK: - Configuration Tests
     

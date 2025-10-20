@@ -12,11 +12,6 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         intelligence = DataPresentationIntelligence.shared
     }
     
-    override func cleanupTestEnvironment() async {
-        intelligence = nil
-        await super.cleanupTestEnvironment()
-    }
-    
     // MARK: - TDD: Red Phase - Failing Tests
     
 @Test func testDataPresentationIntelligenceExists() {
