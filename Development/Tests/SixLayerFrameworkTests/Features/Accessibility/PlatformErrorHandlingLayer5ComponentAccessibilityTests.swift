@@ -30,15 +30,3 @@ open class PlatformErrorHandlingLayer5ComponentAccessibilityTests: BaseTestClass
         #expect(hasAccessibilityID, "PlatformErrorHandlingLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Error Handling Layer 5 Components (Placeholder implementations)
-
-struct PlatformErrorHandlingLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Error Handling Layer 5")
-            Button("Error Handling Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
