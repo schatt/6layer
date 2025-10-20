@@ -125,7 +125,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testPlatformPhotoDisplayL2GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 2 photo display function
-        let testImage = PlatformImage(systemName: "photo")
+        let testImage = PlatformImage()
         
         // When: Creating view using Layer 2 function
         let view = platformPhotoDisplay_L2(image: testImage)
@@ -159,7 +159,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testPlatformOCRWithVisualCorrectionL2GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 2 OCR function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 2 function
@@ -298,7 +298,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testPlatformOCRWithDisambiguationL2GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 2 OCR with disambiguation function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         
@@ -434,7 +434,7 @@ func platformPresentSettings_L2(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
+@MainActor func platformPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
     VStack {
         Text("Photo Capture")
         Button("Capture") {
@@ -444,7 +444,7 @@ func platformPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> s
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoDisplay_L2(image: PlatformImage?) -> some View {
+@MainActor func platformPhotoDisplay_L2(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
             Image(platformImage: image)

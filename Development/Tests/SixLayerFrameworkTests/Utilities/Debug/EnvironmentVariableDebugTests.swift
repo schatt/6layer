@@ -15,7 +15,9 @@ open class EnvironmentVariableDebugTests {
         config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = true
-    }    @Test func testEnvironmentVariablePropagation() {
+    }
+    
+    @Test func testEnvironmentVariablePropagation() {
         // Test: Does the environment variable get set properly?
         
         // 1. Disable global config
