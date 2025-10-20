@@ -59,25 +59,3 @@ open class ServiceComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Service Components (Placeholder implementations)
-
-struct InternationalizationService: View {
-    var body: some View {
-        VStack {
-            Text("Internationalization Service")
-            Button("Localize") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct AccessibilityManager: View {
-    var body: some View {
-        VStack {
-            Text("Accessibility Manager")
-            Button("Manage") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-

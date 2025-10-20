@@ -30,15 +30,3 @@ open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass 
         #expect(hasAccessibilityID, "RuntimeCapabilityDetection should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Runtime Capability Detection Components (Placeholder implementations)
-
-struct RuntimeCapabilityDetectionView: View {
-    var body: some View {
-        VStack {
-            Text("Runtime Capability Detection")
-            Button("Detect") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

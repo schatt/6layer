@@ -30,15 +30,3 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Vision Safety Components (Placeholder implementations)
-
-struct VisionSafety: View {
-    var body: some View {
-        VStack {
-            Text("Vision Safety")
-            Button("Safety") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
