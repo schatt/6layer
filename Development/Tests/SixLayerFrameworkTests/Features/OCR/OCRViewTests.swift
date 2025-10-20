@@ -58,7 +58,6 @@ open class OCRServiceTests {
             textTypes: [.general],
             language: .english,
             requiredFields: [],
-            optionalFields: []
         )
         let strategy = OCRStrategy(
             supportedTextTypes: [.general],
@@ -87,7 +86,6 @@ open class OCRServiceTests {
             textTypes: [.general],
             language: .english,
             requiredFields: [],
-            optionalFields: []
         )
         
         do {
@@ -107,7 +105,6 @@ open class OCRServiceTests {
             textTypes: [.general],
             language: .english,
             requiredFields: [],
-            optionalFields: []
         )
         
         #expect(validContext.documentType == .general, "OCR context should preserve document type")
@@ -117,7 +114,7 @@ open class OCRServiceTests {
     
     @Test func testOCRStrategyConfiguration() async {
         let strategy = OCRStrategy(
-            supportedTextTypes: [.general, .numeric],
+            supportedTextTypes: [.general, .number],
             supportedLanguages: [.english, .spanish],
             processingMode: .accurate,
             requiresNeuralEngine: true,
@@ -125,7 +122,7 @@ open class OCRServiceTests {
         )
         
         #expect(strategy.supportedTextTypes.contains(.general), "OCR strategy should support specified text types")
-        #expect(strategy.supportedTextTypes.contains(.numeric), "OCR strategy should support multiple text types")
+        #expect(strategy.supportedTextTypes.contains(.number), "OCR strategy should support multiple text types")
         #expect(strategy.supportedLanguages.contains(.english), "OCR strategy should support specified languages")
         #expect(strategy.supportedLanguages.contains(.spanish), "OCR strategy should support multiple languages")
         #expect(strategy.processingMode == .accurate, "OCR strategy should preserve processing mode")
