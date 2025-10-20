@@ -354,31 +354,9 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Core Framework Components (Placeholder implementations)
 
-struct AccessibilitySystemState {
-    // Mock implementation
-}
 
-enum PlatformDetection {
-    static var currentPlatform: String {
-        return "iOS"
-    }
-}
 
-struct PlatformOptimizationSettings {
-    let enableGPUAcceleration: Bool
-    let cacheSizeMB: Int
-    let threadCount: Int
-}
-
-open class CrossPlatformOptimizationManager {
-    static func benchmarkPerformance(for view: some View) -> BenchmarkResult {
-        return BenchmarkResult(
-            cpuUsage: 0.0,
-            memoryUsage: 0.0,
-            renderTime: 0.0,
-            isMockData: true
         )
     }
     
