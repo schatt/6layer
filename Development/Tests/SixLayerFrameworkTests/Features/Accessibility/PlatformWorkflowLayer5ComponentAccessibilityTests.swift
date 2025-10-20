@@ -30,15 +30,3 @@ open class PlatformWorkflowLayer5ComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "PlatformWorkflowLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Workflow Layer 5 Components (Placeholder implementations)
-
-struct PlatformWorkflowLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Workflow Layer 5")
-            Button("Workflow Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
