@@ -31,14 +31,3 @@ open class PlatformOCRComponentsLayer4ComponentAccessibilityTests: BaseTestClass
     }
 }
 
-// MARK: - Mock Platform OCR Components Layer 4 (Placeholder implementations)
-
-struct PlatformOCRComponentsLayer4: View {
-    var body: some View {
-        VStack {
-            Text("Platform OCR Components Layer 4")
-            Button("OCR Layer 4") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

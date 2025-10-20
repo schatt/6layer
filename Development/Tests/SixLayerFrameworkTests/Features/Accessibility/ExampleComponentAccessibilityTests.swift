@@ -47,17 +47,3 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Example Components (Placeholder implementations)
-
-struct ExampleHelpers: View {
-    var body: some View {
-        VStack {
-            Text("Example Helpers")
-            Button("Help") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-
-

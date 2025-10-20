@@ -31,14 +31,3 @@ open class PlatformTestingLayer6ComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Platform Testing Layer 6 Components (Placeholder implementations)
-
-struct PlatformTestingLayer6: View {
-    var body: some View {
-        VStack {
-            Text("Platform Testing Layer 6")
-            Button("Test Layer 6") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

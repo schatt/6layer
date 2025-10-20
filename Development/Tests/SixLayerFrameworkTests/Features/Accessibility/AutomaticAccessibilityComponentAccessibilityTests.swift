@@ -31,17 +31,3 @@ open class AutomaticAccessibilityComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Automatic Accessibility Components (Placeholder implementations)
-
-struct AutomaticAccessibilityIdentifiers: View {
-    var body: some View {
-        VStack {
-            Text("Automatic Accessibility Identifiers")
-            Button("Accessibility") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-
-

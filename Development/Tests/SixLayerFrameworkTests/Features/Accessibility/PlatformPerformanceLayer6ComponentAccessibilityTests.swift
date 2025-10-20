@@ -31,14 +31,3 @@ open class PlatformPerformanceLayer6ComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Platform Performance Layer 6 Components (Placeholder implementations)
-
-struct PlatformPerformanceLayer6: View {
-    var body: some View {
-        VStack {
-            Text("Platform Performance Layer 6")
-            Button("Performance Layer 6") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

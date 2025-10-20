@@ -31,14 +31,3 @@ open class DataFrameAnalysisEngineComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock DataFrame Analysis Engine Components (Placeholder implementations)
-
-struct DataFrameAnalysisEngine: View {
-    var body: some View {
-        VStack {
-            Text("DataFrame Analysis Engine")
-            Button("Analyze") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

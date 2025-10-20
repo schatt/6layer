@@ -73,34 +73,3 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Safety Components (Placeholder implementations)
-
-struct PlatformSafety: View {
-    var body: some View {
-        VStack {
-            Text("Platform Safety")
-            Button("Check Safety") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct PlatformSecurity: View {
-    var body: some View {
-        VStack {
-            Text("Platform Security")
-            Button("Check Security") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct PlatformPrivacy: View {
-    var body: some View {
-        VStack {
-            Text("Platform Privacy")
-            Button("Check Privacy") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

@@ -68,9 +68,3 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
     }
 }
 
-// MARK: - Mock Data
-
-struct MockTaskItemBaseline: Identifiable {
-    let id: String
-    let title: String
-}

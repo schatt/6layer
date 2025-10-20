@@ -139,9 +139,3 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
     // No longer needed - using shared hasAccessibilityIdentifier function
 }
 
-// MARK: - Mock Data
-
-struct MockTaskItemReal: Identifiable {
-    let id: String
-    let title: String
-}

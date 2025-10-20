@@ -31,14 +31,3 @@ open class PlatformBenchmarkingComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Platform Benchmarking Components (Placeholder implementations)
-
-struct PlatformBenchmarking: View {
-    var body: some View {
-        VStack {
-            Text("Platform Benchmarking")
-            Button("Benchmark") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

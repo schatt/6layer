@@ -64,15 +64,3 @@ open class IntelligenceComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Intelligence Components (Placeholder implementations)
-
-struct ImageMetadataIntelligence: View {
-    var body: some View {
-        VStack {
-            Text("Image Metadata Intelligence")
-            Button("Analyze") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-

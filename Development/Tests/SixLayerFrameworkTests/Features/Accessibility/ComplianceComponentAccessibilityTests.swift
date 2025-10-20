@@ -59,37 +59,3 @@ open class ComplianceComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Compliance Components (Placeholder implementations)
-
-struct PlatformCompliance: View {
-    var body: some View {
-        VStack {
-            Text("Platform Compliance")
-            Button("Check Compliance") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct PlatformAudit: View {
-    var body: some View {
-        VStack {
-            Text("Platform Audit")
-            Button("Run Audit") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct AppleHIGCompliance: View {
-    var body: some View {
-        VStack {
-            Text("Apple HIG Compliance")
-            Button("Check HIG") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-
-

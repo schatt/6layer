@@ -31,14 +31,3 @@ open class FormUsageExampleComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Form Usage Example Components (Placeholder implementations)
-
-struct FormUsageExample: View {
-    var body: some View {
-        VStack {
-            Text("Form Usage Example")
-            Button("Example") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

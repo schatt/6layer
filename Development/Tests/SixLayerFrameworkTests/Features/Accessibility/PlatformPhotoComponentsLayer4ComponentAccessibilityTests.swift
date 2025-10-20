@@ -31,14 +31,3 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
     }
 }
 
-// MARK: - Mock Platform Photo Components Layer 4 (Placeholder implementations)
-
-struct PlatformPhotoComponentsLayer4: View {
-    var body: some View {
-        VStack {
-            Text("Platform Photo Components Layer 4")
-            Button("Photo Layer 4") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

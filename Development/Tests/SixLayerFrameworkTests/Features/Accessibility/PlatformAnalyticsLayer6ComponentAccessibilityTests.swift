@@ -31,14 +31,3 @@ open class PlatformAnalyticsLayer6ComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Platform Analytics Layer 6 Components (Placeholder implementations)
-
-struct PlatformAnalyticsLayer6: View {
-    var body: some View {
-        VStack {
-            Text("Platform Analytics Layer 6")
-            Button("Analytics Layer 6") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

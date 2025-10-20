@@ -31,17 +31,3 @@ open class CrossPlatformComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Cross-Platform Components (Placeholder implementations)
-
-struct CrossPlatformOptimization: View {
-    var body: some View {
-        VStack {
-            Text("Cross-Platform Optimization")
-            Button("Optimize") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-
-

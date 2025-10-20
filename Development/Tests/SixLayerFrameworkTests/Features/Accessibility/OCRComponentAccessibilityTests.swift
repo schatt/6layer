@@ -45,24 +45,3 @@ open class OCRComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock OCR Components (Placeholder implementations)
-
-struct PlatformOCRComponents: View {
-    var body: some View {
-        VStack {
-            Text("Platform OCR Components")
-            Button("OCR") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
-
-struct PlatformPhotoComponents: View {
-    var body: some View {
-        VStack {
-            Text("Platform Photo Components")
-            Button("Photo") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

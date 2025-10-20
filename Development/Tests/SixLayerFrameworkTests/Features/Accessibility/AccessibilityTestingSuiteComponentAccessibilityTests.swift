@@ -31,14 +31,3 @@ open class AccessibilityTestingSuiteComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Accessibility Testing Suite Components (Placeholder implementations)
-
-struct AccessibilityTestingSuite: View {
-    var body: some View {
-        VStack {
-            Text("Accessibility Testing Suite")
-            Button("Test") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

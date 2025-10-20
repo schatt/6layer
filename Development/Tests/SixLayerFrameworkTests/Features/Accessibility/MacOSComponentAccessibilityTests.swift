@@ -31,14 +31,3 @@ open class MacOSComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock macOS Components (Placeholder implementations)
-
-struct MacOSComponents: View {
-    var body: some View {
-        VStack {
-            Text("macOS Components")
-            Button("macOS") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

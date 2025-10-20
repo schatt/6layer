@@ -31,14 +31,3 @@ open class PlatformSimulationComponentAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Mock Platform Simulation Components (Placeholder implementations)
-
-struct PlatformSimulation: View {
-    var body: some View {
-        VStack {
-            Text("Platform Simulation")
-            Button("Simulate") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
