@@ -7,8 +7,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     var intelligence: DataPresentationIntelligence!
     
-    override func setupTestEnvironment() async {
-        await super.setupTestEnvironment()
+    func setupTestEnvironment() async {
         intelligence = DataPresentationIntelligence.shared
     }
     

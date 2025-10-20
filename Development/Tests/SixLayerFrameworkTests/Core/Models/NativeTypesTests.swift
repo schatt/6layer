@@ -57,8 +57,7 @@ open class NativeTypesTests: BaseTestClass {
     var formState: DynamicFormState!
     var configuration: DynamicFormConfiguration!
     
-    override func setupTestEnvironment() async {
-        await super.setupTestEnvironment()
+    func setupTestEnvironment() async {
         configuration = DynamicFormConfiguration(
             id: "test",
             title: "Test Form",
@@ -68,12 +67,6 @@ open class NativeTypesTests: BaseTestClass {
             cancelButtonText: "Cancel"
         )
         formState = DynamicFormState(configuration: configuration)
-    }
-    
-    override func cleanupTestEnvironment() async {
-        formState = nil
-        configuration = nil
-        await super.cleanupTestEnvironment()
     }
     
     // MARK: - High Priority Tests
