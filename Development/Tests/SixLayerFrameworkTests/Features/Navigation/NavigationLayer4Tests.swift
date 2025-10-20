@@ -532,26 +532,28 @@ open class NavigationLayer4Tests {
         let isActive = Binding<Bool>(get: { false }, set: { _ in })
         
         // When: Measuring performance
-                .platformNavigation {
-                    Text("Navigation Content")
-                }
+        let navigationView = Text("Navigation Content")
+            .platformNavigation {
+                Text("Navigation Content")
+            }
             
-            let _ = Text("Link")
-                .platformNavigationLink_L4(
-                    title: "Test",
-                    systemImage: "star",
-                    isActive: isActive
-                ) {
-                    Text("Destination")
-                }
+        let linkView = Text("Link")
+            .platformNavigationLink_L4(
+                title: "Test",
+                systemImage: "star",
+                isActive: isActive
+            ) {
+                Text("Destination")
+            }
             
-            let _ = Text("Container")
-                .platformNavigationContainer {
-                    Text("Container Content")
-                }
+        let containerView = Text("Container")
+            .platformNavigationContainer {
+                Text("Container Content")
+            }
             
-            let _ = Text("Bar Items")
-                .platformNavigationBarItems_L4(trailing: Button("Action") { })
+        let barItemsView = Text("Bar Items")
+            .platformNavigationBarItems_L4(trailing: Button("Action") { })
+        
         // Performance test removed - performance monitoring was removed from framework
     }
 }
