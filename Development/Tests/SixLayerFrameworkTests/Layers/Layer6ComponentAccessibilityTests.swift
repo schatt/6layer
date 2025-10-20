@@ -448,7 +448,7 @@ func platformPhotoCapture_L6(onCapture: @escaping (PlatformImage?) -> Void) -> s
 func platformPhotoDisplay_L6(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
-            Image(uiImage: image)
+            Image(platformImage: image)
         } else {
             Text("No Image")
         }

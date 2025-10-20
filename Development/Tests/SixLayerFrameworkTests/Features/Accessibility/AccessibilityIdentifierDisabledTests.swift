@@ -18,12 +18,6 @@ open class AccessibilityIdentifierDisabledTests {
         config.enableDebugLogging = false
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
     @Test func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
         // Test: When automatic IDs are disabled, views should not have accessibility identifier modifiers
         let view = Button("Test Button") { }

@@ -267,7 +267,7 @@ open class PlatformLogicTests {
         }
     }
     
-    @Test func testAnimationAppropriateness(_ performanceConfig: PerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
+    func testAnimationAppropriateness(_ performanceConfig: PerformanceConfig, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate animation duration
         if config.supportsTouch {
             #expect(performanceConfig.maxAnimationDuration > 0, "Touch platforms should have animation duration on \(platform)")

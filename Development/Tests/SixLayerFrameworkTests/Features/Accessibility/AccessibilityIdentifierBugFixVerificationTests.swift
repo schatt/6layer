@@ -22,12 +22,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
     /// BUSINESS PURPOSE: Verify the exact bug scenario from the user's report is now fixed
     /// TESTING SCOPE: Tests the specific configuration and usage pattern that was failing
     /// METHODOLOGY: Reproduces the exact scenario and verifies identifiers are generated
