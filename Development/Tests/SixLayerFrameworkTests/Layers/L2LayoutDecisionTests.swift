@@ -36,15 +36,7 @@ open class L2LayoutDecisionTests {
             userPreferences: PhotoPreferences(),
             deviceCapabilities: PhotoDeviceCapabilities()
         )
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Generic Layout Decision Tests
+    }    // MARK: - Generic Layout Decision Tests
     
     @Test func testDetermineOptimalLayout_L2_WithSmallItemCount() {
         // Given

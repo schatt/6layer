@@ -23,15 +23,7 @@ open class OCROverlayViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - OCROverlayView Tests
+    }    // MARK: - OCROverlayView Tests
     
     
     private func setupTestEnvironment() async {

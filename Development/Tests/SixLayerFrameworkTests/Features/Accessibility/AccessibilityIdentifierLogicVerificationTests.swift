@@ -21,15 +21,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
     
     init() async throws {
                 await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    /// BUSINESS PURPOSE: Verify that the identifier generation logic correctly evaluates conditions
+    }    /// BUSINESS PURPOSE: Verify that the identifier generation logic correctly evaluates conditions
     /// TESTING SCOPE: Tests that the AccessibilityIdentifierAssignmentModifier logic works correctly
     /// METHODOLOGY: Tests the actual logic that determines whether identifiers should be generated
     @Test func testIdentifierGenerationLogicEvaluatesConditionsCorrectly() async {

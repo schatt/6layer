@@ -8,13 +8,7 @@ import ViewInspector
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
 @MainActor
-open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - TDD Green Phase: Components That SHOULD Work (Have .automaticAccessibility())
+open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // MARK: - TDD Green Phase: Components That SHOULD Work (Have .automaticAccessibility())
     
     @Test func testPlatformPresentContentL1GeneratesAccessibilityID() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()

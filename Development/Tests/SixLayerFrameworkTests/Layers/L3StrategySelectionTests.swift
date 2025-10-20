@@ -30,15 +30,7 @@ open class L3StrategySelectionTests {
             userPreferences: PhotoPreferences(),
             deviceCapabilities: PhotoDeviceCapabilities()
         )
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Card Layout Strategy Tests
+    }    // MARK: - Card Layout Strategy Tests
     
     @Test func testSelectCardLayoutStrategy_L3_WithSmallContent() {
         // Given

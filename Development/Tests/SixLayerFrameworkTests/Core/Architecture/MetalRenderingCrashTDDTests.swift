@@ -19,15 +19,7 @@ open class MetalRenderingCrashTDDTests {
         config.mode = .automatic
         config.enableDebugLogging = false
         config.enableAutoIDs = true
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - TDD Green Phase: Tests That Now Pass After Performance Layer Removal
+    }    // MARK: - TDD Green Phase: Tests That Now Pass After Performance Layer Removal
     
     @Test func testPlatformPresentItemCollectionL1DoesNotCrash() {
         // TDD Green Phase: Performance layer removed, so no Metal crash

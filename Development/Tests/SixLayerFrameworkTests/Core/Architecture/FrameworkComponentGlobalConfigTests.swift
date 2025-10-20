@@ -16,15 +16,7 @@ open class FrameworkComponentGlobalConfigTests {
         config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
+    }    @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
         // Test that framework components don't generate IDs when global config is disabled
         
         // Disable global config

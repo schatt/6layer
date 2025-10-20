@@ -42,15 +42,7 @@ open class RuntimeCapabilityDetectionTests {
     
     init() async throws {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Touch Detection Tests
+    }    // MARK: - Touch Detection Tests
     
     @Test func testTouchDetectionOniOS() {
         #if os(iOS)

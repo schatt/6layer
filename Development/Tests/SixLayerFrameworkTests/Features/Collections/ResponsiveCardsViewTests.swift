@@ -23,15 +23,7 @@ open class ResponsiveCardsViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - ResponsiveCardView Tests
+    }    // MARK: - ResponsiveCardView Tests
     
     
     private func setupTestEnvironment() async {

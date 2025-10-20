@@ -23,15 +23,7 @@ open class AutomaticAccessibilityIdentifiersTests {
         // namespace is automatically detected as "SixLayer" for tests
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Namespace Detection Tests
+    }    // MARK: - Namespace Detection Tests
     
     
     private func setupTestEnvironment() async {

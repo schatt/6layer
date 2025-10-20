@@ -16,15 +16,7 @@ open class GlobalDisableLocalEnableTDDTests {
         config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - TDD Red Phase: Tests That Should Fail Initially
+    }    // MARK: - TDD Red Phase: Tests That Should Fail Initially
     
     @Test func testFrameworkComponentGlobalDisableLocalEnableGeneratesID() {
         // TDD: Test with actual framework component - this should work

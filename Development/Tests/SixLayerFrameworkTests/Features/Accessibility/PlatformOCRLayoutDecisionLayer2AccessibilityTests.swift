@@ -8,13 +8,7 @@ import ViewInspector
 /// Ensures OCR layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-open class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - OCR Layout Decision Tests
+open class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {    // MARK: - OCR Layout Decision Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRLayout_L2 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS

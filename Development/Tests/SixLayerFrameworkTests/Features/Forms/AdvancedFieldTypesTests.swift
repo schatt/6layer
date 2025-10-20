@@ -36,15 +36,7 @@ open class AdvancedFieldTypesTests {
             cancelButtonText: "Cancel"
         )
         testFormState = DynamicFormState(configuration: testConfiguration)
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Rich Text Editor Tests
+    }    // MARK: - Rich Text Editor Tests
     
     /**
      * BUSINESS PURPOSE: RichTextEditorField provides markdown-enabled text editing with formatting toolbar

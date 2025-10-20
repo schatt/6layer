@@ -29,15 +29,7 @@ open class NamedModifierRefactoringTDDTests {
             config.enableViewHierarchyTracking = true
             config.enableDebugLogging = false
         }
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - RED PHASE TESTS (Should FAIL initially)
+    }    // MARK: - RED PHASE TESTS (Should FAIL initially)
     
     /// TDD RED PHASE: Test that .named replaces current hierarchy level
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior

@@ -15,15 +15,7 @@ open class LocalEnableOverrideTests {
         config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = true  // Enable debug to see what's happening
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    @Test func testGlobalDisableLocalEnable() {
+    }    @Test func testGlobalDisableLocalEnable() {
         // Test: Global disabled, but local enable should work
         
         // 1. Disable global config

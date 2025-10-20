@@ -23,15 +23,7 @@ open class GenericItemCollectionViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - GenericItemCollectionView Tests
+    }    // MARK: - GenericItemCollectionView Tests
     
     
     private func setupTestEnvironment() async {

@@ -17,15 +17,7 @@ open class WindowDetectionTests {
     init() async throws {
         // Implementation exists and is ready for testing
         windowDetection = UnifiedWindowDetection()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Basic Functionality Tests (Positive Cases)
+    }    // MARK: - Basic Functionality Tests (Positive Cases)
     
     @Test func testWindowDetectionInitialization() {
         // GIVEN: A new window detection instance

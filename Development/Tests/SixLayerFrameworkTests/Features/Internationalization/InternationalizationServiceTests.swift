@@ -19,15 +19,7 @@ open class InternationalizationServiceTests {
     
     init() async throws {
         service = InternationalizationService(locale: Locale(identifier: "en-US"))
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Business Logic Tests
+    }    // MARK: - Business Logic Tests
     
     @Test func testInternationalizationService_BusinessLogic() {
         // Given

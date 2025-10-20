@@ -8,13 +8,7 @@ import ViewInspector
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - OCR Visual Correction Tests
+open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MARK: - OCR Visual Correction Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS

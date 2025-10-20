@@ -47,14 +47,7 @@ open class PhotoComponentsLayer4Tests {
         #else
         testImage = PlatformImage()
         #endif
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    }
+    }    }
     
     // MARK: - Layer 4 Photo Component Tests
     

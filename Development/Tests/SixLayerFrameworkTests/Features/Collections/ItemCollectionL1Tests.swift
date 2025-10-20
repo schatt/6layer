@@ -22,15 +22,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
     override init() {
         sampleItems = createSampleItems()
         sampleHints = PresentationHints()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Item Collection Tests
+    }    // MARK: - Item Collection Tests
     
     @Test func testPlatformPresentItemCollection_L1() {
         // Given

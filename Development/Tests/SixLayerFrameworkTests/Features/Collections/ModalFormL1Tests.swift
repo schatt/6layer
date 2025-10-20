@@ -20,15 +20,7 @@ open class ModalFormL1Tests: BaseTestClass {
     
     override init() {
         sampleHints = PresentationHints()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Modal Form Tests
+    }    // MARK: - Modal Form Tests
     
     @Test func testPlatformPresentModalForm_L1() {
         // Given

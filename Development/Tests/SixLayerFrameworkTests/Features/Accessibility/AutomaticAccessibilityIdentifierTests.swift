@@ -56,15 +56,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             context: .list,
             customPreferences: [:]
         )
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Global Configuration Tests
+    }    // MARK: - Global Configuration Tests
     
     /// BUSINESS PURPOSE: Global config should control automatic identifier generation
     /// TESTING SCOPE: Tests that enabling/disabling automatic IDs works globally

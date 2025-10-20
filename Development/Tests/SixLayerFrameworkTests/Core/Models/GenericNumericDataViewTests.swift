@@ -23,15 +23,7 @@ open class GenericNumericDataViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - GenericNumericDataView Tests
+    }    // MARK: - GenericNumericDataView Tests
     
     
     func setupTestEnvironment() async {

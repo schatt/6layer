@@ -19,15 +19,7 @@ open class DataFrameAnalysisEngineTests {
     
     init() async throws {
         analysisEngine = DataFrameAnalysisEngine()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Basic DataFrame Analysis Tests
+    }    // MARK: - Basic DataFrame Analysis Tests
     
     @Test func testAnalyzeDataFrame_BasicStructure() throws {
         // Given: A simple DataFrame with basic data

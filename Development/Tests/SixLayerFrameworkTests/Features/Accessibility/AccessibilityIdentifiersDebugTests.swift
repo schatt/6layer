@@ -7,13 +7,7 @@ import ViewInspector
 
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
-open class AccessibilityIdentifiersDebugTests: BaseTestClass {deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
+open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
         // Test .automaticAccessibilityIdentifiers() directly
         let testView = Button("Test") { }
             .automaticAccessibilityIdentifiers()

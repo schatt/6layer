@@ -74,15 +74,7 @@ open class CapabilityMatrixTests {
             RuntimeCapabilityDetection.setTestAssistiveTouch(true)
             RuntimeCapabilityDetection.setTestHover(true)
         }
-    }
-
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Capability Test Matrix
+    }    // MARK: - Capability Test Matrix
     
     struct CapabilityTest {
         let name: String

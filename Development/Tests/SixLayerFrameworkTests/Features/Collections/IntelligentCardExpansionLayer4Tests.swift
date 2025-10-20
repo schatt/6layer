@@ -23,15 +23,7 @@ open class IntelligentCardExpansionLayer4Tests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - ExpandableCardCollectionView Tests
+    }    // MARK: - ExpandableCardCollectionView Tests
     
     
     private func setupTestEnvironment() async {

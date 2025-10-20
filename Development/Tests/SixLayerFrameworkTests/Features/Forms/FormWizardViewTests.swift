@@ -23,15 +23,7 @@ open class FormWizardViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - FormWizardView Tests
+    }    // MARK: - FormWizardView Tests
     
     
     private func setupTestEnvironment() async {

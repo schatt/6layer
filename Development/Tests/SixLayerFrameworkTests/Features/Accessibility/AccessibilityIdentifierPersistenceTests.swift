@@ -17,15 +17,7 @@ open class AccessibilityIdentifierPersistenceTests {
         config.namespace = "CarManager"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - TDD Red Phase: Tests That Should Fail
+    }    // MARK: - TDD Red Phase: Tests That Should Fail
     
     @Test func testAccessibilityIdentifiersArePersistentAcrossSessions() {
         // TDD: This test SHOULD FAIL initially - IDs are not persistent

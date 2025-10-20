@@ -23,15 +23,7 @@ open class PlatformInternationalizationL1Tests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - platformPresentLocalizedContent_L1 Tests
+    }    // MARK: - platformPresentLocalizedContent_L1 Tests
     
     
     private func setupTestEnvironment() async {

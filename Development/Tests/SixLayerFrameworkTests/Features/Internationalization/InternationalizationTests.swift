@@ -19,15 +19,7 @@ open class InternationalizationTests {
     // MARK: - Test Setup
     
     init() async throws {
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Helper Methods
+    }    // MARK: - Helper Methods
     
     private func createTestLocale() -> Locale {
         return Locale(identifier: "en_US")

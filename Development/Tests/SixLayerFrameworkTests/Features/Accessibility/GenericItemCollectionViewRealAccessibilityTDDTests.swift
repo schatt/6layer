@@ -8,13 +8,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for GenericItemCollectionView
 /// This test SHOULD FAIL - proving GenericItemCollectionView doesn't generate accessibility IDs
 @MainActor
-open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnIOS() {
+open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {    @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnIOS() {
         // MANDATORY: Test iOS behavior by inspecting the returned view structure AND simulator testing
         
         let mockItems = [

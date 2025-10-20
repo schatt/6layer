@@ -23,15 +23,7 @@ open class ResponsiveContainerTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - ResponsiveContainer Tests
+    }    // MARK: - ResponsiveContainer Tests
     
     
     private func setupTestEnvironment() async {

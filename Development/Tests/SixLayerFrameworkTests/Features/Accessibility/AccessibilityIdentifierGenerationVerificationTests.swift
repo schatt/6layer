@@ -21,15 +21,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     
     init() async throws {
                 await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
+    }    /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
     /// TESTING SCOPE: Tests that the basic automatic identifier modifier works end-to-end
     /// METHODOLOGY: Creates a view, applies the modifier, and verifies an identifier is actually assigned
     @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {

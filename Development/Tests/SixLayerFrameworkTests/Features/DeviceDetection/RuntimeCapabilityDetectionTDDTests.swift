@@ -48,15 +48,7 @@ open class RuntimeCapabilityDetectionTDDTests {
         CapabilityOverride.touchSupport = nil
         CapabilityOverride.hapticSupport = nil
         CapabilityOverride.hoverSupport = nil
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Testing Mode Detection Tests
+    }    // MARK: - Testing Mode Detection Tests
     
     @Test func testTestingModeDetection() {
         // This test should pass - we're in a test environment

@@ -35,15 +35,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = false
         AccessibilityIdentifierConfig.shared.namespace = ""
         AccessibilityIdentifierConfig.shared.enableViewHierarchyTracking = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Layer 1 Function Tests
+    }    // MARK: - Layer 1 Function Tests
     
     /// TDD RED PHASE: platformPresentItemCollection_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated

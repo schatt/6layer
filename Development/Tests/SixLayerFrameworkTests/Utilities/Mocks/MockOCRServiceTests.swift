@@ -32,15 +32,7 @@ open class MockOCRServiceTests {
     
     init() async throws {
         // TODO: Set up real mock service tests
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - Real Mock Service Tests (To Be Implemented)
+    }    // MARK: - Real Mock Service Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test mock service functionality:
     // - Mock service initialization and configuration

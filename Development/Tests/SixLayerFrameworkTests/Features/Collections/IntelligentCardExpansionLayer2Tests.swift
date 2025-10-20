@@ -23,15 +23,7 @@ open class IntelligentCardExpansionLayer2Tests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - determineOptimalCardLayout_L2 Tests
+    }    // MARK: - determineOptimalCardLayout_L2 Tests
     
     
     private func setupTestEnvironment() async {

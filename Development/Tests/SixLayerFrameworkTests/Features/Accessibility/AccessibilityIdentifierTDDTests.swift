@@ -18,15 +18,7 @@ open class AccessibilityIdentifierTDDTests {
         config.namespace = "CarManager"
         config.mode = .automatic
         config.enableDebugLogging = false // Disable spam for TDD
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior
+    }    // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior
     
     @Test func testAccessibilityIdentifiersAreReasonableLength() {
         // TDD: Define the behavior I want - short, clean IDs

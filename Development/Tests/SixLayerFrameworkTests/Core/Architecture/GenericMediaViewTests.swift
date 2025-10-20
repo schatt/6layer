@@ -23,15 +23,7 @@ open class GenericMediaViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - GenericMediaView Tests
+    }    // MARK: - GenericMediaView Tests
     
     
     private func setupTestEnvironment() async {

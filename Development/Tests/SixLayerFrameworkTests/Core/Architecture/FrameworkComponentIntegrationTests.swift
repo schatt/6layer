@@ -17,15 +17,7 @@ open class FrameworkComponentIntegrationTests {
         config.mode = .automatic
         config.enableDebugLogging = true
         config.enableAutoIDs = true
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - TDD Red Phase: Components That SHOULD Work (Have .automaticAccessibility())
+    }    // MARK: - TDD Red Phase: Components That SHOULD Work (Have .automaticAccessibility())
     
     @Test func testPlatformPresentContentL1CanBeCreated() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()

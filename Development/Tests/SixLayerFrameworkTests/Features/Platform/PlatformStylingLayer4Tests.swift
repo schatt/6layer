@@ -23,15 +23,7 @@ open class PlatformStylingLayer4Tests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - platformStyledContainer_L4 Tests
+    }    // MARK: - platformStyledContainer_L4 Tests
     
     
     private func setupTestEnvironment() async {

@@ -21,12 +21,6 @@ open class LiquidGlassDesignSystemTests {
         liquidGlassSystem = LiquidGlassDesignSystem.shared
     }
     
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
     // MARK: - Material Tests
     
     @Test func testLiquidGlassMaterialCreation() {

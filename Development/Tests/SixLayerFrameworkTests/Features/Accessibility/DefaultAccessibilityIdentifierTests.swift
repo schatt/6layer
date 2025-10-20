@@ -12,15 +12,7 @@ import SwiftUI
  * METHODOLOGY: Tests that views get automatic identifiers without explicit enabling
  */
 @MainActor
-open class DefaultAccessibilityIdentifierTests: BaseTestClass {
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    /// BUSINESS PURPOSE: Verify that automatic identifiers work by default
+open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS PURPOSE: Verify that automatic identifiers work by default
     /// TESTING SCOPE: Tests that no explicit enabling is required
     /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticAccessibilityIdentifiers()
     @Test func testAutomaticIdentifiersWorkByDefault() async {

@@ -23,15 +23,7 @@ open class PlatformPhotoSemanticLayer1Tests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - platformPhotoDisplay_L1 Tests
+    }    // MARK: - platformPhotoDisplay_L1 Tests
     
     
     private func setupTestEnvironment() async {

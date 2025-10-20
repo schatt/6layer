@@ -23,15 +23,7 @@ open class ModalFormViewTests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - ModalFormView Tests
+    }    // MARK: - ModalFormView Tests
     
     
     private func setupTestEnvironment() async {
