@@ -72,9 +72,9 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should return valid form strategy struct
-        #expect(formStrategy.layoutType != nil, "Form strategy should have a layout type")
-        #expect(formStrategy.fieldSpacing >= 0, "Form strategy should have non-negative field spacing")
-        #expect(!formStrategy.reasoning.isEmpty, "Form strategy should have reasoning")
+        #expect(formStrategy.containerType != nil, "Form strategy should have a container type")
+        #expect(formStrategy.fieldLayout != nil, "Form strategy should have a field layout")
+        #expect(formStrategy.validation != nil, "Form strategy should have validation strategy")
     }
     
     @Test func testSelectModalStrategyFormL3CreatesModalStrategy() async {
@@ -115,8 +115,8 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should return valid expansion strategy struct
-        #expect(expansionStrategy.expansionType != nil, "Expansion strategy should have an expansion type")
-        #expect(expansionStrategy.maxHeight >= 0, "Expansion strategy should have non-negative max height")
-        #expect(!expansionStrategy.reasoning.isEmpty, "Expansion strategy should have reasoning")
+        #expect(!expansionStrategy.supportedStrategies.isEmpty, "Expansion strategy should have supported strategies")
+        #expect(expansionStrategy.primaryStrategy != nil, "Expansion strategy should have a primary strategy")
+        #expect(expansionStrategy.expansionScale > 0, "Expansion strategy should have positive expansion scale")
     }
 }
