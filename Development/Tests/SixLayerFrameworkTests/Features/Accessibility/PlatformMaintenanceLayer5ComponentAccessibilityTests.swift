@@ -30,15 +30,3 @@ open class PlatformMaintenanceLayer5ComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "PlatformMaintenanceLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Maintenance Layer 5 Components (Placeholder implementations)
-
-struct PlatformMaintenanceLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Maintenance Layer 5")
-            Button("Maintenance Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

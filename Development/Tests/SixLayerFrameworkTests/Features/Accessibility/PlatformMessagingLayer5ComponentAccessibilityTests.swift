@@ -30,15 +30,3 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "PlatformMessagingLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Messaging Layer 5 Components (Placeholder implementations)
-
-struct PlatformMessagingLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Messaging Layer 5")
-            Button("Messaging Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
