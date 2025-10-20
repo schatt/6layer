@@ -33,7 +33,7 @@ let package = Package(
             sources: [
                 "Core",
                 "Layers",
-                "Features", 
+                "Components",
                 "Platform",
                 "Extensions"
             ]
