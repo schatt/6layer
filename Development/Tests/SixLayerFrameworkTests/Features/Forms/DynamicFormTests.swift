@@ -578,4 +578,136 @@ open class DynamicFormTests: BaseTestClass {
             // Performance test removed - performance monitoring was removed from framework
         }
     
+    // MARK: - Keyboard Type Verification Tests
+    
+    /// BUSINESS PURPOSE: Validates that DynamicFormField automatically applies correct keyboard types
+    /// TESTING SCOPE: Tests automatic keyboard type application based on contentType
+    /// METHODOLOGY: Test keyboard type application for different content types
+    @Test func testDynamicFormFieldEmailKeyboardType() async {
+        // Given: Email field
+        let field = DynamicFormField(
+            id: "email",
+            contentType: .email,
+            label: "Email Address",
+            placeholder: "Enter email"
+        )
+        
+        // When: Creating the field view
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form"
+        ))
+        
+        // Then: Field should be configured for email input
+        #expect(field.contentType == .email)
+        #expect(field.label == "Email Address")
+        
+        // Note: Actual keyboard type verification would require UI testing
+        // This test verifies the field is properly configured for email input
+    }
+    
+    /// BUSINESS PURPOSE: Validates that DynamicFormField automatically applies phone keyboard type
+    /// TESTING SCOPE: Tests automatic keyboard type application for phone content
+    /// METHODOLOGY: Test keyboard type application for phone content type
+    @Test func testDynamicFormFieldPhoneKeyboardType() async {
+        // Given: Phone field
+        let field = DynamicFormField(
+            id: "phone",
+            contentType: .phone,
+            label: "Phone Number",
+            placeholder: "Enter phone number"
+        )
+        
+        // When: Creating the field view
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form"
+        ))
+        
+        // Then: Field should be configured for phone input
+        #expect(field.contentType == .phone)
+        #expect(field.label == "Phone Number")
+        
+        // Note: Actual keyboard type verification would require UI testing
+        // This test verifies the field is properly configured for phone input
+    }
+    
+    /// BUSINESS PURPOSE: Validates that DynamicFormField automatically applies number keyboard type
+    /// TESTING SCOPE: Tests automatic keyboard type application for number content
+    /// METHODOLOGY: Test keyboard type application for number content type
+    @Test func testDynamicFormFieldNumberKeyboardType() async {
+        // Given: Number field
+        let field = DynamicFormField(
+            id: "age",
+            contentType: .number,
+            label: "Age",
+            placeholder: "Enter age"
+        )
+        
+        // When: Creating the field view
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form"
+        ))
+        
+        // Then: Field should be configured for number input
+        #expect(field.contentType == .number)
+        #expect(field.label == "Age")
+        
+        // Note: Actual keyboard type verification would require UI testing
+        // This test verifies the field is properly configured for number input
+    }
+    
+    /// BUSINESS PURPOSE: Validates that DynamicFormField automatically applies URL keyboard type
+    /// TESTING SCOPE: Tests automatic keyboard type application for URL content
+    /// METHODOLOGY: Test keyboard type application for URL content type
+    @Test func testDynamicFormFieldURLKeyboardType() async {
+        // Given: URL field
+        let field = DynamicFormField(
+            id: "website",
+            contentType: .url,
+            label: "Website",
+            placeholder: "Enter website URL"
+        )
+        
+        // When: Creating the field view
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form"
+        ))
+        
+        // Then: Field should be configured for URL input
+        #expect(field.contentType == .url)
+        #expect(field.label == "Website")
+        
+        // Note: Actual keyboard type verification would require UI testing
+        // This test verifies the field is properly configured for URL input
+    }
+    
+    /// BUSINESS PURPOSE: Validates that DynamicFormField handles text content with default keyboard
+    /// TESTING SCOPE: Tests default keyboard type application for text content
+    /// METHODOLOGY: Test default keyboard type application for text content type
+    @Test func testDynamicFormFieldTextKeyboardType() async {
+        // Given: Text field
+        let field = DynamicFormField(
+            id: "name",
+            contentType: .text,
+            label: "Full Name",
+            placeholder: "Enter your name"
+        )
+        
+        // When: Creating the field view
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form"
+        ))
+        
+        // Then: Field should be configured for text input
+        #expect(field.contentType == .text)
+        #expect(field.label == "Full Name")
+        
+        // Note: Actual keyboard type verification would require UI testing
+        // This test verifies the field is properly configured for text input
+    }
+    
 

@@ -39,11 +39,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     @Test func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOptimizationSettings
-        let settings = PlatformOptimizationSettings(
-            enableGPUAcceleration: true,
-            cacheSizeMB: 100,
-            threadCount: 4
-        )
+        let settings = PlatformOptimizationSettings(for: .iOS)
         
         // When: Creating a view with PlatformOptimizationSettings
         let view = VStack {
@@ -86,7 +82,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     @Test func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformUIPatterns
-        let patterns = PlatformUIPatterns()
+        let patterns = PlatformUIPatterns(for: .iOS)
         
         // When: Creating a view with PlatformUIPatterns
         let view = VStack {

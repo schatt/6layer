@@ -310,6 +310,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     @Test func testAnalysisWithSingleDataPoint() {
         // Given
+        let intelligence = DataPresentationIntelligence.shared
         let singleData = ["Single Item"]
         
         // When
@@ -322,6 +323,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     @Test func testAnalysisWithIdenticalValues() {
         // Given
+        let intelligence = DataPresentationIntelligence.shared
         let identicalValues = Array(repeating: 42.0, count: 10)
         
         // When

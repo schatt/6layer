@@ -18,7 +18,10 @@ open class PlatformResourceLayer5ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformResourceLayer5
-        let testView = PlatformResourceLayer5()
+        let resourceLayer = PlatformResourceLayer5()
+        
+        // When: Get a view from the component
+        let testView = resourceLayer.createResourceButton(title: "Test", action: {})
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

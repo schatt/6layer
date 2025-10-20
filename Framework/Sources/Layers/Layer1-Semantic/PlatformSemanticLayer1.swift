@@ -1411,6 +1411,34 @@ public struct GenericNumericDataView: View {
     let data: [GenericNumericData]
     let hints: PresentationHints
     
+    public init(data: [GenericNumericData], hints: PresentationHints) {
+        self.data = data
+        self.hints = hints
+    }
+    
+    // Convenience initializer for any numeric type
+    public init<T: Numeric>(values: [T], hints: PresentationHints) {
+        self.data = values.enumerated().map { index, value in
+            // Convert any numeric type to Double safely
+            let doubleValue: Double
+            if let intValue = value as? Int {
+                doubleValue = Double(intValue)
+            } else if let floatValue = value as? Float {
+                doubleValue = Double(floatValue)
+            } else if let cgFloatValue = value as? CGFloat {
+                doubleValue = Double(cgFloatValue)
+            } else if let doubleVal = value as? Double {
+                doubleValue = doubleVal
+            } else {
+                // Fallback: convert via String (not ideal but safe)
+                doubleValue = Double(String(describing: value)) ?? 0.0
+            }
+            
+            return GenericNumericData(value: doubleValue, label: "Value \(index + 1)")
+        }
+        self.hints = hints
+    }
+    
     public var body: some View {
         let baseView = VStack {
             Text("Numeric Data")

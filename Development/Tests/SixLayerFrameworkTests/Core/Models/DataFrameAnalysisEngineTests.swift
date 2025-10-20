@@ -29,7 +29,6 @@ open class DataFrameAnalysisEngineTests {
         let result = analysisEngine.analyzeDataFrame(dataFrame)
         
         // Then: Should return proper analysis
-        #expect(result != nil)
         #expect(result.columns.count > 0)
         #expect(result.rowCount == 3)
         #expect(result.columnCount == 3)
@@ -148,7 +147,6 @@ open class DataFrameAnalysisEngineTests {
         let result = analysisEngine.analyzeDataFrame(dataFrame)
         
         // Then: Should provide visualization recommendations
-        #expect(result.visualizationRecommendations != nil)
         #expect(result.visualizationRecommendations.count > 0)
         
         let chartRecommendation = result.visualizationRecommendations.first

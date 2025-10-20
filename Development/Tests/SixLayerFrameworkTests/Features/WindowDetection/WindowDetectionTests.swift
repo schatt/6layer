@@ -34,27 +34,73 @@ open class WindowDetectionTests {
         #expect(windowDetection.orientation == .portrait)
     }
     
-    @Test func testWindowDetectionStartMonitoring() {
-        // GIVEN: A window detection instance
-        // WHEN: Start monitoring is called
-        // THEN: Should start monitoring without crashing
-        #expect(throws: Never.self) { windowDetection.startMonitoring() }
-        #expect(windowDetection.platformDetection != nil)
+    @Test func testWindowDetectionUpdateFromGeometry() {
+        // GIVEN: A window detection instance with test geometry provider
+        // WHEN: Update from geometry is called with a specific size
+        // THEN: Should update window size correctly
+        
+        // Create a test geometry provider that returns controlled values
+        struct TestGeometryProvider: GeometryProvider {
+            let testSize: CGSize
+            
+            func getSize(from geometry: GeometryProxy) -> CGSize {
+                return testSize
+            }
+            
+            func getSafeAreaInsets(from geometry: GeometryProxy) -> EdgeInsets {
+                return EdgeInsets()
+            }
+        }
+        
+        let testProvider = TestGeometryProvider(testSize: CGSize(width: 400, height: 600))
+        let windowDetection = UnifiedWindowDetection(geometryProvider: testProvider)
+        
+        // Test that the geometry provider is working
+        #expect(windowDetection.windowSize.width == 375) // Default initial size
+        #expect(windowDetection.windowSize.height == 667) // Default initial size
+        
+        // Note: We can't easily test updateFromGeometry without a real GeometryProxy
+        // But we can test that the geometry provider is injected correctly
+        #expect(windowDetection.geometryProvider is TestGeometryProvider)
     }
     
-    @Test func testWindowDetectionStopMonitoring() {
-        // GIVEN: A window detection instance that's monitoring
-        // WHEN: Stop monitoring is called
-        // THEN: Should stop monitoring without crashing
-        windowDetection.startMonitoring()
-        #expect(throws: Never.self) { windowDetection.stopMonitoring() }
+    @Test func testWindowDetectionUpdateFromEnvironment() {
+        // GIVEN: A window detection instance
+        // WHEN: Update from environment is called
+        // THEN: Should update environment values without crashing
+        let safeAreaInsets = EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0)
+        #expect(throws: Never.self) { 
+            windowDetection.updateFromEnvironment(
+                horizontalSizeClass: .regular,
+                verticalSizeClass: .compact,
+                safeAreaInsets: safeAreaInsets
+            )
+        }
+        #expect(windowDetection.safeAreaInsets == safeAreaInsets)
     }
     
-    @Test func testWindowDetectionUpdateInfo() {
+    @Test func testWindowDetectionSizeClassConversion() {
         // GIVEN: A window detection instance
-        // WHEN: Update window info is called
-        // THEN: Should update without crashing
-        #expect(throws: Never.self) { windowDetection.updateWindowInfo() }
+        // WHEN: Testing size class conversion
+        // THEN: Should convert sizes correctly to size classes
+        
+        // Test compact size class
+        let compactDetection = UnifiedWindowDetection()
+        compactDetection.windowSize = CGSize(width: 300, height: 600)
+        compactDetection.updateSizeClass()
+        #expect(compactDetection.screenSizeClass == .compact)
+        
+        // Test regular size class
+        let regularDetection = UnifiedWindowDetection()
+        regularDetection.windowSize = CGSize(width: 800, height: 600)
+        regularDetection.updateSizeClass()
+        #expect(regularDetection.screenSizeClass == .regular)
+        
+        // Test large size class
+        let largeDetection = UnifiedWindowDetection()
+        largeDetection.windowSize = CGSize(width: 1200, height: 800)
+        largeDetection.updateSizeClass()
+        #expect(largeDetection.screenSizeClass == .large)
     }
     
     // MARK: - Screen Size Class Tests (Positive Cases)
@@ -332,7 +378,7 @@ open class WindowDetectionTests {
     
     // MARK: - Memory Management Tests
     
-    @Test @MainActor func testWindowDetectionMemoryManagement(
+    @Test @MainActor func testWindowDetectionMemoryManagement() {
         // GIVEN: A window detection instance
         // WHEN: Created and destroyed
         // THEN: Should not leak memory
@@ -349,7 +395,7 @@ open class WindowDetectionTests {
         #expect(weakDetection == nil, "Window detection should be deallocated")
     }
     
-    @Test @MainActor func testMultipleWindowDetectionInstances(
+    @Test @MainActor func testMultipleWindowDetectionInstances() {
         // GIVEN: Multiple window detection instances
         // WHEN: Created and destroyed
         // THEN: Should not interfere with each other

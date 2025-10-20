@@ -113,7 +113,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             customPreferences: [:]
         )
         
-        let view = GenericNumericDataView(data: testData)
+        let view = GenericNumericDataView(data: testData, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 
@@ -138,7 +138,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             customPreferences: [:]
         )
         
-        let view = GenericNumericDataView(data: testData)
+        let view = GenericNumericDataView(data: testData, hints: hints)
         
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view, 

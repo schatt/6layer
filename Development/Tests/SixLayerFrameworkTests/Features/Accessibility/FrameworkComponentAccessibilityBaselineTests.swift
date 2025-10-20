@@ -5,6 +5,13 @@ import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
 
+// MARK: - Mock Data for Testing
+
+struct MockTaskItemBaseline {
+    let id: String
+    let title: String
+}
+
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
 @MainActor

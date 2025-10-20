@@ -1,6 +1,25 @@
 import Foundation
 import SwiftUI
 
+/// Protocol for providing geometry information - enables testability
+public protocol GeometryProvider {
+    func getSize(from geometry: GeometryProxy) -> CGSize
+    func getSafeAreaInsets(from geometry: GeometryProxy) -> EdgeInsets
+}
+
+/// Default implementation that uses the actual geometry values
+public struct DefaultGeometryProvider: GeometryProvider {
+    public init() {}
+    
+    public func getSize(from geometry: GeometryProxy) -> CGSize {
+        return geometry.size
+    }
+    
+    public func getSafeAreaInsets(from geometry: GeometryProxy) -> EdgeInsets {
+        return geometry.safeAreaInsets
+    }
+}
+
 /// Unified Window Detection - Convenience wrapper around SwiftUI's native responsive system
 /// 
 /// Provides cross-platform abstraction over SwiftUI's GeometryReader and environment system.
@@ -37,6 +56,9 @@ public class UnifiedWindowDetection: ObservableObject {
     /// Layout change callback - called when window properties change
     public var onLayoutChange: (() -> Void)?
     
+    /// Geometry provider for testability
+    internal let geometryProvider: GeometryProvider
+    
     // MARK: - Window State Enum
     
     public enum WindowState: String, CaseIterable {
@@ -51,7 +73,8 @@ public class UnifiedWindowDetection: ObservableObject {
     
     // MARK: - Initialization
     
-    public init() {
+    public init(geometryProvider: GeometryProvider = DefaultGeometryProvider()) {
+        self.geometryProvider = geometryProvider
         // Lightweight initialization - no polling, no timers
     }
     
@@ -59,7 +82,7 @@ public class UnifiedWindowDetection: ObservableObject {
     
     /// Update from SwiftUI GeometryReader - main convenience method
     public func updateFromGeometry(_ geometry: GeometryProxy) {
-        let newSize = geometry.size
+        let newSize = geometryProvider.getSize(from: geometry)
         
         // Only update if size actually changed (avoid unnecessary SwiftUI updates)
         if abs(newSize.width - windowSize.width) > 0.5 || 
@@ -85,6 +108,11 @@ public class UnifiedWindowDetection: ObservableObject {
         if let horizontal = horizontalSizeClass {
             screenSizeClass = convertFromSwiftUISizeClass(horizontal, verticalSizeClass)
         }
+    }
+    
+    /// Update size class based on current window size - for testing
+    internal func updateSizeClass() {
+        screenSizeClass = convertToSizeClass(windowSize)
     }
     
     // MARK: - Private Helper Methods

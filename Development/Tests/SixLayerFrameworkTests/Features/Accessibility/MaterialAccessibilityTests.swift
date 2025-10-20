@@ -90,9 +90,8 @@ open class MaterialAccessibilityTests: BaseTestClass {
         )
         
         // Then: Materials should be appropriate for accessibility settings
-        #expect(highContrastMaterial != nil)
-        #expect(reducedMotionMaterial != nil)
-        #expect(voiceOverMaterial != nil)
+        // Note: Material types are value types, so we just verify the method calls succeeded
+        // The actual material selection logic is tested elsewhere
     }
     
     // MARK: - Material Accessibility Compliance Tests

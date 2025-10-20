@@ -20,3 +20,7 @@ Get to a "green phase" where all tests compile successfully, following TDD princ
 Red: Tests fail (compilation errors)
 Green: Tests compile and pass (with stubbed implementations)
 Refactor: Improve the implementation while keeping tests green
+
+Things to note:
+Tests might be wrong. Some tests might still exist when the code has been removed (and the test should be too!) Some tests are outdated (because it's been a while since the tests worked, some probably got overlooked and are testing outdated assumptions). 
+Basically, the tests are not a sole source of correct truth. A combination of knowing our framework's goals, the actual code, and the existing tests should help us guide our path to fixing the tests.

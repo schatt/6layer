@@ -26,13 +26,11 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(manager != nil, "CrossPlatformOptimizationManager should be created successfully")
+        // Note: CrossPlatformOptimizationManager is a class, so it can't be nil after initialization
         
         // 2. Does that structure contain what it should?
-        #expect(manager.currentPlatform != nil, "Manager should have a current platform")
-        #expect(manager.optimizationSettings != nil, "Manager should have optimization settings")
-        #expect(manager.performanceMetrics != nil, "Manager should have performance metrics")
-        #expect(manager.uiPatterns != nil, "Manager should have UI patterns")
+        // Note: These properties are value types, so they can't be nil
+        // The actual verification is that the manager was created successfully
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Manager should detect current platform correctly
@@ -59,8 +57,8 @@ open class CrossPlatformOptimizationLayer6Tests {
             
             // Then: Each manager should be configured correctly
             #expect(manager.currentPlatform == platform, "Manager should use specified platform: \(platform)")
-            #expect(manager.optimizationSettings != nil, "Manager should have settings for \(platform)")
-            #expect(manager.uiPatterns != nil, "Manager should have UI patterns for \(platform)")
+            // Note: These properties are value types, so they can't be nil
+            // The actual verification is that the manager was created successfully for the platform
         }
     }
     
@@ -75,7 +73,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(optimizedView != nil, "Optimized view should be created successfully")
+        // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
         do {
@@ -102,8 +100,9 @@ open class CrossPlatformOptimizationLayer6Tests {
         let recommendations = manager.getPlatformRecommendations()
         
         // Then: Should return platform recommendations (L6 function responsibility)
-        #expect(recommendations != nil, "Should return recommendations")
+        // Note: recommendations is an array, so it cannot be nil
         // Note: Recommendations may be empty if no platform-specific issues are detected
+        #expect(recommendations.count >= 0, "Should return valid recommendations array")
         // This is valid behavior for L6 functions
     }
     
@@ -118,11 +117,10 @@ open class CrossPlatformOptimizationLayer6Tests {
             let settings = PlatformOptimizationSettings(for: platform)
             
             // Then: Settings should be created successfully (L6 function responsibility)
-            #expect(settings != nil, "Settings should be created for \(platform)")
-            #expect(settings.performanceLevel != nil, "Should have performance level for \(platform)")
-            #expect(settings.memoryStrategy != nil, "Should have memory strategy for \(platform)")
-            #expect(settings.renderingOptimizations != nil, "Should have rendering optimizations for \(platform)")
-            #expect(settings.featureFlags != nil, "Should have feature flags for \(platform)")
+            // Note: PlatformOptimizationSettings is a struct, so it cannot be nil
+            // Note: These properties are value types, so they cannot be nil
+            // The actual verification is that the settings were created successfully for the platform
+            #expect(settings.performanceLevel.rawValue.count > 0, "Should have valid performance level for \(platform)")
         }
     }
     
@@ -180,12 +178,11 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(metrics != nil, "Performance metrics should be created successfully")
+        // Note: CrossPlatformPerformanceMetrics is a class, so it cannot be nil after initialization
         
         // 2. Does that structure contain what it should?
-        #expect(metrics.renderingMetrics != nil, "Should have rendering metrics")
-        #expect(metrics.memoryMetrics != nil, "Should have memory metrics")
-        #expect(metrics.platformMetrics != nil, "Should have platform metrics")
+        // Note: These properties are value types, so they cannot be nil
+        // The actual verification is that the metrics were created successfully
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Metrics should be initialized for current platform
@@ -209,7 +206,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         
         // Then: Measurement should be recorded
         let summary = metrics.getCurrentPlatformSummary()
-        #expect(summary != nil, "Should be able to get performance summary")
+        // Note: PerformanceSummary is a struct, so it cannot be nil
         #expect(summary.platform == SixLayerPlatform.current, 
                       "Summary should be for current platform")
     }
@@ -222,12 +219,12 @@ open class CrossPlatformOptimizationLayer6Tests {
         let summary = metrics.getCurrentPlatformSummary()
         
         // Then: Summary should be valid
-        #expect(summary != nil, "Should be able to get performance summary")
+        // Note: PerformanceSummary is a struct, so it cannot be nil
         #expect(summary.platform == SixLayerPlatform.current, 
                       "Summary should be for current platform")
-        #expect(summary.rendering != nil, "Summary should have rendering metrics")
-        #expect(summary.memory != nil, "Summary should have memory metrics")
-        #expect(summary.platformSpecific != nil, "Summary should have platform-specific metrics")
+        // Note: rendering is a struct, so it cannot be nil
+        // Note: memory is a struct, so it cannot be nil
+        // Note: platformSpecific is a struct, so it cannot be nil
         #expect(summary.overallScore >= 0, "Overall score should be non-negative")
         #expect(summary.overallScore <= 100, "Overall score should be <= 100")
     }
@@ -243,11 +240,11 @@ open class CrossPlatformOptimizationLayer6Tests {
             let patterns = PlatformUIPatterns(for: platform)
             
             // Then: Patterns should be platform-appropriate
-            #expect(patterns != nil, "UI patterns should be created for \(platform)")
+            // Note: PlatformUIPatterns is a struct, so it cannot be nil
             #expect(patterns.platform == platform, "Patterns should be for correct platform")
-            #expect(patterns.navigationPatterns != nil, "Should have navigation patterns for \(platform)")
-            #expect(patterns.interactionPatterns != nil, "Should have interaction patterns for \(platform)")
-            #expect(patterns.layoutPatterns != nil, "Should have layout patterns for \(platform)")
+            // Note: navigationPatterns is a struct, so it cannot be nil
+            // Note: interactionPatterns is a struct, so it cannot be nil
+            // Note: layoutPatterns is a struct, so it cannot be nil
             
             // Platform-specific verification
             switch platform {
@@ -286,12 +283,12 @@ open class CrossPlatformOptimizationLayer6Tests {
             // Then: Navigation patterns should be platform-appropriate
             #expect(navigationPatterns.platform == platform, 
                           "Navigation patterns should be for \(platform)")
-            #expect(navigationPatterns.primaryNavigation != nil, 
-                           "Should have primary navigation for \(platform)")
-            #expect(navigationPatterns.secondaryNavigation != nil, 
-                           "Should have secondary navigation for \(platform)")
-            #expect(navigationPatterns.modalPresentation != nil, 
-                           "Should have modal presentation for \(platform)")
+            // Note: primaryNavigation is an enum, so it cannot be nil
+// Note: primaryNavigation is an enum, so it cannot be nil
+            // Note: secondaryNavigation is an enum, so it cannot be nil
+// Note: secondaryNavigation is an enum, so it cannot be nil
+            // Note: modalPresentation is an enum, so it cannot be nil
+// Note: modalPresentation is an enum, so it cannot be nil
         }
     }
     
@@ -301,17 +298,17 @@ open class CrossPlatformOptimizationLayer6Tests {
         
         // When: Testing interaction patterns
         for platform in platforms {
-            let interactionPatterns = InteractionPatterns(for: platform)
+            let interactionPatterns = SixLayerFramework.InteractionPatterns(for: platform)
             
             // Then: Interaction patterns should be platform-appropriate
             #expect(interactionPatterns.platform == platform, 
                           "Interaction patterns should be for \(platform)")
-            #expect(interactionPatterns.primaryInput != nil, 
-                           "Should have primary input for \(platform)")
-            #expect(interactionPatterns.secondaryInput != nil, 
-                           "Should have secondary input for \(platform)")
-            #expect(interactionPatterns.gestureSupport != nil, 
-                           "Should have gesture support for \(platform)")
+            // Note: primaryInput is an enum, so it cannot be nil
+// Note: primaryInput is an enum, so it cannot be nil
+            // Note: secondaryInput is an enum, so it cannot be nil
+// Note: secondaryInput is an enum, so it cannot be nil
+            // Note: gestureSupport is an array, so it cannot be nil
+// Note: gestureSupport is an array, so it cannot be nil
         }
     }
     
@@ -326,14 +323,13 @@ open class CrossPlatformOptimizationLayer6Tests {
             // Then: Layout patterns should be platform-appropriate
             #expect(layoutPatterns.platform == platform, 
                           "Layout patterns should be for \(platform)")
-            #expect(layoutPatterns.primaryLayout != nil, 
-                           "Should have primary layout for \(platform)")
-            #expect(layoutPatterns.secondaryLayout != nil, 
-                           "Should have secondary layout for \(platform)")
-            #expect(layoutPatterns.responsiveBreakpoints != nil, 
-                           "Should have responsive breakpoints for \(platform)")
-            #expect(!layoutPatterns.responsiveBreakpoints.isEmpty, 
-                          "Should have at least one breakpoint for \(platform)")
+            // Note: primaryLayout is an enum, so it cannot be nil
+// Note: primaryLayout is an enum, so it cannot be nil
+            // Note: secondaryLayout is an enum, so it cannot be nil
+// Note: secondaryLayout is an enum, so it cannot be nil
+            // Note: responsiveBreakpoints is an array, so it cannot be nil
+            // Note: responsiveBreakpoints should have at least one breakpoint
+            #expect(!layoutPatterns.responsiveBreakpoints.isEmpty, "Should have at least one breakpoint for \(platform)")
         }
     }
     
@@ -350,7 +346,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(optimizedView != nil, "Optimized view should be created successfully")
+        // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
         do {
@@ -380,7 +376,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(optimizedView != nil, "Performance-optimized view should be created successfully")
+        // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
         do {
@@ -410,7 +406,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(optimizedView != nil, "UI pattern-optimized view should be created successfully")
+        // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
         do {
@@ -458,7 +454,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         let fullyOptimizedView = manager.optimizeView(testView)
         
         // Then: Fully optimized view should be created successfully
-        #expect(fullyOptimizedView != nil, "Fully optimized view should be created")
+        // Note: fullyOptimizedView is a View, so it cannot be nil
         
         do {
             let _ = try fullyOptimizedView.inspect()
@@ -491,7 +487,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         let currentPlatform = SixLayerPlatform.current
         
         // Then: Platform should be detected correctly
-        #expect(currentPlatform != nil, "Current platform should be detected")
+        // Note: currentPlatform is an enum, so it cannot be nil
         
         // Platform-specific verification
         #if os(iOS)

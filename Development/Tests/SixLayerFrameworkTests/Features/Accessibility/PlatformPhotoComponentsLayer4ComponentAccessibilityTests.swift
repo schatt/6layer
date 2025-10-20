@@ -18,7 +18,10 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
     
     @Test func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPhotoComponentsLayer4
-        let testView = PlatformPhotoComponentsLayer4()
+        let photoComponents = PlatformPhotoComponentsLayer4()
+        
+        // When: Get a view from the component
+        let testView = photoComponents.platformPhotoPicker_L4(onImageSelected: { _ in })
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

@@ -43,7 +43,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - View Generation Tests
     
-    @Test @MainActor func testIntelligentDetailViewGeneration(
+    @Test @MainActor func testIntelligentDetailViewGeneration() {
         // GIVEN: A test data item
         let item = sampleData[0]
         
@@ -81,7 +81,7 @@ open class ViewGenerationTests: BaseTestClass {
         }
     }
     
-    @Test @MainActor func testIntelligentDetailViewWithCustomFieldView(
+    @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: A test data item and custom field view
         let item = sampleData[0]
         
@@ -124,7 +124,7 @@ open class ViewGenerationTests: BaseTestClass {
         }
     }
     
-    @Test @MainActor func testIntelligentDetailViewWithHints(
+    @Test @MainActor func testIntelligentDetailViewWithHints() {
         // GIVEN: A test data item and presentation hints
         let item = sampleData[0]
         let hints = PresentationHints(
@@ -170,7 +170,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Layout Strategy Tests
     
-    @Test @MainActor func testLayoutStrategyDetermination(
+    @Test @MainActor func testLayoutStrategyDetermination() {
         // GIVEN: Different data complexities based on content richness
         // Simple data with minimal content (should get compact/standard)
         let simpleData = TestDataItem(
@@ -209,7 +209,7 @@ open class ViewGenerationTests: BaseTestClass {
         #expect([DetailLayoutStrategy.detailed, DetailLayoutStrategy.tabbed].contains(complexStrategy))
     }
     
-    @Test @MainActor func testLayoutStrategyWithHints(
+    @Test @MainActor func testLayoutStrategyWithHints() {
         // GIVEN: Data and explicit hints
         let item = sampleData[0]
         let hints = PresentationHints(
@@ -229,7 +229,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Field View Generation Tests
     
-    @Test @MainActor func testFieldViewGeneration(
+    @Test @MainActor func testFieldViewGeneration() {
         // GIVEN: A data field
         let field = DataField(
             name: "testField",
@@ -253,7 +253,7 @@ open class ViewGenerationTests: BaseTestClass {
         _ = fieldView
     }
     
-    @Test @MainActor func testDetailedFieldViewGeneration(
+    @Test @MainActor func testDetailedFieldViewGeneration() {
         // GIVEN: A data field
         let field = DataField(
             name: "testField",
@@ -318,7 +318,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - View Structure Validation Tests
     
-    @Test @MainActor func testViewStructureConsistency(
+    @Test @MainActor func testViewStructureConsistency() {
         // GIVEN: The same data item
         let item = sampleData[0]
         
@@ -335,7 +335,7 @@ open class ViewGenerationTests: BaseTestClass {
         // with complex view hierarchies. The view creation itself is the test.
     }
     
-    @Test @MainActor func testViewGenerationWithNilValues(
+    @Test @MainActor func testViewGenerationWithNilValues() {
         // GIVEN: Data with nil values
         let item = sampleData[1] // This has nil subtitle
         
@@ -403,7 +403,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Accessibility Tests
     
-    @Test @MainActor func testViewGenerationWithAccessibilityHints(
+    @Test @MainActor func testViewGenerationWithAccessibilityHints() {
         // GIVEN: Data with accessibility hints
         let item = sampleData[0]
         let hints = PresentationHints(
@@ -426,7 +426,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test @MainActor func testViewGenerationIntegration(
+    @Test @MainActor func testViewGenerationIntegration() {
         // GIVEN: A complete data set
         let items = sampleData
         
@@ -445,7 +445,7 @@ open class ViewGenerationTests: BaseTestClass {
         }
     }
     
-    @Test @MainActor func testViewGenerationWithCustomFieldViews(
+    @Test @MainActor func testViewGenerationWithCustomFieldViews() {
         // GIVEN: Data and custom field view implementations
         let item = sampleData[0]
         

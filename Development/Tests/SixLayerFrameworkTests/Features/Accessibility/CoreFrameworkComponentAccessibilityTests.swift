@@ -45,7 +45,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .modifier(ComprehensiveAccessibilityModifier())
+        .modifier(AutomaticAccessibilityIdentifiersModifier())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -84,7 +84,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .modifier(AccessibilityIdentifierAssignmentModifier())
+        .modifier(SystemAccessibilityModifier())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(

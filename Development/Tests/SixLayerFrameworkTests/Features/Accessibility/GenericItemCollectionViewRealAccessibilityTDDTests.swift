@@ -5,6 +5,13 @@ import AppKit
 import ViewInspector
 @testable import SixLayerFramework
 
+// MARK: - Mock Data for Testing
+
+struct MockTaskItemReal {
+    let id: String
+    let title: String
+}
+
 /// TDD Red Phase: REAL Test for GenericItemCollectionView
 /// This test SHOULD FAIL - proving GenericItemCollectionView doesn't generate accessibility IDs
 @MainActor

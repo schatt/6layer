@@ -18,15 +18,34 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
     
     @Test func testPlatformMessagingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformMessagingLayer5
-        let testView = PlatformMessagingLayer5()
+        let messagingLayer = PlatformMessagingLayer5()
         
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            testView,
+        // When: Creating components
+        let alertButton = messagingLayer.createAlertButton(title: "Test Alert", action: {})
+        let toastNotification = messagingLayer.createToastNotification(message: "Test Toast")
+        let bannerNotification = messagingLayer.createBannerNotification(title: "Test Banner", message: "Test Message")
+        
+        // Then: Should generate accessibility identifiers for components
+        let hasAlertAccessibilityID = hasAccessibilityIdentifier(
+            alertButton,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformMessagingLayer5"
+            componentName: "AlertButton"
         )
         
-        #expect(hasAccessibilityID, "PlatformMessagingLayer5 should generate accessibility identifiers")
+        let hasToastAccessibilityID = hasAccessibilityIdentifier(
+            toastNotification,
+            expectedPattern: "*.main.element.*",
+            componentName: "ToastNotification"
+        )
+        
+        let hasBannerAccessibilityID = hasAccessibilityIdentifier(
+            bannerNotification,
+            expectedPattern: "*.main.element.*",
+            componentName: "BannerNotification"
+        )
+        
+        #expect(hasAlertAccessibilityID, "Alert button should generate accessibility identifiers")
+        #expect(hasToastAccessibilityID, "Toast notification should generate accessibility identifiers")
+        #expect(hasBannerAccessibilityID, "Banner notification should generate accessibility identifiers")
     }
 }

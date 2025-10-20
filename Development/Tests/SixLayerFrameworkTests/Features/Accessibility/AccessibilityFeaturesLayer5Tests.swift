@@ -54,19 +54,19 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test success/failure scenarios with different focus configurations
      */
     @Test func testAddFocusableItemSuccess() {
-        // GIVEN: Empty keyboard manager
-        let keyboardManager = KeyboardNavigationManager()
+        let navigationManager = KeyboardNavigationManager()
+        // GIVEN: Empty keyboard navigation manager
         let highContrastManager = HighContrastManager()
         let cancellables = Set<AnyCancellable>()
         
-        #expect(keyboardManager.focusableItems.count == 0)
+        #expect(navigationManager.focusableItems.count == 0)
         
         // WHEN: Adding a focusable item
-        keyboardManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button1")
         
         // THEN: Item should be added successfully
-        #expect(keyboardManager.focusableItems.count == 1)
-        #expect(keyboardManager.focusableItems.first == "button1")
+        #expect(navigationManager.focusableItems.count == 1)
+        #expect(navigationManager.focusableItems.first == "button1")
     }
     
     /**
@@ -76,15 +76,17 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test duplicate item handling
      */
     @Test func testAddFocusableItemDuplicate() {
-        // GIVEN: Keyboard manager with existing item
-        keyboardManager.addFocusableItem("button1")
-        #expect(keyboardManager.focusableItems.count == 1)
+        let navigationManager = KeyboardNavigationManager()
+        // GIVEN: Keyboard navigation manager with existing item
+        let navigationManager = KeyboardNavigationManager()
+        navigationManager.addFocusableItem("button1")
+        #expect(navigationManager.focusableItems.count == 1)
         
         // WHEN: Adding duplicate item
-        keyboardManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button1")
         
         // THEN: Should not add duplicate
-        #expect(keyboardManager.focusableItems.count == 1)
+        #expect(navigationManager.focusableItems.count == 1)
     }
     
     /**
@@ -94,15 +96,17 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test empty string handling
      */
     @Test func testAddFocusableItemEmptyString() {
-        // GIVEN: Empty keyboard manager
-        #expect(keyboardManager.focusableItems.count == 0)
+        let navigationManager = KeyboardNavigationManager()
+        // GIVEN: Empty keyboard navigation manager
+        let navigationManager = KeyboardNavigationManager()
+        #expect(navigationManager.focusableItems.count == 0)
         
         // WHEN: Adding empty string
-        keyboardManager.addFocusableItem("")
+        navigationManager.addFocusableItem("")
         
         // THEN: Should add empty string (current implementation allows it)
-        #expect(keyboardManager.focusableItems.count == 1)
-        #expect(keyboardManager.focusableItems.first == "")
+        #expect(navigationManager.focusableItems.count == 1)
+        #expect(navigationManager.focusableItems.first == "")
     }
     
     /**
@@ -112,17 +116,18 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test successful removal
      */
     @Test func testRemoveFocusableItemSuccess() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
-        #expect(keyboardManager.focusableItems.count == 2)
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        #expect(navigationManager.focusableItems.count == 2)
         
         // WHEN: Removing an item
-        keyboardManager.removeFocusableItem("button1")
+        navigationManager.removeFocusableItem("button1")
         
         // THEN: Item should be removed successfully
-        #expect(keyboardManager.focusableItems.count == 1)
-        #expect(keyboardManager.focusableItems.first == "button2")
+        #expect(navigationManager.focusableItems.count == 1)
+        #expect(navigationManager.focusableItems.first == "button2")
     }
     
     /**
@@ -132,16 +137,17 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test removal of non-existent item
      */
     @Test func testRemoveFocusableItemNotExists() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        #expect(keyboardManager.focusableItems.count == 1)
+        navigationManager.addFocusableItem("button1")
+        #expect(navigationManager.focusableItems.count == 1)
         
         // WHEN: Removing non-existent item
-        keyboardManager.removeFocusableItem("button2")
+        navigationManager.removeFocusableItem("button2")
         
         // THEN: Should not affect existing items
-        #expect(keyboardManager.focusableItems.count == 1)
-        #expect(keyboardManager.focusableItems.first == "button1")
+        #expect(navigationManager.focusableItems.count == 1)
+        #expect(navigationManager.focusableItems.first == "button1")
     }
     
     /**
@@ -151,20 +157,21 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test wraparound behavior
      */
     @Test func testMoveFocusNextWithWraparound() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
-        keyboardManager.addFocusableItem("button3")
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button3")
         
         // Set focus to last item
-        keyboardManager.focusItem("button3")
-        #expect(keyboardManager.currentFocusIndex == 2)
+        navigationManager.focusItem("button3")
+        #expect(navigationManager.currentFocusIndex == 2)
         
         // WHEN: Moving focus next (should wraparound)
-        keyboardManager.moveFocus(direction: .next)
+        navigationManager.moveFocus(direction: .next)
         
         // THEN: Should wraparound to first item
-        #expect(keyboardManager.currentFocusIndex == 0)
+        #expect(navigationManager.currentFocusIndex == 0)
     }
     
     /**
@@ -174,20 +181,21 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test reverse wraparound behavior
      */
     @Test func testMoveFocusPreviousWithWraparound() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
-        keyboardManager.addFocusableItem("button3")
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button3")
         
         // Set focus to first item
-        keyboardManager.focusItem("button1")
-        #expect(keyboardManager.currentFocusIndex == 0)
+        navigationManager.focusItem("button1")
+        #expect(navigationManager.currentFocusIndex == 0)
         
         // WHEN: Moving focus previous (should wraparound)
-        keyboardManager.moveFocus(direction: .previous)
+        navigationManager.moveFocus(direction: .previous)
         
         // THEN: Should wraparound to last item
-        #expect(keyboardManager.currentFocusIndex == 2)
+        #expect(navigationManager.currentFocusIndex == 2)
     }
     
     /**
@@ -197,20 +205,21 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test first item focus
      */
     @Test func testMoveFocusFirst() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
-        keyboardManager.addFocusableItem("button3")
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button3")
         
         // Set focus to middle item
-        keyboardManager.focusItem("button2")
-        #expect(keyboardManager.currentFocusIndex == 1)
+        navigationManager.focusItem("button2")
+        #expect(navigationManager.currentFocusIndex == 1)
         
         // WHEN: Moving focus to first
-        keyboardManager.moveFocus(direction: .first)
+        navigationManager.moveFocus(direction: .first)
         
         // THEN: Should focus first item
-        #expect(keyboardManager.currentFocusIndex == 0)
+        #expect(navigationManager.currentFocusIndex == 0)
     }
     
     /**
@@ -220,20 +229,21 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test last item focus
      */
     @Test func testMoveFocusLast() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
-        keyboardManager.addFocusableItem("button3")
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button3")
         
         // Set focus to first item
-        keyboardManager.focusItem("button1")
-        #expect(keyboardManager.currentFocusIndex == 0)
+        navigationManager.focusItem("button1")
+        #expect(navigationManager.currentFocusIndex == 0)
         
         // WHEN: Moving focus to last
-        keyboardManager.moveFocus(direction: .last)
+        navigationManager.moveFocus(direction: .last)
         
         // THEN: Should focus last item
-        #expect(keyboardManager.currentFocusIndex == 2)
+        #expect(navigationManager.currentFocusIndex == 2)
     }
     
     /**
@@ -243,15 +253,16 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test empty list behavior
      */
     @Test func testMoveFocusEmptyList() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Empty keyboard manager
-        #expect(keyboardManager.focusableItems.count == 0)
+        #expect(navigationManager.focusableItems.count == 0)
         
         // WHEN: Moving focus with empty list
-        keyboardManager.moveFocus(direction: .next)
-        keyboardManager.moveFocus(direction: .previous)
+        navigationManager.moveFocus(direction: .next)
+        navigationManager.moveFocus(direction: .previous)
         
         // THEN: Should handle empty list gracefully
-        #expect(keyboardManager.currentFocusIndex == 0)
+        #expect(navigationManager.currentFocusIndex == 0)
     }
     
     /**
@@ -261,16 +272,17 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test direct focus to specific item
      */
     @Test func testFocusItemSuccess() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
-        keyboardManager.addFocusableItem("button3")
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button3")
         
         // WHEN: Focusing specific item
-        keyboardManager.focusItem("button2")
+        navigationManager.focusItem("button2")
         
         // THEN: Should focus successfully
-        #expect(keyboardManager.currentFocusIndex == 1)
+        #expect(navigationManager.currentFocusIndex == 1)
     }
     
     /**
@@ -280,15 +292,16 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test focus to non-existent item
      */
     @Test func testFocusItemNotExists() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
-        keyboardManager.addFocusableItem("button1")
-        keyboardManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
         
         // WHEN: Focusing non-existent item
-        keyboardManager.focusItem("button3")
+        navigationManager.focusItem("button3")
         
         // THEN: Should not change focus index
-        #expect(keyboardManager.currentFocusIndex == 0)
+        #expect(navigationManager.currentFocusIndex == 0)
     }
     
     // MARK: - HighContrastManager Color Calculation Tests
@@ -300,6 +313,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test color modification with different contrast levels
      */
     @Test func testGetHighContrastColorNormalContrast() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Normal contrast mode
         highContrastManager.isHighContrastEnabled = false
         let baseColor = Color.blue
@@ -318,6 +332,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test high contrast color modification
      */
     @Test func testGetHighContrastColorHighContrast() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: High contrast mode with high contrast level
         highContrastManager.isHighContrastEnabled = true
         highContrastManager.contrastLevel = .high
@@ -337,6 +352,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test extreme contrast modification
      */
     @Test func testGetHighContrastColorExtremeContrast() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: High contrast mode with extreme contrast level
         highContrastManager.isHighContrastEnabled = true
         highContrastManager.contrastLevel = .extreme
@@ -356,6 +372,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test different contrast levels
      */
     @Test func testGetHighContrastColorDifferentLevels() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let baseColor = Color.red
@@ -375,6 +392,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test clear color behavior
      */
     @Test func testGetHighContrastColorClearColor() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let baseColor = Color.clear
@@ -395,6 +413,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test view modifier application
      */
     @Test func testAccessibilityEnhancedViewModifier() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view and accessibility config
         let testView = Text("Test")
         let config = AccessibilityConfig(
@@ -424,6 +443,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test default config behavior
      */
     @Test func testAccessibilityEnhancedViewModifierDefaultConfig() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -446,6 +466,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test VoiceOver modifier application
      */
     @Test func testVoiceOverEnabledViewModifier() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -463,6 +484,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test keyboard navigation modifier application
      */
     @Test func testKeyboardNavigableViewModifier() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -480,6 +502,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test high contrast modifier application
      */
     @Test func testHighContrastEnabledViewModifier() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -497,6 +520,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test multiple modifier application
      */
     @Test func testAccessibilityViewModifiersIntegration() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = Text("Test")
         
@@ -525,16 +549,17 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test performance with many focusable items
      */
     @Test func testKeyboardNavigationManagerPerformance() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: Large number of focusable items
         let itemCount = 1000
         for i in 0..<itemCount {
-            keyboardManager.addFocusableItem("item\(i)")
+            navigationManager.addFocusableItem("item\(i)")
         }
         
         // WHEN: Measuring focus movement performance
         let startTime = CFAbsoluteTimeGetCurrent()
         for _ in 0..<100 {
-            keyboardManager.moveFocus(direction: .next)
+            navigationManager.moveFocus(direction: .next)
         }
         let endTime = CFAbsoluteTimeGetCurrent()
         
@@ -550,6 +575,7 @@ open class AccessibilityFeaturesLayer5Tests {
      * METHODOLOGY: Test performance with many color calculations
      */
     @Test func testHighContrastManagerPerformance() {
+        let navigationManager = KeyboardNavigationManager()
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let colors = [Color.red, Color.blue, Color.green, Color.yellow, Color.purple]

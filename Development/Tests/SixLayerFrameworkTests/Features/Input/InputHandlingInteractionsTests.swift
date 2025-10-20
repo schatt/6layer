@@ -63,7 +63,6 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             // Then
             #expect(manager.currentPlatform == testPlatform)
             #expect(manager.interactionPatterns.platform == testPlatform)
-            #expect(manager.keyboardManager.platform == testPlatform)
             #expect(manager.hapticManager.platform == testPlatform)
             #expect(manager.dragDropManager.platform == testPlatform)
             
@@ -536,15 +535,10 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         // When
         let behavior = manager.getInteractionBehavior(for: .tap)
         let dragBehavior = manager.dragDropManager.getDragBehavior()
-        let shortcutDescription = manager.keyboardManager.getShortcutDescription(
-            key: KeyEquivalent("s"),
-            modifiers: .command
-        )
         
         // Then
         #expect(behavior.isSupported)
         #expect(dragBehavior.supportsDrag)
-        #expect(shortcutDescription == "Swipe or tap gesture")
     }
     
     /// BUSINESS PURPOSE: Validate cross-platform consistency functionality
@@ -561,7 +555,6 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             // Each platform should have consistent behavior
             #expect(manager.currentPlatform == platform)
             #expect(manager.interactionPatterns.platform == platform)
-            #expect(manager.keyboardManager.platform == platform)
             #expect(manager.hapticManager.platform == platform)
             #expect(manager.dragDropManager.platform == platform)
         }

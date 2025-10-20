@@ -9,7 +9,7 @@ import ViewInspector
 /// Tests that the actual SwiftUI views are generated correctly with the right properties and modifiers
 /// This verifies the view structure using the new testing pattern: view created + contains expected content
 @MainActor
-open class ViewGenerationVerificationTests {
+struct ViewGenerationVerificationTests {
     
     // MARK: - Test Data
     
@@ -38,7 +38,7 @@ open class ViewGenerationVerificationTests {
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView actually generates views with proper structure
     /// TESTING SCOPE: Tests that the framework returns views with expected content and layout
     /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
-    @Test @MainActor func testIntelligentDetailViewGeneratesProperStructure(
+    @Test @MainActor func testIntelligentDetailViewGeneratesProperStructure() {
         // GIVEN: Test data
         let item = sampleData[0]
         
@@ -90,7 +90,7 @@ open class ViewGenerationVerificationTests {
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles different layout strategies
     /// TESTING SCOPE: Tests that different presentation hints result in different view structures
     /// METHODOLOGY: Tests actual framework behavior with different hints
-    @Test @MainActor func testIntelligentDetailViewWithDifferentHints(
+    @Test @MainActor func testIntelligentDetailViewWithDifferentHints() {
         // GIVEN: Test data and different presentation hints
         let item = sampleData[0]
         
@@ -158,7 +158,7 @@ open class ViewGenerationVerificationTests {
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles custom field views
     /// TESTING SCOPE: Tests that custom field views are actually used in the generated view
     /// METHODOLOGY: Tests that custom content appears in the final view
-    @Test @MainActor func testIntelligentDetailViewWithCustomFieldView(
+    @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: Test data and custom field view
         let item = sampleData[0]
         
@@ -200,7 +200,7 @@ open class ViewGenerationVerificationTests {
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles nil values gracefully
     /// TESTING SCOPE: Tests that views with nil values still generate properly
     /// METHODOLOGY: Tests actual framework behavior with nil data
-    @Test @MainActor func testIntelligentDetailViewWithNilValues(
+    @Test @MainActor func testIntelligentDetailViewWithNilValues() {
         // GIVEN: Test data with nil values
         let item = sampleData[1] // This has nil subtitle
         
@@ -277,7 +277,7 @@ open class ViewGenerationVerificationTests {
     /// BUSINESS PURPOSE: Verify that layout strategy determination works correctly
     /// TESTING SCOPE: Tests that different data complexities result in appropriate layout strategies
     /// METHODOLOGY: Tests actual strategy selection based on data analysis
-    @Test @MainActor func testLayoutStrategyDeterminationWorksCorrectly(
+    @Test @MainActor func testLayoutStrategyDeterminationWorksCorrectly() {
         // GIVEN: Different data complexities
         let simpleData = TestDataItem(
             title: "Simple",
