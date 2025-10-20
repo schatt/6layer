@@ -106,7 +106,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformPhotoCaptureL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo capture function
-        let testCallback: (UIImage?) -> Void = { _ in }
+        let testCallback: (PlatformImage?) -> Void = { _ in }
         
         // When: Creating view using Layer 3 function
         let view = platformPhotoCapture_L3(onCapture: testCallback)
@@ -123,7 +123,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformPhotoDisplayL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo display function
-        let testImage = UIImage(systemName: "photo")
+        let testImage = PlatformImage(systemName: "photo")
         
         // When: Creating view using Layer 3 function
         let view = platformPhotoDisplay_L3(image: testImage)
@@ -140,7 +140,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformPhotoSelectionL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo selection function
-        let testCallback: ([UIImage]) -> Void = { _ in }
+        let testCallback: ([PlatformImage]) -> Void = { _ in }
         
         // When: Creating view using Layer 3 function
         let view = platformPhotoSelection_L3(onSelection: testCallback)
@@ -157,7 +157,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformOCRWithVisualCorrectionL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 OCR function
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage = PlatformImage(systemName: "doc.text")
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 3 function
@@ -296,7 +296,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformOCRWithDisambiguationL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 OCR with disambiguation function
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage = PlatformImage(systemName: "doc.text")
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         
@@ -432,7 +432,7 @@ func platformPresentSettings_L3(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoCapture_L3(onCapture: @escaping (UIImage?) -> Void) -> some View {
+func platformPhotoCapture_L3(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
     VStack {
         Text("Photo Capture")
         Button("Capture") {
@@ -442,7 +442,7 @@ func platformPhotoCapture_L3(onCapture: @escaping (UIImage?) -> Void) -> some Vi
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoDisplay_L3(image: UIImage?) -> some View {
+func platformPhotoDisplay_L3(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
             Image(uiImage: image)
@@ -453,7 +453,7 @@ func platformPhotoDisplay_L3(image: UIImage?) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoSelection_L3(onSelection: @escaping ([UIImage]) -> Void) -> some View {
+func platformPhotoSelection_L3(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
     VStack {
         Text("Photo Selection")
         Button("Select Photos") {
@@ -463,7 +463,7 @@ func platformPhotoSelection_L3(onSelection: @escaping ([UIImage]) -> Void) -> so
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithVisualCorrection_L3(image: UIImage?, onResult: @escaping (String) -> Void) -> some View {
+func platformOCRWithVisualCorrection_L3(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Visual Correction")
         Button("Process") {
@@ -534,7 +534,7 @@ func platformResponsiveCard_L3(title: String, content: String) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithDisambiguation_L3(image: UIImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
+func platformOCRWithDisambiguation_L3(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Disambiguation")
         ForEach(Array(options.enumerated()), id: \.offset) { index, option in

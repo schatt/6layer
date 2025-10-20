@@ -109,7 +109,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformPhotoCaptureL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 photo capture function
-        let testCallback: (UIImage?) -> Void = { _ in }
+        let testCallback: (PlatformImage?) -> Void = { _ in }
         
         // When: Creating view using Layer 5 function
         let view = platformPhotoCapture_L5(onCapture: testCallback)
@@ -126,7 +126,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformPhotoDisplayL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 photo display function
-        let testImage = UIImage(systemName: "photo")
+        let testImage = PlatformImage(systemName: "photo")
         
         // When: Creating view using Layer 5 function
         let view = platformPhotoDisplay_L5(image: testImage)
@@ -143,7 +143,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformPhotoSelectionL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 photo selection function
-        let testCallback: ([UIImage]) -> Void = { _ in }
+        let testCallback: ([PlatformImage]) -> Void = { _ in }
         
         // When: Creating view using Layer 5 function
         let view = platformPhotoSelection_L5(onSelection: testCallback)
@@ -160,7 +160,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformOCRWithVisualCorrectionL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 OCR function
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage = PlatformImage(systemName: "doc.text")
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 5 function
@@ -299,7 +299,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformOCRWithDisambiguationL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 OCR with disambiguation function
-        let testImage = UIImage(systemName: "doc.text")
+        let testImage = PlatformImage(systemName: "doc.text")
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         
@@ -435,7 +435,7 @@ func platformPresentSettings_L5(settings: [String: String]) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoCapture_L5(onCapture: @escaping (UIImage?) -> Void) -> some View {
+func platformPhotoCapture_L5(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
     VStack {
         Text("Photo Capture")
         Button("Capture") {
@@ -445,7 +445,7 @@ func platformPhotoCapture_L5(onCapture: @escaping (UIImage?) -> Void) -> some Vi
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoDisplay_L5(image: UIImage?) -> some View {
+func platformPhotoDisplay_L5(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
             Image(uiImage: image)
@@ -456,7 +456,7 @@ func platformPhotoDisplay_L5(image: UIImage?) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformPhotoSelection_L5(onSelection: @escaping ([UIImage]) -> Void) -> some View {
+func platformPhotoSelection_L5(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
     VStack {
         Text("Photo Selection")
         Button("Select Photos") {
@@ -466,7 +466,7 @@ func platformPhotoSelection_L5(onSelection: @escaping ([UIImage]) -> Void) -> so
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithVisualCorrection_L5(image: UIImage?, onResult: @escaping (String) -> Void) -> some View {
+func platformOCRWithVisualCorrection_L5(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Visual Correction")
         Button("Process") {
@@ -537,7 +537,7 @@ func platformResponsiveCard_L5(title: String, content: String) -> some View {
     .automaticAccessibilityIdentifiers()
 }
 
-func platformOCRWithDisambiguation_L5(image: UIImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
+func platformOCRWithDisambiguation_L5(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Disambiguation")
         ForEach(Array(options.enumerated()), id: \.offset) { index, option in
