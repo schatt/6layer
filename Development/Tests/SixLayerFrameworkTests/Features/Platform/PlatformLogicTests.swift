@@ -232,8 +232,8 @@ open class PlatformLogicTests {
     }
     
     @Test(arguments: [
-        (IntelligentCardLayoutDecision(primaryLayout: .grid, secondaryLayout: .list), SixLayerPlatform.iOS, PlatformCapabilities(supportsHapticFeedback: true, supportsHover: false, supportsTouch: true, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0)),
-        (IntelligentCardLayoutDecision(primaryLayout: .list, secondaryLayout: .grid), SixLayerPlatform.macOS, PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0))
+        (IntelligentCardLayoutDecision(columns: 2, spacing: 16, cardWidth: 200, cardHeight: 150, padding: 16), SixLayerPlatform.iOS, PlatformCapabilities(supportsHapticFeedback: true, supportsHover: false, supportsTouch: true, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0)),
+        (IntelligentCardLayoutDecision(columns: 3, spacing: 20, cardWidth: 250, cardHeight: 180, padding: 20), SixLayerPlatform.macOS, PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0))
     ])
     func testLayoutDecisionAppropriateness(_ layoutDecision: IntelligentCardLayoutDecision, platform: SixLayerPlatform, config: PlatformCapabilities) {
         // Touch platforms should have appropriate touch targets
