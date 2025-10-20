@@ -332,7 +332,7 @@ open class WindowDetectionTests {
     
     // MARK: - Memory Management Tests
     
-    @Test func testWindowDetectionMemoryManagement() {
+    @Test @MainActor func testWindowDetectionMemoryManagement(
         // GIVEN: A window detection instance
         // WHEN: Created and destroyed
         // THEN: Should not leak memory
@@ -349,7 +349,7 @@ open class WindowDetectionTests {
         #expect(weakDetection == nil, "Window detection should be deallocated")
     }
     
-    @Test func testMultipleWindowDetectionInstances() {
+    @Test @MainActor func testMultipleWindowDetectionInstances(
         // GIVEN: Multiple window detection instances
         // WHEN: Created and destroyed
         // THEN: Should not interfere with each other

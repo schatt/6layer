@@ -3,11 +3,11 @@ import SwiftUI
 /// OCR Disambiguation View - User selection interface for ambiguous OCR results
 public struct OCRDisambiguationView: View {
     let result: OCRDisambiguationResult
-    let onSelection: (String) -> Void
+    let onSelection: (OCRDisambiguationSelection) -> Void
     
     public init(
         result: OCRDisambiguationResult,
-        onSelection: @escaping (String) -> Void
+        onSelection: @escaping (OCRDisambiguationSelection) -> Void
     ) {
         self.result = result
         self.onSelection = onSelection

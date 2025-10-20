@@ -5,18 +5,21 @@ public struct OCROverlayView: View {
     let image: PlatformImage
     let result: OCRResult
     let configuration: OCROverlayConfiguration
-    let onResultUpdated: (OCRResult) -> Void
+    let onTextEdit: (String, CGRect) -> Void
+    let onTextDelete: (CGRect) -> Void
     
     public init(
         image: PlatformImage,
         result: OCRResult,
         configuration: OCROverlayConfiguration = OCROverlayConfiguration(),
-        onResultUpdated: @escaping (OCRResult) -> Void = { _ in }
+        onTextEdit: @escaping (String, CGRect) -> Void = { _, _ in },
+        onTextDelete: @escaping (CGRect) -> Void = { _ in }
     ) {
         self.image = image
         self.result = result
         self.configuration = configuration
-        self.onResultUpdated = onResultUpdated
+        self.onTextEdit = onTextEdit
+        self.onTextDelete = onTextDelete
     }
     
     public var body: some View {

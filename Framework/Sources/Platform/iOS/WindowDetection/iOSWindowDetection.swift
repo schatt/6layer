@@ -66,7 +66,7 @@ public class iOSWindowDetection: ObservableObject {
         if size.width >= 1024 {
             return .large
         } else if size.width >= 768 {
-            return .medium
+            return .regular
         } else {
             return .compact
         }

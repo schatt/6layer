@@ -15,6 +15,7 @@ public class TestSetupUtilities {
     
     // MARK: - Singleton
     
+    @MainActor
     public static let shared = TestSetupUtilities()
     
     private init() {}

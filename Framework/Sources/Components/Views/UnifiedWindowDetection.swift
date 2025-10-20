@@ -94,7 +94,7 @@ public class UnifiedWindowDetection: ObservableObject {
         if size.width >= 1024 {
             return .large
         } else if size.width >= 768 {
-            return .medium
+            return .regular
         } else {
             return .compact
         }
@@ -129,7 +129,7 @@ public struct UnifiedWindowSizeModifier: ViewModifier {
                 .onAppear {
                     windowDetection.updateFromGeometry(geometry)
                 }
-                .onChange(of: geometry.size) { _, _ in
+                .onChange(of: geometry.size) { _ in
                     windowDetection.updateFromGeometry(geometry)
                 }
                 .environmentObject(windowDetection)

@@ -9,7 +9,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
 @MainActor
-open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {    @Test func testOCROverlayView_AppliesCorrectModifiersOnIOS() {
+open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {    @Test @MainActor func testOCROverlayView_AppliesCorrectModifiersOnIOS(
         // MANDATORY: Platform mocking required - OCROverlayView has platform-dependent behavior
         
         let mockImage = PlatformImage()
@@ -43,7 +43,7 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {    @Test fun
         print("✅ iOS Platform Mocking: OCROverlayView should use UIImage on iOS")
     }
     
-    @Test func testOCROverlayView_AppliesCorrectModifiersOnMacOS() {
+    @Test @MainActor func testOCROverlayView_AppliesCorrectModifiersOnMacOS(
         // MANDATORY: Platform mocking required - OCROverlayView has platform-dependent behavior
         
         let mockImage = PlatformImage()

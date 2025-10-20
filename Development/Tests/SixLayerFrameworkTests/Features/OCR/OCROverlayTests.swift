@@ -57,7 +57,7 @@ open class OCROverlayTests: BaseTestClass {
         // OCROverlayView is non-optional - no need to check for nil
     }
     
-    @Test func testOCROverlayViewWithEmptyResult() {
+    @Test @MainActor func testOCROverlayViewWithEmptyResult(
         // Given: Empty OCR result
         let emptyResult = OCRResult(
             extractedText: "",
@@ -83,7 +83,7 @@ open class OCROverlayTests: BaseTestClass {
     
     // MARK: - Bounding Box Visualization Tests
     
-    @Test func testBoundingBoxRendering() {
+    @Test @MainActor func testBoundingBoxRendering(
         // Given: OCR result with bounding boxes
         let testImage = PlatformImage()
         let testOCRResult = OCRResult(
@@ -138,7 +138,7 @@ open class OCROverlayTests: BaseTestClass {
     
     // MARK: - Text Region Interaction Tests
     
-    @Test func testTextRegionTapDetection() {
+    @Test @MainActor func testTextRegionTapDetection(
         // Given: OCR overlay with text regions
         let testImage = PlatformImage()
         let testBoundingBoxes = [
@@ -178,7 +178,7 @@ open class OCROverlayTests: BaseTestClass {
         #expect(detectedRegion?.boundingBox == testBoundingBoxes[0])
     }
     
-    @Test func testTextRegionTapOutsideBounds() {
+    @Test @MainActor func testTextRegionTapOutsideBounds(
         // Given: OCR overlay
         let testImage = PlatformImage()
         let testOCRResult = OCRResult(
@@ -215,7 +215,7 @@ open class OCROverlayTests: BaseTestClass {
     
     // MARK: - Text Editing Tests
     
-    @Test func testTextEditingModeToggle() {
+    @Test @MainActor func testTextEditingModeToggle(
         // Given: OCR overlay
         let testImage = PlatformImage()
         let testBoundingBoxes = [
@@ -252,7 +252,7 @@ open class OCROverlayTests: BaseTestClass {
         #expect(tappedRegion?.boundingBox == testBoundingBoxes[0])
     }
     
-    @Test func testTextEditingCompletion() {
+    @Test @MainActor func testTextEditingCompletion(
         // Given: OCR overlay in editing mode
         var editedText: String?
         var editedRect: CGRect?
@@ -296,7 +296,7 @@ open class OCROverlayTests: BaseTestClass {
         #expect(editedRect == testBoundingBoxes[0])
     }
     
-    @Test func testTextEditingCancellation() {
+    @Test @MainActor func testTextEditingCancellation(
         // Given: OCR overlay in editing mode
         let testImage = PlatformImage()
         let testBoundingBoxes = [
@@ -336,7 +336,7 @@ open class OCROverlayTests: BaseTestClass {
     
     // MARK: - Text Deletion Tests
     
-    @Test func testTextRegionDeletion() {
+    @Test @MainActor func testTextRegionDeletion(
         // Given: OCR overlay
         var deletedRect: CGRect?
         let testImage = PlatformImage()
@@ -376,7 +376,7 @@ open class OCROverlayTests: BaseTestClass {
     
     // MARK: - Visual Feedback Tests
     
-    @Test func testConfidenceVisualIndicators() {
+    @Test @MainActor func testConfidenceVisualIndicators(
         // Given: OCR result with varying confidence levels
         let highConfidenceResult = OCRResult(
             extractedText: "High Confidence",
@@ -511,7 +511,7 @@ open class OCROverlayTests: BaseTestClass {
 }
     // MARK: - Edge Cases Tests
     
-    @Test func testOverlappingBoundingBoxes() {
+    @Test @MainActor func testOverlappingBoundingBoxes(
         // Given: OCR result with overlapping bounding boxes
         let overlappingBoxes = [
             CGRect(x: 10, y: 10, width: 50, height: 20),
@@ -543,7 +543,7 @@ open class OCROverlayTests: BaseTestClass {
         #expect(detectedRegion != nil, "Should detect region despite overlap")
     }
     
-    @Test func testZeroSizeBoundingBoxes() {
+    @Test @MainActor func testZeroSizeBoundingBoxes(
         // Given: OCR result with zero-size bounding boxes
         let zeroSizeBoxes = [
             CGRect(x: 10, y: 10, width: 0, height: 0),
@@ -573,7 +573,7 @@ open class OCROverlayTests: BaseTestClass {
         // OCROverlayView is non-optional - no need to check for nil
     }
     
-    @Test func testNegativeBoundingBoxes() {
+    @Test @MainActor func testNegativeBoundingBoxes(
         // Given: OCR result with negative bounding boxes
         let negativeBoxes = [
             CGRect(x: -10, y: -10, width: 50, height: 20),
