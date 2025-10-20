@@ -149,7 +149,7 @@ open class PlatformLogicTests {
     
     @Test(arguments: [
         (PlatformCapabilities(supportsHapticFeedback: true, supportsHover: false, supportsTouch: true, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0), SixLayerPlatform.iOS, DeviceType.phone),
-        (PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0), SixLayerPlatform.macOS, DeviceType.computer)
+        (PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0), SixLayerPlatform.macOS, DeviceType.mac)
     ])
     func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
         // Haptic feedback should only be available with touch
