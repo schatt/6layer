@@ -23,20 +23,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         deviceCapabilities: PhotoDeviceCapabilities()
     )
     
-    private var sampleHints: PresentationHints = PresentationHints()
-    
-    override init() {
-        super.init()
-        samplePhotoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 667),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
-        sampleHints = PresentationHints()
-    }
-    
-    deinit {
+    private var sampleHints: PresentationHints = PresentationHints()deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

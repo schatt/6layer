@@ -9,19 +9,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
 @MainActor
-open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "TDDTest"
-        config.mode = .automatic
-        config.enableDebugLogging = true
-        config.enableAutoIDs = true
-    }
-    
-    deinit {
+open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

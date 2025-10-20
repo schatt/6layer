@@ -5,14 +5,7 @@ import Testing
 @MainActor
 open class DataPresentationIntelligenceTests: BaseTestClass {
     
-    var intelligence: DataPresentationIntelligence!
-    
-    override init() {
-        super.init()
-        intelligence = DataPresentationIntelligence.shared
-    }
-    
-    override func setupTestEnvironment() async {
+    var intelligence: DataPresentationIntelligence!override func setupTestEnvironment() async {
         await super.setupTestEnvironment()
         intelligence = DataPresentationIntelligence.shared
     }

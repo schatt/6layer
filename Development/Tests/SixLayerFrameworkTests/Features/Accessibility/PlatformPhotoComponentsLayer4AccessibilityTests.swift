@@ -8,20 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-            }
-    
-    // MARK: - Photo Picker Tests
+open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {// MARK: - Photo Picker Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS

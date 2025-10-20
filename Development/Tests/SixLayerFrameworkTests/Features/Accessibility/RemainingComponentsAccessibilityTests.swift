@@ -11,13 +11,7 @@ import ViewInspector
 /// TESTING SCOPE: Layer 4 components and other remaining components in the framework
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-open class RemainingComponentsAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - ExpandableCardComponent Tests
+open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - ExpandableCardComponent Tests
     
     @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")

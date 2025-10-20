@@ -12,13 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - AccessibilityManager Tests
+open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MARK: - AccessibilityManager Tests
     
     @Test func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AccessibilityManager

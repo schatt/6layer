@@ -8,20 +8,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for GenericItemCollectionView
 /// This test SHOULD FAIL - proving GenericItemCollectionView doesn't generate accessibility IDs
 @MainActor
-open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-        // Additional setup if needed
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "TDDTest"
-        config.mode = .automatic
-        config.enableDebugLogging = true
-        config.enableAutoIDs = true
-    }
-    
-    deinit {
+open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

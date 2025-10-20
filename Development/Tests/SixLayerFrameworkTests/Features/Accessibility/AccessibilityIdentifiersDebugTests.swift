@@ -7,13 +7,7 @@ import ViewInspector
 
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
-open class AccessibilityIdentifiersDebugTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    deinit {
+open class AccessibilityIdentifiersDebugTests: BaseTestClass {deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

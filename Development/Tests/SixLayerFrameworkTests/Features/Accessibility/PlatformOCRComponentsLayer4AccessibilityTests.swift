@@ -8,14 +8,7 @@ import ViewInspector
 /// Ensures OCR components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-open class PlatformOCRComponentsLayer4AccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-        // Additional setup if needed
-    }
-    
-    deinit {
+open class PlatformOCRComponentsLayer4AccessibilityTests: BaseTestClass {deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

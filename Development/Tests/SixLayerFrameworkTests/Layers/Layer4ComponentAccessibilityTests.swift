@@ -12,13 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class Layer4ComponentAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Layer 4 Semantic Functions Tests
+open class Layer4ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 4 Semantic Functions Tests
     
     @Test func testPlatformPresentItemCollectionL4GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 4 item collection function

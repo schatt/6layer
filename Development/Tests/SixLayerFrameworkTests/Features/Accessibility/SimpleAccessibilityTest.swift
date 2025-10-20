@@ -7,19 +7,7 @@ import ViewInspector
 
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
-open class SimpleAccessibilityTest: BaseTestClass {
-    
-    override init() {
-        super.init()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "SimpleTest"
-        config.mode = .automatic
-        config.enableDebugLogging = true
-        config.enableAutoIDs = true
-    }
-    
-    @Test func testManualAccessibilityIdentifierWorks() {
+open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessibilityIdentifierWorks() {
         // Test manual accessibility identifier to make sure ViewInspector works
         let testView = Button("Test") { }
             .accessibilityIdentifier("manual-test-id")

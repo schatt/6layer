@@ -8,13 +8,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for MaterialAccessibilityManager.swift classes
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - MaterialAccessibilityManager Tests
+open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MARK: - MaterialAccessibilityManager Tests
     
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS

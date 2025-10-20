@@ -16,13 +16,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class Layer5ComponentAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Layer 5 Semantic Functions Tests
+open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 Semantic Functions Tests
     
     @Test func testPlatformPresentItemCollectionL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 item collection function

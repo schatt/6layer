@@ -12,13 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class PlatformAssessmentLayer5ComponentAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Platform Assessment Layer 5 Component Tests
+open class PlatformAssessmentLayer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Platform Assessment Layer 5 Component Tests
     
     @Test func testPlatformAssessmentLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformAssessmentLayer5

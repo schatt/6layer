@@ -8,13 +8,7 @@ import ViewInspector
 /// Edge case tests for accessibility identifier generation bug fix
 /// These tests ensure our fix handles all edge cases properly
 @MainActor
-open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    deinit {
+open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {deinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

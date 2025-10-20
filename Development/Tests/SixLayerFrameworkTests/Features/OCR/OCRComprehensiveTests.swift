@@ -31,13 +31,7 @@ import SwiftUI
 /// Comprehensive tests for OCR functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
-open class OCRComprehensiveTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Real OCR Comprehensive Tests (To Be Implemented)
+open class OCRComprehensiveTests: BaseTestClass {// MARK: - Real OCR Comprehensive Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test comprehensive OCR functionality:
     // - Real Vision framework integration

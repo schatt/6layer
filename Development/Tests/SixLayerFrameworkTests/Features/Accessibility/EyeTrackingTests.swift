@@ -43,20 +43,7 @@ open class EyeTrackingTests: BaseTestClass {
     var eyeTrackingManager: EyeTrackingManager!
     var testConfig: EyeTrackingConfig!
     
-    // MARK: - Setup and Teardown
-    
-    override init() {
-        super.init()
-        testConfig = EyeTrackingConfig(
-            sensitivity: .medium,
-            dwellTime: 1.0,
-            visualFeedback: true,
-            hapticFeedback: true
-        )
-        eyeTrackingManager = EyeTrackingManager(config: testConfig)
-    }
-    
-    deinit {
+    // MARK: - Setup and Teardowndeinit {
         Task { [weak self] in
             await self?.cleanupTestEnvironment()
         }

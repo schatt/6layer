@@ -8,20 +8,7 @@ import ViewInspector
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-open class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-        // Additional setup if needed
-    }
-    
-    deinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
-    
-    // MARK: - OCR Strategy Selection Tests
+open class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {// MARK: - OCR Strategy Selection Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS

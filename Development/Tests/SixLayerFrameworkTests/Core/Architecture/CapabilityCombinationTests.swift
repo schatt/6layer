@@ -39,14 +39,7 @@ import SwiftUI
 /// Capability combination testing
 /// Tests all possible combinations of capabilities to ensure they work together correctly
 @MainActor
-open class CapabilityCombinationTests: BaseTestClass {
-    override init() {
-        super.init()
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
-    }
-    
-    // MARK: - Capability Combination Matrix
+open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Combination Matrix
     
     struct CapabilityCombination {
         let name: String

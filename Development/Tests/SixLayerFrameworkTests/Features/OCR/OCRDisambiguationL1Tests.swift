@@ -29,13 +29,7 @@ import SwiftUI
 /// Tests for Layer 1 OCR disambiguation functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR disambiguation functionality
 @MainActor
-open class OCRDisambiguationL1Tests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Real Layer 1 OCR Disambiguation Tests (To Be Implemented)
+open class OCRDisambiguationL1Tests: BaseTestClass {// MARK: - Real Layer 1 OCR Disambiguation Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test Layer 1 OCR disambiguation functionality:
     // - Real Layer 1 disambiguation view initialization and configuration

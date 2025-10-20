@@ -12,13 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class PlatformSynchronizationLayer5ComponentAccessibilityTests: BaseTestClass {
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - Platform Synchronization Layer 5 Component Tests
+open class PlatformSynchronizationLayer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Platform Synchronization Layer 5 Component Tests
     
     @Test func testPlatformSynchronizationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSynchronizationLayer5

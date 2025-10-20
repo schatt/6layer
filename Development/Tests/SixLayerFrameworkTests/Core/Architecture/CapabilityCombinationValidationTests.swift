@@ -39,16 +39,7 @@ import SwiftUI
 /// Capability combination validation testing
 /// Validates that capability combinations work correctly on the current platform
 @MainActor
-open class CapabilityCombinationValidationTests: BaseTestClass {
-    override init() {
-        super.init()
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
-        RuntimeCapabilityDetection.setTestVoiceOver(true)
-        RuntimeCapabilityDetection.setTestSwitchControl(true)
-    }
-    
-    // MARK: - Current Platform Combination Tests
+open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Current Platform Combination Tests
     
     @Test func testCurrentPlatformCombination() {
         let platform = SixLayerPlatform.current

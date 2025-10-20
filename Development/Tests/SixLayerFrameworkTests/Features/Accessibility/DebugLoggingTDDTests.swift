@@ -15,13 +15,7 @@ import Foundation
 @MainActor
 open class DebugLoggingTDDTests: BaseTestClass {
     
-    // MARK: - Test Setup
-    
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - AccessibilityIdentifierGenerator Tests
+    // MARK: - Test Setup// MARK: - AccessibilityIdentifierGenerator Tests
     
     /// TEST: AccessibilityIdentifierGenerator should exist and be instantiable
     @Test func testAccessibilityIdentifierGeneratorExists() async {
