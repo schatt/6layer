@@ -49,3 +49,4 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
         }
     }
     
+}
