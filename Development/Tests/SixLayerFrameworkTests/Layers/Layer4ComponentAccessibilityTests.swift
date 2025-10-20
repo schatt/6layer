@@ -7,7 +7,7 @@ import SwiftUI
 //  Layer4ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
 //
-//  Tests Layer 4 components for accessibility
+//  Tests Layer 4 components for accessibility - these are View extensions that add platform-specific styling
 //
 
 @MainActor
@@ -15,204 +15,176 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 4 Component Tests
     
-    @Test func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 photo components
-        let photoComponents = PlatformPhotoComponentsLayer4()
+    @Test func testPlatformPrimaryButtonStyleGeneratesAccessibilityIdentifiers() async {
+        // Given: A test button
+        let testButton = Button("Test Button") { }
         
-        // When: Creating photo picker view
-        let photoPickerView = photoComponents.platformPhotoPicker_L4(onImageSelected: { _ in })
+        // When: Applying platform primary button style
+        let styledButton = testButton.platformPrimaryButtonStyle()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            photoPickerView,
+            styledButton,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformPhotoComponentsLayer4"
+            componentName: "PlatformPrimaryButtonStyle"
         )
         
-        #expect(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform primary button style should generate accessibility identifiers")
     }
     
-    @Test func testPlatformButtonsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 buttons component
-        let buttonsLayer = PlatformButtonsLayer4()
+    @Test func testPlatformSecondaryButtonStyleGeneratesAccessibilityIdentifiers() async {
+        // Given: A test button
+        let testButton = Button("Test Button") { }
         
-        // When: Creating button view
-        let buttonView = buttonsLayer.createPrimaryButton(title: "Test Button", action: {})
+        // When: Applying platform secondary button style
+        let styledButton = testButton.platformSecondaryButtonStyle()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            buttonView,
+            styledButton,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformButtonsLayer4"
+            componentName: "PlatformSecondaryButtonStyle"
         )
         
-        #expect(hasAccessibilityID, "PlatformButtonsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform secondary button style should generate accessibility identifiers")
     }
     
-    @Test func testPlatformFormsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 forms component
-        let formsLayer = PlatformFormsLayer4()
+    @Test func testPlatformFormFieldGeneratesAccessibilityIdentifiers() async {
+        // Given: A test text field
+        let testTextField = TextField("Placeholder", text: .constant(""))
         
-        // When: Creating form view
-        let formView = formsLayer.createFormField(
-            id: "test-field",
-            contentType: .text,
-            label: "Test Field",
-            placeholder: "Enter text"
-        )
+        // When: Applying platform form field wrapper
+        let formField = testTextField.platformFormField(label: "Test Field")
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            formView,
+            formField,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformFormsLayer4"
+            componentName: "PlatformFormField"
         )
         
-        #expect(hasAccessibilityID, "PlatformFormsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform form field should generate accessibility identifiers")
     }
     
-    @Test func testPlatformListsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 lists component
-        let listsLayer = PlatformListsLayer4()
+    @Test func testPlatformListRowGeneratesAccessibilityIdentifiers() async {
+        // Given: A test list row content
+        let testContent = HStack {
+            Text("Test Item")
+            Spacer()
+        }
         
-        // When: Creating list view
-        let listView = listsLayer.createItemList(
-            items: ["Item 1", "Item 2", "Item 3"],
-            onItemSelected: { _ in }
-        )
+        // When: Applying platform list row wrapper
+        let listRow = testContent.platformListRow()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            listView,
+            listRow,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformListsLayer4"
+            componentName: "PlatformListRow"
         )
         
-        #expect(hasAccessibilityID, "PlatformListsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform list row should generate accessibility identifiers")
     }
     
-    @Test func testPlatformModalsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 modals component
-        let modalsLayer = PlatformModalsLayer4()
+    @Test func testPlatformCardStyleGeneratesAccessibilityIdentifiers() async {
+        // Given: A test card content
+        let testCard = VStack {
+            Text("Test Card Title")
+            Text("Test Card Content")
+        }
         
-        // When: Creating modal view
-        let modalView = modalsLayer.createModal(
-            title: "Test Modal",
-            content: Text("Test Content"),
-            onDismiss: {}
-        )
+        // When: Applying platform card style
+        let styledCard = testCard.platformCardStyle()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            modalView,
+            styledCard,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformModalsLayer4"
+            componentName: "PlatformCardStyle"
         )
         
-        #expect(hasAccessibilityID, "PlatformModalsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform card style should generate accessibility identifiers")
     }
     
-    @Test func testPlatformNavigationLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 navigation component
-        let navigationLayer = PlatformNavigationLayer4()
+    @Test func testPlatformSheetGeneratesAccessibilityIdentifiers() async {
+        // Given: A test sheet content
+        let testSheetContent = VStack {
+            Text("Test Sheet Title")
+            Text("Test Sheet Content")
+        }
         
-        // When: Creating navigation view
-        let navigationView = navigationLayer.createNavigationBar(
-            title: "Test Title",
-            leadingButton: nil,
-            trailingButton: nil
-        )
+        // When: Applying platform sheet wrapper
+        let sheet = testSheetContent.platformSheet(isPresented: .constant(true)) {
+            testSheetContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            navigationView,
+            sheet,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformNavigationLayer4"
+            componentName: "PlatformSheet"
         )
         
-        #expect(hasAccessibilityID, "PlatformNavigationLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform sheet should generate accessibility identifiers")
     }
     
-    @Test func testPlatformResponsiveCardsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 responsive cards component
-        let cardsLayer = PlatformResponsiveCardsLayer4()
+    @Test func testPlatformNavigationGeneratesAccessibilityIdentifiers() async {
+        // Given: A test navigation content
+        let testNavigationContent = VStack {
+            Text("Test Navigation Title")
+            Text("Test Navigation Content")
+        }
         
-        // When: Creating card view
-        let cardView = cardsLayer.createCard(
-            title: "Test Card",
-            content: Text("Test Content"),
-            onTap: {}
-        )
+        // When: Applying platform navigation wrapper
+        let navigation = testNavigationContent.platformNavigation()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            cardView,
+            navigation,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformResponsiveCardsLayer4"
+            componentName: "PlatformNavigation"
         )
         
-        #expect(hasAccessibilityID, "PlatformResponsiveCardsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform navigation should generate accessibility identifiers")
     }
     
-    @Test func testPlatformStylingLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 styling component
-        let stylingLayer = PlatformStylingLayer4()
+    @Test func testPlatformCardGridGeneratesAccessibilityIdentifiers() async {
+        // Given: Test card items
+        let testItems = ["Item 1", "Item 2", "Item 3"]
         
-        // When: Creating styled view
-        let styledView = stylingLayer.applyStyling(
-            to: Text("Test Text"),
-            style: .primary
-        )
+        // When: Creating platform card grid
+        let cardGrid = EmptyView().platformCardGrid(
+            items: testItems,
+            columns: 2,
+            spacing: 16
+        ) { item in
+            Text(item)
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            styledView,
+            cardGrid,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformStylingLayer4"
+            componentName: "PlatformCardGrid"
         )
         
-        #expect(hasAccessibilityID, "PlatformStylingLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform card grid should generate accessibility identifiers")
     }
     
-    @Test func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 OCR components
-        let ocrComponents = PlatformOCRComponentsLayer4()
+    @Test func testPlatformBackgroundGeneratesAccessibilityIdentifiers() async {
+        // Given: A test text view
+        let testText = Text("Test Text")
         
-        // When: Creating OCR view
-        let ocrView = ocrComponents.createOCRView(
-            image: PlatformImage.createPlaceholder(),
-            onTextExtracted: { _ in }
-        )
+        // When: Applying platform background
+        let backgroundText = testText.platformBackground()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            ocrView,
+            backgroundText,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformOCRComponentsLayer4"
+            componentName: "PlatformBackground"
         )
         
-        #expect(hasAccessibilityID, "PlatformOCRComponentsLayer4 should generate accessibility identifiers")
-    }
-    
-    @Test func testIntelligentCardExpansionLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 4 intelligent card expansion component
-        let cardExpansion = IntelligentCardExpansionLayer4()
-        
-        // When: Creating card expansion view
-        let cardView = cardExpansion.createExpandableCard(
-            title: "Test Card",
-            content: Text("Test Content"),
-            expandedContent: Text("Expanded Content"),
-            onTap: {}
-        )
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            cardView,
-            expectedPattern: "*.main.element.*",
-            componentName: "IntelligentCardExpansionLayer4"
-        )
-        
-        #expect(hasAccessibilityID, "IntelligentCardExpansionLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Platform background should generate accessibility identifiers")
     }
 }
