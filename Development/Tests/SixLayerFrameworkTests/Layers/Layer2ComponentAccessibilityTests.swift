@@ -485,7 +485,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentHierarchicalData_L2(hierarchy: [String: Any]) -> some View {
+@MainActor func platformPresentHierarchicalData_L2(hierarchy: [String: Any]) -> some View {
     VStack {
         Text("Hierarchical Data")
         ForEach(Array(hierarchy.keys), id: \.self) { key in
@@ -495,7 +495,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentTemporalData_L2(temporalData: [Date]) -> some View {
+@MainActor func platformPresentTemporalData_L2(temporalData: [Date]) -> some View {
     VStack {
         Text("Temporal Data")
         ForEach(Array(temporalData.enumerated()), id: \.offset) { index, date in
@@ -505,21 +505,21 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentContent_L2(content: String) -> some View {
+@MainActor func platformPresentContent_L2(content: String) -> some View {
     VStack {
         Text(content)
     }
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentBasicValue_L2(value: Int) -> some View {
+@MainActor func platformPresentBasicValue_L2(value: Int) -> some View {
     VStack {
         Text("\(value)")
     }
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentBasicArray_L2(array: [Int]) -> some View {
+@MainActor func platformPresentBasicArray_L2(array: [Int]) -> some View {
     VStack {
         ForEach(Array(array.enumerated()), id: \.offset) { index, value in
             Text("\(value)")
@@ -528,7 +528,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcResponsiveCard_L2(title: String, content: String) -> some View {
+@MainActor func platformResponsiveCard_L2(title: String, content: String) -> some View {
     VStack {
         Text(title)
         Text(content)
@@ -536,7 +536,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcOCRWithDisambiguation_L2(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
+@MainActor func platformOCRWithDisambiguation_L2(image: PlatformImage?, options: [String], onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Disambiguation")
         ForEach(Array(options.enumerated()), id: \.offset) { index, option in
@@ -548,7 +548,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcExtractStructuredData_L2(data: [String: String]) -> some View {
+@MainActor func platformExtractStructuredData_L2(data: [String: String]) -> some View {
     VStack {
         Text("Structured Data")
         ForEach(Array(data.keys), id: \.self) { key in
@@ -558,21 +558,21 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentLocalizedContent_L2(content: String, locale: Locale) -> some View {
+@MainActor func platformPresentLocalizedContent_L2(content: String, locale: Locale) -> some View {
     VStack {
         Text(content)
     }
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentLocalizedText_L2(text: String, locale: Locale) -> some View {
+@MainActor func platformPresentLocalizedText_L2(text: String, locale: Locale) -> some View {
     VStack {
         Text(text)
     }
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor funcPresentLocalizedNumber_L2(number: Double, locale: Locale) -> some View {
+@MainActor func platformPresentLocalizedNumber_L2(number: Double, locale: Locale) -> some View {
     VStack {
         Text("\(number)")
     }
