@@ -43,7 +43,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Basic Capability Tests
     
-    @Test func testLiquidGlassSupportDetection() {
+    @Test @MainActor func testLiquidGlassSupportDetection() {
         // Given & When
         let isSupported = LiquidGlassCapabilityDetection.isSupported
         
@@ -52,7 +52,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(!isSupported, "Liquid Glass should not be supported on current platforms")
     }
     
-    @Test func testSupportLevelDetection() {
+    @Test @MainActor func testSupportLevelDetection() {
         // Given & When
         let supportLevel = LiquidGlassCapabilityDetection.supportLevel
         
@@ -61,7 +61,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(supportLevel == .fallback, "Current platforms should use fallback support level")
     }
     
-    @Test func testHardwareRequirementsSupport() {
+    @Test @MainActor func testHardwareRequirementsSupport() {
         // Given & When
         let supportsHardware = LiquidGlassCapabilityDetection.supportsHardwareRequirements
         
@@ -72,7 +72,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Feature Availability Tests
     
-    @Test func testFeatureAvailabilityForUnsupportedPlatform() {
+    @Test @MainActor func testFeatureAvailabilityForUnsupportedPlatform() {
         // Given
         let features: [LiquidGlassFeature] = [.materials, .floatingControls, .contextualMenus, .adaptiveWallpapers, .dynamicReflections]
         
@@ -83,7 +83,7 @@ open class LiquidGlassCapabilityDetectionTests {
         }
     }
     
-    @Test func testAllFeaturesHaveFallbackBehaviors() {
+    @Test @MainActor func testAllFeaturesHaveFallbackBehaviors() {
         // Given
         let features = LiquidGlassFeature.allCases
         
@@ -94,7 +94,7 @@ open class LiquidGlassCapabilityDetectionTests {
         }
     }
     
-    @Test func testFallbackBehaviorsAreAppropriate() {
+    @Test @MainActor func testFallbackBehaviorsAreAppropriate() {
         // Given & When
         let materialFallback = LiquidGlassCapabilityDetection.getFallbackBehavior(for: .materials)
         let controlFallback = LiquidGlassCapabilityDetection.getFallbackBehavior(for: .floatingControls)
@@ -112,7 +112,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Capability Info Tests
     
-    @Test func testCapabilityInfoCreation() {
+    @Test @MainActor func testCapabilityInfoCreation() {
         // Given & When
         let capabilityInfo = LiquidGlassCapabilityInfo()
         
@@ -125,7 +125,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - REAL TDD TESTS FOR LIQUID GLASS CAPABILITY FALLBACK BEHAVIORS
     
-    @Test func testCapabilityInfoFallbackBehaviorsCompleteness() throws {
+    @Test @MainActor func testCapabilityInfoFallbackBehaviorsCompleteness() throws {
         // Test that ALL LiquidGlassFeature cases have fallback behaviors
         // This will FAIL if we add a new feature without handling it in LiquidGlassCapabilityInfo
         
@@ -137,7 +137,7 @@ open class LiquidGlassCapabilityDetectionTests {
         }
     }
     
-    @Test func testCapabilityInfoFallbackBehaviorsBusinessLogic() throws {
+    @Test @MainActor func testCapabilityInfoFallbackBehaviorsBusinessLogic() throws {
         // Test that each LiquidGlassFeature has appropriate fallback behavior for its business purpose
         // This tests the actual business behavior, not just existence
         
@@ -172,7 +172,7 @@ open class LiquidGlassCapabilityDetectionTests {
         }
     }
     
-    @Test func testCapabilityInfoFallbackBehaviorsExhaustiveness() throws {
+    @Test @MainActor func testCapabilityInfoFallbackBehaviorsExhaustiveness() throws {
         // Test that LiquidGlassCapabilityInfo handles ALL LiquidGlassFeature cases
         // This will FAIL if we add a new feature without handling it
         
@@ -194,7 +194,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Platform-Specific Tests
     
-    @Test func testPlatformCapabilities() {
+    @Test @MainActor func testPlatformCapabilities() {
         // Given & When
         let platformCapabilities = LiquidGlassCapabilityDetection.getPlatformCapabilities()
         
@@ -203,7 +203,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(platformCapabilities.supportLevel == .fallback, "Platform support level should be fallback")
     }
     
-    @Test func testRecommendedFallbackApproach() {
+    @Test @MainActor func testRecommendedFallbackApproach() {
         // Given & When
         let approach = LiquidGlassCapabilityDetection.recommendedFallbackApproach
         
@@ -214,7 +214,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Support Level Tests
     
-    @Test func testSupportLevelCases() {
+    @Test @MainActor func testSupportLevelCases() {
         // Given
         let allCases = LiquidGlassSupportLevel.allCases
         
@@ -225,7 +225,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(allCases.contains(.unsupported), "Should include unsupported support level")
     }
     
-    @Test func testSupportLevelRawValues() {
+    @Test @MainActor func testSupportLevelRawValues() {
         // Given & When
         let full = LiquidGlassSupportLevel.full
         let fallback = LiquidGlassSupportLevel.fallback
@@ -239,7 +239,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Feature Tests
     
-    @Test func testFeatureCases() {
+    @Test @MainActor func testFeatureCases() {
         // Given
         let allCases = LiquidGlassFeature.allCases
         
@@ -252,7 +252,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(allCases.contains(.dynamicReflections), "Should include dynamic reflections feature")
     }
     
-    @Test func testFeatureRawValues() {
+    @Test @MainActor func testFeatureRawValues() {
         // Given & When
         let materials = LiquidGlassFeature.materials
         let floatingControls = LiquidGlassFeature.floatingControls
@@ -270,7 +270,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Fallback Behavior Tests
     
-    @Test func testFallbackBehaviorCases() {
+    @Test @MainActor func testFallbackBehaviorCases() {
         // Given
         let allCases = LiquidGlassFallbackBehavior.allCases
         
@@ -283,7 +283,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(allCases.contains(.noReflections), "Should include no reflections behavior")
     }
     
-    @Test func testFallbackBehaviorRawValues() {
+    @Test @MainActor func testFallbackBehaviorRawValues() {
         // Given & When
         let opaqueBackground = LiquidGlassFallbackBehavior.opaqueBackground
         let standardControls = LiquidGlassFallbackBehavior.standardControls
@@ -301,7 +301,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Edge Case Tests
     
-    @Test func testCapabilityDetectionConsistency() {
+    @Test @MainActor func testCapabilityDetectionConsistency() {
         // Given & When
         let isSupported1 = LiquidGlassCapabilityDetection.isSupported
         let isSupported2 = LiquidGlassCapabilityDetection.isSupported
@@ -313,7 +313,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(supportLevel1 == supportLevel2, "Support level should be consistent")
     }
     
-    @Test func testFeatureAvailabilityConsistency() {
+    @Test @MainActor func testFeatureAvailabilityConsistency() {
         // Given
         let features = LiquidGlassFeature.allCases
         
@@ -325,7 +325,7 @@ open class LiquidGlassCapabilityDetectionTests {
         }
     }
     
-    @Test func testFallbackBehaviorConsistency() {
+    @Test @MainActor func testFallbackBehaviorConsistency() {
         // Given
         let features = LiquidGlassFeature.allCases
         
@@ -339,7 +339,7 @@ open class LiquidGlassCapabilityDetectionTests {
     
     // MARK: - Performance Tests
     
-    @Test func testCapabilityDetectionPerformance() {
+    @Test @MainActor func testCapabilityDetectionPerformance() {
         // Given
         let iterations = 1000
         
@@ -356,7 +356,7 @@ open class LiquidGlassCapabilityDetectionTests {
         #expect(executionTime < 0.1, "Capability detection should be fast (under 100ms for 1000 iterations)")
     }
     
-    @Test func testFeatureAvailabilityPerformance() {
+    @Test @MainActor func testFeatureAvailabilityPerformance() {
         // Given
         let features = LiquidGlassFeature.allCases
         let iterations = 100

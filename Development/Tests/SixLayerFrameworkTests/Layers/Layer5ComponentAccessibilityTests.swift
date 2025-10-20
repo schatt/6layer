@@ -126,7 +126,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformPhotoDisplayL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 photo display function
-        let testImage = PlatformImage(systemName: "photo")
+        let testImage = PlatformImage()
         
         // When: Creating view using Layer 5 function
         let view = platformPhotoDisplay_L5(image: testImage)
@@ -160,7 +160,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformOCRWithVisualCorrectionL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 OCR function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 5 function
@@ -299,7 +299,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 5 
     
     @Test func testPlatformOCRWithDisambiguationL5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 OCR with disambiguation function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         

@@ -123,7 +123,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformPhotoDisplayL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 photo display function
-        let testImage = PlatformImage(systemName: "photo")
+        let testImage = PlatformImage()
         
         // When: Creating view using Layer 3 function
         let view = platformPhotoDisplay_L3(image: testImage)
@@ -157,7 +157,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformOCRWithVisualCorrectionL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 OCR function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 3 function
@@ -296,7 +296,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
     
     @Test func testPlatformOCRWithDisambiguationL3GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 3 OCR with disambiguation function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         
@@ -445,7 +445,7 @@ func platformPhotoCapture_L3(onCapture: @escaping (PlatformImage?) -> Void) -> s
 func platformPhotoDisplay_L3(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
-            Image(uiImage: image)
+            Image(platformImage: image)
         } else {
             Text("No Image")
         }

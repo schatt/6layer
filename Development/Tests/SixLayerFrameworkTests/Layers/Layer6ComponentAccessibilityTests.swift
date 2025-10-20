@@ -126,7 +126,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 6 
     
     @Test func testPlatformPhotoDisplayL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 photo display function
-        let testImage = PlatformImage(systemName: "photo")
+        let testImage = PlatformImage()
         
         // When: Creating view using Layer 6 function
         let view = platformPhotoDisplay_L6(image: testImage)
@@ -160,7 +160,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 6 
     
     @Test func testPlatformOCRWithVisualCorrectionL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 OCR function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testCallback: (String) -> Void = { _ in }
         
         // When: Creating view using Layer 6 function
@@ -299,7 +299,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 6 
     
     @Test func testPlatformOCRWithDisambiguationL6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 OCR with disambiguation function
-        let testImage = PlatformImage(systemName: "doc.text")
+        let testImage = PlatformImage()
         let testOptions = ["Option 1", "Option 2", "Option 3"]
         let testCallback: (String) -> Void = { _ in }
         
