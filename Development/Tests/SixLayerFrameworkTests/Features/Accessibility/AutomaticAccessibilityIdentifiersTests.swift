@@ -23,18 +23,15 @@ open class AutomaticAccessibilityIdentifiersTests {
         // namespace is automatically detected as "SixLayer" for tests
         config.mode = .automatic
         config.enableDebugLogging = false
-    }    // MARK: - Namespace Detection Tests
+    }
     
+    // MARK: - Namespace Detection Tests
     
     private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testAutomaticNamespaceDetectionForTests() async {
+    @Test func testAutomaticNamespaceDetectionForTests() async {
         // GIVEN: We're running in a test environment
         // WHEN: Creating a new config
         let config = AccessibilityIdentifierConfig.shared

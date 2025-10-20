@@ -23,18 +23,15 @@ open class IntelligentCardExpansionLayer2Tests {
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }    // MARK: - determineOptimalCardLayout_L2 Tests
+    }
     
+    // MARK: - determineOptimalCardLayout_L2 Tests
     
     private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
-@Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         let result = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 375,
