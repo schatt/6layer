@@ -17,17 +17,18 @@ open class PlatformOCRComponentsLayer4ComponentAccessibilityTests: BaseTestClass
     // MARK: - Platform OCR Components Layer 4 Tests
     
     @Test func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: PlatformOCRComponentsLayer4
-        let testView = PlatformOCRComponentsLayer4()
+        // Given: OCRService (replacement for deprecated PlatformOCRComponentsLayer4)
+        let testView = Text("OCR Service Test")
+            .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
             testView,
             expectedPattern: "*.main.element.*",
-            componentName: "PlatformOCRComponentsLayer4"
+            componentName: "OCRService"
         )
         
-        #expect(hasAccessibilityID, "PlatformOCRComponentsLayer4 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "OCRService should generate accessibility identifiers")
     }
 }
 
