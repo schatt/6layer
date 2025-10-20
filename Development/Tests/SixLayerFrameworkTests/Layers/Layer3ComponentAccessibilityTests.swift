@@ -1,27 +1,31 @@
 import Testing
 import Foundation
-
+import SwiftUI
+@testable import SixLayerFramework
 
 //
 //  Layer3ComponentAccessibilityTests.swift
 //  SixLayerFrameworkTests
 //
-//  Comprehensive accessibility tests for ALL Layer 3 components
+//  Tests Layer 1 semantic functions and Layer 4 components for accessibility
 //
 
-import SwiftUI
-@testable import SixLayerFramework
-
 @MainActor
-open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 Semantic Functions Tests
+open class Layer3ComponentAccessibilityTests: BaseTestClass {
     
-    @Test func testPlatformPresentItemCollectionL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 item collection function
-        let testItems = ["Item 1", "Item 2", "Item 3"]
-        let testHints = ["Hint 1", "Hint 2", "Hint 3"]
+    // MARK: - Layer 1 Semantic Functions Tests
+    
+    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 1 item collection function with test data
+        struct TestItem: Identifiable {
+            let id = UUID()
+            let title: String
+        }
+        let testItems = [TestItem(title: "Item 1"), TestItem(title: "Item 2"), TestItem(title: "Item 3")]
+        let testHints = PresentationHints()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentItemCollection_L3(
+        // When: Creating view using Layer 1 function
+        let view = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
@@ -30,361 +34,282 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {// MARK: - Layer 3 
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            componentName: "ItemCollectionL3"
+            componentName: "ItemCollectionL1"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 item collection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 1 item collection function should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentNumericDataL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 numeric data function
-        let testData = [1.0, 2.0, 3.0]
+    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 1 numeric data function with test data
+        let testData = [
+            GenericNumericData(value: 1.0, label: "Value 1"),
+            GenericNumericData(value: 2.0, label: "Value 2"),
+            GenericNumericData(value: 3.0, label: "Value 3")
+        ]
+        let testHints = PresentationHints()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentNumericData_L3(data: testData)
+        // When: Creating view using Layer 1 function
+        let view = platformPresentNumericData_L1(data: testData, hints: testHints)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            componentName: "NumericDataL3"
+            componentName: "NumericDataL1"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 numeric data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 1 numeric data function should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentFormDataL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 form data function
-        let testFormData = ["field1": "value1", "field2": "value2"]
+    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 1 form data function with test data
+        let testFields = [
+            DynamicFormField(
+                id: "field1",
+                contentType: .text,
+                label: "Field 1",
+                placeholder: "Enter text",
+                isRequired: true
+            ),
+            DynamicFormField(
+                id: "field2", 
+                contentType: .email,
+                label: "Email",
+                placeholder: "Enter email",
+                isRequired: true
+            )
+        ]
+        let testHints = PresentationHints()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentFormData_L3(formData: testFormData)
+        // When: Creating view using Layer 1 function
+        let view = platformPresentFormData_L1(fields: testFields, hints: testHints)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            componentName: "FormDataL3"
+            componentName: "FormDataL1"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 form data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 1 form data function should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentMediaDataL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 media data function
-        let testMediaData = ["image1.jpg", "video1.mp4"]
+    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 1 media data function with test data
+        let testMedia = [
+            GenericMediaItem(
+                id: "media1",
+                type: .image,
+                url: "test://image1.jpg",
+                title: "Test Image 1"
+            ),
+            GenericMediaItem(
+                id: "media2",
+                type: .video,
+                url: "test://video1.mp4", 
+                title: "Test Video 1"
+            )
+        ]
+        let testHints = PresentationHints()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentMediaData_L3(mediaData: testMediaData)
+        // When: Creating view using Layer 1 function
+        let view = platformPresentMediaData_L1(media: testMedia, hints: testHints)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            componentName: "MediaDataL3"
+            componentName: "MediaDataL1"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 media data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 1 media data function should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentSettingsL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 settings function
-        let testSettings = ["setting1": "value1", "setting2": "value2"]
+    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 1 settings function with test data
+        let testSections = [
+            SettingsSectionData(
+                title: "General",
+                items: [
+                    SettingsItemData(title: "Setting 1", type: .toggle),
+                    SettingsItemData(title: "Setting 2", type: .text)
+                ]
+            )
+        ]
+        let testHints = PresentationHints()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentSettings_L3(settings: testSettings)
+        // When: Creating view using Layer 1 function
+        let view = platformPresentSettings_L1(sections: testSections, hints: testHints)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
             view,
             expectedPattern: "*.main.element.*",
-            componentName: "SettingsL3"
+            componentName: "SettingsL1"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 settings function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Layer 1 settings function should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPhotoCaptureL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 photo capture function
-        let testCallback: (PlatformImage?) -> Void = { _ in }
+    // MARK: - Layer 4 Component Tests
+    
+    @Test func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 photo components
+        let photoComponents = PlatformPhotoComponentsLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPhotoCapture_L3(onCapture: testCallback)
+        // When: Creating photo picker view
+        let photoPickerView = photoComponents.platformPhotoPicker_L4(onImageSelected: { _ in })
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            photoPickerView,
             expectedPattern: "*.main.element.*",
-            componentName: "PhotoCaptureL3"
+            componentName: "PlatformPhotoComponentsLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 photo capture function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPhotoDisplayL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 photo display function
-        let testImage = PlatformImage()
+    @Test func testPlatformButtonsLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 buttons component
+        let buttonsLayer = PlatformButtonsLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPhotoDisplay_L3(image: testImage)
+        // When: Creating button view
+        let buttonView = buttonsLayer.createPrimaryButton(title: "Test Button", action: {})
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            buttonView,
             expectedPattern: "*.main.element.*",
-            componentName: "PhotoDisplayL3"
+            componentName: "PlatformButtonsLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 photo display function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformButtonsLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPhotoSelectionL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 photo selection function
-        let testCallback: ([PlatformImage]) -> Void = { _ in }
+    @Test func testPlatformFormsLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 forms component
+        let formsLayer = PlatformFormsLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPhotoSelection_L3(onSelection: testCallback)
+        // When: Creating form view
+        let formView = formsLayer.createFormField(
+            id: "test-field",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text"
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            formView,
             expectedPattern: "*.main.element.*",
-            componentName: "PhotoSelectionL3"
+            componentName: "PlatformFormsLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 photo selection function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformFormsLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformOCRWithVisualCorrectionL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 OCR function
-        let testImage = PlatformImage()
-        let testCallback: (String) -> Void = { _ in }
+    @Test func testPlatformListsLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 lists component
+        let listsLayer = PlatformListsLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformOCRWithVisualCorrection_L3(image: testImage, onResult: testCallback)
+        // When: Creating list view
+        let listView = listsLayer.createItemList(
+            items: ["Item 1", "Item 2", "Item 3"],
+            onItemSelected: { _ in }
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            listView,
             expectedPattern: "*.main.element.*",
-            componentName: "OCRL3"
+            componentName: "PlatformListsLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 OCR function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformListsLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentModalFormL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 modal form function
-        let testFormData = ["field1": "value1"]
-        let testCallback: ([String: String]) -> Void = { _ in }
+    @Test func testPlatformModalsLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 modals component
+        let modalsLayer = PlatformModalsLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentModalForm_L3(formData: testFormData, onSubmit: testCallback)
+        // When: Creating modal view
+        let modalView = modalsLayer.createModal(
+            title: "Test Modal",
+            content: Text("Test Content"),
+            onDismiss: {}
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            modalView,
             expectedPattern: "*.main.element.*",
-            componentName: "ModalFormL3"
+            componentName: "PlatformModalsLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 modal form function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformModalsLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentHierarchicalDataL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 hierarchical data function
-        let testHierarchy = ["root": ["child1": [], "child2": []]]
+    @Test func testPlatformNavigationLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 navigation component
+        let navigationLayer = PlatformNavigationLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentHierarchicalData_L3(hierarchy: testHierarchy)
+        // When: Creating navigation view
+        let navigationView = navigationLayer.createNavigationBar(
+            title: "Test Title",
+            leadingButton: nil,
+            trailingButton: nil
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            navigationView,
             expectedPattern: "*.main.element.*",
-            componentName: "HierarchicalDataL3"
+            componentName: "PlatformNavigationLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 hierarchical data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformNavigationLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentTemporalDataL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 temporal data function
-        let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
+    @Test func testPlatformResponsiveCardsLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 responsive cards component
+        let cardsLayer = PlatformResponsiveCardsLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentTemporalData_L3(temporalData: testTemporalData)
+        // When: Creating card view
+        let cardView = cardsLayer.createCard(
+            title: "Test Card",
+            content: Text("Test Content"),
+            onTap: {}
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            cardView,
             expectedPattern: "*.main.element.*",
-            componentName: "TemporalDataL3"
+            componentName: "PlatformResponsiveCardsLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 temporal data function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformResponsiveCardsLayer4 should generate accessibility identifiers")
     }
     
-    @Test func testPlatformPresentContentL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 content function
-        let testContent = "Sample content"
+    @Test func testPlatformStylingLayer4GeneratesAccessibilityIdentifiers() async {
+        // Given: Layer 4 styling component
+        let stylingLayer = PlatformStylingLayer4()
         
-        // When: Creating view using Layer 3 function
-        let view = platformPresentContent_L3(content: testContent)
+        // When: Creating styled view
+        let styledView = stylingLayer.applyStyling(
+            to: Text("Test Text"),
+            style: .primary
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
+            styledView,
             expectedPattern: "*.main.element.*",
-            componentName: "ContentL3"
+            componentName: "PlatformStylingLayer4"
         )
         
-        #expect(hasAccessibilityID, "Layer 3 content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentBasicValueL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 basic value function
-        let testValue = 42
-        
-        // When: Creating view using Layer 3 function
-        let view = platformPresentBasicValue_L3(value: testValue)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "BasicValueL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 basic value function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentBasicArrayL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 basic array function
-        let testArray = [1, 2, 3, 4, 5]
-        
-        // When: Creating view using Layer 3 function
-        let view = platformPresentBasicArray_L3(array: testArray)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "BasicArrayL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 basic array function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformResponsiveCardL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 responsive card function
-        let testTitle = "Card Title"
-        let testContent = "Card Content"
-        
-        // When: Creating view using Layer 3 function
-        let view = platformResponsiveCard_L3(title: testTitle, content: testContent)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "ResponsiveCardL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 responsive card function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformOCRWithDisambiguationL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 OCR with disambiguation function
-        let testImage = PlatformImage()
-        let testOptions = ["Option 1", "Option 2", "Option 3"]
-        let testCallback: (String) -> Void = { _ in }
-        
-        // When: Creating view using Layer 3 function
-        let view = platformOCRWithDisambiguation_L3(image: testImage, options: testOptions, onResult: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "OCRDisambiguationL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 OCR with disambiguation function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformExtractStructuredDataL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 structured data extraction function
-        let testData = ["key1": "value1", "key2": "value2"]
-        
-        // When: Creating view using Layer 3 function
-        let view = platformExtractStructuredData_L3(data: testData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "StructuredDataL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 structured data extraction function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedContentL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 localized content function
-        let testContent = "Localized content"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 3 function
-        let view = platformPresentLocalizedContent_L3(content: testContent, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedContentL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 localized content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedTextL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 localized text function
-        let testText = "Localized text"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 3 function
-        let view = platformPresentLocalizedText_L3(text: testText, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedTextL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 localized text function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedNumberL3GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 3 localized number function
-        let testNumber = 123.45
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 3 function
-        let view = platformPresentLocalizedNumber_L3(number: testNumber, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
-            view,
-            expectedPattern: "*.main.element.*",
-            componentName: "LocalizedNumberL3"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 3 localized number function should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformStylingLayer4 should generate accessibility identifiers")
     }
 }
-
-
-
-
