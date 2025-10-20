@@ -28,15 +28,3 @@ open class PlatformSynchronizationLayer5ComponentAccessibilityTests: BaseTestCla
         #expect(hasAccessibilityID, "PlatformSynchronizationLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Synchronization Layer 5 Components (Placeholder implementations)
-
-struct PlatformSynchronizationLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Synchronization Layer 5")
-            Button("Synchronization Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}

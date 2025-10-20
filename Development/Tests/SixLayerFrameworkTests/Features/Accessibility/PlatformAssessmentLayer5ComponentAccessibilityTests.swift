@@ -28,15 +28,3 @@ open class PlatformAssessmentLayer5ComponentAccessibilityTests: BaseTestClass {/
         #expect(hasAccessibilityID, "PlatformAssessmentLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Assessment Layer 5 Components (Placeholder implementations)
-
-struct PlatformAssessmentLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Assessment Layer 5")
-            Button("Assessment Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
