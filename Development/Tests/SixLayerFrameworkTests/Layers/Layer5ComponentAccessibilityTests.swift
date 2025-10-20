@@ -82,8 +82,8 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         
         // When: Creating image view
         let imageView = resourceLayer.createImageView(
-            name: "test-image",
-            size: CGSize(width: 100, height: 100)
+            image: nil,
+            placeholder: "Test Image"
         )
         
         // Then: Should generate accessibility identifiers
@@ -114,14 +114,11 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testPlatformOptimizationLayer5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 optimization component
+        // Given: Layer 5 optimization component (stub)
         let optimizationLayer = PlatformOptimizationLayer5()
         
         // When: Creating optimization view
-        let optimizationView = optimizationLayer.createOptimizationView(
-            title: "Test Optimization",
-            content: "Test Content"
-        )
+        let optimizationView = optimizationLayer.body
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -134,14 +131,11 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 safety component
+        // Given: Layer 5 safety component (stub)
         let safetyLayer = PlatformSafetyLayer5()
         
         // When: Creating safety view
-        let safetyView = safetyLayer.createSafetyView(
-            title: "Test Safety",
-            content: "Test Content"
-        )
+        let safetyView = safetyLayer.body
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
@@ -154,14 +148,11 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 5 privacy component
+        // Given: Layer 5 privacy component (stub)
         let privacyLayer = PlatformPrivacyLayer5()
         
         // When: Creating privacy view
-        let privacyView = privacyLayer.createPrivacyView(
-            title: "Test Privacy",
-            content: "Test Content"
-        )
+        let privacyView = privacyLayer.body
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifier(
