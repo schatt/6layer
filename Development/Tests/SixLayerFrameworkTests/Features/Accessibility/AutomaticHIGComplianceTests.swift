@@ -269,12 +269,3 @@ open class AutomaticHIGComplianceTests {
         }
     }
 }
-
-// MARK: - Test Support Types
-
-/// Test item for testing purposes
-struct AutomaticHIGComplianceTestItem: Identifiable {
-    let id: String
-    let title: String
-    let subtitle: String
-}

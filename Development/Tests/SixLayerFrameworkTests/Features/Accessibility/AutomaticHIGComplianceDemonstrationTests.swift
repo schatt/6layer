@@ -4,6 +4,20 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+// MARK: - Test Data Structures
+
+struct AutomaticHIGComplianceTestItem: Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String
+    
+    init(id: String, title: String, subtitle: String) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+    }
+}
+
 /**
  * BUSINESS PURPOSE: Demonstrate that SixLayer framework now automatically applies Apple HIG compliance
  * to all views created by Layer 1 functions, eliminating the need for developers to manually add
