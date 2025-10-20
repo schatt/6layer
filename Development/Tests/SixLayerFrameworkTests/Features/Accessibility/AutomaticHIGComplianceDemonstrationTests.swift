@@ -6,7 +6,7 @@ import SwiftUI
 
 // MARK: - Test Data Structures
 
-struct AutomaticHIGComplianceTestItem: Identifiable {
+struct DemonstrationTestItem: Identifiable {
     let id: String
     let title: String
     let subtitle: String
@@ -50,8 +50,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             
             // NEW WAY (what developers do now):
             let testItems = [
-                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+                DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                DemonstrationTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
             ]
             let testHints = PresentationHints(
                 dataType: .generic,
@@ -82,8 +82,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         await MainActor.run {
             // Setup test data
             let testItems = [
-                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+                DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                DemonstrationTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
             ]
             let testHints = PresentationHints()
             
@@ -130,8 +130,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         await MainActor.run {
             // Setup test data
             let testItems = [
-                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+                DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                DemonstrationTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
             ]
             let testHints = PresentationHints()
             
@@ -157,8 +157,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         await MainActor.run {
             // Setup test data
             let testItems = [
-                AutomaticHIGComplianceTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
-                AutomaticHIGComplianceTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
+                DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
+                DemonstrationTestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
             ]
             let testHints = PresentationHints()
             
