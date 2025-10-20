@@ -66,7 +66,7 @@ public struct OCROverlayView: View {
         // TODO: Implement disambiguation result handling
         return OCROverlayView(
             image: PlatformImage.createPlaceholder(),
-            result: OCRResult(text: "", confidence: 0.0, boundingBoxes: []),
+            result: OCRResult(extractedText: "", confidence: 0.0, boundingBoxes: []),
             configuration: OCROverlayConfiguration()
         )
     }
