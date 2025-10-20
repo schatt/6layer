@@ -11,6 +11,7 @@ import SwiftUI
 /// - Efficient caching and memory usage for platform-specific assets.
 /// - Proper handling of resource variations (e.g., different image resolutions).
 /// - Accessibility of loaded resources.
+@MainActor
 public class PlatformResourceLayer5 {
     
     // MARK: - Button Components

@@ -125,3 +125,18 @@ public extension PlatformImage {
     
     // size property is now defined in PlatformTypes.swift
 }
+
+// MARK: - SwiftUI Image Extension
+
+public extension Image {
+    /// Create a SwiftUI Image from a PlatformImage
+    init(platformImage: PlatformImage) {
+        #if os(iOS)
+        self.init(uiImage: platformImage.uiImage)
+        #elseif os(macOS)
+        self.init(nsImage: platformImage.nsImage)
+        #else
+        self.init(systemName: "photo")
+        #endif
+    }
+}

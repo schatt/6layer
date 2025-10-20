@@ -804,6 +804,29 @@ public struct PlatformImage: @unchecked Sendable {
         return nsImage.size
         #endif
     }
+    
+    /// Create a placeholder image for testing/stub purposes
+    public static func createPlaceholder() -> PlatformImage {
+        #if os(iOS)
+        let size = CGSize(width: 100, height: 100)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let uiImage = renderer.image { context in
+            UIColor.systemBlue.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        return PlatformImage(uiImage: uiImage)
+        #elseif os(macOS)
+        let size = NSSize(width: 100, height: 100)
+        let nsImage = NSImage(size: size)
+        nsImage.lockFocus()
+        NSColor.systemBlue.setFill()
+        NSRect(origin: .zero, size: size).fill()
+        nsImage.unlockFocus()
+        return PlatformImage(nsImage: nsImage)
+        #else
+        return PlatformImage()
+        #endif
+    }
 }
 
 // MARK: - Content Analysis Types

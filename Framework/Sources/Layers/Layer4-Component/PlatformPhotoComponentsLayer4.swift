@@ -11,13 +11,14 @@ import SwiftUI
 /// - Responsive handling of user gestures for image manipulation.
 /// - Seamless integration with platform photo services.
 /// - Accessibility features for image content and interactions.
+@MainActor
 public class PlatformPhotoComponentsLayer4 {
     
     // MARK: - Camera Interface Components
     
     /// Creates a platform-specific camera interface
     @ViewBuilder
-    public static func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
+    public func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
         CameraView(onImageCaptured: onImageCaptured)
         #elseif os(macOS)
@@ -31,7 +32,7 @@ public class PlatformPhotoComponentsLayer4 {
     
     /// Creates a platform-specific photo picker
     @ViewBuilder
-    public static func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
+    public func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
         PhotoPickerView(onImageSelected: onImageSelected)
         #elseif os(macOS)
@@ -45,7 +46,7 @@ public class PlatformPhotoComponentsLayer4 {
     
     /// Creates a platform-specific photo display
     @ViewBuilder
-    public static func platformPhotoDisplay_L4(image: PlatformImage?, style: PhotoDisplayStyle) -> some View {
+    public func platformPhotoDisplay_L4(image: PlatformImage?, style: PhotoDisplayStyle) -> some View {
         Group {
             if let image = image {
                 PhotoDisplayView(image: image, style: style)
@@ -235,7 +236,7 @@ struct PlaceholderPhotoView: View {
                 .foregroundColor(.secondary)
         }
         .frame(width: sizeForStyle(style).width, height: sizeForStyle(style).height)
-        .background(Color(.systemGray6))
+        .background(Color.gray.opacity(0.1))
         .clipShape(clipShapeForStyle(style))
     }
     
@@ -262,15 +263,7 @@ struct PlaceholderPhotoView: View {
 
 // MARK: - Supporting Types
 
-public enum PhotoDisplayStyle {
-    case thumbnail
-    case fullSize
-    case aspectFit
-    case aspectFill
-    case rounded
-}
-
-struct AnyShape: Shape {
+struct AnyShape: Shape, @unchecked Sendable {
     private let _path: (CGRect) -> Path
     
     init<S: Shape>(_ shape: S) {
