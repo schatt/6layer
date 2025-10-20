@@ -196,5 +196,6 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         
         #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS")
     }
+}
 
 

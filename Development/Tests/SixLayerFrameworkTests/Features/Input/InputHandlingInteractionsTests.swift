@@ -42,11 +42,7 @@ import ViewInspector
 @MainActor
 open class InputHandlingInteractionsTests: BaseTestClass {
     
-    // MARK: - Test Setupdeinit {
-        Task { [weak self] in
-            await self?.cleanupTestEnvironment()
-        }
-    }
+    // MARK: - Test Setup
     
     // MARK: - InputHandlingManager Tests
     

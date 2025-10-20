@@ -142,5 +142,6 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {// MA
         
         #expect(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS")
     }
+}
 
 
