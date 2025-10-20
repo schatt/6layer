@@ -209,13 +209,21 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             AccessibilityIdentifierConfig.shared.enableAutoIDs = true
             AccessibilityIdentifierConfig.shared.namespace = "auto"
             
-            // When: Testing manual identifier configuration
-            // We verify that the configuration allows manual identifiers to be set
+            // When: Creating view with manual identifier
+            let manualID = "manual-custom-id"
+            let view = Text("Test")
+                .accessibilityIdentifier(manualID)
+                .automaticAccessibilityIdentifiers()
             
             // Then: Manual identifier should be used
-            // We test this by verifying the view can be created with both modifiers
+            // We test this by verifying the view has the manual identifier
             // The manual identifier should take precedence over automatic generation
-            #expect(true, "View with manual identifier should override automatic generation")
+            let hasManualID = hasAccessibilityIdentifier(
+                view,
+                expectedPattern: "*.\(manualID)",
+                componentName: "ManualIdentifierTest"
+            )
+            #expect(hasManualID, "Manual identifier should override automatic generation")
         }
     }
     
@@ -227,13 +235,19 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Given: Automatic IDs disabled globally
             AccessibilityIdentifierConfig.shared.enableAutoIDs = false
             
-            // When: Testing automatic ID disable configuration
-            // We verify that the configuration can disable automatic ID generation
+            // When: Creating view with automatic accessibility identifiers modifier
+            let view = Text("Test")
+                .automaticAccessibilityIdentifiers()
             
             // Then: No automatic identifier should be generated
-            // We test this by verifying the view can be created when automatic IDs are disabled
+            // We test this by verifying the view does NOT have an automatic identifier
             // The modifier should not generate an identifier when enableAutoIDs is false
-            #expect(true, "View should be created without automatic IDs when disabled globally")
+            let hasAutomaticID = hasAccessibilityIdentifier(
+                view,
+                expectedPattern: "*.auto.*",
+                componentName: "AutomaticIdentifierTest"
+            )
+            #expect(!hasAutomaticID, "View should not have automatic ID when disabled globally")
         }
     }
     
