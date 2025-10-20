@@ -42,7 +42,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     // MARK: - Test Data Setup
     
     private var testItems: [TestItem]!
-    private var testHints: PresentationHints!private func setupTestData() {
+    private var testHints: PresentationHints!
+    
+    private func setupTestData() {
         testItems = [
             TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             TestItem(id: "user-2", title: "Bob", subtitle: "Designer")

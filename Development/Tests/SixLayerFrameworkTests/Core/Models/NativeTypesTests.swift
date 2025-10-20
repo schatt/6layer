@@ -55,7 +55,9 @@ struct MockDataContainer: Equatable {
 open class NativeTypesTests: BaseTestClass {
     
     var formState: DynamicFormState!
-    var configuration: DynamicFormConfiguration!override func setupTestEnvironment() async {
+    var configuration: DynamicFormConfiguration!
+    
+    override func setupTestEnvironment() async {
         await super.setupTestEnvironment()
         configuration = DynamicFormConfiguration(
             id: "test",
