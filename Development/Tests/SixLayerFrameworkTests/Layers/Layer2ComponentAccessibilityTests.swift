@@ -389,7 +389,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
 
 // MARK: - Mock Layer 2 Functions (Placeholder implementations)
 
-@MainActor @MainActor funcPresentItemCollection_L2(items: [String], hints: [String]) -> some View {
+@MainActor func platformPresentItemCollection_L2(items: [String], hints: [String]) -> some View {
     VStack {
         ForEach(Array(items.enumerated()), id: \.offset) { index, item in
             Text(item)
@@ -398,7 +398,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPresentNumericData_L2(data: [Double]) -> some View {
+@MainActor func platformPresentNumericData_L2(data: [Double]) -> some View {
     VStack {
         ForEach(Array(data.enumerated()), id: \.offset) { index, value in
             Text("\(value)")
@@ -407,7 +407,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPresentFormData_L2(formData: [String: String]) -> some View {
+@MainActor func platformPresentFormData_L2(formData: [String: String]) -> some View {
     VStack {
         ForEach(Array(formData.keys), id: \.self) { key in
             Text("\(key): \(formData[key] ?? "")")
@@ -416,7 +416,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPresentMediaData_L2(mediaData: [String]) -> some View {
+@MainActor func platformPresentMediaData_L2(mediaData: [String]) -> some View {
     VStack {
         ForEach(Array(mediaData.enumerated()), id: \.offset) { index, media in
             Text(media)
@@ -425,7 +425,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPresentSettings_L2(settings: [String: String]) -> some View {
+@MainActor func platformPresentSettings_L2(settings: [String: String]) -> some View {
     VStack {
         ForEach(Array(settings.keys), id: \.self) { key in
             Text("\(key): \(settings[key] ?? "")")
@@ -434,7 +434,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
+@MainActor func platformPhotoCapture_L2(onCapture: @escaping (PlatformImage?) -> Void) -> some View {
     VStack {
         Text("Photo Capture")
         Button("Capture") {
@@ -444,7 +444,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPhotoDisplay_L2(image: PlatformImage?) -> some View {
+@MainActor func platformPhotoDisplay_L2(image: PlatformImage?) -> some View {
     VStack {
         if let image = image {
             Image(platformImage: image)
@@ -455,7 +455,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPhotoSelection_L2(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
+@MainActor func platformPhotoSelection_L2(onSelection: @escaping ([PlatformImage]) -> Void) -> some View {
     VStack {
         Text("Photo Selection")
         Button("Select Photos") {
@@ -465,7 +465,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcOCRWithVisualCorrection_L2(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
+@MainActor func platformOCRWithVisualCorrection_L2(image: PlatformImage?, onResult: @escaping (String) -> Void) -> some View {
     VStack {
         Text("OCR with Visual Correction")
         Button("Process") {
@@ -475,7 +475,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
     .automaticAccessibilityIdentifiers()
 }
 
-@MainActor @MainActor funcPresentModalForm_L2(formData: [String: String], onSubmit: @escaping ([String: String]) -> Void) -> some View {
+@MainActor func platformPresentModalForm_L2(formData: [String: String], onSubmit: @escaping ([String: String]) -> Void) -> some View {
     VStack {
         Text("Modal Form")
         Button("Submit") {
