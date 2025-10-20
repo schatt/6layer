@@ -95,8 +95,8 @@ struct LiquidGlassDesignSystemTests {
         
         // Then
         #expect(reflection != nil)
-        #expect(reflection?.size == CGSize(width: 100, height: 100))
-        #expect(reflection?.isReflective == true)
+        #expect(reflection.size == CGSize(width: 100, height: 100))
+        #expect(reflection.isReflective == true)
     }
     
     @MainActor
@@ -115,7 +115,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Then
         #expect(reflection != nil)
-        #expect(reflection?.size == CGSize(width: 200, height: 200))
+        #expect(reflection.size == CGSize(width: 200, height: 200))
     }
     
     // MARK: - Floating Control Tests
@@ -129,7 +129,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given & When
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -152,7 +152,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -174,7 +174,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -199,7 +199,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given & When
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let menu = ContextualMenu(
+        var menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {}),
                 ContextualMenuItem(title: "Delete", action: {})
@@ -223,7 +223,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let menu = ContextualMenu(
+        var menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {})
             ],
@@ -246,7 +246,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let menu = ContextualMenu(
+        var menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {})
             ],
@@ -292,7 +292,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -340,7 +340,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -387,7 +387,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -409,14 +409,14 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let system = LiquidGlassSystem()
+        let system = LiquidGlassDesignSystem()
         let material = liquidGlassSystem.createMaterial(.primary)
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: material
         )
-        let menu = ContextualMenu(
+        var menu = ContextualMenu(
             items: [ContextualMenuItem(title: "Test", action: {})],
             material: liquidGlassSystem.createMaterial(.secondary)
         )
@@ -438,7 +438,7 @@ struct LiquidGlassDesignSystemTests {
         }
         
         // Given & When
-        let system = LiquidGlassSystem()
+        let system = LiquidGlassDesignSystem()
         for feature in LiquidGlassFeature.allCases {
             let fallbackBehavior = system.getFallbackBehavior(for: feature)
             

@@ -267,10 +267,9 @@ public struct FloatingControl: Equatable {
         self.isExpanded = false
     }
     
-    /// Expand the floating control
-    public mutating func expand() {
-        guard isExpandable else { return }
-        isExpanded = true
+    /// Collapse the floating control
+    public mutating func collapse() {
+        isExpanded = false
     }
     
     /// Contract the floating control
