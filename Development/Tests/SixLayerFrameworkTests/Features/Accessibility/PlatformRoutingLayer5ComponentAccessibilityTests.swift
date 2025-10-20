@@ -30,15 +30,3 @@ open class PlatformRoutingLayer5ComponentAccessibilityTests: BaseTestClass {
         #expect(hasAccessibilityID, "PlatformRoutingLayer5 should generate accessibility identifiers")
     }
 }
-
-// MARK: - Mock Platform Routing Layer 5 Components (Placeholder implementations)
-
-struct PlatformRoutingLayer5: View {
-    var body: some View {
-        VStack {
-            Text("Platform Routing Layer 5")
-            Button("Routing Layer 5") { }
-        }
-        .automaticAccessibilityIdentifiers()
-    }
-}
