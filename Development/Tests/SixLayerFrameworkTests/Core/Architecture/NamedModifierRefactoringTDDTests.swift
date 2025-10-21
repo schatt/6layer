@@ -41,7 +41,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get full hierarchy path ending with "SaveButton"
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "HierarchyReplacement"
@@ -62,7 +62,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get full path including both names
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "FullHierarchyPath"
@@ -86,7 +86,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get complete hierarchy path
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "NestedHierarchy"
@@ -113,13 +113,13 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check both accessibility identifiers
             // Then: Should get different full paths
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 view1, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "CollisionPrevention1"
             ), "RED PHASE: First SaveButton should include UserProfile in path")
             
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 view2, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "CollisionPrevention2"
@@ -139,7 +139,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should still get full hierarchy path even with global system disabled
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "IndependentNamedModifier"
@@ -158,7 +158,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get full hierarchy path, not "OriginalID"
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "OverrideTest"
@@ -179,7 +179,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Button should include "ActionContainer" in its generated ID
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "HierarchyInheritance"
@@ -197,7 +197,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should handle empty string gracefully
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: ".*", 
                 componentName: "EmptyStringTest"
@@ -217,7 +217,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should work without changing global settings
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "NoGlobalChanges"
@@ -241,7 +241,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get exactly "SaveButton" (no hierarchy)
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^SaveButton$", 
                 componentName: "ExactNamedModifier"
@@ -262,7 +262,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Button should get exact name, VStack should get hierarchy
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "ExactNamedHierarchyTest"
@@ -282,7 +282,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get exact name even with global system disabled
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^TestButton$", 
                 componentName: "IndependentExactNamedModifier"
@@ -301,7 +301,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get exact name, not "OriginalID"
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^NewExactName$", 
                 componentName: "ExactNamedOverrideTest"
@@ -326,7 +326,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should get hierarchical path for the container
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 componentName: "CombinedModifiersTest"
@@ -347,13 +347,13 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check both accessibility identifiers
             // Then: Both should get the same exact name (collision expected)
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 view1, 
                 expectedPattern: "^SaveButton$", 
                 componentName: "ExactNamedCollision1"
             ), "RED PHASE: First .exactNamed() should get exact name")
             
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 view2, 
                 expectedPattern: "^SaveButton$", 
                 componentName: "ExactNamedCollision2"
@@ -375,7 +375,7 @@ open class NamedModifierRefactoringTDDTests {
             
             // When: We check the accessibility identifier
             // Then: Should handle empty string gracefully
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^$", 
                 componentName: "ExactNamedEmptyStringTest"

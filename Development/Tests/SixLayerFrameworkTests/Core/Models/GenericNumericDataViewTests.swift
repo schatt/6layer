@@ -40,7 +40,7 @@ open class GenericNumericDataViewTests {
             hints: PresentationHints()
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -56,7 +56,7 @@ open class GenericNumericDataViewTests {
             hints: PresentationHints()
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

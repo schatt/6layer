@@ -53,7 +53,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         #expect(view != nil, "platformPresentItemCollection_L1 should create a view")
         
         // TDD RED PHASE: Look for accessibility identifier with current pattern (will be updated to v4.4.0 hierarchical naming)
-        let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
+        let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.main.element.*", 
             componentName: "ItemCollection"
@@ -81,7 +81,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         #expect(view != nil, "platformPresentFormData_L1 should create a view")
         
         // Test that platformPresentFormData_L1 generates accessibility identifiers
-        let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
+        let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.screen.*", 
             componentName: "FormField"
@@ -109,7 +109,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         #expect(view != nil, "platformPresentNumericData_L1 should create a view")
         
         // Test that platformPresentNumericData_L1 generates accessibility identifiers
-        let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
+        let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.main.element.*", 
             componentName: "NumericData"
@@ -139,7 +139,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         
         // CURRENT BEHAVIOR: platformPresentMediaData_L1 does NOT generate accessibility identifiers
         // This test documents the current state - the function needs .automaticAccessibilityIdentifiers() added
-        let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
+        let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.screen.*", 
             componentName: "MediaData"
@@ -177,7 +177,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         
         // CURRENT BEHAVIOR: platformPresentSettings_L1 does NOT generate accessibility identifiers
         // This test documents the current state - the function needs .automaticAccessibilityIdentifiers() added
-        let hasSpecificAccessibilityID = hasAccessibilityIdentifier(
+        let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.screen.*", 
             componentName: "SettingsData"
