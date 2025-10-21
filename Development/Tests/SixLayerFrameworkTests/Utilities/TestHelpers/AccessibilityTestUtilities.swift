@@ -294,15 +294,6 @@ public func hasAccessibilityIdentifierSimple<T: View>(
     }
 }
 
-/// Get the accessibility identifier from a SwiftUI view by hosting it and searching the view hierarchy
-/// - Parameter view: The SwiftUI view to inspect
-/// - Returns: The first accessibility identifier found, or nil if none exists
-@MainActor
-public func getAccessibilityIdentifier<T: View>(from view: T) -> String? {
-    let hostedView = hostRootPlatformView(view)
-    return firstAccessibilityIdentifier(inHosted: hostedView)
-}
-
 /// CRITICAL: Test if a view has an accessibility identifier matching a pattern
 /// This function REQUIRES an expected pattern - no more generic testing!
 /// 
