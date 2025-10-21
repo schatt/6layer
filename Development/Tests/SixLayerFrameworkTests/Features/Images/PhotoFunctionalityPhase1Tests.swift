@@ -299,7 +299,7 @@ open class PhotoFunctionalityPhase1Tests {
         let testImage = createTestPlatformImage()
         
         // When: Creating photo display
-        let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: .thumbnail)
+        let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
         
         // Then: Photo display should be created and be hostable
         #expect(photoDisplay != nil, "Photo display should be created")
