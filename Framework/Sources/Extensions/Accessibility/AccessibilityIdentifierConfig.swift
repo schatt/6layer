@@ -52,6 +52,9 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Debug logging mode
     @Published public var enableDebugLogging: Bool = false
     
+    /// UI test integration mode
+    @Published public var enableUITestIntegration: Bool = false
+    
     /// Debug log entries
     @Published private var debugLogEntries: [String] = []
     
@@ -169,11 +172,6 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         currentScreenContext = state
     }
     
-    /// Enable UI test integration for accessibility identifier generation
-    /// TDD RED PHASE: This is a stub implementation for testing
-    public func enableUITestIntegration(_ enabled: Bool = true) {
-        enableDebugLogging = enabled
-    }
 }
 
 // MARK: - DateFormatter Extension
