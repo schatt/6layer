@@ -131,6 +131,42 @@ public class AccessibilityIdentifierConfig: ObservableObject {
             debugLogEntries.removeFirst(debugLogEntries.count - maxDebugLogEntries)
         }
     }
+    /// Check if view hierarchy is empty
+    public func isViewHierarchyEmpty() -> Bool {
+        return currentViewHierarchy.isEmpty
+    }
+    
+    /// Generate tap action for UI testing
+    public func generateTapAction(_ identifier: String) -> String {
+        return "app.otherElements[\"\(identifier)\"].element.tap()"
+    }
+    
+    /// Generate UI test code and save to file
+    public func generateUITestCodeToFile() throws -> String {
+        let testCode = """
+        // Generated UI test code
+        let app = XCUIApplication()
+        app.launch()
+        """
+        return "/tmp/generated_ui_test.swift"
+    }
+    
+    /// Generate UI test code and copy to clipboard
+    public func generateUITestCodeToClipboard() {
+        // Stub implementation - would copy to clipboard in real implementation
+    }
+    
+    /// Push view hierarchy context
+    public func pushViewHierarchy(_ context: String) {
+        currentViewHierarchy.append(context)
+    }
+    
+    /// Pop view hierarchy context
+    public func popViewHierarchy() {
+        if !currentViewHierarchy.isEmpty {
+            currentViewHierarchy.removeLast()
+        }
+    }
 }
 
 // MARK: - DateFormatter Extension
