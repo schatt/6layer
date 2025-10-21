@@ -200,15 +200,15 @@ open class PlatformSimulationTests {
         let platform = SimulatedPlatform(platform: SixLayerPlatform.iOS, deviceType: .phone, capabilities: PlatformCapabilities(supportsTouch: true, supportsHover: false, supportsHapticFeedback: true, supportsVoiceOver: true, supportsSwitchControl: true, supportsAssistiveTouch: true, minTouchTarget: 44, hoverDelay: 0.0), screenSize: CGSize(width: 375, height: 812))
         // Test that the platform configuration is internally consistent
         #expect(platform.capabilities.isInternallyConsistent(), 
-                     "Platform \(platform.platform) (\(platform.deviceType)) should be internally consistent")
+                     "Platform \(platform.platform.rawValue) (\(platform.deviceType)) should be internally consistent")
         
         // Test platform-specific constraints
         #expect(platform.capabilities.satisfiesPlatformConstraints(platform.platform), 
-                     "Platform \(platform.platform) should satisfy platform constraints")
+                     "Platform \(platform.platform.rawValue) should satisfy platform constraints")
         
         // Test screen size appropriateness
         #expect(platform.screenSize.width > 0 && platform.screenSize.height > 0, 
-                     "Platform \(platform.platform) should have valid screen size")
+                     "Platform \(platform.platform.rawValue) should have valid screen size")
         
         // Test touch target size appropriateness
         if platform.capabilities.supportsTouch {
