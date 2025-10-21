@@ -345,3 +345,63 @@ public func hasAccessibilityIdentifierPattern<T: View>(
         return false
     }
 }
+
+// MARK: - Parameterized Cross-Platform Testing
+
+/// Test accessibility identifiers across both iOS and macOS platforms
+/// - Parameters:
+///   - view: The SwiftUI view to test
+///   - expectedPattern: The regex pattern to match against (use * for wildcards)
+///   - componentName: Name of the component being tested (for debugging)
+///   - testName: Name of the test for better error messages
+/// - Returns: True if the view generates correct accessibility identifiers on both platforms
+@MainActor
+public func testAccessibilityIdentifiersCrossPlatform<T: View>(
+    _ view: T,
+    expectedPattern: String,
+    componentName: String,
+    testName: String = "CrossPlatformTest"
+) -> Bool {
+    let platforms: [SixLayerPlatform] = [.iOS, .macOS]
+    var allPlatformsPassed = true
+    
+    for platform in platforms {
+        let passed = hasAccessibilityIdentifierWithPattern(
+            view,
+            expectedPattern: expectedPattern,
+            platform: platform,
+            componentName: "\(componentName)-\(platform)"
+        )
+        
+        if !passed {
+            print("❌ CROSS-PLATFORM: \(testName) failed on \(platform)")
+            allPlatformsPassed = false
+        } else {
+            print("✅ CROSS-PLATFORM: \(testName) passed on \(platform)")
+        }
+    }
+    
+    return allPlatformsPassed
+}
+
+/// Test accessibility identifiers on a single platform (for representative sampling)
+/// - Parameters:
+///   - view: The SwiftUI view to test
+///   - expectedPattern: The regex pattern to match against (use * for wildcards)
+///   - platform: The platform to test on
+///   - componentName: Name of the component being tested (for debugging)
+/// - Returns: True if the view generates correct accessibility identifiers on the specified platform
+@MainActor
+public func testAccessibilityIdentifiersSinglePlatform<T: View>(
+    _ view: T,
+    expectedPattern: String,
+    platform: SixLayerPlatform,
+    componentName: String
+) -> Bool {
+    return hasAccessibilityIdentifierWithPattern(
+        view,
+        expectedPattern: expectedPattern,
+        platform: platform,
+        componentName: componentName
+    )
+}
