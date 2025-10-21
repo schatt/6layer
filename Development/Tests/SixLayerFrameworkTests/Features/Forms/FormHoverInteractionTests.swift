@@ -196,7 +196,7 @@ open class FormHoverInteractionTests {
         #expect(higCompliance.hasAccessibleHelpText, "Form field should have accessible help text")
     }
     
-    @Test func testFormFieldHoverTimingFollowsHIG() {
+    @Test @MainActor func testFormFieldHoverTimingFollowsHIG() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
