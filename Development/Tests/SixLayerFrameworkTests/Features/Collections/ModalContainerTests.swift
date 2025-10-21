@@ -424,8 +424,8 @@ open class ModalContainerTests: BaseTestClass {
         
         let strategy = createTestModalStrategy(
             platformOptimizations: [
-                .iOS: iOSConstraint,
-                .macOS: macOSConstraint
+                SixLayerPlatform.iOS: iOSConstraint,
+                SixLayerPlatform.macOS: macOSConstraint
             ]
         )
         
