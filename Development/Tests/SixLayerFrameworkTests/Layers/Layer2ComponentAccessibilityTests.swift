@@ -1,404 +1,37 @@
 import Testing
-import Foundation
-
-
-//
-//  Layer2ComponentAccessibilityTests.swift
-//  SixLayerFrameworkTests
-//
-//  Comprehensive accessibility tests for ALL Layer 2 components
-//
-
 import SwiftUI
 @testable import SixLayerFramework
 
+// MARK: - Layer 2 Component Accessibility Tests
+
+/// Test Layer 2 layout decision functions
+/// Layer 2: Platform Layout Decisions - Content-aware layout analysis and decision making
+/// Layer 2 functions return layout decisions, not Views
 @MainActor
-open class Layer2ComponentAccessibilityTests: BaseTestClass {
+final class Layer2ComponentAccessibilityTests {
     
-// MARK: - Layer 2 Semantic Functions Tests
+    // MARK: - Test Data
     
-    @Test func testPlatformPresentItemCollectionL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 item collection function
-        let testItems = ["Item 1", "Item 2", "Item 3"]
-        let testHints = ["Hint 1", "Hint 2", "Hint 3"]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentItemCollection_L2(
-            items: testItems,
-            hints: testHints
-        )
-        
-        // Then: Should generate accessibility identifiers (representative sampling on iOS)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "ItemCollectionL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 item collection function should generate accessibility identifiers")
+    struct TestItem: Identifiable {
+        let id: String
+        let value: Any
     }
     
-    @Test func testPlatformPresentNumericDataL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 numeric data function
-        let testData = [1.0, 2.0, 3.0]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentNumericData_L2(data: testData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "NumericDataL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 numeric data function should generate accessibility identifiers")
-    }
+    // MARK: - Layout Decision Tests
     
-    @Test func testPlatformPresentFormDataL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 form data function
-        let testFormData = ["field1": "value1", "field2": "value2"]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentFormData_L2(formData: testFormData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "FormDataL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 form data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentMediaDataL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 media data function
-        let testMediaData = ["image1.jpg", "video1.mp4"]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentMediaData_L2(mediaData: testMediaData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "MediaDataL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 media data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentSettingsL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 settings function
-        let testSettings = ["setting1": "value1", "setting2": "value2"]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentSettings_L2(settings: testSettings)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "SettingsL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 settings function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPhotoCaptureL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 photo capture function
-        let testCallback: (PlatformImage?) -> Void = { _ in }
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPhotoCapture_L2(onCapture: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "PhotoCaptureL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 photo capture function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPhotoDisplayL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 photo display function
-        let testImage = PlatformImage()
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPhotoDisplay_L2(image: testImage)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "PhotoDisplayL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 photo display function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPhotoSelectionL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 photo selection function
-        let testCallback: ([PlatformImage]) -> Void = { _ in }
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPhotoSelection_L2(onSelection: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "PhotoSelectionL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 photo selection function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformOCRWithVisualCorrectionL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 OCR function
-        let testImage = PlatformImage()
-        let testCallback: (String) -> Void = { _ in }
-        
-        // When: Creating view using Layer 2 function
-        let view = platformOCRWithVisualCorrection_L2(image: testImage, onResult: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "OCRL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 OCR function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentModalFormL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 modal form function
-        let testFormData = ["field1": "value1"]
-        let testCallback: ([String: String]) -> Void = { _ in }
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentModalForm_L2(formData: testFormData, onSubmit: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "ModalFormL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 modal form function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentHierarchicalDataL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 hierarchical data function
-        let testHierarchy = ["root": ["child1": [], "child2": []]]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentHierarchicalData_L2(hierarchy: testHierarchy)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "HierarchicalDataL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 hierarchical data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentTemporalDataL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 temporal data function
-        let testTemporalData = [Date(), Date().addingTimeInterval(3600)]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentTemporalData_L2(temporalData: testTemporalData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "TemporalDataL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 temporal data function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentContentL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 content function
-        let testContent = "Sample content"
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentContent_L2(content: testContent)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "ContentL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentBasicValueL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 basic value function
-        let testValue = 42
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentBasicValue_L2(value: testValue)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "BasicValueL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 basic value function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentBasicArrayL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 basic array function
-        let testArray = [1, 2, 3, 4, 5]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentBasicArray_L2(array: testArray)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "BasicArrayL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 basic array function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformResponsiveCardL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 responsive card function
-        let testTitle = "Card Title"
-        let testContent = "Card Content"
-        
-        // When: Creating view using Layer 2 function
-        let view = platformResponsiveCard_L2(title: testTitle, content: testContent)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "ResponsiveCardL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 responsive card function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformOCRWithDisambiguationL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 OCR with disambiguation function
-        let testImage = PlatformImage()
-        let testOptions = ["Option 1", "Option 2", "Option 3"]
-        let testCallback: (String) -> Void = { _ in }
-        
-        // When: Creating view using Layer 2 function
-        let view = platformOCRWithDisambiguation_L2(image: testImage, options: testOptions, onResult: testCallback)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "OCRDisambiguationL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 OCR with disambiguation function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformExtractStructuredDataL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 structured data extraction function
-        let testData = ["key1": "value1", "key2": "value2"]
-        
-        // When: Creating view using Layer 2 function
-        let view = platformExtractStructuredData_L2(data: testData)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "StructuredDataL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 structured data extraction function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedContentL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 localized content function
-        let testContent = "Localized content"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentLocalizedContent_L2(content: testContent, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "LocalizedContentL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 localized content function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedTextL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 localized text function
-        let testText = "Localized text"
-        let testLocale = Locale(identifier: "en_US")
-        
-        // When: Creating view using Layer 2 function
-        let view = platformPresentLocalizedText_L2(text: testText, locale: testLocale)
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "LocalizedTextL2"
-        )
-        
-        #expect(hasAccessibilityID, "Layer 2 localized text function should generate accessibility identifiers")
-    }
-    
-    @Test func testPlatformPresentLocalizedNumberL2GeneratesAccessibilityIdentifiers() async {
-        // Given: Layer 2 layout decision function
-        let testNumber = 123.45
-        let testLocale = Locale(identifier: "en_US")
+    @Test func testDetermineOptimalLayoutL2ReturnsValidDecision() async {
+        // Given: Test items and hints
+        let testItems = [
+            TestItem(id: "item1", value: "Test Item 1"),
+            TestItem(id: "item2", value: "Test Item 2"),
+            TestItem(id: "item3", value: "Test Item 3")
+        ]
+        let hints = PresentationHints()
         
         // When: Creating layout decision using Layer 2 function
-        // Note: Layer 2 functions return layout decisions, not Views
-        // This test should be testing the layout decision properties
         let layoutDecision = determineOptimalLayout_L2(
-            items: [TestItem(id: "test", value: testNumber)],
-            hints: PresentationHints(),
+            items: testItems,
+            hints: hints,
             screenWidth: 400,
             deviceType: .phone
         )
@@ -407,9 +40,187 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         #expect(layoutDecision.approach != nil, "Layer 2 should return valid layout approach")
         #expect(layoutDecision.columns > 0, "Layer 2 should return valid column count")
         #expect(layoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(layoutDecision.performance != nil, "Layer 2 should return valid performance strategy")
+    }
+    
+    @Test func testDetermineOptimalFormLayoutL2ReturnsValidDecision() async {
+        // Given: Test form data
+        let testFormData = [
+            "name": "John Doe",
+            "email": "john@example.com",
+            "age": 30
+        ]
+        let hints = PresentationHints()
+        
+        // When: Creating form layout decision using Layer 2 function
+        let formLayoutDecision = determineOptimalFormLayout_L2(
+            formData: testFormData,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid form layout decision properties
+        #expect(formLayoutDecision.approach != nil, "Layer 2 should return valid form layout approach")
+        #expect(formLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(formLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testDetermineOptimalCardLayoutL2ReturnsValidDecision() async {
+        // Given: Test card data
+        let testCardData = [
+            "title": "Test Card",
+            "content": "This is test content",
+            "image": "test-image"
+        ]
+        let hints = PresentationHints()
+        
+        // When: Creating card layout decision using Layer 2 function
+        let cardLayoutDecision = determineOptimalCardLayout_L2(
+            cardData: testCardData,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid card layout decision properties
+        #expect(cardLayoutDecision.approach != nil, "Layer 2 should return valid card layout approach")
+        #expect(cardLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(cardLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testDetermineIntelligentCardLayoutL2ReturnsValidDecision() async {
+        // Given: Test card data
+        let testCardData = [
+            "title": "Test Card",
+            "content": "This is test content",
+            "image": "test-image"
+        ]
+        let hints = PresentationHints()
+        
+        // When: Creating intelligent card layout decision using Layer 2 function
+        let intelligentLayoutDecision = determineIntelligentCardLayout_L2(
+            cardData: testCardData,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid intelligent layout decision properties
+        #expect(intelligentLayoutDecision.approach != nil, "Layer 2 should return valid intelligent layout approach")
+        #expect(intelligentLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(intelligentLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testDetermineOptimalPhotoLayoutL2ReturnsValidDecision() async {
+        // Given: Test photo data
+        let testPhotoData = Data("test-image-data".utf8)
+        let hints = PresentationHints()
+        
+        // When: Creating photo layout decision using Layer 2 function
+        let photoLayoutDecision = determineOptimalPhotoLayout_L2(
+            photoData: testPhotoData,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid photo layout decision properties
+        #expect(photoLayoutDecision.approach != nil, "Layer 2 should return valid photo layout approach")
+        #expect(photoLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(photoLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testDeterminePhotoCaptureStrategyL2ReturnsValidDecision() async {
+        // Given: Test photo capture context
+        let hints = PresentationHints()
+        
+        // When: Creating photo capture strategy decision using Layer 2 function
+        let photoCaptureStrategy = determinePhotoCaptureStrategy_L2(
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid photo capture strategy properties
+        #expect(photoCaptureStrategy.approach != nil, "Layer 2 should return valid photo capture strategy approach")
+        #expect(photoCaptureStrategy.columns > 0, "Layer 2 should return valid column count")
+        #expect(photoCaptureStrategy.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testPlatformOCRLayoutL2ReturnsValidDecision() async {
+        // Given: Test OCR text
+        let testText = "This is test OCR text"
+        let hints = PresentationHints()
+        
+        // When: Creating OCR layout decision using Layer 2 function
+        let ocrLayoutDecision = platformOCRLayout_L2(
+            text: testText,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid OCR layout decision properties
+        #expect(ocrLayoutDecision.approach != nil, "Layer 2 should return valid OCR layout approach")
+        #expect(ocrLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(ocrLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testPlatformDocumentOCRLayoutL2ReturnsValidDecision() async {
+        // Given: Test document OCR text
+        let testText = "This is test document OCR text"
+        let hints = PresentationHints()
+        
+        // When: Creating document OCR layout decision using Layer 2 function
+        let documentOCRLayoutDecision = platformDocumentOCRLayout_L2(
+            text: testText,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid document OCR layout decision properties
+        #expect(documentOCRLayoutDecision.approach != nil, "Layer 2 should return valid document OCR layout approach")
+        #expect(documentOCRLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(documentOCRLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testPlatformReceiptOCRLayoutL2ReturnsValidDecision() async {
+        // Given: Test receipt OCR text
+        let testText = "Receipt Total: $25.99"
+        let hints = PresentationHints()
+        
+        // When: Creating receipt OCR layout decision using Layer 2 function
+        let receiptOCRLayoutDecision = platformReceiptOCRLayout_L2(
+            text: testText,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid receipt OCR layout decision properties
+        #expect(receiptOCRLayoutDecision.approach != nil, "Layer 2 should return valid receipt OCR layout approach")
+        #expect(receiptOCRLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(receiptOCRLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+    }
+    
+    @Test func testPlatformBusinessCardOCRLayoutL2ReturnsValidDecision() async {
+        // Given: Test business card OCR text
+        let testText = "John Doe\nSoftware Engineer\njohn@example.com"
+        let hints = PresentationHints()
+        
+        // When: Creating business card OCR layout decision using Layer 2 function
+        let businessCardOCRLayoutDecision = platformBusinessCardOCRLayout_L2(
+            text: testText,
+            hints: hints,
+            screenWidth: 400,
+            deviceType: .phone
+        )
+        
+        // Then: Should have valid business card OCR layout decision properties
+        #expect(businessCardOCRLayoutDecision.approach != nil, "Layer 2 should return valid business card OCR layout approach")
+        #expect(businessCardOCRLayoutDecision.columns > 0, "Layer 2 should return valid column count")
+        #expect(businessCardOCRLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
     }
 }
-
-
-
-
