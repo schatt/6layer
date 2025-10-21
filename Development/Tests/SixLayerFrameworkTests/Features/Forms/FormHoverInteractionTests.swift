@@ -181,7 +181,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Apple HIG Compliance Tests
     
-    @Test func testFormFieldFollowsAppleHIGTooltipGuidelines() {
+    @Test @MainActor func testFormFieldFollowsAppleHIGTooltipGuidelines() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
