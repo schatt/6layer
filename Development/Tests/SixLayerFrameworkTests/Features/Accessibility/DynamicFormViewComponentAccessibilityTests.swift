@@ -404,7 +404,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicArrayFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing array field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .array,
+            fieldType: DynamicContentType.array,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicArrayField"
         )
