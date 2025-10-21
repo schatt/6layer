@@ -32,6 +32,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ItemCollectionL2"
         )
         
@@ -49,6 +50,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "NumericDataL2"
         )
         
@@ -66,6 +68,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "FormDataL2"
         )
         
@@ -83,6 +86,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "MediaDataL2"
         )
         
@@ -100,6 +104,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "SettingsL2"
         )
         
@@ -117,6 +122,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PhotoCaptureL2"
         )
         
@@ -134,6 +140,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PhotoDisplayL2"
         )
         
@@ -151,6 +158,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PhotoSelectionL2"
         )
         
@@ -169,6 +177,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "OCRL2"
         )
         
@@ -187,6 +196,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ModalFormL2"
         )
         
@@ -204,6 +214,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "HierarchicalDataL2"
         )
         
@@ -221,6 +232,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "TemporalDataL2"
         )
         
@@ -238,6 +250,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ContentL2"
         )
         
@@ -255,6 +268,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "BasicValueL2"
         )
         
@@ -272,6 +286,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "BasicArrayL2"
         )
         
@@ -290,6 +305,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveCardL2"
         )
         
@@ -309,6 +325,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "OCRDisambiguationL2"
         )
         
@@ -326,6 +343,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "StructuredDataL2"
         )
         
@@ -344,6 +362,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "LocalizedContentL2"
         )
         
@@ -362,6 +381,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "LocalizedTextL2"
         )
         
@@ -380,6 +400,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "LocalizedNumberL2"
         )
         
