@@ -60,7 +60,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -88,7 +88,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -115,7 +115,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericNumericDataView(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -140,7 +140,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericNumericDataView(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -167,7 +167,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericMediaView(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -192,7 +192,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericMediaView(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -231,7 +231,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -268,7 +268,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -292,7 +292,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericContentView(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -314,7 +314,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericContentView(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -341,7 +341,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -366,7 +366,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -393,7 +393,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -418,7 +418,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

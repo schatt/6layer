@@ -39,7 +39,7 @@ open class IntelligentDetailViewTests {
         
         let view = IntelligentDetailView.platformDetailView(for: testData)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -54,7 +54,7 @@ open class IntelligentDetailViewTests {
         
         let view = IntelligentDetailView.platformDetailView(for: testData)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

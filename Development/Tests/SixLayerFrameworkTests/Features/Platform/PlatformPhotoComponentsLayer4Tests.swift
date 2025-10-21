@@ -39,7 +39,7 @@ open class PlatformPhotoComponentsLayer4Tests {
             onImageCaptured: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -54,7 +54,7 @@ open class PlatformPhotoComponentsLayer4Tests {
             onImageCaptured: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

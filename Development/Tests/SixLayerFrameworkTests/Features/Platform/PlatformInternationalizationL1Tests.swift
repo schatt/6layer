@@ -42,7 +42,7 @@ open class PlatformInternationalizationL1Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -60,7 +60,7 @@ open class PlatformInternationalizationL1Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -77,7 +77,7 @@ open class PlatformInternationalizationL1Tests {
         
         let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -92,7 +92,7 @@ open class PlatformInternationalizationL1Tests {
         
         let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

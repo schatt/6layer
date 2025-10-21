@@ -49,7 +49,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentItemCollection_L1(items: testItems, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -74,7 +74,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentItemCollection_L1(items: testItems, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -98,7 +98,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentNumericData_L1(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -120,7 +120,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentNumericData_L1(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -151,7 +151,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentFormData_L1(field: testField, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -180,7 +180,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentFormData_L1(field: testField, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -204,7 +204,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentMediaData_L1(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -226,7 +226,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentMediaData_L1(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -262,7 +262,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentSettings_L1(settings: testSettings, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -296,7 +296,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentSettings_L1(settings: testSettings, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -320,7 +320,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentContent_L1(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -342,7 +342,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentContent_L1(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -366,7 +366,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -388,7 +388,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -412,7 +412,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -434,7 +434,7 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -459,7 +459,7 @@ open class PlatformSemanticLayer1Tests {
             Text("Test Card Content")
         }, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -482,7 +482,7 @@ open class PlatformSemanticLayer1Tests {
             Text("Test Card Content")
         }, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

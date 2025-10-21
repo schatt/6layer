@@ -49,7 +49,7 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -74,7 +74,7 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -101,7 +101,7 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -126,7 +126,7 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
