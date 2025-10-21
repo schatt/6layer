@@ -46,11 +46,12 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
                 formType: .form,
                 context: .modal
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPresentModalForm_L1"
+                platform: .iOS,
+            componentName: "platformPresentModalForm_L1"
             )
         }
         
@@ -83,11 +84,12 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
                 formType: .form,
                 context: .modal
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPresentModalForm_L1"
+                platform: .iOS,
+            componentName: "platformPresentModalForm_L1"
             )
         }
         

@@ -49,11 +49,12 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformOCRWithVisualCorrection_L1"
+            componentName: "platformOCRWithVisualCorrection_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
@@ -74,11 +75,12 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformOCRWithVisualCorrection_L1"
+            componentName: "platformOCRWithVisualCorrection_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
@@ -101,11 +103,12 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformExtractStructuredData_L1"
+            componentName: "platformExtractStructuredData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on iOS")
@@ -126,11 +129,12 @@ open class PlatformOCRSemanticLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformExtractStructuredData_L1"
+            componentName: "platformExtractStructuredData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformExtractStructuredData_L1 should generate accessibility identifiers on macOS")

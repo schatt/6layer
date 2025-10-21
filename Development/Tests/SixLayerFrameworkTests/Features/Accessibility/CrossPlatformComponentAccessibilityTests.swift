@@ -21,9 +21,10 @@ open class CrossPlatformComponentAccessibilityTests: BaseTestClass {
         let testView = CrossPlatformOptimization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "CrossPlatformOptimization"
         )

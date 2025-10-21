@@ -54,11 +54,12 @@ open class PlatformOCRDisambiguationLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformOCRDisambiguation_L1"
+            componentName: "platformOCRDisambiguation_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformOCRDisambiguation_L1 should generate accessibility identifiers on iOS")
@@ -84,11 +85,12 @@ open class PlatformOCRDisambiguationLayer1Tests {
             onResult: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformOCRDisambiguation_L1"
+            componentName: "platformOCRDisambiguation_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformOCRDisambiguation_L1 should generate accessibility identifiers on macOS")

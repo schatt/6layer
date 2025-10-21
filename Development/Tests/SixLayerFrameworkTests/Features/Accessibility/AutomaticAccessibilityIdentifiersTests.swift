@@ -62,9 +62,10 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .automaticAccessibilityIdentifiers()
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
@@ -76,10 +77,11 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .automaticAccessibilityIdentifiers()
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
+            platform: .iOS,
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
         
@@ -92,9 +94,10 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .named("TestElement")
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*testelement.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "named modifier"
         )
@@ -106,10 +109,11 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .named("TestElement")
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*testelement.*", 
             platform: .macOS,
+            platform: .iOS,
             componentName: "named modifier"
         )
         

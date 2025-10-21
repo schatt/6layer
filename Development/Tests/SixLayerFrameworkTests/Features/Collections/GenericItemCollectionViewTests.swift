@@ -45,9 +45,10 @@ open class GenericItemCollectionViewTests {
             hints: PresentationHints()
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "GenericItemCollectionView"
         )
@@ -66,10 +67,11 @@ open class GenericItemCollectionViewTests {
             hints: PresentationHints()
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
+            platform: .iOS,
             componentName: "GenericItemCollectionView"
         )
         

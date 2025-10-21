@@ -24,9 +24,10 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
         let testView = photoComponents.platformPhotoPicker_L4(onImageSelected: { _ in })
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformPhotoComponentsLayer4"
         )

@@ -28,11 +28,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
+                platform: .iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
             )
         }
         
@@ -57,11 +58,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
+                platform: .iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
             )
         }
         
@@ -86,11 +88,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
+                platform: .iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
             )
         }
         
@@ -115,11 +118,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
+                platform: .iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
             )
         }
         

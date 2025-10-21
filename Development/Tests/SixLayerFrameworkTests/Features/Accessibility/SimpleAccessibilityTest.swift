@@ -12,9 +12,10 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
         let testView = Button("Test") { }
             .accessibilityIdentifier("manual-test-id")
         
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedIdentifier: "manual-test-id", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "ManualAccessibilityIdentifier"
         ), "Manual accessibility identifier should work")
@@ -27,9 +28,10 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
             .automaticAccessibilityIdentifiers()
         
         // Should look for automatic accessibility identifier: "SimpleTest.button.Test"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "SimpleTest.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "AutomaticAccessibilityIdentifierModifier"
         ), "Should have some accessibility identifier")

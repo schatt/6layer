@@ -79,10 +79,11 @@ open class PhotoComponentsLayer4Tests {
             #expect(result != nil, "Layer 4 camera interface should return a valid SwiftUI view")
             
             // 2. Does that structure contain what it should?
-            #expect(hasAccessibilityIdentifierPattern(
+            #expect(testAccessibilityIdentifiersSinglePlatform(
                 result, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
+            platform: .iOS,
             componentName: "PlatformCameraInterface_L4"
             ), "Camera interface should have accessibility identifier")
             

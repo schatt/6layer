@@ -24,9 +24,10 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = crossPlatformOptimization.optimizeView(testView)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "CrossPlatformOptimizationLayer6"
         )
@@ -42,9 +43,10 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = testView.platformSpecificOptimizations(for: SixLayerPlatform.current)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformSpecificOptimizations"
         )
@@ -61,9 +63,10 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = testView.performanceOptimizations(using: settings)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PerformanceOptimizations"
         )
@@ -80,9 +83,10 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = testView.uiPatternOptimizations(using: patterns)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "UIPatternOptimizations"
         )
@@ -116,9 +120,10 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let performanceView = performanceLayer.body
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             performanceView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformPerformanceLayer6"
         )

@@ -26,23 +26,26 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         let bannerNotification = messagingLayer.createBannerNotification(title: "Test Banner", message: "Test Message")
         
         // Then: Should generate accessibility identifiers for components
-        let hasAlertAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAlertAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             alertButton,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AlertButton"
         )
         
-        let hasToastAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasToastAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             toastNotification,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "ToastNotification"
         )
         
-        let hasBannerAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasBannerAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             bannerNotification,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "BannerNotification"
         )

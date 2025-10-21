@@ -31,9 +31,10 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         })
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformInteractionButton"
         )
         
@@ -57,6 +58,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             view,
             expectedPattern: "*.main.element.*",
             platform: .iOS,
+            platform: .iOS,
             componentName: "InputHandlingManager"
         )
         
@@ -72,9 +74,10 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "KeyboardShortcutManager"
         )
@@ -91,9 +94,10 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "HapticFeedbackManager"
         )
@@ -110,9 +114,10 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "DragDropManager"
         )
         

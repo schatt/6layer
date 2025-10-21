@@ -37,9 +37,10 @@ open class CrossPlatformNavigationTests {
 @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = Text("Test Navigation")
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "CrossPlatformNavigationView"
         )
@@ -50,10 +51,11 @@ open class CrossPlatformNavigationTests {
     @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = Text("Test Navigation")
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
+            platform: .iOS,
             componentName: "CrossPlatformNavigationView"
         )
         

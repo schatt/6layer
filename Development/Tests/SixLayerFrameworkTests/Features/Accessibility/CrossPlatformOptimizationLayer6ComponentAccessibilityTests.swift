@@ -26,9 +26,10 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "CrossPlatformOptimizationManager"
         )
@@ -48,9 +49,10 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformOptimizationSettings"
         )
@@ -71,9 +73,10 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         .environmentObject(metrics)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "CrossPlatformPerformanceMetrics"
         )
@@ -93,9 +96,10 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformUIPatterns"
         )
@@ -115,9 +119,10 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformRecommendationEngine"
         )
@@ -137,9 +142,10 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "CrossPlatformTesting"
         )

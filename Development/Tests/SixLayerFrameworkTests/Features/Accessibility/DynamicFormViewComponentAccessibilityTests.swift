@@ -63,12 +63,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     private func testAccessibilityIdentifierGeneration(
         view: some View,
         platform: .iOS,
+            platform: .iOS,
             componentName: String,
         testName: String
     ) -> Bool {
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: componentName
         )
@@ -79,6 +81,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     private func testFieldAccessibility(
         fieldType: DynamicContentType,
         platform: .iOS,
+            platform: .iOS,
             componentName: String
     ) -> Bool {
         let field = DynamicFormField(
@@ -95,6 +98,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         return testAccessibilityIdentifierGeneration(
             view: view,
             platform: .iOS,
+            platform: .iOS,
             componentName: componentName,
             testName: "\(componentName) should generate accessibility identifiers"
         )
@@ -109,6 +113,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicFormView",
             testName: "DynamicFormView should generate accessibility identifiers"
@@ -127,6 +132,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicFormHeader",
             testName: "DynamicFormHeader should generate accessibility identifiers"
         )
@@ -144,6 +150,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicFormSectionView",
             testName: "DynamicFormSectionView should generate accessibility identifiers"
         )
@@ -160,6 +167,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicFormActions",
             testName: "DynamicFormActions should generate accessibility identifiers"
@@ -182,6 +190,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicTextField",
             testName: "DynamicTextField should generate accessibility identifiers"
         )
@@ -195,6 +204,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing number field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .number,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicNumberField"
         )
@@ -210,6 +220,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .textarea,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicTextAreaField"
         )
         
@@ -223,6 +234,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing select field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .select,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicSelectField"
         )
@@ -238,6 +250,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .multiselect,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicMultiSelectField"
         )
         
@@ -251,6 +264,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing radio field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .radio,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicRadioField"
         )
@@ -266,6 +280,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .checkbox,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicCheckboxField"
         )
         
@@ -279,6 +294,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing toggle field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .toggle,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicToggleField"
         )
@@ -294,6 +310,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .date,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicDateField"
         )
         
@@ -307,6 +324,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing time field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .time,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicTimeField"
         )
@@ -322,6 +340,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .datetime,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicDateTimeField"
         )
         
@@ -335,6 +354,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing color field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .color,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicColorField"
         )
@@ -350,6 +370,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .file,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicFileField"
         )
         
@@ -363,6 +384,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing integer field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .integer,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicIntegerField"
         )
@@ -378,6 +400,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .image,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicImageField"
         )
         
@@ -391,6 +414,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing URL field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .url,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicURLField"
         )
@@ -406,6 +430,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .array,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicArrayField"
         )
         
@@ -420,6 +445,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .data,
             platform: .iOS,
+            platform: .iOS,
             componentName: "DynamicDataField"
         )
         
@@ -433,6 +459,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing enum field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .enum,
+            platform: .iOS,
             platform: .iOS,
             componentName: "DynamicEnumField"
         )

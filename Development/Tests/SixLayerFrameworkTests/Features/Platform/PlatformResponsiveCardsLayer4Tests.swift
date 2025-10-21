@@ -60,11 +60,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericItemCollectionView"
+            componentName: "GenericItemCollectionView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
@@ -88,11 +89,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericItemCollectionView"
+            componentName: "GenericItemCollectionView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
@@ -115,11 +117,12 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericNumericDataView(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericNumericDataView"
+            componentName: "GenericNumericDataView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
@@ -140,11 +143,12 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericNumericDataView(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericNumericDataView"
+            componentName: "GenericNumericDataView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
@@ -167,11 +171,12 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericMediaView(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericMediaView"
+            componentName: "GenericMediaView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on iOS")
@@ -192,11 +197,12 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericMediaView(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericMediaView"
+            componentName: "GenericMediaView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on macOS")
@@ -231,11 +237,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericSettingsView"
+            componentName: "GenericSettingsView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on iOS")
@@ -268,11 +275,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericSettingsView"
+            componentName: "GenericSettingsView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on macOS")
@@ -292,11 +300,12 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericContentView(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericContentView"
+            componentName: "GenericContentView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on iOS")
@@ -314,11 +323,12 @@ open class PlatformResponsiveCardsLayer4Tests {
         
         let view = GenericContentView(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericContentView"
+            componentName: "GenericContentView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on macOS")
@@ -341,11 +351,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericNumericDataView"
+            componentName: "GenericNumericDataView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS")
@@ -366,11 +377,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericNumericDataView"
+            componentName: "GenericNumericDataView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS")
@@ -393,11 +405,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "GenericItemCollectionView"
+            componentName: "GenericItemCollectionView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
@@ -418,11 +431,12 @@ open class PlatformResponsiveCardsLayer4Tests {
             hints: hints
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "GenericItemCollectionView"
+            componentName: "GenericItemCollectionView",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")

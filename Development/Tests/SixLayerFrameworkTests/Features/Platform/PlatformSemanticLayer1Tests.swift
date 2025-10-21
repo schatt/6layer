@@ -49,11 +49,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentItemCollection_L1(items: testItems, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentItemCollection_L1"
+            componentName: "platformPresentItemCollection_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on iOS")
@@ -74,11 +75,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentItemCollection_L1(items: testItems, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentItemCollection_L1"
+            componentName: "platformPresentItemCollection_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on macOS")
@@ -98,11 +100,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentNumericData_L1(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentNumericData_L1"
+            componentName: "platformPresentNumericData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on iOS")
@@ -120,11 +123,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentNumericData_L1(data: testData, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentNumericData_L1"
+            componentName: "platformPresentNumericData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on macOS")
@@ -151,11 +155,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentFormData_L1(field: testField, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentFormData_L1"
+            componentName: "platformPresentFormData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on iOS")
@@ -180,11 +185,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentFormData_L1(field: testField, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentFormData_L1"
+            componentName: "platformPresentFormData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on macOS")
@@ -204,11 +210,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentMediaData_L1(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentMediaData_L1"
+            componentName: "platformPresentMediaData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on iOS")
@@ -226,11 +233,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentMediaData_L1(media: testMedia, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentMediaData_L1"
+            componentName: "platformPresentMediaData_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on macOS")
@@ -262,11 +270,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentSettings_L1(settings: testSettings, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentSettings_L1"
+            componentName: "platformPresentSettings_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on iOS")
@@ -296,11 +305,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentSettings_L1(settings: testSettings, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentSettings_L1"
+            componentName: "platformPresentSettings_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on macOS")
@@ -320,11 +330,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentContent_L1(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentContent_L1"
+            componentName: "platformPresentContent_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on iOS")
@@ -342,11 +353,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentContent_L1(content: testContent, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentContent_L1"
+            componentName: "platformPresentContent_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on macOS")
@@ -366,11 +378,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentBasicValue_L1"
+            componentName: "platformPresentBasicValue_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on iOS")
@@ -388,11 +401,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentBasicValue_L1"
+            componentName: "platformPresentBasicValue_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on macOS")
@@ -412,11 +426,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformPresentBasicArray_L1"
+            componentName: "platformPresentBasicArray_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on iOS")
@@ -434,11 +449,12 @@ open class PlatformSemanticLayer1Tests {
         
         let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformPresentBasicArray_L1"
+            componentName: "platformPresentBasicArray_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS")
@@ -459,11 +475,12 @@ open class PlatformSemanticLayer1Tests {
             Text("Test Card Content")
         }, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformResponsiveCard_L1"
+            componentName: "platformResponsiveCard_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on iOS")
@@ -482,11 +499,12 @@ open class PlatformSemanticLayer1Tests {
             Text("Test Card Content")
         }, hints: hints)
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformResponsiveCard_L1"
+            componentName: "platformResponsiveCard_L1",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on macOS")

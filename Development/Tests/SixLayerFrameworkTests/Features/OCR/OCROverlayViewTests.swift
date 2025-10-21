@@ -53,9 +53,10 @@ open class OCROverlayViewTests {
             onTextDelete: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "OCROverlayView"
         )
@@ -82,10 +83,11 @@ open class OCROverlayViewTests {
             onTextDelete: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
+            platform: .iOS,
             componentName: "OCROverlayView"
         )
         

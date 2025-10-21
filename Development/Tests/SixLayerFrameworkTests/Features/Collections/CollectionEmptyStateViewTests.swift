@@ -44,9 +44,10 @@ open class CollectionEmptyStateViewTests {
             customCreateView: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "CollectionEmptyStateView"
         )
@@ -64,10 +65,11 @@ open class CollectionEmptyStateViewTests {
             customCreateView: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
+            platform: .iOS,
             componentName: "CollectionEmptyStateView"
         )
         

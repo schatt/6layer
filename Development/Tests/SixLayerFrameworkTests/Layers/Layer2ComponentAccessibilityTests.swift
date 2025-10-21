@@ -28,10 +28,12 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
             hints: testHints
         )
         
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        // Then: Should generate accessibility identifiers (representative sampling on iOS)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
+            platform: .iOS,
             componentName: "ItemCollectionL2"
         )
         
@@ -46,9 +48,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentNumericData_L2(data: testData)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "NumericDataL2"
         )
         
@@ -63,9 +66,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentFormData_L2(formData: testFormData)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "FormDataL2"
         )
         
@@ -80,9 +84,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentMediaData_L2(mediaData: testMediaData)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "MediaDataL2"
         )
         
@@ -97,9 +102,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentSettings_L2(settings: testSettings)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "SettingsL2"
         )
         
@@ -114,9 +120,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPhotoCapture_L2(onCapture: testCallback)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PhotoCaptureL2"
         )
         
@@ -131,9 +138,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPhotoDisplay_L2(image: testImage)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PhotoDisplayL2"
         )
         
@@ -148,9 +156,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPhotoSelection_L2(onSelection: testCallback)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PhotoSelectionL2"
         )
         
@@ -166,9 +175,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformOCRWithVisualCorrection_L2(image: testImage, onResult: testCallback)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "OCRL2"
         )
         
@@ -184,9 +194,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentModalForm_L2(formData: testFormData, onSubmit: testCallback)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ModalFormL2"
         )
         
@@ -201,9 +212,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentHierarchicalData_L2(hierarchy: testHierarchy)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "HierarchicalDataL2"
         )
         
@@ -218,9 +230,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentTemporalData_L2(temporalData: testTemporalData)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "TemporalDataL2"
         )
         
@@ -235,9 +248,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentContent_L2(content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ContentL2"
         )
         
@@ -252,9 +266,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentBasicValue_L2(value: testValue)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "BasicValueL2"
         )
         
@@ -269,9 +284,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentBasicArray_L2(array: testArray)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "BasicArrayL2"
         )
         
@@ -287,9 +303,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformResponsiveCard_L2(title: testTitle, content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveCardL2"
         )
         
@@ -306,9 +323,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformOCRWithDisambiguation_L2(image: testImage, options: testOptions, onResult: testCallback)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "OCRDisambiguationL2"
         )
         
@@ -323,9 +341,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformExtractStructuredData_L2(data: testData)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "StructuredDataL2"
         )
         
@@ -341,9 +360,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentLocalizedContent_L2(content: testContent, locale: testLocale)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "LocalizedContentL2"
         )
         
@@ -359,9 +379,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentLocalizedText_L2(text: testText, locale: testLocale)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "LocalizedTextL2"
         )
         
@@ -377,9 +398,10 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let view = platformPresentLocalizedNumber_L2(number: testNumber, locale: testLocale)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "LocalizedNumberL2"
         )
         

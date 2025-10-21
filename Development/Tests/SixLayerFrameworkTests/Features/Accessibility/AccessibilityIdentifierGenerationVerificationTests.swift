@@ -45,10 +45,11 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(hasAccessibilityIdentifierPattern(
+            #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "test.*element.*main-ui", 
                 platform: .iOS,
+            platform: .iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
             ), "View should have an accessibility identifier assigned")
         }
@@ -80,10 +81,11 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testView != nil, "View with .named() should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(hasAccessibilityIdentifierPattern(
+            #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.*element.*main-addfuelbutton", 
                 platform: .iOS,
+            platform: .iOS,
             componentName: "NamedModifier"
             ), "View should have an accessibility identifier assigned")
         }
@@ -115,10 +117,11 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testView != nil, "Automatic accessibility identifiers should create view successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(hasAccessibilityIdentifierPattern(
+            #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
                 platform: .iOS,
+            platform: .iOS,
             componentName: "CombinedBreadcrumbModifiers"
             ), "View should have an accessibility identifier assigned")
         }

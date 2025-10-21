@@ -80,11 +80,12 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testImage,
                 style: .thumbnail
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: platform,
-                componentName: "platformPhotoDisplay_L4"
+                platform: .iOS,
+            componentName: "platformPhotoDisplay_L4"
             )
         }
         
@@ -106,11 +107,12 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testPhoto,
                 style: .thumbnail
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPhotoDisplay_L4"
+                platform: .iOS,
+            componentName: "platformPhotoDisplay_L4"
             )
         }
         
@@ -130,11 +132,12 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testPhoto,
                 style: .thumbnail
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPhotoDisplay_L4"
+                platform: .iOS,
+            componentName: "platformPhotoDisplay_L4"
             )
         }
         

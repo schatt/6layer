@@ -34,9 +34,10 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         
         // MANDATORY: Test that accessibility identifiers are applied on iOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             ocrView, 
             expectedPattern: "TDDTest.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on iOS")
@@ -69,9 +70,10 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         
         // MANDATORY: Test that accessibility identifiers are applied on macOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             ocrView, 
             expectedPattern: "TDDTest.main.element.*", 
+            platform: .iOS,
             platform: .iOS,
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on macOS")

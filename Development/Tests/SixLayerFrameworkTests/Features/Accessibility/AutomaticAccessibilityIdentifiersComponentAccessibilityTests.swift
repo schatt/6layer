@@ -15,9 +15,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AutomaticAccessibilityIdentifierModifier"
         )
@@ -31,9 +32,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityLabel("Test Label")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "ComprehensiveAccessibilityModifier"
         )
@@ -47,9 +49,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityHint("Test Hint")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "GlobalAutomaticAccessibilityIdentifierModifier"
         )
@@ -63,9 +66,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityIdentifier("test-id")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "DisableAutomaticAccessibilityIdentifierModifier"
         )
@@ -79,9 +83,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityIdentifier("test-id")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityIdentifierAssignmentModifier"
         )
@@ -95,9 +100,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityLabel("Test Label")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "ViewHierarchyTrackingModifier"
         )
@@ -111,9 +117,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityHint("Test Hint")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "ScreenContextModifier"
         )
@@ -127,9 +134,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityIdentifier("working-test")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "WorkingAccessibilityIdentifierModifier"
         )
@@ -143,9 +151,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityValue("Test Value")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "ExactAccessibilityIdentifierModifier"
         )
@@ -159,9 +168,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityIdentifier("hierarchical-test")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "HierarchicalNamedModifier"
         )
@@ -175,9 +185,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityLabel("Custom Label")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityLabelAssignmentModifier"
         )
@@ -191,9 +202,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityHint("Custom Hint")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityHintAssignmentModifier"
         )
@@ -207,9 +219,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityIdentifier("traits-test")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityTraitsAssignmentModifier"
         )
@@ -223,9 +236,10 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             .accessibilityValue("Custom Value")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityValueAssignmentModifier"
         )

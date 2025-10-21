@@ -205,10 +205,11 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Then: Manual identifier should be used
             // We test this by verifying the view has the manual identifier
             // The manual identifier should take precedence over automatic generation
-            let hasManualID = hasAccessibilityIdentifierPattern(
+            let hasManualID = testAccessibilityIdentifiersSinglePlatform(
                 view,
                 expectedPattern: "*.\(manualID)",
                 platform: .iOS,
+            platform: .iOS,
             componentName: "ManualIdentifierTest"
             )
             #expect(hasManualID, "Manual identifier should override automatic generation")
@@ -230,10 +231,11 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Then: No automatic identifier should be generated
             // We test this by verifying the view does NOT have an automatic identifier
             // The modifier should not generate an identifier when enableAutoIDs is false
-            let hasAutomaticID = hasAccessibilityIdentifierPattern(
+            let hasAutomaticID = testAccessibilityIdentifiersSinglePlatform(
                 view,
                 expectedPattern: "*.auto.*",
                 platform: .iOS,
+            platform: .iOS,
             componentName: "AutomaticIdentifierTest"
             )
             #expect(!hasAutomaticID, "View should not have automatic ID when disabled globally")
@@ -279,10 +281,11 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #expect(view != nil, "Layer 1 function should include automatic identifiers")
             
             // Test that Layer 1 functions generate accessibility identifiers
-            #expect(hasAccessibilityIdentifierPattern(
+            #expect(testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "layer1.main.element.*", 
                 platform: .iOS,
+            platform: .iOS,
             componentName: "Layer1Functions"
             ), "Layer 1 function should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
             
@@ -624,10 +627,11 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             .named("AddFuelButton")
             
             // Test that .named() generates accessibility identifiers
-            #expect(hasAccessibilityIdentifierPattern(
+            #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
                 platform: .iOS,
+            platform: .iOS,
             componentName: "NamedModifier"
             ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
             

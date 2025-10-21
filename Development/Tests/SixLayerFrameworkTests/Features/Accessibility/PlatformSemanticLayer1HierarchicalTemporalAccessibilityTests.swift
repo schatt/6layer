@@ -55,11 +55,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPresentHierarchicalData_L1"
+                platform: .iOS,
+            componentName: "platformPresentHierarchicalData_L1"
             )
         }
         
@@ -94,11 +95,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPresentHierarchicalData_L1"
+                platform: .iOS,
+            componentName: "platformPresentHierarchicalData_L1"
             )
         }
         
@@ -132,11 +134,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPresentTemporalData_L1"
+                platform: .iOS,
+            componentName: "platformPresentTemporalData_L1"
             )
         }
         
@@ -168,11 +171,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifierPattern(
+            testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPresentTemporalData_L1"
+                platform: .iOS,
+            componentName: "platformPresentTemporalData_L1"
             )
         }
         

@@ -42,11 +42,12 @@ open class PlatformStylingLayer4Tests {
                 }
             )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformStyledContainer_L4"
+            componentName: "platformStyledContainer_L4",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on iOS")
@@ -60,11 +61,12 @@ open class PlatformStylingLayer4Tests {
                 }
             )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformStyledContainer_L4"
+            componentName: "platformStyledContainer_L4",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on macOS")

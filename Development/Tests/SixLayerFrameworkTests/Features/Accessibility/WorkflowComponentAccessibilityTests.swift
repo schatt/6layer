@@ -21,9 +21,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformWorkflow()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformWorkflow"
         )
@@ -36,9 +37,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformIntegration()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformIntegration"
         )
@@ -51,9 +53,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAutomation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformAutomation"
         )
@@ -66,9 +69,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformOrchestration()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformOrchestration"
         )
@@ -81,9 +85,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformCoordination()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformCoordination"
         )
@@ -96,9 +101,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSynchronization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformSynchronization"
         )
@@ -111,9 +117,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformCommunication()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformCommunication"
         )
@@ -126,9 +133,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformMessaging()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformMessaging"
         )
@@ -141,9 +149,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformRouting()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformRouting"
         )
@@ -156,9 +165,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformDiscovery()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformDiscovery"
         )
@@ -181,9 +191,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformIdentification()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformIdentification"
         )
@@ -196,9 +207,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformRecognition()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformRecognition"
         )
@@ -211,9 +223,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformClassification()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformClassification"
         )
@@ -226,9 +239,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformCategorization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformCategorization"
         )
@@ -241,9 +255,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformOrganization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformOrganization"
         )
@@ -256,9 +271,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformStructure()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformStructure"
         )
@@ -271,9 +287,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformArchitecture()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformArchitecture"
         )
@@ -286,9 +303,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformDesign()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformDesign"
         )
@@ -301,9 +319,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformImplementation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformImplementation"
         )
@@ -316,9 +335,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformDeployment()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformDeployment"
         )
@@ -331,9 +351,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformMaintenance()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformMaintenance"
         )
@@ -346,9 +367,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSupport()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformSupport"
         )
@@ -361,9 +383,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformService()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformService"
         )
@@ -376,9 +399,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformResource()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformResource"
         )
@@ -391,9 +415,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAsset()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformAsset"
         )
@@ -406,9 +431,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformContent()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformContent"
         )
@@ -421,9 +447,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformData()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformData"
         )
@@ -436,9 +463,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformInformation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformInformation"
         )
@@ -451,9 +479,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformKnowledge()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformKnowledge"
         )
@@ -466,9 +495,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformWisdom()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformWisdom"
         )
@@ -481,9 +511,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformInsight()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformInsight"
         )
@@ -496,9 +527,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformIntelligence()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformIntelligence"
         )
@@ -511,9 +543,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformUnderstanding()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformUnderstanding"
         )
@@ -526,9 +559,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformComprehension()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformComprehension"
         )
@@ -541,9 +575,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformInterpretation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformInterpretation"
         )
@@ -556,9 +591,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAnalysis()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformAnalysis"
         )
@@ -571,9 +607,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformEvaluation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformEvaluation"
         )
@@ -586,9 +623,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAssessment()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformAssessment"
         )
@@ -601,9 +639,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformValidation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformValidation"
         )
@@ -616,9 +655,10 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformVerification()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformVerification"
         )

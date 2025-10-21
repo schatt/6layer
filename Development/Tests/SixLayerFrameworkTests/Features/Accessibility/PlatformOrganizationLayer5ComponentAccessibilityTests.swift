@@ -21,9 +21,10 @@ open class PlatformOrganizationLayer5ComponentAccessibilityTests: BaseTestClass 
         let testView = PlatformOrganizationLayer5()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "PlatformOrganizationLayer5"
         )

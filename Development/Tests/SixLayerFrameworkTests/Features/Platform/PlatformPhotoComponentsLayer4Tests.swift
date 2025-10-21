@@ -39,11 +39,12 @@ open class PlatformPhotoComponentsLayer4Tests {
             onImageCaptured: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
-            componentName: "platformCameraInterface_L4"
+            componentName: "platformCameraInterface_L4",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers on iOS")
@@ -54,11 +55,12 @@ open class PlatformPhotoComponentsLayer4Tests {
             onImageCaptured: { _ in }
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            componentName: "platformCameraInterface_L4"
+            componentName: "platformCameraInterface_L4",
+            testName: "PlatformTest"
         )
         
         #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers on macOS")

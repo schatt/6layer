@@ -22,9 +22,10 @@ open class PlatformOCRComponentsLayer4ComponentAccessibilityTests: BaseTestClass
             .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "OCRService"
         )

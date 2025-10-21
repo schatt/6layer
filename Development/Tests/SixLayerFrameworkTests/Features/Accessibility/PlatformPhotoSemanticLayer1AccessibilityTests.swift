@@ -30,11 +30,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageCaptured: { _ in }
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPhotoCapture_L1"
+                platform: .iOS,
+            componentName: "platformPhotoCapture_L1"
             )
         }
         
@@ -60,11 +61,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageCaptured: { _ in }
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPhotoCapture_L1"
+                platform: .iOS,
+            componentName: "platformPhotoCapture_L1"
             )
         }
         
@@ -92,11 +94,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageSelected: { _ in }
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPhotoSelection_L1"
+                platform: .iOS,
+            componentName: "platformPhotoSelection_L1"
             )
         }
         
@@ -122,11 +125,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageSelected: { _ in }
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPhotoSelection_L1"
+                platform: .iOS,
+            componentName: "platformPhotoSelection_L1"
             )
         }
         
@@ -155,11 +159,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 image: testImage
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
-                componentName: "platformPhotoDisplay_L1"
+                platform: .iOS,
+            componentName: "platformPhotoDisplay_L1"
             )
         }
         
@@ -186,11 +191,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 image: testImage
             )
-            return hasAccessibilityIdentifierPattern(
+            return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                componentName: "platformPhotoDisplay_L1"
+                platform: .iOS,
+            componentName: "platformPhotoDisplay_L1"
             )
         }
         

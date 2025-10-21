@@ -27,9 +27,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = AccessibilityEnhancedView(content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityEnhancedView"
         )
@@ -50,9 +51,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = VoiceOverEnabledView(content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "VoiceOverEnabledView"
         )
@@ -73,9 +75,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = KeyboardNavigableView(content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "KeyboardNavigableView"
         )
@@ -96,9 +99,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = HighContrastEnabledView(content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "HighContrastEnabledView"
         )
@@ -119,9 +123,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = AccessibilityHostingView(content: testContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityHostingView"
         )
@@ -136,9 +141,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = AccessibilityTestingView()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityTestingView"
         )
@@ -159,9 +165,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "VoiceOverManager"
         )
@@ -182,9 +189,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "KeyboardNavigationManager"
         )
@@ -205,9 +213,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "HighContrastManager"
         )
@@ -228,9 +237,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AccessibilityTestingManager"
         )
@@ -251,9 +261,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "SwitchControlManager"
         )
@@ -274,9 +285,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "MaterialAccessibilityManager"
         )
@@ -297,9 +309,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "EyeTrackingManager"
         )
@@ -320,9 +333,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             platform: .iOS,
             componentName: "AssistiveTouchManager"
         )

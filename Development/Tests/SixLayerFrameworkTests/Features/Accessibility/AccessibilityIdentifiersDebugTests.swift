@@ -13,9 +13,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibilityIdentifiers()
         
         // Should look for button-specific accessibility identifier: "DebugTest.button.Test"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
+            platform: .iOS,
             componentName: "DirectAutomaticAccessibilityIdentifiers"
         ), "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
         print("🔍 Testing direct .automaticAccessibilityIdentifiers()")
@@ -28,9 +29,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibilityIdentifiers()
         
         // Should look for named button-specific accessibility identifier: "DebugTest.TestButton.Test"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
+            platform: .iOS,
             componentName: "NamedModifier"
         ), ".named() + .automaticAccessibilityIdentifiers() should generate named button-specific accessibility ID")
         print("🔍 Testing .named() + .automaticAccessibilityIdentifiers()")
@@ -45,9 +47,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             ))
         
         // Should look for modifier-specific accessibility identifier: "DebugTest.modifier.Test"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
+            platform: .iOS,
             componentName: "AutomaticAccessibilityModifier"
         ), "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
         print("🔍 Testing AutomaticAccessibilityModifier directly")
@@ -59,9 +62,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibility()
         
         // Should look for extension-specific accessibility identifier: "DebugTest.extension.Test"
-        #expect(hasAccessibilityIdentifierPattern(
+        #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
+            platform: .iOS,
             componentName: "AutomaticAccessibilityExtension"
         ), ".automaticAccessibility() should generate extension-specific accessibility ID")
         print("🔍 Testing .automaticAccessibility() extension")
