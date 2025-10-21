@@ -390,7 +390,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicURLFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing URL field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .url,
+            fieldType: DynamicContentType.url,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicURLField"
         )
