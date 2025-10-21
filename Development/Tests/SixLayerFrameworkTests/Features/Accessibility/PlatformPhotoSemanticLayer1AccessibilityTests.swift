@@ -126,7 +126,6 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .macOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoSelection_L1"
             )
