@@ -58,6 +58,24 @@ public class LiquidGlassDesignSystem: ObservableObject {
         self.currentTheme = theme
     }
     
+    /// Get fallback behavior for a specific feature
+    /// TDD RED PHASE: This is a stub implementation for testing
+    @available(iOS 26.0, macOS 26.0, *)
+    public func getFallbackBehavior(for feature: LiquidGlassFeature) -> String? {
+        switch feature {
+        case .materials:
+            return "Use standard background colors"
+        case .floatingControls:
+            return "Use standard button controls"
+        case .contextualMenus:
+            return "Use standard context menus"
+        case .adaptiveWallpapers:
+            return "Use static wallpapers"
+        case .dynamicReflections:
+            return "Use standard shadows"
+        }
+    }
+    
     // MARK: - Private Helpers
     
     private static func detectLiquidGlassSupport() -> Bool {
