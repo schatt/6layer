@@ -409,7 +409,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let system = LiquidGlassDesignSystem()
+        let system = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
         var control = FloatingControl(
             type: .navigation,
@@ -438,7 +438,7 @@ struct LiquidGlassDesignSystemTests {
         }
         
         // Given & When
-        let system = LiquidGlassDesignSystem()
+        let system = LiquidGlassDesignSystem.shared
         for feature in LiquidGlassFeature.allCases {
             let fallbackBehavior = system.getFallbackBehavior(for: feature)
             

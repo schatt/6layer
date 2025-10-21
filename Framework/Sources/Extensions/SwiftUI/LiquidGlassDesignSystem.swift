@@ -272,6 +272,12 @@ public struct FloatingControl: Equatable {
         isExpanded = false
     }
     
+    /// Expand the floating control
+    public mutating func expand() {
+        guard isExpandable else { return }
+        isExpanded = true
+    }
+    
     /// Contract the floating control
     public mutating func contract() {
         guard isExpandable else { return }
