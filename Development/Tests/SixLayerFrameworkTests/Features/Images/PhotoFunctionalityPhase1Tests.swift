@@ -278,28 +278,12 @@ open class PhotoFunctionalityPhase1Tests {
     
     @Test @MainActor
     func testPlatformPhotoDisplayL4() {
-        // Given: A PlatformImage and display style
-        let testImage = createTestPlatformImage()
-        let style = PhotoDisplayStyle.thumbnail
-        
-        // When: Creating photo display
-        let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: style)
-        
-        // Then: Photo display should be created and be hostable
-        #expect(photoDisplay != nil, "Photo display should be created")
-        
-        // Test that the photo display can actually be hosted
-        let hostingView = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "Photo display should be hostable")
-    }
-    
-    @Test @MainActor
-    func testPlatformPhotoDisplayL4() {
         // Given: A PlatformImage
         let testImage = createTestPlatformImage()
+        let photoComponents = PlatformPhotoComponentsLayer4()
         
         // When: Creating photo display
-        let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
+        let photoDisplay = photoComponents.platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
         
         // Then: Photo display should be created and be hostable
         #expect(photoDisplay != nil, "Photo display should be created")
