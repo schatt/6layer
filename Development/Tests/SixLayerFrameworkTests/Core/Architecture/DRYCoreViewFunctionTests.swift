@@ -117,48 +117,6 @@ open class DRYCoreViewFunctionTests {
     /// BUSINESS PURPOSE: Validate intelligent detail view functionality with specific capability combinations
     /// TESTING SCOPE: Intelligent detail view specific capability testing, capability combination validation, specific capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with specific capabilities
-    @Test func testIntelligentDetailViewWithSpecificCombination(
-        capabilityName: String,
-        accessibilityName: String,
-        capabilityFactory: () -> MockPlatformCapabilityChecker,
-        accessibilityFactory: () -> MockAccessibilityFeatureChecker
-    ) {
-        // GIVEN: Specific capability and accessibility combination
-        let item = sampleData[0]
-        let capabilityChecker = capabilityFactory()
-        let accessibilityChecker = accessibilityFactory()
-        let testName = "\(capabilityName) + \(accessibilityName)"
-        
-        // WHEN: Generating intelligent detail view
-        let view = DRYTestPatterns.createIntelligentDetailView(
-            item: item,
-            capabilityChecker: capabilityChecker,
-            accessibilityChecker: accessibilityChecker
-        )
-        
-        // THEN: Should generate correct view for this combination
-        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
-        
-        let viewInfo = extractViewInfo(
-            from: view,
-            capabilityChecker: capabilityChecker,
-            accessibilityChecker: accessibilityChecker
-        )
-        
-        // Verify platform-specific properties
-        DRYTestPatterns.verifyPlatformProperties(
-            viewInfo: viewInfo,
-            capabilityChecker: capabilityChecker,
-            testName: testName
-        )
-        
-        // Verify accessibility properties
-        DRYTestPatterns.verifyAccessibilityProperties(
-            viewInfo: viewInfo,
-            accessibilityChecker: accessibilityChecker,
-            testName: testName
-        )
-    }
     
     // MARK: - Parameterized Tests (DRY Version)
     
@@ -350,51 +308,6 @@ open class DRYCoreViewFunctionTests {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
-    /// BUSINESS PURPOSE: Validate simple card component functionality with specific capability combinations
-    /// TESTING SCOPE: Simple card component specific capability testing, capability combination validation, specific capability testing
-    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test simple card component with specific capabilities
-    @Test func testSimpleCardComponentWithSpecificCombination(
-        capabilityName: String,
-        accessibilityName: String,
-        capabilityFactory: () -> MockPlatformCapabilityChecker,
-        accessibilityFactory: () -> MockAccessibilityFeatureChecker
-    ) {
-        // GIVEN: Specific capability and accessibility combination
-        let item = sampleData[0]
-        let capabilityChecker = capabilityFactory()
-        let accessibilityChecker = accessibilityFactory()
-        let testName = "SimpleCard \(capabilityName) + \(accessibilityName)"
-        
-        // WHEN: Generating simple card component
-        let view = DRYTestPatterns.createSimpleCardComponent(
-            item: item,
-            capabilityChecker: capabilityChecker,
-            accessibilityChecker: accessibilityChecker
-        )
-        
-        // THEN: Should generate correct view for this combination
-        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
-        
-        let viewInfo = extractViewInfo(
-            from: view,
-            capabilityChecker: capabilityChecker,
-            accessibilityChecker: accessibilityChecker
-        )
-        
-        // Verify platform-specific properties
-        DRYTestPatterns.verifyPlatformProperties(
-            viewInfo: viewInfo,
-            capabilityChecker: capabilityChecker,
-            testName: testName
-        )
-        
-        // Verify accessibility properties
-        DRYTestPatterns.verifyAccessibilityProperties(
-            viewInfo: viewInfo,
-            accessibilityChecker: accessibilityChecker,
-            testName: testName
-        )
-    }
     
     // MARK: - Helper Methods
     
