@@ -41,13 +41,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     
     // MARK: - Test Data Setup
     
-    private var testItems: [TestItem]!
+    private var testItems: [AccessibilityTestItem]!
     private var testHints: PresentationHints!
     
     private func setupTestData() {
         testItems = [
-            TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
-            TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
+            AccessibilityTestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
+            AccessibilityTestItem(id: "user-2", title: "Bob", subtitle: "Designer")
         ]
         testHints = PresentationHints(
             dataType: .generic,
@@ -205,7 +205,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Then: Manual identifier should be used
             // We test this by verifying the view has the manual identifier
             // The manual identifier should take precedence over automatic generation
-            let hasManualID = hasAccessibilityIdentifier(
+            let hasManualID = hasAccessibilityIdentifierPattern(
                 view,
                 expectedPattern: "*.\(manualID)",
                 componentName: "ManualIdentifierTest"
@@ -229,7 +229,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Then: No automatic identifier should be generated
             // We test this by verifying the view does NOT have an automatic identifier
             // The modifier should not generate an identifier when enableAutoIDs is false
-            let hasAutomaticID = hasAccessibilityIdentifier(
+            let hasAutomaticID = hasAccessibilityIdentifierPattern(
                 view,
                 expectedPattern: "*.auto.*",
                 componentName: "AutomaticIdentifierTest"
@@ -277,7 +277,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #expect(view != nil, "Layer 1 function should include automatic identifiers")
             
             // Test that Layer 1 functions generate accessibility identifiers
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "layer1.main.element.*", 
                 componentName: "Layer1Functions"
@@ -621,7 +621,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             .named("AddFuelButton")
             
             // Test that .named() generates accessibility identifiers
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
                 componentName: "NamedModifier"
@@ -699,7 +699,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
 // MARK: - Test Support Types
 
 /// Test item for testing purposes
-struct TestItem: Identifiable {
+struct AccessibilityTestItem: Identifiable {
     let id: String
     let title: String
     let subtitle: String
