@@ -243,6 +243,7 @@ open class FormHoverInteractionTests {
         return (delay: 0.5, duration: 0.2)
     }
     
+    @MainActor
     private func hasAccessibleHelpText(_ view: some View) -> Bool {
         // Check if the view has accessible help text
         // Our FieldHoverTooltipModifier provides accessibility hints
