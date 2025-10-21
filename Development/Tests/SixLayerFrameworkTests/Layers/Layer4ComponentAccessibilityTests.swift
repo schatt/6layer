@@ -23,7 +23,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let styledButton = testButton.platformPrimaryButtonStyle()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             styledButton,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformPrimaryButtonStyle"
@@ -40,7 +40,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let styledButton = testButton.platformSecondaryButtonStyle()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             styledButton,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSecondaryButtonStyle"
@@ -59,7 +59,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             formField,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformFormField"
@@ -81,7 +81,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             listRow,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformListRow"
@@ -101,7 +101,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let styledCard = testCard.platformCardStyle()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             styledCard,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformCardStyle"
@@ -126,7 +126,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             sheet,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSheet"
@@ -146,7 +146,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let navigation = testNavigationContent.platformNavigation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             navigation,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformNavigation"
@@ -171,7 +171,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             cardGrid,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformCardGrid"
@@ -188,7 +188,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let backgroundText = testText.platformBackground()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             backgroundText,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformBackground"

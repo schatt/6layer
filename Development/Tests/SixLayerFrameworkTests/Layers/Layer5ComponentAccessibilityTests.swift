@@ -27,7 +27,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             alertButtonView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformMessagingLayer5"
@@ -47,7 +47,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             toastView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformMessagingLayer5Toast"
@@ -67,7 +67,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             resourceButtonView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformResourceLayer5"
@@ -87,7 +87,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             imageView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformResourceLayer5Image"
@@ -104,7 +104,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let notificationView = notificationLayer.body
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             notificationView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformNotificationLayer5"
@@ -121,7 +121,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let optimizationView = optimizationLayer.body
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             optimizationView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformOptimizationLayer5"
@@ -138,7 +138,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let safetyView = safetyLayer.body
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             safetyView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSafetyLayer5"
@@ -155,7 +155,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let privacyView = privacyLayer.body
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             privacyView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformPrivacyLayer5"
