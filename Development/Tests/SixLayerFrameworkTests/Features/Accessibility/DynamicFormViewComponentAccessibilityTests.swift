@@ -418,7 +418,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicDataFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing data field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .data,
+            fieldType: DynamicContentType.data,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicDataField"
         )
