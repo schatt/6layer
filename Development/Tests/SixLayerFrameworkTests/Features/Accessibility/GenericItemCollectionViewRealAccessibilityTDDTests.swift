@@ -47,6 +47,7 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         #expect(hasAccessibilityIdentifierPattern(
             collectionView, 
             expectedPattern: "TDDTest.*collection.*item.*task1", 
+            platform: .iOS,
             componentName: "ExpandableCardCollectionView"
         ), "ExpandableCardCollectionView should generate collection-specific accessibility ID")
         
@@ -92,6 +93,7 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         #expect(hasAccessibilityIdentifierPattern(
             collectionView, 
             expectedPattern: "TDDTest.*collection.*item.*task1", 
+            platform: .iOS,
             componentName: "ExpandableCardCollectionView"
         ), "ExpandableCardCollectionView should generate collection-specific accessibility ID")
         

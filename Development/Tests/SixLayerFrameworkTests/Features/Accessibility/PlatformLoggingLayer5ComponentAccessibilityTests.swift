@@ -24,6 +24,7 @@ open class PlatformLoggingLayer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformLoggingLayer5"
         )
         

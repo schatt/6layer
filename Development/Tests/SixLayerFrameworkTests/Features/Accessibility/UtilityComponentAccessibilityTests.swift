@@ -28,6 +28,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityTestUtilities"
         )
         
@@ -47,6 +48,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierValidation"
         )
         
@@ -66,6 +68,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierPatternMatching"
         )
         
@@ -85,6 +88,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "ExactTestView",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierExactMatching"
         )
         
@@ -104,6 +108,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierWildcardMatching"
         )
         
@@ -123,6 +128,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierComponentNameMatching"
         )
         
@@ -142,6 +148,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierNamespaceMatching"
         )
         
@@ -161,6 +168,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.TestScreen.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierScreenMatching"
         )
         
@@ -181,6 +189,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.testelement.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierElementMatching"
         )
         
@@ -200,6 +209,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*.TestState",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierStateMatching"
         )
         
@@ -220,6 +230,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.TestScreen.element.testelement.*.TestState",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierHierarchyMatching"
         )
         
@@ -240,6 +251,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.TESTELEMENT.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierCaseInsensitiveMatching"
         )
         
@@ -259,6 +271,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierPartialMatching"
         )
         
@@ -278,6 +291,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: ".*\\.main\\.element\\..*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierRegexMatching"
         )
         
@@ -300,7 +314,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView,
                 expectedPattern: "*.main.element.*",
-                componentName: "AccessibilityIdentifierPerformanceMatching"
+                platform: .iOS,
+            componentName: "AccessibilityIdentifierPerformanceMatching"
             )
             
             #expect(hasAccessibilityID, "Accessibility identifier performance matching should work correctly")
@@ -325,6 +340,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "invalid.pattern.that.should.not.match",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierErrorHandling"
         )
         
@@ -344,6 +360,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierNullHandling"
         )
         
@@ -363,6 +380,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierEmptyHandling"
         )
         
@@ -382,6 +400,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "   *.main.element.*   ",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierWhitespaceHandling"
         )
         
@@ -402,6 +421,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierSpecialCharacterHandling"
         )
         
@@ -422,6 +442,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierUnicodeHandling"
         )
         
@@ -443,6 +464,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierLongStringHandling"
         )
         

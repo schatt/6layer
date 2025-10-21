@@ -29,6 +29,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "CrossPlatformOptimizationManager"
         )
         
@@ -50,6 +51,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformOptimizationSettings"
         )
         
@@ -72,6 +74,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "CrossPlatformPerformanceMetrics"
         )
         
@@ -93,6 +96,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformUIPatterns"
         )
         
@@ -114,6 +118,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformRecommendationEngine"
         )
         
@@ -135,6 +140,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "CrossPlatformTesting"
         )
         

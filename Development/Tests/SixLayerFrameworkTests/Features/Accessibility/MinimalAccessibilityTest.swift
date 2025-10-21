@@ -15,6 +15,7 @@ open class MinimalAccessibilityTest {
         let hasID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "Text"
         )
         

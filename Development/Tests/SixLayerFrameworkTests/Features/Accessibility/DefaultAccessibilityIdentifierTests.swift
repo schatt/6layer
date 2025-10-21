@@ -32,7 +32,8 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "SixLayer.main.element.*", 
-                componentName: "AutomaticIdentifiersWorkByDefault"
+                platform: .iOS,
+            componentName: "AutomaticIdentifiersWorkByDefault"
             ), "View should have accessibility identifier by default")
             
             // Verify default configuration
@@ -84,7 +85,8 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedIdentifier: "manual-test-button", 
-                componentName: "ManualIdentifiersWorkByDefault"
+                platform: .iOS,
+            componentName: "ManualIdentifiersWorkByDefault"
             ), "Manual accessibility identifier should work by default")
         }
     }

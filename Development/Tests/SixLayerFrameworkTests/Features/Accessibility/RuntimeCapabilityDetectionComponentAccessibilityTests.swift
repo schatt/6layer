@@ -24,6 +24,7 @@ open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass 
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "RuntimeCapabilityDetection"
         )
         

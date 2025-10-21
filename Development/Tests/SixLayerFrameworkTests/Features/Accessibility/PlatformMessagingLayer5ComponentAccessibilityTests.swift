@@ -29,18 +29,21 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         let hasAlertAccessibilityID = hasAccessibilityIdentifierPattern(
             alertButton,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AlertButton"
         )
         
         let hasToastAccessibilityID = hasAccessibilityIdentifierPattern(
             toastNotification,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ToastNotification"
         )
         
         let hasBannerAccessibilityID = hasAccessibilityIdentifierPattern(
             bannerNotification,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "BannerNotification"
         )
         

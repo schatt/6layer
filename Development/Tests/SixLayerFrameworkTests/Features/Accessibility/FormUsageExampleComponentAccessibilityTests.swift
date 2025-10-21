@@ -24,6 +24,7 @@ open class FormUsageExampleComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "FormUsageExample"
         )
         

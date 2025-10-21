@@ -18,6 +18,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AutomaticAccessibilityIdentifierModifier"
         )
         
@@ -33,6 +34,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ComprehensiveAccessibilityModifier"
         )
         
@@ -48,6 +50,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "GlobalAutomaticAccessibilityIdentifierModifier"
         )
         
@@ -63,6 +66,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "DisableAutomaticAccessibilityIdentifierModifier"
         )
         
@@ -78,6 +82,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityIdentifierAssignmentModifier"
         )
         
@@ -93,6 +98,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ViewHierarchyTrackingModifier"
         )
         
@@ -108,6 +114,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ScreenContextModifier"
         )
         
@@ -123,6 +130,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "WorkingAccessibilityIdentifierModifier"
         )
         
@@ -138,6 +146,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ExactAccessibilityIdentifierModifier"
         )
         
@@ -153,6 +162,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "HierarchicalNamedModifier"
         )
         
@@ -168,6 +178,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityLabelAssignmentModifier"
         )
         
@@ -183,6 +194,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityHintAssignmentModifier"
         )
         
@@ -198,6 +210,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityTraitsAssignmentModifier"
         )
         
@@ -213,6 +226,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityValueAssignmentModifier"
         )
         

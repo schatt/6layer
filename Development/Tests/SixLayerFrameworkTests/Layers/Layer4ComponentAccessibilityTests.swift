@@ -26,6 +26,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             styledButton,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformPrimaryButtonStyle"
         )
         
@@ -43,6 +44,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             styledButton,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformSecondaryButtonStyle"
         )
         
@@ -62,6 +64,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             formField,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformFormField"
         )
         
@@ -84,6 +87,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             listRow,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformListRow"
         )
         
@@ -104,6 +108,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             styledCard,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformCardStyle"
         )
         
@@ -129,6 +134,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             sheet,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformSheet"
         )
         
@@ -149,6 +155,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             navigation,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformNavigation"
         )
         
@@ -174,6 +181,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             cardGrid,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformCardGrid"
         )
         
@@ -191,6 +199,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             backgroundText,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformBackground"
         )
         

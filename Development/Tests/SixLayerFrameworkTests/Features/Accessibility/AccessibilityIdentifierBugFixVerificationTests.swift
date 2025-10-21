@@ -101,7 +101,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
-                componentName: "AddFuelButton"
+                platform: .iOS,
+            componentName: "AddFuelButton"
             )
             
             #expect(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
@@ -132,7 +133,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
-                componentName: "AddFuelButton"
+                platform: .iOS,
+            componentName: "AddFuelButton"
             )
             
         }
@@ -161,7 +163,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.FuelView.*", 
-                componentName: "ScreenContext"
+                platform: .iOS,
+            componentName: "ScreenContext"
             )
             
             #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
@@ -191,7 +194,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.*", 
-                componentName: "NavigationState"
+                platform: .iOS,
+            componentName: "NavigationState"
             )
             
             #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'CarManager.*'")
@@ -222,7 +226,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedIdentifier: "manual-add-fuel-button", 
-                componentName: "ManualAccessibilityIdentifier"
+                platform: .iOS,
+            componentName: "ManualAccessibilityIdentifier"
             ), "Manual accessibility identifier should work")
         }
     }
@@ -251,7 +256,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.*element.*testbutton", 
-                componentName: "AutomaticAccessibilityIdentifiers"
+                platform: .iOS,
+            componentName: "AutomaticAccessibilityIdentifiers"
             ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
         }
     }

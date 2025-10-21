@@ -63,6 +63,7 @@ open class AccessibilityGlobalLocalConfigTests {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*testbutton.*", 
+            platform: .iOS,
             componentName: "AccessibilityFunctionsRespectGlobalConfigEnabled"
         )
         
@@ -118,6 +119,7 @@ open class AccessibilityGlobalLocalConfigTests {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             componentName: "AccessibilityFunctionsRespectLocalEnableModifier"
         )
         
@@ -171,6 +173,7 @@ open class AccessibilityGlobalLocalConfigTests {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
+            platform: .iOS,
             componentName: "LocalEnableOverridesGlobalDisable"
         )
         

@@ -44,7 +44,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "HierarchyReplacement"
+                platform: .iOS,
+            componentName: "HierarchyReplacement"
             ), "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID")
         }
     }
@@ -65,7 +66,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "FullHierarchyPath"
+                platform: .iOS,
+            componentName: "FullHierarchyPath"
             ), "RED PHASE: .named() should generate full hierarchy path as accessibility identifier")
         }
     }
@@ -89,7 +91,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "NestedHierarchy"
+                platform: .iOS,
+            componentName: "NestedHierarchy"
             ), "RED PHASE: Multiple .named() calls should build complete hierarchy path")
         }
     }
@@ -116,13 +119,15 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 view1, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "CollisionPrevention1"
+                platform: .iOS,
+            componentName: "CollisionPrevention1"
             ), "RED PHASE: First SaveButton should include UserProfile in path")
             
             #expect(hasAccessibilityIdentifierPattern(
                 view2, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "CollisionPrevention2"
+                platform: .iOS,
+            componentName: "CollisionPrevention2"
             ), "RED PHASE: Second SaveButton should include Settings in path")
         }
     }
@@ -142,7 +147,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "IndependentNamedModifier"
+                platform: .iOS,
+            componentName: "IndependentNamedModifier"
             ), "RED PHASE: .named() should work independently of global automatic accessibility settings")
         }
     }
@@ -161,7 +167,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "OverrideTest"
+                platform: .iOS,
+            componentName: "OverrideTest"
             ), "RED PHASE: .named() should override existing accessibility identifier with full hierarchy path")
         }
     }
@@ -182,7 +189,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "HierarchyInheritance"
+                platform: .iOS,
+            componentName: "HierarchyInheritance"
             ), "RED PHASE: Subcomponents should inherit modified hierarchy context")
         }
     }
@@ -200,7 +208,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: ".*", 
-                componentName: "EmptyStringTest"
+                platform: .iOS,
+            componentName: "EmptyStringTest"
             ), "RED PHASE: .named() with empty string should handle gracefully")
         }
     }
@@ -220,7 +229,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "NoGlobalChanges"
+                platform: .iOS,
+            componentName: "NoGlobalChanges"
             ), "RED PHASE: .named() should not change global environment settings")
             
             // And global settings should remain unchanged
@@ -244,7 +254,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^SaveButton$", 
-                componentName: "ExactNamedModifier"
+                platform: .iOS,
+            componentName: "ExactNamedModifier"
             ), "RED PHASE: .exactNamed() should apply exact name only, no hierarchy")
         }
     }
@@ -265,7 +276,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "ExactNamedHierarchyTest"
+                platform: .iOS,
+            componentName: "ExactNamedHierarchyTest"
             ), "RED PHASE: .exactNamed() should not modify hierarchy for other components")
         }
     }
@@ -285,7 +297,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^TestButton$", 
-                componentName: "IndependentExactNamedModifier"
+                platform: .iOS,
+            componentName: "IndependentExactNamedModifier"
             ), "RED PHASE: .exactNamed() should work independently of global settings")
         }
     }
@@ -304,7 +317,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^NewExactName$", 
-                componentName: "ExactNamedOverrideTest"
+                platform: .iOS,
+            componentName: "ExactNamedOverrideTest"
             ), "RED PHASE: .exactNamed() should override existing accessibility identifier with exact name")
         }
     }
@@ -329,7 +343,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                componentName: "CombinedModifiersTest"
+                platform: .iOS,
+            componentName: "CombinedModifiersTest"
             ), "RED PHASE: .named() and .exactNamed() should work together")
         }
     }
@@ -350,13 +365,15 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 view1, 
                 expectedPattern: "^SaveButton$", 
-                componentName: "ExactNamedCollision1"
+                platform: .iOS,
+            componentName: "ExactNamedCollision1"
             ), "RED PHASE: First .exactNamed() should get exact name")
             
             #expect(hasAccessibilityIdentifierPattern(
                 view2, 
                 expectedPattern: "^SaveButton$", 
-                componentName: "ExactNamedCollision2"
+                platform: .iOS,
+            componentName: "ExactNamedCollision2"
             ), "RED PHASE: Second .exactNamed() should get same exact name (collision)")
         }
     }
@@ -378,7 +395,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "^$", 
-                componentName: "ExactNamedEmptyStringTest"
+                platform: .iOS,
+            componentName: "ExactNamedEmptyStringTest"
             ), "RED PHASE: .exactNamed() with empty string should handle gracefully")
         }
     }

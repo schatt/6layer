@@ -30,6 +30,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             alertButtonView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformMessagingLayer5"
         )
         
@@ -50,6 +51,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             toastView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformMessagingLayer5Toast"
         )
         
@@ -70,6 +72,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             resourceButtonView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformResourceLayer5"
         )
         
@@ -90,6 +93,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             imageView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformResourceLayer5Image"
         )
         
@@ -107,6 +111,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             notificationView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformNotificationLayer5"
         )
         
@@ -124,6 +129,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             optimizationView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformOptimizationLayer5"
         )
         
@@ -141,6 +147,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             safetyView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformSafetyLayer5"
         )
         
@@ -158,6 +165,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             privacyView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformPrivacyLayer5"
         )
         

@@ -53,7 +53,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
+        let hasAccessibilityID = hasAccessibilityIdentifierWithPattern(
             view,
             expectedPattern: "*.main.element.*",
             platform: .iOS,

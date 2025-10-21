@@ -208,7 +208,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasManualID = hasAccessibilityIdentifierPattern(
                 view,
                 expectedPattern: "*.\(manualID)",
-                componentName: "ManualIdentifierTest"
+                platform: .iOS,
+            componentName: "ManualIdentifierTest"
             )
             #expect(hasManualID, "Manual identifier should override automatic generation")
         }
@@ -232,7 +233,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasAutomaticID = hasAccessibilityIdentifierPattern(
                 view,
                 expectedPattern: "*.auto.*",
-                componentName: "AutomaticIdentifierTest"
+                platform: .iOS,
+            componentName: "AutomaticIdentifierTest"
             )
             #expect(!hasAutomaticID, "View should not have automatic ID when disabled globally")
         }
@@ -280,7 +282,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #expect(hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "layer1.main.element.*", 
-                componentName: "Layer1Functions"
+                platform: .iOS,
+            componentName: "Layer1Functions"
             ), "Layer 1 function should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
             
             // Test that the view can be created with accessibility identifier configuration
@@ -624,7 +627,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
-                componentName: "NamedModifier"
+                platform: .iOS,
+            componentName: "NamedModifier"
             ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
             
             // Also verify configuration is correct

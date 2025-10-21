@@ -27,6 +27,7 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformPhotoComponentsLayer4"
         )
         

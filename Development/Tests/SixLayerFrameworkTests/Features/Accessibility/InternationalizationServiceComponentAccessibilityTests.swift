@@ -26,6 +26,7 @@ open class InternationalizationServiceComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "InternationalizationService"
         )
         

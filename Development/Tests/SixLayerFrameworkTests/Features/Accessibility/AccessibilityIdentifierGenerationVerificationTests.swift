@@ -48,7 +48,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "test.*element.*main-ui", 
-                componentName: "AutomaticAccessibilityIdentifiers"
+                platform: .iOS,
+            componentName: "AutomaticAccessibilityIdentifiers"
             ), "View should have an accessibility identifier assigned")
         }
     }
@@ -82,7 +83,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.*element.*main-addfuelbutton", 
-                componentName: "NamedModifier"
+                platform: .iOS,
+            componentName: "NamedModifier"
             ), "View should have an accessibility identifier assigned")
         }
     }
@@ -116,7 +118,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
-                componentName: "CombinedBreadcrumbModifiers"
+                platform: .iOS,
+            componentName: "CombinedBreadcrumbModifiers"
             ), "View should have an accessibility identifier assigned")
         }
     }

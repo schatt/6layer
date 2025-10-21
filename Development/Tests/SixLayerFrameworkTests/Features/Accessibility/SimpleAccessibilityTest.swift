@@ -15,6 +15,7 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
         #expect(hasAccessibilityIdentifierPattern(
             testView, 
             expectedIdentifier: "manual-test-id", 
+            platform: .iOS,
             componentName: "ManualAccessibilityIdentifier"
         ), "Manual accessibility identifier should work")
         print("✅ Manual accessibility identifier works")
@@ -29,6 +30,7 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
         #expect(hasAccessibilityIdentifierPattern(
             testView, 
             expectedPattern: "SimpleTest.main.element.*", 
+            platform: .iOS,
             componentName: "AutomaticAccessibilityIdentifierModifier"
         ), "Should have some accessibility identifier")
         

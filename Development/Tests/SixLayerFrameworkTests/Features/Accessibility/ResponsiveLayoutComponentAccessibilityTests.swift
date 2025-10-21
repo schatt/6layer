@@ -38,6 +38,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveGrid"
         )
         
@@ -62,6 +63,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveNavigation"
         )
         
@@ -87,6 +89,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveStack"
         )
         
@@ -103,6 +106,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveLayoutExample"
         )
         
@@ -119,6 +123,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsiveNavigationExample"
         )
         
@@ -138,6 +143,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ResponsivePadding"
         )
         

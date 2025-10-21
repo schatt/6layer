@@ -24,6 +24,7 @@ open class PlatformPrivacyLayer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformPrivacyLayer5"
         )
         

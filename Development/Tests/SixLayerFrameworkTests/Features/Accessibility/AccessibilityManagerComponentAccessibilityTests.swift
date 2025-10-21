@@ -28,6 +28,7 @@ open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MA
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AccessibilityManager"
         )
         

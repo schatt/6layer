@@ -70,6 +70,7 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
         #expect(hasAccessibilityIdentifierPattern(
             component, 
             expectedPattern: "FrameworkTest.*\(name.lowercased()).*", 
+            platform: .iOS,
             componentName: name
         ), "\(name) should generate accessibility ID")
     }

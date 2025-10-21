@@ -33,6 +33,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ExpandableCardCollectionView"
         )
         
@@ -75,6 +76,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ExpandableCardComponent"
         )
         
@@ -104,6 +106,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "CoverFlowCollectionView"
         )
         
@@ -128,6 +131,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "CoverFlowCardComponent"
         )
         
@@ -151,6 +155,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "GridCollectionView"
         )
         
@@ -174,6 +179,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ListCollectionView"
         )
         
@@ -197,6 +203,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "MasonryCollectionView"
         )
         
@@ -223,6 +230,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "AdaptiveCollectionView"
         )
         
@@ -255,6 +263,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "SimpleCardComponent"
         )
         
@@ -274,6 +283,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "ListCardComponent"
         )
         
@@ -293,6 +303,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "MasonryCardComponent"
         )
         
@@ -318,6 +329,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "NativeExpandableCardView"
         )
         
@@ -341,6 +353,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "iOSExpandableCardView"
         )
         
@@ -364,6 +377,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "macOSExpandableCardView"
         )
         
@@ -387,6 +401,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "visionOSExpandableCardView"
         )
         
@@ -410,6 +425,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
+            platform: .iOS,
             componentName: "PlatformAwareExpandableCardView"
         )
         
