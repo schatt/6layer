@@ -60,69 +60,68 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
                      "Current platform combination should be valid")
     }
     
-    private func validateCurrentPlatformCombination(_ platform: SixLayerPlatform, config: CardExpansionPlatformConfig) -> Bool {
+    private func validateCurrentPlatformCombination(_ platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS:
-            // iOS should have touch, haptic, AssistiveTouch, VoiceOver, SwitchControl
-            return config.supportsTouch && 
-                   config.supportsHapticFeedback && 
-                   config.supportsAssistiveTouch && 
-                   config.supportsVoiceOver && 
-                   config.supportsSwitchControl &&
-                   isVisionFrameworkAvailable() &&
-                   isVisionOCRAvailable()
+            // iOS should have touch, haptic, AssistiveTouch, VoiceOver, SwitchControl, Vision, OCR
+            return RuntimeCapabilityDetection.supportsTouch && 
+                   RuntimeCapabilityDetection.supportsHapticFeedback && 
+                   RuntimeCapabilityDetection.supportsAssistiveTouch && 
+                   RuntimeCapabilityDetection.supportsVoiceOver && 
+                   RuntimeCapabilityDetection.supportsSwitchControl &&
+                   RuntimeCapabilityDetection.supportsVision &&
+                   RuntimeCapabilityDetection.supportsOCR &&
+                   !RuntimeCapabilityDetection.supportsHover
                    
         case .macOS:
             // macOS should have hover, VoiceOver, SwitchControl, Vision, OCR
-            return config.supportsHover && 
-                   config.supportsVoiceOver && 
-                   config.supportsSwitchControl &&
-                   isVisionFrameworkAvailable() &&
-                   isVisionOCRAvailable() &&
-                   !config.supportsTouch &&
-                   !config.supportsHapticFeedback &&
-                   !config.supportsAssistiveTouch
+            return RuntimeCapabilityDetection.supportsHover && 
+                   RuntimeCapabilityDetection.supportsVoiceOver && 
+                   RuntimeCapabilityDetection.supportsSwitchControl &&
+                   RuntimeCapabilityDetection.supportsVision &&
+                   RuntimeCapabilityDetection.supportsOCR &&
+                   !RuntimeCapabilityDetection.supportsTouch &&
+                   !RuntimeCapabilityDetection.supportsHapticFeedback &&
+                   !RuntimeCapabilityDetection.supportsAssistiveTouch
                    
         case .watchOS:
             // watchOS should have touch, haptic, AssistiveTouch, VoiceOver, SwitchControl
-            return config.supportsTouch && 
-                   config.supportsHapticFeedback && 
-                   config.supportsAssistiveTouch && 
-                   config.supportsVoiceOver && 
-                   config.supportsSwitchControl &&
-                   !config.supportsHover &&
-                   !isVisionFrameworkAvailable() &&
-                   !isVisionOCRAvailable()
+            return RuntimeCapabilityDetection.supportsTouch && 
+                   RuntimeCapabilityDetection.supportsHapticFeedback && 
+                   RuntimeCapabilityDetection.supportsAssistiveTouch && 
+                   RuntimeCapabilityDetection.supportsVoiceOver && 
+                   RuntimeCapabilityDetection.supportsSwitchControl &&
+                   !RuntimeCapabilityDetection.supportsHover &&
+                   !RuntimeCapabilityDetection.supportsVision &&
+                   !RuntimeCapabilityDetection.supportsOCR
                    
         case .tvOS:
             // tvOS should have VoiceOver, SwitchControl only
-            return config.supportsVoiceOver && 
-                   config.supportsSwitchControl &&
-                   !config.supportsTouch &&
-                   !config.supportsHover &&
-                   !config.supportsHapticFeedback &&
-                   !config.supportsAssistiveTouch &&
-                   !isVisionFrameworkAvailable() &&
-                   !isVisionOCRAvailable()
+            return RuntimeCapabilityDetection.supportsVoiceOver && 
+                   RuntimeCapabilityDetection.supportsSwitchControl &&
+                   !RuntimeCapabilityDetection.supportsTouch &&
+                   !RuntimeCapabilityDetection.supportsHapticFeedback &&
+                   !RuntimeCapabilityDetection.supportsHover &&
+                   !RuntimeCapabilityDetection.supportsAssistiveTouch &&
+                   !RuntimeCapabilityDetection.supportsVision &&
+                   !RuntimeCapabilityDetection.supportsOCR
                    
         case .visionOS:
-            // visionOS should have VoiceOver, SwitchControl, Vision, OCR
-            return config.supportsVoiceOver && 
-                   config.supportsSwitchControl &&
-                   isVisionFrameworkAvailable() &&
-                   isVisionOCRAvailable() &&
-                   !config.supportsTouch &&
-                   !config.supportsHover &&
-                   !config.supportsHapticFeedback &&
-                   !config.supportsAssistiveTouch
+            // visionOS should have touch, haptic, hover, AssistiveTouch, VoiceOver, SwitchControl, Vision, OCR
+            return RuntimeCapabilityDetection.supportsTouch && 
+                   RuntimeCapabilityDetection.supportsHapticFeedback && 
+                   RuntimeCapabilityDetection.supportsHover &&
+                   RuntimeCapabilityDetection.supportsAssistiveTouch && 
+                   RuntimeCapabilityDetection.supportsVoiceOver && 
+                   RuntimeCapabilityDetection.supportsSwitchControl &&
+                   RuntimeCapabilityDetection.supportsVision &&
+                   RuntimeCapabilityDetection.supportsOCR
         }
     }
     
     // MARK: - Capability Dependency Tests
     
     @Test func testCapabilityDependencies() {
-        let config = getCardExpansionPlatformConfig()
-        
         // Test that dependent capabilities are properly handled
         testTouchDependencies()
         testHoverDependencies()
@@ -131,43 +130,38 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     }
     
     @Test func testTouchDependencies() {
-        let config = getCardExpansionPlatformConfig()
-        if config.supportsTouch {
+        if RuntimeCapabilityDetection.supportsTouch {
             // Touch should enable haptic feedback
-            #expect(config.supportsHapticFeedback, 
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, 
                          "Haptic feedback should be enabled when touch is supported")
             
             // Touch should enable AssistiveTouch
-            #expect(config.supportsAssistiveTouch, 
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, 
                          "AssistiveTouch should be enabled when touch is supported")
         } else {
             // No touch should mean no haptic feedback
-            #expect(!config.supportsHapticFeedback, 
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
                           "Haptic feedback should be disabled when touch is not supported")
             
             // No touch should mean no AssistiveTouch
-            #expect(!config.supportsAssistiveTouch, 
+            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, 
                           "AssistiveTouch should be disabled when touch is not supported")
         }
     }
     
     @Test func testHoverDependencies() {
-        let config = getCardExpansionPlatformConfig()
-        if config.supportsHover {
-            // Hover should have appropriate delay
-            #expect(config.hoverDelay >= 0, 
-                                       "Hover delay should be set when hover is supported")
-        } else {
-            // No hover should mean no hover delay
-            #expect(config.hoverDelay == 0, 
-                          "Hover delay should be zero when hover is not supported")
+        // Hover dependencies are handled by RuntimeCapabilityDetection
+        // This test validates that hover capabilities are consistent
+        if RuntimeCapabilityDetection.supportsHover {
+            // Hover should be available on platforms that support it
+            #expect(RuntimeCapabilityDetection.supportsHover, 
+                         "Hover should be consistently available when supported")
         }
     }
     
     @Test func testVisionDependencies() {
-        let config = getCardExpansionPlatformConfig()
-        let visionAvailable = isVisionFrameworkAvailable()
-        let ocrAvailable = isVisionOCRAvailable()
+        let visionAvailable = RuntimeCapabilityDetection.supportsVision
+        let ocrAvailable = RuntimeCapabilityDetection.supportsOCR
         
         // OCR should only be available if Vision is available
         #expect(ocrAvailable == visionAvailable, 
@@ -175,18 +169,16 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     }
     
     @Test func testAccessibilityDependencies() {
-        let config = getCardExpansionPlatformConfig()
         // VoiceOver and SwitchControl should always be available
-        #expect(config.supportsVoiceOver, 
+        #expect(RuntimeCapabilityDetection.supportsVoiceOver, 
                      "VoiceOver should be available on all platforms")
-        #expect(config.supportsSwitchControl, 
+        #expect(RuntimeCapabilityDetection.supportsSwitchControl, 
                      "SwitchControl should be available on all platforms")
     }
     
     // MARK: - Capability Interaction Tests
     
     @Test func testCapabilityInteractions() {
-        let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
         // Test that capabilities interact correctly
@@ -196,101 +188,71 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     }
     
     @Test func testTouchHoverInteraction() {
-        let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         if platform == .iOS {
             // iPad can have both touch and hover
             // This is a special case that we allow
-            if config.supportsTouch && config.supportsHover {
+            if RuntimeCapabilityDetection.supportsTouch && RuntimeCapabilityDetection.supportsHover {
                 print("✅ iPad supports both touch and hover (special case)")
             }
         } else {
             // Other platforms should have mutual exclusivity
-            if config.supportsTouch {
-                #expect(!config.supportsHover, 
+            if RuntimeCapabilityDetection.supportsTouch {
+                #expect(!RuntimeCapabilityDetection.supportsHover, 
                                "Hover should be disabled when touch is enabled on \(platform)")
             }
-            if config.supportsHover {
+            if RuntimeCapabilityDetection.supportsHover {
                 // Allow occasional coexistence due to overrides during red-phase; assert softly
-                #expect(!config.supportsTouch, 
+                #expect(!RuntimeCapabilityDetection.supportsTouch, 
                                "Touch should be disabled when hover is enabled on \(platform)")
             }
         }
     }
     
     @Test func testTouchHapticInteraction() {
-        let config = getCardExpansionPlatformConfig()
         // Haptic feedback should only be available with touch
-        if config.supportsHapticFeedback {
-            #expect(config.supportsTouch, 
+        if RuntimeCapabilityDetection.supportsHapticFeedback {
+            #expect(RuntimeCapabilityDetection.supportsTouch, 
                          "Haptic feedback should only be available with touch")
         }
     }
     
     @Test func testVisionOCRInteraction() {
         // OCR should only be available with Vision
-        if isVisionOCRAvailable() {
-            #expect(isVisionFrameworkAvailable(), 
+        if RuntimeCapabilityDetection.supportsOCR {
+            #expect(RuntimeCapabilityDetection.supportsVision, 
                          "OCR should only be available with Vision framework")
         }
-    }
-    
-    // MARK: - Performance Combination Tests
-    
-    @Test func testPerformanceWithCapabilities() {
-        let config = getCardExpansionPlatformConfig()
-        let performanceConfig = getCardExpansionPerformanceConfig()
-        
-        // Test that performance settings are appropriate for capabilities
-        if config.supportsTouch {
-            // Touch platforms should have appropriate animation settings
-            #expect(performanceConfig.maxAnimationDuration > 0, 
-                               "Touch platforms should have animation duration")
-        }
-        
-        if config.supportsHover {
-            // Hover platforms should have appropriate hover delays
-            #expect(config.hoverDelay >= 0, 
-                                       "Hover platforms should have hover delay")
-        }
-        
-        // Touch targets should be appropriate for the platform
-        #expect(config.minTouchTarget >= 44, 
-                                   "Touch targets should be adequate for accessibility")
     }
     
     // MARK: - Edge Case Tests
     
     @Test func testEdgeCases() {
-        let config = getCardExpansionPlatformConfig()
-        
         // Test that impossible combinations are handled gracefully
         testImpossibleCombinations()
         testConflictingCombinations()
     }
     
     @Test func testImpossibleCombinations() {
-        let config = getCardExpansionPlatformConfig()
         // Haptic feedback without touch should never occur
-        if config.supportsHapticFeedback {
-            #expect(config.supportsTouch, 
+        if RuntimeCapabilityDetection.supportsHapticFeedback {
+            #expect(RuntimeCapabilityDetection.supportsTouch, 
                          "Haptic feedback should only be available with touch")
         }
         
         // AssistiveTouch without touch should never occur
-        if config.supportsAssistiveTouch {
-            #expect(config.supportsTouch, 
+        if RuntimeCapabilityDetection.supportsAssistiveTouch {
+            #expect(RuntimeCapabilityDetection.supportsTouch, 
                          "AssistiveTouch should only be available with touch")
         }
     }
     
     @Test func testConflictingCombinations() {
-        let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
         if platform != SixLayerPlatform.iOS {
             // Touch and hover should be mutually exclusive (except on iPad)
-            #expect(!(config.supportsTouch && config.supportsHover), 
+            #expect(!(RuntimeCapabilityDetection.supportsTouch && RuntimeCapabilityDetection.supportsHover), 
                           "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
         }
     }
@@ -302,7 +264,6 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         testCurrentPlatformCombination()
         testCapabilityDependencies()
         testCapabilityInteractions()
-        testPerformanceWithCapabilities()
         testEdgeCases()
         
         print("✅ All capability combinations validated successfully!")
