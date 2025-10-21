@@ -57,7 +57,6 @@ open class PlatformOCRDisambiguationLayer1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "platformOCRDisambiguation_L1",
             testName: "PlatformTest"
         )
