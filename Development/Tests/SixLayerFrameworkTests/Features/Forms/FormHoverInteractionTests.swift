@@ -212,6 +212,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Helper Methods
     
+    @MainActor
     private func hasTooltipCapability(_ view: some View) -> Bool {
         // Check if the view has tooltip capability by examining the field description
         // The FieldHoverTooltipModifier should be applied when description is present
