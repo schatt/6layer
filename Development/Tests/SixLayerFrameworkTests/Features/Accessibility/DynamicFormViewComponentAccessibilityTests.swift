@@ -78,7 +78,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     /// Tests field accessibility through CustomFieldView (DRY helper for all field types)
     private func testFieldAccessibility(
         fieldType: DynamicContentType,
-        platform: SixLayerPlatform.iOS,
+        platform: SixLayerPlatform,
             componentName: String
     ) -> Bool {
         let field = DynamicFormField(
@@ -194,7 +194,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicNumberFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing number field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .number,
+            fieldType: DynamicContentType.number,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicNumberField"
         )
@@ -208,7 +208,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicTextAreaFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing textarea field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .textarea,
+            fieldType: DynamicContentType.textarea,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicTextAreaField"
         )
@@ -236,7 +236,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicMultiSelectFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing multiselect field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .multiselect,
+            fieldType: DynamicContentType.multiselect,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicMultiSelectField"
         )
@@ -250,7 +250,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicRadioFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing radio field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .radio,
+            fieldType: DynamicContentType.radio,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicRadioField"
         )
@@ -264,7 +264,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicCheckboxFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing checkbox field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .checkbox,
+            fieldType: DynamicContentType.checkbox,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicCheckboxField"
         )
@@ -278,7 +278,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicToggleFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing toggle field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .toggle,
+            fieldType: DynamicContentType.toggle,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicToggleField"
         )
@@ -292,7 +292,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicDateFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing date field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .date,
+            fieldType: DynamicContentType.date,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicDateField"
         )
@@ -306,7 +306,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicTimeFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing time field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .time,
+            fieldType: DynamicContentType.time,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicTimeField"
         )
@@ -320,7 +320,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicDateTimeFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing datetime field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .datetime,
+            fieldType: DynamicContentType.datetime,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicDateTimeField"
         )
@@ -334,7 +334,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicColorFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing color field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .color,
+            fieldType: DynamicContentType.color,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicColorField"
         )
@@ -348,7 +348,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicFileFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing file field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .file,
+            fieldType: DynamicContentType.file,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicFileField"
         )
@@ -362,7 +362,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicIntegerFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing integer field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .integer,
+            fieldType: DynamicContentType.integer,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicIntegerField"
         )
@@ -376,7 +376,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicImageFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing image field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .image,
+            fieldType: DynamicContentType.image,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicImageField"
         )
