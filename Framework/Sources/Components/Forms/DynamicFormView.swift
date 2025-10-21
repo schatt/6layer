@@ -122,22 +122,4 @@ public struct FormWizardView<Content: View, Navigation: View>: View {
 }
 
 // MARK: - Supporting Types (TDD Red Phase Stubs)
-
-public struct FormWizardStep: Identifiable {
-    public let id: String
-    public let title: String
-    public let stepOrder: Int
-    
-    public init(id: String, title: String, stepOrder: Int) {
-        self.id = id
-        self.title = title
-        self.stepOrder = stepOrder
-    }
-}
-
-public class FormWizardState: ObservableObject {
-    @Published public var currentStepIndex: Int = 0
-    @Published public var isComplete: Bool = false
-    
-    public init() {}
-}
+// Note: FormWizardStep and FormWizardState are defined in FormWizardTypes.swift
