@@ -747,12 +747,12 @@ open class ViewGenerationIntegrationTests {
     }
     
     /// Create a mock platform config from capabilities
-    private func createMockPlatformConfig(from capabilities: ViewGenerationTestConfig.CapabilitySet) -> CardExpansionPlatformConfig {
+    private func createMockPlatformConfig(from capabilities: ViewGenerationTestConfig.CapabilitySet) -> SixLayerFramework.CardExpansionPlatformConfig {
         return getCardExpansionPlatformConfig()
     }
     
     /// Test view generation behavior
-    @Test func testViewGenerationBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test func testViewGenerationBehavior(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration produces the expected view behavior
         // This would test actual view generation in a real implementation
         
@@ -912,7 +912,7 @@ open class ViewGenerationIntegrationTests {
     // MARK: - Helper Functions
     
     /// Create a test view using the mock configuration to verify it works
-    private func createTestViewWithMockConfig(_ config: CardExpansionPlatformConfig) -> some View {
+    private func createTestViewWithMockConfig(_ config: SixLayerFramework.CardExpansionPlatformConfig) -> some View {
         let baseView = Text("Test View")
             .frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget)
             .accessibilityLabel("Test view with mock configuration")
