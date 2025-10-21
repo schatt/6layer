@@ -911,11 +911,11 @@ open class ViewGenerationIntegrationTests {
     
     // MARK: - Helper Functions
     
-    /// Create a test view using the mock configuration to verify it works
-    private func createTestViewWithMockConfig(_ config: SixLayerFramework.CardExpansionPlatformConfig) -> some View {
+    /// Create a test view using general platform configuration
+    private func createTestViewWithGeneralConfig(_ config: ViewGenerationTestConfig.CapabilitySet) -> some View {
         let baseView = Text("Test View")
             .frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget)
-            .accessibilityLabel("Test view with mock configuration")
+            .accessibilityLabel("Test view with general configuration")
         
         // Apply platform-specific modifiers based on capabilities
         // This simulates what the framework would actually do for different platforms
@@ -940,14 +940,40 @@ open class ViewGenerationIntegrationTests {
     
     /// Test that different platform configurations generate different underlying view types
     @Test func testPlatformSpecificViewGeneration() {
-        // Create different platform configurations
-        let touchConfig = getCardExpansionPlatformConfig()
+        // Create different platform configurations using general platform types
+        let touchConfig = ViewGenerationTestConfig.CapabilitySet(
+            supportsTouch: true,
+            supportsHover: false,
+            supportsHapticFeedback: true,
+            supportsAssistiveTouch: true,
+            supportsVoiceOver: true,
+            supportsSwitchControl: true,
+            supportsVision: true,
+            supportsOCR: true,
+            minTouchTarget: 44,
+            hoverDelay: 0.0,
+            platform: .iOS,
+            deviceType: .phone
+        )
         
-        let hoverConfig = getCardExpansionPlatformConfig()
+        let hoverConfig = ViewGenerationTestConfig.CapabilitySet(
+            supportsTouch: false,
+            supportsHover: true,
+            supportsHapticFeedback: false,
+            supportsAssistiveTouch: false,
+            supportsVoiceOver: true,
+            supportsSwitchControl: true,
+            supportsVision: true,
+            supportsOCR: true,
+            minTouchTarget: 0,
+            hoverDelay: 0.5,
+            platform: .macOS,
+            deviceType: .mac
+        )
         
-        // Generate views for different platforms
-        let touchView = createTestViewWithMockConfig(touchConfig)
-        let hoverView = createTestViewWithMockConfig(hoverConfig)
+        // Generate views for different platforms using general configuration
+        let touchView = createTestViewWithGeneralConfig(touchConfig)
+        let hoverView = createTestViewWithGeneralConfig(hoverConfig)
         
         // Then: Test the two critical aspects
         

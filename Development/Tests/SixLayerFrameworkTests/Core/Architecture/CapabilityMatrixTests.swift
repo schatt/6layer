@@ -87,10 +87,10 @@ open class CapabilityMatrixTests {
         // Touch Capability
         CapabilityTest(
             name: "Touch Support",
-            testSupported: { getCardExpansionPlatformConfig().supportsTouch },
+            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .iOS).supportsTouch },
             testBehavior: {
                 // Test that touch-related features work when touch is supported
-                let config = getCardExpansionPlatformConfig()
+                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
                 if config.supportsTouch {
                     // Touch should enable haptic feedback
                     #expect(config.supportsHapticFeedback, 
@@ -116,9 +116,9 @@ open class CapabilityMatrixTests {
         // Hover Capability
         CapabilityTest(
             name: "Hover Support",
-            testSupported: { getCardExpansionPlatformConfig().supportsHover },
+            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .macOS).supportsHover },
             testBehavior: {
-                let config = getCardExpansionPlatformConfig()
+                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
                 if config.supportsHover {
                     // Hover platforms should not support touch (mutually exclusive)
                     #expect(!config.supportsTouch, 
@@ -138,9 +138,9 @@ open class CapabilityMatrixTests {
         // Haptic Feedback Capability
         CapabilityTest(
             name: "Haptic Feedback Support",
-            testSupported: { getCardExpansionPlatformConfig().supportsHapticFeedback },
+            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .iOS).supportsHapticFeedback },
             testBehavior: {
-                let config = getCardExpansionPlatformConfig()
+                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
                 if config.supportsHapticFeedback {
                     // Haptic feedback should only be on touch platforms
                     #expect(config.supportsTouch, 
@@ -157,9 +157,9 @@ open class CapabilityMatrixTests {
         // AssistiveTouch Capability
         CapabilityTest(
             name: "AssistiveTouch Support",
-            testSupported: { getCardExpansionPlatformConfig().supportsAssistiveTouch },
+            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .iOS).supportsAssistiveTouch },
             testBehavior: {
-                let config = getCardExpansionPlatformConfig()
+                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
                 if config.supportsAssistiveTouch {
                     // AssistiveTouch should only be on touch platforms
                     #expect(config.supportsTouch, 
@@ -328,7 +328,7 @@ open class CapabilityMatrixTests {
     
     @Test func testPlatformCapabilityConsistency() {
         let platform = SixLayerPlatform.current
-        let config = getCardExpansionPlatformConfig()
+        let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
         
         // Test that platform capabilities are internally consistent
         switch platform {
@@ -377,7 +377,7 @@ open class CapabilityMatrixTests {
     
     @Test func testCapabilityMatrix() {
         let platform = SixLayerPlatform.current
-        let config = getCardExpansionPlatformConfig()
+        let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
         
         // Create capability matrix
         let capabilities = [

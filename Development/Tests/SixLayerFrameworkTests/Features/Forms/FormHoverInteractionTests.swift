@@ -165,7 +165,7 @@ open class FormHoverInteractionTests {
         #endif
     }
     
-    @Test func testIOSShowsHelpInAccessibility() {
+    @Test @MainActor func testIOSShowsHelpInAccessibility() {
         // GIVEN: A form field with description on iOS
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())

@@ -257,6 +257,7 @@ public class TestSetupUtilities {
     
     /// Get card expansion platform configuration for testing
     /// DRY principle: Centralized card configuration to avoid duplication
+    /// NOTE: This should ONLY be used for card-specific testing
     public static func getCardExpansionPlatformConfig(
         supportsHapticFeedback: Bool? = nil,
         supportsHover: Bool? = nil,
@@ -271,5 +272,6 @@ public class TestSetupUtilities {
         // Use the framework's getCardExpansionPlatformConfig function
         return await SixLayerFramework.getCardExpansionPlatformConfig()
     }
+    
 }
 
