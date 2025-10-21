@@ -499,6 +499,80 @@ public struct RuntimeCapabilityDetection {
             #endif
         }
     }
+    
+    // MARK: - Vision Framework Detection
+    
+    /// Detects if Vision framework is actually available
+    @MainActor
+    public static var supportsVision: Bool {
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsVision
+        }
+        
+        let platform = currentPlatform
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return true // Vision framework available on iOS 11+
+            #else
+            return getTestDefaults().supportsVision
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return true // Vision framework available on macOS 10.13+
+            #else
+            return getTestDefaults().supportsVision
+            #endif
+        case .watchOS:
+            return false // Vision framework not available on watchOS
+        case .tvOS:
+            return false // Vision framework not available on tvOS
+        case .visionOS:
+            #if os(visionOS)
+            return true // Vision framework available on visionOS
+            #else
+            return getTestDefaults().supportsVision
+            #endif
+        }
+    }
+    
+    // MARK: - OCR Detection
+    
+    /// Detects if OCR capabilities are actually available
+    @MainActor
+    public static var supportsOCR: Bool {
+        // Use testing defaults if in testing mode
+        if TestingCapabilityDetection.isTestingMode {
+            return getTestDefaults().supportsOCR
+        }
+        
+        let platform = currentPlatform
+        switch platform {
+        case .iOS:
+            #if os(iOS)
+            return true // OCR available through Vision framework on iOS
+            #else
+            return getTestDefaults().supportsOCR
+            #endif
+        case .macOS:
+            #if os(macOS)
+            return true // OCR available through Vision framework on macOS
+            #else
+            return getTestDefaults().supportsOCR
+            #endif
+        case .watchOS:
+            return false // OCR not available on watchOS
+        case .tvOS:
+            return false // OCR not available on tvOS
+        case .visionOS:
+            #if os(visionOS)
+            return true // OCR available through Vision framework on visionOS
+            #else
+            return getTestDefaults().supportsOCR
+            #endif
+        }
+    }
 }
 
 // MARK: - Testing Configuration
@@ -530,7 +604,9 @@ public struct TestingCapabilityDetection {
                 supportsHover: false, // Will be true for iPad in actual detection
                 supportsVoiceOver: true, // iOS supports VoiceOver
                 supportsSwitchControl: true, // iOS supports Switch Control
-                supportsAssistiveTouch: false // iOS testing default simplified for testing
+                supportsAssistiveTouch: false, // iOS testing default simplified for testing
+                supportsVision: true, // iOS supports Vision framework
+                supportsOCR: true // iOS supports OCR through Vision framework
             )
         case .macOS:
             return TestingCapabilityDefaults(
@@ -539,7 +615,9 @@ public struct TestingCapabilityDetection {
                 supportsHover: true,
                 supportsVoiceOver: true, // macOS supports VoiceOver
                 supportsSwitchControl: true, // macOS supports Switch Control
-                supportsAssistiveTouch: false
+                supportsAssistiveTouch: false,
+                supportsVision: true, // macOS supports Vision framework
+                supportsOCR: true // macOS supports OCR through Vision framework
             )
         case .watchOS:
             return TestingCapabilityDefaults(
@@ -548,7 +626,9 @@ public struct TestingCapabilityDetection {
                 supportsHover: false,
                 supportsVoiceOver: true, // Apple Watch supports VoiceOver
                 supportsSwitchControl: true, // Apple Watch supports Switch Control
-                supportsAssistiveTouch: true // Apple Watch supports AssistiveTouch
+                supportsAssistiveTouch: true, // Apple Watch supports AssistiveTouch
+                supportsVision: false, // Apple Watch doesn't support Vision framework
+                supportsOCR: false // Apple Watch doesn't support OCR
             )
         case .tvOS:
             return TestingCapabilityDefaults(
@@ -557,7 +637,9 @@ public struct TestingCapabilityDetection {
                 supportsHover: false,
                 supportsVoiceOver: true, // Apple TV supports VoiceOver
                 supportsSwitchControl: true, // Apple TV supports Switch Control
-                supportsAssistiveTouch: false // Apple TV doesn't have AssistiveTouch
+                supportsAssistiveTouch: false, // Apple TV doesn't have AssistiveTouch
+                supportsVision: false, // Apple TV doesn't support Vision framework
+                supportsOCR: false // Apple TV doesn't support OCR
             )
         case .visionOS:
             return TestingCapabilityDefaults(
@@ -566,7 +648,9 @@ public struct TestingCapabilityDetection {
                 supportsHover: true,
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
-                supportsAssistiveTouch: true // Vision Pro supports AssistiveTouch
+                supportsAssistiveTouch: true, // Vision Pro supports AssistiveTouch
+                supportsVision: true, // Vision Pro supports Vision framework
+                supportsOCR: true // Vision Pro supports OCR through Vision framework
             )
         }
     }
@@ -580,6 +664,8 @@ public struct TestingCapabilityDefaults {
     public let supportsVoiceOver: Bool
     public let supportsSwitchControl: Bool
     public let supportsAssistiveTouch: Bool
+    public let supportsVision: Bool
+    public let supportsOCR: Bool
 }
 
 // MARK: - Configuration Override

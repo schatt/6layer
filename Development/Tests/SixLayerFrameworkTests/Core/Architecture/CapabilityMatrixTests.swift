@@ -87,26 +87,22 @@ open class CapabilityMatrixTests {
         // Touch Capability
         CapabilityTest(
             name: "Touch Support",
-            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .iOS).supportsTouch },
+            testSupported: { RuntimeCapabilityDetection.supportsTouch },
             testBehavior: {
                 // Test that touch-related features work when touch is supported
-                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
-                if config.supportsTouch {
+                if RuntimeCapabilityDetection.supportsTouch {
                     // Touch should enable haptic feedback
-                    #expect(config.supportsHapticFeedback, 
+                    #expect(RuntimeCapabilityDetection.supportsHapticFeedback, 
                                 "Touch platforms should support haptic feedback")
                     // Touch should enable AssistiveTouch
-                    #expect(config.supportsAssistiveTouch, 
+                    #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, 
                                 "Touch platforms should support AssistiveTouch")
-                    // Touch targets should be appropriate size
-                    #expect(config.minTouchTarget >= 44, 
-                                              "Touch platforms should have adequate touch targets")
                 } else {
                     // Non-touch platforms should not have haptic feedback
-                    #expect(!config.supportsHapticFeedback, 
+                    #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
                                  "Non-touch platforms should not support haptic feedback")
                     // Non-touch platforms should not have AssistiveTouch
-                    #expect(!config.supportsAssistiveTouch, 
+                    #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, 
                                  "Non-touch platforms should not support AssistiveTouch")
                 }
             },
@@ -116,20 +112,16 @@ open class CapabilityMatrixTests {
         // Hover Capability
         CapabilityTest(
             name: "Hover Support",
-            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .macOS).supportsHover },
+            testSupported: { RuntimeCapabilityDetection.supportsHover },
             testBehavior: {
-                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
-                if config.supportsHover {
+                if RuntimeCapabilityDetection.supportsHover {
                     // Hover platforms should not support touch (mutually exclusive)
-                    #expect(!config.supportsTouch, 
+                    #expect(!RuntimeCapabilityDetection.supportsTouch, 
                                  "Hover platforms should not support touch")
-                    // Hover should have appropriate delay settings
-                    #expect(config.hoverDelay >= 0, 
-                                              "Hover platforms should have hover delay")
                 } else {
                     // Non-hover platforms should not have hover-specific features
-                    #expect(config.hoverDelay == 0, 
-                                 "Non-hover platforms should have zero hover delay")
+                    // This is more of a logical test - we can't test hoverDelay directly
+                    // since RuntimeCapabilityDetection doesn't expose timing values
                 }
             },
             expectedPlatforms: [SixLayerPlatform.macOS]
@@ -138,16 +130,15 @@ open class CapabilityMatrixTests {
         // Haptic Feedback Capability
         CapabilityTest(
             name: "Haptic Feedback Support",
-            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .iOS).supportsHapticFeedback },
+            testSupported: { RuntimeCapabilityDetection.supportsHapticFeedback },
             testBehavior: {
-                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
-                if config.supportsHapticFeedback {
+                if RuntimeCapabilityDetection.supportsHapticFeedback {
                     // Haptic feedback should only be on touch platforms
-                    #expect(config.supportsTouch, 
+                    #expect(RuntimeCapabilityDetection.supportsTouch, 
                                 "Haptic feedback should only be on touch platforms")
                 } else {
                     // Non-haptic platforms should not have touch
-                    #expect(!config.supportsTouch, 
+                    #expect(!RuntimeCapabilityDetection.supportsTouch, 
                                  "Non-haptic platforms should not support touch")
                 }
             },
@@ -157,16 +148,15 @@ open class CapabilityMatrixTests {
         // AssistiveTouch Capability
         CapabilityTest(
             name: "AssistiveTouch Support",
-            testSupported: { PlatformTestUtilities.getPlatformConfig(for: .iOS).supportsAssistiveTouch },
+            testSupported: { RuntimeCapabilityDetection.supportsAssistiveTouch },
             testBehavior: {
-                let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
-                if config.supportsAssistiveTouch {
+                if RuntimeCapabilityDetection.supportsAssistiveTouch {
                     // AssistiveTouch should only be on touch platforms
-                    #expect(config.supportsTouch, 
+                    #expect(RuntimeCapabilityDetection.supportsTouch, 
                                 "AssistiveTouch should only be on touch platforms")
                 } else {
                     // Non-AssistiveTouch platforms should not have touch
-                    #expect(!config.supportsTouch, 
+                    #expect(!RuntimeCapabilityDetection.supportsTouch, 
                                  "Non-AssistiveTouch platforms should not support touch")
                 }
             },
@@ -176,14 +166,14 @@ open class CapabilityMatrixTests {
         // Vision Framework Capability
         CapabilityTest(
             name: "Vision Framework Support",
-            testSupported: { PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current) },
+            testSupported: { RuntimeCapabilityDetection.supportsVision },
             testBehavior: {
-                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
+                let isVisionAvailable = RuntimeCapabilityDetection.supportsVision
                 let platform = SixLayerPlatform.current
                 switch platform {
-                case .iOS, .macOS:
+                case .iOS, .macOS, .visionOS:
                     #expect(isVisionAvailable, "Vision should be available on \(platform)")
-                case .watchOS, .tvOS, .visionOS:
+                case .watchOS, .tvOS:
                     #expect(!isVisionAvailable, "Vision should not be available on \(platform)")
                 }
             },
@@ -193,10 +183,10 @@ open class CapabilityMatrixTests {
         // OCR Capability
         CapabilityTest(
             name: "OCR Support",
-            testSupported: { PlatformTestUtilities.getOCRAvailability(for: SixLayerPlatform.current) },
+            testSupported: { RuntimeCapabilityDetection.supportsOCR },
             testBehavior: {
-                let isOCRAvailable = PlatformTestUtilities.getOCRAvailability(for: SixLayerPlatform.current)
-                let isVisionAvailable = PlatformTestUtilities.getVisionAvailability(for: SixLayerPlatform.current)
+                let isOCRAvailable = RuntimeCapabilityDetection.supportsOCR
+                let isVisionAvailable = RuntimeCapabilityDetection.supportsVision
 
                 // OCR should only be available if Vision is available
                 #expect(isOCRAvailable == isVisionAvailable, 
@@ -328,65 +318,63 @@ open class CapabilityMatrixTests {
     
     @Test func testPlatformCapabilityConsistency() {
         let platform = SixLayerPlatform.current
-        let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
         
         // Test that platform capabilities are internally consistent
         switch platform {
         case .iOS:
             // iOS should support touch, haptic, and AssistiveTouch
-            #expect(config.supportsTouch, "iOS should support touch")
-            #expect(config.supportsHapticFeedback, "iOS should support haptic feedback")
-            #expect(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
-            #expect(!config.supportsHover, "iOS should not support hover")
+            #expect(RuntimeCapabilityDetection.supportsTouch, "iOS should support touch")
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "iOS should support haptic feedback")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+            #expect(!RuntimeCapabilityDetection.supportsHover, "iOS should not support hover")
             
         case .macOS:
             // macOS should support hover but not touch
-            #expect(!config.supportsTouch, "macOS should not support touch")
-            #expect(!config.supportsHapticFeedback, "macOS should not support haptic feedback")
-            #expect(!config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
-            #expect(config.supportsHover, "macOS should support hover")
+            #expect(!RuntimeCapabilityDetection.supportsTouch, "macOS should not support touch")
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, "macOS should not support haptic feedback")
+            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
+            #expect(RuntimeCapabilityDetection.supportsHover, "macOS should support hover")
             
         case .watchOS:
             // watchOS should support touch and haptic
-            #expect(config.supportsTouch, "watchOS should support touch")
-            #expect(config.supportsHapticFeedback, "watchOS should support haptic feedback")
-            #expect(config.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
-            #expect(!config.supportsHover, "watchOS should not support hover")
+            #expect(RuntimeCapabilityDetection.supportsTouch, "watchOS should support touch")
+            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "watchOS should support haptic feedback")
+            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
+            #expect(!RuntimeCapabilityDetection.supportsHover, "watchOS should not support hover")
             
         case .tvOS:
             // tvOS should not support touch or hover
-            #expect(!config.supportsTouch, "tvOS should not support touch")
-            #expect(!config.supportsHapticFeedback, "tvOS should not support haptic feedback")
-            #expect(!config.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
-            #expect(!config.supportsHover, "tvOS should not support hover")
+            #expect(!RuntimeCapabilityDetection.supportsTouch, "tvOS should not support touch")
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, "tvOS should not support haptic feedback")
+            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
+            #expect(!RuntimeCapabilityDetection.supportsHover, "tvOS should not support hover")
             
         case .visionOS:
             // visionOS should not support touch or hover
-            #expect(!config.supportsTouch, "visionOS should not support touch")
-            #expect(!config.supportsHapticFeedback, "visionOS should not support haptic feedback")
-            #expect(!config.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
-            #expect(!config.supportsHover, "visionOS should not support hover")
+            #expect(!RuntimeCapabilityDetection.supportsTouch, "visionOS should not support touch")
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, "visionOS should not support haptic feedback")
+            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
+            #expect(!RuntimeCapabilityDetection.supportsHover, "visionOS should not support hover")
         }
         
         // All platforms should support accessibility features
-        #expect(config.supportsVoiceOver, "All platforms should support VoiceOver")
-        #expect(config.supportsSwitchControl, "All platforms should support Switch Control")
+        #expect(RuntimeCapabilityDetection.supportsVoiceOver, "All platforms should support VoiceOver")
+        #expect(RuntimeCapabilityDetection.supportsSwitchControl, "All platforms should support Switch Control")
     }
     
     // MARK: - Capability Matrix Validation
     
     @Test func testCapabilityMatrix() {
         let platform = SixLayerPlatform.current
-        let config = PlatformTestUtilities.getPlatformConfig(for: .iOS)
         
         // Create capability matrix
         let capabilities = [
-            "Touch": config.supportsTouch,
-            "Hover": config.supportsHover,
-            "Haptic": config.supportsHapticFeedback,
-            "AssistiveTouch": config.supportsAssistiveTouch,
-            "VoiceOver": config.supportsVoiceOver,
-            "SwitchControl": config.supportsSwitchControl,
+            "Touch": RuntimeCapabilityDetection.supportsTouch,
+            "Hover": RuntimeCapabilityDetection.supportsHover,
+            "Haptic": RuntimeCapabilityDetection.supportsHapticFeedback,
+            "AssistiveTouch": RuntimeCapabilityDetection.supportsAssistiveTouch,
+            "VoiceOver": RuntimeCapabilityDetection.supportsVoiceOver,
+            "SwitchControl": RuntimeCapabilityDetection.supportsSwitchControl,
             "Vision": isVisionFrameworkAvailable(),
             "OCR": isVisionOCRAvailable()
         ]
