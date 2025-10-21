@@ -571,4 +571,31 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(executionTime < 1.0, "Should perform focus movement efficiently")
     }
     
+    /**
+     * BUSINESS PURPOSE: HighContrastManager performs efficiently with color calculations
+     * 
+     * TESTING SCOPE: Performance with color calculations
+     * METHODOLOGY: Test performance with many color calculations
+     */
+    @Test func testHighContrastManagerPerformance() {
+        let navigationManager = KeyboardNavigationManager()
+        let highContrastManager = HighContrastManager()
+        // GIVEN: High contrast mode
+        highContrastManager.isHighContrastEnabled = true
+        let colors = [Color.red, Color.blue, Color.green, Color.yellow, Color.purple]
+        
+        // WHEN: Measuring color calculation performance
+        let startTime = CFAbsoluteTimeGetCurrent()
+        for _ in 0..<1000 {
+            for color in colors {
+                _ = highContrastManager.getHighContrastColor(color)
+            }
+        }
+        let endTime = CFAbsoluteTimeGetCurrent()
+        
+        // THEN: Should perform efficiently
+        let executionTime = endTime - startTime
+        #expect(executionTime < 1.0, "Should perform color calculations efficiently")
+    }
+    
 }
