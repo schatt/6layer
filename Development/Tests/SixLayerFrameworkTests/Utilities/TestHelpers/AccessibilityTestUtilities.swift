@@ -302,7 +302,6 @@ public func hasAccessibilityIdentifierSimple<T: View>(
 ///   - expectedPattern: The regex pattern to match against (use * for wildcards)
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has an identifier matching the pattern
-@MainActor
 
 // MARK: - Parameterized Cross-Platform Testing
 

@@ -3,18 +3,6 @@ import SwiftUI
 
 // Shared test-only configuration builders (DRY, centralized)
 
-// General platform capabilities for non-card tests
-struct PlatformCapabilitiesTestSnapshot {
-    let supportsHapticFeedback: Bool
-    let supportsHover: Bool
-    let supportsTouch: Bool
-    let supportsVoiceOver: Bool
-    let supportsSwitchControl: Bool
-    let supportsAssistiveTouch: Bool
-    let minTouchTarget: CGFloat
-    let hoverDelay: TimeInterval
-}
-
 // Build a general capability snapshot from RuntimeCapabilityDetection
 @MainActor
 func buildPlatformCapabilitiesSnapshot() -> PlatformCapabilitiesTestSnapshot {
