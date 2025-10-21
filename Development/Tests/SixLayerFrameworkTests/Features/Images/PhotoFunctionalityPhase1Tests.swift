@@ -294,21 +294,19 @@ open class PhotoFunctionalityPhase1Tests {
     }
     
     @Test @MainActor
-    func testPlatformPhotoEditorL4() {
-        // Given: A PlatformImage and edit callback
+    func testPlatformPhotoDisplayL4() {
+        // Given: A PlatformImage
         let testImage = createTestPlatformImage()
-        var _: PlatformImage?
-        let onImageEdited: (PlatformImage) -> Void = { _ in }
         
-        // When: Creating photo editor
-        let photoEditor = platformPhotoEditor_L4(image: testImage, onImageEdited: onImageEdited)
+        // When: Creating photo display
+        let photoDisplay = platformPhotoDisplay_L4(image: testImage, style: .thumbnail)
         
-        // Then: Photo editor should be created and be hostable
-        #expect(photoEditor != nil, "Photo editor should be created")
+        // Then: Photo display should be created and be hostable
+        #expect(photoDisplay != nil, "Photo display should be created")
         
-        // Test that the photo editor can actually be hosted
-        let hostingView = hostRootPlatformView(photoEditor.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "Photo editor should be hostable")
+        // Test that the photo display can actually be hosted
+        let hostingView = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
+        #expect(hostingView != nil, "Photo display should be hostable")
     }
     
     // MARK: - Cross-Platform Color Tests
