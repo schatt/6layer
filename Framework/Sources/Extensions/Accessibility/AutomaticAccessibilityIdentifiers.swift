@@ -195,3 +195,4 @@ public extension View {
     public func automaticAccessibilityIdentifierModifier() -> some View {
         self.modifier(AutomaticAccessibilityIdentifierModifier())
     }
+}
