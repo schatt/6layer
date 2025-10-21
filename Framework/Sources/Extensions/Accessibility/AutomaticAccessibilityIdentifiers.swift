@@ -166,4 +166,10 @@ extension View {
     public func named(_ name: String) -> some View {
         self.modifier(NamedModifier(name: name))
     }
+    
+    /// Apply an exact named accessibility identifier to a view
+    /// TDD RED PHASE: This is a stub implementation for testing
+    public func exactNamed(_ name: String) -> some View {
+        self.modifier(NamedModifier(name: name))
+    }
 }
