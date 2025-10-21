@@ -1,5 +1,7 @@
 import Testing
 
+@testable import SixLayerFramework
+
 
 //
 //  AccessibilityTestingSuiteTests.swift

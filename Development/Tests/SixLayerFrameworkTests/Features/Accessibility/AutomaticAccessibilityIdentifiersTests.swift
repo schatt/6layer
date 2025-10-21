@@ -80,7 +80,6 @@ open class AutomaticAccessibilityIdentifiersTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
         
@@ -111,7 +110,6 @@ open class AutomaticAccessibilityIdentifiersTests {
             view, 
             expectedPattern: "SixLayer.main.element.*testelement.*", 
             platform: .macOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "named modifier"
         )
         

@@ -144,6 +144,12 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         return "app.otherElements[\"\(identifier)\"].element.tap()"
     }
     
+    /// Generate text input action for UI testing
+    /// TDD RED PHASE: This is a stub implementation for testing
+    public func generateTextInputAction(_ identifier: String, text: String) -> String {
+        return "app.textFields[\"\(identifier)\"].element.typeText(\"\(text)\")"
+    }
+    
     /// Generate UI test code and save to file
     public func generateUITestCodeToFile() throws -> String {
         let testCode = """
