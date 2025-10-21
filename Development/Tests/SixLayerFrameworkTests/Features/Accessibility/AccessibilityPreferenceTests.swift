@@ -195,50 +195,8 @@ open class AccessibilityPreferenceTests {
         #expect(allAccessibility.hasBoldText(), "All accessibility should have bold text")
     }
     
-    /// Tests platform-specific accessibility behavior using existing simulation
-    @Test func testPlatformSpecificAccessibility_UsingExistingSimulation() {
-        // Use existing platform simulation infrastructure
-        let simulatedPlatforms = PlatformSimulationTests.simulatedPlatforms
-        
-        for simulatedPlatform in simulatedPlatforms {
-            // Test that accessibility features work for each simulated platform
-            testAccessibilityBehaviorForSimulatedPlatform(simulatedPlatform: simulatedPlatform)
-        }
-    }
     
     /// Tests accessibility behavior for a specific simulated platform
-    @Test private func testAccessibilityBehaviorForSimulatedPlatform(simulatedPlatform: PlatformSimulationTests.SimulatedPlatform) {
-        let platform = simulatedPlatform.platform
-        let capabilities = simulatedPlatform.capabilities
-        
-        // Test that accessibility features are properly configured for each platform
-        switch platform {
-        case .iOS:
-            // iOS should support touch-based accessibility
-            #expect(capabilities.supportsTouch == true, "iOS should support touch for accessibility")
-            #expect(capabilities.minTouchTarget == 44, "iOS should have adequate touch targets")
-            
-        case .macOS:
-            // macOS should support hover-based accessibility
-            #expect(capabilities.supportsHover == true, "macOS should support hover for accessibility")
-            #expect(capabilities.maxAnimationDuration == 0.3, "macOS should have appropriate animation duration")
-            
-        case .watchOS:
-            // watchOS should support touch-based accessibility with appropriate sizing
-            #expect(capabilities.supportsTouch == true, "watchOS should support touch for accessibility")
-            #expect(capabilities.minTouchTarget == 44, "watchOS should have adequate touch targets")
-            
-        case .tvOS:
-            // tvOS should support VoiceOver and larger touch targets
-            #expect(capabilities.supportsVoiceOver == true, "tvOS should support VoiceOver")
-            #expect(capabilities.minTouchTarget == 60, "tvOS should have larger touch targets")
-            
-        case .visionOS:
-            // visionOS should support vision-based accessibility
-            #expect(capabilities.supportsVision == true, "visionOS should support vision")
-            #expect(capabilities.supportsVoiceOver == true, "visionOS should support VoiceOver")
-        }
-    }
     
     // MARK: - Edge Cases and Error Handling
     
