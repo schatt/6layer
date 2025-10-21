@@ -576,6 +576,12 @@ open class AccessibilityFeaturesLayer5Tests {
      * 
      * TESTING SCOPE: High contrast color calculation functionality
      * METHODOLOGY: Test that returned color differs from original when high contrast is enabled
+     * 
+     * TODO: Enhance test to verify correct high contrast colors for multiple test cases:
+     * - Test with various base colors (red, blue, green, etc.)
+     * - Verify returned colors meet WCAG contrast ratio requirements
+     * - Test edge cases (very light/dark colors, system colors)
+     * - Verify colors work well against different backgrounds
      */
     @Test func testHighContrastColorCalculation() {
         let accessibilityManager = AccessibilityManager()
