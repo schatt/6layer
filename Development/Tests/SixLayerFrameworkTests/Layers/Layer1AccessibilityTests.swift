@@ -56,7 +56,6 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.main.element.*", 
-            platform: .iOS,
             componentName: "ItemCollection"
         )
         
@@ -85,7 +84,6 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.screen.*", 
-            platform: .iOS,
             componentName: "FormField"
         )
         
@@ -114,7 +112,6 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.main.element.*", 
-            platform: .iOS,
             componentName: "NumericData"
         )
         
@@ -145,7 +142,6 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.screen.*", 
-            platform: .iOS,
             componentName: "MediaData"
         )
         
@@ -184,7 +180,6 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "*.screen.*", 
-            platform: .iOS,
             componentName: "SettingsData"
         )
         

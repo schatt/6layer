@@ -158,7 +158,7 @@ public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has an identifier matching the pattern on the specified platform
 @MainActor
-public func hasAccessibilityIdentifierPattern<T: View>(
+public func hasAccessibilityIdentifierWithPattern<T: View>(
     _ view: T, 
     expectedPattern: String,
     platform: SixLayerPlatform,
@@ -312,3 +312,36 @@ public func getAccessibilityIdentifier<T: View>(from view: T) -> String? {
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has an identifier matching the pattern
 @MainActor
+public func hasAccessibilityIdentifierPattern<T: View>(
+    _ view: T, 
+    expectedPattern: String,
+    componentName: String = "Component"
+) -> Bool {
+    // Get the actual accessibility identifier from the view
+    if let actualIdentifier = getAccessibilityIdentifier(from: view) {
+        // Convert pattern to regex (replace * with .*)
+        let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
+        do {
+            let regex = try NSRegularExpression(pattern: regexPattern)
+            let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
+            if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
+                print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match: '\(actualIdentifier)' matches '\(expectedPattern)'")
+                return true
+            } else {
+                print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern. Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
+                return false
+            }
+        } catch {
+            print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)': \(error)")
+            return false
+        }
+    } else {
+        // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
+        if expectedPattern == "^$" || expectedPattern == "^\\s*$" {
+            print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty)")
+            return true
+        }
+        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
+        return false
+    }
+}
