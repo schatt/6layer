@@ -374,7 +374,7 @@ open class DRYTestPatterns {
         
         // Verify touch target and hover delay
         #expect(viewInfo.minTouchTarget == capabilityChecker.supportsTouch() ? 44 : 0, "Touch target should match for \(testName)")
-        #expect(viewInfo.hoverDelay == capabilityChecker.supportsHover() ? 0.1 : 0.0, "Hover delay should match for \(testName)")
+        #expect(viewInfo.hoverDelay == (capabilityChecker.supportsHover() ? 0.1 : 0.0), "Hover delay should match for \(testName)")
     }
     
     static func verifyAccessibilityProperties(
