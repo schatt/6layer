@@ -17,8 +17,9 @@ open class AutomaticAccessibilityComponentAccessibilityTests: BaseTestClass {
     // MARK: - Automatic Accessibility Component Tests
     
     @Test func testAutomaticAccessibilityIdentifiersGeneratesAccessibilityIdentifiers() async {
-        // Given: AutomaticAccessibilityIdentifiers
-        let testView = AutomaticAccessibilityIdentifiers()
+        // Given: AutomaticAccessibilityIdentifiers modifier applied to a view
+        let testView = Text("Test")
+            .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifierPattern(
