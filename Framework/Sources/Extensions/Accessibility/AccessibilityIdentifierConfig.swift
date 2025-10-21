@@ -156,11 +156,6 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         // Stub implementation - would copy to clipboard in real implementation
     }
     
-    /// Push view hierarchy context
-    public func pushViewHierarchy(_ context: String) {
-        currentViewHierarchy.append(context)
-    }
-    
     /// Pop view hierarchy context
     public func popViewHierarchy() {
         if !currentViewHierarchy.isEmpty {
