@@ -43,21 +43,20 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     
     @Test func testCurrentPlatformCombination() {
         let platform = SixLayerPlatform.current
-        let config = getCardExpansionPlatformConfig()
         
         print("🔍 Current Platform: \(platform)")
         print("🔍 Capabilities:")
-        print("  - Touch: \(config.supportsTouch ? "✅" : "❌")")
-        print("  - Hover: \(config.supportsHover ? "✅" : "❌")")
-        print("  - Haptic: \(config.supportsHapticFeedback ? "✅" : "❌")")
-        print("  - AssistiveTouch: \(config.supportsAssistiveTouch ? "✅" : "❌")")
-        print("  - VoiceOver: \(config.supportsVoiceOver ? "✅" : "❌")")
-        print("  - SwitchControl: \(config.supportsSwitchControl ? "✅" : "❌")")
-        print("  - Vision: \(isVisionFrameworkAvailable() ? "✅" : "❌")")
-        print("  - OCR: \(isVisionOCRAvailable() ? "✅" : "❌")")
+        print("  - Touch: \(RuntimeCapabilityDetection.supportsTouch ? "✅" : "❌")")
+        print("  - Hover: \(RuntimeCapabilityDetection.supportsHover ? "✅" : "❌")")
+        print("  - Haptic: \(RuntimeCapabilityDetection.supportsHapticFeedback ? "✅" : "❌")")
+        print("  - AssistiveTouch: \(RuntimeCapabilityDetection.supportsAssistiveTouch ? "✅" : "❌")")
+        print("  - VoiceOver: \(RuntimeCapabilityDetection.supportsVoiceOver ? "✅" : "❌")")
+        print("  - SwitchControl: \(RuntimeCapabilityDetection.supportsSwitchControl ? "✅" : "❌")")
+        print("  - Vision: \(RuntimeCapabilityDetection.supportsVision ? "✅" : "❌")")
+        print("  - OCR: \(RuntimeCapabilityDetection.supportsOCR ? "✅" : "❌")")
         
         // Test that the current platform combination is valid
-        #expect(validateCurrentPlatformCombination(platform, config: config), 
+        #expect(validateCurrentPlatformCombination(platform), 
                      "Current platform combination should be valid")
     }
     

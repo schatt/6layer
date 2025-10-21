@@ -215,7 +215,10 @@ public class TestSetupUtilities {
     
     /// Get card expansion platform configuration for testing
     /// DRY principle: Centralized card configuration to avoid duplication
-    /// NOTE: This should ONLY be used for card-specific testing
+    /// 
+    /// ⚠️ ARCHITECTURAL CONSTRAINT: This function should ONLY be used for testing card-specific functionality.
+    /// For general platform capability testing, use RuntimeCapabilityDetection directly.
+    /// Card config should ONLY be used by card display functions in production code.
     public static func getCardExpansionPlatformConfig(
         supportsHapticFeedback: Bool? = nil,
         supportsHover: Bool? = nil,
@@ -232,6 +235,11 @@ public class TestSetupUtilities {
     }
     
     /// Asserts that a card expansion config matches expected capabilities
+    /// 
+    /// ⚠️ ARCHITECTURAL CONSTRAINT: This function should ONLY be used for testing card-specific functionality.
+    /// For general platform capability testing, use RuntimeCapabilityDetection directly.
+    /// Card config should ONLY be used by card display functions in production code.
+    /// 
     /// - Parameters:
     ///   - config: The card expansion configuration to test
     ///   - touch: Expected touch support
