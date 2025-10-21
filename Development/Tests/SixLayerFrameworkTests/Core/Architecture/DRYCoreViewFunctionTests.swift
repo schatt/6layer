@@ -95,20 +95,8 @@ open class DRYCoreViewFunctionTests {
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             
-            // Test intelligent detail view with platform-specific capabilities
-            let platformCapabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
-            let platformAccessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
-            
-            for (capabilityName, capabilityFactory) in platformCapabilityTestCases {
-                for (accessibilityName, accessibilityFactory) in platformAccessibilityTestCases {
-                    testIntelligentDetailViewWithSpecificCombination(
-                        capabilityName: capabilityName,
-                        accessibilityName: accessibilityName,
-                        capabilityFactory: capabilityFactory,
-                        accessibilityFactory: accessibilityFactory
-                    )
-                }
-            }
+            // Note: Specific combination tests are now parameterized tests using @Test(arguments:)
+            // This provides better test isolation and follows DRY principles
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -117,6 +105,54 @@ open class DRYCoreViewFunctionTests {
     /// BUSINESS PURPOSE: Validate intelligent detail view functionality with specific capability combinations
     /// TESTING SCOPE: Intelligent detail view specific capability testing, capability combination validation, specific capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with specific capabilities
+    @Test(arguments: [
+        ("Touch", "NoAccessibility", { DRYTestPatterns.createTouchCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
+        ("Hover", "AllAccessibility", { DRYTestPatterns.createHoverCapabilities() }, { DRYTestPatterns.createAllAccessibility() }),
+        ("AllCapabilities", "NoAccessibility", { DRYTestPatterns.createAllCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
+        ("NoCapabilities", "AllAccessibility", { DRYTestPatterns.createNoCapabilities() }, { DRYTestPatterns.createAllAccessibility() })
+    ])
+    func testIntelligentDetailViewWithSpecificCombination(
+        capabilityName: String,
+        accessibilityName: String,
+        capabilityFactory: () -> MockPlatformCapabilityChecker,
+        accessibilityFactory: () -> MockAccessibilityFeatureChecker
+    ) {
+        // GIVEN: Specific capability and accessibility combination
+        let item = sampleData[0]
+        let capabilityChecker = capabilityFactory()
+        let accessibilityChecker = accessibilityFactory()
+        let testName = "\(capabilityName) + \(accessibilityName)"
+        
+        // WHEN: Generating intelligent detail view
+        let view = DRYTestPatterns.createIntelligentDetailView(
+            item: item,
+            capabilityChecker: capabilityChecker,
+            accessibilityChecker: accessibilityChecker
+        )
+        
+        // THEN: Should generate correct view for this combination
+        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+        
+        let viewInfo = extractViewInfo(
+            from: view,
+            capabilityChecker: capabilityChecker,
+            accessibilityChecker: accessibilityChecker
+        )
+        
+        // Verify platform-specific properties
+        DRYTestPatterns.verifyPlatformProperties(
+            viewInfo: viewInfo,
+            capabilityChecker: capabilityChecker,
+            testName: testName
+        )
+        
+        // Verify accessibility properties
+        DRYTestPatterns.verifyAccessibilityProperties(
+            viewInfo: viewInfo,
+            accessibilityChecker: accessibilityChecker,
+            testName: testName
+        )
+    }
     
     // MARK: - Parameterized Tests (DRY Version)
     
@@ -289,13 +325,65 @@ open class DRYCoreViewFunctionTests {
         for platform in SixLayerPlatform.allCases {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             
-            // Test simple card component with platform-specific capabilities
-            // Note: Specific combination tests removed as they were not being called with @Test(arguments:)
+            // Note: Specific combination tests are now parameterized tests using @Test(arguments:)
+            // This provides better test isolation and follows DRY principles
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
+    
+    /// BUSINESS PURPOSE: Validate simple card component functionality with specific capability combinations
+    /// TESTING SCOPE: Simple card component specific capability testing, capability combination validation, specific capability testing
+    /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test simple card component with specific capabilities
+    @Test(arguments: [
+        ("Touch", "NoAccessibility", { DRYTestPatterns.createTouchCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
+        ("Hover", "AllAccessibility", { DRYTestPatterns.createHoverCapabilities() }, { DRYTestPatterns.createAllAccessibility() }),
+        ("AllCapabilities", "NoAccessibility", { DRYTestPatterns.createAllCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
+        ("NoCapabilities", "AllAccessibility", { DRYTestPatterns.createNoCapabilities() }, { DRYTestPatterns.createAllAccessibility() })
+    ])
+    func testSimpleCardComponentWithSpecificCombination(
+        capabilityName: String,
+        accessibilityName: String,
+        capabilityFactory: () -> MockPlatformCapabilityChecker,
+        accessibilityFactory: () -> MockAccessibilityFeatureChecker
+    ) {
+        // GIVEN: Specific capability and accessibility combination
+        let item = sampleData[0]
+        let capabilityChecker = capabilityFactory()
+        let accessibilityChecker = accessibilityFactory()
+        let testName = "SimpleCard \(capabilityName) + \(accessibilityName)"
+        
+        // WHEN: Generating simple card component
+        let view = DRYTestPatterns.createSimpleCardComponent(
+            item: item,
+            capabilityChecker: capabilityChecker,
+            accessibilityChecker: accessibilityChecker
+        )
+        
+        // THEN: Should generate correct view for this combination
+        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+        
+        let viewInfo = extractViewInfo(
+            from: view,
+            capabilityChecker: capabilityChecker,
+            accessibilityChecker: accessibilityChecker
+        )
+        
+        // Verify platform-specific properties
+        DRYTestPatterns.verifyPlatformProperties(
+            viewInfo: viewInfo,
+            capabilityChecker: capabilityChecker,
+            testName: testName
+        )
+        
+        // Verify accessibility properties
+        DRYTestPatterns.verifyAccessibilityProperties(
+            viewInfo: viewInfo,
+            accessibilityChecker: accessibilityChecker,
+            testName: testName
+        )
+    }
     
     // MARK: - Helper Methods
     
