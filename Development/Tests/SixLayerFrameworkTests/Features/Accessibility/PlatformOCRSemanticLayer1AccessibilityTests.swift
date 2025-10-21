@@ -60,7 +60,6 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .macOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
             )
@@ -119,7 +118,6 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .macOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
             )
