@@ -173,3 +173,25 @@ extension View {
         self.modifier(NamedModifier(name: name))
     }
 }
+
+// MARK: - Automatic Accessibility Identifier Modifier
+
+/// Modifier that automatically applies accessibility identifiers
+/// TDD RED PHASE: This is a stub implementation for testing
+public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
+    public init() {}
+    
+    public func body(content: Content) -> some View {
+        content
+            .automaticAccessibilityIdentifiers()
+    }
+}
+
+// MARK: - View Extension for Automatic Modifier
+
+public extension View {
+    /// Apply automatic accessibility identifier modifier
+    /// TDD RED PHASE: This is a stub implementation for testing
+    public func automaticAccessibilityIdentifierModifier() -> some View {
+        self.modifier(AutomaticAccessibilityIdentifierModifier())
+    }
