@@ -44,26 +44,18 @@ final class Layer2ComponentAccessibilityTests {
     }
     
     @Test func testDetermineOptimalFormLayoutL2ReturnsValidDecision() async {
-        // Given: Test form data
-        let testFormData = [
-            "name": "John Doe",
-            "email": "john@example.com",
-            "age": 30
-        ]
+        // Given: Test hints
         let hints = PresentationHints()
         
         // When: Creating form layout decision using Layer 2 function
         let formLayoutDecision = determineOptimalFormLayout_L2(
-            formData: testFormData,
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            hints: hints
         )
         
         // Then: Should have valid form layout decision properties
-        #expect(formLayoutDecision.approach != nil, "Layer 2 should return valid form layout approach")
-        #expect(formLayoutDecision.columns > 0, "Layer 2 should return valid column count")
-        #expect(formLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(formLayoutDecision.preferredContainer != nil, "Layer 2 should return valid container type")
+        #expect(formLayoutDecision.fieldLayout != nil, "Layer 2 should return valid field layout")
+        #expect(formLayoutDecision.validation != nil, "Layer 2 should return valid validation strategy")
     }
     
     @Test func testDetermineOptimalCardLayoutL2ReturnsValidDecision() async {
@@ -77,10 +69,10 @@ final class Layer2ComponentAccessibilityTests {
         
         // When: Creating card layout decision using Layer 2 function
         let cardLayoutDecision = determineOptimalCardLayout_L2(
-            cardData: testCardData,
-            hints: hints,
+            contentCount: testCardData.count,
             screenWidth: 400,
-            deviceType: .phone
+            deviceType: DeviceType.phone,
+            contentComplexity: ContentComplexity.simple
         )
         
         // Then: Should have valid card layout decision properties
