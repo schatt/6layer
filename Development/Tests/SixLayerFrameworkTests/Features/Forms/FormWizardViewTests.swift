@@ -73,7 +73,6 @@ open class FormWizardViewTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .macOS,
             platform: SixLayerPlatform.iOS,
             componentName: "FormWizardView"
         )

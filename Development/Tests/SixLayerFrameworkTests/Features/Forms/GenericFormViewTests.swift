@@ -81,7 +81,6 @@ open class GenericFormViewTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .macOS,
             platform: SixLayerPlatform.iOS,
             componentName: "GenericFormView"
         )
