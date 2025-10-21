@@ -45,17 +45,19 @@ public class AccessibilityManager {
     
     /// Checks if high contrast is enabled
     public func isHighContrastEnabled() -> Bool {
-        // TODO: Implement actual high contrast detection
-        return false // Stub: return false for now
+        // TDD RED PHASE: Return true to test color calculation path
+        return true // Stub: return true to test high contrast functionality
     }
     
     /// Calculates high contrast color for accessibility
     public func getHighContrastColor(_ baseColor: Color) -> Color {
-        // TDD RED PHASE: Stub implementation for testing
+        // TDD RED PHASE: Stub implementation that fails until real code is implemented
         guard isHighContrastEnabled() else { return baseColor }
         
         // TODO: Implement actual high contrast color calculation
         // Should adjust colors to meet WCAG contrast ratio requirements
+        // For now, simulate work to make performance test fail until implemented
+        usleep(1000) // Simulate 1ms of work per call
         return baseColor
     }
     
