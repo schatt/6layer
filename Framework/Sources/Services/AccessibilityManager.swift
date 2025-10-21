@@ -49,6 +49,16 @@ public class AccessibilityManager {
         return false // Stub: return false for now
     }
     
+    /// Calculates high contrast color for accessibility
+    public func getHighContrastColor(_ baseColor: Color) -> Color {
+        // TDD RED PHASE: Stub implementation for testing
+        guard isHighContrastEnabled() else { return baseColor }
+        
+        // TODO: Implement actual high contrast color calculation
+        // Should adjust colors to meet WCAG contrast ratio requirements
+        return baseColor
+    }
+    
     /// Returns the current accessibility configuration
     public func getAccessibilityConfiguration() -> AccessibilityConfiguration? {
         // TODO: Implement actual configuration retrieval
