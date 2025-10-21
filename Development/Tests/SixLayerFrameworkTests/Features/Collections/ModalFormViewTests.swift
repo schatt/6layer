@@ -63,7 +63,6 @@ open class ModalFormViewTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ModalFormView"
         )
         

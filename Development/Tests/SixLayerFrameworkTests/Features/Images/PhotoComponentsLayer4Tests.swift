@@ -83,7 +83,6 @@ open class PhotoComponentsLayer4Tests {
                 result, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformCameraInterface_L4"
             ), "Camera interface should have accessibility identifier")
             

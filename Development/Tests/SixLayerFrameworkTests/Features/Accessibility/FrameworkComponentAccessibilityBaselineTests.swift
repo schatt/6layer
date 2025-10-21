@@ -71,7 +71,6 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
             component, 
             expectedPattern: "FrameworkTest.*\(name.lowercased()).*", 
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: name
         ), "\(name) should generate accessibility ID")
     }

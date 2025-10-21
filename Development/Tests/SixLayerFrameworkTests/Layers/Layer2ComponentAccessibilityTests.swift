@@ -33,7 +33,6 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
             view,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ItemCollectionL2"
         )
         

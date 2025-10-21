@@ -25,7 +25,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformWorkflow"
         )
         
@@ -40,7 +39,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformIntegration"
         )
@@ -57,7 +55,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformAutomation"
         )
         
@@ -72,7 +69,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformOrchestration"
         )
@@ -89,7 +85,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformCoordination"
         )
         
@@ -104,7 +99,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSynchronization"
         )
@@ -121,7 +115,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformCommunication"
         )
         
@@ -136,7 +129,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformMessaging"
         )
@@ -153,7 +145,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformRouting"
         )
         
@@ -168,7 +159,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformDiscovery"
         )
@@ -195,7 +185,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformIdentification"
         )
         
@@ -210,7 +199,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformRecognition"
         )
@@ -227,7 +215,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformClassification"
         )
         
@@ -242,7 +229,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformCategorization"
         )
@@ -259,7 +245,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformOrganization"
         )
         
@@ -274,7 +259,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformStructure"
         )
@@ -291,7 +275,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformArchitecture"
         )
         
@@ -306,7 +289,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformDesign"
         )
@@ -323,7 +305,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformImplementation"
         )
         
@@ -338,7 +319,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformDeployment"
         )
@@ -355,7 +335,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformMaintenance"
         )
         
@@ -370,7 +349,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSupport"
         )
@@ -387,7 +365,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformService"
         )
         
@@ -402,7 +379,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformResource"
         )
@@ -419,7 +395,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformAsset"
         )
         
@@ -434,7 +409,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformContent"
         )
@@ -451,7 +425,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformData"
         )
         
@@ -466,7 +439,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformInformation"
         )
@@ -483,7 +455,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformKnowledge"
         )
         
@@ -498,7 +469,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformWisdom"
         )
@@ -515,7 +485,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformInsight"
         )
         
@@ -530,7 +499,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformIntelligence"
         )
@@ -547,7 +515,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformUnderstanding"
         )
         
@@ -562,7 +529,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformComprehension"
         )
@@ -579,7 +545,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformInterpretation"
         )
         
@@ -594,7 +559,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformAnalysis"
         )
@@ -611,7 +575,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformEvaluation"
         )
         
@@ -626,7 +589,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformAssessment"
         )
@@ -643,7 +605,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformValidation"
         )
         
@@ -658,7 +619,6 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformVerification"
         )

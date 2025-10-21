@@ -25,7 +25,6 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "FormUsageExample"
         )
         
@@ -42,7 +41,6 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "ExampleProjectCard"
         )

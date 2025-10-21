@@ -25,7 +25,6 @@ open class PlatformPerformanceLayer6ComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformPerformanceLayer6"
         )
         

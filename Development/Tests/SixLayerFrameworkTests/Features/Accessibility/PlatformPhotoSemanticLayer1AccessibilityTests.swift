@@ -34,7 +34,6 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-                platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoCapture_L1"
             )
         }
@@ -97,7 +96,6 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: SixLayerPlatform.iOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoSelection_L1"
             )
@@ -162,7 +160,6 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: SixLayerPlatform.iOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoDisplay_L1"
             )

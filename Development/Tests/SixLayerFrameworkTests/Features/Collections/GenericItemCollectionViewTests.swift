@@ -49,7 +49,6 @@ open class GenericItemCollectionViewTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericItemCollectionView"
         )
         

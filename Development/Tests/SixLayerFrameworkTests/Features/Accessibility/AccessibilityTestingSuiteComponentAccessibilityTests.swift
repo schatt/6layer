@@ -25,7 +25,6 @@ open class AccessibilityTestingSuiteComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityTestingSuite"
         )
         

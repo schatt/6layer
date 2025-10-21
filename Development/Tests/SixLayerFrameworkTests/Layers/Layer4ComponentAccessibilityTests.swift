@@ -27,7 +27,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             styledButton,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformPrimaryButtonStyle"
         )
         
@@ -45,7 +44,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             styledButton,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSecondaryButtonStyle"
         )
@@ -66,7 +64,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             formField,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformFormField"
         )
@@ -91,7 +88,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             listRow,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformListRow"
         )
         
@@ -112,7 +108,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             styledCard,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformCardStyle"
         )
@@ -140,7 +135,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             sheet,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformSheet"
         )
         
@@ -161,7 +155,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             navigation,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformNavigation"
         )
@@ -189,7 +182,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             cardGrid,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformCardGrid"
         )
         
@@ -207,7 +199,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             backgroundText,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformBackground"
         )

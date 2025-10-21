@@ -29,7 +29,6 @@ open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MA
             view,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityManager"
         )
         

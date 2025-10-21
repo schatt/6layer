@@ -31,7 +31,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             alertButtonView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformMessagingLayer5"
         )
         
@@ -52,7 +51,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             toastView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformMessagingLayer5Toast"
         )
@@ -75,7 +73,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             resourceButtonView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformResourceLayer5"
         )
         
@@ -97,7 +94,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             imageView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformResourceLayer5Image"
         )
         
@@ -115,7 +111,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             notificationView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformNotificationLayer5"
         )
@@ -135,7 +130,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             optimizationView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformOptimizationLayer5"
         )
         
@@ -154,7 +148,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             safetyView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformSafetyLayer5"
         )
         
@@ -172,7 +165,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             privacyView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPrivacyLayer5"
         )

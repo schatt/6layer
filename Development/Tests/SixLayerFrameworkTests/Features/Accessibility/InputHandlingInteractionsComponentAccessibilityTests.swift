@@ -58,7 +58,6 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             view,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "InputHandlingManager"
         )
         
@@ -78,7 +77,6 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             view,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "KeyboardShortcutManager"
         )
         
@@ -97,7 +95,6 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "HapticFeedbackManager"
         )

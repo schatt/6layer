@@ -102,7 +102,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
             
@@ -135,7 +134,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
             
@@ -166,7 +164,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 testView, 
                 expectedPattern: "CarManager.FuelView.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ScreenContext"
             )
             
@@ -198,7 +195,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 testView, 
                 expectedPattern: "CarManager.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "NavigationState"
             )
             
@@ -231,7 +227,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 testView, 
                 expectedIdentifier: "manual-add-fuel-button", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ManualAccessibilityIdentifier"
             ), "Manual accessibility identifier should work")
         }
@@ -262,7 +257,6 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 testView, 
                 expectedPattern: "CarManager.*element.*testbutton", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
             ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
         }

@@ -28,7 +28,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             optimizedView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformOptimizationLayer6"
         )
         
@@ -46,7 +45,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSpecificOptimizations"
         )
@@ -67,7 +65,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             optimizedView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PerformanceOptimizations"
         )
         
@@ -86,7 +83,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "UIPatternOptimizations"
         )
@@ -123,7 +119,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             performanceView,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPerformanceLayer6"
         )

@@ -33,7 +33,6 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
                 testView, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticIdentifiersWorkByDefault"
             ), "View should have accessibility identifier by default")
             
@@ -87,7 +86,6 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
                 testView, 
                 expectedIdentifier: "manual-test-button", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ManualIdentifiersWorkByDefault"
             ), "Manual accessibility identifier should work by default")
         }

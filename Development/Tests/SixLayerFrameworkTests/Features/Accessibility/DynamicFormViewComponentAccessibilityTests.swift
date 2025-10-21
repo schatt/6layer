@@ -63,14 +63,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     private func testAccessibilityIdentifierGeneration(
         view: some View,
         platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: String,
         testName: String
     ) -> Bool {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: componentName
         )
@@ -81,7 +79,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     private func testFieldAccessibility(
         fieldType: DynamicContentType,
         platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: String
     ) -> Bool {
         let field = DynamicFormField(
@@ -98,7 +95,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         return testAccessibilityIdentifierGeneration(
             view: view,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: componentName,
             testName: "\(componentName) should generate accessibility identifiers"
         )
@@ -113,7 +109,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicFormView",
             testName: "DynamicFormView should generate accessibility identifiers"
@@ -132,7 +127,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicFormHeader",
             testName: "DynamicFormHeader should generate accessibility identifiers"
         )
@@ -150,7 +144,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicFormSectionView",
             testName: "DynamicFormSectionView should generate accessibility identifiers"
         )
@@ -167,7 +160,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicFormActions",
             testName: "DynamicFormActions should generate accessibility identifiers"
@@ -190,7 +182,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
             view: view,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicTextField",
             testName: "DynamicTextField should generate accessibility identifiers"
         )
@@ -204,7 +195,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing number field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .number,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicNumberField"
         )
@@ -220,7 +210,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .textarea,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicTextAreaField"
         )
         
@@ -234,7 +223,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing select field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .select,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicSelectField"
         )
@@ -250,7 +238,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .multiselect,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicMultiSelectField"
         )
         
@@ -264,7 +251,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing radio field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .radio,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicRadioField"
         )
@@ -280,7 +266,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .checkbox,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicCheckboxField"
         )
         
@@ -294,7 +279,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing toggle field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .toggle,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicToggleField"
         )
@@ -310,7 +294,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .date,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicDateField"
         )
         
@@ -324,7 +307,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing time field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .time,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicTimeField"
         )
@@ -340,7 +322,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .datetime,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicDateTimeField"
         )
         
@@ -354,7 +335,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing color field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .color,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicColorField"
         )
@@ -370,7 +350,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .file,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicFileField"
         )
         
@@ -384,7 +363,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing integer field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .integer,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicIntegerField"
         )
@@ -400,7 +378,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .image,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicImageField"
         )
         
@@ -414,7 +391,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing URL field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .url,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicURLField"
         )
@@ -430,7 +406,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .array,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicArrayField"
         )
         
@@ -445,7 +420,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .data,
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "DynamicDataField"
         )
         
@@ -459,7 +433,6 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         // When: Testing enum field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: .enum,
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicEnumField"
         )

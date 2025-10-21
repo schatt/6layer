@@ -66,7 +66,6 @@ open class AutomaticAccessibilityIdentifiersTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
         
@@ -97,7 +96,6 @@ open class AutomaticAccessibilityIdentifiersTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*testelement.*", 
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "named modifier"
         )

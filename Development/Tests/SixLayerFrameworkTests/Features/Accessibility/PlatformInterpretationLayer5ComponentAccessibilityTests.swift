@@ -25,7 +25,6 @@ open class PlatformInterpretationLayer5ComponentAccessibilityTests: BaseTestClas
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "PlatformInterpretationLayer5"
         )
         

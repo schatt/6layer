@@ -30,7 +30,6 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
             alertButton,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AlertButton"
         )
         
@@ -38,14 +37,12 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
             toastNotification,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ToastNotification"
         )
         
         let hasBannerAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             bannerNotification,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
             platform: SixLayerPlatform.iOS,
             componentName: "BannerNotification"
         )

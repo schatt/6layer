@@ -209,7 +209,6 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 view,
                 expectedPattern: "*.\(manualID)",
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ManualIdentifierTest"
             )
             #expect(hasManualID, "Manual identifier should override automatic generation")
@@ -235,7 +234,6 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 view,
                 expectedPattern: "*.auto.*",
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticIdentifierTest"
             )
             #expect(!hasAutomaticID, "View should not have automatic ID when disabled globally")
@@ -285,7 +283,6 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 view, 
                 expectedPattern: "layer1.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "Layer1Functions"
             ), "Layer 1 function should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
             
@@ -631,7 +628,6 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
             ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
             

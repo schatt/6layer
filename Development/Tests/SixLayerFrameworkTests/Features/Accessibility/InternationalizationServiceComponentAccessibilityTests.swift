@@ -27,7 +27,6 @@ open class InternationalizationServiceComponentAccessibilityTests: BaseTestClass
             view,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "InternationalizationService"
         )
         

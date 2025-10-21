@@ -45,7 +45,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "HierarchyReplacement"
             ), "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID")
         }
@@ -68,7 +67,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "FullHierarchyPath"
             ), "RED PHASE: .named() should generate full hierarchy path as accessibility identifier")
         }
@@ -94,7 +92,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "NestedHierarchy"
             ), "RED PHASE: Multiple .named() calls should build complete hierarchy path")
         }
@@ -123,7 +120,6 @@ open class NamedModifierRefactoringTDDTests {
                 view1, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention1"
             ), "RED PHASE: First SaveButton should include UserProfile in path")
             
@@ -131,7 +127,6 @@ open class NamedModifierRefactoringTDDTests {
                 view2, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention2"
             ), "RED PHASE: Second SaveButton should include Settings in path")
         }
@@ -153,7 +148,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "IndependentNamedModifier"
             ), "RED PHASE: .named() should work independently of global automatic accessibility settings")
         }
@@ -174,7 +168,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "OverrideTest"
             ), "RED PHASE: .named() should override existing accessibility identifier with full hierarchy path")
         }
@@ -197,7 +190,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "HierarchyInheritance"
             ), "RED PHASE: Subcomponents should inherit modified hierarchy context")
         }
@@ -217,7 +209,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: ".*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "EmptyStringTest"
             ), "RED PHASE: .named() with empty string should handle gracefully")
         }
@@ -239,7 +230,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "NoGlobalChanges"
             ), "RED PHASE: .named() should not change global environment settings")
             
@@ -265,7 +255,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedModifier"
             ), "RED PHASE: .exactNamed() should apply exact name only, no hierarchy")
         }
@@ -288,7 +277,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedHierarchyTest"
             ), "RED PHASE: .exactNamed() should not modify hierarchy for other components")
         }
@@ -310,7 +298,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "^TestButton$", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "IndependentExactNamedModifier"
             ), "RED PHASE: .exactNamed() should work independently of global settings")
         }
@@ -331,7 +318,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "^NewExactName$", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedOverrideTest"
             ), "RED PHASE: .exactNamed() should override existing accessibility identifier with exact name")
         }
@@ -358,7 +344,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "CombinedModifiersTest"
             ), "RED PHASE: .named() and .exactNamed() should work together")
         }
@@ -381,7 +366,6 @@ open class NamedModifierRefactoringTDDTests {
                 view1, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedCollision1"
             ), "RED PHASE: First .exactNamed() should get exact name")
             
@@ -389,7 +373,6 @@ open class NamedModifierRefactoringTDDTests {
                 view2, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedCollision2"
             ), "RED PHASE: Second .exactNamed() should get same exact name (collision)")
         }
@@ -413,7 +396,6 @@ open class NamedModifierRefactoringTDDTests {
                 testView, 
                 expectedPattern: "^$", 
                 platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedEmptyStringTest"
             ), "RED PHASE: .exactNamed() with empty string should handle gracefully")
         }

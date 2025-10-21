@@ -26,7 +26,6 @@ open class AutomaticAccessibilityComponentAccessibilityTests: BaseTestClass {
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
         )
         

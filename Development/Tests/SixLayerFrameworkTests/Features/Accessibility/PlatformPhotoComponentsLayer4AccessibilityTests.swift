@@ -111,7 +111,6 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: SixLayerPlatform.iOS,
-                platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoDisplay_L4"
             )
         }
