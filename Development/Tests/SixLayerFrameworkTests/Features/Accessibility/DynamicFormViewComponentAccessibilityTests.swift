@@ -432,7 +432,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     @Test func testDynamicEnumFieldGeneratesAccessibilityIdentifiers() async {
         // When: Testing enum field accessibility through CustomFieldView
         let hasAccessibilityID = testFieldAccessibility(
-            fieldType: .enum,
+            fieldType: .select,
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicEnumField"
         )
