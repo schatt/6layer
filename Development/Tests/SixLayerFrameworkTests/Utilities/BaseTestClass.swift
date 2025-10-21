@@ -30,10 +30,5 @@ open class BaseTestClass {
         config.resetToDefaults()
     }
     
-    deinit {
-        Task { [weak self] in
-            self?.cleanupTestEnvironment()
-        }
-    }
 }
 

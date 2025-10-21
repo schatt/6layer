@@ -54,10 +54,7 @@ open class OCRServiceTests {
         let service = OCRService()
         let testImage = PlatformImage.createPlaceholder()
         let context = OCRContext(
-            documentType: .general,
-            textTypes: [.general],
-            language: .english,
-            requiredFields: [],
+            textTypes: [.general], language: .english, requiredFields: [], documentType: .general,
         )
         let strategy = OCRStrategy(
             supportedTextTypes: [.general],
@@ -82,10 +79,7 @@ open class OCRServiceTests {
         let service = OCRService()
         let testImage = PlatformImage.createPlaceholder()
         let context = OCRContext(
-            documentType: .general,
-            textTypes: [.general],
-            language: .english,
-            requiredFields: [],
+            textTypes: [.general], language: .english, requiredFields: [], documentType: .general,
         )
         
         do {
@@ -101,10 +95,7 @@ open class OCRServiceTests {
     
     @Test func testOCRContextValidation() async {
         let validContext = OCRContext(
-            documentType: .general,
-            textTypes: [.general],
-            language: .english,
-            requiredFields: [],
+            textTypes: [.general], language: .english, requiredFields: [], documentType: .general,
         )
         
         #expect(validContext.documentType == .general, "OCR context should preserve document type")
