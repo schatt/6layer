@@ -65,7 +65,7 @@ open class PlatformPhotoSemanticLayer1Tests {
         
         // Test accessibility identifier generation
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -106,7 +106,7 @@ open class PlatformPhotoSemanticLayer1Tests {
         
         // Test accessibility identifier generation
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
