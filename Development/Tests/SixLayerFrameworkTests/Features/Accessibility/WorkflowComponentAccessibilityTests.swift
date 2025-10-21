@@ -21,7 +21,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformWorkflow()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformWorkflow"
@@ -35,7 +35,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformIntegration()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformIntegration"
@@ -49,7 +49,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAutomation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformAutomation"
@@ -63,7 +63,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformOrchestration()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformOrchestration"
@@ -77,7 +77,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformCoordination()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformCoordination"
@@ -91,7 +91,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSynchronization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSynchronization"
@@ -105,7 +105,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformCommunication()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformCommunication"
@@ -119,7 +119,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformMessaging()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformMessaging"
@@ -133,7 +133,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformRouting()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformRouting"
@@ -147,7 +147,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformDiscovery()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformDiscovery"
@@ -171,7 +171,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformIdentification()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformIdentification"
@@ -185,7 +185,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformRecognition()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformRecognition"
@@ -199,7 +199,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformClassification()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformClassification"
@@ -213,7 +213,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformCategorization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformCategorization"
@@ -227,7 +227,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformOrganization()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformOrganization"
@@ -241,7 +241,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformStructure()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformStructure"
@@ -255,7 +255,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformArchitecture()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformArchitecture"
@@ -269,7 +269,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformDesign()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformDesign"
@@ -283,7 +283,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformImplementation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformImplementation"
@@ -297,7 +297,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformDeployment()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformDeployment"
@@ -311,7 +311,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformMaintenance()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformMaintenance"
@@ -325,7 +325,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSupport()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSupport"
@@ -339,7 +339,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformService()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformService"
@@ -353,7 +353,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformResource()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformResource"
@@ -367,7 +367,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAsset()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformAsset"
@@ -381,7 +381,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformContent()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformContent"
@@ -395,7 +395,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformData()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformData"
@@ -409,7 +409,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformInformation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformInformation"
@@ -423,7 +423,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformKnowledge()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformKnowledge"
@@ -437,7 +437,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformWisdom()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformWisdom"
@@ -451,7 +451,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformInsight()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformInsight"
@@ -465,7 +465,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformIntelligence()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformIntelligence"
@@ -479,7 +479,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformUnderstanding()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformUnderstanding"
@@ -493,7 +493,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformComprehension()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformComprehension"
@@ -507,7 +507,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformInterpretation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformInterpretation"
@@ -521,7 +521,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAnalysis()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformAnalysis"
@@ -535,7 +535,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformEvaluation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformEvaluation"
@@ -549,7 +549,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformAssessment()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformAssessment"
@@ -563,7 +563,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformValidation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformValidation"
@@ -577,7 +577,7 @@ open class WorkflowComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformVerification()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformVerification"

@@ -12,7 +12,7 @@ open class MinimalAccessibilityTest {
             .automaticAccessibilityIdentifiers()
         
         // When: We check if it has an accessibility identifier
-        let hasID = hasAccessibilityIdentifier(
+        let hasID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "Text"

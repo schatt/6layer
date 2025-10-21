@@ -13,7 +13,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibilityIdentifiers()
         
         // Should look for button-specific accessibility identifier: "DebugTest.button.Test"
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "DirectAutomaticAccessibilityIdentifiers"
@@ -28,7 +28,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibilityIdentifiers()
         
         // Should look for named button-specific accessibility identifier: "DebugTest.TestButton.Test"
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "NamedModifier"
@@ -45,7 +45,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             ))
         
         // Should look for modifier-specific accessibility identifier: "DebugTest.modifier.Test"
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "AutomaticAccessibilityModifier"
@@ -59,7 +59,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibility()
         
         // Should look for extension-specific accessibility identifier: "DebugTest.extension.Test"
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             testView, 
             expectedPattern: "DebugTest.main.element.*", 
             componentName: "AutomaticAccessibilityExtension"
@@ -69,5 +69,5 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
     
     // MARK: - Helper Methods
     
-    // No longer needed - using shared hasAccessibilityIdentifier function
+    // No longer needed - using shared hasAccessibilityIdentifierPattern function
 }

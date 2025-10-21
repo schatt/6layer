@@ -25,7 +25,7 @@ open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MA
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityManager"

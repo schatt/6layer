@@ -46,7 +46,7 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
                 formType: .form,
                 context: .modal
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -83,7 +83,7 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
                 formType: .form,
                 context: .modal
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,

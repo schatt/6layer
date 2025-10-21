@@ -30,7 +30,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageCaptured: { _ in }
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -60,7 +60,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageCaptured: { _ in }
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -92,7 +92,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageSelected: { _ in }
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -122,7 +122,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 onImageSelected: { _ in }
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -155,7 +155,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 image: testImage
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -186,7 +186,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
                 context: context,
                 image: testImage
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,

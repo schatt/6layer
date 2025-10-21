@@ -30,7 +30,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericNumericDataView(values: testData, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericNumericDataView"
@@ -71,7 +71,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericFormView(fields: testFields, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericFormView"
@@ -90,7 +90,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericMediaView(media: testMediaItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericMediaView"
@@ -111,7 +111,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericSettingsView(settings: testSettings, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericSettingsView"
@@ -131,7 +131,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericItemCollectionView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericItemCollectionView"
@@ -152,7 +152,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericHierarchicalView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericHierarchicalView"
@@ -171,7 +171,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericTemporalView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericTemporalView"
@@ -187,7 +187,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericContentView(content: testContent, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "GenericContentView"

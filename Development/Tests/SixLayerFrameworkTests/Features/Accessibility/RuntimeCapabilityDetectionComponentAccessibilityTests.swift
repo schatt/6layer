@@ -21,7 +21,7 @@ open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass 
         let testView = RuntimeCapabilityDetectionView()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "RuntimeCapabilityDetection"
