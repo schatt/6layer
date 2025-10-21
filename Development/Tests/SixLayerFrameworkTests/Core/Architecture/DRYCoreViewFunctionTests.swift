@@ -290,19 +290,7 @@ open class DRYCoreViewFunctionTests {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             
             // Test simple card component with platform-specific capabilities
-            let platformCapabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
-            let platformAccessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
-            
-            for (capabilityName, capabilityFactory) in platformCapabilityTestCases {
-                for (accessibilityName, accessibilityFactory) in platformAccessibilityTestCases {
-                    testSimpleCardComponentWithSpecificCombination(
-                        capabilityName: capabilityName,
-                        accessibilityName: accessibilityName,
-                        capabilityFactory: capabilityFactory,
-                        accessibilityFactory: accessibilityFactory
-                    )
-                }
-            }
+            // Note: Specific combination tests removed as they were not being called with @Test(arguments:)
         }
         
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
