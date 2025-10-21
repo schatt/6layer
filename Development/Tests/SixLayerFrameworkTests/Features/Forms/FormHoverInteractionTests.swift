@@ -275,6 +275,7 @@ open class FormHoverInteractionTests {
         #endif
     }
     
+    @MainActor
     private func checkAppleHIGCompliance(_ view: some View) -> (followsTooltipGuidelines: Bool, hasProperHoverTiming: Bool, hasAccessibleHelpText: Bool) {
         // Check Apple HIG compliance for our FieldHoverTooltipModifier
         if let fieldView = view as? DynamicFormFieldView {
