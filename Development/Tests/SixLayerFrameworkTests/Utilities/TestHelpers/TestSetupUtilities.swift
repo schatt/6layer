@@ -190,6 +190,47 @@ public class TestSetupUtilities {
         }
     }
     
+    // MARK: - Test Field Creation Utilities
+    
+    /// Helper function to create DynamicFormField with proper binding for tests
+    /// DRY principle: Centralized field creation to avoid duplication across test files
+    public static func createTestField(
+        label: String,
+        placeholder: String? = nil,
+        value: String = "",
+        isRequired: Bool = false,
+        contentType: DynamicContentType = .text
+    ) -> DynamicFormField {
+        return DynamicFormField(
+            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
+            contentType: contentType,
+            label: label,
+            placeholder: placeholder,
+            isRequired: isRequired,
+            defaultValue: value
+        )
+    }
+    
+    // MARK: - Card Expansion Configuration Utilities
+    
+    /// Get card expansion platform configuration for testing
+    /// DRY principle: Centralized card configuration to avoid duplication
+    /// NOTE: This should ONLY be used for card-specific testing
+    public static func getCardExpansionPlatformConfig(
+        supportsHapticFeedback: Bool? = nil,
+        supportsHover: Bool? = nil,
+        supportsTouch: Bool? = nil,
+        supportsVoiceOver: Bool? = nil,
+        supportsSwitchControl: Bool? = nil,
+        supportsAssistiveTouch: Bool? = nil,
+        minTouchTarget: CGFloat? = nil,
+        hoverDelay: TimeInterval? = nil,
+        animationEasing: Animation? = nil
+    ) async -> CardExpansionPlatformConfig {
+        // Use the framework's getCardExpansionPlatformConfig function
+        return await SixLayerFramework.getCardExpansionPlatformConfig()
+    }
+    
     /// Asserts that a card expansion config matches expected capabilities
     /// - Parameters:
     ///   - config: The card expansion configuration to test
@@ -230,47 +271,6 @@ public class TestSetupUtilities {
         if let assistiveTouch = assistiveTouch {
             #expect(config.supportsAssistiveTouch == assistiveTouch, "Card config AssistiveTouch support should be \(assistiveTouch)", )
         }
-    }
-    
-    // MARK: - Test Field Creation Utilities
-    
-    /// Helper function to create DynamicFormField with proper binding for tests
-    /// DRY principle: Centralized field creation to avoid duplication across test files
-    public static func createTestField(
-        label: String,
-        placeholder: String? = nil,
-        value: String = "",
-        isRequired: Bool = false,
-        contentType: DynamicContentType = .text
-    ) -> DynamicFormField {
-        return DynamicFormField(
-            id: label.lowercased().replacingOccurrences(of: " ", with: "_"),
-            contentType: contentType,
-            label: label,
-            placeholder: placeholder,
-            isRequired: isRequired,
-            defaultValue: value
-        )
-    }
-    
-    // MARK: - Card Expansion Configuration Utilities
-    
-    /// Get card expansion platform configuration for testing
-    /// DRY principle: Centralized card configuration to avoid duplication
-    /// NOTE: This should ONLY be used for card-specific testing
-    public static func getCardExpansionPlatformConfig(
-        supportsHapticFeedback: Bool? = nil,
-        supportsHover: Bool? = nil,
-        supportsTouch: Bool? = nil,
-        supportsVoiceOver: Bool? = nil,
-        supportsSwitchControl: Bool? = nil,
-        supportsAssistiveTouch: Bool? = nil,
-        minTouchTarget: CGFloat? = nil,
-        hoverDelay: TimeInterval? = nil,
-        animationEasing: Animation? = nil
-    ) async -> CardExpansionPlatformConfig {
-        // Use the framework's getCardExpansionPlatformConfig function
-        return await SixLayerFramework.getCardExpansionPlatformConfig()
     }
     
 }

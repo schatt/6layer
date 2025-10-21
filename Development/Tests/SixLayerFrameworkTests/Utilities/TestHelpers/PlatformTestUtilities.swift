@@ -115,12 +115,6 @@ enum AnimationEasing {
     case linear(duration: TimeInterval)
 }
 
-/// Build platform capabilities snapshot
-/// TDD RED PHASE: This is a stub implementation for testing
-func buildPlatformCapabilitiesSnapshot() -> PlatformCapabilitiesTestSnapshot {
-    return PlatformCapabilitiesTestSnapshot()
-}
-
 /// Centralized platform test utilities for consistent capability testing
 final class PlatformTestUtilities {
     
@@ -149,6 +143,7 @@ final class PlatformTestUtilities {
     // MARK: - Platform Test Helper Methods
     
     /// Creates a complete iOS platform test configuration with all capabilities set appropriately
+    @MainActor
     static func createIOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
             platform: SixLayerPlatform.iOS,
@@ -177,7 +172,8 @@ final class PlatformTestUtilities {
         )
     }
     
-    /// Creates a complete watchOS platform test configuration with all capabilities set appropriately                                                          
+    /// Creates a complete watchOS platform test configuration with all capabilities set appropriately
+    @MainActor
     static func createWatchOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
             platform: SixLayerPlatform.watchOS,
@@ -332,7 +328,12 @@ final class PlatformTestUtilities {
     
     /// Test the behavioral implications of Vision framework availability
     @Test static func testVisionAvailableBehavior() {
-        let testConfig = PlatformTestConfig()
+        let testConfig = PlatformTestConfig(
+            platform: .iOS,
+            capabilities: PlatformCapabilitiesTestSnapshot(),
+            visionAvailable: true,
+            ocrAvailable: true
+        )
         let platformName = "Vision Available Platform"
         // Vision-available platforms should have OCR
         #expect(testConfig.ocrAvailable, 
@@ -345,7 +346,12 @@ final class PlatformTestUtilities {
     
     /// Test the behavioral implications of Vision framework unavailability
     @Test static func testVisionUnavailableBehavior() {
-        let testConfig = PlatformTestConfig()
+        let testConfig = PlatformTestConfig(
+            platform: .iOS,
+            capabilities: PlatformCapabilitiesTestSnapshot(),
+            visionAvailable: true,
+            ocrAvailable: true
+        )
         let platformName = "Vision Unavailable Platform"
         // Vision-unavailable platforms should not have OCR
         #expect(!testConfig.ocrAvailable, 
@@ -359,6 +365,7 @@ final class PlatformTestUtilities {
     // MARK: - Platform Configuration Helpers
     
     /// Get platform configuration for a specific platform using centralized helpers
+    @MainActor
     static func getPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilitiesTestSnapshot {
         return buildPlatformCapabilitiesSnapshot()
     }
