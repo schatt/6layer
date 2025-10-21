@@ -162,6 +162,18 @@ public class AccessibilityIdentifierConfig: ObservableObject {
             currentViewHierarchy.removeLast()
         }
     }
+    
+    /// Set navigation state for accessibility identifier generation
+    /// TDD RED PHASE: This is a stub implementation for testing
+    public func setNavigationState(_ state: String) {
+        currentScreenContext = state
+    }
+    
+    /// Enable UI test integration for accessibility identifier generation
+    /// TDD RED PHASE: This is a stub implementation for testing
+    public func enableUITestIntegration(_ enabled: Bool = true) {
+        enableDebugLogging = enabled
+    }
 }
 
 // MARK: - DateFormatter Extension
