@@ -149,7 +149,7 @@ public class HighContrastManager: ObservableObject {
         #endif
     }
     
-    public func getHighContrastColor(_ baseColor: Color) -> Color {
+        func getHighContrastColor(_ baseColor: Color) -> Color {
         guard isHighContrastEnabled else { return baseColor }
         
         switch contrastLevel {
