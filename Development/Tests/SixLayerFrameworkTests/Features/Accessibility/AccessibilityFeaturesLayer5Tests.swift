@@ -579,6 +579,7 @@ open class AccessibilityFeaturesLayer5Tests {
      */
     @Test func testHighContrastManagerPerformance() {
         let navigationManager = KeyboardNavigationManager()
+        let highContrastManager = HighContrastManager()
         // GIVEN: High contrast mode
         highContrastManager.isHighContrastEnabled = true
         let colors = [Color.red, Color.blue, Color.green, Color.yellow, Color.purple]
