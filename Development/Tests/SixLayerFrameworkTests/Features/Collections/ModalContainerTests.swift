@@ -436,4 +436,73 @@ open class ModalContainerTests: BaseTestClass {
         #expect(container != nil, "Modal container should be cross-platform compatible")
         // Performance test removed - performance monitoring was removed from framework
     }
+    
+    // MARK: - Test Helper Functions
+    
+    /// Create a test modal constraint
+    /// TDD RED PHASE: This is a stub implementation for testing
+    private func createTestModalConstraint(maxWidth: CGFloat, maxHeight: CGFloat) -> ModalConstraint {
+        return ModalConstraint(
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+            preferredWidth: maxWidth * 0.8,
+            preferredHeight: maxHeight * 0.8
+        )
+    }
+    
+    /// Create a test modal strategy
+    /// TDD RED PHASE: This is a stub implementation for testing
+    private func createTestModalStrategy(platformOptimizations: [SixLayerPlatform: ModalConstraint]) -> ModalStrategy {
+        return ModalStrategy(
+            presentationType: .sheet,
+            sizing: .adaptive,
+            detents: [.medium, .large],
+            platformOptimizations: platformOptimizations
+        )
+    }
+}
+
+// MARK: - Supporting Types (TDD Red Phase Stubs)
+
+/// Modal constraint for testing
+/// TDD RED PHASE: This is a stub implementation for testing
+struct ModalConstraint {
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+    let preferredWidth: CGFloat
+    let preferredHeight: CGFloat
+}
+
+/// Modal strategy for testing
+/// TDD RED PHASE: This is a stub implementation for testing
+struct ModalStrategy {
+    let presentationType: ModalPresentationType
+    let sizing: ModalSizing
+    let detents: [ModalDetent]
+    let platformOptimizations: [SixLayerPlatform: ModalConstraint]
+}
+
+/// Modal presentation type for testing
+/// TDD RED PHASE: This is a stub implementation for testing
+enum ModalPresentationType {
+    case sheet
+    case fullScreen
+    case popover
+}
+
+/// Modal sizing for testing
+/// TDD RED PHASE: This is a stub implementation for testing
+enum ModalSizing {
+    case adaptive
+    case fixed
+    case intrinsic
+}
+
+/// Modal detent for testing
+/// TDD RED PHASE: This is a stub implementation for testing
+enum ModalDetent {
+    case small
+    case medium
+    case large
+}
 
