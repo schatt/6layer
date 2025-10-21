@@ -30,8 +30,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedView"
         )
         
@@ -54,8 +54,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "VoiceOverEnabledView"
         )
         
@@ -78,8 +78,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "KeyboardNavigableView"
         )
         
@@ -102,8 +102,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "HighContrastEnabledView"
         )
         
@@ -126,8 +126,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityHostingView"
         )
         
@@ -144,8 +144,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityTestingView"
         )
         
@@ -168,8 +168,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "VoiceOverManager"
         )
         
@@ -192,8 +192,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "KeyboardNavigationManager"
         )
         
@@ -216,8 +216,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "HighContrastManager"
         )
         
@@ -240,8 +240,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityTestingManager"
         )
         
@@ -264,8 +264,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "SwitchControlManager"
         )
         
@@ -288,8 +288,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "MaterialAccessibilityManager"
         )
         
@@ -312,8 +312,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "EyeTrackingManager"
         )
         
@@ -336,8 +336,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AssistiveTouchManager"
         )
         

@@ -24,8 +24,8 @@ open class PlatformPerformanceLayer6ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PlatformPerformanceLayer6"
         )
         

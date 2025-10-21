@@ -197,7 +197,7 @@ open class PlatformSimulationTests {
     }
     
     @Test func testPlatformConfiguration() {
-        let platform = SimulatedPlatform(platform: .iOS, deviceType: .phone, capabilities: PlatformCapabilities(supportsTouch: true, supportsHover: false, supportsHapticFeedback: true, supportsVoiceOver: true, supportsSwitchControl: true, supportsAssistiveTouch: true, minTouchTarget: 44, hoverDelay: 0.0), screenSize: CGSize(width: 375, height: 812))
+        let platform = SimulatedPlatform(platform: SixLayerPlatform.iOS, deviceType: .phone, capabilities: PlatformCapabilities(supportsTouch: true, supportsHover: false, supportsHapticFeedback: true, supportsVoiceOver: true, supportsSwitchControl: true, supportsAssistiveTouch: true, minTouchTarget: 44, hoverDelay: 0.0), screenSize: CGSize(width: 375, height: 812))
         // Test that the platform configuration is internally consistent
         #expect(platform.capabilities.isInternallyConsistent(), 
                      "Platform \(platform.platform) (\(platform.deviceType)) should be internally consistent")

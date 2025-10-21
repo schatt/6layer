@@ -58,8 +58,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .iOS,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPresentHierarchicalData_L1"
             )
         }
@@ -99,7 +99,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPresentHierarchicalData_L1"
             )
         }
@@ -137,8 +137,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .iOS,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPresentTemporalData_L1"
             )
         }
@@ -175,7 +175,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPresentTemporalData_L1"
             )
         }

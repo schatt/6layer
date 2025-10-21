@@ -56,8 +56,8 @@ open class OCROverlayViewTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         )
         
@@ -87,7 +87,7 @@ open class OCROverlayViewTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         )
         

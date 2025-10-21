@@ -29,8 +29,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformOptimizationManager"
         )
         
@@ -52,8 +52,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PlatformOptimizationSettings"
         )
         
@@ -76,8 +76,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformPerformanceMetrics"
         )
         
@@ -99,8 +99,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PlatformUIPatterns"
         )
         
@@ -122,8 +122,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PlatformRecommendationEngine"
         )
         
@@ -145,8 +145,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformTesting"
         )
         

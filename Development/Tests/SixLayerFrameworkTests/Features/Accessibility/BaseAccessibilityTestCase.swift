@@ -14,7 +14,7 @@ open class BaseAccessibilityTestCase {
     public func hasAccessibilityIdentifier<V: View>(
         _ view: V,
         expectedPattern: String,
-        platform: .iOS,
+        platform: SixLayerPlatform,
             componentName: String,
         file: StaticString = #filePath,
         line: UInt = #line

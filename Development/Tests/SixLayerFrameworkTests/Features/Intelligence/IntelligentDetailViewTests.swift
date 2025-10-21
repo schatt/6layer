@@ -42,8 +42,8 @@ open class IntelligentDetailViewTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "IntelligentDetailView"
         )
         
@@ -59,7 +59,7 @@ open class IntelligentDetailViewTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "IntelligentDetailView"
         )
         

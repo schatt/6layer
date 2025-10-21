@@ -101,8 +101,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
             
@@ -134,8 +134,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
             
@@ -165,8 +165,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.FuelView.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ScreenContext"
             )
             
@@ -197,8 +197,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NavigationState"
             )
             
@@ -230,8 +230,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedIdentifier: "manual-add-fuel-button", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ManualAccessibilityIdentifier"
             ), "Manual accessibility identifier should work")
         }
@@ -261,8 +261,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.*element.*testbutton", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
             ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
         }

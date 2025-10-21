@@ -45,7 +45,7 @@ open class PlatformInternationalizationL1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "platformPresentLocalizedContent_L1",
             testName: "PlatformTest"
         )
@@ -82,7 +82,7 @@ open class PlatformInternationalizationL1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "platformPresentLocalizedText_L1",
             testName: "PlatformTest"
         )

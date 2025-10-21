@@ -38,8 +38,8 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveGrid"
         )
         
@@ -64,8 +64,8 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveNavigation"
         )
         
@@ -91,8 +91,8 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveStack"
         )
         
@@ -109,8 +109,8 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveLayoutExample"
         )
         
@@ -127,8 +127,8 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveNavigationExample"
         )
         
@@ -148,8 +148,8 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsivePadding"
         )
         

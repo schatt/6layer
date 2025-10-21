@@ -51,8 +51,8 @@ open class CustomItemCollectionViewTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CustomItemCollectionView"
         )
         
@@ -77,7 +77,7 @@ open class CustomItemCollectionViewTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CustomItemCollectionView"
         )
         

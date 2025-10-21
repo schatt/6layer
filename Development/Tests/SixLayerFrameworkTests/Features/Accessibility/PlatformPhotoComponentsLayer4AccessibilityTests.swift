@@ -84,7 +84,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: platform,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoDisplay_L4"
             )
         }
@@ -110,8 +110,8 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .iOS,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoDisplay_L4"
             )
         }
@@ -136,7 +136,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoDisplay_L4"
             )
         }

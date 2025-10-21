@@ -48,8 +48,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "test.*element.*main-ui", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
             ), "View should have an accessibility identifier assigned")
         }
@@ -84,8 +84,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.*element.*main-addfuelbutton", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
             ), "View should have an accessibility identifier assigned")
         }
@@ -120,8 +120,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CombinedBreadcrumbModifiers"
             ), "View should have an accessibility identifier assigned")
         }

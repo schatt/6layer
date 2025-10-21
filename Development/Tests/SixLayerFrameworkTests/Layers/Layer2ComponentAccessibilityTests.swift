@@ -32,8 +32,8 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ItemCollectionL2"
         )
         
@@ -51,7 +51,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NumericDataL2"
         )
         
@@ -69,7 +69,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "FormDataL2"
         )
         
@@ -87,7 +87,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "MediaDataL2"
         )
         
@@ -105,7 +105,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "SettingsL2"
         )
         
@@ -123,7 +123,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PhotoCaptureL2"
         )
         
@@ -141,7 +141,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PhotoDisplayL2"
         )
         
@@ -159,7 +159,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PhotoSelectionL2"
         )
         
@@ -178,7 +178,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OCRL2"
         )
         
@@ -197,7 +197,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ModalFormL2"
         )
         
@@ -215,7 +215,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "HierarchicalDataL2"
         )
         
@@ -233,7 +233,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "TemporalDataL2"
         )
         
@@ -251,7 +251,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ContentL2"
         )
         
@@ -269,7 +269,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "BasicValueL2"
         )
         
@@ -287,7 +287,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "BasicArrayL2"
         )
         
@@ -306,7 +306,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveCardL2"
         )
         
@@ -326,7 +326,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OCRDisambiguationL2"
         )
         
@@ -344,7 +344,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "StructuredDataL2"
         )
         
@@ -363,7 +363,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "LocalizedContentL2"
         )
         
@@ -382,7 +382,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "LocalizedTextL2"
         )
         
@@ -401,7 +401,7 @@ open class Layer2ComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "LocalizedNumberL2"
         )
         

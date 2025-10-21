@@ -44,8 +44,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "HierarchyReplacement"
             ), "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID")
         }
@@ -67,8 +67,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "FullHierarchyPath"
             ), "RED PHASE: .named() should generate full hierarchy path as accessibility identifier")
         }
@@ -93,8 +93,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NestedHierarchy"
             ), "RED PHASE: Multiple .named() calls should build complete hierarchy path")
         }
@@ -122,16 +122,16 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view1, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention1"
             ), "RED PHASE: First SaveButton should include UserProfile in path")
             
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view2, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention2"
             ), "RED PHASE: Second SaveButton should include Settings in path")
         }
@@ -152,8 +152,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "IndependentNamedModifier"
             ), "RED PHASE: .named() should work independently of global automatic accessibility settings")
         }
@@ -173,8 +173,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OverrideTest"
             ), "RED PHASE: .named() should override existing accessibility identifier with full hierarchy path")
         }
@@ -196,8 +196,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "HierarchyInheritance"
             ), "RED PHASE: Subcomponents should inherit modified hierarchy context")
         }
@@ -216,8 +216,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: ".*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "EmptyStringTest"
             ), "RED PHASE: .named() with empty string should handle gracefully")
         }
@@ -238,8 +238,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NoGlobalChanges"
             ), "RED PHASE: .named() should not change global environment settings")
             
@@ -264,8 +264,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "^SaveButton$", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedModifier"
             ), "RED PHASE: .exactNamed() should apply exact name only, no hierarchy")
         }
@@ -287,8 +287,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedHierarchyTest"
             ), "RED PHASE: .exactNamed() should not modify hierarchy for other components")
         }
@@ -309,8 +309,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "^TestButton$", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "IndependentExactNamedModifier"
             ), "RED PHASE: .exactNamed() should work independently of global settings")
         }
@@ -330,8 +330,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "^NewExactName$", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedOverrideTest"
             ), "RED PHASE: .exactNamed() should override existing accessibility identifier with exact name")
         }
@@ -357,8 +357,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "TestApp.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "CombinedModifiersTest"
             ), "RED PHASE: .named() and .exactNamed() should work together")
         }
@@ -380,16 +380,16 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view1, 
                 expectedPattern: "^SaveButton$", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedCollision1"
             ), "RED PHASE: First .exactNamed() should get exact name")
             
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view2, 
                 expectedPattern: "^SaveButton$", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedCollision2"
             ), "RED PHASE: Second .exactNamed() should get same exact name (collision)")
         }
@@ -412,8 +412,8 @@ open class NamedModifierRefactoringTDDTests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "^$", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedEmptyStringTest"
             ), "RED PHASE: .exactNamed() with empty string should handle gracefully")
         }

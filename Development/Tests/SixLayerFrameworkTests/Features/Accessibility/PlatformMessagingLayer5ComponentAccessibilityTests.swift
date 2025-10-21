@@ -29,24 +29,24 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         let hasAlertAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             alertButton,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AlertButton"
         )
         
         let hasToastAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             toastNotification,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ToastNotification"
         )
         
         let hasBannerAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             bannerNotification,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "BannerNotification"
         )
         

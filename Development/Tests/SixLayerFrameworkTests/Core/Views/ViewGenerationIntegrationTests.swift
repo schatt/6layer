@@ -126,7 +126,7 @@ open class ViewGenerationIntegrationTests {
                 supportsOCR: false,
                 minTouchTarget: 44,
                 hoverDelay: 0.0,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
                 deviceType: .phone
             ),
             expectedViewComponents: [
@@ -341,7 +341,7 @@ open class ViewGenerationIntegrationTests {
                 supportsOCR: false,
                 minTouchTarget: 44,
                 hoverDelay: 0.1,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
                 deviceType: .pad
             ),
             expectedViewComponents: [
@@ -799,7 +799,7 @@ open class ViewGenerationIntegrationTests {
                 supportsOCR: true,
                 minTouchTarget: 44,
                 hoverDelay: 0.0,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
                 deviceType: .phone
             ),
             expectedViewComponents: [
@@ -899,7 +899,7 @@ open class ViewGenerationIntegrationTests {
                 supportsOCR: true,
                 minTouchTarget: 44,
                 hoverDelay: 0.0,
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
                 deviceType: .phone
             ),
             expectedViewComponents: [

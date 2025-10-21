@@ -82,8 +82,8 @@ open class PhotoComponentsLayer4Tests {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 result, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PlatformCameraInterface_L4"
             ), "Camera interface should have accessibility identifier")
             

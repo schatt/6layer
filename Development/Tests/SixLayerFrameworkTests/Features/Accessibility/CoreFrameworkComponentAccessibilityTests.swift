@@ -51,7 +51,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ComprehensiveAccessibilityModifier"
         )
         
@@ -73,7 +73,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "SystemAccessibilityModifier"
         )
         
@@ -95,7 +95,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierAssignmentModifier"
         )
         
@@ -114,7 +114,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.testview.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
         )
         
@@ -133,7 +133,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "ExactTestView",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedModifier"
         )
         
@@ -150,7 +150,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.TestScreen.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ScreenContextModifier"
         )
         
@@ -166,7 +166,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*.TestState",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NavigationStateModifier"
         )
         
@@ -184,7 +184,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiersModifier"
         )
         
@@ -203,7 +203,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityModifier"
         )
         
@@ -263,7 +263,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierGeneration"
         )
         
@@ -283,7 +283,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierValidation"
         )
         
@@ -303,7 +303,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.TestScreen.element.testview.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierHierarchy"
         )
         
@@ -324,7 +324,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierCollisionPrevention"
         )
         

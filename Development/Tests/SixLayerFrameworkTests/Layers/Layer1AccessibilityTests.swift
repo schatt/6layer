@@ -114,7 +114,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "*.main.element.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NumericData"
         )
         
@@ -145,7 +145,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "*.screen.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "MediaData"
         )
         
@@ -184,7 +184,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "*.screen.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "SettingsData"
         )
         

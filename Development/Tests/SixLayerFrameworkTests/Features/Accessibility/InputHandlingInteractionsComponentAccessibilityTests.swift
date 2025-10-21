@@ -34,7 +34,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "PlatformInteractionButton"
         )
         
@@ -57,8 +57,8 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = hasAccessibilityIdentifierWithPattern(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "InputHandlingManager"
         )
         
@@ -77,8 +77,8 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "KeyboardShortcutManager"
         )
         
@@ -97,8 +97,8 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "HapticFeedbackManager"
         )
         
@@ -117,7 +117,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "DragDropManager"
         )
         

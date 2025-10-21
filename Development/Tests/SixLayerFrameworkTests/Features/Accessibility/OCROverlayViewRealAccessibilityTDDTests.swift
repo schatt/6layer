@@ -37,8 +37,8 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         #expect(testAccessibilityIdentifiersSinglePlatform(
             ocrView, 
             expectedPattern: "TDDTest.main.element.*", 
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on iOS")
         
@@ -73,8 +73,8 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         #expect(testAccessibilityIdentifiersSinglePlatform(
             ocrView, 
             expectedPattern: "TDDTest.main.element.*", 
-            platform: .iOS,
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on macOS")
         

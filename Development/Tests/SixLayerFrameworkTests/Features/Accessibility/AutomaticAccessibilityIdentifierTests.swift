@@ -208,8 +208,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasManualID = testAccessibilityIdentifiersSinglePlatform(
                 view,
                 expectedPattern: "*.\(manualID)",
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "ManualIdentifierTest"
             )
             #expect(hasManualID, "Manual identifier should override automatic generation")
@@ -234,8 +234,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasAutomaticID = testAccessibilityIdentifiersSinglePlatform(
                 view,
                 expectedPattern: "*.auto.*",
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "AutomaticIdentifierTest"
             )
             #expect(!hasAutomaticID, "View should not have automatic ID when disabled globally")
@@ -284,8 +284,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "layer1.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "Layer1Functions"
             ), "Layer 1 function should generate accessibility identifiers matching pattern 'layer1.main.element.*'")
             
@@ -630,8 +630,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
-                platform: .iOS,
-            platform: .iOS,
+                platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
             ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
             

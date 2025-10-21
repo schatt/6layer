@@ -52,7 +52,7 @@ open class PlatformOCRSemanticLayer1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1",
             testName: "PlatformTest"
         )
@@ -106,7 +106,7 @@ open class PlatformOCRSemanticLayer1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "platformExtractStructuredData_L1",
             testName: "PlatformTest"
         )

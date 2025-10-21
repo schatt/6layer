@@ -68,7 +68,7 @@ open class PlatformPhotoSemanticLayer1Tests {
             testAccessibilityIdentifiersCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .iOS,
+                platform: SixLayerPlatform.iOS,
                 componentName: "platformPhotoDisplay_L1",
             testName: "PlatformTest"
             )

@@ -42,7 +42,7 @@ open class PlatformPhotoComponentsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .iOS,
+            platform: SixLayerPlatform.iOS,
             componentName: "platformCameraInterface_L4",
             testName: "PlatformTest"
         )
