@@ -56,9 +56,8 @@ public class AccessibilityManager {
         
         // TODO: Implement actual high contrast color calculation
         // Should adjust colors to meet WCAG contrast ratio requirements
-        // For now, simulate work to make performance test fail until implemented
-        usleep(1000) // Simulate 1ms of work per call
-        return baseColor
+        // For now, return the same color to make test fail until implemented
+        return baseColor // Same color to make test fail until real implementation
     }
     
     /// Returns the current accessibility configuration

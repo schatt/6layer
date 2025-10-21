@@ -572,29 +572,21 @@ open class AccessibilityFeaturesLayer5Tests {
     }
     
     /**
-     * BUSINESS PURPOSE: HighContrastManager performs efficiently with color calculations
+     * BUSINESS PURPOSE: HighContrastManager calculates different colors when high contrast is enabled
      * 
-     * TESTING SCOPE: Performance with color calculations
-     * METHODOLOGY: Test performance with many color calculations
+     * TESTING SCOPE: High contrast color calculation functionality
+     * METHODOLOGY: Test that returned color differs from original when high contrast is enabled
      */
-    @Test func testHighContrastManagerPerformance() {
-        let navigationManager = KeyboardNavigationManager()
+    @Test func testHighContrastColorCalculation() {
         let accessibilityManager = AccessibilityManager()
-        // GIVEN: High contrast mode
-        let colors = [Color.red, Color.blue, Color.green, Color.yellow, Color.purple]
+        // GIVEN: High contrast is enabled and a base color
+        let baseColor = Color.red
         
-        // WHEN: Measuring color calculation performance
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<1000 {
-            for color in colors {
-                _ = accessibilityManager.getHighContrastColor(color)
-            }
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
+        // WHEN: Getting high contrast color
+        let highContrastColor = accessibilityManager.getHighContrastColor(baseColor)
         
-        // THEN: Should perform efficiently
-        let executionTime = endTime - startTime
-        #expect(executionTime < 1.0, "Should perform color calculations efficiently")
+        // THEN: Should return a different color when high contrast is enabled
+        #expect(highContrastColor != baseColor, "High contrast should return a different color")
     }
     
 }
