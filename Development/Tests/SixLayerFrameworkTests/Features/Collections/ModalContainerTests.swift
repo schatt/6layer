@@ -477,31 +477,8 @@ struct ModalConstraint {
 struct ModalStrategy {
     let presentationType: ModalPresentationType
     let sizing: ModalSizing
-    let detents: [ModalDetent]
+    let detents: [SheetDetent]
     let platformOptimizations: [SixLayerPlatform: ModalConstraint]
 }
 
-/// Modal presentation type for testing
-/// TDD RED PHASE: This is a stub implementation for testing
-enum ModalPresentationType {
-    case sheet
-    case fullScreen
-    case popover
-}
-
-/// Modal sizing for testing
-/// TDD RED PHASE: This is a stub implementation for testing
-enum ModalSizing {
-    case adaptive
-    case fixed
-    case intrinsic
-}
-
-/// Modal detent for testing
-/// TDD RED PHASE: This is a stub implementation for testing
-enum ModalDetent {
-    case small
-    case medium
-    case large
-}
 
