@@ -55,7 +55,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -94,7 +94,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,
@@ -132,7 +132,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -168,7 +168,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            hasAccessibilityIdentifier(
+            hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,

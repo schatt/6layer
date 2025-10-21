@@ -45,7 +45,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "test.*element.*main-ui", 
                 componentName: "AutomaticAccessibilityIdentifiers"
@@ -79,7 +79,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testView != nil, "View with .named() should be created successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.*element.*main-addfuelbutton", 
                 componentName: "NamedModifier"
@@ -113,7 +113,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             #expect(testView != nil, "Automatic accessibility identifiers should create view successfully")
             
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
                 componentName: "CombinedBreadcrumbModifiers"

@@ -429,7 +429,7 @@ open class AccessibilityFeaturesLayer5Tests {
         
         // THEN: Should return modified view with accessibility identifier
         #expect(enhancedView != nil, "Should return accessibility enhanced view")
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             enhancedView, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityEnhancedViewModifier"
@@ -452,7 +452,7 @@ open class AccessibilityFeaturesLayer5Tests {
         
         // THEN: Should return modified view with accessibility identifier
         #expect(enhancedView != nil, "Should return accessibility enhanced view with default config")
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             enhancedView, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
@@ -533,7 +533,7 @@ open class AccessibilityFeaturesLayer5Tests {
         
         // THEN: Should return modified view with accessibility identifier
         #expect(integratedView != nil, "Should return integrated accessibility view")
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             integratedView, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityViewModifiersIntegration"

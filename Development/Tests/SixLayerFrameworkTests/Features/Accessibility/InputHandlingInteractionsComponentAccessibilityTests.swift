@@ -31,7 +31,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         })
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformInteractionButton"
@@ -53,7 +53,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             platform: .iOS,
@@ -72,7 +72,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             platform: .iOS,
@@ -91,7 +91,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             platform: .iOS,
@@ -110,7 +110,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "DragDropManager"

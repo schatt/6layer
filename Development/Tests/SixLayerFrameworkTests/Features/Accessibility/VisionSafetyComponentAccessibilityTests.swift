@@ -21,7 +21,7 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
         let testView = VisionSafety()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "VisionSafety"

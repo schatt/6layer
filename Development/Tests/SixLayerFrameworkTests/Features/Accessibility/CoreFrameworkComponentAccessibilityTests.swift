@@ -48,7 +48,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .modifier(AutomaticAccessibilityIdentifiersModifier())
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "ComprehensiveAccessibilityModifier"
@@ -69,7 +69,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         ))
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "SystemAccessibilityModifier"
@@ -90,7 +90,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         ))
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityIdentifierAssignmentModifier"
@@ -108,7 +108,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .named("TestView")
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.testview.*",
             componentName: "NamedModifier"
@@ -126,7 +126,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "ExactTestView",
             componentName: "ExactNamedModifier"
@@ -142,7 +142,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.TestScreen.*",
             componentName: "ScreenContextModifier"
@@ -157,7 +157,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*.TestState",
             componentName: "NavigationStateModifier"
@@ -174,7 +174,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "AutomaticAccessibilityIdentifiersModifier"
@@ -192,7 +192,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .automaticAccessibility()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "AutomaticAccessibilityModifier"
@@ -251,7 +251,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .automaticAccessibilityIdentifiers()
         
         // When: Checking if accessibility identifier is generated
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityIdentifierGeneration"
@@ -270,7 +270,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .automaticAccessibilityIdentifiers()
         
         // When: Validating accessibility identifier
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityIdentifierValidation"
@@ -289,7 +289,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .named("TestView")
         
         // When: Checking hierarchical accessibility identifier
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.TestScreen.element.testview.*",
             componentName: "AccessibilityIdentifierHierarchy"
@@ -309,7 +309,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .named("AnotherTestView") // This should not collide
         
         // When: Checking collision prevention
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "AccessibilityIdentifierCollisionPrevention"

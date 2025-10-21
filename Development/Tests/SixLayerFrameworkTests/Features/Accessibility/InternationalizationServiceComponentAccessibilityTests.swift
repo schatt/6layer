@@ -23,7 +23,7 @@ open class InternationalizationServiceComponentAccessibilityTests: BaseTestClass
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "InternationalizationService"

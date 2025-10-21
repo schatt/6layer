@@ -65,7 +65,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         componentName: String,
         testName: String
     ) -> Bool {
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: componentName

@@ -26,7 +26,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "CrossPlatformOptimizationManager"
@@ -47,7 +47,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformOptimizationSettings"
@@ -69,7 +69,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         .environmentObject(metrics)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "CrossPlatformPerformanceMetrics"
@@ -90,7 +90,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformUIPatterns"
@@ -111,7 +111,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformRecommendationEngine"
@@ -132,7 +132,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "CrossPlatformTesting"

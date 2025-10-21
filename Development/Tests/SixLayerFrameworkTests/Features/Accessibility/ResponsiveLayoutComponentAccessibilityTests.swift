@@ -35,7 +35,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ResponsiveGrid"
@@ -59,7 +59,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let view = ResponsiveNavigation(content: navigationContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ResponsiveNavigation"
@@ -84,7 +84,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let view = ResponsiveStack(content: stackContent)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ResponsiveStack"
@@ -100,7 +100,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let view = ResponsiveLayoutExample()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ResponsiveLayoutExample"
@@ -116,7 +116,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let view = ResponsiveNavigationExample()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ResponsiveNavigationExample"
@@ -135,7 +135,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         let view = testContent.modifier(ResponsivePadding())
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ResponsivePadding"

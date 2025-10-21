@@ -80,7 +80,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testImage,
                 style: .thumbnail
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: platform,
@@ -106,7 +106,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testPhoto,
                 style: .thumbnail
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .iOS,
@@ -130,7 +130,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testPhoto,
                 style: .thumbnail
             )
-            return hasAccessibilityIdentifier(
+            return hasAccessibilityIdentifierPattern(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
                 platform: .macOS,

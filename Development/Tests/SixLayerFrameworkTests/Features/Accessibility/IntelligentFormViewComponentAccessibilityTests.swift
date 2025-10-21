@@ -34,7 +34,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "IntelligentFormView"
@@ -58,7 +58,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: detailData)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "IntelligentDetailView"

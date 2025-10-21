@@ -29,7 +29,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             .automaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully with accessibility identifier
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "SixLayer.main.element.*", 
                 componentName: "AutomaticIdentifiersWorkByDefault"
@@ -81,7 +81,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             .accessibilityIdentifier("manual-test-button")
             
             // Then: The view should be created successfully with manual accessibility identifier
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedIdentifier: "manual-test-button", 
                 componentName: "ManualIdentifiersWorkByDefault"

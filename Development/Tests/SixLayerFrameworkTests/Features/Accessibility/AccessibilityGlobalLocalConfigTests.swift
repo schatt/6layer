@@ -60,7 +60,7 @@ open class AccessibilityGlobalLocalConfigTests {
             .named("TestButton")
         
         // Test that the view has an accessibility identifier using the same method as working tests
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*testbutton.*", 
             componentName: "AccessibilityFunctionsRespectGlobalConfigEnabled"
@@ -115,7 +115,7 @@ open class AccessibilityGlobalLocalConfigTests {
             .automaticAccessibilityIdentifiers()  // ← Local enable
         
         // Test that the view has an accessibility identifier using the same method as working tests
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "AccessibilityFunctionsRespectLocalEnableModifier"
@@ -168,7 +168,7 @@ open class AccessibilityGlobalLocalConfigTests {
             .automaticAccessibilityIdentifiers()  // ← Should override global disable
         
         // Test that the view has an accessibility identifier using the same method as working tests
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             componentName: "LocalEnableOverridesGlobalDisable"

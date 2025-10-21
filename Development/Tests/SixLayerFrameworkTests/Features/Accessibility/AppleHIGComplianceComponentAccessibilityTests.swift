@@ -26,7 +26,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.appleHIGCompliance()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "AppleHIGComplianceModifier"
@@ -48,7 +48,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemAccessibility()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "SystemAccessibilityModifier"
@@ -70,7 +70,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformPatterns()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformPatternModifier"
@@ -92,7 +92,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.visualConsistency()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "VisualConsistencyModifier"
@@ -114,7 +114,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.interactionPatterns()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "InteractionPatternModifier"
@@ -136,7 +136,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.voiceOverSupport()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "VoiceOverSupportModifier"
@@ -158,7 +158,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.keyboardNavigation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "KeyboardNavigationModifier"
@@ -180,7 +180,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.highContrast()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "HighContrastModifier"
@@ -202,7 +202,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.reducedMotion()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ReducedMotionModifier"
@@ -224,7 +224,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.dynamicType()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "DynamicTypeModifier"
@@ -246,7 +246,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformNavigation()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformNavigationModifier"
@@ -268,7 +268,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformStyling()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformStylingModifier"
@@ -290,7 +290,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformIcon()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformIconModifier"
@@ -312,7 +312,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemColor()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "SystemColorModifier"
@@ -334,7 +334,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemTypography()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "SystemTypographyModifier"
@@ -356,7 +356,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.spacing()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "SpacingModifier"
@@ -378,7 +378,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.touchTarget()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "TouchTargetModifier"
@@ -400,7 +400,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformInteraction()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformInteractionModifier"
@@ -422,7 +422,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.hapticFeedback()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "HapticFeedbackModifier"
@@ -444,7 +444,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.gestureRecognition()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "GestureRecognitionModifier"
@@ -466,7 +466,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "AppleHIGComplianceManager"

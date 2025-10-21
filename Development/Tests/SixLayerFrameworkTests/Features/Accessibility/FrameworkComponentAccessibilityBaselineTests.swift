@@ -67,7 +67,7 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
     
     private func assertComponentGeneratesAccessibilityID<T: View>(_ component: T, name: String) {
         // Look for component-specific accessibility identifier pattern
-        #expect(hasAccessibilityIdentifier(
+        #expect(hasAccessibilityIdentifierPattern(
             component, 
             expectedPattern: "FrameworkTest.*\(name.lowercased()).*", 
             componentName: name

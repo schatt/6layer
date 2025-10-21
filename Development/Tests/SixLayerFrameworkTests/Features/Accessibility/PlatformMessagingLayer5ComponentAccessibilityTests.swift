@@ -26,19 +26,19 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         let bannerNotification = messagingLayer.createBannerNotification(title: "Test Banner", message: "Test Message")
         
         // Then: Should generate accessibility identifiers for components
-        let hasAlertAccessibilityID = hasAccessibilityIdentifier(
+        let hasAlertAccessibilityID = hasAccessibilityIdentifierPattern(
             alertButton,
             expectedPattern: "*.main.element.*",
             componentName: "AlertButton"
         )
         
-        let hasToastAccessibilityID = hasAccessibilityIdentifier(
+        let hasToastAccessibilityID = hasAccessibilityIdentifierPattern(
             toastNotification,
             expectedPattern: "*.main.element.*",
             componentName: "ToastNotification"
         )
         
-        let hasBannerAccessibilityID = hasAccessibilityIdentifier(
+        let hasBannerAccessibilityID = hasAccessibilityIdentifierPattern(
             bannerNotification,
             expectedPattern: "*.main.element.*",
             componentName: "BannerNotification"

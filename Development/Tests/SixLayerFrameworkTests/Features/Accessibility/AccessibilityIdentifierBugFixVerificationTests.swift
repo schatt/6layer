@@ -98,7 +98,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testView != nil, "View with .named() should be created successfully")
             
             // Test actual accessibility identifier generation (should use default "main" screen context)
-            let hasAccessibilityID = hasAccessibilityIdentifier(
+            let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.main.element.*", 
                 componentName: "AddFuelButton"
@@ -129,7 +129,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Then: The view should be created successfully
             
             // Test actual accessibility identifier generation (should use "FuelView" screen context)
-            let hasAccessibilityID = hasAccessibilityIdentifier(
+            let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
                 componentName: "AddFuelButton"
@@ -158,7 +158,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testView != nil, "View with named modifier should be created successfully")
             
             // Test actual accessibility identifier generation
-            let hasAccessibilityID = hasAccessibilityIdentifier(
+            let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.FuelView.*", 
                 componentName: "ScreenContext"
@@ -188,7 +188,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testView != nil, "View with named modifier should be created successfully")
             
             // Test actual accessibility identifier generation
-            let hasAccessibilityID = hasAccessibilityIdentifier(
+            let hasAccessibilityID = hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.*", 
                 componentName: "NavigationState"
@@ -219,7 +219,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testView != nil, "View with manual accessibility identifier should be created successfully")
             
             // Verify that manual identifiers continue to work
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedIdentifier: "manual-add-fuel-button", 
                 componentName: "ManualAccessibilityIdentifier"
@@ -248,7 +248,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             
             // The fix ensures that automatic accessibility identifiers work correctly
-            #expect(hasAccessibilityIdentifier(
+            #expect(hasAccessibilityIdentifierPattern(
                 testView, 
                 expectedPattern: "CarManager.*element.*testbutton", 
                 componentName: "AutomaticAccessibilityIdentifiers"

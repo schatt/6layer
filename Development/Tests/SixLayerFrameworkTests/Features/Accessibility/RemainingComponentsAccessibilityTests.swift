@@ -49,7 +49,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -95,7 +95,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -124,7 +124,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -151,7 +151,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -173,7 +173,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -193,7 +193,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -222,7 +222,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -249,7 +249,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -278,7 +278,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -305,7 +305,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -334,7 +334,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -361,7 +361,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -390,7 +390,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -417,7 +417,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             )
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -451,7 +451,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -483,7 +483,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -506,7 +506,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -527,7 +527,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             onItemEdited: nil
         )
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -544,7 +544,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -559,7 +559,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,

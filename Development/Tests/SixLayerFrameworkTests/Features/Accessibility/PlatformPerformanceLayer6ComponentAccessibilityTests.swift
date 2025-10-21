@@ -21,7 +21,7 @@ open class PlatformPerformanceLayer6ComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformPerformanceLayer6()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformPerformanceLayer6"

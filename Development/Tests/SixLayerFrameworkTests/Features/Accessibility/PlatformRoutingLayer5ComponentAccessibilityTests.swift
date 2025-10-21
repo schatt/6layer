@@ -21,7 +21,7 @@ open class PlatformRoutingLayer5ComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformRoutingLayer5()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformRoutingLayer5"

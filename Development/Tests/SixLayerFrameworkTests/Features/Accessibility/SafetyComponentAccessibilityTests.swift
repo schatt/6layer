@@ -21,7 +21,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = VisionSafety()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "VisionSafety"
@@ -35,7 +35,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSafety()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSafety"
@@ -49,7 +49,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSecurity()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformSecurity"
@@ -63,7 +63,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformPrivacy()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformPrivacy"

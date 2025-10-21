@@ -21,7 +21,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
         let testView = FormUsageExample()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "FormUsageExample"
@@ -37,7 +37,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
         let testView = ExampleHelpers()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "ExampleProjectCard"

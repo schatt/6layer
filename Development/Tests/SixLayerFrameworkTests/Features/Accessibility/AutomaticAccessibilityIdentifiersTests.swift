@@ -62,7 +62,7 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .automaticAccessibilityIdentifiers()
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .iOS,
@@ -76,7 +76,7 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .automaticAccessibilityIdentifiers()
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
@@ -92,7 +92,7 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .named("TestElement")
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*testelement.*", 
             platform: .iOS,
@@ -106,7 +106,7 @@ open class AutomaticAccessibilityIdentifiersTests {
         let view = Text("Test")
             .named("TestElement")
         
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view, 
             expectedPattern: "SixLayer.main.element.*testelement.*", 
             platform: .macOS,

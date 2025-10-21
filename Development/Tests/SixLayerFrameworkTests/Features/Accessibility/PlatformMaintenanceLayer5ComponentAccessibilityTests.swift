@@ -21,7 +21,7 @@ open class PlatformMaintenanceLayer5ComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformMaintenanceLayer5()
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformMaintenanceLayer5"

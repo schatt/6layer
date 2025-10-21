@@ -24,7 +24,7 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
         let testView = photoComponents.platformPhotoPicker_L4(onImageSelected: { _ in })
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformPhotoComponentsLayer4"

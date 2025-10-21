@@ -24,7 +24,7 @@ open class PlatformResourceLayer5ComponentAccessibilityTests: BaseTestClass {
         let testView = resourceLayer.createResourceButton(title: "Test", action: {})
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             testView,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformResourceLayer5"

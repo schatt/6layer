@@ -30,7 +30,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = ExpandableCardCollectionView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ExpandableCardCollectionView"
@@ -72,7 +72,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ExpandableCardComponent"
@@ -101,7 +101,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "CoverFlowCollectionView"
@@ -125,7 +125,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "CoverFlowCardComponent"
@@ -148,7 +148,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = GridCollectionView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "GridCollectionView"
@@ -171,7 +171,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = ListCollectionView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ListCollectionView"
@@ -194,7 +194,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = MasonryCollectionView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "MasonryCollectionView"
@@ -220,7 +220,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "AdaptiveCollectionView"
@@ -252,7 +252,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "SimpleCardComponent"
@@ -271,7 +271,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = ListCardComponent(item: testItem, hints: PresentationHints())
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "ListCardComponent"
@@ -290,7 +290,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "MasonryCardComponent"
@@ -315,7 +315,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "NativeExpandableCardView"
@@ -338,7 +338,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "iOSExpandableCardView"
@@ -361,7 +361,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "macOSExpandableCardView"
@@ -384,7 +384,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "visionOSExpandableCardView"
@@ -407,7 +407,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = hasAccessibilityIdentifier(
+        let hasAccessibilityID = hasAccessibilityIdentifierPattern(
             view,
             expectedPattern: "*.main.element.*",
             componentName: "PlatformAwareExpandableCardView"
