@@ -579,17 +579,16 @@ open class AccessibilityFeaturesLayer5Tests {
      */
     @Test func testHighContrastManagerPerformance() {
         let navigationManager = KeyboardNavigationManager()
-        let accessibilityManager = AccessibilityManager()
+        let highContrastManager = HighContrastManager()
         // GIVEN: High contrast mode
-        let isHighContrastEnabled = accessibilityManager.isHighContrastEnabled()
+        highContrastManager.isHighContrastEnabled = true
         let colors = [Color.red, Color.blue, Color.green, Color.yellow, Color.purple]
         
         // WHEN: Measuring color calculation performance
         let startTime = CFAbsoluteTimeGetCurrent()
         for _ in 0..<1000 {
             for color in colors {
-                // Test accessibility manager functionality
-                _ = accessibilityManager.isHighContrastEnabled()
+                _ = highContrastManager.getHighContrastColor(color)
             }
         }
         let endTime = CFAbsoluteTimeGetCurrent()
