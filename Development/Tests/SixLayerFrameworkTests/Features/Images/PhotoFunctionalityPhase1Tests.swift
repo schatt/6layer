@@ -264,9 +264,10 @@ open class PhotoFunctionalityPhase1Tests {
         // Given: Image selection callback
         var _: PlatformImage?
         let onImageSelected: (PlatformImage) -> Void = { _ in }
+        let photoComponents = PlatformPhotoComponentsLayer4()
         
         // When: Creating photo picker
-        let photoPicker = platformPhotoPicker_L4(onImageSelected: onImageSelected)
+        let photoPicker = photoComponents.platformPhotoPicker_L4(onImageSelected: onImageSelected)
         
         // Then: Photo picker should be created and be hostable
         #expect(photoPicker != nil, "Photo picker should be created")
