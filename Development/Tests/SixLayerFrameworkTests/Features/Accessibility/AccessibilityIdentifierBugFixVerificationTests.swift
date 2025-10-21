@@ -225,7 +225,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Verify that manual identifiers continue to work
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedIdentifier: "manual-add-fuel-button", 
+                expectedPattern: "manual-add-fuel-button", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ManualAccessibilityIdentifier"
             ), "Manual accessibility identifier should work")

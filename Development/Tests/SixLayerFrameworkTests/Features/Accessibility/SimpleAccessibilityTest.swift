@@ -14,7 +14,7 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
         
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedIdentifier: "manual-test-id", 
+            expectedPattern: "manual-test-id", 
             platform: SixLayerPlatform.iOS,
             componentName: "ManualAccessibilityIdentifier"
         ), "Manual accessibility identifier should work")

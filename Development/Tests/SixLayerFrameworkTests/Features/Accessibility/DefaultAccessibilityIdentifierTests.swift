@@ -84,7 +84,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // Then: The view should be created successfully with manual accessibility identifier
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedIdentifier: "manual-test-button", 
+                expectedPattern: "manual-test-button", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ManualIdentifiersWorkByDefault"
             ), "Manual accessibility identifier should work by default")

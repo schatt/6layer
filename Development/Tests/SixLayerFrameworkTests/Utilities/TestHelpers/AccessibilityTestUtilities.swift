@@ -220,14 +220,14 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
 /// 
 /// - Parameters:
 ///   - view: The SwiftUI view to test
-///   - expectedIdentifier: The exact accessibility identifier to look for
+///   - expectedPattern: The exact accessibility identifier to look for
 ///   - platform: The platform to mock for testing
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has the exact expected identifier on the specified platform
 @MainActor
 public func hasAccessibilityIdentifierExact<T: View>(
     _ view: T, 
-    expectedIdentifier: String,
+    expectedPattern: String,
     platform: SixLayerPlatform,
     componentName: String = "Component"
 ) -> Bool {
@@ -255,13 +255,13 @@ public func hasAccessibilityIdentifierExact<T: View>(
 /// 
 /// - Parameters:
 ///   - view: The SwiftUI view to test
-///   - expectedIdentifier: The exact accessibility identifier to look for
+///   - expectedPattern: The exact accessibility identifier to look for
 ///   - componentName: Name of the component being tested (for debugging)
 /// - Returns: True if the view has the exact expected identifier
 @MainActor
 public func hasAccessibilityIdentifierSimple<T: View>(
     _ view: T, 
-    expectedIdentifier: String,
+    expectedPattern: String,
     componentName: String = "Component"
 ) -> Bool {
     // Get the actual accessibility identifier from the view
