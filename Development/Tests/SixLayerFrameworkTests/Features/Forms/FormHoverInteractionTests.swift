@@ -252,6 +252,7 @@ open class FormHoverInteractionTests {
         return false
     }
     
+    @MainActor
     private func getAccessibilityInfo(_ view: some View) -> (hasLabel: Bool, hasHelpText: Bool) {
         // Get accessibility information from our FieldHoverTooltipModifier
         if let fieldView = view as? DynamicFormFieldView {
@@ -261,6 +262,7 @@ open class FormHoverInteractionTests {
         return (hasLabel: false, hasHelpText: false)
     }
     
+    @MainActor
     private func hasPlatformTooltip(_ view: some View) -> Bool {
         // Check platform-specific tooltip support
         // macOS shows tooltips, iOS relies on accessibility
