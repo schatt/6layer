@@ -86,7 +86,6 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .macOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentModalForm_L1"
             )

@@ -62,14 +62,14 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     /// Tests accessibility identifier generation for a view (DRY helper)
     private func testAccessibilityIdentifierGeneration(
         view: some View,
-        platform: SixLayerPlatform.iOS,
+        platform: SixLayerPlatform,
             componentName: String,
         testName: String
     ) -> Bool {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
             expectedPattern: "*.main.element.*",
-            platform: SixLayerPlatform.iOS,
+            platform: platform,
             componentName: componentName
         )
         return hasAccessibilityID

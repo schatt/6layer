@@ -97,7 +97,6 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .macOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentHierarchicalData_L1"
             )
@@ -172,7 +171,6 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.element.*", 
-                platform: .macOS,
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentTemporalData_L1"
             )
