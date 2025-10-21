@@ -34,7 +34,11 @@ open class CollectionEmptyStateViewTests {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
+    func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiers(
+        platform: SixLayerPlatform
+    ) async {
+        // Given: CollectionEmptyStateView with test configuration
         let view = CollectionEmptyStateView(
             hints: PresentationHints(
                 dataType: .collection,
@@ -44,33 +48,15 @@ open class CollectionEmptyStateViewTests {
             customCreateView: nil
         )
         
+        // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
+            platform: platform,
             componentName: "CollectionEmptyStateView"
         )
         
-        #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on iOS")
-    }
-    
-    @Test func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = CollectionEmptyStateView(
-            hints: PresentationHints(
-                dataType: .collection,
-                presentationPreference: .automatic
-            ),
-            onCreateItem: {},
-            customCreateView: nil
-        )
-        
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "CollectionEmptyStateView"
-        )
-        
-        #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on macOS")
+        // Then: Should generate accessibility identifiers on both platforms
+        #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue)")
     }
 }
