@@ -222,6 +222,7 @@ open class FormHoverInteractionTests {
         return false
     }
     
+    @MainActor
     private func hasHoverStateSupport(_ view: some View) -> Bool {
         // Check if the view supports hover states
         // Our FieldHoverTooltipModifier supports hover states
