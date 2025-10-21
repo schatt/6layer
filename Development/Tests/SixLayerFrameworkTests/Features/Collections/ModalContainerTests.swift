@@ -460,7 +460,6 @@ open class ModalContainerTests: BaseTestClass {
             platformOptimizations: platformOptimizations
         )
     }
-}
 
 // MARK: - Supporting Types (TDD Red Phase Stubs)
 
