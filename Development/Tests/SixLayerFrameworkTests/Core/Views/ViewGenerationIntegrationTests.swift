@@ -31,7 +31,7 @@ open class ViewGenerationIntegrationTests {
             let supportsOCR: Bool
             let minTouchTarget: CGFloat
             let hoverDelay: TimeInterval
-            let platform: Platform
+            let platform: SixLayerPlatform
             let deviceType: DeviceType
         }
         
@@ -93,12 +93,6 @@ open class ViewGenerationIntegrationTests {
             case layoutSupport
         }
         
-        enum Platform {
-            case iOS
-            case macOS
-            case tvOS
-            case watchOS
-        }
         
         enum DeviceType {
             case phone
