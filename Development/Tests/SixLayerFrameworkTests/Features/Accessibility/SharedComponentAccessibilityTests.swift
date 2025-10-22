@@ -126,11 +126,11 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
     
     @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiers() async {
         // Given: GenericItemCollectionView
-        struct TestItem: Identifiable {
-            let id = UUID()
-            let title: String
-        }
-        let testItems = [TestItem(title: "Item 1"), TestItem(title: "Item 2"), TestItem(title: "Item 3")]
+        let testItems = [
+            TestItem(title: "Item 1"),
+            TestItem(title: "Item 2"), 
+            TestItem(title: "Item 3")
+        ]
         let hints = PresentationHints()
         let testView = GenericItemCollectionView(items: testItems, hints: hints)
         

@@ -46,7 +46,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Description Field Tests
     
-    @Test func testDynamicFormFieldSupportsDescription() {
+    @Test @MainActor func testDynamicFormFieldSupportsDescription() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         
@@ -55,7 +55,7 @@ open class FormHoverInteractionTests {
         #expect(field.description == "This field requires a valid email address format")
     }
     
-    @Test func testDynamicFormFieldDescriptionIsOptional() {
+    @Test @MainActor func testDynamicFormFieldDescriptionIsOptional() {
         // GIVEN: A form field without description
         let field = createFormFieldWithoutDescription()
         
@@ -65,7 +65,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Hover Tooltip Tests (macOS)
     
-    @Test func testFormFieldShowsTooltipOnHover() {
+    @Test @MainActor func testFormFieldShowsTooltipOnHover() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
@@ -78,7 +78,7 @@ open class FormHoverInteractionTests {
         #expect(hasTooltipCapability(fieldView), "Form field should support hover tooltips")
     }
     
-    @Test func testFormFieldWithoutDescriptionHasNoTooltip() {
+    @Test @MainActor func testFormFieldWithoutDescriptionHasNoTooltip() {
         // GIVEN: A form field without description
         let field = createFormFieldWithoutDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
@@ -92,7 +92,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Hover State Tests
     
-    @Test func testFormFieldProvidesHoverFeedback() {
+    @Test @MainActor func testFormFieldProvidesHoverFeedback() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
@@ -104,7 +104,7 @@ open class FormHoverInteractionTests {
         #expect(hasHoverStateSupport(fieldView), "Form field should support hover state feedback")
     }
     
-    @Test func testHoverStateChangesVisualAppearance() {
+    @Test @MainActor func testHoverStateChangesVisualAppearance() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
@@ -121,7 +121,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Accessibility Tests
     
-    @Test func testFormFieldHelpTextIsAccessible() {
+    @Test @MainActor func testFormFieldHelpTextIsAccessible() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
@@ -133,7 +133,7 @@ open class FormHoverInteractionTests {
         #expect(hasAccessibleHelpText(fieldView), "Form field help text should be accessible")
     }
     
-    @Test func testFormFieldHasProperAccessibilityLabel() {
+    @Test @MainActor func testFormFieldHasProperAccessibilityLabel() {
         // GIVEN: A form field with description
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())
@@ -149,7 +149,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Platform-Specific Behavior Tests
     
-    @Test func testMacOSShowsTooltipOnHover() {
+    @Test @MainActor func testMacOSShowsTooltipOnHover() {
         // GIVEN: A form field with description on macOS
         let field = createFormFieldWithDescription()
         let formState = DynamicFormState(configuration: createTestConfiguration())

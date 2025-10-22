@@ -39,14 +39,6 @@ open class CollectionViewCallbackTests {
         )
     }
     
-    // MARK: - Test Item Model
-    
-    struct TestItem: Identifiable, Equatable {
-        let id: String
-        let title: String
-        let description: String
-    }
-    
     // MARK: - Callback Tracking
     
     private var selectedItems: [TestItem] = []
@@ -280,6 +272,7 @@ open class CollectionViewCallbackTests {
         let view = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
+            hints: PresentationHints(),
             onItemSelected: { item in self.selectedItems.append(item) },
             onItemDeleted: { item in self.deletedItems.append(item) },
             onItemEdited: { item in self.editedItems.append(item) }

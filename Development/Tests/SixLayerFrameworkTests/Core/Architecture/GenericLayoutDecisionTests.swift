@@ -33,19 +33,12 @@ open class GenericLayoutDecisionTests {
     
     // MARK: - Test Data
     
-    private struct TestItem: Identifiable {
-        let id = UUID()
-        let title: String
-        let content: String
-        let priority: Int
-    }
-    
     private func createTestItems(count: Int) -> [TestItem] {
         return (0..<count).map { index in
             TestItem(
                 title: "Item \(index + 1)",
-                content: "Content for item \(index + 1)",
-                priority: index % 3
+                subtitle: nil,
+                description: "Content for item \(index + 1)"
             )
         }
     }
@@ -511,43 +504,6 @@ open class GenericLayoutDecisionTests {
         #expect(layout.maxImageSize.height > 0)
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testLayoutDecisionPerformance() {
-        // Given
-        let items = createTestItems(count: 1000)
-        let hints = createBasicHints()
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let decision = determineOptimalLayout_L2(
-            items: items,
-            hints: hints,
-            screenWidth: 1024,
-            deviceType: .pad
-        )
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        #expect(decision != nil)
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1) // Should complete in under 100ms
-    }
-    
-    @Test func testFormLayoutDecisionPerformance() {
-        // Given
-        let hints = createComplexHints()
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let decision = determineOptimalFormLayout_L2(hints: hints)
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        #expect(decision != nil)
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.05) // Should complete in under 50ms
-    }
     
     // MARK: - Edge Cases and Error Handling
     

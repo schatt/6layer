@@ -314,12 +314,12 @@ open class AccessibilityFeaturesLayer5Tests {
      */
     @Test func testGetHighContrastColorNormalContrast() {
         let navigationManager = KeyboardNavigationManager()
-        // GIVEN: Normal contrast mode
-        highContrastManager.isHighContrastEnabled = false
+        let accessibilityManager = AccessibilityManager()
+        // GIVEN: Normal contrast mode (using existing API)
         let baseColor = Color.blue
         
         // WHEN: Getting high contrast color
-        let resultColor = highContrastManager.getHighContrastColor(baseColor)
+        let resultColor = accessibilityManager.getHighContrastColor(baseColor)
         
         // THEN: Should return original color
         #expect(resultColor == baseColor, "Should return original color in normal contrast")
@@ -333,13 +333,14 @@ open class AccessibilityFeaturesLayer5Tests {
      */
     @Test func testGetHighContrastColorHighContrast() {
         let navigationManager = KeyboardNavigationManager()
+        let accessibilityManager = AccessibilityManager()
         // GIVEN: High contrast mode with high contrast level
-        highContrastManager.isHighContrastEnabled = true
-        highContrastManager.contrastLevel = .high
+        accessibilityManager.isHighContrastEnabled = true
+        accessibilityManager.contrastLevel = .high
         let baseColor = Color.blue
         
         // WHEN: Getting high contrast color
-        let resultColor = highContrastManager.getHighContrastColor(baseColor)
+        let resultColor = accessibilityManager.getHighContrastColor(baseColor)
         
         // THEN: Should return modified color
         #expect(resultColor != baseColor, "Should return modified color in high contrast")
@@ -353,13 +354,14 @@ open class AccessibilityFeaturesLayer5Tests {
      */
     @Test func testGetHighContrastColorExtremeContrast() {
         let navigationManager = KeyboardNavigationManager()
+        let accessibilityManager = AccessibilityManager()
         // GIVEN: High contrast mode with extreme contrast level
-        highContrastManager.isHighContrastEnabled = true
-        highContrastManager.contrastLevel = .extreme
+        accessibilityManager.isHighContrastEnabled = true
+        accessibilityManager.contrastLevel = .extreme
         let baseColor = Color.gray
         
         // WHEN: Getting high contrast color
-        let resultColor = highContrastManager.getHighContrastColor(baseColor)
+        let resultColor = accessibilityManager.getHighContrastColor(baseColor)
         
         // THEN: Should return high contrast color
         #expect(resultColor != baseColor, "Should return high contrast color")

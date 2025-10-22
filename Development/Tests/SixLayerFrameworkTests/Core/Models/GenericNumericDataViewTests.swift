@@ -59,7 +59,6 @@ open class GenericNumericDataViewTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .macOS,
             platform: SixLayerPlatform.iOS,
             componentName: "GenericNumericDataView"
         )

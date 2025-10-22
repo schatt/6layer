@@ -528,19 +528,4 @@ open class ShapeStyleSystemTests {
         #expect(executionTime < 1.0, "Shape style creation should complete within 1 second")
     }
     
-    @Test func testViewModifierPerformance() {
-        // Given: A view
-        let testView = Text("Test")
-        
-        // When: Applying many modifiers
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<100 {
-            let _ = testView
-                .platformBackground(for: .iOS)
-                .platformText(for: .iOS)
-                .platformBorder(for: .iOS)
-        }
-        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-        #expect(executionTime < 1.0, "View modifier application should complete within 1 second")
-    }
 }

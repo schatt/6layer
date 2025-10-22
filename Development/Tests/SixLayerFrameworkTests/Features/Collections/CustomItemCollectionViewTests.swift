@@ -76,7 +76,6 @@ open class CustomItemCollectionViewTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "CustomItemCollectionView"
         )
         

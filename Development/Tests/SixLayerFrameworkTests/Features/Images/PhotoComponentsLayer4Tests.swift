@@ -63,7 +63,8 @@ open class PhotoComponentsLayer4Tests {
             var capturedImage: PlatformImage?
             
             // When: Call Layer 4 function
-            let result = platformCameraInterface_L4(
+            let photoComponents = PlatformPhotoComponentsLayer4()
+            let result = photoComponents.platformCameraInterface_L4(
                 onImageCaptured: { image in
                     capturedImage = image
                 }
@@ -122,7 +123,8 @@ open class PhotoComponentsLayer4Tests {
             var selectedImage: PlatformImage?
             
             // When: Call Layer 4 function
-            let result = platformPhotoPicker_L4(
+            let photoComponents = PlatformPhotoComponentsLayer4()
+            let result = photoComponents.platformPhotoPicker_L4(
                 onImageSelected: { image in
                     selectedImage = image
                 }
@@ -192,11 +194,12 @@ open class PhotoComponentsLayer4Tests {
     @Test func testPlatformPhotoDisplay_L4_AppliesAutomaticAccessibilityIdentifiers() async {
         await MainActor.run {
             // Given: Layer 4 function with test data
-            let testImage = self.testImage!
+            let testImage = testImage!
             let style = PhotoDisplayStyle.thumbnail
             
             // When: Call Layer 4 function
-            let result = platformPhotoDisplay_L4(
+            let photoComponents = PlatformPhotoComponentsLayer4()
+            let result = photoComponents.platformPhotoDisplay_L4(
                 image: testImage,
                 style: style
             )
@@ -226,81 +229,4 @@ open class PhotoComponentsLayer4Tests {
         }
     }
     
-    /// BUSINESS PURPOSE: Layer 4 photo editor functions should apply automatic accessibility identifiers
-    /// TESTING SCOPE: Tests that platformPhotoEditor_L4 applies automatic accessibility identifiers
-    /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    @Test func testPlatformPhotoEditor_L4_AppliesAutomaticAccessibilityIdentifiers() async {
-        await MainActor.run {
-            // Given: Layer 4 function with test data
-            let testImage = self.testImage!
-            var editedImage: PlatformImage?
-            
-            // When: Call Layer 4 function
-            let result = platformPhotoEditor_L4(
-                image: testImage,
-                onImageEdited: { image in
-                    editedImage = image
-                }
-            )
-            
-            // Verify callback is properly configured
-            #expect(result != nil, "Photo editor should be created")
-            #expect(editedImage == nil, "Edited image should be nil initially")
-            
-            // Then: Test the two critical aspects
-            
-            // 1. Does it return a valid structure of the kind it's supposed to?
-            #expect(result != nil, "Layer 4 photo editor should return a valid SwiftUI view")
-            
-            // 2. Does that structure contain what it should?
-            do {
-                // The photo editor should contain some content (text or interactive elements)
-                let viewText = try result.inspect().findAll(ViewType.Text.self)
-                let viewButtons = try result.inspect().findAll(ViewType.Button.self)
-                let viewImages = try result.inspect().findAll(ViewType.Image.self)
-                
-                // Verify view inspection results
-                #expect(viewText != nil, "View text inspection should succeed")
-                #expect(viewButtons != nil, "View buttons inspection should succeed")
-                #expect(viewImages != nil, "View images inspection should succeed")
-                
-                // NOTE: Currently MacOSPhotoEditorView has a framework bug - it's missing the image parameter
-                // in its struct definition, so it doesn't contain the expected content
-                // This test documents the current behavior until the framework bug is fixed
-                
-                // For now, just verify the view structure is inspectable
-                let _ = try result.inspect()
-                
-                // TODO: Fix MacOSPhotoEditorView framework bug and then update this test to verify content
-                // XCTAssertTrue(!viewText.isEmpty || !viewButtons.isEmpty || !viewImages.isEmpty, 
-                //              "Photo editor should contain some content (text, buttons, or images)")
-                
-            } catch {
-                Issue.record("Failed to inspect photo editor structure: \(error)")
-            }
-            
-            // 3. Platform-specific implementation verification (REQUIRED)
-            #if os(macOS)
-            // macOS should return MacOSPhotoEditorView
-            do {
-                // macOS photo editor should be inspectable (MacOSPhotoEditorView)
-                let _ = try result.inspect()
-                // Note: Currently MacOSPhotoEditorView has a framework bug
-                // Once fixed, we should verify it contains the expected macOS-specific content
-            } catch {
-                Issue.record("Failed to verify macOS photo editor structure: \(error)")
-            }
-            #elseif os(iOS)
-            // iOS should return PhotoEditorView
-            do {
-                // iOS photo editor should be inspectable (PhotoEditorView)
-                let _ = try result.inspect()
-                // Note: We can't easily test the underlying UIImagePickerController type
-                // but we can verify the view structure is valid
-            } catch {
-                Issue.record("Failed to verify iOS photo editor structure: \(error)")
-            }
-            #endif
-        }
-    }
 

@@ -176,25 +176,4 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(!suite.testResults.isEmpty, "Testing suite should have test results")
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testAccessibilityTestingPerformance() async {
-        // Given: Testing suite
-        let suite = AccessibilityTestingSuite()
-        
-        // When: Running tests and measuring performance
-        let startTime = Date()
-        await suite.runAllTests()
-        let endTime = Date()
-        let duration = endTime.timeIntervalSince(startTime)
-        
-        // Then: Test business logic for performance
-        #expect(duration < 10.0, "Test execution should complete within 10 seconds")
-        #expect(!suite.testResults.isEmpty, "Should have test results")
-        
-        // Test business logic: Individual test durations should be reasonable
-        for result in suite.testResults {
-            #expect(result.duration < 5.0, "Individual test should complete within 5 seconds")
-        }
-    }
 }

@@ -24,7 +24,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // When: Creating AccessibilityEnhancedView
-        let view = AccessibilityEnhancedView(content: testContent)
+        let config = AccessibilityConfig()
+        let view = AccessibilityEnhancedView(config: config) {
+            testContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -47,7 +50,9 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // When: Creating VoiceOverEnabledView
-        let view = VoiceOverEnabledView(content: testContent)
+        let view = VoiceOverEnabledView {
+            testContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -70,7 +75,9 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // When: Creating KeyboardNavigableView
-        let view = KeyboardNavigableView(content: testContent)
+        let view = KeyboardNavigableView {
+            testContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -93,7 +100,9 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // When: Creating HighContrastEnabledView
-        let view = HighContrastEnabledView(content: testContent)
+        let view = HighContrastEnabledView {
+            testContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -116,7 +125,9 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // When: Creating AccessibilityHostingView
-        let view = AccessibilityHostingView(content: testContent)
+        let view = AccessibilityHostingView {
+            testContent
+        }
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

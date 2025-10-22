@@ -40,7 +40,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
     // MARK: - Test Helpers
     
     /// Helper function to convert PresentationHints to EnhancedPresentationHints
-    private func enhancedHints(from hints: PresentationHints) -> EnhancedPresentationHints {
+    static func enhancedHints(from hints: PresentationHints) -> EnhancedPresentationHints {
         return EnhancedPresentationHints(
             dataType: hints.dataType,
             presentationPreference: hints.presentationPreference,
@@ -94,7 +94,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Test Data
 
-    private let standardHints = PresentationHints(
+    static let standardHints = PresentationHints(
         dataType: .form,
         presentationPreference: .form,
         complexity: .moderate,
@@ -139,11 +139,11 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // When: Creating form presentation
         let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
-            dataType: standardHints.dataType,
-            presentationPreference: standardHints.presentationPreference,
-            complexity: standardHints.complexity,
-            context: standardHints.context,
-            customPreferences: standardHints.customPreferences,
+            dataType: PlatformPresentFormDataL1ComprehensiveTests.standardHints.dataType,
+            presentationPreference: PlatformPresentFormDataL1ComprehensiveTests.standardHints.presentationPreference,
+            complexity: PlatformPresentFormDataL1ComprehensiveTests.standardHints.complexity,
+            context: PlatformPresentFormDataL1ComprehensiveTests.standardHints.context,
+            customPreferences: PlatformPresentFormDataL1ComprehensiveTests.standardHints.customPreferences,
             extensibleHints: []
         ))
 
@@ -180,11 +180,11 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // When: Creating form presentation
         let view = platformPresentFormData_L1(fields: fieldsWithOptions, hints: EnhancedPresentationHints(
-            dataType: standardHints.dataType,
-            presentationPreference: standardHints.presentationPreference,
-            complexity: standardHints.complexity,
-            context: standardHints.context,
-            customPreferences: standardHints.customPreferences,
+            dataType: PlatformPresentFormDataL1ComprehensiveTests.standardHints.dataType,
+            presentationPreference: PlatformPresentFormDataL1ComprehensiveTests.standardHints.presentationPreference,
+            complexity: PlatformPresentFormDataL1ComprehensiveTests.standardHints.complexity,
+            context: PlatformPresentFormDataL1ComprehensiveTests.standardHints.context,
+            customPreferences: PlatformPresentFormDataL1ComprehensiveTests.standardHints.customPreferences,
             extensibleHints: []
         ))
 
@@ -207,11 +207,11 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // When: Creating form presentation
         let view = platformPresentFormData_L1(fields: multiValueFields, hints: EnhancedPresentationHints(
-            dataType: standardHints.dataType,
-            presentationPreference: standardHints.presentationPreference,
-            complexity: standardHints.complexity,
-            context: standardHints.context,
-            customPreferences: standardHints.customPreferences,
+            dataType: PlatformPresentFormDataL1ComprehensiveTests.standardHints.dataType,
+            presentationPreference: PlatformPresentFormDataL1ComprehensiveTests.standardHints.presentationPreference,
+            complexity: PlatformPresentFormDataL1ComprehensiveTests.standardHints.complexity,
+            context: PlatformPresentFormDataL1ComprehensiveTests.standardHints.context,
+            customPreferences: PlatformPresentFormDataL1ComprehensiveTests.standardHints.customPreferences,
             extensibleHints: []
         ))
 
@@ -342,7 +342,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             )
 
             // When: Creating form presentation
-            let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: enhancedHints(from: hints))
+            let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Should work across all platforms
             #expect(view != nil, "Should work with context: \(context)")
@@ -364,11 +364,11 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // When: Creating form presentation
         let view = platformPresentFormData_L1(fields: keyboardTestFields, hints: EnhancedPresentationHints(
-            dataType: standardHints.dataType,
-            presentationPreference: standardHints.presentationPreference,
-            complexity: standardHints.complexity,
-            context: standardHints.context,
-            customPreferences: standardHints.customPreferences,
+            dataType: PlatformPresentFormDataL1ComprehensiveTests.standardHints.dataType,
+            presentationPreference: PlatformPresentFormDataL1ComprehensiveTests.standardHints.presentationPreference,
+            complexity: PlatformPresentFormDataL1ComprehensiveTests.standardHints.complexity,
+            context: PlatformPresentFormDataL1ComprehensiveTests.standardHints.context,
+            customPreferences: PlatformPresentFormDataL1ComprehensiveTests.standardHints.customPreferences,
             extensibleHints: []
         ))
 
@@ -398,11 +398,15 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         )
 
         // When: Measuring performance with large dataset
-            #expect(view != nil)
+        let view = platformPresentFormData_L1(
+            fields: largeFieldSet,
+            hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints)
+        )
+        #expect(view != nil)
         }
     }
 
-    @Test func testPlatformPresentFormData_L1_MemoryEfficiency() {
+    @Test @MainActor func testPlatformPresentFormData_L1_MemoryEfficiency() {
         // Given: Memory-intensive field set
         let memoryFields = (1...500).map { i in
             TestSetupUtilities.createTestField(
@@ -413,8 +417,15 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             )
         }
 
+        let complexHints = PresentationHints(
+            dataType: .form,
+            presentationPreference: .form,
+            complexity: .complex,
+            context: .edit
+        )
+
         // When: Creating form with memory-intensive content
-        let view = platformPresentFormData_L1(fields: memoryFields, hints: enhancedHints(from: complexHints))
+        let view = platformPresentFormData_L1(fields: memoryFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: complexHints))
 
         // Then: Should handle memory efficiently
         #expect(view != nil)
@@ -426,7 +437,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Validation and Edge Cases
 
-    @Test func testPlatformPresentFormData_L1_ValidationScenarios() {
+    @Test @MainActor func testPlatformPresentFormData_L1_ValidationScenarios() {
         // Given: Fields with various validation requirements
         let validationFields = [
             TestSetupUtilities.createTestField(
@@ -448,7 +459,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ]
 
         // When: Creating form with validation scenarios
-        let view = platformPresentFormData_L1(fields: validationFields, hints: enhancedHints(from: standardHints))
+        let view = platformPresentFormData_L1(fields: validationFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: PlatformPresentFormDataL1ComprehensiveTests.standardHints))
 
         // Then: Should handle validation appropriately
         #expect(view != nil)
@@ -461,7 +472,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         #expect(optionalFields.count == 2, "Should have 2 optional fields")
     }
 
-    @Test func testPlatformPresentFormData_L1_EmptyAndNilValues() {
+    @Test @MainActor func testPlatformPresentFormData_L1_EmptyAndNilValues() {
         // Given: Fields with empty and nil values
         let edgeCaseFields = [
             TestSetupUtilities.createTestField(
@@ -487,7 +498,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ]
 
         // When: Creating form with edge case values
-        let view = platformPresentFormData_L1(fields: edgeCaseFields, hints: enhancedHints(from: standardHints))
+        let view = platformPresentFormData_L1(fields: edgeCaseFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: PlatformPresentFormDataL1ComprehensiveTests.standardHints))
 
         // Then: Should handle edge cases gracefully
         #expect(view != nil)
@@ -500,7 +511,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         #expect(nilPlaceholderFields.count == 4, "Should have 4 fields with nil placeholders")
     }
 
-    @Test func testPlatformPresentFormData_L1_SpecialCharacterHandling() {
+    @Test @MainActor func testPlatformPresentFormData_L1_SpecialCharacterHandling() {
         // Given: Fields with special characters and Unicode
         let specialCharFields = [
             TestSetupUtilities.createTestField(
@@ -530,7 +541,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ]
 
         // When: Creating form with special characters
-        let view = platformPresentFormData_L1(fields: specialCharFields, hints: enhancedHints(from: standardHints))
+        let view = platformPresentFormData_L1(fields: specialCharFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: PlatformPresentFormDataL1ComprehensiveTests.standardHints))
 
         // Then: Should handle special characters correctly
         #expect(view != nil)
@@ -544,7 +555,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Integration Tests
 
-    @Test func testPlatformPresentFormData_L1_WithAllHintCombinations() {
+    @Test @MainActor func testPlatformPresentFormData_L1_WithAllHintCombinations() {
         // Given: All possible hint combinations
         let hintCombinations = [
             PresentationHints(dataType: .form, presentationPreference: .form, complexity: .simple, context: .form),
@@ -562,14 +573,14 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // When: Testing all hint combinations
         for (index, hints) in hintCombinations.enumerated() {
-            let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints(from: hints))
+            let view = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Each combination should work
             #expect(view != nil, "Hint combination \(index) should work")
         }
     }
 
-    @Test func testPlatformPresentFormData_L1_CustomPreferencesIntegration() {
+    @Test @MainActor func testPlatformPresentFormData_L1_CustomPreferencesIntegration() {
         // Given: Hints with custom preferences
         let hintsWithPreferences = PresentationHints(
             dataType: .form,
@@ -592,7 +603,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ]
 
         // When: Creating form with custom preferences
-        let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints(from: hintsWithPreferences))
+        let view = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hintsWithPreferences))
 
         // Then: Should integrate custom preferences
         #expect(view != nil)
@@ -602,7 +613,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Accessibility Tests
 
-    @Test func testPlatformPresentFormData_L1_AccessibilitySupport() {
+    @Test @MainActor func testPlatformPresentFormData_L1_AccessibilitySupport() {
         // Given: Fields with accessibility considerations
         let accessibilityFields = [
             TestSetupUtilities.createTestField(
@@ -640,7 +651,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         )
 
         // When: Creating accessible form
-        let view = platformPresentFormData_L1(fields: accessibilityFields, hints: enhancedHints(from: accessibilityHints))
+        let view = platformPresentFormData_L1(fields: accessibilityFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: accessibilityHints))
 
         // Then: Should support accessibility
         #expect(view != nil)
@@ -657,7 +668,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Error Handling Tests
 
-    @Test func testPlatformPresentFormData_L1_ErrorRecovery() {
+    @Test @MainActor func testPlatformPresentFormData_L1_ErrorRecovery() {
         // Given: Fields with potentially problematic data
         let problematicFields = [
             TestSetupUtilities.createTestField(
@@ -673,7 +684,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ]
 
         // When: Creating form with problematic data
-        let view = platformPresentFormData_L1(fields: problematicFields, hints: enhancedHints(from: standardHints))
+        let view = platformPresentFormData_L1(fields: problematicFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: PlatformPresentFormDataL1ComprehensiveTests.standardHints))
 
         // Then: Should handle errors gracefully and still create view
         #expect(view != nil, "Should handle problematic data gracefully")

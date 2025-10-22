@@ -34,15 +34,15 @@ open class PlatformPhotoComponentsLayer4Tests {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = platformCameraInterface_L4(
+    @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
+        let photoComponents = PlatformPhotoComponentsLayer4()
+        let view = photoComponents.platformCameraInterface_L4(
             onImageCaptured: { _ in }
         )
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "platformCameraInterface_L4",
             testName: "PlatformTest"
         )
@@ -51,14 +51,14 @@ open class PlatformPhotoComponentsLayer4Tests {
     }
     
     @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = platformCameraInterface_L4(
+        let photoComponents = PlatformPhotoComponentsLayer4()
+        let view = photoComponents.platformCameraInterface_L4(
             onImageCaptured: { _ in }
         )
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .macOS,
             componentName: "platformCameraInterface_L4",
             testName: "PlatformTest"
         )

@@ -294,40 +294,29 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.visualizationType == .categorical)
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testDataAnalysisPerformance() {
-        // Given
-        let largeData = Array(1...1000).map { "Item \($0)" }
-        
-        // When & Then
-        }
-    }
-    
-    // Performance tests removed - performance monitoring was removed from framework
     
     // MARK: - Edge Cases Tests
     
-    @Test func testAnalysisWithSingleDataPoint() {
+    @Test func testAnalysisWithSingleDataPoint() async {
         // Given
-        let intelligence = DataPresentationIntelligence.shared
+        let intelligence = await DataPresentationIntelligence.shared
         let singleData = ["Single Item"]
         
         // When
-        let result = intelligence.analyzeData(singleData)
+        let result = await intelligence.analyzeData(singleData)
         
         // Then
         #expect(result.dataPoints == 1)
         #expect(result.complexity == .simple)
     }
     
-    @Test func testAnalysisWithIdenticalValues() {
+    @Test func testAnalysisWithIdenticalValues() async {
         // Given
-        let intelligence = DataPresentationIntelligence.shared
+        let intelligence = await DataPresentationIntelligence.shared
         let identicalValues = Array(repeating: 42.0, count: 10)
         
         // When
-        let result = intelligence.analyzeNumericalData(identicalValues)
+        let result = await intelligence.analyzeNumericalData(identicalValues)
         
         // Then
         #expect(result.dataPoints == 10)
@@ -335,12 +324,13 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.hasCategories)
     }
     
-    @Test func testAnalysisWithZeroValues() {
+    @Test func testAnalysisWithZeroValues() async {
         // Given
+        let intelligence = await DataPresentationIntelligence.shared
         let zeroValues: [Double] = [0, 0, 0, 0, 0]
         
         // When
-        let result = intelligence.analyzeNumericalData(zeroValues)
+        let result = await intelligence.analyzeNumericalData(zeroValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -348,24 +338,26 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.hasCategories)
     }
     
-    @Test func testAnalysisWithNegativeValues() {
+    @Test func testAnalysisWithNegativeValues() async {
         // Given
+        let intelligence = await DataPresentationIntelligence.shared
         let negativeValues: [Double] = [-10, -5, 0, 5, 10]
         
         // When
-        let result = intelligence.analyzeNumericalData(negativeValues)
+        let result = await intelligence.analyzeNumericalData(negativeValues)
         
         // Then
         #expect(result.dataPoints == 5)
         #expect(result.complexity == .simple)
     }
     
-    @Test func testAnalysisWithVeryLargeValues() {
+    @Test func testAnalysisWithVeryLargeValues() async {
         // Given
+        let intelligence = await DataPresentationIntelligence.shared
         let largeValues: [Double] = [1e6, 2e6, 3e6, 4e6, 5e6]
         
         // When
-        let result = intelligence.analyzeNumericalData(largeValues)
+        let result = await intelligence.analyzeNumericalData(largeValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -374,13 +366,14 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Consistency Tests
     
-    @Test func testAnalysisConsistencyForSameData() {
+    @Test func testAnalysisConsistencyForSameData() async {
         // Given
+        let intelligence = await DataPresentationIntelligence.shared
         let data = ["A", "B", "C", "D", "E"]
         
         // When
-        let result1 = intelligence.analyzeData(data)
-        let result2 = intelligence.analyzeData(data)
+        let result1 = await intelligence.analyzeData(data)
+        let result2 = await intelligence.analyzeData(data)
         
         // Then
         #expect(result1.dataPoints == result2.dataPoints)
@@ -389,14 +382,15 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result1.recommendedChartType == result2.recommendedChartType)
     }
     
-    @Test func testAnalysisConsistencyForSimilarData() {
+    @Test func testAnalysisConsistencyForSimilarData() async {
         // Given
+        let intelligence = await DataPresentationIntelligence.shared
         let data1 = ["A", "B", "C", "D", "E"]
         let data2 = ["X", "Y", "Z", "W", "V"]
         
         // When
-        let result1 = intelligence.analyzeData(data1)
-        let result2 = intelligence.analyzeData(data2)
+        let result1 = await intelligence.analyzeData(data1)
+        let result2 = await intelligence.analyzeData(data2)
         
         // Then
         #expect(result1.dataPoints == result2.dataPoints)
@@ -404,4 +398,5 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result1.visualizationType == result2.visualizationType)
         #expect(result1.recommendedChartType == result2.recommendedChartType)
     }
+}
 

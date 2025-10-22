@@ -45,7 +45,6 @@ open class PlatformInternationalizationL1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "platformPresentLocalizedContent_L1",
             testName: "PlatformTest"
         )
@@ -64,7 +63,6 @@ open class PlatformInternationalizationL1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .macOS,
             componentName: "platformPresentLocalizedContent_L1",
             testName: "PlatformTest"
         )
@@ -82,7 +80,6 @@ open class PlatformInternationalizationL1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "platformPresentLocalizedText_L1",
             testName: "PlatformTest"
         )
@@ -98,7 +95,6 @@ open class PlatformInternationalizationL1Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "platformPresentLocalizedText_L1",
             testName: "PlatformTest"
         )

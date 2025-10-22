@@ -361,7 +361,7 @@ open class ImageMetadataIntelligenceTests {
     @Test func testImageMetadataIntelligence_BatchProcessing() async throws {
         // Given
         let images = (0..<5).map { _ in createTestImage() }
-        let intelligence = ImageMetadataIntelligence()
+        let intelligence = await ImageMetadataIntelligence()
         
         // When
         let startTime = CFAbsoluteTimeGetCurrent()

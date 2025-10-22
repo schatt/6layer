@@ -530,53 +530,6 @@ open class DynamicFormTests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    /// BUSINESS PURPOSE: Validate DynamicFormBuilder performance functionality
-    /// TESTING SCOPE: Tests DynamicFormBuilder performance with large forms
-    /// METHODOLOGY: Measure DynamicFormBuilder performance when creating large forms with many fields
-    @Test func testDynamicFormBuilderPerformance() {
-            for i in 0..<100 {
-                builder.startSection(id: "section\(i)", title: "Section \(i)")
-                for j in 0..<10 {
-                    builder.addContentField(
-                        id: "field\(i)_\(j)",
-                        contentType: .text,
-                        label: "Field \(i)-\(j)"
-                    )
-                }
-                builder.endSection()
-            }
-            let _ = builder.build(id: "perf-form", title: "Performance Form")
-        }
-    }
-    
-    /// BUSINESS PURPOSE: Validate DynamicFormState performance functionality
-    /// TESTING SCOPE: Tests DynamicFormState performance with large forms
-    /// METHODOLOGY: Measure DynamicFormState performance when managing large forms with many fields
-    @Test func testDynamicFormStatePerformance() {
-        let config = DynamicFormConfiguration(
-            id: "perf-form",
-            title: "Performance Form",
-            sections: Array(0..<100).map { i in
-                DynamicFormSection(
-                    id: "section\(i)",
-                    title: "Section \(i)",
-                    fields: Array(0..<10).map { j in
-                        DynamicFormField(
-                            id: "field\(i)_\(j)",
-                            contentType: .text,
-                            label: "Field \(i)-\(j)"
-                        )
-                    }
-                )
-            }
-        )
-        
-        let state = DynamicFormState(configuration: config)
-
-            let _ = state.formData
-            let _ = state.isValid
-            // Performance test removed - performance monitoring was removed from framework
-        }
     
     // MARK: - Keyboard Type Verification Tests
     
@@ -709,5 +662,6 @@ open class DynamicFormTests: BaseTestClass {
         // Note: Actual keyboard type verification would require UI testing
         // This test verifies the field is properly configured for text input
     }
+}
     
 

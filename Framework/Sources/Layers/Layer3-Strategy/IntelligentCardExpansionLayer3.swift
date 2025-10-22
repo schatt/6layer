@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - Layer 3: Strategy Selection for Intelligent Card Expansion
 
 /// Expansion strategies available for card collections
-public enum ExpansionStrategy: String, CaseIterable {
+public enum ExpansionStrategy: String, CaseIterable, Sendable {
     case hoverExpand = "hoverExpand"
     case contentReveal = "contentReveal"
     case gridReorganize = "gridReorganize"
@@ -26,7 +26,7 @@ public enum ContentDensity: String, CaseIterable {
 }
 
 /// Card expansion strategy configuration
-public struct CardExpansionStrategy {
+public struct CardExpansionStrategy: Sendable {
     public let supportedStrategies: [ExpansionStrategy]
     public let primaryStrategy: ExpansionStrategy
     public let expansionScale: Double

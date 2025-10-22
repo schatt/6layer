@@ -17,18 +17,18 @@ open class AccessibilityTestingSuiteComponentAccessibilityTests: BaseTestClass {
     // MARK: - Accessibility Testing Suite Component Tests
     
     @Test func testAccessibilityTestingSuiteGeneratesAccessibilityIdentifiers() async {
-        // Given: AccessibilityTestingSuite
-        let testView = AccessibilityTestingSuite()
+        // Given: AccessibilityTestingView (the actual View, not the class)
+        let testView = AccessibilityTestingView()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.element.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityTestingSuite"
+            componentName: "AccessibilityTestingView"
         )
         
-        #expect(hasAccessibilityID, "AccessibilityTestingSuite should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "AccessibilityTestingView should generate accessibility identifiers")
     }
 }
 

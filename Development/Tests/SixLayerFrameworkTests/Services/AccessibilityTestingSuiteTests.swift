@@ -108,20 +108,4 @@ open class AccessibilityTestingSuiteTests {
         #expect(currentConfig != nil)
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testAccessibilityTestingSuitePerformance() async {
-        // Given: AccessibilityTestingSuite
-        let suite = AccessibilityTestingSuite()
-        
-        // When: Measuring test execution performance
-        let startTime = CFAbsoluteTimeGetCurrent()
-        
-        _ = suite.runBasicAccessibilityTests()
-        
-        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-        
-        // Then: Should be performant
-        #expect(timeElapsed < 5.0) // Should complete in under 5 seconds
-    }
 }

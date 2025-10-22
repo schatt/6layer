@@ -6,18 +6,6 @@ import SwiftUI
 
 // MARK: - Test Data Structures
 
-struct TestItem: Identifiable {
-    let id: String
-    let title: String
-    let subtitle: String
-    
-    init(id: String, title: String, subtitle: String) {
-        self.id = id
-        self.title = title
-        self.subtitle = subtitle
-    }
-}
-
 struct AutomaticHIGComplianceTestItem: Identifiable {
     let id: String
     let title: String

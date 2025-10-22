@@ -18,13 +18,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Test Data
     
-    struct TestItem: Identifiable {
-        let id = UUID()
-        let title: String
-        let content: String
-    }
-    
-    let testItem = TestItem(title: "Test Card", content: "Test content for expansion")
+    let testItem = TestItem(title: "Test Card", description: "Test content for expansion")
     
     // MARK: - NativeExpandableCardView Tests
     
@@ -330,15 +324,15 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         )
         
         // When: Measuring performance
-            for _ in 0..<10 {
-                let _ = PlatformAwareExpandableCardView(
-                    item: testItem,
-                    expansionStrategy: .hoverExpand
-                )
-            }
+        for _ in 0..<10 {
+            let _ = PlatformAwareExpandableCardView(
+                item: testItem,
+                expansionStrategy: .hoverExpand
+            )
         }
         
         // Then: Performance should be acceptable
         #expect(cardView != nil, "Card should be created for performance test")
         // Performance test removed - performance monitoring was removed from framework
     }
+}

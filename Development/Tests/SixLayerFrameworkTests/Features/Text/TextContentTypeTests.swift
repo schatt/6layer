@@ -54,7 +54,7 @@ open class TextContentTypeTests {
             )
             
             let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-            let textField = DynamicTextField(field: field, formState: formState)
+            let textField = DynamicFormFieldView(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
             #expect(textField != nil, "Should create text field for \(textContentType.rawValue)")
@@ -120,7 +120,7 @@ open class TextContentTypeTests {
             )
             
             let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-            let textField = DynamicTextField(field: field, formState: formState)
+            let textField = DynamicFormFieldView(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
             #expect(textField != nil, "Should create text field for \(textContentType)")
@@ -143,7 +143,7 @@ open class TextContentTypeTests {
         )
         
         let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-        let textField = DynamicTextField(field: field, formState: formState)
+        let textField = DynamicFormFieldView(field: field, formState: formState)
         
         // Verify OTP field configuration
         #expect(textField != nil, "Should create OTP text field")
@@ -158,7 +158,7 @@ open class TextContentTypeTests {
         )
         
         let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-        let textField = DynamicTextField(field: field, formState: formState)
+        let textField = DynamicFormFieldView(field: field, formState: formState)
         
         // Verify OTP field configuration
         #expect(textField != nil, "Should create OTP text field")
@@ -417,7 +417,7 @@ open class TextContentTypeTests {
             )
             
             let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-            let textField = DynamicTextField(field: field, formState: formState)
+            let textField = DynamicFormFieldView(field: field, formState: formState)
             
             #expect(textField != nil, "Text field should be created on \(platform)")
         }

@@ -298,11 +298,5 @@ struct AccessibilityComplianceResult {
     let hasTabOrderAnalysis: Bool
 }
 
-enum AccessibilityTestCategory {
-    case basic
-    case keyboard
-    case screenReader
-    case advanced
-}
 
 

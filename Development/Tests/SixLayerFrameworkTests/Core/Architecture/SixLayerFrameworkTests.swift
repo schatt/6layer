@@ -6,7 +6,7 @@ import Testing
 open class SixLayerFrameworkTests: BaseTestClass {
     
 
-    @Test func testExample() throws {
+    @Test func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.
@@ -14,7 +14,7 @@ open class SixLayerFrameworkTests: BaseTestClass {
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
 
-    @Test func testPerformanceExample() throws {
+    @Test func testPerformanceExample() {
         // This is an example of a performance test case.
         // Performance test removed - performance monitoring was removed from framework
     }

@@ -1,5 +1,5 @@
 import Testing
-
+import Foundation
 
 //
 //  InternationalizationServiceTests.swift

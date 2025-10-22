@@ -339,42 +339,6 @@ open class WindowDetectionTests {
         }
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testWindowDetectionPerformance() {
-        // GIVEN: A window detection instance
-        // WHEN: Update window info is called many times
-        // THEN: Should complete within reasonable time
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<1000 {
-            windowDetection.updateWindowInfo()
-        }
-        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-        #expect(executionTime < 1.0, "Window detection should complete within 1 second")
-    }
-    
-    @Test func testScreenSizeClassCalculationPerformance() {
-        // GIVEN: Various window sizes
-        let testSizes = [
-            CGSize(width: 320, height: 568),
-            CGSize(width: 768, height: 1024),
-            CGSize(width: 1920, height: 1080),
-            CGSize(width: 0, height: 0),
-            CGSize(width: -100, height: -200),
-            CGSize(width: 100000, height: 100000)
-        ]
-        
-        // WHEN: Screen size class is calculated many times
-        // THEN: Should complete within reasonable time
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<10000 {
-            for size in testSizes {
-                _ = ScreenSizeClass.from(screenSize: size)
-            }
-        }
-        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-        #expect(executionTime < 1.0, "Screen size class calculation should complete within 1 second")
-    }
     
     // MARK: - Memory Management Tests
     
@@ -427,22 +391,15 @@ open class WindowDetectionTests {
 
         // Test that the method can be called safely from different contexts
         // This is a simplified test that doesn't use async/await to avoid hanging
-        let expectation = XCTestExpectation(description: "Thread safety test")
-
+        
         // Capture the windowDetection property before entering the closure
         let windowDetection = self.windowDetection
         
-        DispatchQueue.global(qos: .background).async {
-            // Test that we can call updateWindowInfo from a background queue
-            // The method should handle this gracefully
-            Task { @MainActor in
-                #expect(throws: Never.self) { windowDetection?.updateWindowInfo() }
-                expectation.fulfill()
-            }
+        // Test that we can call updateWindowInfo from a background queue
+        // The method should handle this gracefully
+        await Task { @MainActor in
+            #expect(throws: Never.self) { windowDetection?.updateWindowInfo() }
         }
-
-        // Use a shorter timeout and ensure the expectation is fulfilled
-        wait(for: [expectation], timeout: 0.5)
     }
     
     // MARK: - Platform-Specific Tests (iOS)

@@ -547,7 +547,7 @@ open class ViewGenerationIntegrationTests {
     }
     
     /// Test a specific view generation configuration
-    @Test func testViewGenerationConfiguration(_ config: ViewGenerationTestConfig) {
+    func testViewGenerationConfiguration(_ config: ViewGenerationTestConfig) {
         print("🎨 Testing view generation for: \(config.name)")
         
         // Test view component generation
@@ -566,14 +566,14 @@ open class ViewGenerationIntegrationTests {
     // MARK: - View Component Generation Tests
     
     /// Test that the correct view components are generated
-    @Test func testViewComponentGeneration(_ config: ViewGenerationTestConfig) {
+    func testViewComponentGeneration(_ config: ViewGenerationTestConfig) {
         for expectedComponent in config.expectedViewComponents {
             testViewComponent(expectedComponent, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific view component
-    @Test func testViewComponent(
+    func testViewComponent(
         _ expectedComponent: ViewGenerationTestConfig.ExpectedViewComponent,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
@@ -616,14 +616,14 @@ open class ViewGenerationIntegrationTests {
     // MARK: - Modifier Generation Tests
     
     /// Test that the correct modifiers are generated
-    @Test func testModifierGeneration(_ config: ViewGenerationTestConfig) {
+    func testModifierGeneration(_ config: ViewGenerationTestConfig) {
         for expectedModifier in config.expectedModifiers {
             testModifier(expectedModifier, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific modifier
-    @Test func testModifier(
+    func testModifier(
         _ expectedModifier: ViewGenerationTestConfig.ExpectedModifier,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
@@ -668,14 +668,14 @@ open class ViewGenerationIntegrationTests {
     // MARK: - Behavior Generation Tests
     
     /// Test that the correct behaviors are generated
-    @Test func testBehaviorGeneration(_ config: ViewGenerationTestConfig) {
+    func testBehaviorGeneration(_ config: ViewGenerationTestConfig) {
         for expectedBehavior in config.expectedBehaviors {
             testBehavior(expectedBehavior, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific behavior
-    @Test func testBehavior(
+    func testBehavior(
         _ expectedBehavior: ViewGenerationTestConfig.ExpectedBehavior,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
         configName: String
@@ -718,7 +718,7 @@ open class ViewGenerationIntegrationTests {
     // MARK: - Integration Tests
     
     /// Test view generation integration
-    @Test func testViewGenerationIntegration(_ config: ViewGenerationTestConfig) {
+    func testViewGenerationIntegration(_ config: ViewGenerationTestConfig) {
         // Test that the configuration can be used to generate a complete view
         let mockConfig = createMockPlatformConfig(from: config.capabilities)
         
@@ -751,8 +751,15 @@ open class ViewGenerationIntegrationTests {
         return getCardExpansionPlatformConfig()
     }
     
+    private func createTestViewWithMockConfig(_ config: SixLayerFramework.CardExpansionPlatformConfig) -> AnyView? {
+        // TDD RED PHASE: Stub implementation that fails until real code is implemented
+        // TODO: Implement actual view creation with mock config
+        // For now, return nil to make test fail until implemented
+        return nil // This will make the test fail until real implementation
+    }
+    
     /// Test view generation behavior
-    @Test func testViewGenerationBehavior(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
+    func testViewGenerationBehavior(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration produces the expected view behavior
         // This would test actual view generation in a real implementation
         

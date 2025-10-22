@@ -42,7 +42,7 @@ open class ResponsiveContainerTests {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
+            platform: .iOS,
             componentName: "ResponsiveContainer"
         )
         
@@ -58,7 +58,6 @@ open class ResponsiveContainerTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveContainer"
         )
         

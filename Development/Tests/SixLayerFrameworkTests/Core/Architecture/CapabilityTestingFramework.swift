@@ -90,7 +90,7 @@ open class CapabilityTestingFramework {
         }
         
         /// Create a mock platform config based on this test configuration
-        func createMockPlatformConfig() -> CardExpansionPlatformConfig {
+        func createMockPlatformConfig() -> SixLayerFramework.CardExpansionPlatformConfig {
             return getCardExpansionPlatformConfig()
         }
     }
@@ -98,7 +98,7 @@ open class CapabilityTestingFramework {
     // MARK: - Comprehensive Test Configurations
     
     /// All possible capability combinations to test
-    private let testConfigurations: [CapabilityTestConfig] = [
+    static let testConfigurations: [CapabilityTestConfig] = [
         // Touch-enabled configurations
         CapabilityTestConfig(
             name: "Touch + Haptic + AssistiveTouch (iOS Phone)",
@@ -199,7 +199,8 @@ open class CapabilityTestingFramework {
     }
     
     /// Test a specific capability configuration
-    @Test func testCapabilityConfiguration(_ config: CapabilityTestConfig) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations)
+    func testCapabilityConfiguration(_ config: CapabilityTestConfig) {
         print("🧪 Testing configuration: \(config.name)")
         
         // Test 1: Capability detection
@@ -218,7 +219,8 @@ open class CapabilityTestingFramework {
     // MARK: - Capability Detection Tests
     
     /// Test that capability detection works correctly for the configuration
-    @Test func testCapabilityDetection(_ config: CapabilityTestConfig) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations)
+    func testCapabilityDetection(_ config: CapabilityTestConfig) {
         let mockConfig = config.createMockPlatformConfig()
         
         // Test touch capabilities
@@ -249,7 +251,8 @@ open class CapabilityTestingFramework {
     // MARK: - UI Generation Tests
     
     /// Test that the correct UI components are generated for the configuration
-    @Test func testUIGeneration(_ config: CapabilityTestConfig) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations)
+    func testUIGeneration(_ config: CapabilityTestConfig) {
         let mockConfig = config.createMockPlatformConfig()
         
         // Test touch-related UI generation
@@ -278,7 +281,10 @@ open class CapabilityTestingFramework {
     }
     
     /// Test touch-related UI generation
-    @Test func testTouchUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testTouchUIGeneration(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that touch targets are appropriate
         #expect(config.minTouchTarget >= 44, 
                                   "Touch targets should be adequate for touch-enabled \(configName)")
@@ -289,7 +295,10 @@ open class CapabilityTestingFramework {
     }
     
     /// Test non-touch UI generation
-    @Test func testNonTouchUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testNonTouchUIGeneration(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that touch-related features are disabled
         #expect(!config.supportsTouch, "Touch should not be supported for \(configName)")
         #expect(!config.supportsHapticFeedback, "Haptic feedback should not be supported for \(configName)")
@@ -297,21 +306,30 @@ open class CapabilityTestingFramework {
     }
     
     /// Test hover-related UI generation
-    @Test func testHoverUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testHoverUIGeneration(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that hover is supported
         #expect(config.supportsHover, "Hover should be supported for \(configName)")
         #expect(config.hoverDelay >= 0, "Hover delay should be set for \(configName)")
     }
     
     /// Test non-hover UI generation
-    @Test func testNonHoverUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testNonHoverUIGeneration(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that hover is not supported
         #expect(!config.supportsHover, "Hover should not be supported for \(configName)")
         #expect(config.hoverDelay == 0, "Hover delay should be zero for \(configName)")
     }
     
     /// Test haptic feedback UI generation
-    @Test func testHapticUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testHapticUIGeneration(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that haptic feedback is supported
         #expect(config.supportsHapticFeedback, "Haptic feedback should be supported for \(configName)")
         
@@ -320,7 +338,10 @@ open class CapabilityTestingFramework {
     }
     
     /// Test non-haptic UI generation
-    @Test func testNonHapticUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testNonHapticUIGeneration(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
         // Test that haptic feedback is not supported
         #expect(!config.supportsHapticFeedback, "Haptic feedback should not be supported for \(configName)")
     }

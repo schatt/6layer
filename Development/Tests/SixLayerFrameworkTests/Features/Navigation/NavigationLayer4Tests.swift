@@ -15,13 +15,6 @@ import ViewInspector
 @MainActor
 open class NavigationLayer4Tests {
     
-    // MARK: - Test Types
-    
-    struct TestItem: Identifiable, Hashable {
-        let id = UUID()
-        let value: String
-    }
-    
     // MARK: - Navigation Link Tests
     
     @Test func testPlatformNavigationLink_L4_BasicDestination() {
@@ -291,12 +284,12 @@ open class NavigationLayer4Tests {
     
     @Test func testPlatformNavigationDestination() {
         // Given: Navigation destination with item
-        let item = Binding<TestItem?>(get: { TestItem(value: "test-item") }, set: { _ in })
+        let item = Binding<TestItem?>(get: { TestItem(title: "test-item") }, set: { _ in })
         
         // When: Creating navigation destination
         let destination = Text("Trigger")
             .platformNavigationDestination(item: item) { item in
-                Text("Destination: \(item.value)")
+                Text("Destination: \(item.title)")
             }
         
         // Then: Should create navigation destination
@@ -310,7 +303,7 @@ open class NavigationLayer4Tests {
         // When: Creating navigation destination with nil item
         let destination = Text("Trigger")
             .platformNavigationDestination(item: item) { item in
-                Text("Destination: \(item.value)")
+                Text("Destination: \(item.title)")
             }
         
         // Then: Should create navigation destination (should handle nil gracefully)
@@ -319,24 +312,24 @@ open class NavigationLayer4Tests {
     
     @Test func testPlatformNavigationDestination_WithDifferentItemTypes() {
         // Given: Different item types
-        let item1 = Binding<TestItem?>(get: { TestItem(value: "string") }, set: { _ in })
-        let item2 = Binding<TestItem?>(get: { TestItem(value: "number") }, set: { _ in })
-        let item3 = Binding<TestItem?>(get: { TestItem(value: "uuid") }, set: { _ in })
+        let item1 = Binding<TestItem?>(get: { TestItem(title: "string") }, set: { _ in })
+        let item2 = Binding<TestItem?>(get: { TestItem(title: "number") }, set: { _ in })
+        let item3 = Binding<TestItem?>(get: { TestItem(title: "uuid") }, set: { _ in })
         
         // When: Creating destinations with different item types
         let destination1 = Text("String")
             .platformNavigationDestination(item: item1) { item in
-                Text("String: \(item.value)")
+                Text("String: \(item.title)")
             }
         
         let destination2 = Text("Int")
             .platformNavigationDestination(item: item2) { item in
-                Text("Number: \(item.value)")
+                Text("Number: \(item.title)")
             }
         
         let destination3 = Text("UUID")
             .platformNavigationDestination(item: item3) { item in
-                Text("UUID: \(item.value)")
+                Text("UUID: \(item.title)")
             }
         
         // Then: All destinations should be created successfully
@@ -525,35 +518,4 @@ open class NavigationLayer4Tests {
         #expect(nilDestination != nil, "Nil destination should be created")
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testNavigationComponents_Performance() {
-        // Given: Test data
-        let isActive = Binding<Bool>(get: { false }, set: { _ in })
-        
-        // When: Measuring performance
-        let navigationView = Text("Navigation Content")
-            .platformNavigation {
-                Text("Navigation Content")
-            }
-            
-        let linkView = Text("Link")
-            .platformNavigationLink_L4(
-                title: "Test",
-                systemImage: "star",
-                isActive: isActive
-            ) {
-                Text("Destination")
-            }
-            
-        let containerView = Text("Container")
-            .platformNavigationContainer {
-                Text("Container Content")
-            }
-            
-        let barItemsView = Text("Bar Items")
-            .platformNavigationBarItems_L4(trailing: Button("Action") { })
-        
-        // Performance test removed - performance monitoring was removed from framework
-    }
 }

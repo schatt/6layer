@@ -89,7 +89,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     @Test func testInteractionBehaviorForSupportedGesture() {
         // Given
         let manager = InputHandlingManager(platform: .iOS)
-        let gesture = GestureType.tap
+        let gesture = SixLayerFramework.GestureType.tap
         
         // When
         let behavior = manager.getInteractionBehavior(for: gesture)
@@ -108,7 +108,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     @Test func testInteractionBehaviorForUnsupportedGesture() {
         // Given
         let manager = InputHandlingManager(platform: .iOS)
-        let gesture = GestureType.rightClick // Not supported on iOS
+        let gesture = SixLayerFramework.GestureType.rightClick // Not supported on iOS
         
         // When
         let behavior = manager.getInteractionBehavior(for: gesture)
@@ -116,7 +116,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         // Then
         #expect(!behavior.isSupported)
         #expect(behavior.gesture == gesture)
-        #expect(behavior.inputMethod == .mouse)
+        #expect(behavior.inputMethod == SixLayerFramework.InputType.mouse)
         #expect(!behavior.shouldProvideHapticFeedback)
         #expect(!behavior.shouldProvideSoundFeedback)
     }
@@ -127,7 +127,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     @Test func testInteractionBehaviorForMacOS() {
         // Given
         let manager = InputHandlingManager(platform: .macOS)
-        let gesture = GestureType.click
+        let gesture = SixLayerFramework.GestureType.click
         
         // When
         let behavior = manager.getInteractionBehavior(for: gesture)
@@ -135,7 +135,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         // Then
         #expect(behavior.isSupported)
         #expect(behavior.gesture == gesture)
-        #expect(behavior.inputMethod == .mouse)
+        #expect(behavior.inputMethod == SixLayerFramework.InputType.mouse)
         #expect(!behavior.shouldProvideHapticFeedback)
         #expect(behavior.shouldProvideSoundFeedback)
     }
@@ -560,29 +560,6 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         }
     }
     
-    // MARK: - Performance Tests
-    
-    /// BUSINESS PURPOSE: Validate InputHandlingManager performance functionality
-    /// TESTING SCOPE: Tests InputHandlingManager performance and timing
-    /// METHODOLOGY: Test performance metrics and verify performance functionality
-    @Test func testInputHandlingManagerPerformance() {
-        // Given
-        let iterations = 1000
-        
-        // When
-        }
-    }
-    
-    /// BUSINESS PURPOSE: Validate swipe direction performance functionality
-    /// TESTING SCOPE: Tests swipe direction performance and timing
-    /// METHODOLOGY: Test swipe direction performance and verify performance functionality
-    @Test func testSwipeDirectionPerformance() {
-        // Given - Test enum comparison performance
-        let directions: [SwipeDirection] = [.left, .right, .up, .down]
-        let iterations = 10000
-        
-        // When
-        // Performance test removed - performance monitoring was removed from framework
     
     // MARK: - Edge Case Tests
     
@@ -592,7 +569,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     @Test func testInteractionBehaviorWithAllGestureTypes() {
         // Given
         let manager = InputHandlingManager(platform: .iOS)
-        let allGestures = GestureType.allCases
+        let allGestures = SixLayerFramework.GestureType.allCases
         
         // When & Then
         for gesture in allGestures {
@@ -657,7 +634,6 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             let behavior = manager.getDragBehavior()
             
             // Each platform should have a defined behavior
-            #expect(behavior != nil)
             #expect(behavior.dragPreview == .none || behavior.dragPreview == .platform || behavior.dragPreview == .custom)
             #expect(behavior.dropIndicator == .none || behavior.dropIndicator == .platform || behavior.dropIndicator == .custom)
         }
@@ -703,13 +679,11 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: .macOS,
-            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.macOS,
             componentName: "PlatformInteractionButton"
         )
         
         #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS")
-        // Performance test removed - performance monitoring was removed from framework
     }
 }
 

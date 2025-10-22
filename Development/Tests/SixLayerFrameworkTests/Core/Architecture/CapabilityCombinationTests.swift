@@ -156,7 +156,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         supportsAssistiveTouch: Bool,
         supportsVision: Bool,
         supportsOCR: Bool
-    ) -> CardExpansionPlatformConfig {
+    ) -> SixLayerFramework.CardExpansionPlatformConfig {
         // Create a mock configuration that simulates the specified platform capabilities
         return getCardExpansionPlatformConfig()
     }
@@ -556,7 +556,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
                      "Current platform should not match \(combination.name)")
     }
     
-    private func getActualCapabilityValue(_ capability: String, config: CardExpansionPlatformConfig) -> Bool {
+    private func getActualCapabilityValue(_ capability: String, config: SixLayerFramework.CardExpansionPlatformConfig) -> Bool {
         switch capability {
         case "Touch": return config.supportsTouch
         case "Hover": return config.supportsHover

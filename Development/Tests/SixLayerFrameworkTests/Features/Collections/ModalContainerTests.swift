@@ -238,9 +238,6 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         let strategy = createTestModalStrategy(
-            presentationType: .sheet,
-            sizing: .medium,
-            detents: [.small, .medium, .large],
             platformOptimizations: [
                 .iOS: iOSConstraint,
                 .macOS: macOSConstraint
@@ -376,20 +373,15 @@ open class ModalContainerTests: BaseTestClass {
         // Given: Complex test strategy
         let iOSConstraint = createTestModalConstraint(
             maxWidth: 400,
-            maxHeight: 600,
-            preferredSize: CGSize(width: 350, height: 500)
+            maxHeight: 600
         )
         
         let macOSConstraint = createTestModalConstraint(
             maxWidth: 600,
-            maxHeight: 800,
-            preferredSize: CGSize(width: 500, height: 700)
+            maxHeight: 800
         )
         
         let strategy = createTestModalStrategy(
-            presentationType: .sheet,
-            sizing: .medium,
-            detents: [.small, .medium, .large],
             platformOptimizations: [
                 .iOS: iOSConstraint,
                 .macOS: macOSConstraint
@@ -402,12 +394,13 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testPlatformModalContainer_Form_L4_IntegrationWithFormStrategy() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_IntegrationWithFormStrategy() {
         // Given: Modal strategy that would work with form strategy
         let modalStrategy = createTestModalStrategy(
-            presentationType: .sheet,
-            sizing: .medium,
-            detents: [.medium]
+            platformOptimizations: [
+                .iOS: createTestModalConstraint(maxWidth: 400, maxHeight: 600),
+                .macOS: createTestModalConstraint(maxWidth: 600, maxHeight: 800)
+            ]
         )
         
         // When: Creating modal container
@@ -417,15 +410,15 @@ open class ModalContainerTests: BaseTestClass {
         #expect(container != nil, "Modal container should integrate with form strategy")
     }
     
-    @Test func testPlatformModalContainer_Form_L4_CrossPlatformCompatibility() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_CrossPlatformCompatibility() {
         // Given: Cross-platform compatible strategy
         let iOSConstraint = createTestModalConstraint(maxWidth: 400, maxHeight: 600)
         let macOSConstraint = createTestModalConstraint(maxWidth: 600, maxHeight: 800)
         
         let strategy = createTestModalStrategy(
             platformOptimizations: [
-                SixLayerPlatform.iOS: iOSConstraint,
-                SixLayerPlatform.macOS: macOSConstraint
+                ModalPlatform.iOS: iOSConstraint,
+                ModalPlatform.macOS: macOSConstraint
             ]
         )
         
@@ -445,17 +438,16 @@ open class ModalContainerTests: BaseTestClass {
         return ModalConstraint(
             maxWidth: maxWidth,
             maxHeight: maxHeight,
-            preferredWidth: maxWidth * 0.8,
-            preferredHeight: maxHeight * 0.8
+            preferredSize: CGSize(width: maxWidth * 0.8, height: maxHeight * 0.8)
         )
     }
     
     /// Create a test modal strategy
     /// TDD RED PHASE: This is a stub implementation for testing
-    private func createTestModalStrategy(platformOptimizations: [SixLayerPlatform: ModalConstraint]) -> ModalStrategy {
+    private func createTestModalStrategy(platformOptimizations: [ModalPlatform: ModalConstraint]) -> ModalStrategy {
         return ModalStrategy(
             presentationType: .sheet,
-            sizing: .adaptive,
+            sizing: .medium,
             detents: [.medium, .large],
             platformOptimizations: platformOptimizations
         )
@@ -465,20 +457,8 @@ open class ModalContainerTests: BaseTestClass {
 
 /// Modal constraint for testing
 /// TDD RED PHASE: This is a stub implementation for testing
-struct ModalConstraint {
-    let maxWidth: CGFloat
-    let maxHeight: CGFloat
-    let preferredWidth: CGFloat
-    let preferredHeight: CGFloat
-}
 
 /// Modal strategy for testing
 /// TDD RED PHASE: This is a stub implementation for testing
-struct ModalStrategy {
-    let presentationType: ModalPresentationType
-    let sizing: ModalSizing
-    let detents: [SheetDetent]
-    let platformOptimizations: [SixLayerPlatform: ModalConstraint]
-}
 
 

@@ -179,7 +179,7 @@ open class DRYTestPatterns {
     
     // MARK: - Capability Configuration Factory
     
-    static func createTouchCapabilities() -> MockPlatformCapabilityChecker {
+    nonisolated static func createTouchCapabilities() -> MockPlatformCapabilityChecker {
         let checker = MockPlatformCapabilityChecker()
         checker.touchSupported = true
         checker.hapticSupported = true
@@ -189,7 +189,7 @@ open class DRYTestPatterns {
         return checker
     }
     
-    static func createHoverCapabilities() -> MockPlatformCapabilityChecker {
+    nonisolated static func createHoverCapabilities() -> MockPlatformCapabilityChecker {
         let checker = MockPlatformCapabilityChecker()
         checker.hoverSupported = true
         checker.voiceOverSupported = true
@@ -197,7 +197,7 @@ open class DRYTestPatterns {
         return checker
     }
     
-    static func createAllCapabilities() -> MockPlatformCapabilityChecker {
+    nonisolated static func createAllCapabilities() -> MockPlatformCapabilityChecker {
         let checker = MockPlatformCapabilityChecker()
         checker.touchSupported = true
         checker.hoverSupported = true
@@ -210,17 +210,17 @@ open class DRYTestPatterns {
         return checker
     }
     
-    static func createNoCapabilities() -> MockPlatformCapabilityChecker {
+    nonisolated static func createNoCapabilities() -> MockPlatformCapabilityChecker {
         return MockPlatformCapabilityChecker()
     }
     
     // MARK: - Accessibility Configuration Factory
     
-    static func createNoAccessibility() -> MockAccessibilityFeatureChecker {
+    nonisolated static func createNoAccessibility() -> MockAccessibilityFeatureChecker {
         return MockAccessibilityFeatureChecker()
     }
     
-    static func createAllAccessibility() -> MockAccessibilityFeatureChecker {
+    nonisolated static func createAllAccessibility() -> MockAccessibilityFeatureChecker {
         let checker = MockAccessibilityFeatureChecker()
         checker.reduceMotionEnabled = true
         checker.increaseContrastEnabled = true

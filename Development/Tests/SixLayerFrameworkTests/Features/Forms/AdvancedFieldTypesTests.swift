@@ -397,7 +397,7 @@ open class AdvancedFieldTypesTests {
         #expect(customField.field.contentType == .custom)
     }
     
-    @Test func testCustomFieldRegistry() {
+    @Test @MainActor func testCustomFieldRegistry() {
         // Given
         let registry = CustomFieldRegistry.shared
         
@@ -420,7 +420,7 @@ open class AdvancedFieldTypesTests {
         #expect(retrievedComponent is TestCustomField.Type)
     }
     
-    @Test func testCustomFieldRegistryUnknownType() {
+    @Test @MainActor func testCustomFieldRegistryUnknownType() {
         // Given
         let registry = CustomFieldRegistry.shared
         
@@ -698,7 +698,7 @@ open class AdvancedFieldTypesTests {
         // Test that large text is handled efficiently
     }
     
-    @Test func testAutocompleteFieldPerformance() {
+    @Test @MainActor func testAutocompleteFieldPerformance() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -720,7 +720,7 @@ open class AdvancedFieldTypesTests {
         // Test that large suggestion lists are handled efficiently
     }
     
-    @Test func testFileUploadFieldPerformance() {
+    @Test @MainActor func testFileUploadFieldPerformance() {
         // Given
         let field = DynamicFormField(
             id: "files",

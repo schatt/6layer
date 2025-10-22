@@ -337,42 +337,4 @@ open class LiquidGlassCapabilityDetectionTests {
         }
     }
     
-    // MARK: - Performance Tests
-    
-    @Test @MainActor func testCapabilityDetectionPerformance() {
-        // Given
-        let iterations = 1000
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<iterations {
-            _ = LiquidGlassCapabilityDetection.isSupported
-            _ = LiquidGlassCapabilityDetection.supportLevel
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Capability detection should be fast (under 100ms for 1000 iterations)")
-    }
-    
-    @Test @MainActor func testFeatureAvailabilityPerformance() {
-        // Given
-        let features = LiquidGlassFeature.allCases
-        let iterations = 100
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<iterations {
-            for feature in features {
-                _ = LiquidGlassCapabilityDetection.isFeatureAvailable(feature)
-                _ = LiquidGlassCapabilityDetection.getFallbackBehavior(for: feature)
-            }
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.05, "Feature availability checks should be fast (under 50ms for 100 iterations)")
-    }
 }

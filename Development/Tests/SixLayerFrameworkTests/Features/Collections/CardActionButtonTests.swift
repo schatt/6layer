@@ -1,4 +1,6 @@
 import Testing
+import SwiftUI
+@testable import SixLayerFramework
 
 //
 //  CardActionButtonTests.swift
@@ -45,59 +47,37 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    struct TestItem: Identifiable, CardDisplayable {
-        let id = UUID()
-        let title: String
-        let subtitle: String?
-        let description: String?
-        let icon: String?
-        let color: Color?
-        
-        var cardTitle: String { title }
-        var cardSubtitle: String? { subtitle }
-        var cardDescription: String? { description }
-        var cardIcon: String? { icon }
-        var cardColor: Color? { color }
-    }
-    
-    var sampleItems: [TestItem] = []
-    var layoutDecision: IntelligentCardLayoutDecision!
-    var strategy: CardExpansionStrategy!
-    
-    override init() {
-        
-        sampleItems = [
-            TestItem(
-                title: "Test Item 1", 
-                subtitle: "Subtitle 1", 
-                description: "Description 1", 
-                icon: "star.fill", 
-                color: .blue
-            ),
-            TestItem(
-                title: "Test Item 2", 
-                subtitle: "Subtitle 2", 
-                description: "Description 2", 
-                icon: "heart.fill", 
-                color: .red
-            )
-        ]
-        
-        layoutDecision = IntelligentCardLayoutDecision(
-            columns: 2,
-            spacing: 16,
-            cardWidth: 200,
-            cardHeight: 150,
-            padding: 16
+    nonisolated static let sampleItems: [TestItem] = [
+        TestItem(
+            title: "Test Item 1", 
+            subtitle: "Subtitle 1", 
+            description: "Description 1", 
+            icon: "star.fill", 
+            color: Color.backgroundColor
+        ),
+        TestItem(
+            title: "Test Item 2", 
+            subtitle: "Subtitle 2", 
+            description: "Description 2", 
+            icon: "heart.fill", 
+            color: Color.platformDestructive
         )
-        
-        strategy = CardExpansionStrategy(
-            supportedStrategies: [.contentReveal, .hoverExpand],
-            primaryStrategy: .contentReveal,
-            expansionScale: 1.15,
-            animationDuration: 0.3
-        )
-    }
+    ]
+    
+    nonisolated static let layoutDecision: IntelligentCardLayoutDecision = IntelligentCardLayoutDecision(
+        columns: 2,
+        spacing: 16,
+        cardWidth: 200,
+        cardHeight: 150,
+        padding: 16
+    )
+    
+    nonisolated static let strategy: CardExpansionStrategy = CardExpansionStrategy(
+        supportedStrategies: [.contentReveal, .hoverExpand],
+        primaryStrategy: .contentReveal,
+        expansionScale: 1.15,
+        animationDuration: 0.3
+    )
     
     // MARK: - ExpandableCardComponent Action Button Tests
     
@@ -161,7 +141,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testExpandableCardComponentDeleteButtonCallback() {
         // GIVEN: A test item and delete callback
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         var deleteCallbackCalled = false
         var deleteCallbackItem: TestItem?
         
@@ -173,9 +153,8 @@ open class CardActionButtonTests: BaseTestClass {
         // WHEN: Creating an ExpandableCardComponent with delete callback
         let card = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
             onExpand: {},
@@ -198,7 +177,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testExpandableCardComponentBothActionButtons() {
         // GIVEN: A test item and both callbacks
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         let editCallback: (TestItem) -> Void = { _ in
             // Callback implementation - not tested in this unit test
         }
@@ -209,9 +188,8 @@ open class CardActionButtonTests: BaseTestClass {
         // WHEN: Creating an ExpandableCardComponent with both callbacks
         let card = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
             onExpand: {},
@@ -228,14 +206,13 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testExpandableCardComponentNoActionButtons() {
         // GIVEN: A test item without callbacks
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // WHEN: Creating an ExpandableCardComponent without callbacks
         let card = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true, // Expanded to show action buttons
             isHovered: false,
             onExpand: {},
@@ -252,16 +229,15 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testExpandableCardComponentActionButtonsOnlyWhenExpanded() {
         // GIVEN: A test item with callbacks but not expanded
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         let editCallback: (TestItem) -> Void = { _ in }
         let deleteCallback: (TestItem) -> Void = { _ in }
         
         // WHEN: Creating an ExpandableCardComponent that's not expanded
         let card = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: false, // Not expanded
             isHovered: false,
             onExpand: {},
@@ -280,7 +256,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testSimpleCardComponentActionCallbacks() {
         // GIVEN: A test item and callbacks
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         let selectedCallback: (TestItem) -> Void = { _ in
             // Callback implementation - not tested in this unit test
         }
@@ -294,8 +270,7 @@ open class CardActionButtonTests: BaseTestClass {
         // WHEN: Creating a SimpleCardComponent with callbacks
         let card = SimpleCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
+            layoutDecision: CardActionButtonTests.layoutDecision,
             hints: PresentationHints(),
             onItemSelected: selectedCallback,
             onItemDeleted: deleteCallback,
@@ -310,7 +285,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testListCardComponentActionCallbacks() {
         // GIVEN: A test item
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // WHEN: Creating a ListCardComponent
         let card = ListCardComponent(item: item, hints: PresentationHints())
@@ -323,7 +298,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testCoverFlowCardComponentActionCallbacks() {
         // GIVEN: A test item and callbacks
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         let selectedCallback: (TestItem) -> Void = { _ in
             // Callback implementation - not tested in this unit test
         }
@@ -350,7 +325,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testMasonryCardComponentActionCallbacks() {
         // GIVEN: A test item
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // WHEN: Creating a MasonryCardComponent
         let card = MasonryCardComponent(item: item, hints: PresentationHints())
@@ -363,14 +338,13 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testActionButtonsWithNilCallbacks() {
         // GIVEN: A test item
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // WHEN: Creating components with nil callbacks
         let expandableCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -383,8 +357,7 @@ open class CardActionButtonTests: BaseTestClass {
         
         let simpleCard = SimpleCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
+            layoutDecision: CardActionButtonTests.layoutDecision,
             hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
@@ -409,9 +382,8 @@ open class CardActionButtonTests: BaseTestClass {
         // WHEN: Creating components with empty item
         let expandableCard = ExpandableCardComponent(
             item: emptyItem,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -436,7 +408,7 @@ open class CardActionButtonTests: BaseTestClass {
                 subtitle: "Subtitle \(i)",
                 description: "Description \(i)",
                 icon: "star.fill",
-                color: .blue
+                color: Color.backgroundColor
             )
         }
         
@@ -449,15 +421,37 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testActionButtonBehaviorAcrossPlatforms() {
         // GIVEN: Test item and platform-specific expectations
-        let item = sampleItems[0]
+        let sampleItems = [
+            TestItem(
+                title: "Test Item 1", 
+                subtitle: "Subtitle 1", 
+                description: "Description 1", 
+                icon: "star.fill", 
+                color: Color.backgroundColor
+            ),
+            TestItem(
+                title: "Test Item 2", 
+                subtitle: "Subtitle 2", 
+                description: "Description 2", 
+                icon: "heart.fill", 
+                color: Color.platformDestructive
+            ),
+            TestItem(
+                title: "Test Item 3", 
+                subtitle: "Subtitle 3", 
+                description: "Description 3", 
+                icon: "bookmark.fill", 
+                color: Color.platformSuccess
+            )
+        ]
+        let item = CardActionButtonTests.sampleItems[0]
         let platform = SixLayerPlatform.current
         
         // WHEN: Creating card components on different platforms
         let expandableCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -473,45 +467,44 @@ open class CardActionButtonTests: BaseTestClass {
         case .iOS:
             // iOS should support touch interactions and haptic feedback
             #expect(expandableCard.isExpanded, "iOS cards should support expansion for action buttons")
-            #expect(strategy.supportedStrategies.contains(.contentReveal), 
+            #expect(CardActionButtonTests.strategy.supportedStrategies.contains(.contentReveal), 
                         "iOS should support contentReveal strategy for action buttons")
             
         case .macOS:
             // macOS should support hover interactions and keyboard navigation
             #expect(expandableCard.isExpanded, "macOS cards should support expansion for action buttons")
-            #expect(strategy.supportedStrategies.contains(.hoverExpand), 
+            #expect(CardActionButtonTests.strategy.supportedStrategies.contains(.hoverExpand), 
                         "macOS should support hoverExpand strategy for action buttons")
             
         case .watchOS:
             // watchOS should have simplified interactions due to screen size
             #expect(expandableCard.isExpanded, "watchOS cards should support expansion for action buttons")
-            #expect(strategy.supportedStrategies.contains(.contentReveal), 
+            #expect(CardActionButtonTests.strategy.supportedStrategies.contains(.contentReveal), 
                         "watchOS should support contentReveal strategy for action buttons")
             
         case .tvOS:
             // tvOS should support focus-based navigation
             #expect(expandableCard.isExpanded, "tvOS cards should support expansion for action buttons")
-            #expect(strategy.supportedStrategies.contains(.focusMode), 
+            #expect(CardActionButtonTests.strategy.supportedStrategies.contains(.focusMode), 
                         "tvOS should support focusMode strategy for action buttons")
             
         case .visionOS:
             // visionOS should support spatial interactions
             #expect(expandableCard.isExpanded, "visionOS cards should support expansion for action buttons")
-            #expect(strategy.supportedStrategies.contains(.contentReveal), 
+            #expect(CardActionButtonTests.strategy.supportedStrategies.contains(.contentReveal), 
                         "visionOS should support contentReveal strategy for action buttons")
         }
     }
     
     @Test func testActionButtonVisibilityBasedOnState() {
         // GIVEN: Test item and different expansion states
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // Test expanded state - should show action buttons
         let expandedCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -525,9 +518,8 @@ open class CardActionButtonTests: BaseTestClass {
         // Test collapsed state - should not show action buttons
         let collapsedCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: false,
             isHovered: false,
             onExpand: {},
@@ -549,14 +541,13 @@ open class CardActionButtonTests: BaseTestClass {
     
     @Test func testActionButtonCallbackTypes() {
         // GIVEN: Test item and different callback types
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // Test with all callbacks
         let fullCallbackCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -570,9 +561,8 @@ open class CardActionButtonTests: BaseTestClass {
         // Test with only edit callback
         let editOnlyCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -586,9 +576,8 @@ open class CardActionButtonTests: BaseTestClass {
         // Test with no callbacks
         let noCallbackCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},
@@ -615,16 +604,15 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Accessibility Tests
     
-    @Test func testActionButtonsHaveProperAccessibility() {
+    @Test @MainActor func testActionButtonsHaveProperAccessibility() {
         // GIVEN: A test item
-        let item = sampleItems[0]
+        let item = CardActionButtonTests.sampleItems[0]
         
         // WHEN: Creating components with callbacks
         let expandableCard = ExpandableCardComponent(
             item: item,
-            layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            strategy: strategy,
+            layoutDecision: CardActionButtonTests.layoutDecision,
+            strategy: CardActionButtonTests.strategy,
             isExpanded: true,
             isHovered: false,
             onExpand: {},

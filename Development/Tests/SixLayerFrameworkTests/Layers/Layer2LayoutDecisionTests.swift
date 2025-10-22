@@ -28,14 +28,6 @@ import Foundation
 @MainActor
 open class Layer2LayoutDecisionTests {
     
-    // MARK: - Test Data
-    
-    struct TestItem: Identifiable {
-        let id = UUID()
-        let title: String
-        let content: String
-    }
-    
     // MARK: - determineOptimalLayout_L2 Tests
     
     @Test func testDetermineOptimalLayout_L2_ContentComplexityAlgorithm() {

@@ -219,7 +219,8 @@ public class TestSetupUtilities {
     /// ⚠️ ARCHITECTURAL CONSTRAINT: This function should ONLY be used for testing card-specific functionality.
     /// For general platform capability testing, use RuntimeCapabilityDetection directly.
     /// Card config should ONLY be used by card display functions in production code.
-    public static func getCardExpansionPlatformConfig(
+    @MainActor
+    static func getCardExpansionPlatformConfig(
         supportsHapticFeedback: Bool? = nil,
         supportsHover: Bool? = nil,
         supportsTouch: Bool? = nil,
@@ -229,9 +230,9 @@ public class TestSetupUtilities {
         minTouchTarget: CGFloat? = nil,
         hoverDelay: TimeInterval? = nil,
         animationEasing: Animation? = nil
-    ) async -> CardExpansionPlatformConfig {
+    ) -> SixLayerFramework.CardExpansionPlatformConfig {
         // Use the framework's getCardExpansionPlatformConfig function
-        return await SixLayerFramework.getCardExpansionPlatformConfig()
+        return SixLayerFramework.getCardExpansionPlatformConfig()
     }
     
     /// Asserts that a card expansion config matches expected capabilities
@@ -250,8 +251,8 @@ public class TestSetupUtilities {
     ///   - assistiveTouch: Expected AssistiveTouch support
     ///   - file: File name for assertion
     ///   - line: Line number for assertion
-    public func assertCardExpansionConfig(
-        _ config: CardExpansionPlatformConfig,
+    func assertCardExpansionConfig(
+        _ config: SixLayerFramework.CardExpansionPlatformConfig,
         touch: Bool? = nil,
         haptic: Bool? = nil,
         hover: Bool? = nil,

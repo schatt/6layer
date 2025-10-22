@@ -60,4 +60,14 @@ public class AccessibilityIdentifierGenerator {
         
         return generatedID
     }
+    
+    /// Check if an identifier has collision with existing registered identifiers
+    /// - Parameter identifier: The identifier to check
+    /// - Returns: True if collision detected, false otherwise
+    public func checkForCollision(_ identifier: String) -> Bool {
+        // TDD RED PHASE: Stub implementation that fails until real code is implemented
+        // TODO: Implement actual collision detection logic
+        // For now, return false to make test fail until implemented
+        return false // This will make the test fail until real implementation
+    }
 }

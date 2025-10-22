@@ -11,15 +11,6 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    struct TestItem: Identifiable {
-        let id = UUID()
-        let title: String
-        let subtitle: String?
-        let description: String?
-        let icon: String?
-        let color: Color?
-    }
-    
     struct TestItemWithData: Identifiable {
         let id = UUID()
         let name: String
@@ -64,7 +55,6 @@ open class CardContentDisplayTests: BaseTestClass {
             item: item,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
-            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -85,7 +75,6 @@ open class CardContentDisplayTests: BaseTestClass {
             item: item,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
-            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -103,7 +92,6 @@ open class CardContentDisplayTests: BaseTestClass {
         let card = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
@@ -130,8 +118,6 @@ open class CardContentDisplayTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -161,8 +147,6 @@ open class CardContentDisplayTests: BaseTestClass {
         let card = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
-            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: true,
             isHovered: false,
@@ -229,7 +213,6 @@ open class CardContentDisplayTests: BaseTestClass {
             item: genericItems[0],
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
-            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -256,7 +239,6 @@ open class CardContentDisplayTests: BaseTestClass {
             item: vehicles[0],
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
-            hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
             onItemEdited: nil
@@ -281,7 +263,6 @@ open class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: emptyItem,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
@@ -312,7 +293,6 @@ open class CardContentDisplayTests: BaseTestClass {
         let simpleCard = SimpleCardComponent(
             item: longItem,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,
@@ -350,14 +330,23 @@ open class CardContentDisplayTests: BaseTestClass {
     // MARK: - Accessibility Tests
     
     @Test func testCardComponentsHaveProperAccessibility() {
-        // GIVEN: A test item
+        // GIVEN: A test item and layout decision
+        let sampleItems = [
+            TestItem(title: "Test Item", subtitle: "Subtitle", description: "Description", icon: "star.fill", color: .blue)
+        ]
+        let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
+            cardWidth: 200,
+            cardHeight: 150,
+            padding: 16
+        )
         let item = sampleItems[0]
         
         // WHEN: Creating card components
         let simpleCard = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             hints: PresentationHints(),
             onItemSelected: nil,
             onItemDeleted: nil,

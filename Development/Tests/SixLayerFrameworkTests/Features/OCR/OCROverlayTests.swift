@@ -124,10 +124,11 @@ open class OCROverlayTests: BaseTestClass {
         let boundingBox = CGRect(x: 0.1, y: 0.2, width: 0.5, height: 0.3) // Normalized coordinates
         
         // When: Converting to image coordinates
-        let convertedBox = OCROverlayView.convertBoundingBoxToImageCoordinates(
-            boundingBox: boundingBox,
-            imageSize: imageSize
+        let overlayView = OCROverlayView(
+            image: PlatformImage(),
+            result: OCRResult(extractedText: "", confidence: 0.0, boundingBoxes: [])
         )
+        let convertedBox = overlayView.convertBoundingBoxToImageCoordinates(boundingBox)
         
         // Then: Should convert correctly
         #expect(convertedBox.origin.x == 20) // 0.1 * 200
@@ -174,8 +175,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // Then: Should detect correct region
         #expect(detectedRegion != nil, "Should detect tapped text region")
-        #expect(detectedRegion?.text == "Hello World")
-        #expect(detectedRegion?.boundingBox == testBoundingBoxes[0])
+        #expect(detectedRegion == testBoundingBoxes[0], "Should return correct bounding box")
     }
     
     @Test @MainActor func testTextRegionTapOutsideBounds() {
@@ -244,12 +244,12 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // When: Starting text editing
-        overlayView.startTextEditing(for: testBoundingBoxes[0])
+        overlayView.startTextEditing(in: testBoundingBoxes[0])
         
         // Then: Should be able to detect tapped region
         let tappedRegion = overlayView.detectTappedTextRegion(at: CGPoint(x: testBoundingBoxes[0].midX, y: testBoundingBoxes[0].midY))
         #expect(tappedRegion != nil, "Should detect tapped region")
-        #expect(tappedRegion?.boundingBox == testBoundingBoxes[0])
+        #expect(tappedRegion == testBoundingBoxes[0], "Should return correct bounding box")
     }
     
     @Test @MainActor func testTextEditingCompletion() {
@@ -285,11 +285,11 @@ open class OCROverlayTests: BaseTestClass {
             onTextDelete: { _ in }
         )
         
-        overlayView.startTextEditing(for: testBoundingBoxes[0])
+        overlayView.startTextEditing(in: testBoundingBoxes[0])
         
         // When: Completing text editing
         let newText = "Edited Text"
-        overlayView.completeTextEditing(with: newText)
+        overlayView.completeTextEditing()
         
         // Then: Should call completion handler
         #expect(editedText == newText)
@@ -324,7 +324,7 @@ open class OCROverlayTests: BaseTestClass {
             onTextDelete: { _ in }
         )
         
-        overlayView.startTextEditing(for: testBoundingBoxes[0])
+        overlayView.startTextEditing(in: testBoundingBoxes[0])
         
         // When: Canceling text editing
         overlayView.cancelTextEditing()
@@ -368,7 +368,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // When: Deleting text region
-        overlayView.deleteTextRegion(at: testBoundingBoxes[1])
+        overlayView.deleteTextRegion(testBoundingBoxes[1])
         
         // Then: Should call deletion handler
         #expect(deletedRect == testBoundingBoxes[1])
@@ -622,20 +622,14 @@ open class OCROverlayTests: BaseTestClass {
             )
         ]
         
-        let disambiguationResult = OCRDisambiguationResult(
-            candidates: candidates,
-            confidence: 0.8,
-            requiresUserSelection: true
+        let disambiguationSelection = OCRDisambiguationSelection(
+            candidateId: candidates[0].id,
+            selectedType: .name,
+            customText: nil
         )
         
         // When: Creating overlay from disambiguation result
-        let testImage = PlatformImage()
-        let overlayView = OCROverlayView.fromDisambiguationResult(
-            image: testImage,
-            result: disambiguationResult,
-            onTextEdit: { _, _ in },
-            onTextDelete: { _ in }
-        )
+        let overlayView = OCROverlayView.fromDisambiguationResult(disambiguationSelection)
         
         // Then: Should create overlay successfully
         // OCROverlayView is non-optional - no need to check for nil

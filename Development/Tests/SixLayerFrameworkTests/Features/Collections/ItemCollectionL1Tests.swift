@@ -14,24 +14,17 @@ import SwiftUI
 @MainActor
 open class ItemCollectionL1Tests: BaseTestClass {
     
-    // MARK: - Test Data
-    
-    private var sampleItems: [GenericDataItem] = []
-    private var sampleHints: PresentationHints = PresentationHints()
-    
-    override init() {
-        sampleItems = createSampleItems()
-        sampleHints = PresentationHints()
-    }    // MARK: - Item Collection Tests
+    // MARK: - Item Collection Tests
     
     @Test func testPlatformPresentItemCollection_L1() {
         // Given
-        let items = sampleItems
+        let items = createSampleItems()
+        let hints = PresentationHints()
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
-            hints: sampleHints
+            hints: hints
         )
         
         // Then
@@ -124,7 +117,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     @Test func testPlatformPresentItemCollection_L1_WithGridHints() {
         // Given
-        let items = sampleItems
+        let items = createSampleItems()
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .grid,
@@ -133,7 +126,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -144,7 +137,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     @Test func testPlatformPresentItemCollection_L1_WithListHints() {
         // Given
-        let items = sampleItems
+        let items = createSampleItems()
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .list,
@@ -153,7 +146,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )

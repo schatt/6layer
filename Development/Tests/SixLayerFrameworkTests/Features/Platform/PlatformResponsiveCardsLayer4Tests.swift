@@ -63,7 +63,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericItemCollectionView",
             testName: "PlatformTest"
         )
@@ -92,7 +91,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericItemCollectionView",
             testName: "PlatformTest"
         )
@@ -120,7 +118,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericNumericDataView",
             testName: "PlatformTest"
         )
@@ -146,7 +143,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericNumericDataView",
             testName: "PlatformTest"
         )
@@ -174,7 +170,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericMediaView",
             testName: "PlatformTest"
         )
@@ -200,7 +195,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericMediaView",
             testName: "PlatformTest"
         )
@@ -240,7 +234,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericSettingsView",
             testName: "PlatformTest"
         )
@@ -278,7 +271,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericSettingsView",
             testName: "PlatformTest"
         )
@@ -303,7 +295,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericContentView",
             testName: "PlatformTest"
         )
@@ -326,7 +317,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericContentView",
             testName: "PlatformTest"
         )
@@ -354,7 +344,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericNumericDataView",
             testName: "PlatformTest"
         )
@@ -380,7 +369,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericNumericDataView",
             testName: "PlatformTest"
         )
@@ -408,7 +396,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.iOS,
             componentName: "GenericItemCollectionView",
             testName: "PlatformTest"
         )
@@ -434,7 +421,6 @@ open class PlatformResponsiveCardsLayer4Tests {
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
             expectedPattern: "SixLayer.main.element.*", 
-            platform: SixLayerPlatform.macOS,
             componentName: "GenericItemCollectionView",
             testName: "PlatformTest"
         )

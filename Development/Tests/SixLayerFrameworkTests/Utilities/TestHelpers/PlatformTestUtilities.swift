@@ -71,49 +71,6 @@ struct PlatformCapabilitiesTestSnapshot {
 }
 
 /// Card expansion platform configuration for testing
-/// TDD RED PHASE: This is a stub implementation for testing
-struct CardExpansionPlatformConfig {
-    let supportsHapticFeedback: Bool
-    let supportsHover: Bool
-    let supportsTouch: Bool
-    let supportsVoiceOver: Bool
-    let supportsSwitchControl: Bool
-    let supportsAssistiveTouch: Bool
-    let minTouchTarget: CGFloat
-    let hoverDelay: TimeInterval
-    let animationEasing: AnimationEasing
-    
-    init(
-        supportsHapticFeedback: Bool = true,
-        supportsHover: Bool = false,
-        supportsTouch: Bool = true,
-        supportsVoiceOver: Bool = true,
-        supportsSwitchControl: Bool = true,
-        supportsAssistiveTouch: Bool = true,
-        minTouchTarget: CGFloat = 44,
-        hoverDelay: TimeInterval = 0.0,
-        animationEasing: AnimationEasing = .easeInOut(duration: 0.2)
-    ) {
-        self.supportsHapticFeedback = supportsHapticFeedback
-        self.supportsHover = supportsHover
-        self.supportsTouch = supportsTouch
-        self.supportsVoiceOver = supportsVoiceOver
-        self.supportsSwitchControl = supportsSwitchControl
-        self.supportsAssistiveTouch = supportsAssistiveTouch
-        self.minTouchTarget = minTouchTarget
-        self.hoverDelay = hoverDelay
-        self.animationEasing = animationEasing
-    }
-}
-
-/// Animation easing for testing
-/// TDD RED PHASE: This is a stub implementation for testing
-enum AnimationEasing {
-    case easeInOut(duration: TimeInterval)
-    case easeIn(duration: TimeInterval)
-    case easeOut(duration: TimeInterval)
-    case linear(duration: TimeInterval)
-}
 
 /// Centralized platform test utilities for consistent capability testing
 final class PlatformTestUtilities {
@@ -163,6 +120,7 @@ final class PlatformTestUtilities {
     }
     
     /// Creates a complete macOS platform test configuration with all capabilities set appropriately
+    @MainActor
     static func createMacOSPlatformTestConfig() -> PlatformTestConfig {
         return PlatformTestConfig(
             platform: SixLayerPlatform.macOS,

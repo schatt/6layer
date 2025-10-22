@@ -136,12 +136,12 @@ struct ComprehensiveCapabilityTestRunner {
     
 @Test func testAllComprehensiveCapabilityTests() {
         for config in testRunnerConfigurations {
-            runComprehensiveCapabilityTest(config)
+            await runComprehensiveCapabilityTest(config)
         }
     }
     
     /// Run a specific comprehensive capability test
-    private func runComprehensiveCapabilityTest(_ config: TestRunnerConfig) {
+    private func runComprehensiveCapabilityTest(_ config: TestRunnerConfig) async {
         print("🚀 Running comprehensive capability test: \(config.name)")
         print("   Test types: \(config.testTypes.map { "\($0)" }.joined(separator: ", "))")
         print("   Platforms: \(config.platforms.map { "\($0)" }.joined(separator: ", "))")
@@ -496,7 +496,7 @@ struct ComprehensiveCapabilityTestRunner {
         defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Complete Capability Testing" }!
-        runComprehensiveCapabilityTest(config)
+        await runComprehensiveCapabilityTest(config)
     }
     
     /// Run touch-focused testing
@@ -505,7 +505,7 @@ struct ComprehensiveCapabilityTestRunner {
         defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Touch-Focused Testing" }!
-        runComprehensiveCapabilityTest(config)
+        await runComprehensiveCapabilityTest(config)
     }
     
     /// Run hover-focused testing
@@ -514,25 +514,27 @@ struct ComprehensiveCapabilityTestRunner {
         defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Hover-Focused Testing" }!
-        runComprehensiveCapabilityTest(config)
+        await runComprehensiveCapabilityTest(config)
     }
     
     /// Run accessibility-focused testing
-    @Test func accessibilityFocusedTesting() {
+    @Test func accessibilityFocusedTesting() async {
         await setupTestEnvironment()
-        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Accessibility-Focused Testing" }!
-        runComprehensiveCapabilityTest(config)
+        await runComprehensiveCapabilityTest(config)
+        
+        await cleanupTestEnvironment()
     }
     
     /// Run vision-focused testing
-    @Test func visionFocusedTesting() {
+    @Test func visionFocusedTesting() async {
         await setupTestEnvironment()
-        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Vision-Focused Testing" }!
-        runComprehensiveCapabilityTest(config)
+        await runComprehensiveCapabilityTest(config)
+        
+        await cleanupTestEnvironment()
     }
     
     // MARK: - Helper Functions

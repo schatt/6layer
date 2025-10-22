@@ -208,8 +208,27 @@ open class IntelligentCardExpansionTests {
         // Test that expandable card components work
         let card = ExpandableCardComponent(
             item: sampleMenuItems[0],
-            expansionStrategy: .hoverExpand,
-            isExpanded: false
+            layoutDecision: IntelligentCardLayoutDecision(
+                columns: 2,
+                spacing: 16,
+                cardWidth: 200,
+                cardHeight: 150,
+                padding: 16
+            ),
+            strategy: CardExpansionStrategy(
+                supportedStrategies: [.hoverExpand],
+                primaryStrategy: .hoverExpand,
+                expansionScale: 1.15,
+                animationDuration: 0.3
+            ),
+            isExpanded: false,
+            isHovered: false,
+            onExpand: {},
+            onCollapse: {},
+            onHover: { _ in },
+            onItemSelected: { _ in },
+            onItemDeleted: { _ in },
+            onItemEdited: { _ in }
         )
         
         #expect(card != nil)
@@ -257,7 +276,10 @@ open class IntelligentCardExpansionTests {
         // Test that native SwiftUI components are used
         let nativeView = NativeExpandableCardView(
             item: sampleMenuItems[0],
-            expansionStrategy: .hoverExpand
+            expansionStrategy: .hoverExpand,
+            platformConfig: getCardExpansionPlatformConfig(),
+            performanceConfig: getCardExpansionPerformanceConfig(),
+            accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
         
         #expect(nativeView != nil)
@@ -359,19 +381,6 @@ private enum ContentDensity {
     case spacious
 }
 
-private enum ExpansionStrategy {
-    case hoverExpand
-    case contentReveal
-    case gridReorganize
-    case focusMode
-}
-
-private struct CardExpansionStrategy {
-    let supportedStrategies: [ExpansionStrategy]
-    let primaryStrategy: ExpansionStrategy
-    let expansionScale: Double
-}
-
 private struct SmartGridContainer {
     let items: [MenuItem]
     let hints: PresentationHints
@@ -379,18 +388,6 @@ private struct SmartGridContainer {
     init(items: [MenuItem], hints: PresentationHints) {
         self.items = items
         self.hints = hints
-    }
-}
-
-private struct ExpandableCardComponent {
-    let item: MenuItem
-    let expansionStrategy: ExpansionStrategy
-    let isExpanded: Bool
-    
-    init(item: MenuItem, expansionStrategy: ExpansionStrategy, isExpanded: Bool) {
-        self.item = item
-        self.expansionStrategy = expansionStrategy
-        self.isExpanded = isExpanded
     }
 }
 

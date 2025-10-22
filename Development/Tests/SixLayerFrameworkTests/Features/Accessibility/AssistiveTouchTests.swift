@@ -325,13 +325,4 @@ open class AssistiveTouchTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: AssistiveTouchManager performance testing ensures gesture processing is efficient
     /// TESTING SCOPE: Tests performance of gesture processing operations under load
-    /// METHODOLOGY: Measures execution time of repeated gesture processing operations
-    @Test func testAssistiveTouchPerformance() {
-        // Given: AssistiveTouch Manager
-        let config = AssistiveTouchConfig(enableIntegration: true)
-        let manager = AssistiveTouchManager(config: config)
-        
-        // When: Measuring performance
-        // Performance test removed - performance monitoring was removed from framework
-    }
 }

@@ -10,21 +10,14 @@ import SwiftUI
 @MainActor
 final class Layer2ComponentAccessibilityTests {
     
-    // MARK: - Test Data
-    
-    struct TestItem: Identifiable {
-        let id: String
-        let value: Any
-    }
-    
     // MARK: - Layout Decision Tests
     
     @Test func testDetermineOptimalLayoutL2ReturnsValidDecision() async {
         // Given: Test items and hints
         let testItems = [
-            TestItem(id: "item1", value: "Test Item 1"),
-            TestItem(id: "item2", value: "Test Item 2"),
-            TestItem(id: "item3", value: "Test Item 3")
+            TestItem(id: "item1", title: "Test Item 1", value: "Test Item 1"),
+            TestItem(id: "item2", title: "Test Item 2", value: "Test Item 2"),
+            TestItem(id: "item3", title: "Test Item 3", value: "Test Item 3")
         ]
         let hints = PresentationHints()
         
@@ -76,7 +69,7 @@ final class Layer2ComponentAccessibilityTests {
         )
         
         // Then: Should have valid card layout decision properties
-        #expect(cardLayoutDecision.approach != nil, "Layer 2 should return valid card layout approach")
+        #expect(cardLayoutDecision.layout != nil, "Layer 2 should return valid card layout")
         #expect(cardLayoutDecision.columns > 0, "Layer 2 should return valid column count")
         #expect(cardLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
     }
@@ -92,14 +85,14 @@ final class Layer2ComponentAccessibilityTests {
         
         // When: Creating intelligent card layout decision using Layer 2 function
         let intelligentLayoutDecision = determineIntelligentCardLayout_L2(
-            cardData: testCardData,
-            hints: hints,
+            contentCount: testCardData.count,
             screenWidth: 400,
-            deviceType: .phone
+            deviceType: .phone,
+            contentComplexity: .simple
         )
         
         // Then: Should have valid intelligent layout decision properties
-        #expect(intelligentLayoutDecision.approach != nil, "Layer 2 should return valid intelligent layout approach")
+        #expect(intelligentLayoutDecision.cardWidth > 0, "Layer 2 should return valid card width")
         #expect(intelligentLayoutDecision.columns > 0, "Layer 2 should return valid column count")
         #expect(intelligentLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
     }
@@ -111,16 +104,28 @@ final class Layer2ComponentAccessibilityTests {
         
         // When: Creating photo layout decision using Layer 2 function
         let photoLayoutDecision = determineOptimalPhotoLayout_L2(
-            photoData: testPhotoData,
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            purpose: .vehiclePhoto,
+            context: PhotoContext(
+                screenSize: CGSize(width: 400, height: 300),
+                availableSpace: CGSize(width: 400, height: 300),
+                userPreferences: PhotoPreferences(
+                    preferredSource: .camera,
+                    allowEditing: true,
+                    compressionQuality: 0.8
+                ),
+                deviceCapabilities: PhotoDeviceCapabilities(
+                    hasCamera: true,
+                    hasPhotoLibrary: true,
+                    maxImageSize: CGSize(width: 4096, height: 4096),
+                    supportedFormats: [.jpeg, .png]
+                )
+            )
         )
         
         // Then: Should have valid photo layout decision properties
-        #expect(photoLayoutDecision.approach != nil, "Layer 2 should return valid photo layout approach")
-        #expect(photoLayoutDecision.columns > 0, "Layer 2 should return valid column count")
-        #expect(photoLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(photoLayoutDecision.width > 0, "Layer 2 should return valid photo width")
+        #expect(photoLayoutDecision.height > 0, "Layer 2 should return valid photo height")
+        #expect(photoLayoutDecision.width <= 400, "Layer 2 should respect screen width constraint")
     }
     
     @Test func testDeterminePhotoCaptureStrategyL2ReturnsValidDecision() async {

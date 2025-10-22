@@ -82,7 +82,6 @@ open class IntelligentCardExpansionLayer4Tests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
         )
         

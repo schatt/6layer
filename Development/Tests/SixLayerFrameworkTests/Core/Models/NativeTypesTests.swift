@@ -54,21 +54,6 @@ struct MockDataContainer: Equatable {
 @MainActor
 open class NativeTypesTests: BaseTestClass {
     
-    var formState: DynamicFormState!
-    var configuration: DynamicFormConfiguration!
-    
-    func setupTestEnvironment() async {
-        configuration = DynamicFormConfiguration(
-            id: "test",
-            title: "Test Form",
-            description: "Test form for native types",
-            sections: [],
-            submitButtonText: "Submit",
-            cancelButtonText: "Cancel"
-        )
-        formState = DynamicFormState(configuration: configuration)
-    }
-    
     // MARK: - High Priority Tests
     
 @Test func testImageFieldTypeExists() {
@@ -81,6 +66,15 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testImageFieldNativeBinding() {
         // Given
+        let configuration = DynamicFormConfiguration(
+            id: "test",
+            title: "Test Form",
+            description: "Test form for native types",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+        let formState = DynamicFormState(configuration: configuration)
         let field = DynamicFormField(
             id: "profilePhoto",
             contentType: .image,
@@ -357,6 +351,15 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testImageMemoryManagement() {
         // Given
+        let configuration = DynamicFormConfiguration(
+            id: "test",
+            title: "Test Form",
+            description: "Test form for native types",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+        let formState = DynamicFormState(configuration: configuration)
         let field = DynamicFormField(
             id: "image",
             contentType: .image,

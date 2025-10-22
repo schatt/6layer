@@ -287,18 +287,18 @@ open class AccessibilityPreferenceTests {
     /// Tests that accessibility features are consistently available across platforms
     @Test func testCrossPlatformAccessibilityConsistency() {
         // Given: Different platform configurations
-        let simulatedPlatforms = PlatformSimulationTests.simulatedPlatforms
+        let simulatedPlatforms = PlatformSimulationTests.testPlatforms
         
         // When: Check accessibility features for each platform
-        for simulatedPlatform in simulatedPlatforms {
-            let platform = simulatedPlatform.platform
-            let capabilities = simulatedPlatform.capabilities
+        for platform in simulatedPlatforms {
+            // Get platform capabilities using the framework's capability detection
+            let config = getCardExpansionPlatformConfig()
             
             // Then: Test actual business logic
             // Each platform should have consistent accessibility support
-            #expect(capabilities.supportsVoiceOver != nil, "VoiceOver should be detectable on \(platform)")
-            #expect(capabilities.supportsSwitchControl != nil, "Switch Control should be detectable on \(platform)")
-            #expect(capabilities.minTouchTarget >= 44, "Touch targets should meet minimum size on \(platform)")
+            #expect(config.supportsVoiceOver != nil, "VoiceOver should be detectable on \(platform)")
+            #expect(config.supportsSwitchControl != nil, "Switch Control should be detectable on \(platform)")
+            #expect(config.minTouchTarget >= 44, "Touch targets should meet minimum size on \(platform)")
         }
     }
 }

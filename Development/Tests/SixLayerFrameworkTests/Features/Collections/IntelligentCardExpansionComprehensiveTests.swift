@@ -379,7 +379,6 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let card = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             strategy: strategy,
             isExpanded: false,
             isHovered: false,
@@ -421,7 +420,6 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let hoverCard = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             strategy: hoverStrategy,
             isExpanded: false,
             isHovered: false,
@@ -436,7 +434,6 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let contentRevealCard = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
-            hints: PresentationHints(),
             strategy: contentRevealStrategy,
             isExpanded: false,
             isHovered: false,
@@ -456,7 +453,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testGetCardExpansionPlatformConfig() {
         // Test iOS platform configuration
-        simulatePlatform(.iOS)
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
         var config = getCardExpansionPlatformConfig()
         #expect(config != nil)
         TestSetupUtilities.shared.assertCardExpansionConfig(
@@ -470,7 +467,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         // Test macOS platform configuration
-        simulatePlatform(.macOS)
+        RuntimeCapabilityDetection.setTestPlatform(.macOS)
         config = getCardExpansionPlatformConfig()
         #expect(config != nil)
         TestSetupUtilities.shared.assertCardExpansionConfig(
@@ -484,7 +481,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         // Test watchOS platform configuration
-        simulatePlatform(.watchOS)
+        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
         config = getCardExpansionPlatformConfig()
         #expect(config != nil)
         TestSetupUtilities.shared.assertCardExpansionConfig(
@@ -498,7 +495,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         // Test tvOS platform configuration
-        simulatePlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
         config = getCardExpansionPlatformConfig()
         #expect(config != nil)
         TestSetupUtilities.shared.assertCardExpansionConfig(
@@ -512,7 +509,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         // Test visionOS platform configuration
-        simulatePlatform(.visionOS)
+        TestSetupUtilities.shared.simulatePlatform(.visionOS)
         config = getCardExpansionPlatformConfig()
         #expect(config != nil)
         TestSetupUtilities.shared.assertCardExpansionConfig(
