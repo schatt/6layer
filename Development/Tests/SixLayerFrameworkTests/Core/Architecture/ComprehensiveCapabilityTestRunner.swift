@@ -509,12 +509,13 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run hover-focused testing
-    @Test func hoverFocusedTesting() {
+    @Test func hoverFocusedTesting() async {
         await setupTestEnvironment()
-        defer { await cleanupTestEnvironment() }
         
         let config = testRunnerConfigurations.first { $0.name == "Hover-Focused Testing" }!
         await runComprehensiveCapabilityTest(config)
+        
+        await cleanupTestEnvironment()
     }
     
     /// Run accessibility-focused testing

@@ -23,11 +23,8 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Test Data Setup
     
-    private var testFormState: DynamicFormState!
-    private var testConfiguration: DynamicFormConfiguration!
-    
-    init() async throws {
-        testConfiguration = DynamicFormConfiguration(
+    private func createTestFormState() -> DynamicFormState {
+        let testConfiguration = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
             description: "Test form for Advanced Field Types",
@@ -35,7 +32,7 @@ open class AdvancedFieldTypesTests {
             submitButtonText: "Submit",
             cancelButtonText: "Cancel"
         )
-        testFormState = DynamicFormState(configuration: testConfiguration)
+        return DynamicFormState(configuration: testConfiguration)
     }    // MARK: - Rich Text Editor Tests
     
     /**
@@ -46,6 +43,7 @@ open class AdvancedFieldTypesTests {
      */
     @Test func testRichTextEditorFieldInitialization() {
         // Given
+        let testFormState = createTestFormState()
         let field = DynamicFormField(
             id: "richText",
             contentType: .richtext,
@@ -371,6 +369,7 @@ open class AdvancedFieldTypesTests {
     
     @Test func testCustomFieldComponentProtocol() {
         // Given
+        let testFormState = createTestFormState()
         let field = DynamicFormField(
             id: "custom",
             contentType: .text,

@@ -47,7 +47,7 @@ open class DRYTestPatterns {
     }
     
     /// Mock platform capability checker for testing
-    class MockPlatformCapabilityChecker: PlatformCapabilityChecker {
+    class MockPlatformCapabilityChecker: PlatformCapabilityChecker, @unchecked Sendable {
         var touchSupported: Bool = false
         var hoverSupported: Bool = false
         var hapticSupported: Bool = false
@@ -133,7 +133,7 @@ open class DRYTestPatterns {
     }
     
     /// Mock accessibility feature checker for testing
-    class MockAccessibilityFeatureChecker: AccessibilityFeatureChecker {
+    class MockAccessibilityFeatureChecker: AccessibilityFeatureChecker, @unchecked Sendable {
         var reduceMotionEnabled: Bool = false
         var increaseContrastEnabled: Bool = false
         var reduceTransparencyEnabled: Bool = false

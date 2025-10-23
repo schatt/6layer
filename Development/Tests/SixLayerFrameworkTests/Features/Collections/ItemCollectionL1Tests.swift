@@ -77,7 +77,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     @Test func testPlatformPresentItemCollection_L1_WithCompactHints() {
         // Given
-        let items = sampleItems
+        let items = createSampleItems()
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .compact,
@@ -86,7 +86,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -97,7 +97,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     @Test func testPlatformPresentItemCollection_L1_WithDetailedHints() {
         // Given
-        let items = sampleItems
+        let items = createSampleItems()
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .detail,
@@ -106,7 +106,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )

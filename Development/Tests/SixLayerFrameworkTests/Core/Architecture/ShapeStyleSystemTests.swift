@@ -448,7 +448,7 @@ open class ShapeStyleSystemTests {
     
     // MARK: - Accessibility Extension Tests
     
-    @Test func testAccessibilityAwareBackgroundModifier() {
+    @Test @MainActor func testAccessibilityAwareBackgroundModifier() {
         // Given: A view and styles
         let testView = Text("Test")
         let normalStyle = AnyShapeStyle(Color.blue)
@@ -464,7 +464,7 @@ open class ShapeStyleSystemTests {
         #expect(modifiedView != nil)
     }
     
-    @Test func testAccessibilityAwareForegroundModifier() {
+    @Test @MainActor func testAccessibilityAwareForegroundModifier() {
         // Given: A view and styles
         let testView = Text("Test")
         let normalStyle = AnyShapeStyle(Color.blue)
@@ -482,7 +482,7 @@ open class ShapeStyleSystemTests {
     
     // MARK: - Integration Tests
     
-    @Test func testShapeStyleSystemIntegration() {
+    @Test @MainActor func testShapeStyleSystemIntegration() {
         // Given: A complex view
         let testView = VStack {
             Text("Title")
@@ -501,7 +501,7 @@ open class ShapeStyleSystemTests {
         #expect(styledView != nil)
     }
     
-    @Test func testAppleHIGComplianceIntegration() {
+    @Test @MainActor func testAppleHIGComplianceIntegration() {
         // Given: A view that should be Apple HIG compliant
         let testView = Button("Test Button") { }
             .platformBackground(for: .iOS)
