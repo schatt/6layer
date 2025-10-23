@@ -16,10 +16,7 @@ import SwiftUI
 @MainActor
 open class InternationalizationTests {
     
-    // MARK: - Test Setup
-    
-    init() async throws {
-    }    // MARK: - Helper Methods
+    // MARK: - Helper Methods
     
     private func createTestLocale() -> Locale {
         return Locale(identifier: "en_US")
