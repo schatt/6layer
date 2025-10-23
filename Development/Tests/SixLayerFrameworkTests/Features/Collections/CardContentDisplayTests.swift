@@ -73,6 +73,7 @@ open class CardContentDisplayTests {
         // GIVEN: A test item with an icon
         let sampleItems = createTestItems()
         let item = sampleItems[0]
+        let layoutDecision = createLayoutDecision()
         
         // WHEN: Creating a SimpleCardComponent
         let card = SimpleCardComponent(
@@ -114,6 +115,7 @@ open class CardContentDisplayTests {
         // GIVEN: A test item with title and description
         let sampleItems = createTestItems()
         let item = sampleItems[0]
+        let layoutDecision = createLayoutDecision()
         let strategy = CardExpansionStrategy(
             supportedStrategies: [.contentReveal, .hoverExpand],
             primaryStrategy: .contentReveal,
@@ -144,6 +146,7 @@ open class CardContentDisplayTests {
         // GIVEN: A test item and expanded state
         let sampleItems = createTestItems()
         let item = sampleItems[0]
+        let layoutDecision = createLayoutDecision()
         let strategy = CardExpansionStrategy(
             supportedStrategies: [.contentReveal, .hoverExpand],
             primaryStrategy: .contentReveal,
@@ -214,6 +217,7 @@ open class CardContentDisplayTests {
     
     @Test func testCardComponentsWorkWithGenericDataItem() {
         // GIVEN: GenericDataItem instances
+        let layoutDecision = createLayoutDecision()
         let genericItems = [
             GenericDataItem(title: "Generic 1", subtitle: "Subtitle 1", data: ["type": "test"]),
             GenericDataItem(title: "Generic 2", subtitle: "Subtitle 2", data: ["type": "test"])
@@ -240,6 +244,7 @@ open class CardContentDisplayTests {
     
     @Test func testCardComponentsWorkWithGenericVehicle() {
         // GIVEN: GenericDataItem instances (using available types)
+        let layoutDecision = createLayoutDecision()
         let vehicles = [
             GenericDataItem(title: "Car 1", subtitle: "A nice car"),
             GenericDataItem(title: "Truck 1", subtitle: "A big truck")
@@ -268,6 +273,7 @@ open class CardContentDisplayTests {
     
     @Test func testCardComponentsWithEmptyStrings() {
         // GIVEN: Items with empty strings
+        let layoutDecision = createLayoutDecision()
         let emptyItem = TestItem(title: "", subtitle: "", description: "", icon: "", color: nil)
         
         // WHEN: Creating card components
@@ -291,6 +297,7 @@ open class CardContentDisplayTests {
     
     @Test func testCardComponentsWithVeryLongText() {
         // GIVEN: Items with very long text
+        let layoutDecision = createLayoutDecision()
         let longText = String(repeating: "Very long text that should be truncated properly. ", count: 10)
         let longItem = TestItem(
             title: longText,
@@ -336,22 +343,12 @@ open class CardContentDisplayTests {
         // WHEN: Creating many card components
         // THEN: Should complete within reasonable time
         }
-    }
     
     // MARK: - Accessibility Tests
     
     @Test func testCardComponentsHaveProperAccessibility() {
         // GIVEN: A test item and layout decision
-        let sampleItems = [
-            TestItem(title: "Test Item", subtitle: "Subtitle", description: "Description", icon: "star.fill", color: .blue)
-        ]
-        let layoutDecision = IntelligentCardLayoutDecision(
-            columns: 2,
-            spacing: 16,
-            cardWidth: 200,
-            cardHeight: 150,
-            padding: 16
-        )
+        let layoutDecision = createLayoutDecision()
         let sampleItems = createTestItems()
         let item = sampleItems[0]
         
@@ -374,3 +371,4 @@ open class CardContentDisplayTests {
         #expect(masonryCard != nil)
         // Performance test removed - performance monitoring was removed from framework
     }
+}
