@@ -10,14 +10,13 @@ import SwiftUI
 @MainActor
 open class WindowDetectionTests {
     
-    // MARK: - Test Setup
+    // MARK: - Helper Methods
     
-    var windowDetection: UnifiedWindowDetection!
+    private func createWindowDetection() -> UnifiedWindowDetection {
+        return UnifiedWindowDetection()
+    }
     
-    init() async throws {
-        // Implementation exists and is ready for testing
-        windowDetection = UnifiedWindowDetection()
-    }    // MARK: - Basic Functionality Tests (Positive Cases)
+    // MARK: - Basic Functionality Tests (Positive Cases)
     
     @Test func testWindowDetectionInitialization() {
         // GIVEN: A new window detection instance
