@@ -361,14 +361,14 @@ open class ImageMetadataIntelligenceTests {
     @Test func testImageMetadataIntelligence_BatchProcessing() async throws {
         // Given
         let images = (0..<5).map { _ in createTestImage() }
-        let intelligence = await ImageMetadataIntelligence()
         
         // When
         let startTime = CFAbsoluteTimeGetCurrent()
         let metadataResults = try await withThrowingTaskGroup(of: ComprehensiveImageMetadata.self) { group in
             for image in images {
-                group.addTask { @MainActor in
-                    try await intelligence.extractMetadata(from: image)
+                group.addTask {
+                    let intelligence = ImageMetadataIntelligence()
+                    return try await intelligence.extractMetadata(from: image)
                 }
             }
             

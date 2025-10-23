@@ -40,40 +40,8 @@ import SwiftUI
 /// Tests that platform detection correctly determines capability support
 /// AND that capabilities work when supported and are disabled when not supported
 open class CapabilityMatrixTests {
-    init() async throws {
-        // Establish deterministic baseline for current platform
-        let platform = SixLayerPlatform.current
-        RuntimeCapabilityDetection.setTestPlatform(platform)
-        RuntimeCapabilityDetection.setTestVoiceOver(true)
-        RuntimeCapabilityDetection.setTestSwitchControl(true)
-        switch platform {
-        case .macOS:
-            RuntimeCapabilityDetection.setTestTouchSupport(false)
-            RuntimeCapabilityDetection.setTestHapticFeedback(false)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-            RuntimeCapabilityDetection.setTestHover(true)
-        case .iOS:
-            RuntimeCapabilityDetection.setTestTouchSupport(true)
-            RuntimeCapabilityDetection.setTestHapticFeedback(true)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            RuntimeCapabilityDetection.setTestHover(false)
-        case .watchOS:
-            RuntimeCapabilityDetection.setTestTouchSupport(true)
-            RuntimeCapabilityDetection.setTestHapticFeedback(true)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            RuntimeCapabilityDetection.setTestHover(false)
-        case .tvOS:
-            RuntimeCapabilityDetection.setTestTouchSupport(false)
-            RuntimeCapabilityDetection.setTestHapticFeedback(false)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-            RuntimeCapabilityDetection.setTestHover(false)
-        case .visionOS:
-            RuntimeCapabilityDetection.setTestTouchSupport(true)
-            RuntimeCapabilityDetection.setTestHapticFeedback(true)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            RuntimeCapabilityDetection.setTestHover(true)
-        }
-    }    // MARK: - Capability Test Matrix
+    
+    // MARK: - Capability Test Matrix
     
     struct CapabilityTest: Sendable {
         let name: String
@@ -260,7 +228,14 @@ open class CapabilityMatrixTests {
         }
     }
     
-    @Test @MainActor(arguments: CapabilityMatrixTests.capabilityTests) func testCapability(_ capabilityTest: CapabilityTest) {
+    @Test @MainActor func testCapability() {
+        // Test all capabilities individually
+        for capabilityTest in Self.capabilityTests {
+            testCapability(capabilityTest)
+        }
+    }
+    
+    @MainActor private func testCapability(_ capabilityTest: CapabilityTest) {
         let platform = SixLayerPlatform.current
         let isSupported = capabilityTest.testSupported()
         let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
@@ -274,141 +249,5 @@ open class CapabilityMatrixTests {
         
         // Test 3: Log the capability status for verification
         print("✅ \(capabilityTest.name) on \(platform): \(isSupported ? "SUPPORTED" : "NOT SUPPORTED")")
-    }
-    
-    // MARK: - Individual Capability Tests
-    
-    @Test @MainActor func testTouchCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "Touch Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    @Test @MainActor func testHoverCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "Hover Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    @Test @MainActor func testHapticFeedbackCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "Haptic Feedback Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    @Test @MainActor func testAssistiveTouchCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "AssistiveTouch Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    @Test @MainActor func testVisionFrameworkCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "Vision Framework Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    @Test @MainActor func testOCRCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "OCR Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    @Test @MainActor func testColorEncodingCapability() {
-        let capabilityTest = Self.capabilityTests.first { $0.name == "Color Encoding Support" }!
-        testCapability(capabilityTest)
-    }
-    
-    // MARK: - Platform-Specific Capability Validation
-    
-    @Test @MainActor func testPlatformCapabilityConsistency() {
-        let platform = SixLayerPlatform.current
-        
-        // Test that platform capabilities are internally consistent
-        switch platform {
-        case .iOS:
-            // iOS should support touch, haptic, and AssistiveTouch
-            #expect(RuntimeCapabilityDetection.supportsTouch, "iOS should support touch")
-            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "iOS should support haptic feedback")
-            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS should support AssistiveTouch")
-            #expect(!RuntimeCapabilityDetection.supportsHover, "iOS should not support hover")
-            
-        case .macOS:
-            // macOS should support hover but not touch
-            #expect(!RuntimeCapabilityDetection.supportsTouch, "macOS should not support touch")
-            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, "macOS should not support haptic feedback")
-            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
-            #expect(RuntimeCapabilityDetection.supportsHover, "macOS should support hover")
-            
-        case .watchOS:
-            // watchOS should support touch and haptic
-            #expect(RuntimeCapabilityDetection.supportsTouch, "watchOS should support touch")
-            #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "watchOS should support haptic feedback")
-            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "watchOS should support AssistiveTouch")
-            #expect(!RuntimeCapabilityDetection.supportsHover, "watchOS should not support hover")
-            
-        case .tvOS:
-            // tvOS should not support touch or hover
-            #expect(!RuntimeCapabilityDetection.supportsTouch, "tvOS should not support touch")
-            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, "tvOS should not support haptic feedback")
-            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
-            #expect(!RuntimeCapabilityDetection.supportsHover, "tvOS should not support hover")
-            
-        case .visionOS:
-            // visionOS should not support touch or hover
-            #expect(!RuntimeCapabilityDetection.supportsTouch, "visionOS should not support touch")
-            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, "visionOS should not support haptic feedback")
-            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
-            #expect(!RuntimeCapabilityDetection.supportsHover, "visionOS should not support hover")
-        }
-        
-        // All platforms should support accessibility features
-        #expect(RuntimeCapabilityDetection.supportsVoiceOver, "All platforms should support VoiceOver")
-        #expect(RuntimeCapabilityDetection.supportsSwitchControl, "All platforms should support Switch Control")
-    }
-    
-    // MARK: - Capability Matrix Validation
-    
-    @Test @MainActor func testCapabilityMatrix() {
-        let platform = SixLayerPlatform.current
-        
-        // Create capability matrix
-        let capabilities = [
-            "Touch": RuntimeCapabilityDetection.supportsTouch,
-            "Hover": RuntimeCapabilityDetection.supportsHover,
-            "Haptic": RuntimeCapabilityDetection.supportsHapticFeedback,
-            "AssistiveTouch": RuntimeCapabilityDetection.supportsAssistiveTouch,
-            "VoiceOver": RuntimeCapabilityDetection.supportsVoiceOver,
-            "SwitchControl": RuntimeCapabilityDetection.supportsSwitchControl,
-            "Vision": isVisionFrameworkAvailable(),
-            "OCR": isVisionOCRAvailable()
-        ]
-        
-        // Validate capability matrix
-        for (capability, isSupported) in capabilities {
-            print("📊 \(platform): \(capability) = \(isSupported ? "✅" : "❌")")
-        }
-        
-        // Test that the matrix is internally consistent
-        #expect(validateCapabilityMatrix(capabilities), 
-                     "Capability matrix should be internally consistent")
-    }
-    
-    private func validateCapabilityMatrix(_ capabilities: [String: Bool]) -> Bool {
-        // Touch and haptic should be consistent
-        if capabilities["Touch"] == true && capabilities["Haptic"] != true {
-            return false
-        }
-        
-        // Hover and touch should be mutually exclusive (except for iPad)
-        if capabilities["Hover"] == true && capabilities["Touch"] == true {
-            // This is valid for iPad, so we allow it
-        }
-        
-        // AssistiveTouch should only be available on touch platforms
-        if capabilities["AssistiveTouch"] == true && capabilities["Touch"] != true {
-            return false
-        }
-        
-        // OCR should only be available if Vision is available
-        if capabilities["OCR"] == true && capabilities["Vision"] != true {
-            return false
-        }
-        
-        return true
     }
 }

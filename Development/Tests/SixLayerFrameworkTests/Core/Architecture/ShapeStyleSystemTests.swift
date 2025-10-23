@@ -315,7 +315,7 @@ open class ShapeStyleSystemTests {
     
     // MARK: - View Extension Tests
     
-    @Test func testPlatformBackgroundModifier() {
+    @Test @MainActor func testPlatformBackgroundModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -326,7 +326,7 @@ open class ShapeStyleSystemTests {
         #expect(modifiedView != nil)
     }
     
-    @Test func testPlatformSurfaceModifier() {
+    @Test @MainActor func testPlatformSurfaceModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -337,7 +337,7 @@ open class ShapeStyleSystemTests {
         #expect(modifiedView != nil)
     }
     
-    @Test func testPlatformTextModifier() {
+    @Test @MainActor func testPlatformTextModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -348,7 +348,7 @@ open class ShapeStyleSystemTests {
         #expect(modifiedView != nil)
     }
     
-    @Test func testPlatformBorderModifier() {
+    @Test @MainActor func testPlatformBorderModifier() {
         // Given: A view
         let testView = Text("Test")
         

@@ -457,6 +457,11 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewGenerationWithCustomFieldViews() {
         // GIVEN: Data and custom field view implementations
+        let sampleData = [
+            TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
+            TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
+            TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
+        ]
         let item = sampleData[0]
         
         // WHEN: Generating views with different custom field views

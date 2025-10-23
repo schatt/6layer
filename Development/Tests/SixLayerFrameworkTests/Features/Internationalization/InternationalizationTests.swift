@@ -506,7 +506,7 @@ open class InternationalizationTests {
         let startTime = CFAbsoluteTimeGetCurrent()
         let results = await withTaskGroup(of: String.self) { group in
             for number in numbers {
-                group.addTask {
+                group.addTask { @MainActor in
                     i18n.formatNumber(Double(number))
                 }
             }
