@@ -13,16 +13,11 @@ import Foundation
 
 open class InternationalizationServiceTests {
     
-    // MARK: - Test Data
-    
-    private var service: InternationalizationService!
-    
-    init() async throws {
-        service = InternationalizationService(locale: Locale(identifier: "en-US"))
-    }    // MARK: - Business Logic Tests
+    // MARK: - Business Logic Tests
     
     @Test func testInternationalizationService_BusinessLogic() {
-        // Given
+        // Given - Create service locally for this test
+        let service = InternationalizationService(locale: Locale(identifier: "en-US"))
         let testText = "Hello World"
         
         // When
@@ -53,7 +48,8 @@ open class InternationalizationServiceTests {
     }
     
     @Test func testInternationalizationService_MixedText_BusinessLogic() {
-        // Given
+        // Given - Create service locally for this test
+        let service = InternationalizationService(locale: Locale(identifier: "en-US"))
         let mixedText = "Hello مرحبا World"
         
         // When
@@ -79,7 +75,8 @@ open class InternationalizationServiceTests {
     }
     
     @Test func testInternationalizationService_EmptyText_BusinessLogic() {
-        // Given
+        // Given - Create service locally for this test
+        let service = InternationalizationService(locale: Locale(identifier: "en-US"))
         let emptyText = ""
         
         // When
