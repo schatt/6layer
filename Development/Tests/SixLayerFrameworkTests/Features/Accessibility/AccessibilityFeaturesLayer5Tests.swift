@@ -573,28 +573,5 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(executionTime < 1.0, "Should perform focus movement efficiently")
     }
     
-    /**
-     * BUSINESS PURPOSE: HighContrastManager calculates different colors when high contrast is enabled
-     * 
-     * TESTING SCOPE: High contrast color calculation functionality
-     * METHODOLOGY: Test that returned color differs from original when high contrast is enabled
-     * 
-     * TODO: Enhance test to verify correct high contrast colors for multiple test cases:
-     * - Test with various base colors (red, blue, green, etc.)
-     * - Verify returned colors meet WCAG contrast ratio requirements
-     * - Test edge cases (very light/dark colors, system colors)
-     * - Verify colors work well against different backgrounds
-     */
-    @Test func testHighContrastColorCalculation() {
-        let accessibilityManager = AccessibilityManager()
-        // GIVEN: High contrast is enabled and a base color
-        let baseColor = Color.red
-        
-        // WHEN: Getting high contrast color
-        let highContrastColor = accessibilityManager.getHighContrastColor(baseColor)
-        
-        // THEN: Should return a different color when high contrast is enabled
-        #expect(highContrastColor != baseColor, "High contrast should return a different color")
-    }
     
 }

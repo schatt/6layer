@@ -359,7 +359,7 @@ open class ShapeStyleSystemTests {
         #expect(modifiedView != nil)
     }
     
-    @Test func testPlatformGradientModifier() {
+    @Test @MainActor func testPlatformGradientModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -371,7 +371,7 @@ open class ShapeStyleSystemTests {
     }
     
     @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    func testPlatformMaterialModifier() {
+    @MainActor func testPlatformMaterialModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -383,7 +383,7 @@ open class ShapeStyleSystemTests {
     }
     
     @Test @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    func testPlatformHierarchicalModifier() {
+    @MainActor func testPlatformHierarchicalModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -397,7 +397,7 @@ open class ShapeStyleSystemTests {
     // MARK: - Material Extension Tests
     
     @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    func testMaterialBackgroundModifier() {
+    @MainActor func testMaterialBackgroundModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -409,7 +409,7 @@ open class ShapeStyleSystemTests {
     }
     
     @Test @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    func testHierarchicalMaterialBackgroundModifier() {
+    @MainActor func testHierarchicalMaterialBackgroundModifier() {
         // Given: A view
         let testView = Text("Test")
         
@@ -422,7 +422,7 @@ open class ShapeStyleSystemTests {
     
     // MARK: - Gradient Extension Tests
     
-    @Test func testGradientBackgroundModifier() {
+    @Test @MainActor func testGradientBackgroundModifier() {
         // Given: A view and gradient
         let testView = Text("Test")
         let gradient = LinearGradient(colors: [.blue, .purple], startPoint: .top, endPoint: .bottom)
@@ -434,7 +434,7 @@ open class ShapeStyleSystemTests {
         #expect(modifiedView != nil)
     }
     
-    @Test func testRadialGradientBackgroundModifier() {
+    @Test @MainActor func testRadialGradientBackgroundModifier() {
         // Given: A view and radial gradient
         let testView = Text("Test")
         let gradient = RadialGradient(colors: [.blue, .purple], center: .center, startRadius: 0, endRadius: 100)

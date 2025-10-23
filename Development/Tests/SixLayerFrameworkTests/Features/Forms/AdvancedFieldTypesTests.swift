@@ -721,6 +721,7 @@ open class AdvancedFieldTypesTests {
     
     @Test @MainActor func testFileUploadFieldPerformance() {
         // Given
+        let testFormState = createTestFormState()
         let field = DynamicFormField(
             id: "files",
             contentType: .file,

@@ -116,7 +116,7 @@ open class DRYCoreViewFunctionTests {
         accessibilityName: String,
         capabilityFactory: () -> MockPlatformCapabilityChecker,
         accessibilityFactory: () -> MockAccessibilityFeatureChecker
-    ) {
+    ) async {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
         let capabilityChecker = capabilityFactory()

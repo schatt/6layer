@@ -47,12 +47,18 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     @Test func testPlatformPresentItemCollection_L1_WithSingleItem() {
         // Given
-        let items = [sampleItems.first!]
+        let items = [createSampleItems().first!]
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .simple,
+            context: .browse
+        )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
-            hints: sampleHints
+            hints: hints
         )
         
         // Then
@@ -62,11 +68,17 @@ open class ItemCollectionL1Tests: BaseTestClass {
     @Test func testPlatformPresentItemCollection_L1_WithManyItems() {
         // Given
         let items = createManyItems(count: 100)
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .complex,
+            context: .browse
+        )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        let view: some View = platformPresentItemCollection_L1(
             items: items,
-            hints: sampleHints
+            hints: hints
         )
         
         // Then

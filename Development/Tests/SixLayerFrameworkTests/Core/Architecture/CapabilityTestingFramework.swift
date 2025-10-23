@@ -38,7 +38,6 @@ import SwiftUI
 
 /// Comprehensive capability testing framework
 /// Tests both sides of every capability branch and verifies UI generation
-@MainActor
 open class CapabilityTestingFramework {
     
     // MARK: - Test Configuration
@@ -347,7 +346,10 @@ open class CapabilityTestingFramework {
     }
     
     /// Test accessibility UI generation
-    @Test func testAccessibilityUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in 
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testAccessibilityUIGeneration(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that accessibility features are always supported
         #expect(config.supportsVoiceOver, "VoiceOver should always be supported for \(configName)")
         #expect(config.supportsSwitchControl, "Switch Control should always be supported for \(configName)")
@@ -370,7 +372,10 @@ open class CapabilityTestingFramework {
     }
     
     /// Test logical consistency of capabilities
-    @Test func testLogicalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in 
+        [config.createMockPlatformConfig()].map { ($0, config.name) }
+    })
+    func testLogicalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             #expect(config.supportsTouch, "Haptic feedback should only be available with touch for \(configName)")

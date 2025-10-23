@@ -54,7 +54,6 @@ open class CrossPlatformNavigationTests {
             view, 
             expectedPattern: "SixLayer.main.element.*", 
             platform: .macOS,
-            platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformNavigationView"
         )
         
