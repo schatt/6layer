@@ -208,7 +208,7 @@ open class AdvancedFieldTypesTests {
         // Test that suggestion selection updates the form state
     }
     
-    @Test func testAutocompleteSuggestionsDisplay() {
+    @Test @MainActor func testAutocompleteSuggestionsDisplay() {
         // Given
         let suggestions = ["Apple", "Banana", "Cherry"]
         
@@ -310,7 +310,7 @@ open class AdvancedFieldTypesTests {
         // Test that max file size is properly configured
     }
     
-    @Test func testFileUploadAreaDragAndDrop() {
+    @Test @MainActor func testFileUploadAreaDragAndDrop() {
         // Given
         let allowedTypes = [UTType.image, UTType.pdf]
         let maxFileSize: Int64 = 10 * 1024 * 1024
@@ -350,7 +350,7 @@ open class AdvancedFieldTypesTests {
         #expect(fileInfo.id != nil)
     }
     
-    @Test func testFileListDisplay() {
+    @Test @MainActor func testFileListDisplay() {
         // Given
         let files = [
             FileInfo(name: "test1.pdf", size: 1024, type: .pdf, url: nil),
@@ -367,7 +367,7 @@ open class AdvancedFieldTypesTests {
         // Test that file list displays files correctly
     }
     
-    @Test func testFileRowDisplay() {
+    @Test @MainActor func testFileRowDisplay() {
         // Given
         let file = FileInfo(name: "test.pdf", size: 1024, type: .pdf, url: nil)
         
@@ -564,7 +564,7 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Accessibility Tests
     
-    @Test func testRichTextEditorAccessibility() {
+    @Test @MainActor func testRichTextEditorAccessibility() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -709,7 +709,7 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Performance Tests
     
-    @Test func testRichTextEditorPerformance() {
+    @Test @MainActor func testRichTextEditorPerformance() {
         // Given
         let field = DynamicFormField(
             id: "richText",

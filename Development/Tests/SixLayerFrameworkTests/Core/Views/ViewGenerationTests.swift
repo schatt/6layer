@@ -45,7 +45,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewGeneration() {
         // GIVEN: A test data item
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         
         // WHEN: Generating an intelligent detail view
         let detailView = IntelligentDetailView.platformDetailView(for: item)
@@ -83,7 +83,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: A test data item and custom field view
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         
         // WHEN: Generating an intelligent detail view with custom field view
         let detailView = IntelligentDetailView.platformDetailView(
@@ -126,7 +126,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewWithHints() {
         // GIVEN: A test data item and presentation hints
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .compact,
@@ -211,7 +211,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testLayoutStrategyWithHints() {
         // GIVEN: Data and explicit hints
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .detail,
@@ -281,7 +281,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test func testDataIntrospection() {
         // GIVEN: A test data item
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         
         // WHEN: Analyzing the data
         let analysis = DataIntrospectionEngine.analyze(item)
@@ -320,7 +320,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewStructureConsistency() {
         // GIVEN: The same data item
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         
         // WHEN: Generating views multiple times
         let view1 = IntelligentDetailView.platformDetailView(for: item)
@@ -410,7 +410,7 @@ open class ViewGenerationTests: BaseTestClass {
             TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
             TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
         ]
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .automatic,
@@ -457,7 +457,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewGenerationWithCustomFieldViews() {
         // GIVEN: Data and custom field view implementations
-        let item = self.sampleData[0]
+        let item = sampleData[0]
         
         // WHEN: Generating views with different custom field views
         let view1 = IntelligentDetailView.platformDetailView(

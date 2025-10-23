@@ -336,7 +336,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             enableMenuSupport: true,
             enableGestureRecognition: true,
             gestureSensitivity: .medium,
-            menuStyle: .compact
+            menuStyle: .standard
         )
         let manager = AssistiveTouchManager(config: config)
         
