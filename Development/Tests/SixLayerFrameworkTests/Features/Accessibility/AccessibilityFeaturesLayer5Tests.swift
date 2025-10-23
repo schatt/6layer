@@ -78,7 +78,6 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testAddFocusableItemDuplicate() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: Keyboard navigation manager with existing item
-        let navigationManager = KeyboardNavigationManager()
         navigationManager.addFocusableItem("button1")
         #expect(navigationManager.focusableItems.count == 1)
         
