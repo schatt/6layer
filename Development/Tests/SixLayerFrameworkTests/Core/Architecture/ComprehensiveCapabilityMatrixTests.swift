@@ -452,33 +452,6 @@ open class ComprehensiveCapabilityMatrixTests {
         )
     }
     
-    private func getPropertyValue(from viewDefinition: ViewDefinition, key: String) -> Any {
-        switch key {
-        case "supportsTouch": return viewDefinition.supportsTouch
-        case "supportsHover": return viewDefinition.supportsHover
-        case "supportsHapticFeedback": return viewDefinition.supportsHapticFeedback
-        case "supportsAssistiveTouch": return viewDefinition.supportsAssistiveTouch
-        case "supportsVision": return viewDefinition.supportsVision
-        case "supportsOCR": return viewDefinition.supportsOCR
-        case "supportsTouchpad": return viewDefinition.supportsTouchpad
-        case "supportsExternalDisplay": return viewDefinition.supportsExternalDisplay
-        case "supportsMultipleDisplays": return viewDefinition.supportsMultipleDisplays
-        case "minTouchTarget": return viewDefinition.minTouchTarget
-        case "hoverDelay": return viewDefinition.hoverDelay
-        case "hasReduceMotion": return viewDefinition.hasReduceMotion
-        case "hasIncreaseContrast": return viewDefinition.hasIncreaseContrast
-        case "hasReduceTransparency": return viewDefinition.hasReduceTransparency
-        case "hasBoldText": return viewDefinition.hasBoldText
-        case "hasLargerText": return viewDefinition.hasLargerText
-        case "hasButtonShapes": return viewDefinition.hasButtonShapes
-        case "hasOnOffLabels": return viewDefinition.hasOnOffLabels
-        case "hasGrayscale": return viewDefinition.hasGrayscale
-        case "hasInvertColors": return viewDefinition.hasInvertColors
-        case "hasSmartInvert": return viewDefinition.hasSmartInvert
-        case "hasDifferentiateWithoutColor": return viewDefinition.hasDifferentiateWithoutColor
-        default: return false
-        }
-    }
     
     // MARK: - Helper Types
     
