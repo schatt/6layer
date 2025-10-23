@@ -202,7 +202,16 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.recommendedChartType == .pie)
     }
     
-    @Test func testChartTypeRecommendationForComplexCategoricalData() {
+    @Test func testChartTypeRecommendationForComplexCategoricalData() async {
+        // Setup test environment first
+        await setupTestEnvironment()
+        
+        // Guard against uninitialized intelligence
+        guard let intelligence = intelligence else {
+            Issue.record("Test setup failed: intelligence not initialized")
+            return
+        }
+        
         // Given
         let categories = Dictionary(uniqueKeysWithValues: (1...25).map { ("Category \($0)", $0) })
         
