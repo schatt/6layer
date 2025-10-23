@@ -394,7 +394,7 @@ open class CapabilityTestingFramework {
     }
     
     /// Test platform-specific behavior
-    @Test func testPlatformSpecificBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in [config.createMockPlatformConfig()].map { ($0, config.name) } }) func testPlatformSpecificBehavior(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration makes sense for its platform
         switch config.supportsTouch {
         case true:
@@ -409,7 +409,7 @@ open class CapabilityTestingFramework {
     }
     
     /// Test edge case handling
-    @Test func testEdgeCaseHandling(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in [config.createMockPlatformConfig()].map { ($0, config.name) } }) func testEdgeCaseHandling(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that all boolean capabilities are properly set
         let capabilities: [String: Bool] = [
             "Touch": config.supportsTouch,
@@ -439,7 +439,7 @@ open class CapabilityTestingFramework {
     }
     
     /// Test internal consistency of the configuration
-    @Test func testInternalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in [config.createMockPlatformConfig()].map { ($0, config.name) } }) func testInternalConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that related capabilities are consistent
         if config.supportsHapticFeedback {
             #expect(config.supportsTouch, "Haptic feedback requires touch for \(configName)")
@@ -455,7 +455,7 @@ open class CapabilityTestingFramework {
     }
     
     /// Test cross-platform consistency
-    @Test func testCrossPlatformConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in [config.createMockPlatformConfig()].map { ($0, config.name) } }) func testCrossPlatformConsistency(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the same capability state produces consistent behavior
         // This would be more comprehensive in a real implementation
         #expect(config != nil, "Configuration should be valid for \(configName)")
@@ -568,7 +568,7 @@ open class CapabilityTestingFramework {
     }
     
     /// Test UI generation with a mock configuration
-    @Test func testUIGenerationWithMockConfig(_ config: CardExpansionPlatformConfig, configName: String) {
+    @Test(arguments: CapabilityTestingFramework.testConfigurations.flatMap { config in [config.createMockPlatformConfig()].map { ($0, config.name) } }) func testUIGenerationWithMockConfig(_ config: CardExpansionPlatformConfig, configName: String) {
         // Test that the configuration can be used to generate appropriate UI
         // This would test actual view generation in a real implementation
         

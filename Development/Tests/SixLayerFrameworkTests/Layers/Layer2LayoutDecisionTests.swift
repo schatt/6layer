@@ -483,7 +483,7 @@ open class Layer2LayoutDecisionTests {
             )
             
             // When: Determining optimal layout for each data type
-            let decision = determineOptimalLayout_L2(
+            let decision: LayoutDecision = determineOptimalLayout_L2(
                 items: items,
                 hints: hints,
                 screenWidth: 375,

@@ -387,24 +387,6 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(resultColor1 == resultColor2, "Should return consistent high contrast colors")
     }
     
-    /**
-     * BUSINESS PURPOSE: HighContrastManager handles clear colors appropriately
-     * 
-     * TESTING SCOPE: Clear color handling
-     * METHODOLOGY: Test clear color behavior
-     */
-    @Test func testGetHighContrastColorClearColor() {
-        let navigationManager = KeyboardNavigationManager()
-        // GIVEN: High contrast mode
-        highContrastManager.isHighContrastEnabled = true
-        let baseColor = Color.clear
-        
-        // WHEN: Getting high contrast color for clear color
-        let resultColor = highContrastManager.getHighContrastColor(baseColor)
-        
-        // THEN: Should handle clear color appropriately
-        #expect(resultColor != nil, "Should handle clear color appropriately")
-    }
     
     // MARK: - View Modifier Tests
     

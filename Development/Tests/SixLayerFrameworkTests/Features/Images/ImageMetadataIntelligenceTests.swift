@@ -368,7 +368,9 @@ open class ImageMetadataIntelligenceTests {
         let metadataResults = try await withThrowingTaskGroup(of: ComprehensiveImageMetadata.self) { group in
             for image in images {
                 group.addTask {
-                    try await intelligence.extractMetadata(from: image)
+                    try await MainActor.run {
+                        try await intelligence.extractMetadata(from: image)
+                    }
                 }
             }
             
