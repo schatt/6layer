@@ -9,7 +9,9 @@ import ViewInspector
 @MainActor
 open class EnvironmentVariableDebugTests {
     
-    init() async throws {
+    // MARK: - Helper Methods
+    
+    private func setupTestEnvironment() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.namespace = "TestApp"
@@ -18,6 +20,9 @@ open class EnvironmentVariableDebugTests {
     }
     
     @Test func testEnvironmentVariablePropagation() {
+        // Setup test environment first
+        setupTestEnvironment()
+        
         // Test: Does the environment variable get set properly?
         
         // 1. Disable global config
