@@ -67,7 +67,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // Should handle long names gracefully
             #expect(!buttonID.isEmpty, "Should generate ID with very long names")
-            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             
             // Warn if extremely long (but don't fail the test)
             if buttonID.count > 200 {
