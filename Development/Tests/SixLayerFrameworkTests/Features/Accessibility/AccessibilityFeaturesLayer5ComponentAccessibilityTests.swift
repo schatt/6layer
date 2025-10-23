@@ -253,7 +253,13 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiers() async {
         // Given: SwitchControlManager
-        let manager = SwitchControlManager()
+        let config = SwitchControlConfig(
+            enableNavigation: true,
+            enableScanning: true,
+            scanningSpeed: 1.0,
+            enableCustomActions: true
+        )
+        let manager = SwitchControlManager(config: config)
         
         // When: Creating a view with SwitchControlManager
         let view = VStack {
@@ -322,7 +328,13 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AssistiveTouchManager
-        let manager = AssistiveTouchManager()
+        let config = AssistiveTouchConfig(
+            enableIntegration: true,
+            enableCustomGestures: true,
+            enableVoiceControl: true,
+            enableSwitchControl: true
+        )
+        let manager = AssistiveTouchManager(config: config)
         
         // When: Creating a view with AssistiveTouchManager
         let view = VStack {

@@ -10,44 +10,6 @@ import SwiftUI
 import Testing
 @testable import SixLayerFramework
 
-/// Stub definition for CardExpansionPlatformConfig
-public struct CardExpansionPlatformConfig: Sendable {
-    public let supportsTouch: Bool
-    public let supportsHover: Bool
-    public let supportsHapticFeedback: Bool
-    public let supportsAssistiveTouch: Bool
-    public let supportsVoiceOver: Bool
-    public let supportsSwitchControl: Bool
-    public let supportsVision: Bool
-    public let supportsOCR: Bool
-    public let minTouchTarget: CGFloat
-    public let hoverDelay: TimeInterval
-    
-    public init(
-        supportsTouch: Bool = false,
-        supportsHover: Bool = false,
-        supportsHapticFeedback: Bool = false,
-        supportsAssistiveTouch: Bool = false,
-        supportsVoiceOver: Bool = false,
-        supportsSwitchControl: Bool = false,
-        supportsVision: Bool = false,
-        supportsOCR: Bool = false,
-        minTouchTarget: CGFloat = 44.0,
-        hoverDelay: TimeInterval = 0.1
-    ) {
-        self.supportsTouch = supportsTouch
-        self.supportsHover = supportsHover
-        self.supportsHapticFeedback = supportsHapticFeedback
-        self.supportsAssistiveTouch = supportsAssistiveTouch
-        self.supportsVoiceOver = supportsVoiceOver
-        self.supportsSwitchControl = supportsSwitchControl
-        self.supportsVision = supportsVision
-        self.supportsOCR = supportsOCR
-        self.minTouchTarget = minTouchTarget
-        self.hoverDelay = hoverDelay
-    }
-}
-
 /// Centralized test setup utilities for consistent platform mocking across all tests
 public class TestSetupUtilities {
     
@@ -268,17 +230,18 @@ public class TestSetupUtilities {
         minTouchTarget: CGFloat? = nil,
         hoverDelay: TimeInterval? = nil,
         animationEasing: Animation? = nil
-    ) -> CardExpansionPlatformConfig {
-        // Use the framework's getCardExpansionPlatformConfig function
-        return CardExpansionPlatformConfig(
-            supportsHapticFeedback: supportsHapticFeedback,
-            supportsHover: supportsHover,
-            supportsTouch: supportsTouch,
-            supportsVoiceOver: supportsVoiceOver,
-            supportsSwitchControl: supportsSwitchControl,
-            supportsAssistiveTouch: supportsAssistiveTouch,
-            minTouchTarget: minTouchTarget,
-            hoverDelay: hoverDelay
+    ) -> SixLayerFramework.CardExpansionPlatformConfig {
+        // Use the framework's CardExpansionPlatformConfig
+        return SixLayerFramework.CardExpansionPlatformConfig(
+            supportsHapticFeedback: supportsHapticFeedback ?? false,
+            supportsHover: supportsHover ?? false,
+            supportsTouch: supportsTouch ?? true,
+            supportsVoiceOver: supportsVoiceOver ?? true,
+            supportsSwitchControl: supportsSwitchControl ?? true,
+            supportsAssistiveTouch: supportsAssistiveTouch ?? true,
+            minTouchTarget: minTouchTarget ?? 44.0,
+            hoverDelay: hoverDelay ?? 0.1,
+            animationEasing: animationEasing ?? .easeInOut(duration: 0.3)
         )
     }
     
@@ -299,7 +262,7 @@ public class TestSetupUtilities {
     ///   - file: File name for assertion
     ///   - line: Line number for assertion
     func assertCardExpansionConfig(
-        _ config: CardExpansionPlatformConfig,
+        _ config: SixLayerFramework.CardExpansionPlatformConfig,
         touch: Bool? = nil,
         haptic: Bool? = nil,
         hover: Bool? = nil,

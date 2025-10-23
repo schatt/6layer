@@ -385,7 +385,7 @@ open class UIGenerationVerificationTests {
             supportsAssistiveTouch: false,
             minTouchTarget: 0,
             hoverDelay: 0.1,
-            animationEasing: .easeInOut(duration: 0.2)
+            animationEasing: Animation.easeInOut(duration: 0.2)
         )
         
         // Verify configurations are different

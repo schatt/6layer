@@ -75,14 +75,14 @@ open class CapabilityMatrixTests {
         }
     }    // MARK: - Capability Test Matrix
     
-    struct CapabilityTest {
+    struct CapabilityTest: Sendable {
         let name: String
-        let testSupported: () -> Bool
-        let testBehavior: () -> Void
+        let testSupported: @MainActor () -> Bool
+        let testBehavior: @MainActor () -> Void
         let expectedPlatforms: [SixLayerPlatform]
     }
     
-    private let capabilityTests: [CapabilityTest] = [
+    @MainActor static let capabilityTests: [CapabilityTest] = [
         // Touch Capability
         CapabilityTest(
             name: "Touch Support",
@@ -254,13 +254,13 @@ open class CapabilityMatrixTests {
     
     // MARK: - Comprehensive Capability Testing
     
-    @Test func testAllCapabilities() {
-        for capabilityTest in capabilityTests {
+    @Test @MainActor func testAllCapabilities() {
+        for capabilityTest in Self.capabilityTests {
             testCapability(capabilityTest)
         }
     }
     
-    @Test func testCapability(_ capabilityTest: CapabilityTest) {
+    @Test(arguments: CapabilityMatrixTests.capabilityTests) @MainActor func testCapability(_ capabilityTest: CapabilityTest) {
         let platform = SixLayerPlatform.current
         let isSupported = capabilityTest.testSupported()
         let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
@@ -278,44 +278,44 @@ open class CapabilityMatrixTests {
     
     // MARK: - Individual Capability Tests
     
-    @Test func testTouchCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "Touch Support" }!
+    @Test @MainActor func testTouchCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "Touch Support" }!
         testCapability(capabilityTest)
     }
     
-    @Test func testHoverCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "Hover Support" }!
+    @Test @MainActor func testHoverCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "Hover Support" }!
         testCapability(capabilityTest)
     }
     
-    @Test func testHapticFeedbackCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "Haptic Feedback Support" }!
+    @Test @MainActor func testHapticFeedbackCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "Haptic Feedback Support" }!
         testCapability(capabilityTest)
     }
     
-    @Test func testAssistiveTouchCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "AssistiveTouch Support" }!
+    @Test @MainActor func testAssistiveTouchCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "AssistiveTouch Support" }!
         testCapability(capabilityTest)
     }
     
-    @Test func testVisionFrameworkCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "Vision Framework Support" }!
+    @Test @MainActor func testVisionFrameworkCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "Vision Framework Support" }!
         testCapability(capabilityTest)
     }
     
-    @Test func testOCRCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "OCR Support" }!
+    @Test @MainActor func testOCRCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "OCR Support" }!
         testCapability(capabilityTest)
     }
     
-    @Test func testColorEncodingCapability() {
-        let capabilityTest = capabilityTests.first { $0.name == "Color Encoding Support" }!
+    @Test @MainActor func testColorEncodingCapability() {
+        let capabilityTest = Self.capabilityTests.first { $0.name == "Color Encoding Support" }!
         testCapability(capabilityTest)
     }
     
     // MARK: - Platform-Specific Capability Validation
     
-    @Test func testPlatformCapabilityConsistency() {
+    @Test @MainActor func testPlatformCapabilityConsistency() {
         let platform = SixLayerPlatform.current
         
         // Test that platform capabilities are internally consistent

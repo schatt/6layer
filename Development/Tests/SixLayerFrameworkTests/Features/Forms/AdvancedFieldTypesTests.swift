@@ -23,6 +23,10 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Test Data Setup
     
+    private var testFormState: DynamicFormState {
+        return createTestFormState()
+    }
+    
     private func createTestFormState() -> DynamicFormState {
         let testConfiguration = DynamicFormConfiguration(
             id: "testForm",
@@ -43,16 +47,16 @@ open class AdvancedFieldTypesTests {
      */
     @Test func testRichTextEditorFieldInitialization() {
         // Given
-        let testFormState = createTestFormState()
         let field = DynamicFormField(
             id: "richText",
             contentType: .richtext,
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
+        let formState = createTestFormState()
         
         // When
-        let richTextField = RichTextEditorField(field: field, formState: testFormState)
+        let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
         #expect(richTextField != nil)
@@ -68,9 +72,10 @@ open class AdvancedFieldTypesTests {
             label: "Rich Text Content",
             placeholder: "Enter rich text content"
         )
+        let formState = createTestFormState()
         
         // When
-        let richTextField = RichTextEditorField(field: field, formState: testFormState)
+        let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
         // Test that editing mode can be toggled
@@ -367,9 +372,8 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Custom Field Component Tests
     
-    @Test func testCustomFieldComponentProtocol() {
+    @Test @MainActor func testCustomFieldComponentProtocol() {
         // Given
-        let testFormState = createTestFormState()
         let field = DynamicFormField(
             id: "custom",
             contentType: .text,
@@ -721,7 +725,6 @@ open class AdvancedFieldTypesTests {
     
     @Test @MainActor func testFileUploadFieldPerformance() {
         // Given
-        let testFormState = createTestFormState()
         let field = DynamicFormField(
             id: "files",
             contentType: .file,

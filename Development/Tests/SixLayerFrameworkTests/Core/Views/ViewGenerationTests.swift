@@ -457,7 +457,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewGenerationWithCustomFieldViews() {
         // GIVEN: Data and custom field view implementations
-        let item = self.self.sampleData[0]
+        let item = self.sampleData[0]
         
         // WHEN: Generating views with different custom field views
         let view1 = IntelligentDetailView.platformDetailView(

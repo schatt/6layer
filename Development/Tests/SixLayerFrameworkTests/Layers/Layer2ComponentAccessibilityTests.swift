@@ -116,8 +116,8 @@ final class Layer2ComponentAccessibilityTests {
                 deviceCapabilities: PhotoDeviceCapabilities(
                     hasCamera: true,
                     hasPhotoLibrary: true,
-                    maxImageSize: CGSize(width: 4096, height: 4096),
-                    supportedFormats: [.jpeg, .png]
+                    supportsEditing: true,
+                    maxImageResolution: PlatformSize(width: 4096, height: 4096)
                 )
             )
         )
@@ -130,94 +130,96 @@ final class Layer2ComponentAccessibilityTests {
     
     @Test func testDeterminePhotoCaptureStrategyL2ReturnsValidDecision() async {
         // Given: Test photo capture context
-        let hints = PresentationHints()
+        let purpose = PhotoPurpose.document
+        let context = PhotoContext(
+            screenSize: CGSize(width: 400, height: 600),
+            availableSpace: CGSize(width: 400, height: 300),
+            userPreferences: PhotoPreferences(
+                preferredSource: .camera,
+                allowEditing: true,
+                compressionQuality: 0.8
+            ),
+            deviceCapabilities: PhotoDeviceCapabilities(
+                hasCamera: true,
+                hasPhotoLibrary: true,
+                supportsEditing: true,
+                maxImageResolution: PlatformSize(width: 4096, height: 4096)
+            )
+        )
         
         // When: Creating photo capture strategy decision using Layer 2 function
         let photoCaptureStrategy = determinePhotoCaptureStrategy_L2(
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            purpose: purpose,
+            context: context
         )
         
-        // Then: Should have valid photo capture strategy properties
-        #expect(photoCaptureStrategy.approach != nil, "Layer 2 should return valid photo capture strategy approach")
-        #expect(photoCaptureStrategy.columns > 0, "Layer 2 should return valid column count")
-        #expect(photoCaptureStrategy.spacing >= 0, "Layer 2 should return valid spacing")
+        // Then: Should have valid photo capture strategy
+        #expect([PhotoCaptureStrategy.camera, .photoLibrary, .both].contains(photoCaptureStrategy), "Layer 2 should return valid photo capture strategy")
     }
     
     @Test func testPlatformOCRLayoutL2ReturnsValidDecision() async {
-        // Given: Test OCR text
-        let testText = "This is test OCR text"
-        let hints = PresentationHints()
+        // Given: Test OCR context
+        let context = OCRContext()
         
         // When: Creating OCR layout decision using Layer 2 function
         let ocrLayoutDecision = platformOCRLayout_L2(
-            text: testText,
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            context: context
         )
         
         // Then: Should have valid OCR layout decision properties
-        #expect(ocrLayoutDecision.approach != nil, "Layer 2 should return valid OCR layout approach")
-        #expect(ocrLayoutDecision.columns > 0, "Layer 2 should return valid column count")
-        #expect(ocrLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(ocrLayoutDecision.maxImageSize.width > 0, "Layer 2 should return valid max image width")
+        #expect(ocrLayoutDecision.maxImageSize.height > 0, "Layer 2 should return valid max image height")
+        #expect(ocrLayoutDecision.recommendedImageSize.width > 0, "Layer 2 should return valid recommended image width")
+        #expect(ocrLayoutDecision.recommendedImageSize.height > 0, "Layer 2 should return valid recommended image height")
     }
     
     @Test func testPlatformDocumentOCRLayoutL2ReturnsValidDecision() async {
-        // Given: Test document OCR text
-        let testText = "This is test document OCR text"
-        let hints = PresentationHints()
+        // Given: Test document OCR context
+        let documentType = DocumentType.receipt
+        let context = OCRContext()
         
         // When: Creating document OCR layout decision using Layer 2 function
         let documentOCRLayoutDecision = platformDocumentOCRLayout_L2(
-            text: testText,
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            documentType: documentType,
+            context: context
         )
         
         // Then: Should have valid document OCR layout decision properties
-        #expect(documentOCRLayoutDecision.approach != nil, "Layer 2 should return valid document OCR layout approach")
-        #expect(documentOCRLayoutDecision.columns > 0, "Layer 2 should return valid column count")
-        #expect(documentOCRLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(documentOCRLayoutDecision.maxImageSize.width > 0, "Layer 2 should return valid max image width")
+        #expect(documentOCRLayoutDecision.maxImageSize.height > 0, "Layer 2 should return valid max image height")
+        #expect(documentOCRLayoutDecision.recommendedImageSize.width > 0, "Layer 2 should return valid recommended image width")
+        #expect(documentOCRLayoutDecision.recommendedImageSize.height > 0, "Layer 2 should return valid recommended image height")
     }
     
     @Test func testPlatformReceiptOCRLayoutL2ReturnsValidDecision() async {
-        // Given: Test receipt OCR text
-        let testText = "Receipt Total: $25.99"
-        let hints = PresentationHints()
+        // Given: Test receipt OCR context
+        let context = OCRContext()
         
         // When: Creating receipt OCR layout decision using Layer 2 function
         let receiptOCRLayoutDecision = platformReceiptOCRLayout_L2(
-            text: testText,
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            context: context
         )
         
         // Then: Should have valid receipt OCR layout decision properties
-        #expect(receiptOCRLayoutDecision.approach != nil, "Layer 2 should return valid receipt OCR layout approach")
-        #expect(receiptOCRLayoutDecision.columns > 0, "Layer 2 should return valid column count")
-        #expect(receiptOCRLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(receiptOCRLayoutDecision.maxImageSize.width > 0, "Layer 2 should return valid max image width")
+        #expect(receiptOCRLayoutDecision.maxImageSize.height > 0, "Layer 2 should return valid max image height")
+        #expect(receiptOCRLayoutDecision.recommendedImageSize.width > 0, "Layer 2 should return valid recommended image width")
+        #expect(receiptOCRLayoutDecision.recommendedImageSize.height > 0, "Layer 2 should return valid recommended image height")
     }
     
     @Test func testPlatformBusinessCardOCRLayoutL2ReturnsValidDecision() async {
-        // Given: Test business card OCR text
-        let testText = "John Doe\nSoftware Engineer\njohn@example.com"
-        let hints = PresentationHints()
+        // Given: Test business card OCR context
+        let context = OCRContext()
         
         // When: Creating business card OCR layout decision using Layer 2 function
         let businessCardOCRLayoutDecision = platformBusinessCardOCRLayout_L2(
-            text: testText,
-            hints: hints,
-            screenWidth: 400,
-            deviceType: .phone
+            context: context
         )
         
         // Then: Should have valid business card OCR layout decision properties
-        #expect(businessCardOCRLayoutDecision.approach != nil, "Layer 2 should return valid business card OCR layout approach")
-        #expect(businessCardOCRLayoutDecision.columns > 0, "Layer 2 should return valid column count")
-        #expect(businessCardOCRLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
+        #expect(businessCardOCRLayoutDecision.maxImageSize.width > 0, "Layer 2 should return valid max image width")
+        #expect(businessCardOCRLayoutDecision.maxImageSize.height > 0, "Layer 2 should return valid max image height")
+        #expect(businessCardOCRLayoutDecision.recommendedImageSize.width > 0, "Layer 2 should return valid recommended image width")
+        #expect(businessCardOCRLayoutDecision.recommendedImageSize.height > 0, "Layer 2 should return valid recommended image height")
     }
 }

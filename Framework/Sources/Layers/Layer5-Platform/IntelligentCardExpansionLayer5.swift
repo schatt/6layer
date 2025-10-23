@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - Layer 5: Platform Optimization for Intelligent Card Expansion
 
 /// Platform-specific optimization configuration
-public struct CardExpansionPlatformConfig {
+public struct CardExpansionPlatformConfig: Sendable {
     public let supportsHapticFeedback: Bool
     public let supportsHover: Bool
     public let supportsTouch: Bool

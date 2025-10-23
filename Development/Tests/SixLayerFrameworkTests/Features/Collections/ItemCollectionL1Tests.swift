@@ -34,11 +34,17 @@ open class ItemCollectionL1Tests: BaseTestClass {
     @Test func testPlatformPresentItemCollection_L1_WithEmptyItems() {
         // Given
         let items: [GenericDataItem] = []
+        let hints = PresentationHints(
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .simple,
+            context: .dashboard
+        )
         
         // When
         let view = platformPresentItemCollection_L1(
             items: items,
-            hints: sampleHints
+            hints: hints
         )
         
         // Then

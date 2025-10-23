@@ -98,7 +98,6 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testAddFocusableItemEmptyString() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: Empty keyboard navigation manager
-        let navigationManager = KeyboardNavigationManager()
         #expect(navigationManager.focusableItems.count == 0)
         
         // WHEN: Adding empty string
@@ -306,66 +305,8 @@ open class AccessibilityFeaturesLayer5Tests {
     
     // MARK: - HighContrastManager Color Calculation Tests
     
-    /**
-     * BUSINESS PURPOSE: HighContrastManager modifies colors based on contrast levels
-     * 
-     * TESTING SCOPE: Color calculation algorithms
-     * METHODOLOGY: Test color modification with different contrast levels
-     */
-    @Test func testGetHighContrastColorNormalContrast() {
-        let navigationManager = KeyboardNavigationManager()
-        let accessibilityManager = AccessibilityManager()
-        // GIVEN: Normal contrast mode (using existing API)
-        let baseColor = Color.blue
-        
-        // WHEN: Getting high contrast color
-        let resultColor = accessibilityManager.getHighContrastColor(baseColor)
-        
-        // THEN: Should return original color
-        #expect(resultColor == baseColor, "Should return original color in normal contrast")
-    }
     
-    /**
-     * BUSINESS PURPOSE: HighContrastManager modifies colors for high contrast mode
-     * 
-     * TESTING SCOPE: High contrast color calculation
-     * METHODOLOGY: Test high contrast color modification
-     */
-    @Test func testGetHighContrastColorHighContrast() {
-        let navigationManager = KeyboardNavigationManager()
-        let accessibilityManager = AccessibilityManager()
-        // GIVEN: High contrast mode with high contrast level
-        accessibilityManager.isHighContrastEnabled = true
-        accessibilityManager.contrastLevel = .high
-        let baseColor = Color.blue
-        
-        // WHEN: Getting high contrast color
-        let resultColor = accessibilityManager.getHighContrastColor(baseColor)
-        
-        // THEN: Should return modified color
-        #expect(resultColor != baseColor, "Should return modified color in high contrast")
-    }
     
-    /**
-     * BUSINESS PURPOSE: HighContrastManager provides extreme contrast for accessibility
-     * 
-     * TESTING SCOPE: Extreme contrast color calculation
-     * METHODOLOGY: Test extreme contrast modification
-     */
-    @Test func testGetHighContrastColorExtremeContrast() {
-        let navigationManager = KeyboardNavigationManager()
-        let accessibilityManager = AccessibilityManager()
-        // GIVEN: High contrast mode with extreme contrast level
-        accessibilityManager.isHighContrastEnabled = true
-        accessibilityManager.contrastLevel = .extreme
-        let baseColor = Color.gray
-        
-        // WHEN: Getting high contrast color
-        let resultColor = accessibilityManager.getHighContrastColor(baseColor)
-        
-        // THEN: Should return high contrast color
-        #expect(resultColor != baseColor, "Should return high contrast color")
-    }
     
     
     

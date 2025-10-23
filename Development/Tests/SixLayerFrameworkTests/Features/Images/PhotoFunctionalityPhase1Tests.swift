@@ -249,7 +249,8 @@ open class PhotoFunctionalityPhase1Tests {
         let onImageCaptured: (PlatformImage) -> Void = { _ in }
         
         // When: Creating camera interface
-        let cameraInterface = platformCameraInterface_L4(onImageCaptured: onImageCaptured)
+        let photoComponents = PlatformPhotoComponentsLayer4()
+        let cameraInterface = photoComponents.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
         
         // Then: Camera interface should be created and be hostable
         #expect(cameraInterface != nil, "Camera interface should be created")

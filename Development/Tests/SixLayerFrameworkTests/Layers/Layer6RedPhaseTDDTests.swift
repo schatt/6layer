@@ -84,7 +84,7 @@ open class Layer6RedPhaseTDDTests {
         let testSuite = AccessibilityTestingSuite()
         let result = await testSuite.runComplianceTest(
             for: problematicView,
-            category: .basic
+            category: .voiceOver
         )
         
         // Then: Should detect actual accessibility issues

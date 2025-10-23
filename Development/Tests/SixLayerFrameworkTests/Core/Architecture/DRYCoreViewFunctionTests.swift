@@ -75,18 +75,16 @@ open class DRYCoreViewFunctionTests {
     /// BUSINESS PURPOSE: Validate intelligent detail view functionality with all capability combinations
     /// TESTING SCOPE: Intelligent detail view capability testing, capability combination validation, comprehensive capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with all capabilities
-    @Test func testIntelligentDetailViewWithAllCapabilities() {
+    @Test func testIntelligentDetailViewWithAllCapabilities() async {
         // Test every combination of platform capabilities and accessibility features
         let capabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
         let accessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
         
         for (capabilityName, capabilityFactory) in capabilityTestCases {
             for (accessibilityName, accessibilityFactory) in accessibilityTestCases {
-                testIntelligentDetailViewWithSpecificCombination(
+                await testIntelligentDetailViewWithSpecificCombination(
                     capabilityName: capabilityName,
-                    accessibilityName: accessibilityName,
-                    capabilityFactory: capabilityFactory,
-                    accessibilityFactory: accessibilityFactory
+                    accessibilityName: accessibilityName
                 )
             }
         }
@@ -106,21 +104,42 @@ open class DRYCoreViewFunctionTests {
     /// TESTING SCOPE: Intelligent detail view specific capability testing, capability combination validation, specific capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with specific capabilities
     @Test(arguments: [
-        ("Touch", "NoAccessibility", { DRYTestPatterns.createTouchCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
-        ("Hover", "AllAccessibility", { DRYTestPatterns.createHoverCapabilities() }, { DRYTestPatterns.createAllAccessibility() }),
-        ("AllCapabilities", "NoAccessibility", { DRYTestPatterns.createAllCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
-        ("NoCapabilities", "AllAccessibility", { DRYTestPatterns.createNoCapabilities() }, { DRYTestPatterns.createAllAccessibility() })
+        ("Touch", "NoAccessibility"),
+        ("Hover", "AllAccessibility"),
+        ("AllCapabilities", "NoAccessibility"),
+        ("NoCapabilities", "AllAccessibility")
     ])
-    func testIntelligentDetailViewWithSpecificCombination(
+    @MainActor func testIntelligentDetailViewWithSpecificCombination(
         capabilityName: String,
-        accessibilityName: String,
-        capabilityFactory: () -> MockPlatformCapabilityChecker,
-        accessibilityFactory: () -> MockAccessibilityFeatureChecker
+        accessibilityName: String
     ) async {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
-        let capabilityChecker = capabilityFactory()
-        let accessibilityChecker = accessibilityFactory()
+        let capabilityChecker: MockPlatformCapabilityChecker
+        let accessibilityChecker: MockAccessibilityFeatureChecker
+        
+        // Create appropriate checkers based on names
+        switch capabilityName {
+        case "Touch":
+            capabilityChecker = DRYTestPatterns.createTouchCapabilities()
+        case "Hover":
+            capabilityChecker = DRYTestPatterns.createHoverCapabilities()
+        case "AllCapabilities":
+            capabilityChecker = DRYTestPatterns.createAllCapabilities()
+        case "NoCapabilities":
+            capabilityChecker = DRYTestPatterns.createNoCapabilities()
+        default:
+            fatalError("Unknown capability name: \(capabilityName)")
+        }
+        
+        switch accessibilityName {
+        case "NoAccessibility":
+            accessibilityChecker = DRYTestPatterns.createNoAccessibility()
+        case "AllAccessibility":
+            accessibilityChecker = DRYTestPatterns.createAllAccessibility()
+        default:
+            fatalError("Unknown accessibility name: \(accessibilityName)")
+        }
         let testName = "\(capabilityName) + \(accessibilityName)"
         
         // WHEN: Generating intelligent detail view
@@ -306,17 +325,15 @@ open class DRYCoreViewFunctionTests {
     /// BUSINESS PURPOSE: Validate simple card component functionality with all capability combinations
     /// TESTING SCOPE: Simple card component capability testing, capability combination validation, comprehensive capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test simple card component with all capabilities
-    @Test func testSimpleCardComponentWithAllCapabilities() {
+    @Test func testSimpleCardComponentWithAllCapabilities() async {
         let capabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
         let accessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
         
         for (capabilityName, capabilityFactory) in capabilityTestCases {
             for (accessibilityName, accessibilityFactory) in accessibilityTestCases {
-                testSimpleCardComponentWithSpecificCombination(
+                await testSimpleCardComponentWithSpecificCombination(
                     capabilityName: capabilityName,
-                    accessibilityName: accessibilityName,
-                    capabilityFactory: capabilityFactory,
-                    accessibilityFactory: accessibilityFactory
+                    accessibilityName: accessibilityName
                 )
             }
         }
@@ -337,21 +354,42 @@ open class DRYCoreViewFunctionTests {
     /// TESTING SCOPE: Simple card component specific capability testing, capability combination validation, specific capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test simple card component with specific capabilities
     @Test(arguments: [
-        ("Touch", "NoAccessibility", { DRYTestPatterns.createTouchCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
-        ("Hover", "AllAccessibility", { DRYTestPatterns.createHoverCapabilities() }, { DRYTestPatterns.createAllAccessibility() }),
-        ("AllCapabilities", "NoAccessibility", { DRYTestPatterns.createAllCapabilities() }, { DRYTestPatterns.createNoAccessibility() }),
-        ("NoCapabilities", "AllAccessibility", { DRYTestPatterns.createNoCapabilities() }, { DRYTestPatterns.createAllAccessibility() })
+        ("Touch", "NoAccessibility"),
+        ("Hover", "AllAccessibility"),
+        ("AllCapabilities", "NoAccessibility"),
+        ("NoCapabilities", "AllAccessibility")
     ])
-    func testSimpleCardComponentWithSpecificCombination(
+    @MainActor func testSimpleCardComponentWithSpecificCombination(
         capabilityName: String,
-        accessibilityName: String,
-        capabilityFactory: () -> MockPlatformCapabilityChecker,
-        accessibilityFactory: () -> MockAccessibilityFeatureChecker
-    ) {
+        accessibilityName: String
+    ) async {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
-        let capabilityChecker = capabilityFactory()
-        let accessibilityChecker = accessibilityFactory()
+        let capabilityChecker: MockPlatformCapabilityChecker
+        let accessibilityChecker: MockAccessibilityFeatureChecker
+        
+        // Create appropriate checkers based on names
+        switch capabilityName {
+        case "Touch":
+            capabilityChecker = DRYTestPatterns.createTouchCapabilities()
+        case "Hover":
+            capabilityChecker = DRYTestPatterns.createHoverCapabilities()
+        case "AllCapabilities":
+            capabilityChecker = DRYTestPatterns.createAllCapabilities()
+        case "NoCapabilities":
+            capabilityChecker = DRYTestPatterns.createNoCapabilities()
+        default:
+            fatalError("Unknown capability name: \(capabilityName)")
+        }
+        
+        switch accessibilityName {
+        case "NoAccessibility":
+            accessibilityChecker = DRYTestPatterns.createNoAccessibility()
+        case "AllAccessibility":
+            accessibilityChecker = DRYTestPatterns.createAllAccessibility()
+        default:
+            fatalError("Unknown accessibility name: \(accessibilityName)")
+        }
         let testName = "SimpleCard \(capabilityName) + \(accessibilityName)"
         
         // WHEN: Generating simple card component
