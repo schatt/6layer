@@ -19,6 +19,11 @@ import Foundation
 @MainActor
 public class AccessibilityIdentifierGenerator {
     
+    // MARK: - Private Properties
+    
+    /// Track generated IDs for collision detection
+    private var generatedIDs: Set<String> = []
+    
     // MARK: - Initialization
     
     public init() {}
@@ -51,6 +56,9 @@ public class AccessibilityIdentifierGenerator {
         }
         
         let generatedID = identifierComponents.joined(separator: ".")
+        
+        // Register the generated ID for collision detection
+        generatedIDs.insert(generatedID)
         
         // Log the generation if debug logging is enabled
         if config.enableDebugLogging {

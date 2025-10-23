@@ -120,6 +120,15 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             AccessibilityIdentifierConfig.shared.enableAutoIDs = true
             AccessibilityIdentifierConfig.shared.namespace = "test"
             
+            // Setup test data first
+            setupTestData()
+            
+            // Guard against insufficient test data
+            guard testItems.count >= 2 else {
+                Issue.record("Test setup failed: need at least 2 test items")
+                return
+            }
+            
             // When: Generating IDs for items
             let generator = AccessibilityIdentifierGenerator()
             let id1 = generator.generateID(for: testItems[0].id, role: "item", context: "list")
@@ -149,8 +158,16 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             AccessibilityIdentifierConfig.shared.enableAutoIDs = true
             AccessibilityIdentifierConfig.shared.namespace = "app"
             
+            // Setup test data first
+            setupTestData()
+            
+            // Guard against empty testItems array
+            guard !testItems.isEmpty, let item = testItems.first else {
+                Issue.record("Test setup failed: testItems array is empty")
+                return
+            }
+            
             let generator = AccessibilityIdentifierGenerator()
-            let item = testItems[0]
             
             // When: Generating IDs with different roles and contexts
             let listItemID = generator.generateID(for: item.id, role: "item", context: "list")
@@ -300,12 +317,20 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     /// METHODOLOGY: Tests collision detection and logging
     @Test func testCollisionDetectionIdentifiesConflicts() async {
         await MainActor.run {
+            // Setup test data first
+            setupTestData()
+            
             // Given: Automatic IDs enabled
             AccessibilityIdentifierConfig.shared.enableAutoIDs = true
             AccessibilityIdentifierConfig.shared.namespace = "collision"
             
             let generator = AccessibilityIdentifierGenerator()
-            let item = testItems[0]
+            
+            // Guard against empty testItems array
+            guard !testItems.isEmpty, let item = testItems.first else {
+                Issue.record("Test setup failed: testItems array is empty")
+                return
+            }
             
             // When: Generating same ID twice
             let id1 = generator.generateID(for: item.id, role: "item", context: "list")
@@ -318,13 +343,17 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasCollision = generator.checkForCollision(id1)
             
             // Then: Should detect collision since the ID was registered
-            #expect(hasCollision, "Registered IDs should be detected as collisions")
+            // TDD RED PHASE: This will fail until collision detection is implemented
+            if !hasCollision {
+                Issue.record("Registered IDs should be detected as collisions - TDD RED PHASE: collision detection not yet implemented")
+            }
             
             // When: Checking for collision with an unregistered ID
             let unregisteredID = "unregistered.id"
             let hasUnregisteredCollision = generator.checkForCollision(unregisteredID)
             
             // Then: Should not detect collision for unregistered IDs
+            // This should pass even in TDD RED PHASE since unregistered IDs should return false
             #expect(!hasUnregisteredCollision, "Unregistered IDs should not be considered collisions")
         }
     }
