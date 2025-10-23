@@ -1,5 +1,52 @@
 import SwiftUI
 
+// MARK: - Color Name Types
+
+/// Defensive enum for color names to prevent string-based anti-patterns
+public enum ColorName: String, CaseIterable {
+    // Background colors
+    case backgroundColor = "backgroundColor"
+    case secondaryBackgroundColor = "secondaryBackgroundColor"
+    case tertiaryBackgroundColor = "tertiaryBackgroundColor"
+    case groupedBackgroundColor = "groupedBackgroundColor"
+    case secondaryGroupedBackgroundColor = "secondaryGroupedBackgroundColor"
+    case tertiaryGroupedBackgroundColor = "tertiaryGroupedBackgroundColor"
+    
+    // Foreground colors
+    case foregroundColor = "foregroundColor"
+    case secondaryForegroundColor = "secondaryForegroundColor"
+    case tertiaryForegroundColor = "tertiaryForegroundColor"
+    case quaternaryForegroundColor = "quaternaryForegroundColor"
+    case placeholderForegroundColor = "placeholderForegroundColor"
+    case separatorColor = "separatorColor"
+    case linkColor = "linkColor"
+    
+    // System colors
+    case blue = "blue"
+    case red = "red"
+    case green = "green"
+    case orange = "orange"
+    case yellow = "yellow"
+    case purple = "purple"
+    case pink = "pink"
+    case gray = "gray"
+    case black = "black"
+    case white = "white"
+    case clear = "clear"
+    case primary = "primary"
+    case secondary = "secondary"
+    case accentColor = "accentColor"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+    
+    /// Safe factory method that can't fail at runtime
+    static func from(string: String) -> ColorName? {
+        return ColorName(rawValue: string)
+    }
+}
+
 // MARK: - Enhanced Platform Color System Extensions
 
 /// Platform-specific color system that provides consistent theming
@@ -512,65 +559,70 @@ public extension Color {
     static func named(_ colorName: String?) -> Color? {
         guard let colorName = colorName, !colorName.isEmpty else { return nil }
         
-        // Map business logic color names to platform colors
-        switch colorName {
-        case "backgroundColor":
+        // Use enum-based approach instead of string matching
+        guard let colorNameEnum = ColorName(rawValue: colorName) else {
+            // Unknown color name - log for debugging but don't crash
+            print("Warning: Unknown color name '\(colorName)', returning nil")
+            return nil
+        }
+        
+        // Map business logic color names to platform colors using enum
+        switch colorNameEnum {
+        case .backgroundColor:
             return backgroundColor
-        case "secondaryBackgroundColor":
+        case .secondaryBackgroundColor:
             return secondaryBackgroundColor
-        case "tertiaryBackgroundColor":
+        case .tertiaryBackgroundColor:
             return tertiaryBackgroundColor
-        case "groupedBackgroundColor":
+        case .groupedBackgroundColor:
             return groupedBackgroundColor
-        case "secondaryGroupedBackgroundColor":
+        case .secondaryGroupedBackgroundColor:
             return secondaryGroupedBackgroundColor
-        case "tertiaryGroupedBackgroundColor":
+        case .tertiaryGroupedBackgroundColor:
             return tertiaryGroupedBackgroundColor
-        case "foregroundColor":
+        case .foregroundColor:
             return foregroundColor
-        case "secondaryForegroundColor":
+        case .secondaryForegroundColor:
             return secondaryForegroundColor
-        case "tertiaryForegroundColor":
+        case .tertiaryForegroundColor:
             return tertiaryForegroundColor
-        case "quaternaryForegroundColor":
+        case .quaternaryForegroundColor:
             return quaternaryForegroundColor
-        case "placeholderForegroundColor":
+        case .placeholderForegroundColor:
             return placeholderForegroundColor
-        case "separatorColor":
+        case .separatorColor:
             return separatorColor
-        case "linkColor":
+        case .linkColor:
             return linkColor
         // System colors
-        case "blue":
+        case .blue:
             return Color.blue
-        case "red":
+        case .red:
             return Color.red
-        case "green":
+        case .green:
             return Color.green
-        case "orange":
+        case .orange:
             return Color.orange
-        case "yellow":
+        case .yellow:
             return Color.yellow
-        case "purple":
+        case .purple:
             return Color.purple
-        case "pink":
+        case .pink:
             return Color.pink
-        case "gray":
+        case .gray:
             return Color.gray
-        case "black":
+        case .black:
             return Color.black
-        case "white":
+        case .white:
             return Color.white
-        case "clear":
+        case .clear:
             return Color.clear
-        case "primary":
+        case .primary:
             return Color.primary
-        case "secondary":
+        case .secondary:
             return Color.secondary
-        case "accentColor":
+        case .accentColor:
             return Color.accentColor
-        default:
-            return nil
         }
     }
 
