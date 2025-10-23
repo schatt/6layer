@@ -237,7 +237,16 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.confidence == 1.0)
     }
     
-    @Test func testConfidenceCalculationForComplexData() {
+    @Test func testConfidenceCalculationForComplexData() async {
+        // Setup test environment first
+        await setupTestEnvironment()
+        
+        // Guard against uninitialized intelligence
+        guard let intelligence = intelligence else {
+            Issue.record("Test setup failed: intelligence not initialized")
+            return
+        }
+        
         // Given
         let complexData = Array(1...50).map { "Item \($0)" }
         
