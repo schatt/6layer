@@ -45,7 +45,7 @@ open class AdvancedFieldTypesTests {
      * TESTING SCOPE: Tests field initialization, data binding, and platform-specific behavior
      * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
      */
-    @Test func testRichTextEditorFieldInitialization() {
+    @Test @MainActor func testRichTextEditorFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -64,7 +64,7 @@ open class AdvancedFieldTypesTests {
         #expect(field.label == "Rich Text Content")
     }
     
-    @Test func testRichTextEditorFieldEditingMode() {
+    @Test @MainActor func testRichTextEditorFieldEditingMode() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -83,7 +83,7 @@ open class AdvancedFieldTypesTests {
         #expect(richTextField != nil)
     }
     
-    @Test func testRichTextEditorTextBinding() {
+    @Test @MainActor func testRichTextEditorTextBinding() {
         // Given
         let field = DynamicFormField(
             id: "richText",
@@ -136,7 +136,7 @@ open class AdvancedFieldTypesTests {
      * TESTING SCOPE: Tests field initialization, suggestion filtering, and selection behavior
      * METHODOLOGY: Uses comprehensive test scenarios including empty suggestions and large datasets
      */
-    @Test func testAutocompleteFieldInitialization() {
+    @Test @MainActor func testAutocompleteFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -160,7 +160,7 @@ open class AdvancedFieldTypesTests {
         #expect(field.label == "Search")
     }
     
-    @Test func testAutocompleteFieldSuggestionFiltering() {
+    @Test @MainActor func testAutocompleteFieldSuggestionFiltering() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -184,7 +184,7 @@ open class AdvancedFieldTypesTests {
         // This tests the internal filtering logic
     }
     
-    @Test func testAutocompleteFieldSuggestionSelection() {
+    @Test @MainActor func testAutocompleteFieldSuggestionSelection() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -233,7 +233,7 @@ open class AdvancedFieldTypesTests {
      * TESTING SCOPE: Tests field initialization, file type validation, size limits, and error handling
      * METHODOLOGY: Uses mock file scenarios and comprehensive error condition testing
      */
-    @Test func testEnhancedFileUploadFieldInitialization() {
+    @Test @MainActor func testEnhancedFileUploadFieldInitialization() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -260,7 +260,7 @@ open class AdvancedFieldTypesTests {
         #expect(field.label == "Upload Files")
     }
     
-    @Test func testFileUploadFieldAllowedTypes() {
+    @Test @MainActor func testFileUploadFieldAllowedTypes() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -285,7 +285,7 @@ open class AdvancedFieldTypesTests {
         // Test that allowed types are properly configured
     }
     
-    @Test func testFileUploadFieldMaxFileSize() {
+    @Test @MainActor func testFileUploadFieldMaxFileSize() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -514,7 +514,7 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Integration Tests
     
-    @Test func testAdvancedFieldTypesIntegration() {
+    @Test @MainActor func testAdvancedFieldTypesIntegration() {
         // Given
         let richTextField = DynamicFormField(
             id: "richText",
@@ -584,7 +584,7 @@ open class AdvancedFieldTypesTests {
         // This tests the accessibility implementation
     }
     
-    @Test func testAutocompleteFieldAccessibility() {
+    @Test @MainActor func testAutocompleteFieldAccessibility() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
@@ -607,7 +607,7 @@ open class AdvancedFieldTypesTests {
         // Test that accessibility labels and hints are properly set
     }
     
-    @Test func testFileUploadFieldAccessibility() {
+    @Test @MainActor func testFileUploadFieldAccessibility() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -633,7 +633,7 @@ open class AdvancedFieldTypesTests {
     
     // MARK: - Error Handling Tests
     
-    @Test func testFileUploadFieldInvalidFileType() {
+    @Test @MainActor func testFileUploadFieldInvalidFileType() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -658,7 +658,7 @@ open class AdvancedFieldTypesTests {
         // Test that invalid file types are properly handled
     }
     
-    @Test func testFileUploadFieldFileSizeExceeded() {
+    @Test @MainActor func testFileUploadFieldFileSizeExceeded() {
         // Given
         let field = DynamicFormField(
             id: "files",
@@ -683,7 +683,7 @@ open class AdvancedFieldTypesTests {
         // Test that file size limits are properly enforced
     }
     
-    @Test func testAutocompleteFieldEmptySuggestions() {
+    @Test @MainActor func testAutocompleteFieldEmptySuggestions() {
         // Given
         let field = DynamicFormField(
             id: "autocomplete",
