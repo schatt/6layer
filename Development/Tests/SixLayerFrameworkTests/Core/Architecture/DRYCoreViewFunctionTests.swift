@@ -1,6 +1,5 @@
 import Testing
 
-
 //
 //  DRYCoreViewFunctionTests.swift
 //  SixLayerFrameworkTests
@@ -329,11 +328,17 @@ open class DRYCoreViewFunctionTests {
         let capabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
         let accessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
         
-        for (capabilityName, capabilityFactory) in capabilityTestCases {
-            for (accessibilityName, accessibilityFactory) in accessibilityTestCases {
+        for (capabilityName, _) in capabilityTestCases {
+            for (accessibilityName, _) in accessibilityTestCases {
+                // Convert strings to enums for the new method signature
+                guard let capabilityType = CapabilityType.from(string: capabilityName),
+                      let accessibilityType = AccessibilityType.from(string: accessibilityName) else {
+                    continue // Skip invalid combinations
+                }
+                
                 await testSimpleCardComponentWithSpecificCombination(
-                    capabilityName: capabilityName,
-                    accessibilityName: accessibilityName
+                    capabilityType: capabilityType,
+                    accessibilityType: accessibilityType
                 )
             }
         }
@@ -354,43 +359,39 @@ open class DRYCoreViewFunctionTests {
     /// TESTING SCOPE: Simple card component specific capability testing, capability combination validation, specific capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test simple card component with specific capabilities
     @Test(arguments: [
-        ("Touch", "NoAccessibility"),
-        ("Hover", "AllAccessibility"),
-        ("AllCapabilities", "NoAccessibility"),
-        ("NoCapabilities", "AllAccessibility")
+        (CapabilityType.touchOnly, AccessibilityType.noAccessibility),
+        (CapabilityType.hoverOnly, AccessibilityType.allAccessibility),
+        (CapabilityType.allCapabilities, AccessibilityType.noAccessibility),
+        (CapabilityType.noCapabilities, AccessibilityType.allAccessibility)
     ])
     @MainActor func testSimpleCardComponentWithSpecificCombination(
-        capabilityName: String,
-        accessibilityName: String
+        capabilityType: CapabilityType,
+        accessibilityType: AccessibilityType
     ) async {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
         let capabilityChecker: MockPlatformCapabilityChecker
         let accessibilityChecker: MockAccessibilityFeatureChecker
         
-        // Create appropriate checkers based on names
-        switch capabilityName {
-        case "Touch":
+        // Create appropriate checkers based on enum types - no string matching needed!
+        switch capabilityType {
+        case .touchOnly:
             capabilityChecker = DRYTestPatterns.createTouchCapabilities()
-        case "Hover":
+        case .hoverOnly:
             capabilityChecker = DRYTestPatterns.createHoverCapabilities()
-        case "AllCapabilities":
+        case .allCapabilities:
             capabilityChecker = DRYTestPatterns.createAllCapabilities()
-        case "NoCapabilities":
+        case .noCapabilities:
             capabilityChecker = DRYTestPatterns.createNoCapabilities()
-        default:
-            fatalError("Unknown capability name: \(capabilityName)")
         }
         
-        switch accessibilityName {
-        case "NoAccessibility":
+        switch accessibilityType {
+        case .noAccessibility:
             accessibilityChecker = DRYTestPatterns.createNoAccessibility()
-        case "AllAccessibility":
+        case .allAccessibility:
             accessibilityChecker = DRYTestPatterns.createAllAccessibility()
-        default:
-            fatalError("Unknown accessibility name: \(accessibilityName)")
         }
-        let testName = "SimpleCard \(capabilityName) + \(accessibilityName)"
+        let testName = "SimpleCard \(capabilityType.displayName) + \(accessibilityType.displayName)"
         
         // WHEN: Generating simple card component
         let view = DRYTestPatterns.createSimpleCardComponent(
