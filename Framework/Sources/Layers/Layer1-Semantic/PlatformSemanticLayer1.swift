@@ -1,5 +1,27 @@
 import SwiftUI
 
+// MARK: - Item Type Types
+
+/// Defensive enum for item types to prevent string-based anti-patterns
+public enum ItemType: String, CaseIterable {
+    case featureCards = "featureCards"
+    case generic = "generic"
+    case media = "media"
+    case navigation = "navigation"
+    case form = "form"
+    case list = "list"
+    case grid = "grid"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+    
+    /// Safe factory method that can't fail at runtime
+    static func from(string: String) -> ItemType {
+        return ItemType(rawValue: string) ?? .generic
+    }
+}
+
 // MARK: - Validation Rule Types
 
 /// Defensive enum for validation rules to prevent string-based anti-patterns
@@ -1044,16 +1066,20 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
     
     /// Determine the optimal presentation strategy based on hints and platform
     private func determinePresentationStrategy() -> PresentationStrategy {
-        let itemType = hints.customPreferences["itemType"] ?? "generic"
-        let interactionStyle = hints.customPreferences["interactionStyle"] ?? "static"
+        let itemTypeString = hints.customPreferences["itemType"] ?? "generic"
+        let interactionStyleString = hints.customPreferences["interactionStyle"] ?? "static"
         let _ = hints.customPreferences["layoutPreference"] ?? "automatic"
+        
+        // Convert strings to enums for type safety
+        let itemType = ItemType.from(string: itemTypeString)
+        let interactionStyle = InteractionStyle(rawValue: interactionStyleString) ?? .static
         
         // Platform-aware decision making
         let platform = SixLayerPlatform.currentPlatform
         let deviceType = SixLayerPlatform.deviceType
         
         // Feature cards with expandable interaction
-        if itemType == "featureCards" && interactionStyle == "expandable" {
+        if itemType == .featureCards && interactionStyle == .expandable {
             switch platform {
             case .visionOS:
                 return .coverFlow // Spatial interface prefers coverflow
