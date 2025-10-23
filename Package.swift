@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.3.1 - Metal Rendering Crash Fix + Performance Layer Removal + Swift Testing Migration
+// SixLayerFramework v4.5.0 - CardDisplayHelper Hint System + Dependency Injection + Compilation Fixes
 
 import PackageDescription
 

@@ -11,30 +11,25 @@ import ViewInspector
 /// TESTING SCOPE: All Layer 1 presentation functions
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @MainActor
-open class Layer1AccessibilityTests: BaseTestClass {
+open class Layer1AccessibilityTests {
     
-     // MARK: - Test Setup
+    // MARK: - Helper Methods
     
-    private var testItems: [Layer1TestItem]!
-    private var testHints: PresentationHints!
-    
-    override init() {
-                testItems = [
+    private func createTestItems() -> [Layer1TestItem] {
+        return [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
         ]
-        testHints = PresentationHints(
+    }
+    
+    private func createTestHints() -> PresentationHints {
+        return PresentationHints(
             dataType: .generic,
             presentationPreference: .grid,
             complexity: .moderate,
             context: .list,
             customPreferences: [:]
         )
-        
-        // Reset global config to default state
-        AccessibilityIdentifierConfig.shared.enableAutoIDs = false
-        AccessibilityIdentifierConfig.shared.namespace = ""
-        AccessibilityIdentifierConfig.shared.enableViewHierarchyTracking = false
     }    // MARK: - Layer 1 Function Tests
     
     /// TDD RED PHASE: platformPresentItemCollection_L1 should generate accessibility identifiers
@@ -43,10 +38,14 @@ open class Layer1AccessibilityTests: BaseTestClass {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
+        // Create test data locally
+        let testItems = createTestItems()
+        let testHints = createTestHints()
+        
         // When: Creating view using platformPresentItemCollection_L1
         let view = platformPresentItemCollection_L1(
-            items: testItems!,
-            hints: testHints!
+            items: testItems,
+            hints: testHints
         )
         
         // Then: View should be created
