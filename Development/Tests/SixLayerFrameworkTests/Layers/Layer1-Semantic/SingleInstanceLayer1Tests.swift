@@ -9,12 +9,10 @@ import SwiftUI
 @MainActor
 open class SingleInstanceLayer1Tests {
     
-    // MARK: - Test Setup
+    // MARK: - Helper Methods
     
-    private var testHints: PresentationHints!
-    
-    init() async throws {
-        testHints = PresentationHints(
+    private func createTestHints() -> PresentationHints {
+        return PresentationHints(
             dataType: .numeric,
             presentationPreference: .card,
             complexity: .simple,
@@ -27,6 +25,7 @@ open class SingleInstanceLayer1Tests {
     
     @Test func testPlatformPresentNumericData_L1_SingleInstance() {
         // GIVEN: A single GenericNumericData item
+        let testHints = createTestHints()
         let singleNumericData = GenericNumericData(
             value: 42.0,
             label: "Test Value",
@@ -46,6 +45,7 @@ open class SingleInstanceLayer1Tests {
     
     @Test func testPlatformPresentNumericData_L1_SingleInstance_Consistency() {
         // GIVEN: A single GenericNumericData item
+        let testHints = createTestHints()
         let singleNumericData = GenericNumericData(
             value: 42.0,
             label: "Test Value",
@@ -71,6 +71,7 @@ open class SingleInstanceLayer1Tests {
     
     @Test func testPlatformPresentMediaData_L1_SingleInstance() {
         // GIVEN: A single GenericMediaItem
+        let testHints = createTestHints()
         let singleMediaItem = GenericMediaItem(
             title: "Test Media",
             url: "https://example.com/image.jpg",
@@ -92,6 +93,7 @@ open class SingleInstanceLayer1Tests {
     
     @Test func testPlatformPresentHierarchicalData_L1_SingleInstance() {
         // GIVEN: A single GenericHierarchicalItem
+        let testHints = createTestHints()
         let singleHierarchicalItem = GenericHierarchicalItem(
             title: "Test Item",
             level: 0,
@@ -113,6 +115,7 @@ open class SingleInstanceLayer1Tests {
     
     @Test func testPlatformPresentTemporalData_L1_SingleInstance() {
         // GIVEN: A single GenericTemporalItem
+        let testHints = createTestHints()
         let singleTemporalItem = GenericTemporalItem(
             title: "Test Event",
             date: Date(),
@@ -134,6 +137,7 @@ open class SingleInstanceLayer1Tests {
     
     @Test func testPlatformPresentFormData_L1_SingleInstance() {
         // GIVEN: A single DynamicFormField
+        let testHints = createTestHints()
         let singleFormField = DynamicFormField(
             id: "test-field",
             contentType: .text,
