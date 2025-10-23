@@ -287,6 +287,22 @@ open class EyeTrackingTests: BaseTestClass {
     /// METHODOLOGY: Start calibration and verify calibration state and process
     @Test func testStartCalibration() async {
         await MainActor.run {
+            // Initialize test data first
+            testConfig = EyeTrackingConfig(
+                sensitivity: .medium,
+                dwellTime: 1.0,
+                visualFeedback: true,
+                hapticFeedback: true,
+                calibration: EyeTrackingCalibration()
+            )
+            eyeTrackingManager = EyeTrackingManager(config: testConfig)
+            
+            // Guard against uninitialized manager
+            guard let eyeTrackingManager = eyeTrackingManager else {
+                Issue.record("Test setup failed: eyeTrackingManager not initialized")
+                return
+            }
+            
             eyeTrackingManager.startCalibration()
         }
         
@@ -294,6 +310,12 @@ open class EyeTrackingTests: BaseTestClass {
         try? await Task.sleep(nanoseconds: 2_500_000_000) // 2.5 seconds
         
         await MainActor.run {
+            // Guard against uninitialized manager
+            guard let eyeTrackingManager = eyeTrackingManager else {
+                Issue.record("Test setup failed: eyeTrackingManager not initialized")
+                return
+            }
+            
             #expect(eyeTrackingManager.isCalibrated)
         }
     }
