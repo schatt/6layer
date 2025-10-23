@@ -255,9 +255,11 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         // Given: SwitchControlManager
         let config = SwitchControlConfig(
             enableNavigation: true,
-            enableScanning: true,
-            scanningSpeed: 1.0,
-            enableCustomActions: true
+            enableCustomActions: true,
+            enableGestureSupport: true,
+            focusManagement: .automatic,
+            gestureSensitivity: .medium,
+            navigationSpeed: .normal
         )
         let manager = SwitchControlManager(config: config)
         
@@ -330,9 +332,11 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         // Given: AssistiveTouchManager
         let config = AssistiveTouchConfig(
             enableIntegration: true,
-            enableCustomGestures: true,
-            enableVoiceControl: true,
-            enableSwitchControl: true
+            enableCustomActions: true,
+            enableMenuSupport: true,
+            enableGestureRecognition: true,
+            gestureSensitivity: .medium,
+            menuStyle: .compact
         )
         let manager = AssistiveTouchManager(config: config)
         
