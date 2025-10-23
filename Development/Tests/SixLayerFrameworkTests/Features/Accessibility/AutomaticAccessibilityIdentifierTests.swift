@@ -286,10 +286,19 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             AccessibilityIdentifierConfig.shared.enableAutoIDs = true
             AccessibilityIdentifierConfig.shared.namespace = "layer1"
             
+            // Setup test data first
+            setupTestData()
+            
+            // Guard against uninitialized test data
+            guard let testItems = testItems, let testHints = testHints else {
+                Issue.record("Test setup failed: testItems or testHints not initialized")
+                return
+            }
+            
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(
-                items: testItems!,
-                hints: testHints!
+                items: testItems,
+                hints: testHints
             )
             
             // Then: View should be created with automatic identifiers

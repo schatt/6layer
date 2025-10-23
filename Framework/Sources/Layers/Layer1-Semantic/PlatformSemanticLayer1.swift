@@ -1,5 +1,23 @@
 import SwiftUI
 
+// MARK: - Validation Rule Types
+
+/// Defensive enum for validation rules to prevent string-based anti-patterns
+public enum ValidationRuleType: String, CaseIterable {
+    case required = "required"
+    case email = "email"
+    case phone = "phone"
+    case url = "url"
+    case minLength = "minLength"
+    case maxLength = "maxLength"
+    case min = "min"
+    case max = "max"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+}
+
 // MARK: - Generic Data Presentation Functions
 
 /// Generic function for presenting any collection of identifiable items
@@ -1910,39 +1928,43 @@ public struct SimpleFormView: View {
     }
     
     private func validateRule(ruleKey: String, ruleValue: String, value: String, fieldLabel: String) -> String? {
-        switch ruleKey {
-        case "required":
+        guard let ruleType = ValidationRuleType(rawValue: ruleKey) else {
+            // Unknown validation rule - log for debugging but don't crash
+            print("Warning: Unknown validation rule '\(ruleKey)' for field '\(fieldLabel)'")
+            return nil
+        }
+        
+        switch ruleType {
+        case .required:
             return value.isEmpty ? "\(fieldLabel) is required" : nil
-        case "email":
+        case .email:
             let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
             return !matchesPattern(value, pattern: emailRegex) ? "\(fieldLabel) must be a valid email" : nil
-        case "phone":
+        case .phone:
             let phoneRegex = "^[+]?[0-9\\s\\-\\(\\)]{10,}$"
             return !matchesPattern(value, pattern: phoneRegex) ? "\(fieldLabel) must be a valid phone number" : nil
-        case "url":
+        case .url:
             let urlRegex = "^(https?://)?[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?$"
             return !matchesPattern(value, pattern: urlRegex) ? "\(fieldLabel) must be a valid URL" : nil
-        case "minLength":
+        case .minLength:
             if let min = Int(ruleValue), value.count < min {
                 return "\(fieldLabel) must be at least \(min) characters"
             }
             return nil
-        case "maxLength":
+        case .maxLength:
             if let max = Int(ruleValue), value.count > max {
                 return "\(fieldLabel) must be less than \(max) characters"
             }
             return nil
-        case "min":
+        case .min:
             if let min = Double(ruleValue), let num = Double(value), num < min {
                 return "\(fieldLabel) must be at least \(min)"
             }
             return nil
-        case "max":
+        case .max:
             if let max = Double(ruleValue), let num = Double(value), num > max {
                 return "\(fieldLabel) must be less than \(max)"
             }
-            return nil
-        default:
             return nil
         }
     }
