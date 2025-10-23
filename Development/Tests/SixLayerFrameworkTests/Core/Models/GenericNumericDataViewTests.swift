@@ -13,28 +13,30 @@ import ViewInspector
 @MainActor
 open class GenericNumericDataViewTests {
     
-    // MARK: - Test Setup
+    // MARK: - Helper Methods
     
-    init() async throws {
-        await setupTestEnvironment()
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func configureAccessibilityIdentifiers() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }    // MARK: - GenericNumericDataView Tests
-    
-    
-    func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
     
-    func cleanupTestEnvironment() async {
+    private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
 @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        // Setup test environment
+        await setupTestEnvironment()
+        configureAccessibilityIdentifiers()
+        
         let view = GenericNumericDataView(
             data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
             hints: PresentationHints()
@@ -51,6 +53,10 @@ open class GenericNumericDataViewTests {
     }
     
     @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        // Setup test environment
+        await setupTestEnvironment()
+        configureAccessibilityIdentifiers()
+        
         let view = GenericNumericDataView(
             data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
             hints: PresentationHints()
