@@ -149,20 +149,8 @@ open class EyeTrackingTests {
     @Test func testEyeTrackingManagerEnable() async {
         await MainActor.run {
             // Initialize test data first
-            testConfig = EyeTrackingConfig(
-                sensitivity: .medium,
-                dwellTime: 1.0,
-                visualFeedback: true,
-                hapticFeedback: true,
-                calibration: EyeTrackingCalibration()
-            )
-            eyeTrackingManager = EyeTrackingManager(config: testConfig)
-            
-            // Guard against uninitialized manager
-            guard let eyeTrackingManager = eyeTrackingManager else {
-                Issue.record("Test setup failed: eyeTrackingManager not initialized")
-                return
-            }
+            let testConfig = createTestConfig()
+            let eyeTrackingManager = EyeTrackingManager(config: testConfig)
             
             let _ = eyeTrackingManager.isEnabled
             eyeTrackingManager.enable()
@@ -179,6 +167,7 @@ open class EyeTrackingTests {
     /// METHODOLOGY: Disable EyeTrackingManager and verify disabled state and cleanup behavior
     @Test func testEyeTrackingManagerDisable() async {
         await MainActor.run {
+            let eyeTrackingManager = createEyeTrackingManager()
             eyeTrackingManager.enable()
             eyeTrackingManager.disable()
             
