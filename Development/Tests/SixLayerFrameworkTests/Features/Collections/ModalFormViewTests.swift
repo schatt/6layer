@@ -13,28 +13,32 @@ import ViewInspector
 @MainActor
 open class ModalFormViewTests {
     
-    // MARK: - Test Setup
+    // MARK: - Helper Methods
     
-    init() async throws {
-        await setupTestEnvironment()
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func configureAccessibilityIdentifiers() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }    // MARK: - ModalFormView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
+    
+    // MARK: - ModalFormView Tests
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        // Setup test environment
+        await setupTestEnvironment()
+        configureAccessibilityIdentifiers()
+        
         let testFields = [
             DynamicFormField(
                 id: "field1",
@@ -70,6 +74,10 @@ open class ModalFormViewTests {
     }
     
     @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        // Setup test environment
+        await setupTestEnvironment()
+        configureAccessibilityIdentifiers()
+        
         let testFields = [
             DynamicFormField(
                 id: "field1",
