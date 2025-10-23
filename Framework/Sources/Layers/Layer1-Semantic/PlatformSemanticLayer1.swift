@@ -1,5 +1,41 @@
 import SwiftUI
 
+// MARK: - Property Label Types
+
+/// Defensive enum for common property labels to prevent string-based anti-patterns
+public enum PropertyLabel: String, CaseIterable {
+    case name = "name"
+    case title = "title"
+    case description = "description"
+    case subtitle = "subtitle"
+    case value = "value"
+    case id = "id"
+    case type = "type"
+    case content = "content"
+    case data = "data"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+    
+    /// Safe factory method that can't fail at runtime
+    static func from(string: String) -> PropertyLabel? {
+        return PropertyLabel(rawValue: string)
+    }
+    
+    /// Check if a string matches any of the title-related labels
+    static func isTitleLabel(_ label: String) -> Bool {
+        guard let propertyLabel = PropertyLabel(rawValue: label) else { return false }
+        return propertyLabel == .name || propertyLabel == .title
+    }
+    
+    /// Check if a string matches any of the description-related labels
+    static func isDescriptionLabel(_ label: String) -> Bool {
+        guard let propertyLabel = PropertyLabel(rawValue: label) else { return false }
+        return propertyLabel == .description || propertyLabel == .subtitle
+    }
+}
+
 // MARK: - Item Type Types
 
 /// Defensive enum for item types to prevent string-based anti-patterns
@@ -2861,12 +2897,12 @@ public struct GenericContentView: View {
                     if let label = child.label {
                         data[label] = child.value
                         
-                        // Common property mappings
-                        if label == "name" || label == "title" {
+                        // Common property mappings using enum-based approach
+                        if PropertyLabel.isTitleLabel(label) {
                             if let stringValue = child.value as? String {
                                 title = stringValue
                             }
-                        } else if label == "description" || label == "subtitle" {
+                        } else if PropertyLabel.isDescriptionLabel(label) {
                             if let stringValue = child.value as? String {
                                 subtitle = stringValue
                             }
