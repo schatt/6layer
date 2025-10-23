@@ -378,7 +378,7 @@ open class WindowDetectionTests {
     
     // MARK: - Thread Safety Tests
     
-    @Test func testWindowDetectionThreadSafety() {
+    @Test func testWindowDetectionThreadSafety() async {
         // GIVEN: A window detection instance
         // WHEN: Called from multiple threads
         // THEN: Should not crash

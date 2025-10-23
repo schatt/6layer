@@ -39,7 +39,6 @@ import SwiftUI
 /// Comprehensive capability matrix testing
 /// Tests that platform detection correctly determines capability support
 /// AND that capabilities work when supported and are disabled when not supported
-@MainActor
 open class CapabilityMatrixTests {
     init() async throws {
         // Establish deterministic baseline for current platform
@@ -364,7 +363,7 @@ open class CapabilityMatrixTests {
     
     // MARK: - Capability Matrix Validation
     
-    @Test func testCapabilityMatrix() {
+    @Test @MainActor func testCapabilityMatrix() {
         let platform = SixLayerPlatform.current
         
         // Create capability matrix

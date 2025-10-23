@@ -94,7 +94,8 @@ open class NativeTypesTests: BaseTestClass {
         #expect(retrievedImage == testImage)
     }
     
-    @Test func testURLFieldNativeBinding() {
+    @Test func testURLFieldNativeBinding
+        let formState = createTestFormState()() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(

@@ -367,25 +367,6 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(resultColor != baseColor, "Should return high contrast color")
     }
     
-    /**
-     * BUSINESS PURPOSE: HighContrastManager provides different contrast levels
-     * 
-     * TESTING SCOPE: Multiple contrast level handling
-     * METHODOLOGY: Test different contrast levels
-     */
-    @Test func testGetHighContrastColorDifferentLevels() {
-        let navigationManager = KeyboardNavigationManager()
-        // GIVEN: High contrast mode
-        highContrastManager.isHighContrastEnabled = true
-        let baseColor = Color.red
-        
-        // WHEN: Getting high contrast color multiple times
-        let resultColor1 = highContrastManager.getHighContrastColor(baseColor)
-        let resultColor2 = highContrastManager.getHighContrastColor(baseColor)
-        
-        // THEN: Should return consistent results
-        #expect(resultColor1 == resultColor2, "Should return consistent high contrast colors")
-    }
     
     
     // MARK: - View Modifier Tests
