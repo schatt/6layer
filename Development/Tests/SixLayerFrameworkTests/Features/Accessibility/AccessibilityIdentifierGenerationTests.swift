@@ -8,7 +8,7 @@ import ViewInspector
 /// TDD Tests for Accessibility Identifier Generation
 /// Following proper TDD: Test drives design, write best code to make tests pass
 @MainActor
-open class AccessibilityIdentifierTDDTests {
+open class AccessibilityIdentifierGenerationTests {
     
     init() async throws {
                 // Reset configuration to known state

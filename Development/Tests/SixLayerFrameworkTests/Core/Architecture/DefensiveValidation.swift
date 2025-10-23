@@ -36,13 +36,13 @@ struct DefensiveValidation {
         return validateCapabilityName(name).map { validatedName in
             switch validatedName {
             case "Touch Only":
-                return DRYTestPatterns.createTouchCapabilities()
+                return TestPatterns.createTouchCapabilities()
             case "Hover Only":
-                return DRYTestPatterns.createHoverCapabilities()
+                return TestPatterns.createHoverCapabilities()
             case "All Capabilities":
-                return DRYTestPatterns.createAllCapabilities()
+                return TestPatterns.createAllCapabilities()
             case "No Capabilities":
-                return DRYTestPatterns.createNoCapabilities()
+                return TestPatterns.createNoCapabilities()
             default:
                 // This should never happen due to validation, but defensive programming
                 fatalError("Unhandled validated capability name: \(validatedName)")
@@ -55,9 +55,9 @@ struct DefensiveValidation {
         return validateAccessibilityName(name).map { validatedName in
             switch validatedName {
             case "No Accessibility":
-                return DRYTestPatterns.createNoAccessibility()
+                return TestPatterns.createNoAccessibility()
             case "All Accessibility":
-                return DRYTestPatterns.createAllAccessibility()
+                return TestPatterns.createAllAccessibility()
             default:
                 // This should never happen due to validation, but defensive programming
                 fatalError("Unhandled validated accessibility name: \(validatedName)")

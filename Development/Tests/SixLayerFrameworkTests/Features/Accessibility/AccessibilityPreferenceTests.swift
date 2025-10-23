@@ -181,8 +181,8 @@ open class AccessibilityPreferenceTests {
     /// Tests accessibility features using existing mocking infrastructure
     @Test func testAccessibilityFeatures_UsingExistingMocks() {
         // Use existing mocking functions to test different accessibility states
-        let noAccessibility = DRYTestPatterns.createNoAccessibility()
-        let allAccessibility = DRYTestPatterns.createAllAccessibility()
+        let noAccessibility = TestPatterns.createNoAccessibility()
+        let allAccessibility = TestPatterns.createAllAccessibility()
         
         // Test no accessibility features
         #expect(!noAccessibility.hasReduceMotion(), "No accessibility should not have reduce motion")
@@ -225,7 +225,7 @@ open class AccessibilityPreferenceTests {
     /// Tests that the framework works correctly when all accessibility features are disabled
     @Test func testAllAccessibilityFeaturesDisabled() {
         // Given: No accessibility features enabled (simulated)
-        let noAccessibility = DRYTestPatterns.createNoAccessibility()
+        let noAccessibility = TestPatterns.createNoAccessibility()
         
         // When: Check accessibility state
         let reduceMotion = noAccessibility.hasReduceMotion()
@@ -242,7 +242,7 @@ open class AccessibilityPreferenceTests {
     /// Tests that the framework works correctly when all accessibility features are enabled
     @Test func testAllAccessibilityFeaturesEnabled() {
         // Given: All accessibility features enabled (simulated)
-        let allAccessibility = DRYTestPatterns.createAllAccessibility()
+        let allAccessibility = TestPatterns.createAllAccessibility()
         
         // When: Check accessibility state
         let reduceMotion = allAccessibility.hasReduceMotion()

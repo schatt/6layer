@@ -60,13 +60,13 @@ struct DefensiveTestImplementation {
         // Test implementation here
         let item = sampleData[0]
         
-        let view = DRYTestPatterns.createSimpleCardComponent(
+        let view = TestPatterns.createSimpleCardComponent(
             item: item,
             capabilityChecker: capabilityChecker,
             accessibilityChecker: accessibilityChecker
         )
         
-        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+        TestPatterns.verifyViewGeneration(view, testName: testName)
     }
 }
 

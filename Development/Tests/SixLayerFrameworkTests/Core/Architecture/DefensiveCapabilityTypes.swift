@@ -40,13 +40,13 @@ struct DefensiveTestPatterns {
     static func createCapabilityChecker(for type: CapabilityType) -> MockPlatformCapabilityChecker {
         switch type {
         case .touchOnly:
-            return DRYTestPatterns.createTouchCapabilities()
+            return TestPatterns.createTouchCapabilities()
         case .hoverOnly:
-            return DRYTestPatterns.createHoverCapabilities()
+            return TestPatterns.createHoverCapabilities()
         case .allCapabilities:
-            return DRYTestPatterns.createAllCapabilities()
+            return TestPatterns.createAllCapabilities()
         case .noCapabilities:
-            return DRYTestPatterns.createNoCapabilities()
+            return TestPatterns.createNoCapabilities()
         }
     }
     
@@ -54,9 +54,9 @@ struct DefensiveTestPatterns {
     static func createAccessibilityChecker(for type: AccessibilityType) -> MockAccessibilityFeatureChecker {
         switch type {
         case .noAccessibility:
-            return DRYTestPatterns.createNoAccessibility()
+            return TestPatterns.createNoAccessibility()
         case .allAccessibility:
-            return DRYTestPatterns.createAllAccessibility()
+            return TestPatterns.createAllAccessibility()
         }
     }
     

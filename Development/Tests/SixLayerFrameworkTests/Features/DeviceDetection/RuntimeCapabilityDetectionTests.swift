@@ -2,147 +2,176 @@ import Testing
 
 
 //
-//  RuntimeCapabilityDetectionTests.swift
+//  RuntimeCapabilityDetectionTDDTests.swift
 //  SixLayerFrameworkTests
 //
 //  BUSINESS PURPOSE:
-//  Validates runtime capability detection functionality and comprehensive runtime capability testing,
-//  ensuring proper runtime capability detection and validation across all supported platforms.
+//  Validates runtime capability detection TDD functionality and comprehensive runtime capability detection testing,
+//  ensuring proper runtime capability detection and behavior validation across all supported platforms.
 //
 //  TESTING SCOPE:
-//  - Runtime capability detection and validation
-//  - Platform-specific runtime capability testing
-//  - Capability override functionality and testing
-//  - Cross-platform runtime capability consistency and compatibility
-//  - Runtime capability detection accuracy and reliability
-//  - Edge cases and error handling for runtime capability detection
+//  - Runtime capability detection TDD functionality and validation
+//  - Runtime capability detection testing and validation
+//  - Cross-platform runtime capability detection consistency and compatibility
+//  - Platform-specific runtime capability detection behavior testing
+//  - Runtime capability detection accuracy and reliability testing
+//  - Edge cases and error handling for runtime capability detection logic
 //
 //  METHODOLOGY:
-//  - Test runtime capability detection using platform-specific compilation directives
-//  - Verify platform-specific runtime capability testing using switch statements
-//  - Test capability override functionality and validation
-//  - Validate cross-platform runtime capability consistency and compatibility
+//  - Test runtime capability detection TDD functionality using comprehensive runtime capability detection testing
+//  - Verify platform-specific runtime capability detection behavior using switch statements and conditional logic
+//  - Test cross-platform runtime capability detection consistency and compatibility
+//  - Validate platform-specific runtime capability detection behavior using platform detection
 //  - Test runtime capability detection accuracy and reliability
-//  - Test edge cases and error handling for runtime capability detection
+//  - Test edge cases and error handling for runtime capability detection logic
 //
 //  QUALITY ASSESSMENT: ✅ EXCELLENT
-//  - ✅ Excellent: Uses comprehensive business logic testing with runtime capability detection
-//  - ✅ Excellent: Tests platform-specific behavior with proper compilation directives
-//  - ✅ Excellent: Validates capability override functionality comprehensively
-//  - ✅ Excellent: Uses proper test structure with runtime capability testing
-//  - ✅ Excellent: Tests both default and override capability scenarios
+//  - ✅ Excellent: Uses comprehensive business logic testing with runtime capability detection TDD
+//  - ✅ Excellent: Tests platform-specific behavior with proper runtime capability detection logic
+//  - ✅ Excellent: Validates runtime capability detection and behavior comprehensively
+//  - ✅ Excellent: Uses proper test structure with runtime capability detection TDD testing
+//  - ✅ Excellent: Tests all runtime capability detection scenarios
 //
 
 import SwiftUI
 @testable import SixLayerFramework
 
-/// Tests for runtime capability detection
+/// TDD Tests for Runtime Capability Detection
+/// These tests define the expected behavior and will initially fail
 @MainActor
-open class RuntimeCapabilityDetectionTests {
+open class RuntimeCapabilityDetectionTDDTests {
+    
+    // MARK: - Test Setup
     
     init() async throws {
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-    }    // MARK: - Touch Detection Tests
-    
-    @Test func testTouchDetectionOniOS() {
-        #if os(iOS)
-        // iOS should always support touch
-        #expect(RuntimeCapabilityDetection.supportsTouch, "iOS should support touch")
-        #endif
-    }
-    
-    @Test func testTouchDetectionOnmacOS() {
-        #if os(macOS)
-        // Do not rely on default system state; explicitly verify override behavior
-        CapabilityOverride.touchSupport = false
-        #expect(!RuntimeCapabilityDetection.supportsTouchWithOverride, "macOS should report no touch when override is false")
-        CapabilityOverride.touchSupport = true
-        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride, "macOS should report touch when override is true")
+        // Clear any overrides before each test
         CapabilityOverride.touchSupport = nil
-        #endif
+        CapabilityOverride.hapticSupport = nil
+        CapabilityOverride.hoverSupport = nil
+    }    // MARK: - Testing Mode Detection Tests
+    
+    @Test func testTestingModeDetection() {
+        // This test should pass - we're in a test environment
+        #expect(TestingCapabilityDetection.isTestingMode, "Should detect testing mode in XCTest environment")
     }
     
-    @Test func testTouchOverrideFunctionality() {
-        // Test that override works correctly
-        let originalValue = RuntimeCapabilityDetection.supportsTouch
+    @Test func testTestingDefaultsForEachPlatform() {
+        // Test that each platform has predictable testing defaults
+        let platforms: [SixLayerPlatform] = [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS]
         
-        // Set override to true
+        for platform in platforms {
+            let defaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+            
+            // Each platform should have defined defaults
+            #expect(defaults != nil, "Platform \(platform) should have testing defaults")
+            
+            // Log the defaults for verification
+            print("Testing defaults for \(platform):")
+            print("  Touch: \(defaults.supportsTouch)")
+            print("  Haptic: \(defaults.supportsHapticFeedback)")
+            print("  Hover: \(defaults.supportsHover)")
+            print("  VoiceOver: \(defaults.supportsVoiceOver)")
+            print("  SwitchControl: \(defaults.supportsSwitchControl)")
+            print("  AssistiveTouch: \(defaults.supportsAssistiveTouch)")
+        }
+    }
+    
+    // MARK: - Runtime Detection Tests (These will initially fail)
+    
+    @Test func testRuntimeTouchDetectionUsesTestingDefaults() {
+        // In testing mode, should use hardcoded defaults
+        let platform = SixLayerPlatform.current
+        let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        
+        // This should use testing defaults, not runtime detection
+        let actualTouchSupport = RuntimeCapabilityDetection.supportsTouch
+        #expect(actualTouchSupport == expectedDefaults.supportsTouch, 
+                     "Runtime detection should use testing defaults when in testing mode")
+    }
+    
+    @Test func testRuntimeHapticDetectionUsesTestingDefaults() {
+        // In testing mode, should use hardcoded defaults
+        let platform = SixLayerPlatform.current
+        let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        
+        let actualHapticSupport = RuntimeCapabilityDetection.supportsHapticFeedback
+        #expect(actualHapticSupport == expectedDefaults.supportsHapticFeedback, 
+                     "Runtime haptic detection should use testing defaults when in testing mode")
+    }
+    
+    @Test func testRuntimeHoverDetectionUsesTestingDefaults() {
+        // In testing mode, should use hardcoded defaults
+        let platform = SixLayerPlatform.current
+        let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        
+        let actualHoverSupport = RuntimeCapabilityDetection.supportsHover
+        #expect(actualHoverSupport == expectedDefaults.supportsHover, 
+                     "Runtime hover detection should use testing defaults when in testing mode")
+    }
+    
+    // MARK: - Override Functionality Tests
+    
+    @Test func testTouchOverrideTakesPrecedenceOverTestingDefaults() {
+        // Set override
         CapabilityOverride.touchSupport = true
-        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride, "Override should work when set to true")
+        
+        // Should use override, not testing defaults
+        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride, 
+                     "Override should take precedence over testing defaults")
         
         // Set override to false
         CapabilityOverride.touchSupport = false
-        #expect(!RuntimeCapabilityDetection.supportsTouchWithOverride, "Override should work when set to false")
-        
-        // Clear override
-        CapabilityOverride.touchSupport = nil
-        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride == originalValue, "Should return to original value when override is cleared")
+        #expect(!RuntimeCapabilityDetection.supportsTouchWithOverride, 
+                      "Override should work when set to false")
     }
     
-    // MARK: - Haptic Feedback Tests
-    
-    @Test func testHapticFeedbackDetection() {
-        #if os(iOS)
-        #expect(RuntimeCapabilityDetection.supportsHapticFeedback, "iOS should support haptic feedback")
-        #elseif os(macOS)
-        // Do not assert default system state in CI; verify via explicit override in dedicated test
-        _ = RuntimeCapabilityDetection.supportsHapticFeedback
-        #endif
-    }
-    
-    @Test func testHapticFeedbackOverride() {
-        let originalValue = RuntimeCapabilityDetection.supportsHapticFeedback
-        
+    @Test func testHapticOverrideTakesPrecedenceOverTestingDefaults() {
+        // Set override
         CapabilityOverride.hapticSupport = true
-        #expect(RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride, "Haptic override should work")
         
-        CapabilityOverride.hapticSupport = nil
-        #expect(RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride == originalValue, "Should return to original value")
+        // Should use override, not testing defaults
+        #expect(RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride, 
+                     "Haptic override should take precedence over testing defaults")
     }
     
-    // MARK: - Hover Detection Tests
-    
-    @Test func testHoverDetection() {
-        #if os(iOS)
-        // Should depend on device type (iPad vs iPhone)
-        let deviceType = DeviceType.current
-        if deviceType == .pad {
-            #expect(RuntimeCapabilityDetection.supportsHover, "iPad should support hover")
-        } else {
-            #expect(!RuntimeCapabilityDetection.supportsHover, "iPhone should not support hover")
-        }
-        #elseif os(macOS)
-        #expect(RuntimeCapabilityDetection.supportsHover, "macOS should support hover")
-        #endif
+    @Test func testHoverOverrideTakesPrecedenceOverTestingDefaults() {
+        // Set override
+        CapabilityOverride.hoverSupport = false
+        
+        // Should use override, not testing defaults
+        #expect(!RuntimeCapabilityDetection.supportsHoverWithOverride, 
+                      "Hover override should take precedence over testing defaults")
     }
     
-    // MARK: - Accessibility Tests
+    // MARK: - Platform-Specific Behavior Tests
     
-    @Test func testVoiceOverDetection() {
-        // This tests the actual system state
-        let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
-        print("VoiceOver support: \(supportsVoiceOver)")
-        // We can't assert a specific value since it depends on system settings
+    @Test func testMacOSTouchDefaults() {
+        let macDefaults = TestingCapabilityDetection.getTestingDefaults(for: .macOS)
+        
+        // macOS testing defaults should be predictable
+        #expect(!macDefaults.supportsTouch, "macOS testing default should be false for touch")
+        #expect(!macDefaults.supportsHapticFeedback, "macOS testing default should be false for haptic")
+        #expect(macDefaults.supportsHover, "macOS testing default should be true for hover")
+        #expect(!macDefaults.supportsAssistiveTouch, "macOS testing default should be false for AssistiveTouch")
     }
     
-    @Test func testSwitchControlDetection() {
-        // This tests the actual system state
-        let supportsSwitchControl = RuntimeCapabilityDetection.supportsSwitchControl
-        print("Switch Control support: \(supportsSwitchControl)")
-        // We can't assert a specific value since it depends on system settings
+    @Test func testiOSTouchDefaults() {
+        let iOSDefaults = TestingCapabilityDetection.getTestingDefaults(for: .iOS)
+        
+        // iOS testing defaults should be predictable
+        #expect(iOSDefaults.supportsTouch, "iOS testing default should be true for touch")
+        #expect(iOSDefaults.supportsHapticFeedback, "iOS testing default should be true for haptic")
+        #expect(!iOSDefaults.supportsHover, "iOS testing default should be false for hover (simplified)")
+        #expect(!iOSDefaults.supportsAssistiveTouch, "iOS testing default should be false for AssistiveTouch (simplified)")
     }
     
-    @Test func testAssistiveTouchDetection() {
-        #if os(iOS)
-        // This tests the actual system state
-        let supportsAssistiveTouch = RuntimeCapabilityDetection.supportsAssistiveTouch
-        print("AssistiveTouch support: \(supportsAssistiveTouch)")
-        // We can't assert a specific value since it depends on system settings
-        #elseif os(macOS)
-        // Force platform to macOS semantics and assert false
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
-        #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
-        #endif
+    @Test func testVisionOSTouchDefaults() {
+        let visionDefaults = TestingCapabilityDetection.getTestingDefaults(for: .visionOS)
+        
+        // visionOS testing defaults should be predictable
+        #expect(visionDefaults.supportsTouch, "visionOS testing default should be true for touch")
+        #expect(visionDefaults.supportsHapticFeedback, "visionOS testing default should be true for haptic")
+        #expect(visionDefaults.supportsHover, "visionOS testing default should be true for hover")
     }
     
     // MARK: - Integration Tests
@@ -150,46 +179,79 @@ open class RuntimeCapabilityDetectionTests {
     @Test func testCardExpansionConfigUsesRuntimeDetection() {
         let config = getCardExpansionPlatformConfig()
         
-        // The config should now use runtime detection
-        print("Card expansion config:")
-        print("  Touch: \(config.supportsTouch)")
-        print("  Haptic: \(config.supportsHapticFeedback)")
-        print("  Hover: \(config.supportsHover)")
-        print("  VoiceOver: \(config.supportsVoiceOver)")
-        print("  Switch Control: \(config.supportsSwitchControl)")
-        print("  AssistiveTouch: \(config.supportsAssistiveTouch)")
+        // The config should use runtime detection (which uses testing defaults in test mode)
+        let platform = SixLayerPlatform.current
+        let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
-        // Verify that the config is using runtime detection
-        #expect(config.supportsTouch == RuntimeCapabilityDetection.supportsTouchWithOverride, "Card expansion config should use runtime touch detection")
-        #expect(config.supportsHapticFeedback == RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride, "Card expansion config should use runtime haptic detection")
-        #expect(config.supportsHover == RuntimeCapabilityDetection.supportsHoverWithOverride, "Card expansion config should use runtime hover detection")
+        #expect(config.supportsTouch == expectedDefaults.supportsTouch, 
+                     "Card expansion config should use runtime detection")
+        #expect(config.supportsHapticFeedback == expectedDefaults.supportsHapticFeedback, 
+                     "Card expansion config should use runtime detection")
+        #expect(config.supportsHover == expectedDefaults.supportsHover, 
+                     "Card expansion config should use runtime detection")
     }
     
     @Test func testPlatformOptimizationUsesRuntimeDetection() {
         let platform = SixLayerPlatform.current
         let supportsTouchGestures = platform.supportsTouchGestures
         
-        print("Platform \(platform) supports touch gestures: \(supportsTouchGestures)")
-        
-        // Should use runtime detection
-        #expect(supportsTouchGestures == RuntimeCapabilityDetection.supportsTouchWithOverride, "Platform optimization should use runtime touch detection")
+        // Should use runtime detection (which uses testing defaults in test mode)
+        let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        #expect(supportsTouchGestures == expectedDefaults.supportsTouch, 
+                     "Platform optimization should use runtime detection")
     }
     
     // MARK: - Override Persistence Tests
     
-    @Test func testOverridePersistence() {
-        // Test that overrides persist across calls
+    @Test func testOverridePersistenceAcrossMultipleCalls() {
+        // Set overrides
         CapabilityOverride.touchSupport = true
         CapabilityOverride.hapticSupport = false
         
-        // Multiple calls should return the same value
+        // Multiple calls should return consistent values
+        for _ in 0..<5 {
+            #expect(RuntimeCapabilityDetection.supportsTouchWithOverride)
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride)
+        }
+    }
+    
+    @Test func testOverrideClearing() {
+        // Set override
+        CapabilityOverride.touchSupport = true
         #expect(RuntimeCapabilityDetection.supportsTouchWithOverride)
-        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride)
-        #expect(!RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride)
-        #expect(!RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride)
         
-        // Clean up
+        // Clear override
         CapabilityOverride.touchSupport = nil
-        CapabilityOverride.hapticSupport = nil
+        
+        // Should return to testing defaults
+        let platform = SixLayerPlatform.current
+        let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride == expectedDefaults.supportsTouch)
+    }
+    
+    // MARK: - Edge Case Tests
+    
+    @Test func testMultipleOverridesWorkIndependently() {
+        // Set different overrides
+        CapabilityOverride.touchSupport = true
+        CapabilityOverride.hapticSupport = false
+        CapabilityOverride.hoverSupport = true
+        
+        // Each should work independently
+        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride)
+        #expect(!RuntimeCapabilityDetection.supportsHapticFeedbackWithOverride)
+        #expect(RuntimeCapabilityDetection.supportsHoverWithOverride)
+    }
+    
+    @Test func testOverridePrecedenceOrder() {
+        // Override should take precedence over testing defaults
+        let platform = SixLayerPlatform.current
+        let testingDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        
+        // Set override to opposite of testing default
+        CapabilityOverride.touchSupport = !testingDefaults.supportsTouch
+        
+        // Should use override, not testing default
+        #expect(RuntimeCapabilityDetection.supportsTouchWithOverride == !testingDefaults.supportsTouch)
     }
 }

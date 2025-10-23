@@ -37,25 +37,25 @@ import Testing
 
 import SwiftUI
 
-// Import types from DRYTestPatterns
-typealias PlatformCapabilityChecker = DRYTestPatterns.PlatformCapabilityChecker
-typealias AccessibilityFeatureChecker = DRYTestPatterns.AccessibilityFeatureChecker
-typealias AccessibilityFeature = DRYTestPatterns.AccessibilityFeature
-typealias ViewInfo = DRYTestPatterns.ViewInfo
-typealias TestDataItem = DRYTestPatterns.TestDataItem
-typealias MockPlatformCapabilityChecker = DRYTestPatterns.MockPlatformCapabilityChecker
-typealias MockAccessibilityFeatureChecker = DRYTestPatterns.MockAccessibilityFeatureChecker
+// Import types from TestPatterns
+typealias PlatformCapabilityChecker = TestPatterns.PlatformCapabilityChecker
+typealias AccessibilityFeatureChecker = TestPatterns.AccessibilityFeatureChecker
+typealias AccessibilityFeature = TestPatterns.AccessibilityFeature
+typealias ViewInfo = TestPatterns.ViewInfo
+typealias TestDataItem = TestPatterns.TestDataItem
+typealias MockPlatformCapabilityChecker = TestPatterns.MockPlatformCapabilityChecker
+typealias MockAccessibilityFeatureChecker = TestPatterns.MockAccessibilityFeatureChecker
 @testable import SixLayerFramework
 
 /// DRY Core View Function Tests
 /// Demonstrates how to eliminate duplication using reusable patterns
 @MainActor
-open class DRYCoreViewFunctionTests {
+open class CoreViewFunctionTests {
     
     // MARK: - Test Data Types
-    // TestDataItem is now imported from DRYTestPatterns
+    // TestDataItem is now imported from TestPatterns
     
-    // Mock classes are now imported from DRYTestPatterns
+    // Mock classes are now imported from TestPatterns
     
     // MARK: - Test Data
     
@@ -63,9 +63,9 @@ open class DRYCoreViewFunctionTests {
     
     init() async throws {
         sampleData = [
-            DRYTestPatterns.createTestItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
-            DRYTestPatterns.createTestItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
-            DRYTestPatterns.createTestItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
+            TestPatterns.createTestItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
+            TestPatterns.createTestItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
+            TestPatterns.createTestItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
         ]
     }
     
@@ -76,8 +76,8 @@ open class DRYCoreViewFunctionTests {
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with all capabilities
     @Test func testIntelligentDetailViewWithAllCapabilities() async {
         // Test every combination of platform capabilities and accessibility features
-        let capabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
-        let accessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
+        let capabilityTestCases = TestPatterns.createCapabilityTestCases()
+        let accessibilityTestCases = TestPatterns.createAccessibilityTestCases()
         
         for (capabilityName, _) in capabilityTestCases {
             for (accessibilityName, _) in accessibilityTestCases {
@@ -126,32 +126,32 @@ open class DRYCoreViewFunctionTests {
         // Create appropriate checkers based on enum types - no string matching needed!
         switch capabilityType {
         case .touchOnly:
-            capabilityChecker = DRYTestPatterns.createTouchCapabilities()
+            capabilityChecker = TestPatterns.createTouchCapabilities()
         case .hoverOnly:
-            capabilityChecker = DRYTestPatterns.createHoverCapabilities()
+            capabilityChecker = TestPatterns.createHoverCapabilities()
         case .allCapabilities:
-            capabilityChecker = DRYTestPatterns.createAllCapabilities()
+            capabilityChecker = TestPatterns.createAllCapabilities()
         case .noCapabilities:
-            capabilityChecker = DRYTestPatterns.createNoCapabilities()
+            capabilityChecker = TestPatterns.createNoCapabilities()
         }
         
         switch accessibilityType {
         case .noAccessibility:
-            accessibilityChecker = DRYTestPatterns.createNoAccessibility()
+            accessibilityChecker = TestPatterns.createNoAccessibility()
         case .allAccessibility:
-            accessibilityChecker = DRYTestPatterns.createAllAccessibility()
+            accessibilityChecker = TestPatterns.createAllAccessibility()
         }
         let testName = "\(capabilityType.displayName) + \(accessibilityType.displayName)"
         
         // WHEN: Generating intelligent detail view
-        let view = DRYTestPatterns.createIntelligentDetailView(
+        let view = TestPatterns.createIntelligentDetailView(
             item: item,
             capabilityChecker: capabilityChecker,
             accessibilityChecker: accessibilityChecker
         )
         
         // THEN: Should generate correct view for this combination
-        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+        TestPatterns.verifyViewGeneration(view, testName: testName)
         
         let viewInfo = extractViewInfo(
             from: view,
@@ -160,14 +160,14 @@ open class DRYCoreViewFunctionTests {
         )
         
         // Verify platform-specific properties
-        DRYTestPatterns.verifyPlatformProperties(
+        TestPatterns.verifyPlatformProperties(
             viewInfo: viewInfo,
             capabilityChecker: capabilityChecker,
             testName: testName
         )
         
         // Verify accessibility properties
-        DRYTestPatterns.verifyAccessibilityProperties(
+        TestPatterns.verifyAccessibilityProperties(
             viewInfo: viewInfo,
             accessibilityChecker: accessibilityChecker,
             testName: testName
@@ -180,27 +180,27 @@ open class DRYCoreViewFunctionTests {
     /// TESTING SCOPE: Intelligent detail view touch capability testing, touch capability validation, touch-specific testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with touch capability
     @Test func testIntelligentDetailViewWithTouchCapability() {
-        let testCases = DRYTestPatterns.createBooleanTestCases()
+        let testCases = TestPatterns.createBooleanTestCases()
         
         for (isEnabled, description) in testCases {
             // Configure mock for this test case
             let capabilityChecker = isEnabled ? 
-                DRYTestPatterns.createTouchCapabilities() : 
-                DRYTestPatterns.createNoCapabilities()
+                TestPatterns.createTouchCapabilities() : 
+                TestPatterns.createNoCapabilities()
             
-            let accessibilityChecker = DRYTestPatterns.createNoAccessibility()
+            let accessibilityChecker = TestPatterns.createNoAccessibility()
             let item = sampleData[0]
             let testName = "Touch \(description)"
             
             // WHEN: Generating view with touch capability
-            let view = DRYTestPatterns.createIntelligentDetailView(
+            let view = TestPatterns.createIntelligentDetailView(
                 item: item,
                 capabilityChecker: capabilityChecker,
                 accessibilityChecker: accessibilityChecker
             )
             
             // THEN: Should generate correct view for touch capability
-            DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+            TestPatterns.verifyViewGeneration(view, testName: testName)
             
             let viewInfo = extractViewInfo(
                 from: view,
@@ -226,27 +226,27 @@ open class DRYCoreViewFunctionTests {
     /// TESTING SCOPE: Intelligent detail view hover capability testing, hover capability validation, hover-specific testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test intelligent detail view with hover capability
     @Test func testIntelligentDetailViewWithHoverCapability() {
-        let testCases = DRYTestPatterns.createBooleanTestCases()
+        let testCases = TestPatterns.createBooleanTestCases()
         
         for (isEnabled, description) in testCases {
             // Configure mock for this test case
             let capabilityChecker = isEnabled ? 
-                DRYTestPatterns.createHoverCapabilities() : 
-                DRYTestPatterns.createNoCapabilities()
+                TestPatterns.createHoverCapabilities() : 
+                TestPatterns.createNoCapabilities()
             
-            let accessibilityChecker = DRYTestPatterns.createNoAccessibility()
+            let accessibilityChecker = TestPatterns.createNoAccessibility()
             let item = sampleData[0]
             let testName = "Hover \(description)"
             
             // WHEN: Generating view with hover capability
-            let view = DRYTestPatterns.createIntelligentDetailView(
+            let view = TestPatterns.createIntelligentDetailView(
                 item: item,
                 capabilityChecker: capabilityChecker,
                 accessibilityChecker: accessibilityChecker
             )
             
             // THEN: Should generate correct view for hover capability
-            DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+            TestPatterns.verifyViewGeneration(view, testName: testName)
             
             let viewInfo = extractViewInfo(
                 from: view,
@@ -277,18 +277,18 @@ open class DRYCoreViewFunctionTests {
         
         for (feature, description) in testCases {
             // Test enabled state
-            let capabilityChecker = DRYTestPatterns.createAllCapabilities()
+            let capabilityChecker = TestPatterns.createAllCapabilities()
             let accessibilityChecker = createAccessibilityWithFeature(feature, enabled: true)
             let item = sampleData[0]
             let testName = "\(description) enabled"
             
-            let view = DRYTestPatterns.createIntelligentDetailView(
+            let view = TestPatterns.createIntelligentDetailView(
                 item: item,
                 capabilityChecker: capabilityChecker,
                 accessibilityChecker: accessibilityChecker
             )
             
-            DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+            TestPatterns.verifyViewGeneration(view, testName: testName)
             
             let viewInfo = extractViewInfo(
                 from: view,
@@ -301,14 +301,14 @@ open class DRYCoreViewFunctionTests {
             
             // Test disabled state
             let disabledAccessibilityChecker = createAccessibilityWithFeature(feature, enabled: false)
-            let disabledView = DRYTestPatterns.createIntelligentDetailView(
+            let disabledView = TestPatterns.createIntelligentDetailView(
                 item: item,
                 capabilityChecker: capabilityChecker,
                 accessibilityChecker: disabledAccessibilityChecker
             )
             
             let disabledTestName = "\(description) disabled"
-            DRYTestPatterns.verifyViewGeneration(disabledView, testName: disabledTestName)
+            TestPatterns.verifyViewGeneration(disabledView, testName: disabledTestName)
             
             let disabledViewInfo = extractViewInfo(
                 from: disabledView,
@@ -327,8 +327,8 @@ open class DRYCoreViewFunctionTests {
     /// TESTING SCOPE: Simple card component capability testing, capability combination validation, comprehensive capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test simple card component with all capabilities
     @Test func testSimpleCardComponentWithAllCapabilities() async {
-        let capabilityTestCases = DRYTestPatterns.createCapabilityTestCases()
-        let accessibilityTestCases = DRYTestPatterns.createAccessibilityTestCases()
+        let capabilityTestCases = TestPatterns.createCapabilityTestCases()
+        let accessibilityTestCases = TestPatterns.createAccessibilityTestCases()
         
         for (capabilityName, _) in capabilityTestCases {
             for (accessibilityName, _) in accessibilityTestCases {
@@ -378,32 +378,32 @@ open class DRYCoreViewFunctionTests {
         // Create appropriate checkers based on enum types - no string matching needed!
         switch capabilityType {
         case .touchOnly:
-            capabilityChecker = DRYTestPatterns.createTouchCapabilities()
+            capabilityChecker = TestPatterns.createTouchCapabilities()
         case .hoverOnly:
-            capabilityChecker = DRYTestPatterns.createHoverCapabilities()
+            capabilityChecker = TestPatterns.createHoverCapabilities()
         case .allCapabilities:
-            capabilityChecker = DRYTestPatterns.createAllCapabilities()
+            capabilityChecker = TestPatterns.createAllCapabilities()
         case .noCapabilities:
-            capabilityChecker = DRYTestPatterns.createNoCapabilities()
+            capabilityChecker = TestPatterns.createNoCapabilities()
         }
         
         switch accessibilityType {
         case .noAccessibility:
-            accessibilityChecker = DRYTestPatterns.createNoAccessibility()
+            accessibilityChecker = TestPatterns.createNoAccessibility()
         case .allAccessibility:
-            accessibilityChecker = DRYTestPatterns.createAllAccessibility()
+            accessibilityChecker = TestPatterns.createAllAccessibility()
         }
         let testName = "SimpleCard \(capabilityType.displayName) + \(accessibilityType.displayName)"
         
         // WHEN: Generating simple card component
-        let view = DRYTestPatterns.createSimpleCardComponent(
+        let view = TestPatterns.createSimpleCardComponent(
             item: item,
             capabilityChecker: capabilityChecker,
             accessibilityChecker: accessibilityChecker
         )
         
         // THEN: Should generate correct view for this combination
-        DRYTestPatterns.verifyViewGeneration(view, testName: testName)
+        TestPatterns.verifyViewGeneration(view, testName: testName)
         
         let viewInfo = extractViewInfo(
             from: view,
@@ -412,14 +412,14 @@ open class DRYCoreViewFunctionTests {
         )
         
         // Verify platform-specific properties
-        DRYTestPatterns.verifyPlatformProperties(
+        TestPatterns.verifyPlatformProperties(
             viewInfo: viewInfo,
             capabilityChecker: capabilityChecker,
             testName: testName
         )
         
         // Verify accessibility properties
-        DRYTestPatterns.verifyAccessibilityProperties(
+        TestPatterns.verifyAccessibilityProperties(
             viewInfo: viewInfo,
             accessibilityChecker: accessibilityChecker,
             testName: testName

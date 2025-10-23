@@ -13,22 +13,22 @@ import ViewInspector
 @MainActor
 open class CustomItemCollectionViewTests {
     
-    // MARK: - Test Setup
+    // MARK: - Helper Methods
     
-    init() async throws {
-        await setupTestEnvironment()
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func configureAccessibilityIdentifiers() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
         config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
-    }    // MARK: - CustomItemCollectionView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
     }
+    
+    // MARK: - CustomItemCollectionView Tests
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
