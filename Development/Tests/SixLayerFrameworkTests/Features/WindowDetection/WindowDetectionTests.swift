@@ -21,6 +21,8 @@ open class WindowDetectionTests {
     
     @Test func testWindowDetectionInitialization() {
         // GIVEN: A new window detection instance
+        let windowDetection = UnifiedWindowDetection()
+        
         // WHEN: Initialized
         // THEN: Should have default values
         #expect(windowDetection != nil)
@@ -66,6 +68,8 @@ open class WindowDetectionTests {
     
     @Test func testWindowDetectionUpdateFromEnvironment() {
         // GIVEN: A window detection instance
+        let windowDetection = UnifiedWindowDetection()
+        
         // WHEN: Update from environment is called
         // THEN: Should update environment values without crashing
         let safeAreaInsets = EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0)
@@ -223,6 +227,8 @@ open class WindowDetectionTests {
     
     @Test func testMultipleStartMonitoringCalls() {
         // GIVEN: A window detection instance
+        let windowDetection = UnifiedWindowDetection()
+        
         // WHEN: Start monitoring is called multiple times
         // THEN: Should not crash or create multiple observers
         #expect(throws: Never.self) { windowDetection.startMonitoring() }
@@ -232,6 +238,8 @@ open class WindowDetectionTests {
     
     @Test func testStopMonitoringWithoutStart() {
         // GIVEN: A window detection instance that hasn't started monitoring
+        let windowDetection = UnifiedWindowDetection()
+        
         // WHEN: Stop monitoring is called
         // THEN: Should not crash
         #expect(throws: Never.self) { windowDetection.stopMonitoring() }
@@ -239,6 +247,8 @@ open class WindowDetectionTests {
     
     @Test func testMultipleStopMonitoringCalls() {
         // GIVEN: A window detection instance that's monitoring
+        let windowDetection = UnifiedWindowDetection()
+        
         // WHEN: Stop monitoring is called multiple times
         // THEN: Should not crash
         windowDetection.startMonitoring()
@@ -380,25 +390,24 @@ open class WindowDetectionTests {
     
     @Test func testWindowDetectionThreadSafety() async {
         // GIVEN: A window detection instance
+        let windowDetection = UnifiedWindowDetection()
+        
         // WHEN: Called from multiple threads
         // THEN: Should not crash
 
         // Test that the method can be called safely from the main thread multiple times
         // This tests basic thread safety for repeated calls
-        #expect(throws: Never.self) { windowDetection?.updateWindowInfo() }
-        #expect(throws: Never.self) { windowDetection?.updateWindowInfo() }
-        #expect(throws: Never.self) { windowDetection?.updateWindowInfo() }
+        #expect(throws: Never.self) { windowDetection.updateWindowInfo() }
+        #expect(throws: Never.self) { windowDetection.updateWindowInfo() }
+        #expect(throws: Never.self) { windowDetection.updateWindowInfo() }
 
         // Test that the method can be called safely from different contexts
         // This is a simplified test that doesn't use async/await to avoid hanging
         
-        // Capture the windowDetection property before entering the closure
-        let windowDetection = self.windowDetection
-        
         // Test that we can call updateWindowInfo from a background queue
         // The method should handle this gracefully
         await Task { @MainActor in
-            #expect(throws: Never.self) { windowDetection?.updateWindowInfo() }
+            #expect(throws: Never.self) { windowDetection.updateWindowInfo() }
         }
     }
     

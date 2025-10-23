@@ -194,10 +194,12 @@ open class AdvancedFieldTypesTests {
         )
         let suggestions = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
         
+        let formState = createTestFormState()
+        
         // When
         let autocompleteField = AutocompleteField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             suggestions: suggestions
         )
         
@@ -242,10 +244,12 @@ open class AdvancedFieldTypesTests {
         let allowedTypes = [UTType.image, UTType.pdf, UTType.text]
         let maxFileSize: Int64 = 10 * 1024 * 1024 // 10MB
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: allowedTypes,
             maxFileSize: maxFileSize
         )
@@ -266,10 +270,12 @@ open class AdvancedFieldTypesTests {
         )
         let allowedTypes = [UTType.image, UTType.pdf, UTType.text]
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: allowedTypes,
             maxFileSize: nil
         )
@@ -289,10 +295,12 @@ open class AdvancedFieldTypesTests {
         )
         let maxFileSize: Int64 = 5 * 1024 * 1024 // 5MB
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: [UTType.image],
             maxFileSize: maxFileSize
         )
@@ -395,7 +403,9 @@ open class AdvancedFieldTypesTests {
             }
         }
         
-        let customField = TestCustomField(field: field, formState: testFormState)
+        let formState = createTestFormState()
+        
+        let customField = TestCustomField(field: field, formState: formState)
         
         // Then
         #expect(customField != nil)
@@ -527,16 +537,18 @@ open class AdvancedFieldTypesTests {
             placeholder: "Select files to upload"
         )
         
+        let formState = createTestFormState()
+        
         // When
-        let richTextComponent = RichTextEditorField(field: richTextField, formState: testFormState)
+        let richTextComponent = RichTextEditorField(field: richTextField, formState: formState)
         let autocompleteComponent = AutocompleteField(
             field: autocompleteField,
-            formState: testFormState,
+            formState: formState,
             suggestions: ["Option 1", "Option 2"]
         )
         let fileUploadComponent = EnhancedFileUploadField(
             field: fileUploadField,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: [UTType.image],
             maxFileSize: 1024 * 1024
         )
@@ -547,7 +559,7 @@ open class AdvancedFieldTypesTests {
         #expect(fileUploadComponent != nil)
         
         // Test that all components work together in the same form state
-        #expect(testFormState != nil)
+        #expect(formState != nil)
     }
     
     // MARK: - Accessibility Tests
@@ -561,8 +573,10 @@ open class AdvancedFieldTypesTests {
             placeholder: "Enter rich text content"
         )
         
+        let formState = createTestFormState()
+        
         // When
-        let richTextField = RichTextEditorField(field: field, formState: testFormState)
+        let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
         #expect(richTextField != nil)
@@ -579,10 +593,12 @@ open class AdvancedFieldTypesTests {
             placeholder: "Type to search..."
         )
         
+        let formState = createTestFormState()
+        
         // When
         let autocompleteField = AutocompleteField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             suggestions: ["Option 1", "Option 2"]
         )
         
@@ -600,10 +616,12 @@ open class AdvancedFieldTypesTests {
             placeholder: "Select files to upload"
         )
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: [UTType.image],
             maxFileSize: 1024 * 1024
         )
@@ -625,10 +643,12 @@ open class AdvancedFieldTypesTests {
         )
         let allowedTypes = [UTType.image] // Only images allowed
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: allowedTypes,
             maxFileSize: nil
         )
@@ -648,10 +668,12 @@ open class AdvancedFieldTypesTests {
         )
         let maxFileSize: Int64 = 1024 // 1KB
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: [UTType.image],
             maxFileSize: maxFileSize
         )
@@ -671,10 +693,12 @@ open class AdvancedFieldTypesTests {
         )
         let emptySuggestions: [String] = []
         
+        let formState = createTestFormState()
+        
         // When
         let autocompleteField = AutocompleteField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             suggestions: emptySuggestions
         )
         
@@ -695,9 +719,11 @@ open class AdvancedFieldTypesTests {
         )
         let largeText = String(repeating: "This is a test. ", count: 1000) // Large text
         
+        let formState = createTestFormState()
+        
         // When
-        testFormState.setValue(largeText, for: field.id)
-        let richTextField = RichTextEditorField(field: field, formState: testFormState)
+        formState.setValue(largeText, for: field.id)
+        let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
         #expect(richTextField != nil)
@@ -714,10 +740,12 @@ open class AdvancedFieldTypesTests {
         )
         let largeSuggestions = (1...1000).map { "Option \($0)" } // Large suggestion list
         
+        let formState = createTestFormState()
+        
         // When
         let autocompleteField = AutocompleteField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             suggestions: largeSuggestions
         )
         
@@ -735,10 +763,12 @@ open class AdvancedFieldTypesTests {
             placeholder: "Select files to upload"
         )
         
+        let formState = createTestFormState()
+        
         // When
         let fileUploadField = EnhancedFileUploadField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             allowedTypes: [UTType.image],
             maxFileSize: nil
         )
