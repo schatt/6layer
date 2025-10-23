@@ -193,7 +193,7 @@ open class PhotoComponentsLayer4Tests {
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
     @Test func testPlatformPhotoDisplay_L4_AppliesAutomaticAccessibilityIdentifiers() async {
         // Given: Layer 4 function with test data
-        let testImage = self.testImage
+        let testImage = PlatformImage()
         let style = PhotoDisplayStyle.thumbnail
         
         await MainActor.run {

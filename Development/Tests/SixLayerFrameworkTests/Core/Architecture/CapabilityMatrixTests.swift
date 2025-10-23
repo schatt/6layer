@@ -260,7 +260,7 @@ open class CapabilityMatrixTests {
         }
     }
     
-    @Test(arguments: CapabilityMatrixTests.capabilityTests) @MainActor func testCapability(_ capabilityTest: CapabilityTest) {
+    @Test @MainActor(arguments: CapabilityMatrixTests.capabilityTests) func testCapability(_ capabilityTest: CapabilityTest) {
         let platform = SixLayerPlatform.current
         let isSupported = capabilityTest.testSupported()
         let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)

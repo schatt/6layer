@@ -89,7 +89,7 @@ open class CapabilityTestingFramework {
         }
         
         /// Create a mock platform config based on this test configuration
-        func createMockPlatformConfig() -> SixLayerFramework.CardExpansionPlatformConfig {
+        @MainActor func createMockPlatformConfig() -> SixLayerFramework.CardExpansionPlatformConfig {
             return TestSetupUtilities.getCardExpansionPlatformConfig()
         }
     }
