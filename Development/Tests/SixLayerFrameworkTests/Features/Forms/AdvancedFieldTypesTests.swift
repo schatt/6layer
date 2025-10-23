@@ -92,14 +92,15 @@ open class AdvancedFieldTypesTests {
             placeholder: "Enter rich text content"
         )
         let testText = "This is **bold** and *italic* text"
+        let formState = createTestFormState()
         
         // When
-        testFormState.setValue(testText, for: field.id)
-        let richTextField = RichTextEditorField(field: field, formState: testFormState)
+        formState.setValue(testText, for: field.id)
+        let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
         #expect(richTextField != nil)
-        #expect(testFormState.getValue(for: field.id) == testText)
+        #expect(formState.getValue(for: field.id) == testText)
     }
     
     @Test func testRichTextToolbarFormatting() {
@@ -144,11 +145,12 @@ open class AdvancedFieldTypesTests {
             placeholder: "Type to search..."
         )
         let suggestions = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+        let formState = createTestFormState()
         
         // When
         let autocompleteField = AutocompleteField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             suggestions: suggestions
         )
         
@@ -167,11 +169,12 @@ open class AdvancedFieldTypesTests {
             placeholder: "Type to search..."
         )
         let suggestions = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+        let formState = createTestFormState()
         
         // When
         let autocompleteField = AutocompleteField(
             field: field,
-            formState: testFormState,
+            formState: formState,
             suggestions: suggestions
         )
         
