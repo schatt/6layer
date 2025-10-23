@@ -35,7 +35,7 @@ open class Layer2LayoutDecisionTests {
         // Algorithm: 0-5=simple, 6-9=moderate, 10-25=complex, 25+=veryComplex
         
         // Test simple content (0-5 items)
-        let simpleItems = (1...3).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let simpleItems = (1...3).map { i in TestItem(title: "Item \(i)") }
         let simpleDecision = determineOptimalLayout_L2(
             items: simpleItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .simple, context: .dashboard),
@@ -45,7 +45,7 @@ open class Layer2LayoutDecisionTests {
         #expect(simpleDecision.approach == .uniform, "3 items should result in uniform approach (simple content)")
         
         // Test moderate content (6-9 items)
-        let moderateItems = (1...7).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let moderateItems = (1...7).map { i in TestItem(title: "Item \(i)") }
         let moderateDecision = determineOptimalLayout_L2(
             items: moderateItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .moderate, context: .dashboard),
@@ -55,7 +55,7 @@ open class Layer2LayoutDecisionTests {
         #expect(moderateDecision.approach == .adaptive, "7 items should result in adaptive approach (moderate content)")
         
         // Test complex content (10-25 items)
-        let complexItems = (1...15).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let complexItems = (1...15).map { i in TestItem(title: "Item \(i)") }
         let complexDecision = determineOptimalLayout_L2(
             items: complexItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .complex, context: .dashboard),
@@ -65,7 +65,7 @@ open class Layer2LayoutDecisionTests {
         #expect(complexDecision.approach == .responsive, "15 items should result in responsive approach (complex content)")
         
         // Test very complex content (25+ items)
-        let veryComplexItems = (1...30).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let veryComplexItems = (1...30).map { i in TestItem(title: "Item \(i)") }
         let veryComplexDecision = determineOptimalLayout_L2(
             items: veryComplexItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .veryComplex, context: .dashboard),
@@ -78,7 +78,7 @@ open class Layer2LayoutDecisionTests {
     @Test func testDetermineOptimalLayout_L2_ComplexContent() {
         // Given: Complex content with many items
         let items = (1...50).map { i in
-            TestItem(title: "Item \(i)", content: "Complex content with lots of information")
+            TestItem(title: "Item \(i)")
         }
         let hints = PresentationHints(
             dataType: .collection,
@@ -106,7 +106,7 @@ open class Layer2LayoutDecisionTests {
     @Test func testDetermineOptimalLayout_L2_DifferentDeviceTypes() {
         // Given: Same content for different device types
         let items = (1...20).map { i in
-            TestItem(title: "Item \(i)", content: "Content")
+            TestItem(title: "Item \(i)")
         }
         let hints = PresentationHints(
             dataType: .collection,
@@ -152,7 +152,7 @@ open class Layer2LayoutDecisionTests {
     @Test func testDetermineOptimalLayout_L2_DifferentComplexityLevels() {
         // Given: Same items with different complexity hints
         let items = (1...10).map { i in
-            TestItem(title: "Item \(i)", content: "Content")
+            TestItem(title: "Item \(i)")
         }
         
         // When: Testing different complexity levels
@@ -226,7 +226,7 @@ open class Layer2LayoutDecisionTests {
     @Test func testDetermineOptimalLayout_L2_WithoutDeviceContext() {
         // Given: Items without explicit device context
         let items = (1...5).map { i in
-            TestItem(title: "Item \(i)", content: "Content")
+            TestItem(title: "Item \(i)")
         }
         let hints = PresentationHints(
             dataType: .text,
@@ -255,7 +255,7 @@ open class Layer2LayoutDecisionTests {
         // Then apply device limits: mobile<768=2, tablet>=768=4, desktop>=1024=6
         
         // Test mobile device (width < 768) - should be limited to 2 columns max
-        let mobileItems = (1...10).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let mobileItems = (1...10).map { i in TestItem(title: "Item \(i)") }
         let mobileDecision = determineOptimalLayout_L2(
             items: mobileItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .complex, context: .dashboard),
@@ -265,7 +265,7 @@ open class Layer2LayoutDecisionTests {
         #expect(mobileDecision.columns <= 2, "Mobile devices should be limited to 2 columns max")
         
         // Test tablet device (width >= 768) - should allow more columns
-        let tabletItems = (1...10).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let tabletItems = (1...10).map { i in TestItem(title: "Item \(i)") }
         let tabletDecision = determineOptimalLayout_L2(
             items: tabletItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .complex, context: .dashboard),
@@ -276,7 +276,7 @@ open class Layer2LayoutDecisionTests {
         #expect(tabletDecision.columns <= 5, "Complex content should be limited to 5 columns")
         
         // Test desktop device (width >= 1024) - should allow maximum columns
-        let desktopItems = (1...20).map { i in TestItem(title: "Item \(i)", content: "Content") }
+        let desktopItems = (1...20).map { i in TestItem(title: "Item \(i)") }
         let desktopDecision = determineOptimalLayout_L2(
             items: desktopItems,
             hints: PresentationHints(dataType: .text, presentationPreference: .list, complexity: .veryComplex, context: .dashboard),
@@ -441,7 +441,7 @@ open class Layer2LayoutDecisionTests {
     @Test func testDetermineOptimalLayout_L2_ExtremeValues() {
         // Given: Very large number of items
         let items = (1...1000).map { i in
-            TestItem(title: "Item \(i)", content: "Content")
+            TestItem(title: "Item \(i)")
         }
         let hints = PresentationHints(
             dataType: .collection,
@@ -469,7 +469,7 @@ open class Layer2LayoutDecisionTests {
     @Test func testDetermineOptimalLayout_L2_DifferentDataTypes() {
         // Given: Different data types
         let items = (1...5).map { i in
-            TestItem(title: "Item \(i)", content: "Content")
+            TestItem(title: "Item \(i)")
         }
         
         let dataTypes: [DataTypeHint] = Array(DataTypeHint.allCases.prefix(7)) // Use real enum
@@ -483,7 +483,7 @@ open class Layer2LayoutDecisionTests {
             )
             
             // When: Determining optimal layout for each data type
-            let decision: LayoutDecision = determineOptimalLayout_L2(
+            let decision: GenericLayoutDecision = determineOptimalLayout_L2(
                 items: items,
                 hints: hints,
                 screenWidth: 375,
