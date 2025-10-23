@@ -1,5 +1,34 @@
 import SwiftUI
 
+// MARK: - Error Severity Types
+
+/// Defensive enum for error severity to prevent string-based anti-patterns
+public enum ErrorSeverity: String, CaseIterable {
+    case info = "info"
+    case warning = "warning"
+    case error = "error"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+    
+    var iconName: String {
+        switch self {
+        case .info: return "info.circle"
+        case .warning: return "exclamationmark.triangle"
+        case .error: return "xmark.circle"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .info: return .blue
+        case .warning: return .orange
+        case .error: return .red
+        }
+    }
+}
+
 // MARK: - Intelligent Form View
 
 /// Intelligent form generation using our 6-layer platform architecture
@@ -655,21 +684,21 @@ private struct DefaultPlatformFieldView: View {
     }
     
     private func errorIcon(for severity: String) -> String {
-        switch severity {
-        case "info": return "info.circle"
-        case "warning": return "exclamationmark.triangle"
-        case "error": return "xmark.circle"
-        default: return "info.circle"
+        guard let errorSeverity = ErrorSeverity(rawValue: severity) else {
+            // Unknown severity - log for debugging but don't crash
+            print("Warning: Unknown error severity '\(severity)', defaulting to info")
+            return ErrorSeverity.info.iconName
         }
+        return errorSeverity.iconName
     }
     
     private func errorColor(for severity: String) -> Color {
-        switch severity {
-        case "info": return .blue
-        case "warning": return .orange
-        case "error": return .red
-        default: return .blue
+        guard let errorSeverity = ErrorSeverity(rawValue: severity) else {
+            // Unknown severity - log for debugging but don't crash
+            print("Warning: Unknown error severity '\(severity)', defaulting to info")
+            return ErrorSeverity.info.color
         }
+        return errorSeverity.color
     }
 }
 
