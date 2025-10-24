@@ -173,7 +173,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         Text(cardTitle)
             .font(.headline)
             .lineLimit(2)
-            .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
+            .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
         
         // Subtitle or description
         if let subtitle = cardSubtitle {
@@ -374,7 +374,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
                 .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
-                .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
+                .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
             
             if let subtitle = cardSubtitle {
                 Text(subtitle)
@@ -707,7 +707,7 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
                 .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
-                .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
+                .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
         }
         .frame(width: layoutDecision.cardWidth, height: layoutDecision.cardHeight)
         .background(.regularMaterial)
@@ -769,7 +769,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
                 Text(cardTitle)
                     .font(.headline)
                     .lineLimit(1)
-                    .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
+                    .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
                 
                 if let subtitle = cardSubtitle {
                     Text(subtitle)
@@ -840,7 +840,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
                 .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
-                .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
+                .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
             
             if let description = cardDescription {
                 Text(description)
