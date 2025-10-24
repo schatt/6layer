@@ -17,8 +17,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
         await MainActor.run {
-            // Setup: Configure test environment
-            setupTestEnvironment(enableDebugLogging: true)
+            // Setup: Configure test environment with automatic mode and debug logging
+            setupTestEnvironment(mode: .automatic, enableDebugLogging: true)
             
             // Test: Use centralized component accessibility testing
             let testPassed = testComponentAccessibility(
@@ -44,8 +44,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testNamedActuallyGeneratesIdentifiers() async {
         await MainActor.run {
-            // Setup: Configure test environment with specific namespace
-            setupTestEnvironment(enableDebugLogging: true, namespace: "CarManager")
+            // Setup: Configure test environment with specific namespace and automatic mode
+            setupTestEnvironment(mode: .automatic, enableDebugLogging: true, namespace: "CarManager")
             
             // Test: Use centralized component accessibility testing
             let testPassed = testComponentAccessibility(

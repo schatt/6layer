@@ -18,8 +18,8 @@ open class CollectionEmptyStateViewTests {
         platform: SixLayerPlatform
     ) async {
         await MainActor.run {
-            // Setup: Configure test environment
-            setupTestEnvironment()
+            // Setup: Configure test environment with automatic mode (explicit)
+            setupTestEnvironment(mode: .automatic)
             
             // Test: Use centralized accessibility testing function
             let testPassed = testAccessibilityIdentifierGeneration(
@@ -28,8 +28,8 @@ open class CollectionEmptyStateViewTests {
                 platform: platform
             )
             
-            // Assert: Should generate accessibility identifiers
-            #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue)")
+            // Assert: Should generate accessibility identifiers in automatic mode
+            #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue) in automatic mode")
             
             // Cleanup: Reset test environment
             cleanupTestEnvironment()
@@ -53,6 +53,51 @@ open class CollectionEmptyStateViewTests {
             
             // Cleanup: Reset test environment
             cleanupTestEnvironment()
+        }
+    }
+    
+    @Test
+    func testCollectionEmptyStateViewAllAccessibilityModes() async {
+        await MainActor.run {
+            let view = createCollectionEmptyStateView()
+            
+            // Test automatic mode
+            setupTestEnvironment(mode: .automatic)
+            let automaticPassed = testComponentAccessibility(
+                componentName: "CollectionEmptyStateView-Automatic",
+                createComponent: { view }
+            )
+            cleanupTestEnvironment()
+            
+            // Test manual mode
+            setupTestEnvironment(mode: .manual)
+            let manualPassed = testComponentAccessibilityManual(
+                componentName: "CollectionEmptyStateView-Manual",
+                createComponent: { view }
+            )
+            cleanupTestEnvironment()
+            
+            // Test semantic mode
+            setupTestEnvironment(mode: .semantic)
+            let semanticPassed = testComponentAccessibilitySemantic(
+                componentName: "CollectionEmptyStateView-Semantic",
+                createComponent: { view }
+            )
+            cleanupTestEnvironment()
+            
+            // Test disabled mode
+            setupTestEnvironment(mode: .disabled)
+            let disabledPassed = testComponentAccessibilityDisabled(
+                componentName: "CollectionEmptyStateView-Disabled",
+                createComponent: { view }
+            )
+            cleanupTestEnvironment()
+            
+            // Assert: Should work in all accessibility modes
+            #expect(automaticPassed, "CollectionEmptyStateView should work in automatic mode")
+            #expect(manualPassed, "CollectionEmptyStateView should work in manual mode")
+            #expect(semanticPassed, "CollectionEmptyStateView should work in semantic mode")
+            #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
         }
     }
     
