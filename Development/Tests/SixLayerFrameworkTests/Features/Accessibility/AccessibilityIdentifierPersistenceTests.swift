@@ -1,6 +1,4 @@
 import Testing
-
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -8,18 +6,14 @@ import ViewInspector
 /// TDD Tests for Accessibility Identifier Persistence
 /// Following proper TDD: Write failing tests first to prove the issue exists
 @MainActor
-open class AccessibilityIdentifierPersistenceTests {
+open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     
-    init() async throws {
-                let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - TDD Red Phase: Tests That Should Fail
+    // MARK: - TDD Red Phase: Tests That Should Fail
     
     @Test func testAccessibilityIdentifiersArePersistentAcrossSessions() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: This test SHOULD FAIL initially - IDs are not persistent
         // We want IDs to be the same across app launches
         
@@ -48,9 +42,15 @@ open class AccessibilityIdentifierPersistenceTests {
         #expect(id1 == id2, "Accessibility IDs should be persistent across app launches")
         
         print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     @Test func testAccessibilityIdentifiersAreDeterministicForSameView() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: This test SHOULD FAIL initially - IDs contain timestamps
         // Same view with same hierarchy should generate same ID
         
@@ -71,9 +71,15 @@ open class AccessibilityIdentifierPersistenceTests {
         #expect(id1 == id2, "Identical views should generate identical IDs")
         
         print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     @Test func testAccessibilityIdentifiersDontContainTimestamps() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: This test SHOULD FAIL initially - IDs contain timestamps
         // IDs should be based on view structure, not time
         
@@ -96,9 +102,15 @@ open class AccessibilityIdentifierPersistenceTests {
         #expect(id == id2, "IDs should not contain timestamps")
         
         print("🔴 TDD Red Phase: ID1='\(id)', ID2='\(id2)' - These should be equal but aren't")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     @Test func testAccessibilityIdentifiersAreStableForUITesting() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: This test SHOULD FAIL initially
         // UI tests need stable IDs that don't change between runs
         
@@ -141,9 +153,15 @@ open class AccessibilityIdentifierPersistenceTests {
             
             print("Testing accessibility identifier persistence: \(buttonName) - Original='\(originalID)', New='\(newID)'")
         }
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     @Test func testAccessibilityIdentifiersAreBasedOnViewStructure() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: This test SHOULD FAIL initially
         // IDs should be based on view hierarchy and context, not random factors
         
@@ -166,9 +184,15 @@ open class AccessibilityIdentifierPersistenceTests {
         #expect(id1 == id2, "Same view structure should generate same ID regardless of timing")
         
         print("Testing accessibility identifier persistence: ID1='\(id1)', ID2='\(id2)'")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     @Test func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: This test focuses ONLY on persistence - truly identical views
         
         let createIdenticalView = {
@@ -194,9 +218,15 @@ open class AccessibilityIdentifierPersistenceTests {
         #expect(id1 == id2, "Truly identical views should generate identical IDs")
         
         print("🟢 TDD Green Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     @Test func testAccessibilityIdentifiersPersistAcrossConfigResets() {
+        // Setup test environment
+        setupTestEnvironment()
+        
         // TDD: Test persistence across config resets (simulating app restarts)
         
         let createTestView = {
@@ -223,6 +253,9 @@ open class AccessibilityIdentifierPersistenceTests {
         #expect(id1 == id2, "IDs should persist across config resets")
         
         print("🟢 TDD Green Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     // MARK: - Helper Methods

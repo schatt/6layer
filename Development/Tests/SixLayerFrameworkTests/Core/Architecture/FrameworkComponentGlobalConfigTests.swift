@@ -7,27 +7,20 @@ import ViewInspector
 
 /// Test that framework components respect global accessibility config
 @MainActor
-open class FrameworkComponentGlobalConfigTests {
-    
-    init() async throws {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "TestApp"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
+open class FrameworkComponentGlobalConfigTests: BaseTestClass {
     
     @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
+        setupTestEnvironment()
+        
         // Test that framework components don't generate IDs when global config is disabled
         
-        // Disable global config
+        // Disable global config AFTER setup (which resets to defaults)
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = false
         
-        // Create a framework component (this should NOT generate an ID)
+        // Create a framework component WITHOUT .named() (this should NOT generate an ID)
         let view = Button("Test") { }
-            .named("TestButton")
+            .automaticAccessibilityIdentifiers()
         
         // Try to inspect for accessibility identifier
         do {
@@ -42,14 +35,19 @@ open class FrameworkComponentGlobalConfigTests {
             // If we can't inspect, that's also fine - means no accessibility identifier was applied
             print("✅ Framework component correctly has no accessibility identifier when global config is disabled")
         }
+        
+        cleanupTestEnvironment()
     }
     
     @Test func testFrameworkComponentsGenerateIDsWhenGlobalConfigEnabled() {
+        setupTestEnvironment()
+        
         // Test that framework components DO generate IDs when global config is enabled
         
-        // Ensure global config is enabled (default)
+        // Set custom namespace AFTER setup (which resets to defaults)
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
+        config.namespace = "TestApp"
         
         // Create a framework component (this SHOULD generate an ID)
         let view = Button("Test") { }
@@ -64,13 +62,15 @@ open class FrameworkComponentGlobalConfigTests {
             // Should have an ID when global config is enabled
             #expect(!accessibilityID.isEmpty, "Framework component should generate ID when global config is enabled")
             #expect(accessibilityID.contains("TestApp"), "ID should contain namespace")
-            #expect(accessibilityID.contains("testscreen"), "ID should contain screen context")
-            #expect(accessibilityID.contains("testbutton"), "ID should contain view name")
+            #expect(accessibilityID.contains("main"), "ID should contain screen context")
+            #expect(accessibilityID.contains("TestButton"), "ID should contain view name")
             
             print("✅ Framework component correctly generates ID: '\(accessibilityID)'")
             
         } catch {
             Issue.record("Failed to inspect framework component: \(error)")
         }
+        
+        cleanupTestEnvironment()
     }
 }

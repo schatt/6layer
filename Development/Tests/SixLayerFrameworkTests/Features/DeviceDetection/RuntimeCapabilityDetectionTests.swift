@@ -39,16 +39,9 @@ import SwiftUI
 /// TDD Tests for Runtime Capability Detection
 /// These tests define the expected behavior and will initially fail
 @MainActor
-open class RuntimeCapabilityDetectionTDDTests {
+open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
-    // MARK: - Test Setup
-    
-    init() async throws {
-        // Clear any overrides before each test
-        CapabilityOverride.touchSupport = nil
-        CapabilityOverride.hapticSupport = nil
-        CapabilityOverride.hoverSupport = nil
-    }    // MARK: - Testing Mode Detection Tests
+    // MARK: - Testing Mode Detection Tests
     
     @Test func testTestingModeDetection() {
         // This test should pass - we're in a test environment
@@ -192,6 +185,14 @@ open class RuntimeCapabilityDetectionTDDTests {
     }
     
     @Test func testPlatformOptimizationUsesRuntimeDetection() {
+        // Setup test environment
+        setupTestEnvironment()
+        
+        // Clear any overrides before test
+        CapabilityOverride.touchSupport = nil
+        CapabilityOverride.hapticSupport = nil
+        CapabilityOverride.hoverSupport = nil
+        
         let platform = SixLayerPlatform.current
         let supportsTouchGestures = platform.supportsTouchGestures
         
@@ -199,6 +200,9 @@ open class RuntimeCapabilityDetectionTDDTests {
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         #expect(supportsTouchGestures == expectedDefaults.supportsTouch, 
                      "Platform optimization should use runtime detection")
+        
+        // Cleanup
+        cleanupTestEnvironment()
     }
     
     // MARK: - Override Persistence Tests

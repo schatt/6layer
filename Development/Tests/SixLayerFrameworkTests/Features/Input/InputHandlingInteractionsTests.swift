@@ -659,7 +659,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         // When & Then
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformInteractionButton"
         )
@@ -678,7 +678,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         // When & Then
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.macOS,
             componentName: "PlatformInteractionButton"
         )

@@ -87,7 +87,7 @@ struct CameraView: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.originalImage] as? UIImage {
-                parent.onImageCaptured(PlatformImage(image))
+                parent.onImageCaptured(PlatformImage(image))  // Inline conversion: system API return → PlatformImage
             }
             picker.dismiss(animated: true)
         }
@@ -119,7 +119,7 @@ struct PhotoPickerView: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.originalImage] as? UIImage {
-                parent.onImageSelected(PlatformImage(image))
+                parent.onImageSelected(PlatformImage(image))  // Inline conversion: system API return → PlatformImage
             }
             picker.dismiss(animated: true)
         }

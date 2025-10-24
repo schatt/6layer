@@ -343,7 +343,7 @@ open class ComprehensiveCapabilityMatrixTests {
         // Test basic properties without complex type casting
         #expect(viewDefinition.supportsTouch == config.platformCapabilities.contains(.touch), "Touch support should match capability")
         #expect(viewDefinition.supportsHover == config.platformCapabilities.contains(.hover), "Hover support should match capability")
-        #expect(viewDefinition.supportsAssistiveTouch == config.accessibilityFeatures.contains(.assistiveTouch), "AssistiveTouch support should match accessibility feature")
+        #expect(viewDefinition.supportsAssistiveTouch == config.platformCapabilities.contains(.assistiveTouch), "AssistiveTouch support should match platform capability")
         
         print("✅ \(config.description) - PASSED")
     }

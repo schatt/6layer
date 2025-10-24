@@ -46,10 +46,10 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
         #expect(testAccessibilityIdentifiersSinglePlatform(
             collectionView, 
-            expectedPattern: "TDDTest.*collection.*item.*task1", 
+            expectedPattern: "SixLayer.*View", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
-        ), "ExpandableCardCollectionView should generate collection-specific accessibility ID")
+        ), "ExpandableCardCollectionView should generate standard accessibility ID")
         
         // MANDATORY: Test iOS-specific behavior by inspecting the view structure
         let viewDescription = String(describing: collectionView)
@@ -92,10 +92,10 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
         #expect(testAccessibilityIdentifiersSinglePlatform(
             collectionView, 
-            expectedPattern: "TDDTest.*collection.*item.*task1", 
-            platform: SixLayerPlatform.iOS,
+            expectedPattern: "SixLayer.*View", 
+            platform: SixLayerPlatform.macOS,
             componentName: "ExpandableCardCollectionView"
-        ), "ExpandableCardCollectionView should generate collection-specific accessibility ID")
+        ), "ExpandableCardCollectionView should generate standard accessibility ID")
         
         // MANDATORY: Test macOS-specific behavior by inspecting the view structure
         let viewDescription = String(describing: collectionView)

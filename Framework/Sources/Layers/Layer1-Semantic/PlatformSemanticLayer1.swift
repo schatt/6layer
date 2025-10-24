@@ -99,6 +99,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemDeleted: onItemDeleted,
         onItemEdited: onItemEdited
     )
+    .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
     .automaticAccessibilityIdentifiers()
 }
 
@@ -446,9 +447,11 @@ public func platformPresentContent_L1(
     hints: PresentationHints
 ) -> some View {
         return GenericContentView(content: content, hints: hints)
+            .environment(\.accessibilityIdentifierName, "platformPresentContent_L1")
             .automaticAccessibility()
             .platformPatterns()
             .visualConsistency()
+            .automaticAccessibilityIdentifiers()
 }
 
 /// Present basic numeric values (Int, Float, Double, Bool) with appropriate formatting
@@ -458,9 +461,11 @@ public func platformPresentBasicValue_L1(
     hints: PresentationHints
 ) -> AnyView {
     return AnyView(BasicValueView(value: value, hints: hints)
+        .environment(\.accessibilityIdentifierName, "platformPresentBasicValue_L1")
         .automaticAccessibility()
         .platformPatterns()
-        .visualConsistency())
+        .visualConsistency()
+        .automaticAccessibilityIdentifiers())
 }
 
 /// Present basic arrays with appropriate formatting
@@ -470,9 +475,11 @@ public func platformPresentBasicArray_L1(
     hints: PresentationHints
 ) -> AnyView {
     return AnyView(BasicArrayView(array: array, hints: hints)
+        .environment(\.accessibilityIdentifierName, "platformPresentBasicArray_L1")
         .automaticAccessibility()
         .platformPatterns()
-        .visualConsistency())
+        .visualConsistency()
+        .automaticAccessibilityIdentifiers())
 }
 
 /// Generic function for presenting settings interface

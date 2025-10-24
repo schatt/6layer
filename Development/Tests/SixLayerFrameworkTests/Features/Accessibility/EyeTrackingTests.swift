@@ -297,17 +297,16 @@ open class EyeTrackingTests: BaseTestClass {
     /// TESTING SCOPE: Tests eye tracking calibration initiation
     /// METHODOLOGY: Start calibration and verify calibration state and process
     @Test func testStartCalibration() async {
+        let testConfig = EyeTrackingConfig(
+            sensitivity: .medium,
+            dwellTime: 1.0,
+            visualFeedback: true,
+            hapticFeedback: true,
+            calibration: EyeTrackingCalibration()
+        )
+        let eyeTrackingManager = EyeTrackingManager(config: testConfig)
+        
         await MainActor.run {
-            // Initialize test data first
-            let testConfig = EyeTrackingConfig(
-                sensitivity: .medium,
-                dwellTime: 1.0,
-                visualFeedback: true,
-                hapticFeedback: true,
-                calibration: EyeTrackingCalibration()
-            )
-            let eyeTrackingManager = EyeTrackingManager(config: testConfig)
-            
             eyeTrackingManager.startCalibration()
         }
         
@@ -315,16 +314,6 @@ open class EyeTrackingTests: BaseTestClass {
         try? await Task.sleep(nanoseconds: 2_500_000_000) // 2.5 seconds
         
         await MainActor.run {
-            let testConfig = EyeTrackingConfig(
-                sensitivity: .medium,
-                dwellTime: 1.0,
-                visualFeedback: true,
-                hapticFeedback: true,
-                calibration: EyeTrackingCalibration()
-            )
-            let eyeTrackingManager = EyeTrackingManager(config: testConfig)
-            eyeTrackingManager.startCalibration()
-            
             #expect(eyeTrackingManager.isCalibrated)
         }
     }

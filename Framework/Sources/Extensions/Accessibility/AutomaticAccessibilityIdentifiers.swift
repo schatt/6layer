@@ -26,7 +26,9 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        let shouldApply = config.enableAutoIDs && globalAutomaticAccessibilityIdentifiers
+        // If globalAutomaticAccessibilityIdentifiers is explicitly set to false, disable
+        // Otherwise, respect the config setting
+        let shouldApply = globalAutomaticAccessibilityIdentifiers && config.enableAutoIDs
         
         if config.enableDebugLogging {
             print("🔍 MODIFIER DEBUG: enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)")
@@ -122,13 +124,17 @@ public struct NamedModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
+            .environment(\.accessibilityIdentifierName, name)  // ← Set environment key for other modifiers
             .accessibilityIdentifier(generateNamedAccessibilityIdentifier())
     }
     
     private func generateNamedAccessibilityIdentifier() -> String {
-        guard globalEnabled else { return "" }
-        
         let config = AccessibilityIdentifierConfig.shared
+        
+        if config.enableDebugLogging {
+            print("🔍 NAMED MODIFIER DEBUG: Generating identifier for explicit name (ignoring global settings)")
+        }
+        
         let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
         let namespace = config.namespace.isEmpty ? "main" : config.namespace
         let screenContext = config.currentScreenContext ?? "main"
@@ -182,6 +188,7 @@ public struct ExactNamedModifier: ViewModifier {
         guard globalEnabled else { return "" }
         
         let config = AccessibilityIdentifierConfig.shared
+        guard config.enableAutoIDs else { return "" }  // ← Add this check
         
         // GREEN PHASE: Return ONLY the exact name - no framework additions
         let exactIdentifier = name
@@ -241,13 +248,89 @@ extension EnvironmentValues {
     }
 }
 
+// MARK: - Forced Automatic Accessibility Identifier Modifier
+
+/// Modifier that forces automatic accessibility identifiers regardless of global settings
+/// Used for local override scenarios
+public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
+    @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
+    @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
+
+    public func body(content: Content) -> some View {
+        let config = AccessibilityIdentifierConfig.shared
+        
+        if config.enableDebugLogging {
+            print("🔍 FORCED MODIFIER DEBUG: Always applying identifier (local override)")
+            print("🔍 FORCED MODIFIER DEBUG: accessibilityIdentifierName = '\(accessibilityIdentifierName ?? "nil")'")
+            print("🔍 FORCED MODIFIER DEBUG: accessibilityIdentifierElementType = '\(accessibilityIdentifierElementType ?? "nil")'")
+        }
+        
+        let identifier = generateIdentifier()
+        if config.enableDebugLogging {
+            print("🔍 FORCED MODIFIER DEBUG: Applying identifier '\(identifier)' to view")
+        }
+        
+        return AnyView(content.accessibilityIdentifier(identifier))
+    }
+    
+    private func generateIdentifier() -> String {
+        let config = AccessibilityIdentifierConfig.shared
+        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
+        let namespace = config.namespace.isEmpty ? "main" : config.namespace
+        let screenContext = config.currentScreenContext ?? "main"
+        let viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+        
+        // Build identifier components, avoiding duplication
+        var identifierComponents: [String] = []
+        
+        // Add prefix
+        identifierComponents.append(prefix)
+        
+        // Add namespace only if it's different from prefix
+        if namespace != prefix {
+            identifierComponents.append(namespace)
+        }
+        
+        // Add screen context
+        identifierComponents.append(screenContext)
+        
+        // Add view hierarchy path
+        identifierComponents.append(viewHierarchyPath)
+        
+        // Add element type if available
+        if let elementType = accessibilityIdentifierElementType {
+            identifierComponents.append(elementType)
+        }
+        
+        // Add name if available
+        if let name = accessibilityIdentifierName {
+            identifierComponents.append(name)
+        }
+        
+        return identifierComponents.joined(separator: ".")
+    }
+}
+
+// MARK: - Disable Automatic Accessibility Identifier Modifier
+
+/// Modifier that prevents automatic accessibility identifiers from being applied
+/// Used for local disable scenarios
+public struct DisableAutomaticAccessibilityIdentifiersModifier: ViewModifier {
+    public func body(content: Content) -> some View {
+        // This modifier doesn't apply any accessibility identifier
+        // It just passes through the content unchanged
+        content
+    }
+}
+
 // MARK: - View Extensions
 
 extension View {
     /// Apply automatic accessibility identifiers to a view
     /// This is the primary modifier that all framework components should use
+    /// This forces enable regardless of global settings (local override)
     public func automaticAccessibilityIdentifiers() -> some View {
-        self.modifier(AutomaticAccessibilityIdentifiersModifier())
+        self.modifier(ForcedAutomaticAccessibilityIdentifiersModifier())
     }
     
     /// Enable global automatic accessibility identifiers (alias for automaticAccessibilityIdentifiers)
@@ -259,7 +342,7 @@ extension View {
     /// Disable automatic accessibility identifiers
     /// This is provided for backward compatibility with tests
     public func disableAutomaticAccessibilityIdentifiers() -> some View {
-        self.environment(\.globalAutomaticAccessibilityIdentifiers, false)
+        self.modifier(DisableAutomaticAccessibilityIdentifiersModifier())
     }
     
     /// Apply a named accessibility identifier to a view

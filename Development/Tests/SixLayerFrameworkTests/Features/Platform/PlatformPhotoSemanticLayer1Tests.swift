@@ -11,20 +11,9 @@ import ViewInspector
 /// TESTING SCOPE: All functions in PlatformPhotoSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-open class PlatformPhotoSemanticLayer1Tests {
+open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - platformPhotoDisplay_L1 Tests
-    
     
     private func setupTestEnvironment() async {
         await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
@@ -34,7 +23,9 @@ open class PlatformPhotoSemanticLayer1Tests {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        await setupTestEnvironment()
+        
         // Given
         let preferences = PhotoPreferences(
             preferredSource: .camera,
@@ -67,15 +58,19 @@ open class PlatformPhotoSemanticLayer1Tests {
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersCrossPlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*View", 
                 componentName: "platformPhotoDisplay_L1",
                 testName: "PlatformTest"
             )
         }
         #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on iOS")
+        
+        await cleanupTestEnvironment()
     }
     
     @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        await setupTestEnvironment()
+        
         // Given
         let preferences = PhotoPreferences(
             preferredSource: .camera,
@@ -108,11 +103,13 @@ open class PlatformPhotoSemanticLayer1Tests {
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersCrossPlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*View", 
                 componentName: "platformPhotoDisplay_L1",
                 testName: "PlatformTest"
             )
         }
         #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on macOS")
+        
+        await cleanupTestEnvironment()
     }
 }

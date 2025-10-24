@@ -119,22 +119,21 @@ open class OCROverlayTests: BaseTestClass {
     }
     
     @Test func testBoundingBoxCoordinateConversion() {
-        // Given: Image size and bounding box
-        let imageSize = CGSize(width: 200, height: 150)
+        // Given: Normalized bounding box coordinates
         let boundingBox = CGRect(x: 0.1, y: 0.2, width: 0.5, height: 0.3) // Normalized coordinates
         
-        // When: Converting to image coordinates
+        // When: Converting to image coordinates using placeholder image (100x100)
         let overlayView = OCROverlayView(
-            image: PlatformImage(),
+            image: PlatformImage.createPlaceholder(), // 100x100 image
             result: OCRResult(extractedText: "", confidence: 0.0, boundingBoxes: [])
         )
         let convertedBox = overlayView.convertBoundingBoxToImageCoordinates(boundingBox)
         
         // Then: Should convert correctly
-        #expect(convertedBox.origin.x == 20) // 0.1 * 200
-        #expect(convertedBox.origin.y == 30) // 0.2 * 150
-        #expect(convertedBox.width == 100)  // 0.5 * 200
-        #expect(convertedBox.height == 45)  // 0.3 * 150
+        #expect(convertedBox.origin.x == 10) // 0.1 * 100
+        #expect(convertedBox.origin.y == 20) // 0.2 * 100
+        #expect(convertedBox.width == 50)   // 0.5 * 100
+        #expect(convertedBox.height == 30)  // 0.3 * 100
     }
     
     // MARK: - Text Region Interaction Tests
