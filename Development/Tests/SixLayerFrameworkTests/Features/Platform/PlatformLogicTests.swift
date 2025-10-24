@@ -11,7 +11,7 @@ import SwiftUI
 open class PlatformLogicTests {
     
     // Local, general-purpose capability snapshot for tests (do not use card-specific config)
-    public struct PlatformCapabilities {
+    public struct PlatformCapabilities: Sendable {
         let supportsHapticFeedback: Bool
         let supportsHover: Bool
         let supportsTouch: Bool

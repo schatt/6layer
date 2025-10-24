@@ -5,16 +5,16 @@ import SwiftUI
 // MARK: - Shared Test Data Models
 
 public struct TestItem: Identifiable, CardDisplayable, Hashable, @unchecked Sendable {
-    let id: AnyHashable
-    let title: String
-    let subtitle: String?
-    let description: String?
-    let icon: String?
-    let color: Color?
-    let value: Any?
+    public let id: AnyHashable
+    public let title: String
+    public let subtitle: String?
+    public let description: String?
+    public let icon: String?
+    public let color: Color?
+    public let value: Any?
     
     // Constructor with auto-generated UUID ID
-    init(title: String, subtitle: String? = nil, description: String? = nil, icon: String? = nil, color: Color? = nil, value: Any? = nil) {
+    public init(title: String, subtitle: String? = nil, description: String? = nil, icon: String? = nil, color: Color? = nil, value: Any? = nil) {
         self.id = UUID()
         self.title = title
         self.subtitle = subtitle
@@ -35,14 +35,14 @@ public struct TestItem: Identifiable, CardDisplayable, Hashable, @unchecked Send
         self.value = value
     }
     
-    var cardTitle: String { title }
-    var cardSubtitle: String? { subtitle }
-    var cardDescription: String? { description }
-    var cardIcon: String? { icon }
-    var cardColor: Color? { color }
+    public var cardTitle: String { title }
+    public var cardSubtitle: String? { subtitle }
+    public var cardDescription: String? { description }
+    public var cardIcon: String? { icon }
+    public var cardColor: Color? { color }
     
     // MARK: - Hashable Conformance
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(title)
         hasher.combine(subtitle)
@@ -50,7 +50,7 @@ public struct TestItem: Identifiable, CardDisplayable, Hashable, @unchecked Send
         hasher.combine(icon)
     }
     
-    static func == (lhs: TestItem, rhs: TestItem) -> Bool {
+    public static func == (lhs: TestItem, rhs: TestItem) -> Bool {
         return lhs.id == rhs.id &&
                lhs.title == rhs.title &&
                lhs.subtitle == rhs.subtitle &&

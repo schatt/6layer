@@ -12,7 +12,7 @@ open class CardContentDisplayTests: BaseTestClass {
     // MARK: - Test Data
     
     public struct TestItemWithData: Identifiable {
-        let id = UUID()
+        public let id = UUID()
         let name: String
         let details: String
         let metadata: [String: Any]
