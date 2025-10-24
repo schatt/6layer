@@ -173,6 +173,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         Text(cardTitle)
             .font(.headline)
             .lineLimit(2)
+            .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
         
         // Subtitle or description
         if let subtitle = cardSubtitle {
@@ -265,6 +266,10 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     
     private var cardTitle: String {
         CardDisplayHelper.extractTitle(from: item) ?? "Title"
+    }
+    
+    private var isPlaceholderTitle: Bool {
+        CardDisplayHelper.extractTitle(from: item) == nil
     }
     
     private var cardSubtitle: String? {
@@ -369,6 +374,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
                 .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
+                .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
             
             if let subtitle = cardSubtitle {
                 Text(subtitle)
@@ -390,6 +396,10 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
     
     private var cardTitle: String {
         CardDisplayHelper.extractTitle(from: item) ?? "Title"
+    }
+    
+    private var isPlaceholderTitle: Bool {
+        CardDisplayHelper.extractTitle(from: item) == nil
     }
     
     private var cardSubtitle: String? {
@@ -697,6 +707,7 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
                 .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
+                .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
         }
         .frame(width: layoutDecision.cardWidth, height: layoutDecision.cardHeight)
         .background(.regularMaterial)
@@ -711,6 +722,10 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
     
     private var cardTitle: String {
         CardDisplayHelper.extractTitle(from: item, hints: hints) ?? "Title"
+    }
+    
+    private var isPlaceholderTitle: Bool {
+        CardDisplayHelper.extractTitle(from: item, hints: hints) == nil
     }
     
     private var cardIcon: String {
@@ -754,6 +769,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
                 Text(cardTitle)
                     .font(.headline)
                     .lineLimit(1)
+                    .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
                 
                 if let subtitle = cardSubtitle {
                     Text(subtitle)
@@ -785,6 +801,10 @@ public struct ListCardComponent<Item: Identifiable>: View {
     
     private var cardTitle: String {
         CardDisplayHelper.extractTitle(from: item) ?? "Title"
+    }
+    
+    private var isPlaceholderTitle: Bool {
+        CardDisplayHelper.extractTitle(from: item) == nil
     }
     
     private var cardSubtitle: String? {
@@ -820,6 +840,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
                 .font(.headline)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
+                .foregroundColor(isPlaceholderTitle ? .secondary : .primary)
             
             if let description = cardDescription {
                 Text(description)
@@ -840,6 +861,10 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
     
     private var cardTitle: String {
         CardDisplayHelper.extractTitle(from: item, hints: hints) ?? "Title"
+    }
+    
+    private var isPlaceholderTitle: Bool {
+        CardDisplayHelper.extractTitle(from: item, hints: hints) == nil
     }
     
     private var cardDescription: String? {
