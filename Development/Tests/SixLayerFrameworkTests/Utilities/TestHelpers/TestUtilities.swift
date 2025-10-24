@@ -4,7 +4,7 @@ import SwiftUI
 
 // MARK: - Shared Test Data Models
 
-struct TestItem: Identifiable, CardDisplayable, Hashable, @unchecked Sendable {
+public struct TestItem: Identifiable, CardDisplayable, Hashable, @unchecked Sendable {
     let id: AnyHashable
     let title: String
     let subtitle: String?

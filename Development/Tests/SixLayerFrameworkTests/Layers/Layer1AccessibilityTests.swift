@@ -196,7 +196,7 @@ open class Layer1AccessibilityTests {
 
 // MARK: - Test Support Types
 
-struct Layer1TestItem: Identifiable {
+public struct Layer1TestItem: Identifiable {
     let id: String
     let title: String
     let subtitle: String

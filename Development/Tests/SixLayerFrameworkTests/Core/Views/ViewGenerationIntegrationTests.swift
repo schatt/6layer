@@ -13,14 +13,14 @@ open class ViewGenerationIntegrationTests {
     // MARK: - Test Configuration
     
     /// View generation test configuration
-    struct ViewGenerationTestConfig {
+    public struct ViewGenerationTestConfig {
         let name: String
         let capabilities: CapabilitySet
         let expectedViewComponents: [ExpectedViewComponent]
         let expectedModifiers: [ExpectedModifier]
         let expectedBehaviors: [ExpectedBehavior]
         
-        struct CapabilitySet {
+        public struct CapabilitySet {
             let supportsTouch: Bool
             let supportsHover: Bool
             let supportsHapticFeedback: Bool

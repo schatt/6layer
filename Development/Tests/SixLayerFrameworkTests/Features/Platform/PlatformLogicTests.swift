@@ -11,7 +11,7 @@ import SwiftUI
 open class PlatformLogicTests {
     
     // Local, general-purpose capability snapshot for tests (do not use card-specific config)
-    struct PlatformCapabilities {
+    public struct PlatformCapabilities {
         let supportsHapticFeedback: Bool
         let supportsHover: Bool
         let supportsTouch: Bool
@@ -23,7 +23,7 @@ open class PlatformLogicTests {
     }
 
     // Local performance config for animation-related tests (avoid card-specific config)
-    struct PerformanceConfig {
+    public struct PerformanceConfig {
         let targetFrameRate: Int
         let maxAnimationDuration: Double
     }
