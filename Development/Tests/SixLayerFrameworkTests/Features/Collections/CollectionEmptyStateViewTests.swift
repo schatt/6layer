@@ -38,6 +38,9 @@ open class CollectionEmptyStateViewTests {
     func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiers(
         platform: SixLayerPlatform
     ) async {
+        // Set the test platform for this test case
+        RuntimeCapabilityDetection.setTestPlatform(platform)
+        
         // Given: CollectionEmptyStateView with test configuration
         let view = CollectionEmptyStateView(
             hints: PresentationHints(
@@ -58,5 +61,8 @@ open class CollectionEmptyStateViewTests {
         
         // Then: Should generate accessibility identifiers on both platforms
         #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue)")
+        
+        // Clean up test platform
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
 }

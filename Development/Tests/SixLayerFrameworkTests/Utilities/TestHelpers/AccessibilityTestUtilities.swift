@@ -297,6 +297,9 @@ public func testAccessibilityIdentifiersCrossPlatform<T: View>(
     var allPlatformsPassed = true
     
     for platform in platforms {
+        // Set the test platform for this test case
+        RuntimeCapabilityDetection.setTestPlatform(platform)
+        
         let passed = hasAccessibilityIdentifierWithPattern(
             view,
             expectedPattern: expectedPattern,
@@ -310,6 +313,9 @@ public func testAccessibilityIdentifiersCrossPlatform<T: View>(
         } else {
             print("✅ CROSS-PLATFORM: \(testName) passed on \(platform)")
         }
+        
+        // Clean up test platform
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     return allPlatformsPassed
@@ -329,10 +335,18 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     platform: SixLayerPlatform,
     componentName: String
 ) -> Bool {
-    return hasAccessibilityIdentifierWithPattern(
+    // Set the test platform for this test case
+    RuntimeCapabilityDetection.setTestPlatform(platform)
+    
+    let result = hasAccessibilityIdentifierWithPattern(
         view,
         expectedPattern: expectedPattern,
         platform: platform,
         componentName: componentName
     )
+    
+    // Clean up test platform
+    RuntimeCapabilityDetection.setTestPlatform(nil)
+    
+    return result
 }

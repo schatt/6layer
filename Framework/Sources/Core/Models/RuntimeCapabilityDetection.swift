@@ -749,4 +749,26 @@ public extension RuntimeCapabilityDetection {
         }
         return supportsHover
     }
+    
+    /// Minimum touch target size for accessibility compliance
+    @MainActor
+    static var minTouchTarget: CGFloat {
+        switch currentPlatform {
+        case .iOS, .watchOS:
+            return 44.0  // Apple's minimum touch target size
+        case .macOS, .tvOS, .visionOS:
+            return 0.0   // No touch targets on these platforms
+        }
+    }
+    
+    /// Hover delay for platforms that support hover
+    @MainActor
+    static var hoverDelay: TimeInterval {
+        switch currentPlatform {
+        case .macOS:
+            return 0.5   // macOS hover delay
+        case .iOS, .watchOS, .tvOS, .visionOS:
+            return 0.0   // No hover on these platforms
+        }
+    }
 }

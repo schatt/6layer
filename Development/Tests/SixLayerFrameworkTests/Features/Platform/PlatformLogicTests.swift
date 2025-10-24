@@ -152,6 +152,9 @@ open class PlatformLogicTests {
         (PlatformCapabilities(supportsHapticFeedback: false, supportsHover: true, supportsTouch: false, supportsVoiceOver: true, supportsSwitchControl: false, supportsAssistiveTouch: false, minTouchTarget: 44, hoverDelay: 0), SixLayerPlatform.macOS, DeviceType.mac)
     ])
     func testCapabilityConsistency(_ config: PlatformCapabilities, platform: SixLayerPlatform, deviceType: DeviceType) {
+        // Set the test platform for this test case
+        RuntimeCapabilityDetection.setTestPlatform(platform)
+        
         // Haptic feedback should only be available with touch
         if config.supportsHapticFeedback {
             #expect(config.supportsTouch, "Haptic feedback should only be available with touch on \(platform) \(deviceType)")
@@ -173,6 +176,9 @@ open class PlatformLogicTests {
         } else {
             #expect(config.minTouchTarget == 0, "Touch target should be zero for non-touch platforms on \(platform) \(deviceType)")
         }
+        
+        // Clean up test platform
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     // MARK: - Vision Framework Availability Tests

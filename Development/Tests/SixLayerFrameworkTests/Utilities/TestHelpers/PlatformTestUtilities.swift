@@ -213,9 +213,27 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of non-touch platform capabilities
-    @Test static func testNonTouchPlatformBehavior() {
-        let capabilities = PlatformCapabilitiesTestSnapshot()
-        let platformName = "Non-Touch Platform"
+    @Test @MainActor static func testNonTouchPlatformBehavior() {
+        // Set test platform to tvOS (non-touch platform)
+        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        
+        // Test actual platform detection
+        let platform = SixLayerPlatform.currentPlatform
+        #expect(platform == .tvOS, "Test platform should be tvOS")
+        
+        // Test actual capability detection
+        let capabilities = PlatformCapabilitiesTestSnapshot(
+            supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedback,
+            supportsHover: RuntimeCapabilityDetection.supportsHover,
+            supportsTouch: RuntimeCapabilityDetection.supportsTouch,
+            supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
+            supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
+            supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
+            minTouchTarget: RuntimeCapabilityDetection.minTouchTarget,
+            hoverDelay: RuntimeCapabilityDetection.hoverDelay
+        )
+        
+        let platformName = "Non-Touch Platform (tvOS)"
         // Non-touch platforms should not support haptic feedback
         #expect(!capabilities.supportsHapticFeedback, 
                       "\(platformName) should not support haptic feedback")
@@ -227,12 +245,33 @@ final class PlatformTestUtilities {
         // Non-touch platforms should have zero touch target requirement
         #expect(capabilities.minTouchTarget == 0, 
                       "\(platformName) should have zero touch target requirement")
+        
+        // Clean up test platform
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     /// Test the behavioral implications of hover platform capabilities
-    @Test static func testHoverPlatformBehavior() {
-        let capabilities = PlatformCapabilitiesTestSnapshot()
-        let platformName = "Hover Platform"
+    @Test @MainActor static func testHoverPlatformBehavior() {
+        // Set test platform to macOS (hover platform)
+        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        
+        // Test actual platform detection
+        let platform = SixLayerPlatform.currentPlatform
+        #expect(platform == .macOS, "Test platform should be macOS")
+        
+        // Test actual capability detection
+        let capabilities = PlatformCapabilitiesTestSnapshot(
+            supportsHapticFeedback: RuntimeCapabilityDetection.supportsHapticFeedback,
+            supportsHover: RuntimeCapabilityDetection.supportsHover,
+            supportsTouch: RuntimeCapabilityDetection.supportsTouch,
+            supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
+            supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
+            supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
+            minTouchTarget: RuntimeCapabilityDetection.minTouchTarget,
+            hoverDelay: RuntimeCapabilityDetection.hoverDelay
+        )
+        
+        let platformName = "Hover Platform (macOS)"
         // Hover platforms should have hover delay set
         #expect(capabilities.hoverDelay >= 0, 
                                    "\(platformName) should have hover delay set")
@@ -240,6 +279,9 @@ final class PlatformTestUtilities {
         // Hover platforms should not support touch (mutually exclusive)
         #expect(!capabilities.supportsTouch, 
                       "\(platformName) should not support touch (hover exclusive)")
+        
+        // Clean up test platform
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     /// Test the behavioral implications of non-hover platform capabilities
@@ -303,21 +345,25 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of Vision framework unavailability
-    @Test static func testVisionUnavailableBehavior() {
-        let testConfig = PlatformTestConfig(
-            platform: .iOS,
-            capabilities: PlatformCapabilitiesTestSnapshot(),
-            visionAvailable: true,
-            ocrAvailable: true
-        )
-        let platformName = "Vision Unavailable Platform"
+    @Test @MainActor static func testVisionUnavailableBehavior() {
+        // Set test platform to watchOS (which doesn't support Vision framework)
+        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        
+        // Test actual Vision/OCR detection
+        let visionAvailable = RuntimeCapabilityDetection.supportsVision
+        let ocrAvailable = RuntimeCapabilityDetection.supportsOCR
+        
+        let platformName = "Vision Unavailable Platform (watchOS)"
+        // Vision-unavailable platforms should not have Vision framework
+        #expect(!visionAvailable, 
+                      "\(platformName) should not have Vision framework")
+        
         // Vision-unavailable platforms should not have OCR
-        #expect(!testConfig.ocrAvailable, 
+        #expect(!ocrAvailable, 
                       "\(platformName) should not have OCR available")
         
-        // Vision-unavailable platforms should not have Vision framework
-        #expect(!testConfig.visionAvailable, 
-                      "\(platformName) should not have Vision framework")
+        // Clean up test platform
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     // MARK: - Platform Configuration Helpers
