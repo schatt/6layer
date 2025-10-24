@@ -1,12 +1,48 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.6.0 - Default Values in Hints System** 🎯
+## 📍 **Current Release: v4.6.1 - UI Placeholder Styling Enhancement** 🎯
 
 **Release Date**: October 24, 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.3.0 - API Rename: .trackViewHierarchy() → .named()  
-**Note**: Major new feature for fine-grained control over fallback behavior  
+**Previous Release**: v4.6.0 - Default Values in Hints System  
+**Note**: UI enhancement for better visual distinction of placeholder content  
 **Next Release**: TBD
+
+---
+
+## 🎨 **v4.6.1 - UI Placeholder Styling Enhancement** (October 24, 2025)
+
+### **What's New:**
+- **UI Placeholder Styling**: Empty fields now display in lighter grey (.secondary) color
+- **Visual Clarity**: Users can easily distinguish between placeholder text and actual content
+- **Enhanced UX**: Improved user experience with clear visual indicators
+
+### **Technical Changes:**
+- Added `isPlaceholderTitle` computed property to all card component structs
+- Applied conditional `foregroundColor` styling to `Text(cardTitle)` views
+- Placeholder text (like 'Title') displays in `.secondary` color
+- Actual content displays in `.primary` color
+
+### **Bug Fixes:**
+- Fixed visual ambiguity where placeholder text looked identical to real content
+- Improved accessibility by providing visual cues for empty fields
+
+### **Benefits:**
+- **Better User Experience**: Clear visual distinction between placeholders and real data
+- **Improved Accessibility**: Visual cues help users understand content state
+- **Enhanced Design**: More polished and professional appearance
+
+### **Migration Guide:**
+- **No breaking changes**: This is a visual enhancement only
+- **Automatic**: All existing code benefits from the improved styling
+- **No action required**: The enhancement works with existing implementations
+
+### **Release Notes Summary:**
+This minor release enhances the visual design of card components by adding conditional styling that distinguishes placeholder content from actual data. Empty fields now display in a lighter grey color, providing better visual clarity and improved user experience.
+
+---
+
+## 🎯 **v4.6.0 - Default Values in Hints System** (October 24, 2025)
 
 ---
 
