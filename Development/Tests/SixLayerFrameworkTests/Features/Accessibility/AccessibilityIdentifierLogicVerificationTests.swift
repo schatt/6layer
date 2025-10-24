@@ -109,14 +109,14 @@ open class AccessibilityIdentifierLogicVerificationTests {
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             
             let generator = AccessibilityIdentifierGenerator()
             
             // Test Case 1: Basic identifier generation
             let basicID = generator.generateID(for: "TestButton", role: "button", context: "ui")
-            #expect(basicID.hasPrefix("CarManager"), "Generated ID should start with namespace")
+            #expect(basicID.hasPrefix("SixLayer"), "Generated ID should start with namespace")
             #expect(basicID.contains("button"), "Generated ID should contain role")
             // Note: The actual implementation may not include the exact object name in the ID
             // This test verifies the ID is generated and has the expected structure
@@ -126,21 +126,21 @@ open class AccessibilityIdentifierLogicVerificationTests {
             config.pushViewHierarchy("NavigationView")
             config.pushViewHierarchy("ProfileSection")
             let hierarchyID = generator.generateID(for: "EditButton", role: "button", context: "ui")
-            #expect(hierarchyID.hasPrefix("CarManager"), "Generated ID should start with namespace")
+            #expect(hierarchyID.hasPrefix("SixLayer"), "Generated ID should start with namespace")
             #expect(hierarchyID.contains("button"), "Generated ID should contain role")
             #expect(!hierarchyID.isEmpty, "Generated ID should not be empty")
             
             // Test Case 3: Identifier with screen context
             config.setScreenContext("UserProfile")
             let screenID = generator.generateID(for: "SaveButton", role: "button", context: "ui")
-            #expect(screenID.hasPrefix("CarManager"), "Generated ID should start with namespace")
+            #expect(screenID.hasPrefix("SixLayer"), "Generated ID should start with namespace")
             #expect(screenID.contains("button"), "Generated ID should contain role")
             #expect(!screenID.isEmpty, "Generated ID should not be empty")
             
             // Test Case 4: Identifier with navigation state
             config.setNavigationState("ProfileEditMode")
             let navigationID = generator.generateID(for: "CancelButton", role: "button", context: "ui")
-            #expect(navigationID.hasPrefix("CarManager"), "Generated ID should start with namespace")
+            #expect(navigationID.hasPrefix("SixLayer"), "Generated ID should start with namespace")
             #expect(navigationID.contains("button"), "Generated ID should contain role")
             #expect(!navigationID.isEmpty, "Generated ID should not be empty")
         }
@@ -155,7 +155,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             
             // Given: The exact configuration from the bug report
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             config.enableUITestIntegration = true
@@ -172,7 +172,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             
             // Verify that all configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
-            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
+            #expect(config.namespace == "SixLayer", "Namespace should be set correctly")
             #expect(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
             #expect(config.enableUITestIntegration, "UI test integration should be enabled")
             #expect(config.enableDebugLogging, "Debug logging should be enabled")

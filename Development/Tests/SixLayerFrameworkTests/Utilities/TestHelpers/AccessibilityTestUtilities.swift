@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import ViewInspector
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -48,13 +49,35 @@ public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
     let root = hosting.view
     root?.setNeedsLayout()
     root?.layoutIfNeeded()
+    
+    // Force accessibility update
+    root?.accessibilityElementsHidden = false
+    root?.isAccessibilityElement = true
+    
+    // Force another layout pass to ensure accessibility is updated
+    DispatchQueue.main.async {
+        root?.setNeedsLayout()
+        root?.layoutIfNeeded()
+    }
+    
     print("DEBUG: Created UIHostingController with root view: \(type(of: root))")
+    print("DEBUG: Root view accessibility identifier: \(root?.accessibilityIdentifier ?? "nil")")
     return root
     #elseif canImport(AppKit)
     let hosting = NSHostingController(rootView: view)
     let root = hosting.view
     root.layoutSubtreeIfNeeded()
+    
+    // Force accessibility update
+    root.setAccessibilityElement(true)
+    
+    // Force another layout pass to ensure accessibility is updated
+    DispatchQueue.main.async {
+        root.layoutSubtreeIfNeeded()
+    }
+    
     print("DEBUG: Created NSHostingController with root view: \(type(of: root))")
+    print("DEBUG: Root view accessibility identifier: '\(root.accessibilityIdentifier())'")
     return root
     #else
     print("DEBUG: No hosting controller available")
@@ -68,28 +91,38 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     #if canImport(UIKit)
     guard let rootView = root as? UIView else { return nil }
     
-    // Check root view first
-    if let id = rootView.accessibilityIdentifier { 
-        print("DEBUG: Found accessibility identifier on root view: '\(id)'")
-        return id 
-    }
-    
     // Debug: Print all views and their identifiers
     print("DEBUG: Root view type: \(type(of: rootView))")
     print("DEBUG: Root view accessibility identifier: \(rootView.accessibilityIdentifier ?? "nil")")
     print("DEBUG: Root view subviews count: \(rootView.subviews.count)")
     
-    // Search through all subviews
+    // Check root view first
+    if let id = rootView.accessibilityIdentifier, !id.isEmpty { 
+        print("DEBUG: Found accessibility identifier on root view: '\(id)'")
+        return id 
+    }
+    
+    // Search through all subviews more thoroughly
     var stack: [UIView] = rootView.subviews
     var depth = 0
-    while let next = stack.popLast(), depth < 10 { // Limit depth to avoid infinite loops
+    var checkedViews: Set<ObjectIdentifier> = []
+    
+    while let next = stack.popLast(), depth < 20 { // Increased depth limit
+        let nextId = ObjectIdentifier(next)
+        if checkedViews.contains(nextId) {
+            continue // Avoid infinite loops
+        }
+        checkedViews.insert(nextId)
+        
         print("DEBUG: Checking view at depth \(depth): \(type(of: next))")
         print("DEBUG: View accessibility identifier: \(next.accessibilityIdentifier ?? "nil")")
         
-        if let id = next.accessibilityIdentifier { 
+        if let id = next.accessibilityIdentifier, !id.isEmpty { 
             print("DEBUG: Found accessibility identifier on subview: '\(id)'")
             return id 
         }
+        
+        // Add all subviews to the stack
         stack.append(contentsOf: next.subviews)
         depth += 1
     }
@@ -100,21 +133,30 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         return nil 
     }
     
-    // Check root view first
-    let rootId = rootView.accessibilityIdentifier()
+    // Debug: Print all views and their identifiers
     print("DEBUG: Root NSView type: \(type(of: rootView))")
-    print("DEBUG: Root NSView accessibility identifier: '\(rootId)'")
+    print("DEBUG: Root NSView accessibility identifier: '\(rootView.accessibilityIdentifier())'")
     print("DEBUG: Root NSView subviews count: \(rootView.subviews.count)")
     
+    // Check root view first
+    let rootId = rootView.accessibilityIdentifier()
     if !rootId.isEmpty { 
         print("DEBUG: Found accessibility identifier on root NSView: '\(rootId)'")
         return rootId 
     }
     
-    // Search through all subviews
+    // Search through all subviews more thoroughly
     var stack: [NSView] = rootView.subviews
     var depth = 0
-    while let next = stack.popLast(), depth < 10 { // Limit depth to avoid infinite loops
+    var checkedViews: Set<ObjectIdentifier> = []
+    
+    while let next = stack.popLast(), depth < 20 { // Increased depth limit
+        let nextId = ObjectIdentifier(next)
+        if checkedViews.contains(nextId) {
+            continue // Avoid infinite loops
+        }
+        checkedViews.insert(nextId)
+        
         let id = next.accessibilityIdentifier()
         print("DEBUG: Checking NSView at depth \(depth): \(type(of: next))")
         print("DEBUG: NSView accessibility identifier: '\(id)'")
@@ -123,6 +165,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
             print("DEBUG: Found accessibility identifier on NSView subview: '\(id)'")
             return id 
         }
+        
+        // Add all subviews to the stack
         stack.append(contentsOf: next.subviews)
         depth += 1
     }
@@ -132,18 +176,29 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     #endif
 }
 
-/// Convenience: Return the first non-empty accessibilityIdentifier from a SwiftUI view
-/// after enabling global auto-IDs and hosting it for inspection.
+/// Convenience: Return the accessibility identifier directly from a SwiftUI view
+/// This is much simpler than hosting the view and searching platform views
 @MainActor
-public func getAccessibilityIdentifier<V: View>(from view: V) -> String? {
+public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> String? {
     // Ensure config is enabled for tests
     AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+    AccessibilityIdentifierConfig.shared.enableDebugLogging = true
     if AccessibilityIdentifierConfig.shared.namespace.isEmpty {
         AccessibilityIdentifierConfig.shared.namespace = "test"
     }
-    // Don't wrap with global auto IDs - let the component's own modifiers work
-    let root = hostRootPlatformView(view)
-    return firstAccessibilityIdentifier(inHosted: root)
+    
+    // Apply the global auto IDs to ensure environment variable is set
+    let viewWithAutoIDs = view.withGlobalAutoIDsEnabled()
+    
+    do {
+        // Use ViewInspector to directly inspect the SwiftUI view
+        let identifier = try viewWithAutoIDs.inspect().accessibilityIdentifier()
+        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from SwiftUI view")
+        return identifier.isEmpty ? nil : identifier
+    } catch {
+        print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
+        return nil
+    }
 }
 
 // MARK: - Platform Mocking for Accessibility Tests
@@ -167,8 +222,8 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)
     
-    // Get the actual accessibility identifier from the view
-    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+    // Get the actual accessibility identifier directly from the SwiftUI view
+    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view) else {
         // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
         if expectedPattern == "^$" || expectedPattern == "^\\s*$" {
             print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty) on \(platform)")
@@ -217,8 +272,8 @@ public func hasAccessibilityIdentifierExact<T: View>(
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)
     
-    // Get the actual accessibility identifier from the view
-    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+    // Get the actual accessibility identifier directly from the SwiftUI view
+    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view) else {
         print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
         return false
     }
@@ -247,8 +302,8 @@ public func hasAccessibilityIdentifierSimple<T: View>(
     expectedPattern: String,
     componentName: String = "Component"
 ) -> Bool {
-    // Get the actual accessibility identifier from the view
-    guard let actualIdentifier = getAccessibilityIdentifier(from: view) else {
+    // Get the actual accessibility identifier directly from the SwiftUI view
+    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view) else {
         // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
         if expectedPattern.isEmpty {
             print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty)")

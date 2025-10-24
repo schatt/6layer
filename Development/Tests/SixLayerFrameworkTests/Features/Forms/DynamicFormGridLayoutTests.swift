@@ -278,7 +278,7 @@ open class DynamicFormGridLayoutTests {
     // MARK: - Real-World Scenario Tests
     
     @Test func testFuelDetailsGridLayout() {
-        // Given: Real-world fuel details fields (matching CarManager usage)
+        // Given: Real-world fuel details fields (matching SixLayer usage)
         let fuelFields = [
             DynamicFormField(id: "odometer", contentType: .number, label: "Odometer", metadata: ["maxWidth": "120", "gridColumn": "1"]),
             DynamicFormField(id: "gallons", contentType: .number, label: "Gallons", metadata: ["maxWidth": "100", "gridColumn": "2"]),

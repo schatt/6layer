@@ -7,7 +7,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
-open class CardContentDisplayTests {
+open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Test Data
     
@@ -20,7 +20,9 @@ open class CardContentDisplayTests {
     
     // MARK: - Helper Methods
     
-    private func createTestItems() -> [TestItem] {
+    /// Creates specific test items for CardContentDisplayTests
+    @MainActor
+    internal func createCardTestItems() -> [TestItem] {
         return [
             TestItem(title: "Test Item 1", subtitle: "Subtitle 1", description: "Description 1", icon: "star.fill", color: .blue),
             TestItem(title: "Test Item 2", subtitle: "Subtitle 2", description: "Description 2", icon: "heart.fill", color: .red),
@@ -35,7 +37,9 @@ open class CardContentDisplayTests {
         ]
     }
     
-    private func createLayoutDecision() -> IntelligentCardLayoutDecision {
+    /// Creates specific layout decision for CardContentDisplayTests
+    @MainActor
+    public func createCardLayoutDecision() -> IntelligentCardLayoutDecision {
         return IntelligentCardLayoutDecision(
             columns: 2,
             spacing: 16,
@@ -49,7 +53,7 @@ open class CardContentDisplayTests {
     
     @Test func testSimpleCardComponentDisplaysItemTitle() {
         // GIVEN: A test item with a title
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         let layoutDecision = createLayoutDecision()
         
@@ -71,7 +75,7 @@ open class CardContentDisplayTests {
     
     @Test func testSimpleCardComponentDisplaysItemIcon() {
         // GIVEN: A test item with an icon
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         let layoutDecision = createLayoutDecision()
         
@@ -91,7 +95,7 @@ open class CardContentDisplayTests {
     
     @Test func testSimpleCardComponentHandlesMissingIcon() {
         // GIVEN: A test item without an icon
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[2] // This item has icon: nil
         let layoutDecision = createLayoutDecision()
         
@@ -113,7 +117,7 @@ open class CardContentDisplayTests {
     
     @Test func testExpandableCardComponentDisplaysItemContent() {
         // GIVEN: A test item with title and description
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         let layoutDecision = createLayoutDecision()
         let strategy = CardExpansionStrategy(
@@ -144,7 +148,7 @@ open class CardContentDisplayTests {
     
     @Test func testExpandableCardComponentExpandedContent() {
         // GIVEN: A test item and expanded state
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         let layoutDecision = createLayoutDecision()
         let strategy = CardExpansionStrategy(
@@ -177,7 +181,7 @@ open class CardContentDisplayTests {
     
     @Test func testListCardComponentDisplaysItemData() {
         // GIVEN: A test item
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         
         // WHEN: Creating a ListCardComponent
@@ -189,7 +193,7 @@ open class CardContentDisplayTests {
     
     @Test func testListCardComponentHandlesMissingSubtitle() {
         // GIVEN: A test item without subtitle
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[2] // This item has subtitle: nil
         
         // WHEN: Creating a ListCardComponent
@@ -203,7 +207,7 @@ open class CardContentDisplayTests {
     
     @Test func testMasonryCardComponentDisplaysItemData() {
         // GIVEN: A test item
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         
         // WHEN: Creating a MasonryCardComponent
@@ -328,28 +332,13 @@ open class CardContentDisplayTests {
     
     // MARK: - Performance Tests
     
-    @Test func testCardComponentCreationPerformance() {
-        // GIVEN: A large number of items
-        let manyItems = (0..<1000).map { i in
-            TestItem(
-                title: "Item \(i)",
-                subtitle: "Subtitle \(i)",
-                description: "Description \(i)",
-                icon: "star.fill",
-                color: .blue
-            )
-        }
-        
-        // WHEN: Creating many card components
-        // THEN: Should complete within reasonable time
-        }
     
     // MARK: - Accessibility Tests
     
     @Test func testCardComponentsHaveProperAccessibility() {
         // GIVEN: A test item and layout decision
         let layoutDecision = createLayoutDecision()
-        let sampleItems = createTestItems()
+        let sampleItems = createCardTestItems()
         let item = sampleItems[0]
         
         // WHEN: Creating card components

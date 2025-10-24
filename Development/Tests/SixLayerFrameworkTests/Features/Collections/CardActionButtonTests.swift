@@ -400,21 +400,6 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    @Test func testActionButtonCreationPerformance() {
-        // GIVEN: A large number of items
-        let manyItems = (0..<1000).map { i in
-            TestItem(
-                title: "Item \(i)",
-                subtitle: "Subtitle \(i)",
-                description: "Description \(i)",
-                icon: "star.fill",
-                color: Color.backgroundColor
-            )
-        }
-        
-        // WHEN: Creating many card components with callbacks
-        // THEN: Should complete within reasonable time
-        }
     }
     
     // MARK: - Platform-Specific Business Logic Tests

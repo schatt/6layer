@@ -25,11 +25,24 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
 
     public func body(content: Content) -> some View {
-        if AccessibilityIdentifierConfig.shared.enableAutoIDs && globalAutomaticAccessibilityIdentifiers {
-            content
-                .accessibilityIdentifier(generateIdentifier())
+        let config = AccessibilityIdentifierConfig.shared
+        let shouldApply = config.enableAutoIDs && globalAutomaticAccessibilityIdentifiers
+        
+        if config.enableDebugLogging {
+            print("🔍 MODIFIER DEBUG: enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)")
+        }
+        
+        if shouldApply {
+            let identifier = generateIdentifier()
+            if config.enableDebugLogging {
+                print("🔍 MODIFIER DEBUG: Applying identifier '\(identifier)' to view")
+            }
+            return AnyView(content.accessibilityIdentifier(identifier))
         } else {
-            content
+            if config.enableDebugLogging {
+                print("🔍 MODIFIER DEBUG: NOT applying identifier - conditions not met")
+            }
+            return AnyView(content)
         }
     }
     
@@ -40,7 +53,7 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Use the configured global prefix
         let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
         
-        // Use the configured namespace (legacy support, can be same as prefix)
+        // Use the configured namespace (avoid duplication with prefix)
         let namespace = config.namespace.isEmpty ? "main" : config.namespace
         
         // Use the current screen context from config
@@ -55,7 +68,22 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Determine element type
         let elementType = accessibilityIdentifierElementType ?? "View" // Default to "View" if not specified
         
-        var identifierComponents: [String] = [prefix, namespace, screenContext, viewHierarchyPath]
+        // Build identifier components, avoiding duplication
+        var identifierComponents: [String] = []
+        
+        // Add prefix
+        identifierComponents.append(prefix)
+        
+        // Add namespace only if it's different from prefix
+        if namespace != prefix {
+            identifierComponents.append(namespace)
+        }
+        
+        // Add screen context
+        identifierComponents.append(screenContext)
+        
+        // Add view hierarchy path
+        identifierComponents.append(viewHierarchyPath)
         
         if config.includeComponentNames {
             identifierComponents.append(componentName)
@@ -65,7 +93,22 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
             identifierComponents.append(elementType)
         }
         
-        return identifierComponents.joined(separator: ".")
+        let identifier = identifierComponents.joined(separator: ".")
+        
+        // Debug logging
+        if config.enableDebugLogging {
+            print("🔍 ACCESSIBILITY DEBUG: Generated identifier '\(identifier)'")
+            print("   - prefix: '\(prefix)'")
+            print("   - namespace: '\(namespace)' (included: \(namespace != prefix))")
+            print("   - screenContext: '\(screenContext)'")
+            print("   - viewHierarchyPath: '\(viewHierarchyPath)'")
+            print("   - componentName: '\(componentName)'")
+            print("   - elementType: '\(elementType)'")
+            print("   - includeComponentNames: \(config.includeComponentNames)")
+            print("   - includeElementTypes: \(config.includeElementTypes)")
+        }
+        
+        return identifier
     }
 }
 
@@ -85,12 +128,70 @@ public struct NamedModifier: ViewModifier {
     private func generateNamedAccessibilityIdentifier() -> String {
         guard globalEnabled else { return "" }
         
-        let basePrefix = prefix ?? "SixLayer"
-        let componentName = "main"
-        let elementType = "element"
-        let uniqueId = UUID().uuidString.prefix(8)
+        let config = AccessibilityIdentifierConfig.shared
+        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
+        let namespace = config.namespace.isEmpty ? "main" : config.namespace
+        let screenContext = config.currentScreenContext ?? "main"
+        let viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
         
-        return "\(basePrefix).\(componentName).\(elementType).\(uniqueId)"
+        // Build identifier components, avoiding duplication
+        var identifierComponents: [String] = []
+        
+        // Add prefix
+        identifierComponents.append(prefix)
+        
+        // Add namespace only if it's different from prefix
+        if namespace != prefix {
+            identifierComponents.append(namespace)
+        }
+        
+        // Add screen context
+        identifierComponents.append(screenContext)
+        
+        // Add view hierarchy path
+        identifierComponents.append(viewHierarchyPath)
+        
+        // Add the actual name that was passed to the modifier
+        identifierComponents.append(name)
+        
+        let identifier = identifierComponents.joined(separator: ".")
+        
+        // Debug logging
+        if config.enableDebugLogging {
+            print("🔍 NAMED MODIFIER DEBUG: Generated identifier '\(identifier)' for name '\(name)'")
+        }
+        
+        return identifier
+    }
+}
+
+// MARK: - Exact Named Component Modifier
+
+/// Modifier that applies exact accessibility identifiers without framework additions
+/// GREEN PHASE: Produces truly minimal identifiers - just the exact name provided
+public struct ExactNamedModifier: ViewModifier {
+    let name: String
+    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalEnabled
+    
+    public func body(content: Content) -> some View {
+        content
+            .accessibilityIdentifier(generateExactNamedAccessibilityIdentifier())
+    }
+    
+    private func generateExactNamedAccessibilityIdentifier() -> String {
+        guard globalEnabled else { return "" }
+        
+        let config = AccessibilityIdentifierConfig.shared
+        
+        // GREEN PHASE: Return ONLY the exact name - no framework additions
+        let exactIdentifier = name
+        
+        // Debug logging
+        if config.enableDebugLogging {
+            print("🔍 EXACT NAMED MODIFIER DEBUG: Generated exact identifier '\(exactIdentifier)' for name '\(name)'")
+        }
+        
+        return exactIdentifier
     }
 }
 
@@ -168,9 +269,9 @@ extension View {
     }
     
     /// Apply an exact named accessibility identifier to a view
-    /// TDD RED PHASE: This is a stub implementation for testing
+    /// GREEN PHASE: Produces truly minimal identifiers without framework additions
     public func exactNamed(_ name: String) -> some View {
-        self.modifier(NamedModifier(name: name))
+        self.modifier(ExactNamedModifier(name: name))
     }
 }
 

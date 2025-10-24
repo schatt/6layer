@@ -30,7 +30,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Exact configuration from the user's bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             config.enableUITestIntegration = true
@@ -67,7 +67,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             
             // Verify configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
-            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
+            #expect(config.namespace == "SixLayer", "Namespace should be set correctly")
             #expect(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
             #expect(config.enableUITestIntegration, "UI test integration should be enabled")
             #expect(config.enableDebugLogging, "Debug logging should be enabled")
@@ -82,7 +82,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             config.enableDebugLogging = true
@@ -100,12 +100,12 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation (should use default "main" screen context)
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "CarManager.main.element.*", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
             
-            #expect(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
+            #expect(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'SixLayer.main.element.*'")
         }
     }
     
@@ -116,7 +116,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             config.enableDebugLogging = true
@@ -132,7 +132,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation (should use "FuelView" screen context)
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "CarManager.FuelView.element.*", 
+                expectedPattern: "SixLayer.FuelView.element.*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
@@ -147,7 +147,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableDebugLogging = true
             config.clearDebugLog()
@@ -162,12 +162,12 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "CarManager.FuelView.*", 
+                expectedPattern: "SixLayer.FuelView.*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ScreenContext"
             )
             
-            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'CarManager.FuelView.*'")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.FuelView.*'")
         }
     }
     
@@ -178,7 +178,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableDebugLogging = true
             config.clearDebugLog()
@@ -193,12 +193,12 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "CarManager.*", 
+                expectedPattern: "SixLayer.*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NavigationState"
             )
             
-            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'CarManager.*'")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*'")
         }
     }
     
@@ -210,7 +210,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             
             // When: Using manual accessibility identifier (the working case from bug report)
@@ -240,7 +240,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             
             // When: Using automatic accessibility identifiers
@@ -255,7 +255,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // The fix ensures that automatic accessibility identifiers work correctly
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "CarManager.*element.*testbutton", 
+                expectedPattern: "SixLayer.*element.*testbutton", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
             ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
@@ -270,7 +270,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration matching the bug report
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             
             // When: Using the global modifier (the original working approach)
@@ -293,7 +293,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Given: Configuration with enhanced features enabled
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             config.enableUITestIntegration = true
@@ -313,7 +313,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             )
             
             // Then: The identifier should contain proper context information
-            #expect(id.contains("CarManager"), "ID should contain namespace")
+            #expect(id.contains("SixLayer"), "ID should contain namespace")
             #expect(id.contains("FuelView"), "ID should contain screen context")
             #expect(id.contains("button"), "ID should contain role")
             #expect(id.contains("test-object"), "ID should contain object ID")

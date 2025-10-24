@@ -14,9 +14,5 @@ open class SixLayerFrameworkTests: BaseTestClass {
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
 
-    @Test func testPerformanceExample() {
-        // This is an example of a performance test case.
-        // Performance test removed - performance monitoring was removed from framework
-    }
 }
 

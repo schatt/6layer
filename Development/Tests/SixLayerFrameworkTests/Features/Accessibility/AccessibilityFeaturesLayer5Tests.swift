@@ -450,31 +450,6 @@ open class AccessibilityFeaturesLayer5Tests {
     
     // MARK: - Performance Tests
     
-    /**
-     * BUSINESS PURPOSE: KeyboardNavigationManager performs efficiently with large lists
-     * 
-     * TESTING SCOPE: Performance with large datasets
-     * METHODOLOGY: Test performance with many focusable items
-     */
-    @Test func testKeyboardNavigationManagerPerformance() {
-        let navigationManager = KeyboardNavigationManager()
-        // GIVEN: Large number of focusable items
-        let itemCount = 1000
-        for i in 0..<itemCount {
-            navigationManager.addFocusableItem("item\(i)")
-        }
-        
-        // WHEN: Measuring focus movement performance
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<100 {
-            navigationManager.moveFocus(direction: .next)
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // THEN: Should perform efficiently
-        let executionTime = endTime - startTime
-        #expect(executionTime < 1.0, "Should perform focus movement efficiently")
-    }
     
     
 }

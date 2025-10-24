@@ -12,27 +12,31 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    struct TestDataItem: Identifiable {
-        let id = UUID()
-        let title: String
-        let subtitle: String?
-        let description: String?
-        let value: Int
-        let isActive: Bool
+    public struct TestDataItem: Identifiable {
+        public let id = UUID()
+        public let title: String
+        public let subtitle: String?
+        public let description: String?
+        public let value: Int
+        public let isActive: Bool
     }
     
-    var sampleData: [TestDataItem] = []
-    var layoutDecision: IntelligentCardLayoutDecision!
+    // MARK: - Helper Functions
     
-    override init() {
-        
-        sampleData = [
+    /// Creates specific test data for ViewGenerationTests
+    @MainActor
+    public func createViewGenerationTestData() -> [TestDataItem] {
+        return [
             TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
             TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
             TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
         ]
-        
-        layoutDecision = IntelligentCardLayoutDecision(
+    }
+    
+    /// Creates specific layout decision for ViewGenerationTests
+    @MainActor
+    public func createViewGenerationLayoutDecision() -> IntelligentCardLayoutDecision {
+        return IntelligentCardLayoutDecision(
             columns: 2,
             spacing: 16,
             cardWidth: 200,
@@ -45,7 +49,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewGeneration() {
         // GIVEN: A test data item
-        let item = sampleData[0]
+        let item = createViewGenerationTestData()[0]
         
         // WHEN: Generating an intelligent detail view
         let detailView = IntelligentDetailView.platformDetailView(for: item)
@@ -83,7 +87,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: A test data item and custom field view
-        let item = sampleData[0]
+        let item = createViewGenerationTestData()[0]
         
         // WHEN: Generating an intelligent detail view with custom field view
         let detailView = IntelligentDetailView.platformDetailView(
@@ -126,7 +130,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewWithHints() {
         // GIVEN: A test data item and presentation hints
-        let item = sampleData[0]
+        let item = createViewGenerationTestData()[0]
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .compact,
@@ -211,7 +215,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testLayoutStrategyWithHints() {
         // GIVEN: Data and explicit hints
-        let item = sampleData[0]
+        let item = createViewGenerationTestData()[0]
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .detail,
@@ -281,7 +285,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test func testDataIntrospection() {
         // GIVEN: A test data item
-        let item = sampleData[0]
+        let item = createViewGenerationTestData()[0]
         
         // WHEN: Analyzing the data
         let analysis = DataIntrospectionEngine.analyze(item)
@@ -320,7 +324,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewStructureConsistency() {
         // GIVEN: The same data item
-        let item = sampleData[0]
+        let item = createViewGenerationTestData()[0]
         
         // WHEN: Generating views multiple times
         let view1 = IntelligentDetailView.platformDetailView(for: item)
@@ -337,7 +341,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewGenerationWithNilValues() {
         // GIVEN: Data with nil values
-        let item = self.sampleData[1] // This has nil subtitle
+        let item = createViewGenerationTestData()[1] // This has nil subtitle
         
         // WHEN: Generating a view
         let view = IntelligentDetailView.platformDetailView(for: item)
@@ -352,21 +356,6 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    @Test func testViewGenerationPerformance() {
-        // GIVEN: A large number of data items
-        let manyItems = (0..<1000).map { i in
-            TestDataItem(
-                title: "Item \(i)",
-                subtitle: i % 2 == 0 ? "Subtitle \(i)" : nil,
-                description: "Description \(i)",
-                value: i,
-                isActive: i % 3 == 0
-            )
-        }
-        
-        // WHEN: Generating views for many items
-        // THEN: Should complete within reasonable time
-        }
     }
     
     // MARK: - Error Handling Tests
@@ -457,12 +446,7 @@ open class ViewGenerationTests: BaseTestClass {
     
     @Test @MainActor func testViewGenerationWithCustomFieldViews() {
         // GIVEN: Data and custom field view implementations
-        let sampleData = [
-            TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
-            TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
-            TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
-        ]
-        let item = sampleData[0]
+        let item = TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true)
         
         // WHEN: Generating views with different custom field views
         let view1 = IntelligentDetailView.platformDetailView(

@@ -13,7 +13,7 @@ open class AccessibilityIdentifierDisabledTests {
                 let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = false  // ← DISABLED
-        config.namespace = "CarManager"
+        config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
     }

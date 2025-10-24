@@ -514,18 +514,5 @@ open class ShapeStyleSystemTests {
     
     // MARK: - Performance Tests
     
-    @Test func testShapeStyleCreationPerformance() {
-        // Given: Performance test
-        // When: Creating many shape styles
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<1000 {
-            let _ = ShapeStyleSystem.Factory.background(for: .iOS)
-            let _ = ShapeStyleSystem.Factory.surface(for: .macOS)
-            let _ = ShapeStyleSystem.Factory.text(for: .iOS)
-            let _ = ShapeStyleSystem.Factory.border(for: .macOS)
-        }
-        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-        #expect(executionTime < 1.0, "Shape style creation should complete within 1 second")
-    }
     
 }

@@ -25,6 +25,7 @@ open class CollectionEmptyStateViewTests {
             let testPassed = testAccessibilityIdentifierGeneration(
                 createCollectionEmptyStateView(),
                 componentName: "CollectionEmptyStateView",
+                expectedPattern: "SixLayer.main.ui.element.View",
                 platform: platform
             )
             

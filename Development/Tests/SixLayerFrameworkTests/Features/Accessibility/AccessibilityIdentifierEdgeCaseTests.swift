@@ -11,6 +11,8 @@ import ViewInspector
 open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - Edge Case 1: Empty String Parameters
     
     @Test func testEmptyStringParameters() {
+        setupTestEnvironment()
+        
         let view = Button("Test") { }
             .named("")  // ← Empty string
         
@@ -20,7 +22,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // Should handle empty strings gracefully
             #expect(!buttonID.isEmpty, "Should generate ID even with empty parameters")
-            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             
             print("✅ Empty string ID: '\(buttonID)' (\(buttonID.count) chars)")
             
@@ -32,6 +34,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 2: Special Characters in Names
     
     @Test func testSpecialCharactersInNames() {
+        setupTestEnvironment()
+        
         // Test: How are special characters handled in names?
         let view = Button("Test") { }
             .named("Button@#$%^&*()")  // ← Special characters
@@ -42,7 +46,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // Should preserve special characters (no sanitization)
             #expect(!buttonID.isEmpty, "Should generate ID with special characters")
-            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             #expect(buttonID.contains("@#$%^&*()"), "Should preserve special characters")
             
             print("✅ Special chars ID: '\(buttonID)' (\(buttonID.count) chars)")
@@ -55,6 +59,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 3: Very Long Names
     
     @Test func testVeryLongNames() {
+        setupTestEnvironment()
+        
         // Test: Does it handle extremely long names gracefully?
         let longName = String(repeating: "VeryLongName", count: 50)  // 600+ chars
         let view = Button("Test") { }
@@ -86,6 +92,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 4: Manual ID Override
     
     @Test func testManualIDOverride() {
+        setupTestEnvironment()
+        
         // Test: Does manual ID override automatic ID?
         let view = PlatformInteractionButton(style: .primary, action: {
             // Test action
@@ -111,6 +119,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 5: Disable/Enable Mid-Hierarchy
     
     @Test func testDisableEnableMidHierarchy() {
+        setupTestEnvironment()
+        
         // Test: Does disable work mid-hierarchy?
         let view = VStack {
             Button("Auto") { }
@@ -130,7 +140,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // First button should have automatic ID
             let autoButtonID = try buttons[0].accessibilityIdentifier()
-            #expect(autoButtonID.contains("CarManager"), "Auto button should have automatic ID")
+            #expect(autoButtonID.contains("SixLayer"), "Auto button should have automatic ID")
             
             // Second button should not have accessibility identifier modifier
             // (We can't inspect for accessibility identifier when disabled)
@@ -147,6 +157,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 6: Multiple Screen Contexts
     
     @Test func testMultipleScreenContexts() {
+        setupTestEnvironment()
+        
         let view = VStack {
             Text("Content")
         }
@@ -158,7 +170,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // Should handle multiple contexts (last one wins or combines)
             #expect(!vStackID.isEmpty, "Should generate ID with multiple contexts")
-            #expect(vStackID.contains("CarManager"), "Should contain namespace")
+            #expect(vStackID.contains("SixLayer"), "Should contain namespace")
             
             print("✅ Multiple contexts ID: '\(vStackID)' (\(vStackID.count) chars)")
             
@@ -167,16 +179,18 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
         }
     }
     
-    // MARK: - Edge Case 7: Collision Detection
+    // MARK: - Edge Case 7: Exact Named Behavior (Red Phase Tests)
     
-    @Test func testCollisionDetection() {
-        // Test: Are IDs unique despite same names?
+    @Test func testExactNamedBehavior() {
+        setupTestEnvironment()
+        
+        // Test: Does exactNamed() use exact names without hierarchy?
         let view1 = Button("Test1") { }
-            .named("SameName")
+            .exactNamed("SameName")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let view2 = Button("Test2") { }
-            .named("SameName")  // ← Same name
+            .exactNamed("SameName")  // ← Same exact name
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -186,22 +200,114 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             let inspectedView2 = try view2.inspect()
             let button2ID = try inspectedView2.accessibilityIdentifier()
             
-            // IDs should be unique despite same names
-            #expect(button1ID != button2ID, "IDs should be unique despite same names")
-            #expect(button1ID.contains("CarManager"), "First ID should contain namespace")
-            #expect(button2ID.contains("CarManager"), "Second ID should contain namespace")
+            // exactNamed() should respect the exact name (no hierarchy, no collision detection)
+            #expect(button1ID == button2ID, "exactNamed() should use exact names without modification")
+            #expect(button1ID == "SameName", "exactNamed() should produce exact identifier 'SameName', got '\(button1ID)'")
+            #expect(button2ID == "SameName", "exactNamed() should produce exact identifier 'SameName', got '\(button2ID)'")
             
-            print("✅ Collision test - ID1: '\(button1ID)'")
-            print("✅ Collision test - ID2: '\(button2ID)'")
+            print("✅ Exact named test - ID1: '\(button1ID)'")
+            print("✅ Exact named test - ID2: '\(button2ID)'")
             
         } catch {
-            Issue.record("Failed to inspect views for collision detection: \(error)")
+            Issue.record("Failed to inspect exactNamed views: \(error)")
+        }
+    }
+    
+    @Test func testExactNamedVsNamedDifference() {
+        setupTestEnvironment()
+        
+        // Test: exactNamed() should produce different identifiers than named()
+        let exactView = Button("Test") { }
+            .exactNamed("TestButton")
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let namedView = Button("Test") { }
+            .named("TestButton")
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let exactInspected = try exactView.inspect()
+            let exactID = try exactInspected.accessibilityIdentifier()
+            
+            let namedInspected = try namedView.inspect()
+            let namedID = try namedInspected.accessibilityIdentifier()
+            
+            // exactNamed() should produce different identifiers than named()
+            // This test will FAIL until exactNamed() is properly implemented
+            #expect(exactID != namedID, "exactNamed() should produce different identifiers than named()")
+            #expect(exactID.contains("TestButton"), "exactNamed() should contain the exact name")
+            #expect(namedID.contains("TestButton"), "named() should contain the name")
+            #expect(exactID == "TestButton", "exactNamed() should produce exact identifier 'TestButton', got '\(exactID)'")
+            
+            print("✅ Exact vs Named - Exact: '\(exactID)'")
+            print("✅ Exact vs Named - Named: '\(namedID)'")
+            
+        } catch {
+            Issue.record("Failed to inspect exactNamed vs named views: \(error)")
+        }
+    }
+    
+    @Test func testExactNamedIgnoresHierarchy() {
+        setupTestEnvironment()
+        
+        // Test: exactNamed() should ignore view hierarchy context
+        let config = AccessibilityIdentifierConfig.shared
+        config.pushViewHierarchy("NavigationView")
+        config.pushViewHierarchy("ProfileSection")
+        config.setScreenContext("UserProfile")
+        
+        let exactView = Button("Test") { }
+            .exactNamed("SaveButton")
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let exactInspected = try exactView.inspect()
+            let exactID = try exactInspected.accessibilityIdentifier()
+            
+            // exactNamed() should NOT include hierarchy components
+            // This test will FAIL until exactNamed() is properly implemented
+            #expect(!exactID.contains("NavigationView"), "exactNamed() should ignore NavigationView hierarchy")
+            #expect(!exactID.contains("ProfileSection"), "exactNamed() should ignore ProfileSection hierarchy")
+            #expect(!exactID.contains("UserProfile"), "exactNamed() should ignore UserProfile screen context")
+            #expect(exactID.contains("SaveButton"), "exactNamed() should contain the exact name")
+            #expect(exactID == "SaveButton", "exactNamed() should produce exact identifier 'SaveButton', got '\(exactID)'")
+            
+            print("✅ Exact named ignores hierarchy - ID: '\(exactID)'")
+            
+        } catch {
+            Issue.record("Failed to inspect exactNamed with hierarchy: \(error)")
+        }
+    }
+    
+    @Test func testExactNamedMinimalIdentifier() {
+        setupTestEnvironment()
+        
+        // Test: exactNamed() should produce minimal identifiers
+        let exactView = Button("Test") { }
+            .exactNamed("MinimalButton")
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let exactInspected = try exactView.inspect()
+            let exactID = try exactInspected.accessibilityIdentifier()
+            
+            // exactNamed() should produce minimal identifiers (just the exact name)
+            // This test will FAIL until exactNamed() is properly implemented
+            let expectedMinimalPattern = "MinimalButton"
+            #expect(exactID == expectedMinimalPattern, "exactNamed() should produce exact identifier '\(expectedMinimalPattern)', got '\(exactID)'")
+            
+            print("✅ Exact named minimal - ID: '\(exactID)'")
+            
+        } catch {
+            Issue.record("Failed to inspect exactNamed minimal: \(error)")
         }
     }
     
     // MARK: - Edge Case 8: Configuration Changes Mid-Test
     
     @Test func testConfigurationChangesMidTest() {
+        setupTestEnvironment()
+        
         // Test: What happens if configuration changes during view creation?
         let config = AccessibilityIdentifierConfig.shared
         
@@ -230,6 +336,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 9: Nested .named() Calls
     
     @Test func testNestedNamedCalls() {
+        setupTestEnvironment()
+        
         // Test: What happens with deeply nested .named() calls?
         let view = VStack {
             HStack {
@@ -249,7 +357,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // Should handle nested calls without duplication
             #expect(!buttonID.isEmpty, "Should generate ID with nested .named() calls")
-            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             #expect(!buttonID.contains("outer-outer"), "Should not duplicate names")
             
             print("✅ Nested calls ID: '\(buttonID)' (\(buttonID.count) chars)")
@@ -262,6 +370,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     // MARK: - Edge Case 10: Unicode Characters
     
     @Test func testUnicodeCharacters() {
+        setupTestEnvironment()
+        
         // Test: How are Unicode characters handled?
         let view = Button("Test") { }
             .named("按钮")  // ← Chinese characters
@@ -272,7 +382,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             
             // Should handle Unicode gracefully
             #expect(!buttonID.isEmpty, "Should generate ID with Unicode characters")
-            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             
             print("✅ Unicode ID: '\(buttonID)' (\(buttonID.count) chars)")
             

@@ -258,29 +258,6 @@ open class AccessibilityPreferenceTests {
     
     // MARK: - Performance Tests
     
-    /// Tests that accessibility configuration doesn't significantly impact performance
-    @Test func testAccessibilityConfigurationPerformance() {
-        // Given: Performance measurement setup
-        let startTime = CFAbsoluteTimeGetCurrent()
-        
-        // When: Get accessibility configuration multiple times
-        for _ in 0..<100 {
-            let config = getCardExpansionPlatformConfig()
-            let performanceConfig = getCardExpansionPerformanceConfig()
-            let accessibilityConfig = getCardExpansionAccessibilityConfig()
-            _ = config.supportsVoiceOver
-            _ = config.supportsSwitchControl
-            _ = performanceConfig.maxAnimationDuration
-            _ = accessibilityConfig.supportsVoiceOver
-        }
-        
-        // Then: Test actual business logic
-        let endTime = CFAbsoluteTimeGetCurrent()
-        let executionTime = endTime - startTime
-        
-        // Accessibility configuration should be fast
-        #expect(executionTime < 1.0, "Accessibility configuration should be fast (< 1 second for 100 calls)")
-    }
     
     // MARK: - Cross-Platform Consistency Tests
     

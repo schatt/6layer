@@ -14,7 +14,7 @@ open class AccessibilityIdentifierPersistenceTests {
                 let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
-        config.namespace = "CarManager"
+        config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false
     }    // MARK: - TDD Red Phase: Tests That Should Fail
@@ -34,7 +34,7 @@ open class AccessibilityIdentifierPersistenceTests {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
-        config.namespace = "CarManager"
+        config.namespace = "SixLayer"
         config.mode = .automatic
         
         let view2 = Button("Add Fuel") { }
@@ -124,7 +124,7 @@ open class AccessibilityIdentifierPersistenceTests {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
-        config.namespace = "CarManager"
+        config.namespace = "SixLayer"
         config.mode = .automatic
         
         // Generate IDs again for same test cases
@@ -212,7 +212,7 @@ open class AccessibilityIdentifierPersistenceTests {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
-        config.namespace = "CarManager"
+        config.namespace = "SixLayer"
         config.mode = .automatic
         
         // Second generation with same config

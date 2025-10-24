@@ -15,7 +15,7 @@ open class AccessibilityIdentifierGenerationTests {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
-        config.namespace = "CarManager"
+        config.namespace = "SixLayer"
         config.mode = .automatic
         config.enableDebugLogging = false // Disable spam for TDD
     }    // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior
@@ -32,7 +32,7 @@ open class AccessibilityIdentifierGenerationTests {
             
             // This test SHOULD FAIL initially - IDs are currently 400+ chars
             #expect(buttonID.count < 80, "Accessibility ID should be reasonable length")
-            #expect(buttonID.contains("CarManager"), "Should contain namespace")
+            #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             #expect(buttonID.contains("addfuelbutton"), "Should contain view name")
             
             print("✅ Generated ID: '\(buttonID)' (\(buttonID.count) chars)")

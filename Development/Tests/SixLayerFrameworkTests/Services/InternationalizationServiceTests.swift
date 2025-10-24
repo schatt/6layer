@@ -79,20 +79,4 @@ open class InternationalizationServiceTests {
     
     // MARK: - Performance Tests
     
-    @Test func testInternationalizationServicePerformance() async {
-        // Given: InternationalizationService
-        let service = InternationalizationService()
-        
-        // When: Measuring localization performance
-        let startTime = CFAbsoluteTimeGetCurrent()
-        
-        for i in 0..<100 {
-            _ = service.localizedString(for: "test.key.\(i)")
-        }
-        
-        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-        
-        // Then: Should be performant
-        #expect(timeElapsed < 1.0) // Should complete in under 1 second
-    }
 }

@@ -30,5 +30,44 @@ open class BaseTestClass {
         config.resetToDefaults()
     }
     
+    // MARK: - Common Test Data Creation
+    
+    /// Creates generic sample data for testing
+    /// Override this method in subclasses to provide specific test data
+    @MainActor
+    open func createSampleData() -> [Any] {
+        return [
+            "Sample Item 1",
+            "Sample Item 2", 
+            "Sample Item 3"
+        ]
+    }
+    
+    /// Creates test hints for presentation components
+    /// Override this method in subclasses to provide specific presentation hints
+    @MainActor
+    open func createTestHints() -> PresentationHints {
+        return PresentationHints(
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .dashboard,
+            customPreferences: [:]
+        )
+    }
+    
+    /// Creates a default layout decision for testing
+    /// Override this method in subclasses to provide specific layout decisions
+    @MainActor
+    open func createLayoutDecision() -> IntelligentCardLayoutDecision {
+        return IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
+            cardWidth: 200,
+            cardHeight: 150,
+            padding: 16
+        )
+    }
+    
 }
 

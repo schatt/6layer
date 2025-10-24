@@ -649,7 +649,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Given: Configuration is enabled (as per user's bug report)
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             // Enable debug logging
@@ -665,14 +665,14 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Test that .named() generates accessibility identifiers
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "CarManager.main.element.*", 
+                expectedPattern: "SixLayer.main.element.*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
-            ), "View with .named() should generate accessibility identifiers matching pattern 'CarManager.main.element.*'")
+            ), "View with .named() should generate accessibility identifiers matching pattern 'SixLayer.main.element.*'")
             
             // Also verify configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
-            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
+            #expect(config.namespace == "SixLayer", "Namespace should be set correctly")
             #expect(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
         }
     }
@@ -683,7 +683,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Given: Configuration is enabled
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             
             // When: A view uses accessibility identifiers
@@ -696,7 +696,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             
             // Also verify configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
-            #expect(config.namespace == "CarManager", "Namespace should be set correctly")
+            #expect(config.namespace == "SixLayer", "Namespace should be set correctly")
         }
     }
     
@@ -706,7 +706,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Given: Configuration with view hierarchy tracking
             let config = AccessibilityIdentifierConfig.shared
             config.enableAutoIDs = true
-            config.namespace = "CarManager"
+            config.namespace = "SixLayer"
             config.mode = .automatic
             config.enableViewHierarchyTracking = true
             
@@ -724,7 +724,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             )
             
             // The ID should contain the actual context, not hardcoded "ui"
-            #expect(id.contains("CarManager"), "ID should contain namespace")
+            #expect(id.contains("SixLayer"), "ID should contain namespace")
             #expect(id.contains("UserProfile"), "ID should contain screen context")
             #expect(id.contains("button"), "ID should contain role")
             #expect(id.contains("test-object"), "ID should contain object ID")

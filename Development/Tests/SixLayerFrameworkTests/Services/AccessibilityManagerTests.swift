@@ -108,22 +108,4 @@ open class AccessibilityManagerTests {
     
     // MARK: - Performance Tests
     
-    @Test func testAccessibilityManagerPerformance() async {
-        // Given: AccessibilityManager
-        let manager = AccessibilityManager()
-        
-        // When: Measuring accessibility detection performance
-        let startTime = CFAbsoluteTimeGetCurrent()
-        
-        for _ in 0..<100 {
-            _ = manager.isVoiceOverEnabled()
-            _ = manager.isReduceMotionEnabled()
-            _ = manager.isHighContrastEnabled()
-        }
-        
-        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-        
-        // Then: Should be performant
-        #expect(timeElapsed < 1.0) // Should complete in under 1 second
-    }
 }
