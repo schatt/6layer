@@ -20,7 +20,7 @@ public class PlatformPhotoComponentsLayer4 {
     @ViewBuilder
     public func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
-        CameraView(onImageCaptured: onImageCaptured)
+        SystemCameraPicker(onImageCaptured: onImageCaptured)
         #elseif os(macOS)
         MacCameraView(onImageCaptured: onImageCaptured)
         #else
@@ -34,7 +34,7 @@ public class PlatformPhotoComponentsLayer4 {
     @ViewBuilder
     public func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
-        PhotoPickerView(onImageSelected: onImageSelected)
+        SystemImagePicker(onImageSelected: onImageSelected)
         #elseif os(macOS)
         MacPhotoPickerView(onImageSelected: onImageSelected)
         #else
@@ -61,70 +61,6 @@ public class PlatformPhotoComponentsLayer4 {
 
 #if os(iOS)
 import UIKit
-
-struct CameraView: UIViewControllerRepresentable {
-    let onImageCaptured: (PlatformImage) -> Void
-    
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.sourceType = .camera
-        picker.delegate = context.coordinator
-        return picker
-    }
-    
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: CameraView
-        
-        init(_ parent: CameraView) {
-            self.parent = parent
-        }
-        
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[.originalImage] as? UIImage {
-                parent.onImageCaptured(PlatformImage(image))  // Inline conversion: system API return → PlatformImage
-            }
-            picker.dismiss(animated: true)
-        }
-    }
-}
-
-struct PhotoPickerView: UIViewControllerRepresentable {
-    let onImageSelected: (PlatformImage) -> Void
-    
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.delegate = context.coordinator
-        return picker
-    }
-    
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: PhotoPickerView
-        
-        init(_ parent: PhotoPickerView) {
-            self.parent = parent
-        }
-        
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[.originalImage] as? UIImage {
-                parent.onImageSelected(PlatformImage(image))  // Inline conversion: system API return → PlatformImage
-            }
-            picker.dismiss(animated: true)
-        }
-    }
-}
 
 #elseif os(macOS)
 import AppKit
