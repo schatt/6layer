@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.5.0 - CardDisplayHelper Hint System + Dependency Injection + Compilation Fixes
+// SixLayerFramework v4.6.3 - PlatformImage Breaking Change Bug Fix + BugReports Organization
 
 import PackageDescription
 
@@ -49,13 +49,16 @@ let package = Package(
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
                 // Function index moved to docs directory
+                "BugReports/README.md",
+                "BugReports/PlatformImage_v4.6.2/README.md"
             ],
             sources: [
                 "Core",
                 "Layers", 
                 "Features",
                 "Integration",
-                "Utilities"
+                "Utilities",
+                "BugReports"
             ]
         ),
         

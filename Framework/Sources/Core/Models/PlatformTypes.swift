@@ -775,9 +775,21 @@ public struct PlatformImage: @unchecked Sendable {
     public init(uiImage: UIImage) {
         self._uiImage = uiImage
     }
+    
+    /// Implicit conversion from UIImage to PlatformImage (iOS only)
+    /// This enables the currency exchange model: UIImage → PlatformImage at system boundary
+    public init(_ image: UIImage) {
+        self.init(uiImage: image)
+    }
     #elseif os(macOS)
     public init(nsImage: NSImage) {
         self._nsImage = nsImage
+    }
+    
+    /// Implicit conversion from NSImage to PlatformImage (macOS only)
+    /// This enables the currency exchange model: NSImage → PlatformImage at system boundary
+    public init(_ image: NSImage) {
+        self.init(nsImage: image)
     }
     #endif
     
