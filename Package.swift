@@ -50,7 +50,8 @@ let package = Package(
             exclude: [
                 // Function index moved to docs directory
                 "BugReports/README.md",
-                "BugReports/PlatformImage_v4.6.2/README.md"
+                "BugReports/PlatformImage_v4.6.2/README.md",
+                "BugReports/ButtonStyle_v4.6.3/README.md"
             ],
             sources: [
                 "Core",

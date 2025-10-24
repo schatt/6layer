@@ -16,10 +16,11 @@ public class PlatformMessagingLayer5 {
     // MARK: - Alert Components
     
     /// Creates a platform-specific alert button
+    @MainActor
     public func createAlertButton(title: String, style: AlertStyle = .default, action: @escaping () -> Void) -> some View {
         #if os(iOS)
         return Button(title, action: action)
-            .buttonStyle(style == .destructive ? .bordered : .borderedProminent)
+            .buttonStyle(.bordered)
             .foregroundColor(style == .destructive ? .red : .primary)
         #elseif os(macOS)
         return Button(title, action: action)
