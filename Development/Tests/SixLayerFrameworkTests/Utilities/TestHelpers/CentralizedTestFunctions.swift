@@ -284,6 +284,82 @@ public func testComponentAccessibilitySemantic<T: View>(
     return true
 }
 
+/// Centralized function for testing component with disabled accessibility mode
+/// Tests that a component behaves correctly when accessibility identifiers are disabled
+/// 
+/// - Parameters:
+///   - componentName: Name of the component being tested
+///   - createComponent: Function that creates the component to test
+///   - testName: Name of the test for debugging
+/// - Returns: True if component accessibility test passes when disabled
+@MainActor
+public func testComponentAccessibilityDisabled<T: View>(
+    componentName: String,
+    createComponent: () -> T,
+    testName: String = "ComponentAccessibilityDisabledTest"
+) -> Bool {
+    // Test: Component creation
+    let component = createComponent()
+    
+    // Test: Accessibility identifier should NOT be generated when disabled
+    let config = AccessibilityIdentifierConfig.shared
+    let autoIDsWereEnabled = config.enableAutoIDs
+    
+    // Disable auto IDs for this test
+    config.enableAutoIDs = false
+    
+    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+        component,
+        componentName: componentName,
+        expectedPattern: "", // Expect empty when disabled
+        testName: testName
+    )
+    
+    // Restore original setting
+    config.enableAutoIDs = autoIDsWereEnabled
+    
+    if !accessibilityTestPassed {
+        print("❌ ACCESSIBILITY DISABLED TEST: \(componentName) failed accessibility disabled test")
+        return false
+    }
+    
+    print("✅ ACCESSIBILITY DISABLED TEST: \(componentName) passed accessibility disabled test")
+    return true
+}
+
+/// Centralized function for testing component accessibility in general
+/// Tests that a component has proper accessibility support
+/// 
+/// - Parameters:
+///   - componentName: Name of the component being tested
+///   - createComponent: Function that creates the component to test
+///   - testName: Name of the test for debugging
+/// - Returns: True if component accessibility test passes
+@MainActor
+public func testComponentAccessibility<T: View>(
+    componentName: String,
+    createComponent: () -> T,
+    testName: String = "ComponentAccessibilityTest"
+) -> Bool {
+    // Test: Component creation
+    let component = createComponent()
+    
+    // Test: Accessibility identifier should be generated
+    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+        component,
+        componentName: componentName,
+        testName: testName
+    )
+    
+    if !accessibilityTestPassed {
+        print("❌ ACCESSIBILITY TEST: \(componentName) failed accessibility test")
+        return false
+    }
+    
+    print("✅ ACCESSIBILITY TEST: \(componentName) passed accessibility test")
+    return true
+}
+
 // MARK: - Centralized Test Setup Functions
 
 /// Centralized function for setting up test environment

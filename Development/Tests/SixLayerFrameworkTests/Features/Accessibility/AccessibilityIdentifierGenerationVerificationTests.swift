@@ -18,7 +18,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
         await MainActor.run {
             // Setup: Configure test environment with automatic mode and debug logging
-            setupTestEnvironment(mode: .automatic, enableDebugLogging: true)
+            setupTestEnvironment(enableDebugLogging: true, mode: .automatic)
             
             // Test: Use centralized component accessibility testing
             let testPassed = testComponentAccessibility(
@@ -45,7 +45,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     @Test func testNamedActuallyGeneratesIdentifiers() async {
         await MainActor.run {
             // Setup: Configure test environment with specific namespace and automatic mode
-            setupTestEnvironment(mode: .automatic, enableDebugLogging: true, namespace: "CarManager")
+            setupTestEnvironment(enableDebugLogging: true, namespace: "CarManager", mode: .automatic)
             
             // Test: Use centralized component accessibility testing
             let testPassed = testComponentAccessibility(
@@ -96,7 +96,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
                 testView, 
                 expectedPattern: "CarManager.FuelView.element.*", 
                 platform: SixLayerPlatform.iOS,
-            componentName: "CombinedBreadcrumbModifiers"
+                componentName: "CombinedBreadcrumbModifiers"
             ), "View should have an accessibility identifier assigned")
         }
     }
