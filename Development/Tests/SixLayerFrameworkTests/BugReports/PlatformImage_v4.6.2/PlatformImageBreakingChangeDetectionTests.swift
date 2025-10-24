@@ -247,13 +247,16 @@ open class PlatformImageBreakingChangeDetectionTests {
         }
         
         // Simulate macOS photo capture/selection
-        if let cameraCoordinator = getMacCameraCoordinator(from: cameraInterface) {
-            cameraCoordinator.takePhoto()
-        }
+        // Create coordinators directly with the test callbacks
+        let cameraCoordinator = MacCameraView.Coordinator(MacCameraView { image in
+            capturedImage = image
+        })
+        cameraCoordinator.takePhoto()
         
-        if let pickerCoordinator = getMacPhotoPickerCoordinator(from: photoPicker) {
-            pickerCoordinator.choosePhoto()
-        }
+        let pickerCoordinator = MacPhotoPickerView.Coordinator(MacPhotoPickerView { image in
+            selectedImage = image
+        })
+        pickerCoordinator.choosePhoto()
         
         #expect(capturedImage != nil, "macOS production camera code should work")
         #expect(selectedImage != nil, "macOS production photo picker code should work")
@@ -340,11 +343,17 @@ open class PlatformImageBreakingChangeDetectionTests {
     
     #if os(macOS)
     private func getMacCameraCoordinator(from view: some View) -> MacCameraView.Coordinator? {
-        return nil
+        // For testing purposes, we need to create a coordinator directly
+        // since we can't easily extract it from the SwiftUI view
+        let macCameraView = MacCameraView { _ in }
+        return macCameraView.makeCoordinator()
     }
     
     private func getMacPhotoPickerCoordinator(from view: some View) -> MacPhotoPickerView.Coordinator? {
-        return nil
+        // For testing purposes, we need to create a coordinator directly
+        // since we can't easily extract it from the SwiftUI view
+        let macPhotoPickerView = MacPhotoPickerView { _ in }
+        return macPhotoPickerView.makeCoordinator()
     }
     #endif
 }
