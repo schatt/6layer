@@ -1,12 +1,133 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.3.0 - API Rename: .trackViewHierarchy() → .named()** 🎯
+## 📍 **Current Release: v4.6.0 - Default Values in Hints System** 🎯
 
-**Release Date**: October 9, 2025  
+**Release Date**: October 24, 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.2.1 - Critical Accessibility Identifier Bug Fix and Improved Defaults  
-**Note**: Improved API clarity with better developer experience  
+**Previous Release**: v4.3.0 - API Rename: .trackViewHierarchy() → .named()  
+**Note**: Major new feature for fine-grained control over fallback behavior  
 **Next Release**: TBD
+
+---
+
+## 🎯 **v4.6.0 - Default Values in Hints System** ✅ **COMPLETE**
+
+**Release Date**: October 24, 2025  
+**Type**: Minor Release (New Feature)  
+**Priority**: Enhancement  
+**Scope**: Major new feature for fine-grained control over fallback behavior  
+**Note**: Non-breaking change with significant new capabilities
+
+### 🆕 **What's New**
+
+#### **1. Default Values in Hints System** ⭐ **BREAKTHROUGH FEATURE**
+- **New Properties**: `itemTitleDefault`, `itemSubtitleDefault`, `itemIconDefault`, `itemColorDefault`
+- **Fine-Grained Control**: Developers can now specify fallback values when properties are missing/empty
+- **Smart Empty String Handling**: Empty strings are respected unless explicit default provided
+- **Priority System Enhancement**: New "Priority 1.5" for default values in content extraction
+
+#### **2. Enhanced CardDisplayHelper** 🔧 **INTERNAL IMPROVEMENT**
+- **Better Priority System**: More intelligent content extraction logic
+- **Nil Returns**: Returns `nil` instead of hardcoded fallbacks when no content found
+- **UI Layer Separation**: Better separation between data and UI responsibilities
+- **Cleaner Architecture**: Improved separation of concerns
+
+#### **3. UI Layer Placeholder System** 🎨 **UX IMPROVEMENT**
+- **Field Name Placeholders**: Shows field names (e.g., "Title") when no content found
+- **Lighter Color Styling**: Placeholders displayed in lighter colors for better UX
+- **Clear Distinction**: Users can distinguish between actual content and placeholders
+
+### 🔧 **Technical Changes**
+
+#### **New Default Value Properties**
+```swift
+let hints = PresentationHints(
+    customPreferences: [
+        "itemTitleProperty": "name",
+        "itemTitleDefault": "Untitled Document",        // NEW
+        "itemSubtitleProperty": "description", 
+        "itemSubtitleDefault": "No description available", // NEW
+        "itemIconProperty": "status",
+        "itemIconDefault": "doc.text",                   // NEW
+        "itemColorProperty": "priority",
+        "itemColorDefault": "gray"                      // NEW
+    ]
+)
+```
+
+#### **Enhanced Priority System**
+1. **Priority 1**: Hint Property Extraction
+2. **Priority 1.5**: Default Values ⭐ **NEW**
+3. **Priority 2**: CardDisplayable Protocol
+4. **Priority 3**: Reflection Discovery
+5. **Priority 4**: UI Layer Placeholders
+
+#### **CardDisplayHelper Changes**
+- `extractTitle`, `extractIcon`, `extractColor` now return optionals
+- Returns `nil` when no meaningful content (or default) is found
+- Empty strings return `nil` unless explicit default configured
+- CardDisplayable fallback removed from data layer
+
+### 📚 **Documentation**
+
+#### **New Documentation Files**
+- **[HintsDefaultValuesGuide.md](Framework/docs/HintsDefaultValuesGuide.md)** - Complete guide to default values
+- **[AI_AGENT_GUIDE_v4.6.0.md](Framework/docs/AI_AGENT_GUIDE_v4.6.0.md)** - Version-specific AI agent guide
+
+#### **Updated Documentation**
+- **[AI_AGENT_GUIDE.md](Framework/docs/AI_AGENT_GUIDE.md)** - Updated with default values information
+- **[README.md](Framework/docs/README.md)** - Updated documentation index
+
+### 🧪 **Testing**
+
+#### **New Test Files**
+- **[HintsDefaultValueTests.swift](Development/Tests/SixLayerFrameworkTests/Features/Collections/HintsDefaultValueTests.swift)** - Comprehensive default values testing
+- **[CardDisplayableBugTests.swift](Development/Tests/SixLayerFrameworkTests/Features/Collections/CardDisplayableBugTests.swift)** - Bug fix verification
+- **[CardDisplayHelperNilFallbackTests.swift](Development/Tests/SixLayerFrameworkTests/Features/Collections/CardDisplayHelperNilFallbackTests.swift)** - Nil return behavior testing
+
+#### **Test Coverage**
+- **10 tests** for default values functionality
+- **9 tests** for CardDisplayable bug fix
+- **Comprehensive coverage** of all new features
+- **All new tests passing** ✅
+
+### 🔄 **Migration Guide**
+
+#### **For Existing Code**
+- **No changes required** - Existing code continues to work
+- **Optional enhancement** - Add default values for better UX
+- **Non-breaking change** - External API remains unchanged
+
+#### **For New Code**
+- **Recommended approach** - Use default values for better UX
+- **Best practices** - Provide meaningful, context-appropriate defaults
+- **User experience** - Clear distinction between content and placeholders
+
+### 🎯 **Benefits**
+
+1. **Fine-Grained Control**: Developers can control fallback behavior precisely
+2. **Better UX**: Users see meaningful placeholders instead of generic text
+3. **Cleaner Architecture**: Better separation between data and UI layers
+4. **Non-Breaking**: External API remains unchanged for existing code
+5. **Comprehensive Documentation**: Complete guides and examples
+
+### 🐛 **Bug Fixes**
+
+#### **CardDisplayable Protocol Bug**
+- **Issue**: `platformPresentItemCollection_L1` not properly using `CardDisplayable` protocol
+- **Root Cause**: `CardDisplayHelper` not falling back to `CardDisplayable` when hints failed
+- **Solution**: Enhanced priority system with proper fallback logic
+- **Result**: Framework now correctly uses `CardDisplayable` when appropriate
+
+### 📋 **Release Notes Summary**
+
+- ✅ **Default Values System**: Major new feature for fallback control
+- ✅ **Enhanced CardDisplayHelper**: Better content extraction logic
+- ✅ **UI Layer Placeholders**: Improved user experience
+- ✅ **Comprehensive Documentation**: Complete guides and examples
+- ✅ **Non-Breaking Change**: Existing code continues to work
+- ✅ **Bug Fix**: CardDisplayable protocol now works correctly
+- ✅ **Test Coverage**: All new features thoroughly tested
 
 ---
 

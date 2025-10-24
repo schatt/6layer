@@ -10,6 +10,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[DeveloperExtensionGuide.md](DeveloperExtensionGuide.md)** - **NEW!** Complete guide for developers extending the framework
 - **[ExtensionQuickReference.md](ExtensionQuickReference.md)** - **NEW!** Quick reference card for common patterns
 - **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - **NEW!** Guide for AI agents working with the framework (includes Settings Management)
+- **[AI_AGENT_GUIDE_v4.6.0.md](AI_AGENT_GUIDE_v4.6.0.md)** - **NEW v4.6.0!** Version-specific AI agent guide for default values feature
 
 ### 🏗️ Architecture Details
 - **[README_Layer1_Semantic.md](README_Layer1_Semantic.md)** - Semantic intent layer
@@ -21,6 +22,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 
 ### 🔧 Advanced Topics
 - **[HintsSystemExtensibility.md](HintsSystemExtensibility.md)** - Custom hints and extensibility
+- **[HintsDefaultValuesGuide.md](HintsDefaultValuesGuide.md)** - **NEW v4.6.0!** Default values in hints system
 - **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
 - **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
 - **Settings Management** - Centralized settings system (see AI_AGENT_GUIDE.md)

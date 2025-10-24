@@ -198,6 +198,29 @@ let hints = PresentationHints(
 )
 ```
 
+### **5. Default Values in Hints (NEW in v4.6.0):**
+```swift
+// ✅ NEW: Default values for missing or empty properties
+let hints = PresentationHints(
+    dataType: .collection,
+    presentationPreference: .list,
+    complexity: .moderate,
+    context: .browse,
+    customPreferences: [
+        "itemTitleProperty": "name",
+        "itemTitleDefault": "Untitled Document",        // NEW: Default when name is missing/empty
+        "itemSubtitleProperty": "description", 
+        "itemSubtitleDefault": "No description available", // NEW: Default when description is missing/empty
+        "itemIconProperty": "status",
+        "itemIconDefault": "doc.text",                   // NEW: Default when status is missing/empty
+        "itemColorProperty": "priority",
+        "itemColorDefault": "gray"                      // NEW: Default when priority is missing/empty
+    ]
+)
+```
+
+**📚 For complete default values documentation, see [Hints Default Values Guide](HintsDefaultValuesGuide.md)**
+
 ## 🔧 **How to Actually Use the Framework**
 
 ### **1. Use Generic Functions with Business-Specific Hints:**
@@ -1010,6 +1033,22 @@ let businessHint = CustomHint(
 let hints = EnhancedPresentationHints(
     dataType: .form,
     extensibleHints: [businessHint]
+)
+```
+
+### **Issue: "How to handle missing or empty data"**
+```swift
+// Problem: Developer has missing or empty properties
+// Solution: Use default values in hints (NEW in v4.6.0)
+let hints = PresentationHints(
+    dataType: .collection,
+    presentationPreference: .list,
+    customPreferences: [
+        "itemTitleProperty": "name",
+        "itemTitleDefault": "Untitled Document",        // Shows when name is missing/empty
+        "itemSubtitleProperty": "description",
+        "itemSubtitleDefault": "No description available" // Shows when description is missing/empty
+    ]
 )
 ```
 

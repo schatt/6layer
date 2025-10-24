@@ -264,7 +264,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item)
+        CardDisplayHelper.extractTitle(from: item) ?? "Title"
     }
     
     private var cardSubtitle: String? {
@@ -279,11 +279,11 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item)
+        CardDisplayHelper.extractIcon(from: item) ?? "star.fill"
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item)
+        CardDisplayHelper.extractColor(from: item) ?? .blue
     }
 }
 
@@ -389,7 +389,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item)
+        CardDisplayHelper.extractTitle(from: item) ?? "Title"
     }
     
     private var cardSubtitle: String? {
@@ -397,11 +397,11 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item)
+        CardDisplayHelper.extractIcon(from: item) ?? "star.fill"
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item)
+        CardDisplayHelper.extractColor(from: item) ?? .blue
     }
 }
 
@@ -710,15 +710,15 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item, hints: hints)
+        CardDisplayHelper.extractTitle(from: item, hints: hints) ?? "Title"
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item, hints: hints)
+        CardDisplayHelper.extractIcon(from: item, hints: hints) ?? "star.fill"
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item, hints: hints)
+        CardDisplayHelper.extractColor(from: item, hints: hints) ?? .blue
     }
 }
 
@@ -784,7 +784,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item)
+        CardDisplayHelper.extractTitle(from: item) ?? "Title"
     }
     
     private var cardSubtitle: String? {
@@ -792,11 +792,11 @@ public struct ListCardComponent<Item: Identifiable>: View {
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item)
+        CardDisplayHelper.extractIcon(from: item) ?? "star.fill"
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item)
+        CardDisplayHelper.extractColor(from: item) ?? .blue
     }
 }
 
@@ -839,7 +839,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
     // MARK: - Card Displayable Support
     
     private var cardTitle: String {
-        CardDisplayHelper.extractTitle(from: item, hints: hints)
+        CardDisplayHelper.extractTitle(from: item, hints: hints) ?? "Title"
     }
     
     private var cardDescription: String? {
@@ -847,10 +847,10 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
     }
     
     private var cardIcon: String {
-        CardDisplayHelper.extractIcon(from: item, hints: hints)
+        CardDisplayHelper.extractIcon(from: item, hints: hints) ?? "star.fill"
     }
     
     private var cardColor: Color {
-        CardDisplayHelper.extractColor(from: item, hints: hints)
+        CardDisplayHelper.extractColor(from: item, hints: hints) ?? .blue
     }
 }

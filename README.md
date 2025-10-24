@@ -41,7 +41,7 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v4.3.0
+## 🆕 Latest Release: v4.6.0
 
 ### **Major Architectural Improvement: Framework Components Now Respect Global Config**
 🎯 **Breaking Change**: Framework components now automatically check the global accessibility configuration. `GlobalAutomaticAccessibilityIdentifierModifier` is no longer needed for framework components.
