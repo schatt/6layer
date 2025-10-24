@@ -1,6 +1,4 @@
 import Testing
-
-
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
@@ -9,40 +7,60 @@ import ViewInspector
 /// 
 /// BUSINESS PURPOSE: Ensure CollectionEmptyStateView generates proper accessibility identifiers
 /// TESTING SCOPE: CollectionEmptyStateView component from PlatformSemanticLayer1.swift
-/// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+/// METHODOLOGY: Uses centralized test functions following DRY principles
 @MainActor
 open class CollectionEmptyStateViewTests {
     
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - CollectionEmptyStateView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+    // MARK: - CollectionEmptyStateView Tests
     
     @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
     func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiers(
         platform: SixLayerPlatform
     ) async {
-        // Set the test platform for this test case
-        RuntimeCapabilityDetection.setTestPlatform(platform)
-        
-        // Given: CollectionEmptyStateView with test configuration
-        let view = CollectionEmptyStateView(
+        await MainActor.run {
+            // Setup: Configure test environment
+            setupTestEnvironment()
+            
+            // Test: Use centralized accessibility testing function
+            let testPassed = testAccessibilityIdentifierGeneration(
+                createCollectionEmptyStateView(),
+                componentName: "CollectionEmptyStateView",
+                platform: platform
+            )
+            
+            // Assert: Should generate accessibility identifiers
+            #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue)")
+            
+            // Cleanup: Reset test environment
+            cleanupTestEnvironment()
+        }
+    }
+    
+    @Test
+    func testCollectionEmptyStateViewCrossPlatformAccessibility() async {
+        await MainActor.run {
+            // Setup: Configure test environment
+            setupTestEnvironment()
+            
+            // Test: Use centralized cross-platform testing function
+            let testPassed = testCrossPlatformAccessibilityIdentifierGeneration(
+                createCollectionEmptyStateView(),
+                componentName: "CollectionEmptyStateView"
+            )
+            
+            // Assert: Should generate accessibility identifiers on all platforms
+            #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on all platforms")
+            
+            // Cleanup: Reset test environment
+            cleanupTestEnvironment()
+        }
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Creates a CollectionEmptyStateView for testing
+    private func createCollectionEmptyStateView() -> CollectionEmptyStateView {
+        return CollectionEmptyStateView(
             hints: PresentationHints(
                 dataType: .collection,
                 presentationPreference: .automatic
@@ -50,19 +68,5 @@ open class CollectionEmptyStateViewTests {
             onCreateItem: {},
             customCreateView: nil
         )
-        
-        // When: Testing accessibility identifier generation
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.element.*", 
-            platform: platform,
-            componentName: "CollectionEmptyStateView"
-        )
-        
-        // Then: Should generate accessibility identifiers on both platforms
-        #expect(hasAccessibilityID, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue)")
-        
-        // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
 }

@@ -1,6 +1,4 @@
 import Testing
-
-
 import SwiftUI
 import ViewInspector
 @testable import SixLayerFramework
@@ -9,83 +7,62 @@ import ViewInspector
  * BUSINESS PURPOSE: Verify that accessibility identifier generation actually works end-to-end
  * and that the Enhanced Breadcrumb System modifiers properly trigger identifier generation.
  * 
- * TESTING SCOPE: Tests two critical aspects:
- * 1. View created - The view can be instantiated successfully
- * 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
- * 
- * METHODOLOGY: Uses ViewInspector to actually inspect the view and verify that accessibility
- * identifiers are present and have the expected format. This addresses the gap in original
- * tests that only verified views could be created, not that identifiers were actually assigned.
+ * TESTING SCOPE: Uses centralized test functions following DRY principles
+ * METHODOLOGY: Leverages centralized accessibility testing functions for consistent validation
  */
 open class AccessibilityIdentifierGenerationVerificationTests {
     
-    init() async throws {
-                await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }    /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
+    /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
     /// TESTING SCOPE: Tests that the basic automatic identifier modifier works end-to-end
-    /// METHODOLOGY: Creates a view, applies the modifier, and verifies an identifier is actually assigned
+    /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
         await MainActor.run {
-            // Given: Configuration for identifier generation
-            let config = AccessibilityIdentifierConfig.shared
-            config.enableAutoIDs = true
-            config.namespace = "test"
-            config.enableDebugLogging = true
-            config.clearDebugLog()
+            // Setup: Configure test environment
+            setupTestEnvironment(enableDebugLogging: true)
             
-            // When: Creating a view with automatic accessibility identifiers
-            let testView = Button(action: {}) {
-                Label("Test Button", systemImage: "plus")
-            }
-            .automaticAccessibilityIdentifiers()
+            // Test: Use centralized component accessibility testing
+            let testPassed = testComponentAccessibility(
+                componentName: "AutomaticAccessibilityIdentifiers",
+                createComponent: {
+                    Button(action: {}) {
+                        Label("Test Button", systemImage: "plus")
+                    }
+                    .automaticAccessibilityIdentifiers()
+                }
+            )
             
-            // Then: Test the two critical aspects
+            // Assert: Should generate accessibility identifiers
+            #expect(testPassed, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers")
             
-            // 1. View created - The view can be instantiated successfully
-            #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
-            
-            // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(testAccessibilityIdentifiersSinglePlatform(
-                testView, 
-                expectedPattern: "test.*element.*main-ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "AutomaticAccessibilityIdentifiers"
-            ), "View should have an accessibility identifier assigned")
+            // Cleanup: Reset test environment
+            cleanupTestEnvironment()
         }
     }
     
     /// BUSINESS PURPOSE: Verify that .named() actually triggers identifier generation
     /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifier works end-to-end
-    /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
+    /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testNamedActuallyGeneratesIdentifiers() async {
         await MainActor.run {
-            // Given: Configuration matching the bug report
-            let config = AccessibilityIdentifierConfig.shared
-            config.enableAutoIDs = true
-            config.namespace = "CarManager"
-            config.mode = .automatic
-            config.enableViewHierarchyTracking = true
-            config.enableDebugLogging = true
-            config.clearDebugLog()
+            // Setup: Configure test environment with specific namespace
+            setupTestEnvironment(enableDebugLogging: true, namespace: "CarManager")
             
-            // When: Using .named() modifier (the new API)
-            let testView = Button(action: {}) {
-                Label("Add Fuel", systemImage: "plus")
-            }
-            .named("AddFuelButton")
+            // Test: Use centralized component accessibility testing
+            let testPassed = testComponentAccessibility(
+                componentName: "NamedModifier",
+                createComponent: {
+                    Button(action: {}) {
+                        Label("Add Fuel", systemImage: "plus")
+                    }
+                    .named("AddFuelButton")
+                }
+            )
             
-            // Then: Test the two critical aspects
+            // Assert: Should generate accessibility identifiers
+            #expect(testPassed, "NamedModifier should generate accessibility identifiers")
             
-            // 1. View created - The view can be instantiated successfully
-            #expect(testView != nil, "View with .named() should be created successfully")
-            
-            // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            #expect(testAccessibilityIdentifiersSinglePlatform(
-                testView, 
-                expectedPattern: "CarManager.*element.*main-addfuelbutton", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "NamedModifier"
-            ), "View should have an accessibility identifier assigned")
+            // Cleanup: Reset test environment
+            cleanupTestEnvironment()
         }
     }
     
