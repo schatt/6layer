@@ -200,38 +200,87 @@ public func testComponentCreation<T>(
     return true
 }
 
-/// Centralized function for testing component with accessibility features
-/// Tests that a component has proper accessibility support
+/// Centralized function for testing component with manual accessibility mode
+/// Tests that a component behaves correctly when accessibility mode is manual
 /// 
 /// - Parameters:
 ///   - componentName: Name of the component being tested
 ///   - createComponent: Function that creates the component to test
-///   - expectedAccessibilityFeatures: Expected accessibility features
 ///   - testName: Name of the test for debugging
-/// - Returns: True if component accessibility test passes
+/// - Returns: True if component accessibility test passes in manual mode
 @MainActor
-public func testComponentAccessibility<T: View>(
+public func testComponentAccessibilityManual<T: View>(
     componentName: String,
     createComponent: () -> T,
-    expectedAccessibilityFeatures: [String] = ["accessibilityIdentifier", "accessibilityLabel"],
-    testName: String = "ComponentAccessibilityTest"
+    testName: String = "ComponentAccessibilityManualTest"
 ) -> Bool {
     // Test: Component creation
     let component = createComponent()
     
-    // Test: Accessibility identifier generation
+    // Test: Accessibility identifier should behave differently in manual mode
+    let config = AccessibilityIdentifierConfig.shared
+    let originalMode = config.mode
+    
+    // Set to manual mode for this test
+    config.mode = .manual
+    
     let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
         component,
         componentName: componentName,
         testName: testName
     )
     
+    // Restore original mode
+    config.mode = originalMode
+    
     if !accessibilityTestPassed {
-        print("❌ ACCESSIBILITY TEST: \(componentName) failed accessibility identifier test")
+        print("❌ ACCESSIBILITY MANUAL TEST: \(componentName) failed accessibility manual test")
         return false
     }
     
-    print("✅ ACCESSIBILITY TEST: \(componentName) passed all accessibility tests")
+    print("✅ ACCESSIBILITY MANUAL TEST: \(componentName) passed accessibility manual test")
+    return true
+}
+
+/// Centralized function for testing component with semantic accessibility mode
+/// Tests that a component behaves correctly when accessibility mode is semantic
+/// 
+/// - Parameters:
+///   - componentName: Name of the component being tested
+///   - createComponent: Function that creates the component to test
+///   - testName: Name of the test for debugging
+/// - Returns: True if component accessibility test passes in semantic mode
+@MainActor
+public func testComponentAccessibilitySemantic<T: View>(
+    componentName: String,
+    createComponent: () -> T,
+    testName: String = "ComponentAccessibilitySemanticTest"
+) -> Bool {
+    // Test: Component creation
+    let component = createComponent()
+    
+    // Test: Accessibility identifier should behave differently in semantic mode
+    let config = AccessibilityIdentifierConfig.shared
+    let originalMode = config.mode
+    
+    // Set to semantic mode for this test
+    config.mode = .semantic
+    
+    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+        component,
+        componentName: componentName,
+        testName: testName
+    )
+    
+    // Restore original mode
+    config.mode = originalMode
+    
+    if !accessibilityTestPassed {
+        print("❌ ACCESSIBILITY SEMANTIC TEST: \(componentName) failed accessibility semantic test")
+        return false
+    }
+    
+    print("✅ ACCESSIBILITY SEMANTIC TEST: \(componentName) passed accessibility semantic test")
     return true
 }
 
@@ -242,20 +291,24 @@ public func testComponentAccessibility<T: View>(
 /// 
 /// - Parameters:
 ///   - enableAccessibility: Whether to enable accessibility features
+///   - enableAutoIDs: Whether to enable automatic accessibility identifiers
 ///   - enableDebugLogging: Whether to enable debug logging
 ///   - namespace: Namespace for accessibility identifiers
+///   - mode: Accessibility mode (automatic, manual, disabled, semantic)
 @MainActor
 public func setupTestEnvironment(
     enableAccessibility: Bool = true,
+    enableAutoIDs: Bool = true,
     enableDebugLogging: Bool = false,
-    namespace: String = "SixLayer"
+    namespace: String = "SixLayer",
+    mode: AccessibilityMode = .automatic
 ) {
     // Setup: Configure accessibility
     if enableAccessibility {
         let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = true
+        config.enableAutoIDs = enableAutoIDs
         config.namespace = namespace
-        config.mode = .automatic
+        config.mode = mode
         config.enableDebugLogging = enableDebugLogging
     }
     
@@ -318,6 +371,80 @@ extension Optional: AnyOptional {
          
          // Cleanup
          cleanupTestEnvironment()
+     }
+ }
+ 
+ // Test when accessibility IDs are disabled:
+ @Test func testCollectionEmptyStateViewAccessibilityDisabled() async {
+     await MainActor.run {
+         // Setup with auto IDs disabled
+         setupTestEnvironment(enableAutoIDs: false)
+         
+         let view = CollectionEmptyStateView(
+             title: "Test Title",
+             message: "Test Message",
+             onCreateItem: {},
+             customCreateView: nil
+         )
+         
+         let testPassed = testComponentAccessibilityDisabled(
+             componentName: "CollectionEmptyStateView",
+             createComponent: { view }
+         )
+         
+         #expect(testPassed, "CollectionEmptyStateView should work when accessibility IDs are disabled")
+         
+         // Cleanup
+         cleanupTestEnvironment()
+     }
+ }
+ 
+ // Test different accessibility modes:
+ @Test func testCollectionEmptyStateViewAccessibilityModes() async {
+     await MainActor.run {
+         let view = CollectionEmptyStateView(
+             title: "Test Title",
+             message: "Test Message",
+             onCreateItem: {},
+             customCreateView: nil
+         )
+         
+         // Test automatic mode (default)
+         setupTestEnvironment(mode: .automatic)
+         let automaticPassed = testComponentAccessibility(
+             componentName: "CollectionEmptyStateView-Automatic",
+             createComponent: { view }
+         )
+         cleanupTestEnvironment()
+         
+         // Test manual mode
+         setupTestEnvironment(mode: .manual)
+         let manualPassed = testComponentAccessibilityManual(
+             componentName: "CollectionEmptyStateView-Manual",
+             createComponent: { view }
+         )
+         cleanupTestEnvironment()
+         
+         // Test semantic mode
+         setupTestEnvironment(mode: .semantic)
+         let semanticPassed = testComponentAccessibilitySemantic(
+             componentName: "CollectionEmptyStateView-Semantic",
+             createComponent: { view }
+         )
+         cleanupTestEnvironment()
+         
+         // Test disabled mode
+         setupTestEnvironment(mode: .disabled)
+         let disabledPassed = testComponentAccessibilityDisabled(
+             componentName: "CollectionEmptyStateView-Disabled",
+             createComponent: { view }
+         )
+         cleanupTestEnvironment()
+         
+         #expect(automaticPassed, "CollectionEmptyStateView should work in automatic mode")
+         #expect(manualPassed, "CollectionEmptyStateView should work in manual mode")
+         #expect(semanticPassed, "CollectionEmptyStateView should work in semantic mode")
+         #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
      }
  }
  

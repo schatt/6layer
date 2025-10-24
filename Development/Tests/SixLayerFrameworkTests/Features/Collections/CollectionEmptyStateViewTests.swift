@@ -37,19 +37,19 @@ open class CollectionEmptyStateViewTests {
     }
     
     @Test
-    func testCollectionEmptyStateViewCrossPlatformAccessibility() async {
+    func testCollectionEmptyStateViewAccessibilityDisabled() async {
         await MainActor.run {
-            // Setup: Configure test environment
-            setupTestEnvironment()
+            // Setup: Configure test environment with auto IDs disabled
+            setupTestEnvironment(enableAutoIDs: false)
             
-            // Test: Use centralized cross-platform testing function
-            let testPassed = testCrossPlatformAccessibilityIdentifierGeneration(
-                createCollectionEmptyStateView(),
-                componentName: "CollectionEmptyStateView"
+            // Test: Use centralized accessibility disabled testing function
+            let testPassed = testComponentAccessibilityDisabled(
+                componentName: "CollectionEmptyStateView",
+                createComponent: createCollectionEmptyStateView
             )
             
-            // Assert: Should generate accessibility identifiers on all platforms
-            #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on all platforms")
+            // Assert: Should work correctly when accessibility IDs are disabled
+            #expect(testPassed, "CollectionEmptyStateView should work when accessibility IDs are disabled")
             
             // Cleanup: Reset test environment
             cleanupTestEnvironment()
