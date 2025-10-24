@@ -178,21 +178,22 @@ open class AccessibilityPreferenceTests {
     
     // MARK: - Cross-Platform Testing Using Mocking
     
-    /// Tests accessibility features using existing mocking infrastructure
-    @Test func testAccessibilityFeatures_UsingExistingMocks() {
-        // Use existing mocking functions to test different accessibility states
-        let noAccessibility = TestPatterns.createNoAccessibility()
-        let allAccessibility = TestPatterns.createAllAccessibility()
+    /// Tests accessibility features using RuntimeCapabilityDetection
+    @Test func testAccessibilityFeatures_UsingRuntimeDetection() {
+        // Test accessibility features using RuntimeCapabilityDetection platform setting
         
-        // Test no accessibility features
-        #expect(!noAccessibility.hasReduceMotion(), "No accessibility should not have reduce motion")
-        #expect(!noAccessibility.hasIncreaseContrast(), "No accessibility should not have increase contrast")
-        #expect(!noAccessibility.hasBoldText(), "No accessibility should not have bold text")
+        // Test no accessibility features (tvOS - minimal accessibility)
+        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        #expect(!RuntimeCapabilityDetection.supportsVoiceOver, "tvOS should not support VoiceOver")
+        #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
         
-        // Test all accessibility features
-        #expect(allAccessibility.hasReduceMotion(), "All accessibility should have reduce motion")
-        #expect(allAccessibility.hasIncreaseContrast(), "All accessibility should have increase contrast")
-        #expect(allAccessibility.hasBoldText(), "All accessibility should have bold text")
+        // Test all accessibility features (iOS - full accessibility)
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        #expect(RuntimeCapabilityDetection.supportsVoiceOver, "iOS should support VoiceOver")
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     
@@ -224,36 +225,42 @@ open class AccessibilityPreferenceTests {
     
     /// Tests that the framework works correctly when all accessibility features are disabled
     @Test func testAllAccessibilityFeaturesDisabled() {
-        // Given: No accessibility features enabled (simulated)
-        let noAccessibility = TestPatterns.createNoAccessibility()
+        // Given: No accessibility features enabled (simulated using tvOS)
+        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
         
         // When: Check accessibility state
-        let reduceMotion = noAccessibility.hasReduceMotion()
-        let highContrast = noAccessibility.hasIncreaseContrast()
-        let boldText = noAccessibility.hasBoldText()
+        let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
+        let supportsAssistiveTouch = RuntimeCapabilityDetection.supportsAssistiveTouch
+        let supportsSwitchControl = RuntimeCapabilityDetection.supportsSwitchControl
         
         // Then: Test actual business logic
-        // All accessibility features should be disabled
-        #expect(!reduceMotion, "Reduce motion should be disabled")
-        #expect(!highContrast, "High contrast should be disabled")
-        #expect(!boldText, "Bold text should be disabled")
+        // All accessibility features should be disabled on tvOS
+        #expect(!supportsVoiceOver, "VoiceOver should be disabled on tvOS")
+        #expect(!supportsAssistiveTouch, "AssistiveTouch should be disabled on tvOS")
+        #expect(!supportsSwitchControl, "Switch Control should be disabled on tvOS")
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     /// Tests that the framework works correctly when all accessibility features are enabled
     @Test func testAllAccessibilityFeaturesEnabled() {
-        // Given: All accessibility features enabled (simulated)
-        let allAccessibility = TestPatterns.createAllAccessibility()
+        // Given: All accessibility features enabled (simulated using iOS)
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
         
         // When: Check accessibility state
-        let reduceMotion = allAccessibility.hasReduceMotion()
-        let highContrast = allAccessibility.hasIncreaseContrast()
-        let boldText = allAccessibility.hasBoldText()
+        let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
+        let supportsAssistiveTouch = RuntimeCapabilityDetection.supportsAssistiveTouch
+        let supportsSwitchControl = RuntimeCapabilityDetection.supportsSwitchControl
         
         // Then: Test actual business logic
-        // All accessibility features should be enabled
-        #expect(reduceMotion, "Reduce motion should be enabled")
-        #expect(highContrast, "High contrast should be enabled")
-        #expect(boldText, "Bold text should be enabled")
+        // All accessibility features should be enabled on iOS
+        #expect(supportsVoiceOver, "VoiceOver should be enabled on iOS")
+        #expect(supportsAssistiveTouch, "AssistiveTouch should be enabled on iOS")
+        #expect(supportsSwitchControl, "Switch Control should be enabled on iOS")
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     // MARK: - Performance Tests

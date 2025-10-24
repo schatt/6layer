@@ -1,4 +1,5 @@
 import Foundation
+import SixLayerFramework
 
 /// Defensive validation utilities to prevent runtime crashes
 struct DefensiveValidation {
@@ -31,18 +32,18 @@ struct DefensiveValidation {
         }
     }
     
-    /// Safe capability checker creation with validation
-    static func createCapabilityCheckerSafely(_ name: String) -> Result<MockPlatformCapabilityChecker, ValidationError> {
+    /// Safe platform setting with validation using RuntimeCapabilityDetection
+    static func setPlatformSafely(_ name: String) -> Result<Void, ValidationError> {
         return validateCapabilityName(name).map { validatedName in
             switch validatedName {
             case "Touch Only":
-                return TestPatterns.createTouchCapabilities()
+                RuntimeCapabilityDetection.setTestPlatform(.iOS)
             case "Hover Only":
-                return TestPatterns.createHoverCapabilities()
+                RuntimeCapabilityDetection.setTestPlatform(.macOS)
             case "All Capabilities":
-                return TestPatterns.createAllCapabilities()
+                RuntimeCapabilityDetection.setTestPlatform(.iOS)
             case "No Capabilities":
-                return TestPatterns.createNoCapabilities()
+                RuntimeCapabilityDetection.setTestPlatform(.tvOS)
             default:
                 // This should never happen due to validation, but defensive programming
                 fatalError("Unhandled validated capability name: \(validatedName)")
@@ -50,14 +51,14 @@ struct DefensiveValidation {
         }
     }
     
-    /// Safe accessibility checker creation with validation
-    static func createAccessibilityCheckerSafely(_ name: String) -> Result<MockAccessibilityFeatureChecker, ValidationError> {
+    /// Safe accessibility platform setting with validation using RuntimeCapabilityDetection
+    static func setAccessibilityPlatformSafely(_ name: String) -> Result<Void, ValidationError> {
         return validateAccessibilityName(name).map { validatedName in
             switch validatedName {
             case "No Accessibility":
-                return TestPatterns.createNoAccessibility()
+                RuntimeCapabilityDetection.setTestPlatform(.tvOS) // Minimal accessibility
             case "All Accessibility":
-                return TestPatterns.createAllAccessibility()
+                RuntimeCapabilityDetection.setTestPlatform(.iOS) // Full accessibility
             default:
                 // This should never happen due to validation, but defensive programming
                 fatalError("Unhandled validated accessibility name: \(validatedName)")

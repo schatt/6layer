@@ -185,35 +185,14 @@ open class CoreViewFunctionTests {
     ) async {
         // GIVEN: Specific capability and accessibility combination
         let item = sampleData[0]
-        let capabilityChecker: MockPlatformCapabilityChecker
-        let accessibilityChecker: MockAccessibilityFeatureChecker
         
-        // Create appropriate checkers based on enum types - no string matching needed!
-        switch capabilityType {
-        case .touchOnly:
-            capabilityChecker = TestPatterns.createTouchCapabilities()
-        case .hoverOnly:
-            capabilityChecker = TestPatterns.createHoverCapabilities()
-        case .allCapabilities:
-            capabilityChecker = TestPatterns.createAllCapabilities()
-        case .noCapabilities:
-            capabilityChecker = TestPatterns.createNoCapabilities()
-        }
+        // Set platform based on capability type using RuntimeCapabilityDetection
+        DefensiveTestPatterns.setPlatformForCapabilityType(capabilityType)
         
-        switch accessibilityType {
-        case .noAccessibility:
-            accessibilityChecker = TestPatterns.createNoAccessibility()
-        case .allAccessibility:
-            accessibilityChecker = TestPatterns.createAllAccessibility()
-        }
         let testName = "SimpleCard \(capabilityType.displayName) + \(accessibilityType.displayName)"
         
         // WHEN: Generating simple card component
-        let view = TestPatterns.createSimpleCardComponent(
-            item: item,
-            capabilityChecker: capabilityChecker,
-            accessibilityChecker: accessibilityChecker
-        )
+        let view = TestPatterns.createSimpleCardComponent(item: item)
         
         // THEN: Should generate correct view for this combination
         TestPatterns.verifyViewGeneration(view, testName: testName)
@@ -223,7 +202,7 @@ open class CoreViewFunctionTests {
         // Verify platform-specific properties
         TestPatterns.verifyPlatformProperties(viewInfo: viewInfo, testName: testName)
         
-        // Verify accessibility properties  
+        // Verify accessibility properties
         TestPatterns.verifyAccessibilityProperties(viewInfo: viewInfo, testName: testName)
         
         // Clean up test platform

@@ -1,4 +1,5 @@
 import Foundation
+import SixLayerFramework
 
 /// Defensive approach: Use enums instead of string literals to prevent runtime crashes
 enum CapabilityType: String, CaseIterable {
@@ -36,41 +37,42 @@ enum AccessibilityType: String, CaseIterable {
 /// Defensive test pattern that prevents crashes
 struct DefensiveTestPatterns {
     
-    /// Safe capability checker creation - returns nil instead of crashing
-    static func createCapabilityChecker(for type: CapabilityType) -> MockPlatformCapabilityChecker {
+    /// Safe platform setting for capability types using RuntimeCapabilityDetection
+    static func setPlatformForCapabilityType(_ type: CapabilityType) {
         switch type {
         case .touchOnly:
-            return TestPatterns.createTouchCapabilities()
+            RuntimeCapabilityDetection.setTestPlatform(.iOS)
         case .hoverOnly:
-            return TestPatterns.createHoverCapabilities()
+            RuntimeCapabilityDetection.setTestPlatform(.macOS)
         case .allCapabilities:
-            return TestPatterns.createAllCapabilities()
+            RuntimeCapabilityDetection.setTestPlatform(.iOS)
         case .noCapabilities:
-            return TestPatterns.createNoCapabilities()
+            RuntimeCapabilityDetection.setTestPlatform(.tvOS)
         }
     }
     
-    /// Safe accessibility checker creation - returns nil instead of crashing
-    static func createAccessibilityChecker(for type: AccessibilityType) -> MockAccessibilityFeatureChecker {
+    /// Safe platform setting for accessibility types using RuntimeCapabilityDetection
+    static func setPlatformForAccessibilityType(_ type: AccessibilityType) {
+        // For accessibility testing, we can use any platform that supports accessibility
         switch type {
         case .noAccessibility:
-            return TestPatterns.createNoAccessibility()
+            RuntimeCapabilityDetection.setTestPlatform(.tvOS) // Minimal accessibility
         case .allAccessibility:
-            return TestPatterns.createAllAccessibility()
+            RuntimeCapabilityDetection.setTestPlatform(.iOS) // Full accessibility
         }
     }
     
     /// Defensive test case creation with compile-time safety
-    static func createDefensiveCapabilityTestCases() -> [(CapabilityType, () -> MockPlatformCapabilityChecker)] {
+    static func createDefensiveCapabilityTestCases() -> [(CapabilityType, () -> Void)] {
         return CapabilityType.allCases.map { type in
-            (type, { createCapabilityChecker(for: type) })
+            (type, { setPlatformForCapabilityType(type) })
         }
     }
     
     /// Defensive test case creation with compile-time safety
-    static func createDefensiveAccessibilityTestCases() -> [(AccessibilityType, () -> MockAccessibilityFeatureChecker)] {
+    static func createDefensiveAccessibilityTestCases() -> [(AccessibilityType, () -> Void)] {
         return AccessibilityType.allCases.map { type in
-            (type, { createAccessibilityChecker(for: type) })
+            (type, { setPlatformForAccessibilityType(type) })
         }
     }
 }
