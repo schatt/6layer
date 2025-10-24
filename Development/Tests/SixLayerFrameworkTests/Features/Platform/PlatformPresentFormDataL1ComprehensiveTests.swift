@@ -52,7 +52,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
     }
     
     /// Helper function to create DynamicFormField with proper binding for tests
-    private func createTestField(
+    public func createTestField(
         label: String,
         placeholder: String? = nil,
         value: String = "",

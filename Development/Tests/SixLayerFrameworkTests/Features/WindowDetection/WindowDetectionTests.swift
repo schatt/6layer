@@ -12,7 +12,7 @@ open class WindowDetectionTests {
     
     // MARK: - Helper Methods
     
-    private func createWindowDetection() -> UnifiedWindowDetection {
+    public func createWindowDetection() -> UnifiedWindowDetection {
         return UnifiedWindowDetection()
     }
     

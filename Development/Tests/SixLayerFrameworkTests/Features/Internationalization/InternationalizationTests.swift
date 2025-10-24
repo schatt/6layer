@@ -18,11 +18,11 @@ open class InternationalizationTests {
     
     // MARK: - Helper Methods
     
-    private func createTestLocale() -> Locale {
+    public func createTestLocale() -> Locale {
         return Locale(identifier: "en_US")
     }
     
-    private func createTestRTLocale() -> Locale {
+    public func createTestRTLocale() -> Locale {
         return Locale(identifier: "ar_SA")
     }
     

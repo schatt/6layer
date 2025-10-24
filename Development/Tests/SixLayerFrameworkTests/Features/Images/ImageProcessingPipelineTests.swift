@@ -42,7 +42,7 @@ open class ImageProcessingPipelineTests {
     
     // MARK: - Test Data
     
-    private func createTestImage() -> PlatformImage {
+    public func createTestImage() -> PlatformImage {
         // Create a simple test image
         #if os(iOS)
         let size = CGSize(width: 100, height: 100)
@@ -61,7 +61,7 @@ open class ImageProcessingPipelineTests {
         #endif
     }
     
-    private func createProcessingOptions() -> ProcessingOptions {
+    public func createProcessingOptions() -> ProcessingOptions {
         return ProcessingOptions(
             quality: .high,
             enableEnhancement: true,

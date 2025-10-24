@@ -851,7 +851,7 @@ open class L3StrategySelectionTests {
     // MARK: - Helper Functions
     
     /// Create a test view using the card layout strategy to verify it works
-    private func createTestViewWithCardLayoutStrategy(_ strategy: LayoutStrategy) -> some View {
+    public func createTestViewWithCardLayoutStrategy(_ strategy: LayoutStrategy) -> some View {
         return VStack(spacing: 8) {
             ForEach(0..<strategy.columns, id: \.self) { _ in
                 Text("Test Card")

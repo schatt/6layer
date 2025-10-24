@@ -505,7 +505,7 @@ open class PlatformColorsTests {
     // MARK: - Helper Functions
     
     /// Create a test view using platform colors to verify they work functionally
-    private func createTestViewWithPlatformColors() -> some View {
+    public func createTestViewWithPlatformColors() -> some View {
         return VStack {
             Text("Primary Label")
                 .foregroundColor(Color.platformPrimaryLabel)

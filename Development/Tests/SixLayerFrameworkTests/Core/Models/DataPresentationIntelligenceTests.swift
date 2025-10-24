@@ -7,7 +7,7 @@ open class DataPresentationIntelligenceTests {
     
     // MARK: - Helper Methods
     
-    private func createIntelligence() -> DataPresentationIntelligence {
+    public func createIntelligence() -> DataPresentationIntelligence {
         return DataPresentationIntelligence.shared
     }
     

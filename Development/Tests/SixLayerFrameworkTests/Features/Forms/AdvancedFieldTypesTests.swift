@@ -27,7 +27,7 @@ open class AdvancedFieldTypesTests {
         return createTestFormState()
     }
     
-    private func createTestFormState() -> DynamicFormState {
+    public func createTestFormState() -> DynamicFormState {
         let testConfiguration = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",

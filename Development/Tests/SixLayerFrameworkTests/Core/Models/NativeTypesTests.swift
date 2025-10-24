@@ -54,7 +54,7 @@ struct MockDataContainer: Equatable {
 @MainActor
 open class NativeTypesTests: BaseTestClass {
     
-    private func createTestFormState() -> DynamicFormState {
+    public func createTestFormState() -> DynamicFormState {
         let configuration = DynamicFormConfiguration(
             id: "test",
             title: "Test Form",

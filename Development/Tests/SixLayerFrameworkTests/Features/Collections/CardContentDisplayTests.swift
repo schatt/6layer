@@ -22,7 +22,7 @@ open class CardContentDisplayTests: BaseTestClass {
     
     /// Creates specific test items for CardContentDisplayTests
     @MainActor
-    internal func createCardTestItems() -> [TestItem] {
+    public func createCardTestItems() -> [TestItem] {
         return [
             TestItem(title: "Test Item 1", subtitle: "Subtitle 1", description: "Description 1", icon: "star.fill", color: .blue),
             TestItem(title: "Test Item 2", subtitle: "Subtitle 2", description: "Description 2", icon: "heart.fill", color: .red),
@@ -30,7 +30,7 @@ open class CardContentDisplayTests: BaseTestClass {
         ]
     }
     
-    private func createTestItemsWithData() -> [TestItemWithData] {
+    public func createTestItemsWithData() -> [TestItemWithData] {
         return [
             TestItemWithData(name: "Data Item 1", details: "Details 1", metadata: ["type": "primary", "value": 42]),
             TestItemWithData(name: "Data Item 2", details: "Details 2", metadata: ["type": "secondary", "value": 84])

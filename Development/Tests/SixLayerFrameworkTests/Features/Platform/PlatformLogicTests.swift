@@ -285,7 +285,7 @@ open class PlatformLogicTests {
     
     // MARK: - Helper Methods
     
-    private func createMockPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilities {
+    public func createMockPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilities {
         switch platform {
         case .iOS:
             return PlatformCapabilities(
@@ -345,7 +345,7 @@ open class PlatformLogicTests {
         }
     }
     
-    private func createMockDeviceConfig(for deviceType: DeviceType) -> PlatformCapabilities {
+    public func createMockDeviceConfig(for deviceType: DeviceType) -> PlatformCapabilities {
         switch deviceType {
         case .phone:
             return PlatformCapabilities(
@@ -427,12 +427,12 @@ open class PlatformLogicTests {
         }
     }
     
-    private func createMockPlatformDeviceConfig(platform: SixLayerPlatform, deviceType: DeviceType) -> PlatformCapabilities {
+    public func createMockPlatformDeviceConfig(platform: SixLayerPlatform, deviceType: DeviceType) -> PlatformCapabilities {
         // This would be more complex in reality, but for testing we'll use platform as primary
         return createMockPlatformConfig(for: platform)
     }
     
-    private func createMockVisionAvailability(for platform: SixLayerPlatform) -> Bool {
+    public func createMockVisionAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return true
@@ -441,7 +441,7 @@ open class PlatformLogicTests {
         }
     }
     
-    private func createMockOCRAvailability(for platform: SixLayerPlatform) -> Bool {
+    public func createMockOCRAvailability(for platform: SixLayerPlatform) -> Bool {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return true
@@ -450,7 +450,7 @@ open class PlatformLogicTests {
         }
     }
     
-    private func createMockLayoutDecision(for platform: SixLayerPlatform) -> IntelligentCardLayoutDecision {
+    public func createMockLayoutDecision(for platform: SixLayerPlatform) -> IntelligentCardLayoutDecision {
         switch platform {
         case .iOS:
             return IntelligentCardLayoutDecision(
@@ -495,7 +495,7 @@ open class PlatformLogicTests {
         }
     }
     
-    private func createMockPerformanceConfig(for platform: SixLayerPlatform) -> PerformanceConfig {
+    public func createMockPerformanceConfig(for platform: SixLayerPlatform) -> PerformanceConfig {
         switch platform {
         case .iOS, .macOS, .visionOS:
             return PerformanceConfig(

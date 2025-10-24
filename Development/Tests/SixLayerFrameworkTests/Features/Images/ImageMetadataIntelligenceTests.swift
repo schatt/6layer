@@ -42,7 +42,7 @@ open class ImageMetadataIntelligenceTests {
     
     // MARK: - Test Data
     
-    private func createTestImage() -> PlatformImage {
+    public func createTestImage() -> PlatformImage {
         #if os(iOS)
         let size = CGSize(width: 100, height: 100)
         let renderer = UIGraphicsImageRenderer(size: size)

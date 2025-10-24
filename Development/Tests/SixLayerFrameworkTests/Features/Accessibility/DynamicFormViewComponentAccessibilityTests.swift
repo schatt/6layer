@@ -36,7 +36,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - Shared Test Helpers (DRY Principle)
     
     /// Creates a test form view using IntelligentFormView for consistent testing
-    private func createTestFormView() -> some View {
+    public func createTestFormView() -> some View {
         IntelligentFormView.generateForm(
             for: TestData.self,
             initialData: TestData(name: "Test", email: "test@example.com"),
@@ -46,7 +46,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     /// Creates a test field with correct parameters (DTRT - use actual framework types)
-    private func createTestField() -> DynamicFormField {
+    public func createTestField() -> DynamicFormField {
         DynamicFormField(
             id: "test-field",
             textContentType: .name,

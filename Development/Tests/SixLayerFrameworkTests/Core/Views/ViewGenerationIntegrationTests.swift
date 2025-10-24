@@ -747,11 +747,11 @@ open class ViewGenerationIntegrationTests {
     }
     
     /// Create a mock platform config from capabilities
-    private func createMockPlatformConfig(from capabilities: ViewGenerationTestConfig.CapabilitySet) -> SixLayerFramework.CardExpansionPlatformConfig {
+    public func createMockPlatformConfig(from capabilities: ViewGenerationTestConfig.CapabilitySet) -> SixLayerFramework.CardExpansionPlatformConfig {
         return getCardExpansionPlatformConfig()
     }
     
-    private func createTestViewWithMockConfig(_ config: SixLayerFramework.CardExpansionPlatformConfig) -> AnyView? {
+    public func createTestViewWithMockConfig(_ config: SixLayerFramework.CardExpansionPlatformConfig) -> AnyView? {
         // TDD RED PHASE: Stub implementation that fails until real code is implemented
         // TODO: Implement actual view creation with mock config
         // For now, return nil to make test fail until implemented
@@ -919,7 +919,7 @@ open class ViewGenerationIntegrationTests {
     // MARK: - Helper Functions
     
     /// Create a test view using general platform configuration
-    private func createTestViewWithGeneralConfig(_ config: ViewGenerationTestConfig.CapabilitySet) -> some View {
+    public func createTestViewWithGeneralConfig(_ config: ViewGenerationTestConfig.CapabilitySet) -> some View {
         let baseView = Text("Test View")
             .frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget)
             .accessibilityLabel("Test view with general configuration")

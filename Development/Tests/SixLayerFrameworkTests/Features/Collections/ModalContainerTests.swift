@@ -16,7 +16,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    private func createTestModalStrategy(
+    public func createTestModalStrategy(
         presentationType: ModalPresentationType = .sheet,
         sizing: ModalSizing = .medium,
         detents: [SheetDetent] = [.medium],
@@ -30,7 +30,7 @@ open class ModalContainerTests: BaseTestClass {
         )
     }
     
-    private func createTestModalConstraint(
+    public func createTestModalConstraint(
         maxWidth: CGFloat? = nil,
         maxHeight: CGFloat? = nil,
         preferredSize: CGSize? = nil
@@ -434,7 +434,7 @@ open class ModalContainerTests: BaseTestClass {
     
     /// Create a test modal constraint
     /// TDD RED PHASE: This is a stub implementation for testing
-    private func createTestModalConstraint(maxWidth: CGFloat, maxHeight: CGFloat) -> ModalConstraint {
+    public func createTestModalConstraint(maxWidth: CGFloat, maxHeight: CGFloat) -> ModalConstraint {
         return ModalConstraint(
             maxWidth: maxWidth,
             maxHeight: maxHeight,
@@ -444,7 +444,7 @@ open class ModalContainerTests: BaseTestClass {
     
     /// Create a test modal strategy
     /// TDD RED PHASE: This is a stub implementation for testing
-    private func createTestModalStrategy(platformOptimizations: [ModalPlatform: ModalConstraint]) -> ModalStrategy {
+    public func createTestModalStrategy(platformOptimizations: [ModalPlatform: ModalConstraint]) -> ModalStrategy {
         return ModalStrategy(
             presentationType: .sheet,
             sizing: .medium,

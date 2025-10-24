@@ -7,11 +7,13 @@ import SwiftUI
 /// Tests for single-instance Layer 1 functions
 /// Following TDD principles - these tests define the expected behavior
 @MainActor
-open class SingleInstanceLayer1Tests {
+open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func createTestHints() -> PresentationHints {
+    /// Override BaseTestClass method to provide specific test hints for numeric data
+    @MainActor
+    public override func createTestHints() -> PresentationHints {
         return PresentationHints(
             dataType: .numeric,
             presentationPreference: .card,

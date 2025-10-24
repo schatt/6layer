@@ -13,12 +13,14 @@ import Foundation
 import TabularData
 
 @MainActor
-open class DataFrameAnalysisEngineTests {
+open class DataFrameAnalysisEngineTests: BaseTestClass {
     
-    var analysisEngine: DataFrameAnalysisEngine!
+    // MARK: - Helper Methods
     
-    init() async throws {
-        analysisEngine = DataFrameAnalysisEngine()
+    /// Creates specific analysis engine for DataFrameAnalysisEngineTests
+    @MainActor
+    public func createAnalysisEngine() -> DataFrameAnalysisEngine {
+        return DataFrameAnalysisEngine()
     }    // MARK: - Basic DataFrame Analysis Tests
     
     @Test func testAnalyzeDataFrame_BasicStructure() throws {
@@ -26,7 +28,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createSampleDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should return proper analysis
         #expect(result.columns.count > 0)
@@ -39,7 +41,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = DataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should handle empty DataFrame gracefully
         #expect(result.rowCount == 0)
@@ -52,7 +54,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createMixedTypeDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should correctly identify column types
         #expect(result.columns.count == 4)
@@ -77,7 +79,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createNumericDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should provide statistical analysis
         #expect(result.statisticalAnalysis != nil)
@@ -90,7 +92,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createTimeSeriesDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should detect time series patterns
         #expect(result.patterns.hasTimeSeries)
@@ -102,7 +104,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createCategoricalDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should provide categorical analysis
         #expect(result.patterns.hasCategories)
@@ -117,7 +119,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createDataFrameWithMissingValues()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should detect missing data
         #expect(result.dataQuality != nil)
@@ -130,7 +132,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createDataFrameWithOutliers()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should detect outliers
         #expect(result.dataQuality != nil)
@@ -144,7 +146,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createMixedTypeDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should provide visualization recommendations
         #expect(result.visualizationRecommendations.count > 0)
@@ -163,7 +165,7 @@ open class DataFrameAnalysisEngineTests {
         
         // When: Analyzing the DataFrame
         let startTime = CFAbsoluteTimeGetCurrent()
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         let executionTime = CFAbsoluteTimeGetCurrent() - startTime
         
         // Then: Should complete within reasonable time
@@ -179,7 +181,7 @@ open class DataFrameAnalysisEngineTests {
         let dataFrame = try createSampleDataFrame()
         
         // When: Analyzing the DataFrame
-        let result = analysisEngine.analyzeDataFrame(dataFrame)
+        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should integrate with existing DataIntrospectionEngine
         #expect(result.dataIntrospectionResult != nil)
@@ -188,7 +190,7 @@ open class DataFrameAnalysisEngineTests {
     
     // MARK: - Helper Methods
     
-    private func createSampleDataFrame() throws -> DataFrame {
+    public func createSampleDataFrame() throws -> DataFrame {
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "name", contents: ["Alice", "Bob", "Charlie"]))
         dataFrame.append(column: Column(name: "age", contents: [25, 30, 35]))
@@ -197,7 +199,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createMixedTypeDataFrame() throws -> DataFrame {
+    public func createMixedTypeDataFrame() throws -> DataFrame {
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "name", contents: ["Alice", "Bob", "Charlie"]))
         dataFrame.append(column: Column(name: "age", contents: [25, 30, 35]))
@@ -207,7 +209,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createNumericDataFrame() throws -> DataFrame {
+    public func createNumericDataFrame() throws -> DataFrame {
         let values = (1...100).map { Double($0) }
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "values", contents: values))
@@ -216,7 +218,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createTimeSeriesDataFrame() throws -> DataFrame {
+    public func createTimeSeriesDataFrame() throws -> DataFrame {
         let dates = (0..<30).map { Date().addingTimeInterval(TimeInterval($0 * 86400)) }
         let values = (0..<30).map { Double($0 * 2 + Int.random(in: -5...5)) }
         
@@ -227,7 +229,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createCategoricalDataFrame() throws -> DataFrame {
+    public func createCategoricalDataFrame() throws -> DataFrame {
         let categories = ["A", "B", "A", "C", "B", "A", "C", "B"]
         let values = [10, 20, 15, 25, 18, 12, 22, 16]
         
@@ -238,7 +240,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createDataFrameWithMissingValues() throws -> DataFrame {
+    public func createDataFrameWithMissingValues() throws -> DataFrame {
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "name", contents: ["Alice", "Bob", "Charlie"]))
         dataFrame.append(column: Column(name: "age", contents: [25, nil, 35]))
@@ -247,7 +249,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createDataFrameWithOutliers() throws -> DataFrame {
+    public func createDataFrameWithOutliers() throws -> DataFrame {
         let values = [1, 2, 3, 4, 5, 100, 2, 3, 4, 5] // 100 is an outlier
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "values", contents: values))
@@ -255,7 +257,7 @@ open class DataFrameAnalysisEngineTests {
         return dataFrame
     }
     
-    private func createLargeDataFrame(rowCount: Int) throws -> DataFrame {
+    public func createLargeDataFrame(rowCount: Int) throws -> DataFrame {
         let values = (1...rowCount).map { Double($0) }
         let categories = (1...rowCount).map { "Category \($0 % 10)" }
         

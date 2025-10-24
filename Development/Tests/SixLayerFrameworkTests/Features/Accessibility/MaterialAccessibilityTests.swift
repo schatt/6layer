@@ -232,11 +232,11 @@ open class MaterialAccessibilityTests: BaseTestClass {
 
 extension MaterialAccessibilityTests {
     
-    private func createTestMaterial() -> Material {
+    public func createTestMaterial() -> Material {
         return .regularMaterial
     }
     
-    private func createTestView() -> some View {
+    public func createTestView() -> some View {
         Rectangle()
             .fill(.regularMaterial)
             .frame(width: 100, height: 100)

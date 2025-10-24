@@ -15,7 +15,7 @@ open class FormHoverInteractionTests {
     
     // MARK: - Test Data
     
-    private func createFormFieldWithDescription() -> DynamicFormField {
+    public func createFormFieldWithDescription() -> DynamicFormField {
         return DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -26,7 +26,7 @@ open class FormHoverInteractionTests {
         )
     }
     
-    private func createFormFieldWithoutDescription() -> DynamicFormField {
+    public func createFormFieldWithoutDescription() -> DynamicFormField {
         return DynamicFormField(
             id: "simpleField",
             contentType: .text,
@@ -36,7 +36,7 @@ open class FormHoverInteractionTests {
         )
     }
     
-    private func createTestConfiguration() -> DynamicFormConfiguration {
+    public func createTestConfiguration() -> DynamicFormConfiguration {
         return DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",

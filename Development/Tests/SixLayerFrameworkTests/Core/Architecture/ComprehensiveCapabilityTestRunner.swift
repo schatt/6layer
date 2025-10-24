@@ -476,7 +476,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Create a platform configuration for a specific platform using centralized utilities
-    private func createPlatformConfig(platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
+    public func createPlatformConfig(platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
         let snapshot = PlatformTestUtilities.getPlatformConfig(for: platform)
         return CardExpansionPlatformConfig(
             supportsHapticFeedback: snapshot.supportsHapticFeedback,
@@ -545,7 +545,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - Helper Functions
     
     /// Create a test view using the platform configuration to verify it works
-    private func createTestViewWithConfig(_ config: CardExpansionPlatformConfig) -> some View {
+    public func createTestViewWithConfig(_ config: CardExpansionPlatformConfig) -> some View {
         return Text("Test View")
             .frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget)
             .accessibilityLabel("Test view for platform configuration")

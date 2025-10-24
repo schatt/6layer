@@ -105,7 +105,7 @@ open class CollectionEmptyStateViewTests {
     // MARK: - Helper Functions
     
     /// Creates a CollectionEmptyStateView for testing
-    private func createCollectionEmptyStateView() -> CollectionEmptyStateView {
+    public func createCollectionEmptyStateView() -> CollectionEmptyStateView {
         return CollectionEmptyStateView(
             hints: PresentationHints(
                 dataType: .collection,

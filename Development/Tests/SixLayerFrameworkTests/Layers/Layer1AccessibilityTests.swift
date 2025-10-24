@@ -15,14 +15,14 @@ open class Layer1AccessibilityTests {
     
     // MARK: - Helper Methods
     
-    private func createTestItems() -> [Layer1TestItem] {
+    public func createTestItems() -> [Layer1TestItem] {
         return [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
         ]
     }
     
-    private func createTestHints() -> PresentationHints {
+    public func createTestHints() -> PresentationHints {
         return PresentationHints(
             dataType: .generic,
             presentationPreference: .grid,

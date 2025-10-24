@@ -41,7 +41,7 @@ open class PlatformPresentContentL1Tests {
     
     // MARK: - Test Data Setup
     
-    private func createTestHints() -> PresentationHints {
+    public func createTestHints() -> PresentationHints {
         return PresentationHints(
             dataType: .generic,
             presentationPreference: .automatic,

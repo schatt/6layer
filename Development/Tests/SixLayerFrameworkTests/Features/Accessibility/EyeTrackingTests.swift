@@ -36,22 +36,20 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class EyeTrackingTests {
+open class EyeTrackingTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func createEyeTrackingManager() -> EyeTrackingManager {
-        let testConfig = EyeTrackingConfig(
-            sensitivity: .medium,
-            dwellTime: 1.0,
-            visualFeedback: true,
-            hapticFeedback: true,
-            calibration: EyeTrackingCalibration()
-        )
+    /// Creates specific eye tracking manager for EyeTrackingTests
+    @MainActor
+    public func createEyeTrackingManager() -> EyeTrackingManager {
+        let testConfig = createEyeTrackingConfig()
         return EyeTrackingManager(config: testConfig)
     }
     
-    private func createTestConfig() -> EyeTrackingConfig {
+    /// Creates specific eye tracking config for EyeTrackingTests
+    @MainActor
+    public func createEyeTrackingConfig() -> EyeTrackingConfig {
         return EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,
@@ -149,7 +147,7 @@ open class EyeTrackingTests {
     @Test func testEyeTrackingManagerEnable() async {
         await MainActor.run {
             // Initialize test data first
-            let testConfig = createTestConfig()
+            let testConfig = createEyeTrackingConfig()
             let eyeTrackingManager = EyeTrackingManager(config: testConfig)
             
             let _ = eyeTrackingManager.isEnabled

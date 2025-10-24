@@ -160,7 +160,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func createTestPlatformImage() -> PlatformImage {
+    public func createTestPlatformImage() -> PlatformImage {
         // Use existing sample image instead of generating one
         guard let imagePath = Bundle.main.path(forResource: "IMG_3002", ofType: "jpeg"),
               let imageData = NSData(contentsOfFile: imagePath) else {

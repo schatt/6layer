@@ -247,7 +247,7 @@ open class PlatformDataFrameAnalysisL1Tests {
     
     // MARK: - Helper Methods
     
-    private func createTestDataFrame() -> DataFrame {
+    public func createTestDataFrame() -> DataFrame {
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "name", contents: ["Alice", "Bob", "Charlie"]))
         dataFrame.append(column: Column(name: "age", contents: [25, 30, 35]))
@@ -255,7 +255,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         return dataFrame
     }
     
-    private func createTestDataFrame2() -> DataFrame {
+    public func createTestDataFrame2() -> DataFrame {
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "product", contents: ["Widget A", "Widget B", "Widget C"]))
         dataFrame.append(column: Column(name: "price", contents: [10.99, 15.99, 20.99]))
@@ -263,7 +263,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         return dataFrame
     }
     
-    private func createDataFrameWithMissingData() -> DataFrame {
+    public func createDataFrameWithMissingData() -> DataFrame {
         var dataFrame = DataFrame()
         dataFrame.append(column: Column(name: "name", contents: ["Alice", "Bob", "Charlie"]))
         dataFrame.append(column: Column(name: "age", contents: [25, nil, 35]))
@@ -271,7 +271,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         return dataFrame
     }
     
-    private func createLargeDataFrame(rowCount: Int) -> DataFrame {
+    public func createLargeDataFrame(rowCount: Int) -> DataFrame {
         let values = (1...rowCount).map { Double($0) }
         let categories = (1...rowCount).map { "Category \($0 % 10)" }
         

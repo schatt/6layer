@@ -33,7 +33,7 @@ open class GenericLayoutDecisionTests {
     
     // MARK: - Test Data
     
-    private func createTestItems(count: Int) -> [TestItem] {
+    public func createTestItems(count: Int) -> [TestItem] {
         return (0..<count).map { index in
             TestItem(
                 title: "Item \(index + 1)",
@@ -43,7 +43,7 @@ open class GenericLayoutDecisionTests {
         }
     }
     
-    private func createBasicHints() -> PresentationHints {
+    public func createBasicHints() -> PresentationHints {
         return PresentationHints(
             dataType: .collection,
             presentationPreference: .automatic,
@@ -53,7 +53,7 @@ open class GenericLayoutDecisionTests {
         )
     }
     
-    private func createComplexHints() -> PresentationHints {
+    public func createComplexHints() -> PresentationHints {
         return PresentationHints(
             dataType: .collection,
             presentationPreference: .automatic,

@@ -536,7 +536,7 @@ open class L2LayoutDecisionTests {
     
     // MARK: - Helper Methods
     
-    private func createSampleItems() -> [GenericDataItem] {
+    public func createSampleItems() -> [GenericDataItem] {
         return [
             GenericDataItem(
                 title: "Item 1",
@@ -556,7 +556,7 @@ open class L2LayoutDecisionTests {
         ]
     }
     
-    private func createManyItems(count: Int) -> [GenericDataItem] {
+    public func createManyItems(count: Int) -> [GenericDataItem] {
         return (1...count).map { index in
             GenericDataItem(
                 title: "Item \(index)",
@@ -566,7 +566,7 @@ open class L2LayoutDecisionTests {
         }
     }
     
-    private func createSimpleFormFields() -> [DynamicFormField] {
+    public func createSimpleFormFields() -> [DynamicFormField] {
         return [
             DynamicFormField(
                 id: "name",
@@ -585,7 +585,7 @@ open class L2LayoutDecisionTests {
         ]
     }
     
-    private func createComplexFormFields() -> [DynamicFormField] {
+    public func createComplexFormFields() -> [DynamicFormField] {
         return (1...20).map { index in
             DynamicFormField(
                 id: "field_\(index)",

@@ -357,7 +357,7 @@ open class PhotoFunctionalityPhase1Tests {
     
     // MARK: - Helper Methods
     
-    private func createSampleImageData() -> Data {
+    public func createSampleImageData() -> Data {
         // Create a simple 1x1 pixel image data
         #if os(iOS)
         let size = CGSize(width: 1, height: 1)
@@ -379,7 +379,7 @@ open class PhotoFunctionalityPhase1Tests {
         #endif
     }
     
-    private func createTestPlatformImage() -> PlatformImage {
+    public func createTestPlatformImage() -> PlatformImage {
         #if os(iOS)
         let size = CGSize(width: 200, height: 200)
         let renderer = UIGraphicsImageRenderer(size: size)
@@ -399,7 +399,7 @@ open class PhotoFunctionalityPhase1Tests {
     }
     
     /// Create a test view using a PlatformImage to verify it works functionally
-    private func createTestViewWithPlatformImage(_ image: PlatformImage) -> some View {
+    public func createTestViewWithPlatformImage(_ image: PlatformImage) -> some View {
         return Image(platformImage: image)
             .resizable()
             .aspectRatio(contentMode: .fit)
@@ -408,7 +408,7 @@ open class PhotoFunctionalityPhase1Tests {
     }
     
     /// Create a test view using platform system colors to verify they work functionally
-    private func createTestViewWithPlatformSystemColors() -> some View {
+    public func createTestViewWithPlatformSystemColors() -> some View {
         return VStack {
             Text("System Background")
                 .foregroundColor(Color.platformLabel)

@@ -176,7 +176,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func createSampleItems() -> [GenericDataItem] {
+    public func createSampleItems() -> [GenericDataItem] {
         return [
             GenericDataItem(
                 title: "Item 1",
@@ -196,7 +196,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         ]
     }
     
-    private func createManyItems(count: Int) -> [GenericDataItem] {
+    public func createManyItems(count: Int) -> [GenericDataItem] {
         return (1...count).map { index in
             GenericDataItem(
                 title: "Item \(index)",

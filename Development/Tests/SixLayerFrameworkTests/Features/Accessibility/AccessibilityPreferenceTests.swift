@@ -43,12 +43,12 @@ open class AccessibilityPreferenceTests {
     
     // MARK: - Test Data Setup
     
-    private func createTestView() -> some View {
+    public func createTestView() -> some View {
         Button("Test Button") { }
             .frame(width: 100, height: 50)
     }
     
-    private func createTestImage() -> PlatformImage {
+    public func createTestImage() -> PlatformImage {
         PlatformImage()
     }
     
