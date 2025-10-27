@@ -118,5 +118,33 @@ struct ExternalModuleIntegrationTests {
             #expect(true, "Enum methods accessible")
         }
     }
+    
+    /// Tests that OCROverlayView is accessible from external modules
+    @Test("OCROverlayView accessible from external modules")
+    func testOCROverlayViewAccessible() async throws {
+        await MainActor.run {
+            let testImage = PlatformImage()
+            let testResult = OCRResult(
+                extractedText: "Test OCR Text",
+                confidence: 0.95,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 1.0,
+                language: .english
+            )
+            
+            // Test that OCROverlayView can be created from external module
+            let ocrView = OCROverlayView(
+                image: testImage,
+                result: testResult,
+                configuration: OCROverlayConfiguration(),
+                onTextEdit: { _, _ in },
+                onTextDelete: { _ in }
+            )
+            
+            // If this compiles and creates a view, the API is accessible
+            #expect(true, "OCROverlayView accessible and creating views")
+        }
+    }
 }
 
