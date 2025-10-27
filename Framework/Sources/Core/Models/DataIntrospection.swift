@@ -15,6 +15,12 @@ public struct DataIntrospectionEngine {
     
     /// Analyze a data model and provide UI recommendations
         public static func analyze<T>(_ data: T) -> DataAnalysisResult {
+        // Check if this is a Core Data managed object
+        if let managedObject = data as? NSManagedObject {
+            return analyzeCoreData(managedObject)
+        }
+        
+        // Use standard Mirror introspection for non-Core Data objects
         let mirror = Mirror(reflecting: data)
         let fields = extractFields(from: mirror)
         let complexity = calculateComplexity(fields: fields, data: data)
@@ -285,6 +291,91 @@ public extension DataIntrospectionEngine {
 // MARK: - Private Implementation
 
 private extension DataIntrospectionEngine {
+    
+    /// Analyze Core Data managed objects using NSEntityDescription
+    static func analyzeCoreData(_ managedObject: NSManagedObject) -> DataAnalysisResult {
+        let entity = managedObject.entity
+        let properties = entity.propertiesByName
+        
+        // If no properties, fallback to Mirror
+        if properties.isEmpty {
+            return analyzeWithMirror(managedObject)
+        }
+        
+        var fields: [DataField] = []
+        
+        for (name, property) in properties {
+            // Skip relationships for now
+            guard let attribute = property as? NSAttributeDescription else { continue }
+            
+            let fieldType = inferCoreDataFieldType(attributeType: attribute.attributeType)
+            let field = DataField(
+                name: name,
+                type: fieldType,
+                isOptional: property.isOptional,
+                isArray: false,
+                isIdentifiable: name == "id" || name.hasSuffix("ID"),
+                hasDefaultValue: false
+            )
+            fields.append(field)
+        }
+        
+        let complexity = calculateComplexity(fields: fields, data: managedObject)
+        let patterns = detectPatterns(fields: fields)
+        let recommendations = generateRecommendations(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns
+        )
+        
+        return DataAnalysisResult(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns,
+            recommendations: recommendations
+        )
+    }
+    
+    /// Infer field type from Core Data attribute type
+    static func inferCoreDataFieldType(attributeType: NSAttributeType) -> FieldType {
+        switch attributeType {
+        case .stringAttributeType:
+            return .string
+        case .integer16AttributeType, .integer32AttributeType, .integer64AttributeType,
+             .decimalAttributeType, .doubleAttributeType, .floatAttributeType:
+            return .number
+        case .booleanAttributeType:
+            return .boolean
+        case .dateAttributeType:
+            return .date
+        case .UUIDAttributeType:
+            return .uuid
+        case .binaryDataAttributeType, .transformableAttributeType:
+            return .document
+        default:
+            return .custom
+        }
+    }
+    
+    /// Analyze with Mirror (fallback for non-Core Data or empty Core Data entities)
+    static func analyzeWithMirror<T>(_ data: T) -> DataAnalysisResult {
+        let mirror = Mirror(reflecting: data)
+        let fields = extractFields(from: mirror)
+        let complexity = calculateComplexity(fields: fields, data: data)
+        let patterns = detectPatterns(fields: fields)
+        let recommendations = generateRecommendations(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns
+        )
+        
+        return DataAnalysisResult(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns,
+            recommendations: recommendations
+        )
+    }
     
     /// Extract field information from a Mirror
     static func extractFields(from mirror: Mirror) -> [DataField] {
