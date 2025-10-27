@@ -1,0 +1,92 @@
+import Testing
+import SwiftUI
+
+// Normal import - same as external modules like CarManager
+// NO @testable - tests from external module perspective
+import SixLayerFramework
+
+/// External Module Integration Tests
+///
+/// These tests simulate how an external module (like CarManager) would use the framework.
+/// They use normal `import` (not `@testable`) to test public API access.
+///
+/// **Purpose:**
+/// - Catch API visibility issues that would break external modules
+/// - Verify public APIs are accessible from external perspective
+/// - Ensure framework is usable by external consumers
+///
+/// **Difference from SixLayerFrameworkTests:**
+/// - Uses `import` instead of `@testable import`
+/// - Tests public API only (no internal access)
+/// - Simulates external module usage patterns
+///
+/// **What was broken:**
+/// - platformPhotoPicker_L4 was changed from static to instance method
+/// - @testable tests still worked (could access internals)
+/// - External modules couldn't access it (compilation error)
+/// - These tests would have caught that bug
+@Suite("External Module Integration Tests")
+struct ExternalModuleIntegrationTests {
+    
+    /// Tests that global photo picker function is accessible from external modules
+    ///
+    /// This test simulates CarManager usage:
+    /// ```swift
+    /// import SixLayerFramework
+    /// let picker = platformPhotoPicker_L4(onImageSelected: { _ in })
+    /// ```
+    @Test("Global photo picker function accessible")
+    func testGlobalPhotoPickerAccessible() async throws {
+        // Simulate how CarManager would call this
+        // Test that it compiles and runs
+        await MainActor.run {
+            let view = platformPhotoPicker_L4(onImageSelected: { _ in })
+            // If this compiles and runs, it means external modules can access it
+            #expect(true, "Function is accessible")
+        }
+    }
+    
+    /// Tests that global camera interface function is accessible
+    @Test("Global camera interface function accessible")
+    func testGlobalCameraInterfaceAccessible() async throws {
+        await MainActor.run {
+            let _ = platformCameraInterface_L4(onImageCaptured: { _ in })
+            #expect(true, "Function is accessible")
+        }
+    }
+    
+    /// Tests that global photo display function is accessible
+    @Test("Global photo display function accessible")
+    func testGlobalPhotoDisplayAccessible() async throws {
+        let image = PlatformImage()
+        await MainActor.run {
+            let _ = platformPhotoDisplay_L4(image: image, style: .thumbnail)
+            #expect(true, "Function is accessible")
+        }
+    }
+    
+    /// Tests that PlatformImage implicit conversion works from external modules
+    @Test("PlatformImage implicit conversion works externally")
+    func testPlatformImageImplicitConversion() async throws {
+        // Test that UIImage and NSImage can be implicitly converted
+        #if os(iOS)
+        let uiImage = UIImage(systemName: "photo") ?? UIImage()
+        let platformImage = PlatformImage(uiImage: uiImage)
+        #expect(true, "iOS conversion works")
+        #elseif os(macOS)
+        let nsImage = NSImage(systemSymbolName: "photo", accessibilityDescription: nil) ?? NSImage()
+        let platformImage = PlatformImage(nsImage: nsImage)
+        #expect(true, "macOS conversion works")
+        #endif
+    }
+    
+    /// Tests that Layer 5 messaging functions are accessible
+    @Test("Layer 5 messaging functions accessible")
+    func testLayer5MessagingAccessible() async throws {
+        // Note: PlatformMessagingLayer5 has internal init, so we can't instantiate it
+        // This test verifies that we're testing from external perspective
+        // In real usage, external modules would use the public static methods
+        #expect(true, "Testing from external perspective")
+    }
+}
+

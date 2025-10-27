@@ -66,5 +66,15 @@ let package = Package(
             ]
         ),
         
+        // External integration tests - uses normal import (no @testable)
+        // Tests the framework from external module perspective
+        .testTarget(
+            name: "SixLayerFrameworkExternalIntegrationTests",
+            dependencies: [
+                "SixLayerFramework"
+            ],
+            path: "Development/Tests/SixLayerFrameworkExternalIntegrationTests"
+        ),
+        
     ]
 )
