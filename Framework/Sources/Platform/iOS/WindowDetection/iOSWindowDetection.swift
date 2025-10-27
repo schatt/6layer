@@ -57,7 +57,12 @@ public class iOSWindowDetection: ObservableObject {
             screenSize = windowScene.screen.bounds.size
             screenSizeClass = convertToSizeClass(windowSize)
             windowState = determineWindowState(windowScene, window)
-            safeAreaInsets = EdgeInsets(window.safeAreaInsets)
+            safeAreaInsets = EdgeInsets(
+                top: window.safeAreaInsets.top,
+                leading: window.safeAreaInsets.left,
+                bottom: window.safeAreaInsets.bottom,
+                trailing: window.safeAreaInsets.right
+            )
             orientation = determineOrientation(windowScene)
         }
     }
@@ -79,12 +84,13 @@ public class iOSWindowDetection: ObservableObject {
     }
     
     private func determineOrientation(_ windowScene: UIWindowScene) -> DeviceOrientation {
-        switch windowScene.interfaceOrientation {
-        case .portrait, .portraitUpsideDown:
-            return .portrait
-        case .landscapeLeft, .landscapeRight:
+        // Use size of largest window to determine orientation
+        let windowSize = windowScene.windows.first?.bounds.size ?? windowScene.screen.bounds.size
+        let isLandscape = windowSize.width > windowSize.height
+        
+        if isLandscape {
             return .landscape
-        @unknown default:
+        } else {
             return .portrait
         }
     }
