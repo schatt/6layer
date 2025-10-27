@@ -12,13 +12,13 @@ import SwiftUI
 /// - Seamless integration with platform photo services.
 /// - Accessibility features for image content and interactions.
 @MainActor
-public class PlatformPhotoComponentsLayer4 {
+public enum PlatformPhotoComponentsLayer4 {
     
     // MARK: - Camera Interface Components
     
     /// Creates a platform-specific camera interface
     @ViewBuilder
-    public func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
+    public static func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
         CameraView(onImageCaptured: onImageCaptured)
         #elseif os(macOS)
@@ -32,7 +32,7 @@ public class PlatformPhotoComponentsLayer4 {
     
     /// Creates a platform-specific photo picker
     @ViewBuilder
-    public func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
+    public static func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
         PhotoPickerView(onImageSelected: onImageSelected)
         #elseif os(macOS)
@@ -46,7 +46,7 @@ public class PlatformPhotoComponentsLayer4 {
     
     /// Creates a platform-specific photo display
     @ViewBuilder
-    public func platformPhotoDisplay_L4(image: PlatformImage?, style: PhotoDisplayStyle) -> some View {
+    public static func platformPhotoDisplay_L4(image: PlatformImage?, style: PhotoDisplayStyle) -> some View {
         Group {
             if let image = image {
                 PhotoDisplayView(image: image, style: style)
@@ -62,7 +62,7 @@ public class PlatformPhotoComponentsLayer4 {
 #if os(iOS)
 import UIKit
 
-struct CameraView: UIViewControllerRepresentable {
+public struct CameraView: UIViewControllerRepresentable {
     let onImageCaptured: (PlatformImage) -> Void
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -94,7 +94,7 @@ struct CameraView: UIViewControllerRepresentable {
     }
 }
 
-struct PhotoPickerView: UIViewControllerRepresentable {
+public struct PhotoPickerView: UIViewControllerRepresentable {
     let onImageSelected: (PlatformImage) -> Void
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -129,29 +129,30 @@ struct PhotoPickerView: UIViewControllerRepresentable {
 #elseif os(macOS)
 import AppKit
 
-struct MacCameraView: NSViewControllerRepresentable {
+public struct MacCameraView: NSViewControllerRepresentable {
     let onImageCaptured: (PlatformImage) -> Void
     
-    func makeNSViewController(context: Context) -> NSViewController {
+    public func makeNSViewController(context: Context) -> NSViewController {
         let controller = NSViewController()
         let button = NSButton(title: "Take Photo", target: context.coordinator, action: #selector(Coordinator.takePhoto))
         controller.view = button
         return controller
     }
     
-    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {}
+    public func updateNSViewController(_ nsViewController: NSViewController, context: Context) {}
     
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject {
+    public class Coordinator: NSObject {
         let parent: MacCameraView
         
         init(_ parent: MacCameraView) {
             self.parent = parent
         }
         
+        @MainActor
         @objc func takePhoto() {
             // Stub implementation - would integrate with macOS camera APIs
             let image = PlatformImage.createPlaceholder()
@@ -160,29 +161,30 @@ struct MacCameraView: NSViewControllerRepresentable {
     }
 }
 
-struct MacPhotoPickerView: NSViewControllerRepresentable {
+public struct MacPhotoPickerView: NSViewControllerRepresentable {
     let onImageSelected: (PlatformImage) -> Void
     
-    func makeNSViewController(context: Context) -> NSViewController {
+    public func makeNSViewController(context: Context) -> NSViewController {
         let controller = NSViewController()
         let button = NSButton(title: "Choose Photo", target: context.coordinator, action: #selector(Coordinator.choosePhoto))
         controller.view = button
         return controller
     }
     
-    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {}
+    public func updateNSViewController(_ nsViewController: NSViewController, context: Context) {}
     
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject {
+    public class Coordinator: NSObject {
         let parent: MacPhotoPickerView
         
         init(_ parent: MacPhotoPickerView) {
             self.parent = parent
         }
         
+        @MainActor
         @objc func choosePhoto() {
             // Stub implementation - would integrate with macOS photo picker APIs
             let image = PlatformImage.createPlaceholder()
@@ -273,4 +275,27 @@ struct AnyShape: Shape, @unchecked Sendable {
     func path(in rect: CGRect) -> Path {
         return _path(rect)
     }
+}
+
+// MARK: - Convenience Functions (Global)
+
+/// Creates a platform-specific photo picker (convenience wrapper)
+@ViewBuilder
+@MainActor
+public func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
+    PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
+}
+
+/// Creates a platform-specific camera interface (convenience wrapper)
+@ViewBuilder
+@MainActor
+public func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
+    PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
+}
+
+/// Creates a platform-specific photo display (convenience wrapper)
+@ViewBuilder
+@MainActor
+public func platformPhotoDisplay_L4(image: PlatformImage?, style: PhotoDisplayStyle) -> some View {
+    PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: image, style: style)
 }

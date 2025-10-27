@@ -19,21 +19,18 @@ public func platformPhotoCapture_L1(
     // Determine the best capture strategy based on purpose and context
     let strategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
     
-    // Create Layer 4 component instance
-    let photoComponents = PlatformPhotoComponentsLayer4()
-    
     switch strategy {
     case .camera:
         // Use camera interface for direct capture
-        photoComponents.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
+        PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
     case .photoLibrary:
         // Use photo library picker
-        photoComponents.platformPhotoPicker_L4(onImageSelected: onImageCaptured)
+        PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageCaptured)
     case .both:
         // Provide both options
         VStack {
-            photoComponents.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
-            photoComponents.platformPhotoPicker_L4(onImageSelected: onImageCaptured)
+            PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
+            PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageCaptured)
         }
     }
 }
@@ -50,11 +47,8 @@ public func platformPhotoSelection_L1(
     // Determine optimal layout for selection interface
     let layout = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
     
-    // Create Layer 4 component instance
-    let photoComponents = PlatformPhotoComponentsLayer4()
-    
     // Use photo picker with optimized layout
-    photoComponents.platformPhotoPicker_L4(onImageSelected: onImageSelected)
+    PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
         .frame(width: layout.width, height: layout.height)
 }
 
@@ -73,11 +67,8 @@ public func platformPhotoDisplay_L1(
     // Determine optimal layout
     let layout = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
     
-    // Create Layer 4 component instance
-    let photoComponents = PlatformPhotoComponentsLayer4()
-    
     // Create display with semantic styling
-    photoComponents.platformPhotoDisplay_L4(
+    PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
         image: image,
         style: displayStyleForPurpose(purpose)
     )
