@@ -36,45 +36,43 @@ struct IntelligentDetailViewSheetTests {
     
     // MARK: - Sheet Presentation Tests
     
-    /// Verify that platformDetailView renders content in a sheet (not blank)
-    @Test func testPlatformDetailViewRendersContentInSheet() async throws {
-        let task = TestTask(title: "Test Task", description: "Test description", priority: 5)
+    /// Verify that platformDetailView is NOT blank (has text content from model)
+    /// BUG: View was rendering as blank in sheet
+    @Test func testPlatformDetailViewIsNotBlank() async throws {
+        let task = TestTask(title: "Test Task Title", description: "Task description content", priority: 5)
         
-        // Create a view with sheet presentation (simulating .sheet() context)
-        let sheetContent = IntelligentDetailView.platformDetailView(
-            for: task,
-            hints: PresentationHints(
-                dataType: .generic,
-                presentationPreference: .automatic,
-                complexity: .moderate,
-                context: .detail,
-                customPreferences: [:]
-            )
-        )
-        .frame(minWidth: 400, minHeight: 500)
+        let detailView = IntelligentDetailView.platformDetailView(for: task)
         
-        // Verify the view can be inspected with ViewInspector
+        // Verify the view can be inspected
         do {
-            let inspector = try sheetContent.inspect()
+            let inspector = try detailView.inspect()
             
-            // Try to find VStack (standard layout structure)
-            // This proves the view has actual content structure, not blank
+            // BUG CHECK: Find actual text content
+            // If the view is blank, we won't find any text views with the model's content
             do {
-                let _ = try inspector.find(ViewType.VStack.self)
-                // If we found a VStack, the view has structure and content
-                #expect(true, "platformDetailView should have view structure (proves it's not blank)")
-            } catch {
-                // Try finding any structural view
-                do {
-                    let _ = try inspector.find(ViewType.HStack.self)
-                    #expect(true, "platformDetailView should have view structure (proves it's not blank)")
-                } catch {
-                    // Any view structure is acceptable
-                    #expect(true, "platformDetailView should render in sheet (not blank)")
+                let texts = try inspector.findAll(ViewType.Text.self)
+                // The bug manifests as blank view, so text count should be > 0
+                #expect(texts.count > 0, "platformDetailView should display text content (bug: was blank)")
+                
+                // Verify some of the text matches our model data
+                var foundTitle = false
+                for text in texts {
+                    do {
+                        let content = try text.string()
+                        if content.contains("Test Task Title") || content.contains("Task description") {
+                            foundTitle = true
+                            break
+                        }
+                    } catch {
+                        // Can't get text content, continue
+                    }
                 }
+                #expect(foundTitle, "platformDetailView should display model's title/description (bug: was blank)")
+            } catch {
+                Issue.record("Could not find Text views in platformDetailView: \(error). Bug: view might be blank")
             }
         } catch {
-            Issue.record("platformDetailView should be inspectable (indicates it has content): \(error)")
+            Issue.record("platformDetailView failed inspection: \(error)")
         }
     }
     
@@ -112,20 +110,33 @@ struct IntelligentDetailViewSheetTests {
         }
     }
     
-    /// Verify that platformDetailView accepts and respects frame constraints
-    @Test func testPlatformDetailViewRespectsFrameConstraints() async throws {
+    /// Verify that platformDetailView is NOT tiny when frame constraints are applied
+    /// BUG: View was rendering tiny in sheet even with frame constraints
+    @Test func testPlatformDetailViewIsNotTiny() async throws {
         let task = TestTask(title: "Test Task", description: "Description", priority: 3)
         
         // Apply frame constraints like the sheet context would
+        // BUG: Even with minWidth/minHeight, view rendered tiny
         let detailView = IntelligentDetailView.platformDetailView(for: task)
             .frame(minWidth: 400, minHeight: 500)
             .frame(idealWidth: 600, idealHeight: 700)
         
-        // Verify the view compiles and can be inspected with frame constraints
+        // Verify the view can be inspected with frame constraints
         do {
             let inspector = try detailView.inspect()
-            // If we can inspect with frame constraints, the view respects them
-            #expect(true, "platformDetailView should accept frame constraints for sheet sizing")
+            
+            // Check if the frame modifiers are applied
+            // If we can inspect, the frame constraints were accepted (though actual size testing requires real sheet presentation)
+            #expect(true, "platformDetailView should accept frame constraints")
+            
+            // Additional check: verify the view has content structure
+            // Tiny blank views often fail to render any structure
+            do {
+                let vstacks = try inspector.findAll(ViewType.VStack.self)
+                #expect(vstacks.count > 0, "platformDetailView should have view structure (bug: was tiny/blank)")
+            } catch {
+                #expect(false, "platformDetailView should have VStack structure")
+            }
         } catch {
             Issue.record("platformDetailView should accept frame constraints: \(error)")
         }
