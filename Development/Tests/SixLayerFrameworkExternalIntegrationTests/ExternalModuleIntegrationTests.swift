@@ -33,16 +33,25 @@ struct ExternalModuleIntegrationTests {
     /// This test simulates CarManager usage:
     /// ```swift
     /// import SixLayerFramework
-    /// let picker = platformPhotoPicker_L4(onImageSelected: { _ in })
+    /// var selectedImage: PlatformImage?
+    /// let picker = platformPhotoPicker_L4(onImageSelected: { image in selectedImage = image })
     /// ```
     @Test("Global photo picker function accessible")
     func testGlobalPhotoPickerAccessible() async throws {
         // Simulate how CarManager would call this
-        // Test that it compiles and runs
         await MainActor.run {
-            let view = platformPhotoPicker_L4(onImageSelected: { _ in })
-            // If this compiles and runs, it means external modules can access it
+            var selectedImage: PlatformImage?
+            
+            let view = platformPhotoPicker_L4(onImageSelected: { image in
+                selectedImage = image
+            })
+            
+            // Test that it compiles and creates a view
             #expect(true, "Function is accessible")
+            
+            // Test that callback signature is accessible
+            // In real usage, external modules would call this with their own callback
+            #expect(true, "Callback can be provided")
         }
     }
     
@@ -50,8 +59,18 @@ struct ExternalModuleIntegrationTests {
     @Test("Global camera interface function accessible")
     func testGlobalCameraInterfaceAccessible() async throws {
         await MainActor.run {
-            let _ = platformCameraInterface_L4(onImageCaptured: { _ in })
+            var capturedImage: PlatformImage?
+            
+            let _ = platformCameraInterface_L4(onImageCaptured: { image in
+                capturedImage = image
+            })
+            
+            // Test that it compiles and creates a view
             #expect(true, "Function is accessible")
+            
+            // Test that callback signature is accessible
+            // In real usage, external modules would call this with their own callback
+            #expect(true, "Callback can be provided")
         }
     }
     
@@ -96,8 +115,15 @@ struct ExternalModuleIntegrationTests {
             // Test that photo components apply accessibility identifiers
             // These should work from an external module perspective
             
-            let cameraView = platformCameraInterface_L4(onImageCaptured: { _ in })
-            let pickerView = platformPhotoPicker_L4(onImageSelected: { _ in })
+            var capturedImage: PlatformImage?
+            var selectedImage: PlatformImage?
+            
+            let cameraView = platformCameraInterface_L4(onImageCaptured: { image in
+                capturedImage = image
+            })
+            let pickerView = platformPhotoPicker_L4(onImageSelected: { image in
+                selectedImage = image
+            })
             let displayView = platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
             
             // If these compile and create views, the API is accessible
@@ -133,17 +159,29 @@ struct ExternalModuleIntegrationTests {
                 language: .english
             )
             
+            var editedText: String?
+            var editedBounds: CGRect?
+            var deletedBounds: CGRect?
+            
             // Test that OCROverlayView can be created from external module
             let ocrView = OCROverlayView(
                 image: testImage,
                 result: testResult,
                 configuration: OCROverlayConfiguration(),
-                onTextEdit: { _, _ in },
-                onTextDelete: { _ in }
+                onTextEdit: { text, bounds in
+                    editedText = text
+                    editedBounds = bounds
+                },
+                onTextDelete: { bounds in
+                    deletedBounds = bounds
+                }
             )
             
             // If this compiles and creates a view, the API is accessible
             #expect(true, "OCROverlayView accessible and creating views")
+            
+            // Test that callback signatures are accessible
+            #expect(true, "Callbacks can be provided")
         }
     }
 }
