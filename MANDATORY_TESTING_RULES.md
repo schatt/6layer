@@ -630,6 +630,62 @@ XCTAssertTrue(hostingController.view.layer?.isKind(of: CAMetalLayer.self) ?? fal
 - ❌ Doesn't test actual functionality
 - ❌ Wouldn't catch bugs if the functionality was broken
 
+## Rule 8: External Module Integration Testing
+
+### 8.1 Dual Test Module Strategy
+- **MANDATORY**: Every function touched MUST be tested in BOTH test modules
+- **MANDATORY**: Internal tests use `@testable import` for implementation testing
+- **MANDATORY**: External tests use normal `import` for public API visibility testing
+- **MANDATORY**: No function can be released without external integration tests
+
+### 8.2 Test Module Structure
+```swift
+// SixLayerFrameworkTests - Internal testing with @testable
+@testable import SixLayerFramework
+
+// SixLayerFrameworkExternalIntegrationTests - External testing
+import SixLayerFramework  // NO @testable
+```
+
+### 8.3 External Integration Test Requirements
+- **MANDATORY**: Every public API MUST be tested from external perspective
+- **MANDATORY**: Tests must verify functions are accessible from external modules
+- **MANDATORY**: Tests must catch API visibility issues (like v4.6.5 bug)
+- **MANDATORY**: Every function touched MUST have corresponding external test
+
+### 8.4 External Test Pattern
+```swift
+// ✅ REQUIRED: External integration test for every function
+@Suite("External Module Integration Tests")
+struct ExternalModuleIntegrationTests {
+    
+    @Test("Platform photo picker accessible from external modules")
+    func testPlatformPhotoPickerAccessible() async throws {
+        // Simulate external module usage
+        await MainActor.run {
+            let _ = platformPhotoPicker_L4(onImageSelected: { _ in })
+            #expect(true, "Function is accessible")
+        }
+    }
+    
+    // Every function that's touched MUST have a test here
+}
+```
+
+### 8.5 When to Add External Tests
+- **MANDATORY**: When you modify any file, add corresponding external test
+- **MANDATORY**: When you add a new public function, add external test
+- **MANDATORY**: When you fix an API visibility bug, add external test
+- **MANDATORY**: When you refactor public APIs, update external tests
+
+### 8.6 What We Learned from v4.6.5
+The `platformPhotoPicker_L4` bug (v4.6.5):
+- ❌ Internal tests passed (using `@testable`)
+- ❌ External modules couldn't access it (normal `import`)
+- ✅ External integration tests would have caught this
+
+**MANDATORY**: External integration tests catch bugs that `@testable` tests miss.
+
 ## Summary
 
 **MANDATORY**: Every function must be tested to ensure:
@@ -640,7 +696,8 @@ XCTAssertTrue(hostingController.view.layer?.isKind(of: CAMetalLayer.self) ?? fal
 5. ✅ Real-world usage scenarios are covered
 6. ✅ Tests actually validate behavior, not just existence
 7. ✅ Tests are functional, not cosmetic
+8. ✅ Public APIs are accessible from external modules (external integration tests)
 
-**MANDATORY**: This ensures that bugs like the automatic accessibility identifier failure cannot go undetected.
+**MANDATORY**: This ensures that bugs like the automatic accessibility identifier failure and the v4.6.5 API visibility issue cannot go undetected.
 
 **MANDATORY**: No function can be released without meeting ALL these requirements.
