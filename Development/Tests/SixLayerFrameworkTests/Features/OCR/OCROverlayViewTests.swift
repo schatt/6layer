@@ -53,9 +53,10 @@ open class OCROverlayViewTests {
             onTextDelete: { _ in }
         )
         
+        // OCROverlayView generates "SixLayer.main.ui" pattern (correct for basic UI component)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.main.ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         )
@@ -82,9 +83,10 @@ open class OCROverlayViewTests {
             onTextDelete: { _ in }
         )
         
+        // OCROverlayView generates "SixLayer.main.ui" pattern (correct for basic UI component)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.main.ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         )

@@ -25,6 +25,7 @@ public struct OCROverlayView: View {
     public var body: some View {
         Text("OCR Overlay View (Stub)")
             .foregroundColor(.secondary)
+            .automaticAccessibilityIdentifiers()
     }
     
     // MARK: - Interactive Methods (Red-phase stubs)
