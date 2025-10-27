@@ -152,7 +152,7 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     
     /// Generate UI test code and save to file
     public func generateUITestCodeToFile() throws -> String {
-        let testCode = """
+        let _ = """
         // Generated UI test code
         let app = XCUIApplication()
         app.launch()

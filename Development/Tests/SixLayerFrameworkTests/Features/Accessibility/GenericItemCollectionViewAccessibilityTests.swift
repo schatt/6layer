@@ -1,9 +1,12 @@
 import Testing
 
 import SwiftUI
-import AppKit
 import ViewInspector
 @testable import SixLayerFramework
+
+#if os(macOS)
+import AppKit
+#endif
 
 // MARK: - Mock Data for Testing
 

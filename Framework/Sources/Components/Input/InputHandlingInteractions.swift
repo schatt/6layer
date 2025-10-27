@@ -190,7 +190,7 @@ public class HapticFeedbackManager {
     }
     
     #if os(iOS)
-    private func triggerIOSFeedback(_ feedback: PlatformHapticFeedback) {
+    @MainActor private func triggerIOSFeedback(_ feedback: PlatformHapticFeedback) {
         switch feedback {
         case .light:
             let impactFeedback = UIImpactFeedbackGenerator(style: .light)

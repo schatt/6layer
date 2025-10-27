@@ -182,6 +182,7 @@ private func choosePerformanceStrategy(complexity: ContentComplexity, capabiliti
     }
 }
 
+@MainActor
 private func getCurrentDeviceCapabilities() -> DeviceCapabilities {
     return DeviceCapabilities()
 }
@@ -264,6 +265,7 @@ public struct DeviceCapabilities {
     public let orientation: DeviceOrientation
     public let memoryAvailable: Int64
     
+    @MainActor
     public init() {
         #if os(iOS)
         self.screenSize = UIScreen.main.bounds.size
@@ -326,6 +328,7 @@ private func generateLayoutReasoning(approach: LayoutApproach, columns: Int, spa
 
 /// Determine optimal card layout for the given content and device
 /// Layer 2: Layout Decision
+@MainActor
     func determineOptimalCardLayout_L2(
     contentCount: Int,
     screenWidth: CGFloat,
@@ -376,6 +379,7 @@ private func generateLayoutReasoning(approach: LayoutApproach, columns: Int, spa
 }
 
 /// Analyze card content for layout decisions
+@MainActor
 private func analyzeCardContent(
     count: Int,
     width: CGFloat,

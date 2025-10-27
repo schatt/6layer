@@ -37,11 +37,13 @@ public class VoiceOverManager: ObservableObject {
     @Published public var isVoiceOverRunning: Bool = false
     @Published public var lastAnnouncement: String = ""
     
+    @MainActor
     public init() {
         checkVoiceOverStatus()
     }
     
-        func announce(_ message: String, priority: VoiceOverPriority = .normal) {
+    @MainActor
+    func announce(_ message: String, priority: VoiceOverPriority = .normal) {
         lastAnnouncement = message
         
         #if os(iOS)
@@ -60,6 +62,7 @@ public class VoiceOverManager: ObservableObject {
         #endif
     }
     
+    @MainActor
     private func checkVoiceOverStatus() {
         #if os(iOS)
         isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
@@ -134,10 +137,12 @@ public class HighContrastManager: ObservableObject {
     @Published public var isHighContrastEnabled: Bool = false
     @Published public var contrastLevel: ContrastLevel = .normal
     
+    @MainActor
     public init() {
         checkHighContrastStatus()
     }
     
+    @MainActor
     private func checkHighContrastStatus() {
         #if os(iOS)
         isHighContrastEnabled = UIAccessibility.isDarkerSystemColorsEnabled

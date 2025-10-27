@@ -262,7 +262,7 @@ open class EnhancedDeviceDetectionTests: BaseTestClass {
     
     // MARK: - Platform-Specific Tests
     
-    @Test func testPlatformSpecificCapabilities() {
+    @Test @MainActor func testPlatformSpecificCapabilities() {
         // Given - Create capabilities using the actual platform detection
         let capabilities = EnhancedDeviceCapabilities()
         

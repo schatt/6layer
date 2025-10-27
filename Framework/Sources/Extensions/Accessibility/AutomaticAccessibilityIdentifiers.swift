@@ -376,7 +376,7 @@ public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
 public extension View {
     /// Apply automatic accessibility identifier modifier
     /// TDD RED PHASE: This is a stub implementation for testing
-    public func automaticAccessibilityIdentifierModifier() -> some View {
+    func automaticAccessibilityIdentifierModifier() -> some View {
         self.modifier(AutomaticAccessibilityIdentifierModifier())
     }
 }

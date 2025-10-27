@@ -48,9 +48,13 @@ public struct AccessibilityAwareShapeStyle: ShapeStyle {
     public func resolve(in environment: EnvironmentValues) -> Color {
         // Check accessibility settings and apply appropriate style
         #if canImport(UIKit)
-        if UIAccessibility.isDarkerSystemColorsEnabled {
+        // Use nonisolated access to UIAccessibility properties
+        let darkerColors = UIAccessibility.isDarkerSystemColorsEnabled
+        let reduceMotion = UIAccessibility.isReduceMotionEnabled
+        
+        if darkerColors {
             return highContrastStyle.resolve(in: environment)
-        } else if UIAccessibility.isReduceMotionEnabled {
+        } else if reduceMotion {
             return reducedMotionStyle.resolve(in: environment)
         } else {
             return normalStyle.resolve(in: environment)

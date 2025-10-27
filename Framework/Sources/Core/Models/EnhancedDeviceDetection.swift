@@ -196,6 +196,7 @@ public struct EnhancedDeviceCapabilities {
         public let pixelDensity: CGFloat
         public let safeAreaInsets: EdgeInsets
         
+        @MainActor
         public init() {
             #if os(iOS)
             let screen = UIScreen.main
@@ -377,6 +378,7 @@ public func getCurrentDeviceCapabilities() -> EnhancedDeviceCapabilities {
 }
 
 /// Get device capabilities for a specific screen size (useful for testing)
+@MainActor
 public func getDeviceCapabilitiesForScreenSize(
     _ size: CGSize,
     deviceType: DeviceType,

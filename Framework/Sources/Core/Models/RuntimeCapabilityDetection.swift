@@ -345,6 +345,7 @@ public struct RuntimeCapabilityDetection {
     }
     
     #if os(iOS)
+    @MainActor
     private static func detectiOSHoverSupport() -> Bool {
         // Check if we're on iPad with Apple Pencil or hover-capable device
         if UIDevice.current.userInterfaceIdiom == .pad {
