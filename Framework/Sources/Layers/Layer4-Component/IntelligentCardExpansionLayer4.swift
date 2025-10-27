@@ -766,61 +766,50 @@ public struct ListCardComponent<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Image(systemName: cardIcon)
-                    .font(.title2)
-                    .foregroundColor(cardColor)
+        HStack {
+            Image(systemName: cardIcon)
+                .font(.title2)
+                .foregroundColor(cardColor)
+            
+            VStack(alignment: .leading) {
+                Text(cardTitle)
+                    .font(.headline)
+                    .lineLimit(1)
+                    .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
                 
-                VStack(alignment: .leading) {
-                    Text(cardTitle)
-                        .font(.headline)
+                if let subtitle = cardSubtitle {
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                         .lineLimit(1)
-                        .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
-                    
-                    if let subtitle = cardSubtitle {
-                        Text(subtitle)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                    }
                 }
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .padding()
-            .background(.regularMaterial)
-            .onTapGesture {
-                onItemSelected?(item)
             }
             
-            // Action buttons (Edit/Delete)
-            if onItemDeleted != nil || onItemEdited != nil {
-                HStack(spacing: 12) {
-                    if let onItemEdited = onItemEdited {
-                        Button("Edit") {
-                            onItemEdited(item)
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                    
-                    if let onItemDeleted = onItemDeleted {
-                        Button("Delete") {
-                            onItemDeleted(item)
-                        }
-                        .buttonStyle(.bordered)
-                        .foregroundColor(.red)
-                    }
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+        .padding()
+        .background(.regularMaterial)
+        .cornerRadius(8)
+        .onTapGesture {
+            onItemSelected?(item)
+        }
+        .contextMenu {
+            if let onItemEdited = onItemEdited {
+                Button("Edit") {
+                    onItemEdited(item)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 8)
+            }
+            
+            if let onItemDeleted = onItemDeleted {
+                Button("Delete", role: .destructive) {
+                    onItemDeleted(item)
+                }
             }
         }
-        .cornerRadius(8)
         .accessibilityElement(children: .combine)
         .accessibilityAction(named: "Activate") {
             onItemSelected?(item)
