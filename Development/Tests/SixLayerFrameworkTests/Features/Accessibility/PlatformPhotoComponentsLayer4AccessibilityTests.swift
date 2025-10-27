@@ -20,10 +20,10 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         platform: SixLayerPlatform
     ) async {
         // Given
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When
-        let view = photoComponents.platformPhotoPicker_L4(
+        let view = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(
             onImageSelected: { _ in }
         )
         
@@ -71,12 +71,12 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         platform: SixLayerPlatform
     ) async {
         // Given
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         let testImage = PlatformImage.createPlaceholder()
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            let view = photoComponents.platformPhotoDisplay_L4(
+            let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
                 image: testImage,
                 style: .thumbnail
             )
@@ -101,8 +101,8 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            let photoComponents = PlatformPhotoComponentsLayer4()
-            let view = photoComponents.platformPhotoDisplay_L4(
+            
+            let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
                 image: testPhoto,
                 style: .thumbnail
             )
@@ -125,8 +125,8 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         
         // When & Then
         let hasAccessibilityID = await MainActor.run {
-            let photoComponents = PlatformPhotoComponentsLayer4()
-            let view = photoComponents.platformPhotoDisplay_L4(
+            
+            let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
                 image: testPhoto,
                 style: .thumbnail
             )

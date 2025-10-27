@@ -63,8 +63,8 @@ open class PhotoComponentsLayer4Tests {
             var capturedImage: PlatformImage?
             
             // When: Call Layer 4 function
-            let photoComponents = PlatformPhotoComponentsLayer4()
-            let result = photoComponents.platformCameraInterface_L4(
+            
+            let result = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
                 onImageCaptured: { image in
                     capturedImage = image
                 }
@@ -123,8 +123,8 @@ open class PhotoComponentsLayer4Tests {
             var selectedImage: PlatformImage?
             
             // When: Call Layer 4 function
-            let photoComponents = PlatformPhotoComponentsLayer4()
-            let result = photoComponents.platformPhotoPicker_L4(
+            
+            let result = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(
                 onImageSelected: { image in
                     selectedImage = image
                 }
@@ -198,8 +198,8 @@ open class PhotoComponentsLayer4Tests {
         
         await MainActor.run {
             // When: Call Layer 4 function
-            let photoComponents = PlatformPhotoComponentsLayer4()
-            let result = photoComponents.platformPhotoDisplay_L4(
+            
+            let result = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
                 image: testImage,
                 style: style
             )

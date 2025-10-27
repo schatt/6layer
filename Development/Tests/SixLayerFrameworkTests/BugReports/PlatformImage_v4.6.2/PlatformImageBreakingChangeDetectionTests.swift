@@ -199,17 +199,17 @@ open class PlatformImageBreakingChangeDetectionTests {
     @Test func testProductionCodePath_ExactBrokenExecution() {
         #if os(iOS)
         // Given: The exact production code path that was broken
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
         
         // When: Execute the exact production code that was broken
         // This is the EXACT code path from the bug report
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { image in
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         
@@ -234,15 +234,15 @@ open class PlatformImageBreakingChangeDetectionTests {
         
         #elseif os(macOS)
         // macOS equivalent test
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
         
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { image in
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         

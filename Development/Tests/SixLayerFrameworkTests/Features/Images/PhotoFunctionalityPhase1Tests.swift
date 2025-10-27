@@ -249,8 +249,8 @@ open class PhotoFunctionalityPhase1Tests {
         let onImageCaptured: (PlatformImage) -> Void = { _ in }
         
         // When: Creating camera interface
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let cameraInterface = photoComponents.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
+        
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
         
         // Then: Camera interface should be created and be hostable
         #expect(cameraInterface != nil, "Camera interface should be created")
@@ -265,10 +265,10 @@ open class PhotoFunctionalityPhase1Tests {
         // Given: Image selection callback
         var _: PlatformImage?
         let onImageSelected: (PlatformImage) -> Void = { _ in }
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Creating photo picker
-        let photoPicker = photoComponents.platformPhotoPicker_L4(onImageSelected: onImageSelected)
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
         
         // Then: Photo picker should be created and be hostable
         #expect(photoPicker != nil, "Photo picker should be created")
@@ -282,10 +282,10 @@ open class PhotoFunctionalityPhase1Tests {
     func testPlatformPhotoDisplayL4() {
         // Given: A PlatformImage
         let testImage = createTestPlatformImage()
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Creating photo display
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
         
         // Then: Photo display should be created and be hostable
         #expect(photoDisplay != nil, "Photo display should be created")

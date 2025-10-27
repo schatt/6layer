@@ -86,11 +86,11 @@ open class PlatformImageImplicitConversionTests {
         #if os(iOS)
         // Given: UIImage and Layer 4 components
         let uiImage = createTestUIImage()
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Use implicit conversion in callback
         var capturedImage: PlatformImage?
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
@@ -109,11 +109,11 @@ open class PlatformImageImplicitConversionTests {
         #elseif os(macOS)
         // Given: NSImage and Layer 4 components
         let nsImage = createTestNSImage()
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Use implicit conversion in callback
         var capturedImage: PlatformImage?
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
@@ -148,8 +148,8 @@ open class PlatformImageImplicitConversionTests {
         #expect(platformImage.uiImage == uiImage, "Implicit conversion should preserve UIImage")
         
         // Test that converted image can be used in framework
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -169,8 +169,8 @@ open class PlatformImageImplicitConversionTests {
         #expect(platformImage.nsImage == nsImage, "Implicit conversion should preserve NSImage")
         
         // Test that converted image can be used in framework
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )

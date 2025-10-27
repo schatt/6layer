@@ -45,8 +45,8 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         var capturedImage: PlatformImage?
         var callbackExecuted = false
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
             callbackExecuted = true
         }
@@ -76,8 +76,8 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         // Given: Camera interface and real image data
         var capturedImage: PlatformImage?
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
@@ -103,8 +103,8 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         var selectedImage: PlatformImage?
         var callbackExecuted = false
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { image in
+        
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
             callbackExecuted = true
         }
@@ -134,8 +134,8 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         // Given: Photo picker and real image data
         var selectedImage: PlatformImage?
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { image in
+        
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         
@@ -161,8 +161,8 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         let realImage = createRealPlatformImage()
         let style = PhotoDisplayStyle.thumbnail
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: realImage,
             style: style
         )

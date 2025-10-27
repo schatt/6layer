@@ -42,11 +42,11 @@ open class TestingFailureDemonstrationTests {
         var callbackExecuted = false
         var capturedImage: PlatformImage?
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Use our current testing approach
         // This is what we actually do in our tests
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             callbackExecuted = true
             capturedImage = image
         }
@@ -69,11 +69,11 @@ open class TestingFailureDemonstrationTests {
         var callbackExecuted = false
         var capturedImage: PlatformImage?
         
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Use proper testing approach
         // This is what we SHOULD have been doing
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             callbackExecuted = true
             capturedImage = image
         }
@@ -126,8 +126,8 @@ open class TestingFailureDemonstrationTests {
         #endif
         
         // When: Test what we currently test (view creation)
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let view = photoComponents.platformCameraInterface_L4 { _ in }
+        
+        let view = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { _ in }
         
         // This is what our current tests verify
         #expect(view != nil, "Current tests verify view creation")
@@ -189,8 +189,8 @@ open class TestingFailureDemonstrationTests {
         // Given: Our testing approach vs proper testing approach
         
         // Our current approach: Test the wrapper
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let view = photoComponents.platformCameraInterface_L4 { _ in }
+        
+        let view = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { _ in }
         
         // What we test: View creation
         #expect(view != nil, "We test view creation")

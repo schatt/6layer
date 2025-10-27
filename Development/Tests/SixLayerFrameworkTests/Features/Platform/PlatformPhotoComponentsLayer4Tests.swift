@@ -35,8 +35,8 @@ open class PlatformPhotoComponentsLayer4Tests {
     }
     
     @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let view = photoComponents.platformCameraInterface_L4(
+        
+        let view = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
             onImageCaptured: { _ in }
         )
         
@@ -51,8 +51,8 @@ open class PlatformPhotoComponentsLayer4Tests {
     }
     
     @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let view = photoComponents.platformCameraInterface_L4(
+        
+        let view = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
             onImageCaptured: { _ in }
         )
         

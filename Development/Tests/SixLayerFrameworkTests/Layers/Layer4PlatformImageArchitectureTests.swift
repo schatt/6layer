@@ -41,18 +41,18 @@ open class Layer4PlatformImageArchitectureTests {
     /// METHODOLOGY: Test callback parameter types and behavior
     @Test func testLayer4CallbacksUsePlatformImageOnly() {
         // Given: Layer 4 components
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Set up callbacks with PlatformImage
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
         
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             // image parameter should be PlatformImage, not UIImage/NSImage
             capturedImage = image
         }
         
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { image in
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             // image parameter should be PlatformImage, not UIImage/NSImage
             selectedImage = image
         }
@@ -124,8 +124,8 @@ open class Layer4PlatformImageArchitectureTests {
         #expect(platformImage.uiImage == uiImage, "UIImage → PlatformImage conversion should work")
         
         // Test that Layer 4 can work with the converted PlatformImage
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -143,8 +143,8 @@ open class Layer4PlatformImageArchitectureTests {
         #expect(platformImage.nsImage == nsImage, "NSImage → PlatformImage conversion should work")
         
         // Test that Layer 4 can work with the converted PlatformImage
-        let photoComponents = PlatformPhotoComponentsLayer4()
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -158,13 +158,13 @@ open class Layer4PlatformImageArchitectureTests {
     /// METHODOLOGY: Test that Layer 4 only works with PlatformImage
     @Test func testLayer4DoesNotExposePlatformSpecificTypes() {
         // Given: Layer 4 components
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         let platformImage = createTestPlatformImage()
         
         // When: Use Layer 4 APIs
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { _ in }
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { _ in }
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { _ in }
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { _ in }
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -179,8 +179,8 @@ open class Layer4PlatformImageArchitectureTests {
         // Verify that Layer 4 callbacks only accept PlatformImage
         // (This would be a compilation error if Layer 4 exposed platform-specific types)
         let testCallback: (PlatformImage) -> Void = { _ in }
-        let _ = photoComponents.platformCameraInterface_L4(onImageCaptured: testCallback)
-        let _ = photoComponents.platformPhotoPicker_L4(onImageSelected: testCallback)
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: testCallback)
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: testCallback)
     }
     
     /// BUSINESS PURPOSE: Verify Layer 4 follows currency exchange model
@@ -202,10 +202,10 @@ open class Layer4PlatformImageArchitectureTests {
         #endif
         
         // Then: Layer 4 should only work with PlatformImage (dollars in the country)
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // Test that Layer 4 accepts PlatformImage directly
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -214,7 +214,7 @@ open class Layer4PlatformImageArchitectureTests {
         
         // Test that Layer 4 callbacks work with PlatformImage
         var callbackImage: PlatformImage?
-        let _ = photoComponents.platformCameraInterface_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             callbackImage = image
         }
         

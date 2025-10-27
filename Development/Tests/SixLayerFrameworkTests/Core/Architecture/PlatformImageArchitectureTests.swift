@@ -48,7 +48,7 @@ open class PlatformImageArchitectureTests {
         #endif
         
         // When: Try to use platform-specific types with framework APIs
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // Then: Framework should only work with PlatformImage
         // This test ensures the framework enforces PlatformImage-only usage
@@ -57,7 +57,7 @@ open class PlatformImageArchitectureTests {
         // Test that framework doesn't accept UIImage directly
         // (This would be a compilation error if we tried to pass UIImage)
         let platformImage = PlatformImage(uiImage: uiImage)
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             // image parameter should be PlatformImage, not UIImage
             #expect(image is PlatformImage, "Framework callback should receive PlatformImage")
         }
@@ -65,7 +65,7 @@ open class PlatformImageArchitectureTests {
         #elseif os(macOS)
         // Test that framework doesn't accept NSImage directly
         let platformImage = PlatformImage(nsImage: nsImage)
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             // image parameter should be PlatformImage, not NSImage
             #expect(image is PlatformImage, "Framework callback should receive PlatformImage")
         }
@@ -113,17 +113,17 @@ open class PlatformImageArchitectureTests {
     /// METHODOLOGY: Test callback parameter types
     @Test func testFrameworkCallbacksUsePlatformImageOnly() {
         // Given: Framework components
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         
         // When: Set up callbacks
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
         
-        let cameraInterface = photoComponents.platformCameraInterface_L4 { image in
+        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
-        let photoPicker = photoComponents.platformPhotoPicker_L4 { image in
+        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         
@@ -167,11 +167,11 @@ open class PlatformImageArchitectureTests {
     /// METHODOLOGY: Test that framework APIs don't return platform-specific types
     @Test func testNoPlatformSpecificTypesInFramework() {
         // Given: Framework components
-        let photoComponents = PlatformPhotoComponentsLayer4()
+        
         let platformImage = createTestPlatformImage()
         
         // When: Use framework APIs
-        let photoDisplay = photoComponents.platformPhotoDisplay_L4(
+        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
