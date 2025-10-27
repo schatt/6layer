@@ -21,10 +21,13 @@ public enum PlatformPhotoComponentsLayer4 {
     public static func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
         CameraView(onImageCaptured: onImageCaptured)
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         MacCameraView(onImageCaptured: onImageCaptured)
+            .automaticAccessibilityIdentifiers()
         #else
         Text("Camera not available on this platform")
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -35,10 +38,13 @@ public enum PlatformPhotoComponentsLayer4 {
     public static func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
         #if os(iOS)
         PhotoPickerView(onImageSelected: onImageSelected)
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         MacPhotoPickerView(onImageSelected: onImageSelected)
+            .automaticAccessibilityIdentifiers()
         #else
         Text("Photo picker not available on this platform")
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
