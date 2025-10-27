@@ -52,7 +52,8 @@ let package = Package(
                 "BugReports/README.md",
                 "BugReports/PlatformImage_v4.6.2/README.md",
                 "BugReports/ButtonStyle_v4.6.3/README.md",
-                "BugReports/PlatformTypes_v4.6.4/README.md"
+                "BugReports/PlatformTypes_v4.6.4/README.md",
+                "BugReports/PlatformPhotoPicker_v4.6.5/README.md"
             ],
             sources: [
                 "Core",
