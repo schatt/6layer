@@ -170,8 +170,16 @@ public enum DeviceContext: String, CaseIterable {
         }
         
         // Check for external display
-        if UIScreen.screens.count > 1 {
-            return .externalDisplay
+        if #available(iOS 16.0, *) {
+            // Use the new API
+            if UIApplication.shared.openSessions.count > 1 {
+                return .externalDisplay
+            }
+        } else {
+            // Use the deprecated API for older iOS versions
+            if UIScreen.screens.count > 1 {
+                return .externalDisplay
+            }
         }
         
         // Check for split view (iPad only)
@@ -725,7 +733,8 @@ public struct PlatformSize: @unchecked Sendable {
         #endif
     }
     
-    /// Convert to CGSize (iOS) or NSSize (macOS)
+    /// Output conversion to platform-specific types
+    /// Note: Prefer using width and height properties for cross-platform code
     #if os(iOS)
     public var asCGSize: CGSize {
         return self.cgSize
@@ -735,15 +744,6 @@ public struct PlatformSize: @unchecked Sendable {
         return self.nsSize
     }
     #endif
-    
-    /// Convert to CGSize for cross-platform compatibility
-    public var asCGSize: CGSize {
-        #if os(iOS)
-        return self.cgSize
-        #elseif os(macOS)
-        return CGSize(width: nsSize.width, height: nsSize.height)
-        #endif
-    }
 }
 
 public struct PlatformImage: @unchecked Sendable {

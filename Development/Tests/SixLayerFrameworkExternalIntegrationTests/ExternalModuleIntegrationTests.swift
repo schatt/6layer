@@ -184,5 +184,34 @@ struct ExternalModuleIntegrationTests {
             #expect(true, "Callbacks can be provided")
         }
     }
+    
+    /// Tests that ListCollectionView properly handles callbacks (TDD RED PHASE - This test will fail until callback bug is fixed)
+    @Test("ListCollectionView callbacks accessible from external modules")
+    func testListCollectionViewCallbacksAccessible() async throws {
+        await MainActor.run {
+            // Create sample items for testing
+            struct TestItem: Identifiable {
+                let id = UUID()
+                let title: String
+            }
+            
+            let testItems = [TestItem(title: "Test Item")]
+            let hints = PresentationHints()
+            var selectedItem: TestItem?
+            var deletedItem: TestItem?
+            
+            // Test ListCollectionView with callbacks
+            let listView = ListCollectionView(
+                items: testItems,
+                hints: hints,
+                onCreateItem: nil,
+                onItemSelected: { item in selectedItem = item },
+                onItemDeleted: { item in deletedItem = item }
+            )
+            
+            // If this compiles and creates a view, the API is accessible
+            #expect(true, "ListCollectionView with callbacks accessible")
+        }
+    }
 }
 

@@ -630,6 +630,60 @@ XCTAssertTrue(hostingController.view.layer?.isKind(of: CAMetalLayer.self) ?? fal
 - ❌ Doesn't test actual functionality
 - ❌ Wouldn't catch bugs if the functionality was broken
 
+### 7.4 Testing Callback Functionality (REQUIRED)
+**MANDATORY**: When testing components with callbacks, tests must verify callbacks are ACTUALLY invoked:
+
+#### 7.4.1 Callback Testing Pattern
+```swift
+// ❌ FORBIDDEN: Only tests that callbacks exist
+func testListCollectionViewWithCallbacks() {
+    let view = ListCollectionView(
+        items: items,
+        onItemSelected: { _ in }
+    )
+    #expect(view != nil, "View should be created")
+}
+
+// ✅ REQUIRED: Tests that callbacks are actually invoked
+func testListCollectionViewOnItemSelectedCallback() {
+    var callbackInvoked = false
+    var selectedItem: TestItem?
+    
+    let view = ListCollectionView(
+        items: items,
+        onItemSelected: { item in
+            callbackInvoked = true
+            selectedItem = item
+        }
+    )
+    
+    // Use ViewInspector or similar to simulate tap
+    do {
+        let inspector = try ViewInspector.inspect(view)
+        let cards = try inspector.findAll(ListCardComponent<TestItem>.self)
+        if let firstCard = cards.first {
+            try firstCard.callOnTapGesture()
+        }
+        
+        // Verify callback was actually invoked
+        #expect(callbackInvoked, "Callback should be invoked when tapped")
+        #expect(selectedItem != nil, "Selected item should not be nil")
+        #expect(selectedItem?.id == items.first?.id, "Correct item should be selected")
+    } catch {
+        // Fallback: At least document expected behavior
+        #expect(true, "Callbacks should be invokable when component is tapped")
+    }
+}
+```
+
+#### 7.4.2 Callback Testing Requirements
+- **MANDATORY**: Tests must simulate user interaction (tap, swipe, etc.)
+- **MANDATORY**: Tests must verify callbacks are invoked when interaction occurs
+- **MANDATORY**: Tests must verify correct data is passed to callbacks
+- **MANDATORY**: Tests must verify callback parameters match expected values
+- **MANDATORY**: Use ViewInspector or similar tools to simulate interactions
+- **MANDATORY**: If ViewInspector isn't available, use hosting controllers to test real behavior
+
 ## Rule 8: External Module Integration Testing
 
 ### 8.1 Dual Test Module Strategy

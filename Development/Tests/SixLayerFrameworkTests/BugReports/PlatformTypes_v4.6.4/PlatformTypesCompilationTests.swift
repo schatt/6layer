@@ -496,10 +496,17 @@ struct PlatformTypesCompilationTests {
         #expect(platformSizeFromCG.width == 150)
         #expect(platformSizeFromCG.height == 250)
         
-        // Test conversion back to CGSize
+        // Test conversion back to CGSize/NSSize (using public property)
+        // In real code, prefer using .width and .height properties instead
+        #if os(iOS)
         let convertedCGSize = platformSizeFromCG.asCGSize
         #expect(convertedCGSize.width == 150)
         #expect(convertedCGSize.height == 250)
+        #elseif os(macOS)
+        let convertedNSSize = platformSizeFromCG.asNSSize
+        #expect(convertedNSSize.width == 150)
+        #expect(convertedNSSize.height == 250)
+        #endif
     }
     
     @Test func testPlatformImageCompilation() {

@@ -58,11 +58,12 @@ let package = Package(
             ],
             sources: [
                 "Core",
-                "Layers", 
+                "Layers",
                 "Features",
                 "Integration",
                 "Utilities",
-                "BugReports"
+                "BugReports",
+                "Components"
             ]
         ),
         

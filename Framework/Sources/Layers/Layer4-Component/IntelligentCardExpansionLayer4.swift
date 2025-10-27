@@ -541,7 +541,13 @@ public struct ListCollectionView<Item: Identifiable>: View {
         } else {
             LazyVStack(spacing: 12) {
                 ForEach(items) { item in
-                    ListCardComponent(item: item, hints: hints)
+                    ListCardComponent(
+                        item: item,
+                        hints: hints,
+                        onItemSelected: onItemSelected,
+                        onItemDeleted: onItemDeleted,
+                        onItemEdited: onItemEdited
+                    )
                 }
             }
             .padding(16)
@@ -760,37 +766,61 @@ public struct ListCardComponent<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        HStack {
-            Image(systemName: cardIcon)
-                .font(.title2)
-                .foregroundColor(cardColor)
-            
-            VStack(alignment: .leading) {
-                Text(cardTitle)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
+        VStack(spacing: 0) {
+            HStack {
+                Image(systemName: cardIcon)
+                    .font(.title2)
+                    .foregroundColor(cardColor)
                 
-                if let subtitle = cardSubtitle {
-                    Text(subtitle)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                VStack(alignment: .leading) {
+                    Text(cardTitle)
+                        .font(.headline)
                         .lineLimit(1)
+                        .foregroundColor(isPlaceholderTitle ? .blue.opacity(0.6) : .primary)
+                    
+                    if let subtitle = cardSubtitle {
+                        Text(subtitle)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                    }
                 }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .background(.regularMaterial)
+            .onTapGesture {
+                onItemSelected?(item)
             }
             
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            // Action buttons (Edit/Delete)
+            if onItemDeleted != nil || onItemEdited != nil {
+                HStack(spacing: 12) {
+                    if let onItemEdited = onItemEdited {
+                        Button("Edit") {
+                            onItemEdited(item)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    
+                    if let onItemDeleted = onItemDeleted {
+                        Button("Delete") {
+                            onItemDeleted(item)
+                        }
+                        .buttonStyle(.bordered)
+                        .foregroundColor(.red)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 8)
+            }
         }
-        .padding()
-        .background(.regularMaterial)
         .cornerRadius(8)
-        .onTapGesture {
-            onItemSelected?(item)
-        }
         .accessibilityElement(children: .combine)
         .accessibilityAction(named: "Activate") {
             onItemSelected?(item)

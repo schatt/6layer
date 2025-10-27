@@ -2,6 +2,7 @@ import Testing
 
 
 import SwiftUI
+import ViewInspector
 @testable import SixLayerFramework
 
 /// Tests for Collection View Callback Functionality
@@ -161,6 +162,55 @@ open class CollectionViewCallbackTests {
         #expect(view != nil)
     }
     
+    @Test func testListCollectionViewOnItemSelectedCallback() async throws {
+        // Rule 6.2 & 7.4: Functional testing - Tests must validate actual behavior
+        // CRITICAL: This test verifies that ListCollectionView ACTUALLY INVOKES callbacks when tapped
+        
+        // Given: Track if callbacks are invoked
+        resetCallbacks()
+        var callbackInvoked = false
+        var receivedItem: TestItem?
+        
+        let view = ListCollectionView(
+            items: sampleItems,
+            hints: basicHints,
+            onItemSelected: { item in
+                callbackInvoked = true
+                receivedItem = item
+                self.selectedItems.append(item)
+            }
+        )
+        
+        // When: Simulating a tap using ViewInspector
+        do {
+            let inspector = try view.inspect()
+            
+            // Find the ListCardComponent instances
+            let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
+            
+            // Then: Verify the view structure
+            #expect(listCardComponents.count == sampleItems.count, "Should have cards for each item")
+            
+            // Get the first card - it's now a VStack, find the HStack child (where onTapGesture is applied)
+            if let firstCard = listCardComponents.first {
+                let vStack = try firstCard.vStack()
+                // VStack contains: HStack at index 0 (the card content), Optional HStack at index 1 (action buttons)
+                // Find the first HStack which has the onTapGesture
+                let hStack = try vStack.hStack(0)
+                try hStack.callOnTapGesture()
+                
+                // Verify callback was ACTUALLY invoked
+                #expect(callbackInvoked, "Callback should be invoked when card is tapped")
+                #expect(receivedItem != nil, "Received item should not be nil")
+                #expect(receivedItem?.id == sampleItems.first?.id, "Should receive correct item")
+                #expect(self.selectedItems.count == 1, "Selected items should contain tapped item")
+            }
+        } catch {
+            // If ViewInspector fails, that's a test infrastructure issue
+            Issue.record("ViewInspector failed to inspect ListCollectionView: \(error)")
+        }
+    }
+    
     @Test func testCoverFlowCollectionViewWithCallbacks() {
         // Given: Cover flow collection view with callbacks
         resetCallbacks()
@@ -195,6 +245,110 @@ open class CollectionViewCallbackTests {
         
         // Then: View should be created successfully
         #expect(view != nil)
+    }
+    
+    @Test func testListCollectionViewOnItemDeletedCallback() async throws {
+        // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
+        
+        var callbackInvoked = false
+        var receivedItem: TestItem?
+        
+        let view = ListCollectionView(
+            items: sampleItems,
+            hints: basicHints,
+            onItemDeleted: { item in
+                callbackInvoked = true
+                receivedItem = item
+                self.deletedItems.append(item)
+            }
+        )
+        
+        // When: Simulating delete button tap using ViewInspector
+        do {
+            let inspector = try view.inspect()
+            
+            // Find Delete buttons in the view
+            let buttons = try inspector.findAll(ViewType.Button.self)
+            
+            // Find and tap the Delete button
+            for button in buttons {
+                do {
+                    let labelView = try button.labelView()
+                    let labelText = try labelView.text().string()
+                    
+                    if labelText == "Delete" {
+                        // Tap the button to invoke its action
+                        try button.tap()
+                        
+                        // Then: Callback should be invoked
+                        #expect(callbackInvoked, "Delete callback should be invoked when Delete button is tapped")
+                        #expect(receivedItem != nil, "Should receive deleted item")
+                        break
+                    }
+                } catch {
+                    // Continue searching
+                    continue
+                }
+            }
+            
+            if !callbackInvoked {
+                Issue.record("Could not find Delete button in view or failed to tap it")
+            }
+        } catch {
+            Issue.record("ViewInspector failed to inspect ListCollectionView: \(error)")
+        }
+    }
+    
+    @Test func testListCollectionViewOnItemEditedCallback() async throws {
+        // Rule 6.2 & 7.4: Functional testing
+        
+        var callbackInvoked = false
+        var receivedItem: TestItem?
+        
+        let view = ListCollectionView(
+            items: sampleItems,
+            hints: basicHints,
+            onItemEdited: { item in
+                callbackInvoked = true
+                receivedItem = item
+                self.editedItems.append(item)
+            }
+        )
+        
+        // When: Simulating edit button tap using ViewInspector
+        do {
+            let inspector = try view.inspect()
+            
+            // Find Edit buttons in the view
+            let buttons = try inspector.findAll(ViewType.Button.self)
+            
+            // Find and tap the Edit button
+            for button in buttons {
+                do {
+                    let labelView = try button.labelView()
+                    let labelText = try labelView.text().string()
+                    
+                    if labelText == "Edit" {
+                        // Tap the button to invoke its action
+                        try button.tap()
+                        
+                        // Then: Callback should be invoked
+                        #expect(callbackInvoked, "Edit callback should be invoked when Edit button is tapped")
+                        #expect(receivedItem != nil, "Should receive edited item")
+                        break
+                    }
+                } catch {
+                    // Continue searching
+                    continue
+                }
+            }
+            
+            if !callbackInvoked {
+                Issue.record("Could not find Edit button in view or failed to tap it")
+            }
+        } catch {
+            Issue.record("ViewInspector failed to inspect ListCollectionView: \(error)")
+        }
     }
     
     @Test func testAdaptiveCollectionViewWithCallbacks() {
