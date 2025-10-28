@@ -39,7 +39,7 @@ public struct IntelligentFormView {
     // MARK: - Public API
     
     /// Generate a form for creating new data with data binding integration
-        static func generateForm<T>(
+    public static func generateForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
         dataBinder: DataBinder<T>? = nil,
@@ -107,7 +107,7 @@ public struct IntelligentFormView {
     }
     
     /// Generate a form for updating existing data with data binding integration
-        static func generateForm<T>(
+    public static func generateForm<T>(
         for data: T,
         dataBinder: DataBinder<T>? = nil,
         inputHandlingManager: InputHandlingManager? = nil,
