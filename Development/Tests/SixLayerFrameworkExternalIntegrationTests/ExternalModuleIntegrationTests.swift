@@ -355,5 +355,14 @@ struct ExternalModuleIntegrationTests {
         // If this compiles, PresentationHints is accessible
         #expect(true, "PresentationHints is accessible from external modules")
     }
+    
+    /// Tests AccessibilityManager is accessible
+    @Test("AccessibilityManager is accessible")
+    func testAccessibilityManagerAccessible() async throws {
+        // Test that AccessibilityManager can be created
+        let manager = AccessibilityManager()
+        
+        #expect(true, "AccessibilityManager is accessible from external modules")
+    }
 }
 
