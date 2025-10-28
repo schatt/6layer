@@ -1,5 +1,7 @@
 # ViewInspector Compilation Error on macOS SDK 26
 
+**Issue filed:** [GitHub Issue #405](https://github.com/nalexn/ViewInspector/issues/405)
+
 ## Summary
 ViewInspector fails to compile on macOS SDK 26 due to missing SwiftUI types that are iOS-only.
 
