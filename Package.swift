@@ -44,7 +44,7 @@ let package = Package(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                "ViewInspector"
+                .product(name: "ViewInspector", package: "ViewInspector", condition: .when(platforms: [.iOS]))
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
