@@ -246,5 +246,25 @@ struct ExternalModuleIntegrationTests {
             #expect(true, "IntelligentFormView.generateForm is accessible from external modules")
         }
     }
+    
+    /// Tests that IntelligentDetailView.platformDetailView is accessible from external modules
+    @Test("IntelligentDetailView.platformDetailView is accessible")
+    func testIntelligentDetailViewAccessible() async throws {
+        await MainActor.run {
+            struct TestDetailData: Identifiable {
+                let id = UUID()
+                let name: String
+                let status: String
+            }
+            
+            let testData = TestDetailData(name: "Test", status: "Active")
+            
+            // Test that platformDetailView can be called from external modules
+            let detailView = IntelligentDetailView.platformDetailView(for: testData)
+            
+            // If this compiles and creates a view, the API is accessible
+            #expect(true, "IntelligentDetailView.platformDetailView is accessible from external modules")
+        }
+    }
 }
 
