@@ -5,8 +5,8 @@ import CoreData
 /// TDD Tests for Core Data Introspection Bug
 ///
 /// FOLLOWING PROPER TDD:
-/// 1. RED: This test SHOULD FAIL now (demonstrates the bug)
-/// 2. GREEN: Implement fix to make test pass
+/// 1. RED: Test fails when bug exists (Mirror can't see @NSManaged properties)
+/// 2. GREEN: Test passes after fix (NSEntityDescription introspection)
 /// 3. REFACTOR: Clean up if needed
 ///
 /// THE BUG: Mirror cannot see @NSManaged properties, so analysis returns empty fields
@@ -15,9 +15,8 @@ import CoreData
 @MainActor
 struct DataIntrospectionCoreDataTests {
     
-    /// RED TEST: This test documents that Core Data entities return empty field analysis
-    /// This is the bug - when fixed, this test should pass (detecting title field)
-    @Test func testCoreDataEntityReturnsEmptyAnalysis() throws {
+    /// Test that Core Data entities are detected and properly introspected
+    @Test func testCoreDataEntityReturnsProperAnalysis() throws {
         // GIVEN: A Core Data managed object with properties
         let model = NSManagedObjectModel()
         
@@ -29,31 +28,100 @@ struct DataIntrospectionCoreDataTests {
         titleAttribute.attributeType = .stringAttributeType
         titleAttribute.isOptional = true
         
-        taskEntity.properties = [titleAttribute]
+        let statusAttribute = NSAttributeDescription()
+        statusAttribute.name = "status"
+        statusAttribute.attributeType = .stringAttributeType
+        statusAttribute.isOptional = true
+        
+        taskEntity.properties = [titleAttribute, statusAttribute]
         model.entities = [taskEntity]
         
         let container = NSPersistentContainer(name: "TestModel", managedObjectModel: model)
-        container.persistentStoreDescriptions = [{
-            let desc = NSPersistentStoreDescription()
-            desc.type = NSInMemoryStoreType
-            desc.shouldAddStoreAsynchronously = false
-            return desc
-        }()]
+        let desc = NSPersistentStoreDescription()
+        desc.type = NSInMemoryStoreType
+        desc.shouldAddStoreAsynchronously = false
+        container.persistentStoreDescriptions = [desc]
         container.loadPersistentStores { _, _ in }
         
         let context = container.viewContext
         let task = NSManagedObject(entity: taskEntity, insertInto: context)
         task.setValue("Test Title", forKey: "title")
+        task.setValue("pending", forKey: "status")
         
         // WHEN: We analyze the Core Data entity
         let analysis = DataIntrospectionEngine.analyze(task)
         
-        // THEN: The bug causes this to return 0 fields (Mirror can't see @NSManaged properties)
-        // After fix: Should detect 1 field (title)
+        // THEN: Should detect all Core Data entity properties (title, status)
         let hasTitleField = analysis.fields.contains { $0.name == "title" }
+        let hasStatusField = analysis.fields.contains { $0.name == "status" }
         
-        // THIS TEST WILL FAIL (RED) - documents the bug exists
-        #expect(hasTitleField, "BUG: DataIntrospectionEngine should detect Core Data properties. Found \(analysis.fields.count) fields.")
+        #expect(hasTitleField, "Should detect 'title' field from Core Data entity")
+        #expect(hasStatusField, "Should detect 'status' field from Core Data entity")
+        #expect(analysis.fields.count >= 2, "Should detect at least 2 fields. Found \(analysis.fields.count)")
+    }
+    
+    /// Test that Core Data field types are correctly inferred
+    @Test func testCoreDataFieldTypesAreCorrect() throws {
+        let model = NSManagedObjectModel()
+        
+        let productEntity = NSEntityDescription()
+        productEntity.name = "Product"
+        
+        let nameAttr = NSAttributeDescription()
+        nameAttr.name = "name"
+        nameAttr.attributeType = .stringAttributeType
+        
+        let priceAttr = NSAttributeDescription()
+        priceAttr.name = "price"
+        priceAttr.attributeType = .doubleAttributeType
+        
+        let inStockAttr = NSAttributeDescription()
+        inStockAttr.name = "inStock"
+        inStockAttr.attributeType = .booleanAttributeType
+        
+        productEntity.properties = [nameAttr, priceAttr, inStockAttr]
+        model.entities = [productEntity]
+        
+        let container = NSPersistentContainer(name: "TestModel", managedObjectModel: model)
+        let desc = NSPersistentStoreDescription()
+        desc.type = NSInMemoryStoreType
+        desc.shouldAddStoreAsynchronously = false
+        container.persistentStoreDescriptions = [desc]
+        container.loadPersistentStores { _, _ in }
+        
+        let product = NSManagedObject(entity: productEntity, insertInto: container.viewContext)
+        
+        let analysis = DataIntrospectionEngine.analyze(product)
+        
+        // Verify field types are correctly inferred
+        let nameField = analysis.fields.first { $0.name == "name" }
+        let priceField = analysis.fields.first { $0.name == "price" }
+        let inStockField = analysis.fields.first { $0.name == "inStock" }
+        
+        #expect(nameField != nil, "Should have 'name' field")
+        #expect(nameField?.type == .string, "Name field should be .string type")
+        
+        #expect(priceField != nil, "Should have 'price' field")
+        #expect(priceField?.type == .number, "Price field should be .number type")
+        
+        #expect(inStockField != nil, "Should have 'inStock' field")
+        #expect(inStockField?.type == .boolean, "InStock field should be .boolean type")
+    }
+    
+    /// Test that regular (non-Core Data) objects still work with Mirror introspection
+    @Test func testRegularObjectsStillWorkWithMirror() {
+        struct RegularStruct {
+            let title: String
+            let count: Int
+            let isActive: Bool
+        }
+        
+        let regularData = RegularStruct(title: "Test", count: 42, isActive: true)
+        let analysis = DataIntrospectionEngine.analyze(regularData)
+        
+        // Regular structs should be detected by Mirror
+        #expect(analysis.fields.count >= 3, "Should detect regular struct properties")
+        #expect(analysis.fields.contains { $0.name == "title" }, "Should detect 'title' from regular struct")
     }
 }
 
