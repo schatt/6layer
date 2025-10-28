@@ -133,7 +133,7 @@ public struct ResponsiveLayout {
     }
 
     @MainActor
-    static func adaptiveGrid<Content: View>(
+    public static func adaptiveGrid<Content: View>(
         minWidth: CGFloat = 300,
         spacing: CGFloat = 16,
         @ViewBuilder content: @escaping () -> Content
@@ -147,7 +147,7 @@ public struct ResponsiveLayout {
     }
 
     @MainActor
-    static func horizontalGrid<Content: View>(
+    public static func horizontalGrid<Content: View>(
         minWidth: CGFloat = 300,
         spacing: CGFloat = 16,
         @ViewBuilder content: @escaping () -> Content
@@ -161,7 +161,7 @@ public struct ResponsiveLayout {
     }
 
     @MainActor
-    static func verticalGrid<Content: View>(
+    public static func verticalGrid<Content: View>(
         minWidth: CGFloat = 300,
         spacing: CGFloat = 16,
         @ViewBuilder content: @escaping () -> Content

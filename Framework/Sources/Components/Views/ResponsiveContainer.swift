@@ -4,6 +4,10 @@ public struct ResponsiveContainer<Content: View>: View {
     let content: (_ isHorizontal: Bool, _ isVertical: Bool) -> Content
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.verticalSizeClass) private var vSizeClass
+    
+    public init(@ViewBuilder content: @escaping (_ isHorizontal: Bool, _ isVertical: Bool) -> Content) {
+        self.content = content
+    }
 
     public var body: some View {
         content(hSizeClass == .regular, vSizeClass == .regular)

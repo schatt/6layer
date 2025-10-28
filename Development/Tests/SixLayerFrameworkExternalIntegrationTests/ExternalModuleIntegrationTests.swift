@@ -266,5 +266,94 @@ struct ExternalModuleIntegrationTests {
             #expect(true, "IntelligentDetailView.platformDetailView is accessible from external modules")
         }
     }
+    
+    /// Tests that ResponsiveLayout static methods are accessible from external modules
+    @Test("ResponsiveLayout static methods accessible")
+    func testResponsiveLayoutAccessible() async throws {
+        await MainActor.run {
+            // Test that ResponsiveLayout static methods can be used from external modules
+            let adaptiveView = ResponsiveLayout.adaptiveGrid {
+                Text("Test content")
+            }
+            
+            // If this compiles, ResponsiveLayout is accessible
+            #expect(true, "ResponsiveLayout is accessible from external modules")
+        }
+    }
+    
+    /// Tests that ResponsiveContainer is accessible from external modules
+    @Test("ResponsiveContainer is accessible")
+    func testResponsiveContainerAccessible() async throws {
+        await MainActor.run {
+            // Test that ResponsiveContainer can be used from external modules
+            // Note: Uses proper 2-parameter closure signature
+            let container = ResponsiveContainer { isHorizontal, isVertical in
+                VStack {
+                    Text("H: \(isHorizontal ? "Yes" : "No")")
+                    Text("V: \(isVertical ? "Yes" : "No")")
+                }
+            }
+            
+            // If this compiles, ResponsiveContainer is accessible
+            #expect(true, "ResponsiveContainer is accessible from external modules")
+        }
+    }
+    
+    /// Tests that OCR Layer 1 functions are accessible from external modules
+    @Test("OCR Layer 1 functions accessible")
+    func testOCRLayer1Accessible() async throws {
+        await MainActor.run {
+            let testImage = PlatformImage()
+            let context = OCRContext(
+                textTypes: [.general],
+                language: .english,
+                confidenceThreshold: 0.8
+            )
+            
+            // Test platformOCRWithVisualCorrection_L1
+            let ocrView = platformOCRWithVisualCorrection_L1(
+                image: testImage,
+                context: context,
+                onResult: { _ in }
+            )
+            
+            // If this compiles, OCR functions are accessible
+            #expect(true, "OCR Layer 1 functions are accessible from external modules")
+        }
+    }
+    
+    /// Tests that DataIntrospectionEngine is accessible from external modules
+    @Test("DataIntrospectionEngine.analyze is accessible")
+    func testDataIntrospectionEngineAccessible() async throws {
+        struct TestData: Identifiable {
+            let id = UUID()
+            let name: String
+            let age: Int
+        }
+        
+        let testData = TestData(name: "Test", age: 25)
+        
+        // Test that DataIntrospectionEngine.analyze can be called from external modules
+        let analysis = DataIntrospectionEngine.analyze(testData)
+        
+        // Test that the result has the expected structure
+        #expect(analysis.fields.count >= 2, "Should detect at least 2 fields")
+        
+        let hasNameField = analysis.fields.contains { $0.name == "name" }
+        #expect(hasNameField, "Should detect 'name' field")
+        
+        let hasAgeField = analysis.fields.contains { $0.name == "age" }
+        #expect(hasAgeField, "Should detect 'age' field")
+    }
+    
+    /// Tests that PresentationHints can be used from external modules
+    @Test("PresentationHints is accessible")
+    func testPresentationHintsAccessible() async throws {
+        // Test that PresentationHints can be created from external modules
+        let _ = PresentationHints()
+        
+        // If this compiles, PresentationHints is accessible
+        #expect(true, "PresentationHints is accessible from external modules")
+    }
 }
 
