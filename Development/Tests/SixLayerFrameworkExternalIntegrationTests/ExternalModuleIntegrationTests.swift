@@ -213,5 +213,38 @@ struct ExternalModuleIntegrationTests {
             #expect(true, "ListCollectionView with callbacks accessible")
         }
     }
+    
+    /// Tests that IntelligentFormView.generateForm is accessible from external modules
+    @Test("IntelligentFormView.generateForm is accessible")
+    func testIntelligentFormViewGenerateFormAccessible() async throws {
+        await MainActor.run {
+            // Test that IntelligentFormView.generateForm can be called from external modules
+            struct TestFormData: Identifiable {
+                let id = UUID()
+                var name: String
+                var email: String
+            }
+            
+            let testData = TestFormData(name: "Test", email: "test@example.com")
+            
+            // Test that generateForm for creating new data is accessible
+            let createForm = IntelligentFormView.generateForm(
+                for: TestFormData.self,
+                initialData: testData,
+                onSubmit: { _ in },
+                onCancel: { }
+            )
+            
+            // Test that generateForm for updating existing data is accessible
+            let updateForm = IntelligentFormView.generateForm(
+                for: testData,
+                onUpdate: { _ in },
+                onCancel: { }
+            )
+            
+            // If these compile and create views, the API is accessible
+            #expect(true, "IntelligentFormView.generateForm is accessible from external modules")
+        }
+    }
 }
 
