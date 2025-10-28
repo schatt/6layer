@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.6.4 - ButtonStyle Compatibility Bug Fix + BugReports Organization
+// SixLayerFramework v4.7.0 - Core Data Introspection Fix + ViewInspector macOS Exclusion
 
 import PackageDescription
 
