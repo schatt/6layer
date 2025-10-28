@@ -7,6 +7,9 @@
 
 import SwiftUI
 import CoreData
+#if canImport(SwiftData)
+import SwiftData
+#endif
 
 // MARK: - Intelligent Detail View Engine
 
