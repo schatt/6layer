@@ -43,8 +43,7 @@ let package = Package(
         .testTarget(
             name: "SixLayerFrameworkTests",
             dependencies: [
-                "SixLayerFramework",
-                "ViewInspector"
+                "SixLayerFramework"
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [

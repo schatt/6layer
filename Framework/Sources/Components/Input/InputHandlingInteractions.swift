@@ -168,7 +168,7 @@ public class HapticFeedbackManager {
     }
     
     /// Trigger haptic feedback appropriate for the platform
-        func triggerFeedback(_ feedback: PlatformHapticFeedback) {
+    @MainActor func triggerFeedback(_ feedback: PlatformHapticFeedback) {
         switch platform {
         case .iOS:
             #if os(iOS)
