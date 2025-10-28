@@ -6,7 +6,7 @@ import Combine
 
 /// Connects UI form fields to data model properties using key paths
 @MainActor
-final class DataBinder<T> {
+public final class DataBinder<T> {
     
     // MARK: - Properties
     
