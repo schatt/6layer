@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 // MARK: - Intelligent Detail View Engine
 
@@ -572,13 +573,28 @@ public extension IntelligentDetailView {
         return .tertiary
     }
     
-    /// Get field value using reflection
+    /// Get field value using reflection or Core Data introspection
     static func getFieldValue<T>(from data: T, fieldName: String) -> Any {
+        // Check if this is a Core Data managed object
+        if let managedObject = data as? NSManagedObject {
+            // Use Core Data value extraction
+            if let value = managedObject.value(forKey: fieldName), !(value is NSNull) {
+                return value
+            }
+            return "N/A"
+        }
+        
+        // Use Mirror for non-Core Data objects
         let mirror = Mirror(reflecting: data)
         
         for child in mirror.children {
             if child.label == fieldName {
-                return child.value
+                let value = child.value
+                // Return "N/A" for nil values wrapped as Optional.none
+                if String(describing: value) == "nil" {
+                    return "N/A"
+                }
+                return value
             }
         }
         
