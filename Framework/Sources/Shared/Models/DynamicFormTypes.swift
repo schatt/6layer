@@ -218,66 +218,6 @@ public struct DynamicFormField: Identifiable, Hashable {
             metadata: metadata
         )
     }
-    
-    /// Convenience initializer for tests: id, label, type, value, options
-    public init(id: String, label: String, type: DynamicFormFieldType, value: String, options: [String]? = nil) {
-        self.id = id
-        self.label = label
-        self.textContentType = nil
-        self.contentType = nil
-        self.placeholder = nil
-        self.description = nil
-        self.isRequired = false
-        self.validationRules = nil
-        self.options = options
-        self.defaultValue = value
-        self.metadata = nil
-    }
-    
-    /// Discover field-level display hints from the field's metadata
-    /// Hints are automatically discovered from the data description, not passed in separately
-    public var displayHints: FieldDisplayHints? {
-        guard let metadata = metadata else { return nil }
-        
-        return FieldDisplayHints(
-            expectedLength: metadata["expectedLength"].flatMap(Int.init),
-            displayWidth: metadata["displayWidth"],
-            showCharacterCounter: metadata["showCharacterCounter"] == "true",
-            maxLength: metadata["maxLength"].flatMap(Int.init),
-            minLength: metadata["minLength"].flatMap(Int.init),
-            metadata: metadata
-        )
-    }
-}
-
-/// Test-specific field type enum for convenience initializer
-public enum DynamicFormFieldType: String, CaseIterable, Hashable {
-    case text = "text"
-    case email = "email"
-    case password = "password"
-    case phone = "phone"
-    case url = "url"
-    case number = "number"
-    case integer = "integer"
-    case date = "date"
-    case time = "time"
-    case datetime = "datetime"
-    case select = "select"
-    case multiselect = "multiselect"
-    case radio = "radio"
-    case checkbox = "checkbox"
-    case textarea = "textarea"
-    case richtext = "richtext"
-    case file = "file"
-    case image = "image"
-    case color = "color"
-    case range = "range"
-    case toggle = "toggle"
-    case array = "array"
-    case data = "data"
-    case autocomplete = "autocomplete"
-    case `enum` = "enum"
-    case custom = "custom"
 }
 
 /// Custom content types for non-text UI components

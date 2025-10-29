@@ -41,24 +41,25 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v4.6.1
+## 🆕 Latest Release: v4.8.0
 
-### **Major Architectural Improvement: Framework Components Now Respect Global Config**
-🎯 **Breaking Change**: Framework components now automatically check the global accessibility configuration. `GlobalAutomaticAccessibilityIdentifierModifier` is no longer needed for framework components.
+### **Field-Level Display Hints System**
+🎯 **New Feature**: Declarative `.hints` files that describe how to present data models.
 
 **Highlights:**
-- ✅ **Cleaner API** - Framework components automatically respect global config
-- ✅ **Better Separation** - Clear distinction between framework and custom view behavior  
-- ✅ **Persistent IDs** - Accessibility identifiers now persist across app launches
-- ✅ **Deterministic Generation** - IDs based on view structure, not timestamps
-- ✅ **Complete Automatic Accessibility Identifiers** - Works for all Layers 1-6
-- ✅ **Comprehensive Test Coverage** - 1,662 tests passing with 0 failures
-- ✅ **Mandatory Testing Rules** - Established TDD methodology for future development
-- ✅ **Layer 4-6 Functions Fixed** - Photo components, performance extensions, haptic feedback
-- ✅ **Backward Compatible** - No migration required
-- ✅ **Enhanced Debug Output** - Rich debugging with hierarchy and context
-- ✅ **UI Test Helpers** - Generate tap actions, text input actions
-- ✅ **Proper TDD Process** - Red-Green-Refactor cycle followed
+- ✅ **Field-Level Hints** - Define display properties for individual fields
+- ✅ **DRY Architecture** - Define hints once in `.hints` files, use everywhere
+- ✅ **Automatic Discovery** - 6Layer reads hints from `Hints/` folder based on model name
+- ✅ **Cached Loading** - Hints loaded once and reused for performance
+- ✅ **Organized Storage** - All hints in `Hints/` subfolder
+- ✅ **Display Width System** - `narrow`, `medium`, `wide`, or numeric values
+- ✅ **Character Counter** - Optional character count overlay
+- ✅ **Type-Safe** - Strongly-typed `FieldDisplayHints` structure
+- ✅ **Backward Compatible** - Existing code continues to work without changes
+- ✅ **Comprehensive Tests** - Complete test coverage for hint system
+- ✅ **Documentation** - Complete guides and examples
+
+**See [Field Hints Complete Guide](Framework/docs/FieldHintsCompleteGuide.md) for full documentation**
 
 **Example:**
 ```swift

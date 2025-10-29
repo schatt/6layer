@@ -1,0 +1,32 @@
+{
+  "username": {
+    "expectedLength": 20,
+    "displayWidth": "medium",
+    "maxLength": 50,
+    "minLength": 3,
+    "showCharacterCounter": "false"
+  },
+  "email": {
+    "expectedLength": 30,
+    "displayWidth": "wide",
+    "maxLength": 255
+  },
+  "bio": {
+    "expectedLength": 500,
+    "displayWidth": "wide",
+    "maxLength": 1000,
+    "minLength": 10,
+    "showCharacterCounter": "true"
+  },
+  "postalCode": {
+    "expectedLength": 10,
+    "displayWidth": "narrow",
+    "maxLength": 10
+  },
+  "phone": {
+    "expectedLength": 15,
+    "displayWidth": "medium",
+    "maxLength": 20
+  }
+}
+

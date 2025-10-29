@@ -5,6 +5,57 @@ All notable changes to SixLayerFramework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.8.0] - 2025-01-30
+
+### Added
+- **Field-Level Display Hints**: Declarative `.hints` files to describe how data models should be presented
+- **Hints/ Folder Support**: Organized storage for all hints files
+- **Automatic Hint Loading**: 6Layer reads hints automatically based on model name
+- **Hint Caching**: Hints loaded once and reused everywhere (DRY)
+- **Display Width System**: `narrow`, `medium`, `wide`, or numeric values
+- **Character Counter Support**: Optional character count overlay
+- **FieldDisplayHints Structure**: Type-safe hint properties
+- **DataHintsLoader**: File-based hint loading system
+- **FieldHintsRegistry**: Registry pattern for hint management
+- **Integration Tests**: Comprehensive test coverage for hint system
+
+### Changed
+- **Enhanced platformPresentFormData_L1**: Added `modelName` parameter for automatic hint loading
+- **PresentationHints**: Added `fieldHints` property for field-level configuration
+- **EnhancedPresentationHints**: Added field hints support
+- **DynamicFormField**: Added `displayHints` computed property to discover hints from metadata
+
+### Documentation
+- Complete field hints usage guide
+- DRY architecture documentation
+- File structure guide
+- Migration guide
+- Test coverage summary
+- Release notes
+
+### Files Added
+- `Framework/Sources/Core/Models/DataHintsLoader.swift`
+- `Framework/Sources/Core/Models/FieldHintsRegistry.swift`
+- `Framework/Sources/Extensions/SwiftUI/FieldHintsModifiers.swift`
+- `Framework/docs/FieldHintsGuide.md`
+- `Framework/docs/HintsDRYArchitecture.md`
+- `Framework/docs/HintsFolderStructure.md`
+- `Framework/Examples/AutoLoadHintsExample.swift`
+- `Development/Tests/SixLayerFrameworkTests/Core/Models/FieldDisplayHintsTests.swift`
+- `Development/Tests/SixLayerFrameworkTests/Core/Models/FieldHintsLoaderTests.swift`
+- `Development/Tests/SixLayerFrameworkTests/Core/Models/FieldHintsDRYTests.swift`
+- `Development/Tests/SixLayerFrameworkTests/Core/Models/FieldHintsIntegrationTests.swift`
+
+### Technical Details
+- Hints describe the DATA, not the view
+- Declarative approach: define once, use everywhere
+- Backward compatible: existing code continues to work
+- Opt-in feature: no changes required for existing apps
+- Type-safe: strongly typed FieldDisplayHints structure
+- Performance optimized: cached loading for efficiency
+
+---
+
 ## [4.5.0] - 2025-01-27
 
 ### Added

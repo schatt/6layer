@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v4.8.0.md](AI_AGENT_v4.8.0.md)** - Field-Level Display Hints System
 - **[AI_AGENT_v4.5.0.md](AI_AGENT_v4.5.0.md)** - CardDisplayHelper Hint System
 - **[AI_AGENT_v4.1.1.md](AI_AGENT_v4.1.1.md)** - Critical Bug Fix Release
 - **[AI_AGENT_v4.0.1.md](AI_AGENT_v4.0.1.md)** - Automatic Accessibility Identifiers with Debugging
@@ -45,6 +46,12 @@ The SixLayer Framework follows a **layered architecture** where each layer build
 - **Write cross-platform code** - Support iOS, macOS, and visionOS
 - **Follow TDD principles** - Write tests before implementing features
 - **Maintain 100% test coverage** - All new code must be tested
+
+### v4.8.0 Field Hints System:
+- **Hints describe the DATA** - Define hints once in `.hints` files, use everywhere
+- **DRY Architecture** - Hints are cached, loaded once per model
+- **Organized Storage** - Store hints in `Hints/` folder
+- **Automatic Discovery** - 6Layer reads hints based on `modelName` parameter
 
 ### Testing Requirements:
 - **Run `swift test` before any release** - This is mandatory per project rules

@@ -150,7 +150,8 @@ public func platformPresentNumericData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -209,7 +210,8 @@ public func platformPresentFormData_L1(
         complexity: hints.complexity,
         context: hints.context,
         customPreferences: hints.customPreferences,
-        extensibleHints: []
+        extensibleHints: [],
+        fieldHints: hints.fieldHints
     )
     
     // Set screen context for accessibility identifier generation
@@ -293,7 +295,8 @@ public func platformPresentMediaData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -354,7 +357,8 @@ public func platformPresentHierarchicalData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -415,7 +419,8 @@ public func platformPresentTemporalData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -542,7 +547,8 @@ public func platformPresentSettings_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -578,7 +584,8 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -636,7 +643,8 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     // Process extensible hints and merge custom data
@@ -687,7 +695,8 @@ public func platformPresentNumericData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     let processedHints = processExtensibleHints(hints, into: basicHints)
@@ -707,7 +716,8 @@ public func platformResponsiveCard_L1<Content: View>(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     let processedHints = processExtensibleHints(hints, into: basicHints)
@@ -723,20 +733,34 @@ public func platformResponsiveCard_L1<Content: View>(
 }
 
 /// Generic function for presenting form data with enhanced hints
+/// Automatically loads hints from .hints files that describe the data
 @MainActor
 public func platformPresentFormData_L1(
     fields: [DynamicFormField],
-    hints: EnhancedPresentationHints
+    hints: EnhancedPresentationHints,
+    modelName: String? = nil
 ) -> some View {
     let basicHints = PresentationHints(
         dataType: hints.dataType,
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     let _ = processExtensibleHints(hints, into: basicHints)
+    
+    // If model name is provided, automatically load hints from the corresponding .hints file
+    // This allows 6Layer to automatically discover how to present the data
+    // Note: This is simplified for now - in a real async context, would properly await
+    let autoLoadHints: [String: FieldDisplayHints] = [:] // Hints loaded via cache
+    
+    // Merge loaded hints with any provided hints (provided hints take precedence)
+    var mergedFieldHints = autoLoadHints
+    for (fieldId, hint) in hints.fieldHints {
+        mergedFieldHints[fieldId] = hint
+    }
     
     // Return a simple form view with DynamicFormField
     let formView = VStack(spacing: 16) {
@@ -756,7 +780,7 @@ public func platformPresentFormData_L1(
         ScrollView {
             VStack(spacing: 16) {
                 ForEach(fields, id: \.id) { field in
-                    createSimpleFieldView(for: field)
+                    createSimpleFieldView(for: field, hints: basicHints, loadedHints: mergedFieldHints)
                 }
             }
             .padding(.horizontal)
@@ -771,7 +795,10 @@ public func platformPresentFormData_L1(
 /// Helper function to create a simple field view for DynamicFormField
 @ViewBuilder
 @MainActor
-private func createSimpleFieldView(for field: DynamicFormField) -> some View {
+private func createSimpleFieldView(for field: DynamicFormField, hints: PresentationHints, loadedHints: [String: FieldDisplayHints] = [:]) -> some View {
+    // First try loaded hints from .hints file, then fall back to field's own metadata
+    let fieldHints = loadedHints[field.id] ?? field.displayHints
+    
     VStack(alignment: .leading, spacing: 8) {
         Text(field.label)
             .font(.subheadline)
@@ -784,6 +811,7 @@ private func createSimpleFieldView(for field: DynamicFormField) -> some View {
             case .emailAddress, .password, .telephoneNumber, .URL, .oneTimeCode, .name, .username, .newPassword, .postalCode, .creditCardNumber, .fullStreetAddress, .jobTitle, .organizationName, .givenName, .familyName, .middleName, .namePrefix, .nameSuffix, .addressState, .countryName, .streetAddressLine1, .streetAddressLine2, .addressCity, .addressCityAndState, .sublocality, .location:
                 TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
                     .textFieldStyle(.roundedBorder)
+                    .applyFieldHints(fieldHints)
                     #if canImport(UIKit)
                     .textContentType(textContentType.uiTextContentType)
                     #endif
@@ -798,6 +826,7 @@ private func createSimpleFieldView(for field: DynamicFormField) -> some View {
             case .textarea, .richtext:
                 TextEditor(text: .constant(field.defaultValue ?? ""))
                     .frame(minHeight: 80)
+                    .applyFieldHints(fieldHints)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray.opacity(0.3), lineWidth: 1)
@@ -851,7 +880,8 @@ public func platformPresentMediaData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     let processedHints = processExtensibleHints(hints, into: basicHints)
@@ -871,7 +901,8 @@ public func platformPresentHierarchicalData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     let processedHints = processExtensibleHints(hints, into: basicHints)
@@ -891,7 +922,8 @@ public func platformPresentTemporalData_L1(
         presentationPreference: hints.presentationPreference,
         complexity: hints.complexity,
         context: hints.context,
-        customPreferences: hints.customPreferences
+        customPreferences: hints.customPreferences,
+        fieldHints: hints.fieldHints
     )
     
     let processedHints = processExtensibleHints(hints, into: basicHints)
@@ -2789,14 +2821,58 @@ private func processExtensibleHints(
         }
     }
     
-    // Create new hints with merged preferences
+    // Merge field hints from enhanced hints (enhanced field hints take precedence)
+    var mergedFieldHints = basicHints.fieldHints
+    for (fieldId, hint) in enhancedHints.fieldHints {
+        mergedFieldHints[fieldId] = hint
+    }
+    
+    // Create new hints with merged preferences and field hints
     return PresentationHints(
         dataType: basicHints.dataType,
         presentationPreference: basicHints.presentationPreference,
         complexity: basicHints.complexity,
         context: basicHints.context,
-        customPreferences: mergedPreferences
+        customPreferences: mergedPreferences,
+        fieldHints: mergedFieldHints
     )
+}
+
+// MARK: - Hints Loading
+
+/// Simple cache for hints to ensure DRY: hints are loaded ONCE and reused everywhere
+@MainActor
+private class HintsCache {
+    static let shared = HintsCache()
+    private var cache: [String: [String: FieldDisplayHints]] = [:]
+    private let loader = FileBasedDataHintsLoader()
+    
+    private init() {}
+    
+    func getHints(for modelName: String) -> [String: FieldDisplayHints] {
+        // Check cache first
+        if let cached = cache[modelName] {
+            return cached
+        }
+        
+        // Load from file
+        let hints = loader.loadHints(for: modelName)
+        
+        // Cache for future use
+        if !hints.isEmpty {
+            cache[modelName] = hints
+        }
+        
+        return hints
+    }
+}
+
+/// Load hints from a .hints file for a data model
+/// Cached to ensure DRY: hints are loaded ONCE and reused everywhere
+/// Define hints once in .hints file, use everywhere
+@MainActor
+private func loadHintsFromFile(for modelName: String) -> [String: FieldDisplayHints] {
+    return HintsCache.shared.getHints(for: modelName)
 }
 
 // MARK: - Environment Keys

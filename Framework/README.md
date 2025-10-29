@@ -29,6 +29,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 
 - **Cross-Platform**: Write once, run on iOS and macOS
 - **Intelligent Layout**: AI-driven layout decisions based on content and context
+- **Field-Level Display Hints (v4.8.0)**: Declarative `.hints` files for data presentation
 - **Layout Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
 - **Performance Optimized**: Native performance with intelligent caching
 - **Accessibility First**: Built-in accessibility enhancements with automatic identifier generation
@@ -36,6 +37,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Type Safe**: Full Swift type safety with compile-time validation
 - **Extensible**: Easy to extend with custom layers and strategies
 - **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
+- **DRY Architecture**: Define hints once in files, use everywhere automatically
 
 ## 🧪 Comprehensive Testing Framework
 
@@ -60,6 +62,35 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Accessibility Preference Tests**: Test behavior when accessibility preferences are enabled/disabled
 - **Vision Safety Tests**: Test OCR and Vision framework safety features
 - **Comprehensive Integration Tests**: Cross-layer functionality testing
+
+## 🆕 What's New in v4.8.0
+
+### Field-Level Display Hints System
+- **Declarative Data Presentation**: Create `.hints` files that describe how data should be presented
+- **DRY Architecture**: Define hints once, automatically applied everywhere
+- **Organized Storage**: Hints stored in `Hints/` folder by model name
+- **Display Width System**: `narrow`, `medium`, `wide`, or numeric widths
+- **Automatic Discovery**: 6Layer reads hints based on `modelName` parameter
+- **Cached Loading**: Hints loaded once and reused for performance
+
+```swift
+// Create Hints/User.hints
+{
+  "username": { "displayWidth": "medium", "expectedLength": 20 },
+  "email": { "displayWidth": "wide" }
+}
+
+// Use in your views
+platformPresentFormData_L1(
+    fields: userFields,
+    hints: EnhancedPresentationHints(...),
+    modelName: "User"  // 6Layer reads User.hints automatically!
+)
+```
+
+**📚 Full documentation**: [Field Hints Complete Guide](docs/FieldHintsCompleteGuide.md)
+
+---
 
 ## 🆕 What's New in v3.5.0
 
@@ -630,6 +661,7 @@ xcodebuild test -scheme SixLayerFramework -destination 'platform=iOS Simulator,n
 
 ### 🤖 **AI Agent Guide** (For AI Assistants)
 - **[AI Agent Guide](docs/AI_AGENT_GUIDE.md)** - **Essential for AI assistants** working with the framework. Contains complete architecture understanding, correct usage patterns, and common mistakes to avoid.
+- **NEW in v4.8.0**: [Field-Level Display Hints](docs/FieldHintsCompleteGuide.md) - Declarative data presentation system
 
 ### 📖 **Developer Documentation**
 - [Six-Layer Architecture Overview](docs/six-layer-architecture-current-status.md)

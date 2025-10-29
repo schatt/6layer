@@ -957,6 +957,71 @@ public enum ContentComplexity: String, CaseIterable, Sendable {
     case advanced = "advanced"
 }
 
+/// Field-level display hints for individual form fields
+public struct FieldDisplayHints: Sendable {
+    /// Expected maximum length of the field (for display sizing)
+    public let expectedLength: Int?
+    
+    /// Display width hint: "narrow", "medium", "wide", or a specific value
+    public let displayWidth: String?
+    
+    /// Whether to show a character counter
+    public let showCharacterCounter: Bool
+    
+    /// Maximum allowed length (for validation)
+    public let maxLength: Int?
+    
+    /// Minimum allowed length (for validation)
+    public let minLength: Int?
+    
+    /// Additional field-specific metadata
+    public let metadata: [String: String]
+    
+    public init(
+        expectedLength: Int? = nil,
+        displayWidth: String? = nil,
+        showCharacterCounter: Bool = false,
+        maxLength: Int? = nil,
+        minLength: Int? = nil,
+        metadata: [String: String] = [:]
+    ) {
+        self.expectedLength = expectedLength
+        self.displayWidth = displayWidth
+        self.showCharacterCounter = showCharacterCounter
+        self.maxLength = maxLength
+        self.minLength = minLength
+        self.metadata = metadata
+    }
+    
+    /// Get display width as CGFloat if a specific numeric value is provided
+    public func displayWidthValue() -> CGFloat? {
+        guard let widthString = displayWidth else { return nil }
+        
+        // Try to parse as numeric value
+        if let width = Double(widthString) {
+            return CGFloat(width)
+        }
+        
+        // Return nil for named widths (handled by UI layer)
+        return nil
+    }
+    
+    /// Determine if display width is narrow
+    public var isNarrow: Bool {
+        return displayWidth?.lowercased() == "narrow"
+    }
+    
+    /// Determine if display width is medium
+    public var isMedium: Bool {
+        return displayWidth?.lowercased() == "medium" || displayWidth == nil
+    }
+    
+    /// Determine if display width is wide
+    public var isWide: Bool {
+        return displayWidth?.lowercased() == "wide"
+    }
+}
+
 /// Simple presentation hints for basic usage
 public struct PresentationHints: Sendable {
     public let dataType: DataTypeHint
@@ -965,18 +1030,33 @@ public struct PresentationHints: Sendable {
     public let context: PresentationContext
     public var customPreferences: [String: String]
     
+    /// Field-level display hints keyed by field ID
+    public let fieldHints: [String: FieldDisplayHints]
+    
     public init(
         dataType: DataTypeHint = .generic,
         presentationPreference: PresentationPreference = .automatic,
         complexity: ContentComplexity = .moderate,
         context: PresentationContext = .dashboard,
-        customPreferences: [String: String] = [:]
+        customPreferences: [String: String] = [:],
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) {
         self.dataType = dataType
         self.presentationPreference = presentationPreference
         self.complexity = complexity
         self.context = context
         self.customPreferences = customPreferences
+        self.fieldHints = fieldHints
+    }
+    
+    /// Get field-level hints for a specific field
+    public func hints(forFieldId fieldId: String) -> FieldDisplayHints? {
+        return fieldHints[fieldId]
+    }
+    
+    /// Check if hints exist for a specific field
+    public func hasHints(forFieldId fieldId: String) -> Bool {
+        return fieldHints[fieldId] != nil
     }
 }
 

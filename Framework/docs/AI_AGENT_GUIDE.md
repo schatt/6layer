@@ -19,9 +19,10 @@ AI agents need to understand:
 3. **[Working with Developers](#-working-with-developers)** - AI agent best practices
 4. **[Apple HIG Compliance](#-apple-hig-compliance-by-default)** - Automatic design compliance
 5. **[Settings Management](#️-settings-management)** - Centralized settings system
-6. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
-7. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
-8. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
+6. **[Field-Level Display Hints (v4.8.0)](#6-field-level-display-hints-new-in-v480)** - Declarative data presentation hints
+7. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
+8. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
+9. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
 
 ## 🏗️ **Framework Architecture (Correct Understanding)**
 
@@ -220,6 +221,46 @@ let hints = PresentationHints(
 ```
 
 **📚 For complete default values documentation, see [Hints Default Values Guide](HintsDefaultValuesGuide.md)**
+
+### **6. Field-Level Display Hints (NEW in v4.8.0):**
+```swift
+// ✅ NEW: Field-level hints that describe the DATA, not the view
+
+// Step 1: Create Hints/User.hints file
+{
+  "username": {
+    "displayWidth": "medium",
+    "expectedLength": 20,
+    "maxLength": 50
+  },
+  "email": {
+    "displayWidth": "wide"
+  },
+  "bio": {
+    "displayWidth": "wide",
+    "showCharacterCounter": true
+  }
+}
+
+// Step 2: Use in views (hints loaded automatically!)
+platformPresentFormData_L1(
+    fields: userFields,
+    hints: EnhancedPresentationHints(
+        dataType: .form,
+        context: .create
+    ),
+    modelName: "User"  // 6Layer reads Hints/User.hints automatically!
+)
+
+// ✅ DRY: Define hints once, use everywhere
+// ✅ Cached: Hints loaded once, reused for performance
+// ✅ Organized: All hints in Hints/ folder
+```
+
+**📚 For complete field hints documentation, see:**
+- [Field Hints Complete Guide](FieldHintsCompleteGuide.md) - Comprehensive usage guide
+- [Field Hints Guide](FieldHintsGuide.md) - Quick start
+- [Hints DRY Architecture](HintsDRYArchitecture.md) - DRY principles
 
 ## 🔧 **How to Actually Use the Framework**
 

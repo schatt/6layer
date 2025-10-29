@@ -304,11 +304,9 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When & Then
-        let view = ModalFormView(
-            fields: [],
+        let view = ModalFormL1View(
             formType: formType,
-            context: context,
-            hints: sampleHints
+            context: context
         )
         #expect(view != nil)
         // Performance test removed - performance monitoring was removed from framework

@@ -9,7 +9,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[README_UsageExamples.md](README_UsageExamples.md)** - Practical usage examples and patterns
 - **[DeveloperExtensionGuide.md](DeveloperExtensionGuide.md)** - **NEW!** Complete guide for developers extending the framework
 - **[ExtensionQuickReference.md](ExtensionQuickReference.md)** - **NEW!** Quick reference card for common patterns
-- **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - **NEW!** Guide for AI agents working with the framework (includes Settings Management)
+- **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - **Updated v4.8.0!** Guide for AI agents (includes Field Hints)
 - **[AI_AGENT_GUIDE_v4.6.0.md](AI_AGENT_GUIDE_v4.6.0.md)** - **NEW v4.6.0!** Version-specific AI agent guide for default values feature
 
 ### 🏗️ Architecture Details
@@ -23,6 +23,10 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 ### 🔧 Advanced Topics
 - **[HintsSystemExtensibility.md](HintsSystemExtensibility.md)** - Custom hints and extensibility
 - **[HintsDefaultValuesGuide.md](HintsDefaultValuesGuide.md)** - **NEW v4.6.0!** Default values in hints system
+- **[FieldHintsCompleteGuide.md](FieldHintsCompleteGuide.md)** - **NEW v4.8.0!** Field-level display hints system
+- **[FieldHintsGuide.md](FieldHintsGuide.md)** - Quick start guide for field hints
+- **[HintsDRYArchitecture.md](HintsDRYArchitecture.md)** - DRY architecture for field hints
+- **[HintsFolderStructure.md](HintsFolderStructure.md)** - Hints file organization
 - **[platform-specific-patterns.md](platform-specific-patterns.md)** - Platform-specific development patterns
 - **[FunctionIndex.md](FunctionIndex.md)** - Complete function reference
 - **Settings Management** - Centralized settings system (see AI_AGENT_GUIDE.md)

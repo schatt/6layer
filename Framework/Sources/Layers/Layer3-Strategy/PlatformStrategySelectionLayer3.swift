@@ -349,22 +349,10 @@ private func generateStrategyReasoning(
 
 /// Modal strategy for implementing modal containers
 public struct ModalStrategy {
-    public let presentationType: ModalPresentationType
-    public let sizing: ModalSizing
-    public let detents: [SheetDetent]
-    public let platformOptimizations: [ModalPlatform: ModalConstraint]
-    
-    public init(
-        presentationType: ModalPresentationType,
-        sizing: ModalSizing,
-        detents: [SheetDetent],
-        platformOptimizations: [ModalPlatform: ModalConstraint]
-    ) {
-        self.presentationType = presentationType
-        self.sizing = sizing
-        self.detents = detents
-        self.platformOptimizations = platformOptimizations
-    }
+    let presentationType: ModalPresentationType
+    let sizing: ModalSizing
+    let detents: [SheetDetent]
+    let platformOptimizations: [ModalPlatform: ModalConstraint]
 }
 
 /// Temporary Layer 3 function for selecting form strategy for AddFuelView

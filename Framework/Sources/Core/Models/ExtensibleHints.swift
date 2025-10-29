@@ -136,13 +136,17 @@ public struct EnhancedPresentationHints: Sendable {
     public let customPreferences: [String: String]
     public let extensibleHints: [ExtensibleHint]
     
+    /// Field-level display hints keyed by field ID
+    public let fieldHints: [String: FieldDisplayHints]
+    
     public init(
         dataType: DataTypeHint,
         presentationPreference: PresentationPreference = .automatic,
         complexity: ContentComplexity = .moderate,
         context: PresentationContext = .dashboard,
         customPreferences: [String: String] = [:],
-        extensibleHints: [ExtensibleHint] = []
+        extensibleHints: [ExtensibleHint] = [],
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) {
         self.dataType = dataType
         self.presentationPreference = presentationPreference
@@ -150,6 +154,17 @@ public struct EnhancedPresentationHints: Sendable {
         self.context = context
         self.customPreferences = customPreferences
         self.extensibleHints = extensibleHints
+        self.fieldHints = fieldHints
+    }
+    
+    /// Get field-level hints for a specific field
+    public func hints(forFieldId fieldId: String) -> FieldDisplayHints? {
+        return fieldHints[fieldId]
+    }
+    
+    /// Check if hints exist for a specific field
+    public func hasHints(forFieldId fieldId: String) -> Bool {
+        return fieldHints[fieldId] != nil
     }
     
     /// Get hints of a specific type
