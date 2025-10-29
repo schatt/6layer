@@ -50,7 +50,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardComponent"
         )
@@ -96,7 +96,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardComponent"
         )
@@ -125,7 +125,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "CoverFlowCollectionView"
         )
@@ -152,7 +152,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "CoverFlowCollectionView"
         )
@@ -174,7 +174,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "CoverFlowCardComponent"
         )
@@ -194,7 +194,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "CoverFlowCardComponent"
         )
@@ -223,7 +223,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "GridCollectionView"
         )
@@ -250,7 +250,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "GridCollectionView"
         )
@@ -279,7 +279,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ListCollectionView"
         )
@@ -306,7 +306,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ListCollectionView"
         )
@@ -335,7 +335,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "MasonryCollectionView"
         )
@@ -362,7 +362,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "MasonryCollectionView"
         )
@@ -391,7 +391,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AdaptiveCollectionView"
         )
@@ -418,7 +418,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AdaptiveCollectionView"
         )
@@ -452,7 +452,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "SimpleCardComponent"
         )
@@ -484,7 +484,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "SimpleCardComponent"
         )
@@ -507,7 +507,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ListCardComponent"
         )
@@ -528,7 +528,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ListCardComponent"
         )
@@ -545,7 +545,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "MasonryCardComponent"
         )
@@ -560,7 +560,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "MasonryCardComponent"
         )

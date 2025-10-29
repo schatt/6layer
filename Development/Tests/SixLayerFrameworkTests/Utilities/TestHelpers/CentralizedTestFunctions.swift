@@ -308,10 +308,11 @@ public func testComponentAccessibilityDisabled<T: View>(
     // Disable auto IDs for this test
     config.enableAutoIDs = false
     
+    // Use a regex that matches only empty string to assert no ID
     let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
         component,
         componentName: componentName,
-        expectedPattern: "", // Expect empty when disabled
+        expectedPattern: "^$",
         testName: testName
     )
     
