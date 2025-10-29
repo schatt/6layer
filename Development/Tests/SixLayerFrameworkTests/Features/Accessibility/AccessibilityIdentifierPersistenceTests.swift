@@ -1,8 +1,7 @@
 import Testing
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// TDD Tests for Accessibility Identifier Persistence
 /// Following proper TDD: Write failing tests first to prove the issue exists
 @MainActor

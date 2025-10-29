@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for IntelligentFormView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure IntelligentFormView generates proper accessibility identifiers

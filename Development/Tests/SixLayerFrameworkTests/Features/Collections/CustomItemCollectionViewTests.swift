@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for CustomItemCollectionView component
 /// 
 /// BUSINESS PURPOSE: Ensure CustomItemCollectionView generates proper accessibility identifiers

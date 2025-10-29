@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 @MainActor

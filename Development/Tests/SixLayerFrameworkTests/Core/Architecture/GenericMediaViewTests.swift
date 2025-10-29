@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for GenericMediaView component
 /// 
 /// BUSINESS PURPOSE: Ensure GenericMediaView generates proper accessibility identifiers

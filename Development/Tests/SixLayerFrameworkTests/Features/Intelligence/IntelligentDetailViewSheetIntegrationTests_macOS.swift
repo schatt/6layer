@@ -47,7 +47,8 @@ struct IntelligentDetailViewSheetIntegrationTests_macOS {
 
         // When: Begin sheet and allow layout pass
         hostWindow.beginSheet(sheetWindow, completionHandler: nil)
-        RunLoop.main.run(until: Date().addingTimeInterval(0.15))
+        // Allow a brief layout pass
+        try? await Task.sleep(nanoseconds: 150_000_000)
 
         // Then: Verify the sheet has non-trivial size and visible subviews
         let fittingSize = sheetController.view.fittingSize

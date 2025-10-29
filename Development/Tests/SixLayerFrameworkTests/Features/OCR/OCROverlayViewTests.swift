@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for OCROverlayView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure OCROverlayView generates proper accessibility identifiers

@@ -33,9 +33,8 @@ import Testing
 //
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 @MainActor
 open class PlatformPresentContentL1Tests {
     

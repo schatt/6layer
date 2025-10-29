@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Form Callback Functional Tests
 /// Tests that forms with callbacks ACTUALLY INVOKE them when buttons are tapped (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
@@ -223,4 +222,3 @@ open class FormCallbackFunctionalTests {
         #expect(true, "Callbacks can be provided by external modules")
     }
 }
-

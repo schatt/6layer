@@ -1,8 +1,7 @@
 import Testing
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// TDD Tests for IntelligentDetailView Sheet Presentation Bug
 ///
 /// BUG: IntelligentDetailView renders tiny and blank when used in .sheet() modifier on macOS

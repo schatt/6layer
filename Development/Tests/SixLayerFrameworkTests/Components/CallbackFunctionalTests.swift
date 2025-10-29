@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Component Callback Functional Tests
 /// Tests that components with callbacks ACTUALLY INVOKE them when expected (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
@@ -182,4 +181,6 @@ open class CallbackFunctionalTests {
         #expect(ocrView != nil, "OCROverlayView should be accessible externally")
     }
 }
-
+#if !os(macOS)
+// ViewInspector-dependent tests are iOS-only
+#endif

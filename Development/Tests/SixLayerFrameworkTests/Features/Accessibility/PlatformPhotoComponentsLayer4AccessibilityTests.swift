@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
@@ -82,9 +81,9 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             )
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoDisplay_L4"
+                componentName: "platformPhotoDisplay_L4"
             )
         }
         
@@ -108,9 +107,9 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             )
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoDisplay_L4"
+                componentName: "platformPhotoDisplay_L4"
             )
         }
         
@@ -132,9 +131,9 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             )
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoDisplay_L4"
+                componentName: "platformPhotoDisplay_L4"
             )
         }
         

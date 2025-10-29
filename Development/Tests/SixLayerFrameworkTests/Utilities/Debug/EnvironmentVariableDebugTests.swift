@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Debug test to understand environment variable propagation
 @MainActor
 open class EnvironmentVariableDebugTests {

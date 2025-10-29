@@ -27,9 +27,8 @@ import Testing
 //
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 @MainActor
 open class PhotoComponentsLayer4Tests {
     

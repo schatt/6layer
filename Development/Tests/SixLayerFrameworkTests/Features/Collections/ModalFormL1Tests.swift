@@ -303,8 +303,8 @@ open class ModalFormL1Tests: BaseTestClass {
         let formType = DataTypeHint.form
         let context = PresentationContext.modal
         
-        // When & Then
-        let view = ModalFormL1View(
+        // When & Then: use Layer 1 API
+        let view = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )

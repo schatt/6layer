@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for PlatformStylingLayer4.swift
 /// 
 /// BUSINESS PURPOSE: Ensure all styling Layer 4 components generate proper accessibility identifiers

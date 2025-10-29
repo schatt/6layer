@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoLayoutDecisionLayer2.swift functions
 /// Ensures Photo layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance

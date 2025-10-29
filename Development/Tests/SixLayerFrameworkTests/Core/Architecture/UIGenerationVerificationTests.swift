@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// UI Generation Verification Tests
 /// Tests that the correct UI components are generated based on capabilities
 @MainActor

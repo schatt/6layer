@@ -1,8 +1,7 @@
 import Testing
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /**
  * BUSINESS PURPOSE: Verify that accessibility identifier generation actually works end-to-end
  * and that the Enhanced Breadcrumb System modifiers properly trigger identifier generation.

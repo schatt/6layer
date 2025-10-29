@@ -36,7 +36,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Comprehensive test suite for Input Handling & Interactions system
 /// Tests platform-specific input handling, keyboard shortcuts, haptic feedback, and drag & drop
 @MainActor

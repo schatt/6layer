@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for DynamicFormView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure DynamicFormView generates proper accessibility identifiers

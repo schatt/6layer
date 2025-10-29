@@ -2,12 +2,12 @@ import Testing
 
 
 import SwiftUI
+@testable import SixLayerFramework
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
-@testable import SixLayerFramework
 
 /**
  * BUSINESS PURPOSE: SixLayer framework should automatically generate accessibility identifiers

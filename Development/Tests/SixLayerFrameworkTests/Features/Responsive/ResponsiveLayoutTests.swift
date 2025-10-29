@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for ResponsiveLayout.swift
 /// 
 /// BUSINESS PURPOSE: Ensure ResponsiveLayout generates proper accessibility identifiers

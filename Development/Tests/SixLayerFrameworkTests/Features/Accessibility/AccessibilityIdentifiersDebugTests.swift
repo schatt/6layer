@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
 open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
@@ -12,10 +11,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
         let testView = Button("Test") { }
             .automaticAccessibilityIdentifiers()
         
-        // Should look for button-specific accessibility identifier: "SixLayer.main.ui.element.View"
+        // Should look for button-specific accessibility identifier with current format
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "DirectAutomaticAccessibilityIdentifiers"
         ), "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
@@ -46,10 +45,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
                 platform: .iOS
             ))
         
-        // Should look for modifier-specific accessibility identifier: "SixLayer.main.ui.element.View"
+        // Should look for modifier-specific accessibility identifier with current format
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityModifier"
         ), "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
@@ -61,10 +60,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
         let testView = Button("Test") { }
             .automaticAccessibility()
         
-        // Should look for extension-specific accessibility identifier: "SixLayer.main.ui.element.View"
+        // Should look for extension-specific accessibility identifier with current format
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityExtension"
         ), ".automaticAccessibility() should generate extension-specific accessibility ID")

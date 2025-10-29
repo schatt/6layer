@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+@testable import SixLayerFramework
 import ViewInspector
 #if canImport(UIKit)
 import UIKit
@@ -25,7 +26,6 @@ import UIKit
 #if canImport(AppKit)
 import AppKit
 #endif
-@testable import SixLayerFramework
 
 // MARK: - Test Extensions for Accessibility Identifier Testing
 

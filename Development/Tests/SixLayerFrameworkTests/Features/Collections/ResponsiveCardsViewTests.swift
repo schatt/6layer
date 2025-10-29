@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for ResponsiveCardsView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure ResponsiveCardsView components generate proper accessibility identifiers

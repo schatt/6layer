@@ -24,12 +24,12 @@ import Testing
 //
 
 import SwiftUI
+@testable import SixLayerFramework
 #if os(iOS)
 import UIKit
 #elseif os(macOS)
 import AppKit
 #endif
-@testable import SixLayerFramework
 
 @MainActor
 open class Layer4PlatformImageArchitectureTests {

@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Test the "global disable, local enable" functionality
 @MainActor
 open class LocalEnableOverrideTests: BaseTestClass {

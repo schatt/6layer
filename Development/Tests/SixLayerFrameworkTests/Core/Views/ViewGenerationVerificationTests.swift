@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// View Generation Verification Tests
 /// Tests that the actual SwiftUI views are generated correctly with the right properties and modifiers
 /// This verifies the view structure using the new testing pattern: view created + contains expected content

@@ -1,9 +1,8 @@
 import Testing
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformSemanticLayer1.swift modal form functions
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance

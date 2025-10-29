@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 // MARK: - Mock Data for Testing
 
 struct MockTaskItemBaseline: Identifiable {

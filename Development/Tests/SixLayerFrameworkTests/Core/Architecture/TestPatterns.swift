@@ -1,8 +1,7 @@
 import Testing
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// DRY Test Patterns
 /// Provides reusable patterns to eliminate duplication in tests
 @MainActor

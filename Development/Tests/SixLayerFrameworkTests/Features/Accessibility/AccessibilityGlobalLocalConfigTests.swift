@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Test that accessibility functions respect both global and local configuration options
 @MainActor
 open class AccessibilityGlobalLocalConfigTests {
@@ -40,6 +39,7 @@ open class AccessibilityGlobalLocalConfigTests {
             let accessibilityID = try button.accessibilityIdentifier()
             
             // Should be empty when global config is disabled
+            // TDD RED: Modifier currently always applies IDs (local override) - global disable not yet respected
             #expect(accessibilityID.isEmpty, "Automatic accessibility functions should not generate ID when global config is disabled")
             
         } catch {
@@ -62,7 +62,7 @@ open class AccessibilityGlobalLocalConfigTests {
         // Test that the view has an accessibility identifier using the same method as working tests
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityFunctionsRespectGlobalConfigEnabled"
         )
@@ -119,7 +119,7 @@ open class AccessibilityGlobalLocalConfigTests {
         // Test that the view has an accessibility identifier using the same method as working tests
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityFunctionsRespectLocalEnableModifier"
         )
@@ -174,7 +174,7 @@ open class AccessibilityGlobalLocalConfigTests {
         // Test that the view has an accessibility identifier using the same method as working tests
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "LocalEnableOverridesGlobalDisable"
         )

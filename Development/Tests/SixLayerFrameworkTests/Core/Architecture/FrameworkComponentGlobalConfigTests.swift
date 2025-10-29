@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Test that framework components respect global accessibility config
 @MainActor
 open class FrameworkComponentGlobalConfigTests: BaseTestClass {

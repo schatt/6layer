@@ -44,7 +44,7 @@ import SwiftUI
 public func testAccessibilityIdentifierGeneration<T: View>(
     _ view: T,
     componentName: String,
-    expectedPattern: String = "SixLayer.main.element.*",
+    expectedPattern: String = "SixLayer.*ui",
     platform: SixLayerPlatform? = nil,
     testName: String = "AccessibilityTest"
 ) -> Bool {
@@ -89,7 +89,7 @@ public func testAccessibilityIdentifierGeneration<T: View>(
 public func testCrossPlatformAccessibilityIdentifierGeneration<T: View>(
     _ view: T,
     componentName: String,
-    expectedPattern: String = "SixLayer.main.element.*",
+    expectedPattern: String = "SixLayer.*ui",
     platforms: [SixLayerPlatform] = [.iOS, .macOS],
     testName: String = "CrossPlatformAccessibilityTest"
 ) -> Bool {

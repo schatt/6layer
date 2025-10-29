@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for CrossPlatformNavigation.swift
 /// 
 /// BUSINESS PURPOSE: Ensure CrossPlatformNavigation generates proper accessibility identifiers

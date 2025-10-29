@@ -30,8 +30,9 @@ import SwiftUI
 import UIKit
 #elseif os(macOS)
 import AppKit
-#endif
 @testable import SixLayerFramework
+#endif
+
 
 @MainActor
 open class PlatformImageAPISignatureTests {

@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AssistiveTouchManager.swift classes
 /// Ensures AssistiveTouchManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance

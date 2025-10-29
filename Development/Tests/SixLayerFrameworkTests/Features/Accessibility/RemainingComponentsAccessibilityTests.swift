@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Comprehensive Accessibility Tests for Remaining SixLayer Components
 /// 
 /// BUSINESS PURPOSE: Ensure every remaining SixLayer component generates proper accessibility identifiers

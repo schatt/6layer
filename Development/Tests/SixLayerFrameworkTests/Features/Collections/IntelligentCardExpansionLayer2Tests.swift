@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for IntelligentCardExpansionLayer2.swift
 /// 
 /// BUSINESS PURPOSE: Ensure Layer 2 card expansion decision functions generate proper accessibility identifiers

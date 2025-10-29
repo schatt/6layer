@@ -9,6 +9,8 @@ import Testing
 import Foundation
 @testable import SixLayerFramework
 
+private class _FieldHintsTestBundleMarker {}
+
 struct FieldHintsIntegrationTests {
     
     @Test func testLoadHintsFromTestFile() throws {
@@ -37,7 +39,7 @@ struct FieldHintsIntegrationTests {
         // Test loading
         let loader = FileBasedDataHintsLoader(
             fileManager: .default,
-            bundle: Bundle(for: type(of: self))
+            bundle: Bundle(for: _FieldHintsTestBundleMarker.self)
         )
         
         // Load using model name (will look for bundle first, won't find it)
@@ -126,7 +128,7 @@ struct FieldHintsIntegrationTests {
         let presentationHints = PresentationHints(
             dataType: .form,
             fieldHints: [
-                "username": FieldDisplayHints(displayWidth: "medium", expectedLength: 20)
+                "username": FieldDisplayHints(expectedLength: 20, displayWidth: "medium")
             ]
         )
         
@@ -167,11 +169,11 @@ struct FieldHintsIntegrationTests {
     @Test func testHintsMergingPriority() {
         // Test that manually provided hints take precedence over loaded hints
         let loadedHints = [
-            "username": FieldDisplayHints(displayWidth: "medium", expectedLength: 10)
+            "username": FieldDisplayHints(expectedLength: 10, displayWidth: "medium")
         ]
         
         let providedHints = [
-            "username": FieldDisplayHints(displayWidth: "wide", expectedLength: 20)
+            "username": FieldDisplayHints(expectedLength: 20, displayWidth: "wide")
         ]
         
         // In the actual implementation, provided hints should take precedence

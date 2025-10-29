@@ -98,8 +98,8 @@ struct FieldDisplayHintsTests {
     @Test func testPresentationHintsFieldHintsRetrieval() {
         let fieldHints = [
             "username": FieldDisplayHints(
-                displayWidth: "medium",
-                expectedLength: 20
+                expectedLength: 20,
+                displayWidth: "medium"
             )
         ]
         

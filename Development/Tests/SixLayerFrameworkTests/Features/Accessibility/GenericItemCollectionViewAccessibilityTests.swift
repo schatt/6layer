@@ -1,9 +1,8 @@
 import Testing
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 #if os(macOS)
 import AppKit
 #endif
@@ -49,7 +48,7 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
         #expect(testAccessibilityIdentifiersSinglePlatform(
             collectionView, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
         ), "ExpandableCardCollectionView should generate standard accessibility ID")
@@ -95,7 +94,7 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
         #expect(testAccessibilityIdentifiersSinglePlatform(
             collectionView, 
-            expectedPattern: "SixLayer.*View", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.macOS,
             componentName: "ExpandableCardCollectionView"
         ), "ExpandableCardCollectionView should generate standard accessibility ID")

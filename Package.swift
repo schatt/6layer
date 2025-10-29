@@ -18,7 +18,7 @@ let package = Package(
         )
     ],
         dependencies: [
-            .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7")
+            .package(url: "https://github.com/nalexn/ViewInspector", branch: "0.10.4")
         ],
     targets: [
         // Main framework target - organized into logical structure
@@ -44,7 +44,8 @@ let package = Package(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                .product(name: "ViewInspector", package: "ViewInspector", condition: .when(platforms: [.iOS]))
+                // Temporarily include macOS to verify 0.10.4 branch macOS compatibility
+                .product(name: "ViewInspector", package: "ViewInspector", condition: .when(platforms: [.iOS, .macOS]))
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [

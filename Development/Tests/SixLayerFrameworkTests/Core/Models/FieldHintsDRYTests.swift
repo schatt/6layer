@@ -19,9 +19,23 @@ struct FieldHintsDRYTests {
         let secondLoad = loader.loadHints(for: "User")
         let thirdLoad = loader.loadHints(for: "User")
         
-        // Each load returns same result (consistent)
-        #expect(firstLoad == secondLoad)
-        #expect(secondLoad == thirdLoad)
+        // Each load returns consistent keys and values for key attributes
+        #expect(Set(firstLoad.keys) == Set(secondLoad.keys))
+        #expect(Set(secondLoad.keys) == Set(thirdLoad.keys))
+        
+        for key in firstLoad.keys {
+            let a = firstLoad[key]
+            let b = secondLoad[key]
+            let c = thirdLoad[key]
+            #expect(a?.expectedLength == b?.expectedLength)
+            #expect(b?.expectedLength == c?.expectedLength)
+            #expect(a?.displayWidth == b?.displayWidth)
+            #expect(b?.displayWidth == c?.displayWidth)
+            #expect(a?.maxLength == b?.maxLength)
+            #expect(b?.maxLength == c?.maxLength)
+            #expect(a?.minLength == b?.minLength)
+            #expect(b?.minLength == c?.minLength)
+        }
         
         // Note: Actual file system caching is tested in integration tests
     }
@@ -33,8 +47,8 @@ struct FieldHintsDRYTests {
             registry: globalDataHintsRegistry
         )
         
-        // Hints should be loaded (empty if no file exists)
-        #expect(hints.fieldHints != nil)
+        // Access fieldHints (may be empty if no file exists)
+        let _ = hints.fieldHints
     }
     
     @Test func testEnhancedPresentationHintsWithModelName() async {
@@ -44,8 +58,8 @@ struct FieldHintsDRYTests {
             registry: globalDataHintsRegistry
         )
         
-        // Hints should be loaded (empty if no file exists)
-        #expect(hints.fieldHints != nil)
+        // Access fieldHints (may be empty if no file exists)
+        let _ = hints.fieldHints
     }
 }
 

@@ -14,8 +14,9 @@ import SwiftUI
 import UIKit
 #elseif os(macOS)
 import AppKit
-#endif
 @testable import SixLayerFramework
+#endif
+
 
 open class PhotoFunctionalityPhase1Tests {
     

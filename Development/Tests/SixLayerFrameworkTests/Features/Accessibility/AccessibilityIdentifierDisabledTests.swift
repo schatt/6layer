@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Test what happens when automatic accessibility IDs are disabled
 @MainActor
 open class AccessibilityIdentifierDisabledTests {

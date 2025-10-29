@@ -4,7 +4,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for FormWizardView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure FormWizardView generates proper accessibility identifiers

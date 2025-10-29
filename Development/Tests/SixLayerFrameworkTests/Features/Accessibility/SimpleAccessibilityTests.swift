@@ -2,9 +2,8 @@ import Testing
 
 
 import SwiftUI
-import ViewInspector
 @testable import SixLayerFramework
-
+import ViewInspector
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
 open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessibilityIdentifierWorks() {

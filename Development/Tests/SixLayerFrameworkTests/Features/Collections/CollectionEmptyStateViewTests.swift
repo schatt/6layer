@@ -2,7 +2,6 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-
 /// Tests for CollectionEmptyStateView component
 /// 
 /// BUSINESS PURPOSE: Ensure CollectionEmptyStateView generates proper accessibility identifiers
