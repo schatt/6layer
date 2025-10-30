@@ -387,7 +387,7 @@ open class AdvancedFieldTypesTests {
         // Given
         let field = DynamicFormField(
             id: "custom",
-            contentType: .text,
+            contentType: .custom,
             label: "Custom Field",
             placeholder: "Custom placeholder"
         )

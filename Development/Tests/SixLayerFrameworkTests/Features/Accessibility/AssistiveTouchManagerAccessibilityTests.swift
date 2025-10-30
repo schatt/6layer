@@ -25,6 +25,7 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     
 @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
+        await setupTestEnvironment()
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
             enableCustomActions: true,
@@ -51,6 +52,7 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
+        await setupTestEnvironment()
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
             enableCustomActions: true,

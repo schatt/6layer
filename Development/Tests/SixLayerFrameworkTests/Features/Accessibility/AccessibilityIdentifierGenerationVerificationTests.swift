@@ -175,7 +175,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             do {
                 let accessibilityIdentifier2 = try testView2.inspect().button().accessibilityIdentifier()
                 #expect(!accessibilityIdentifier2.isEmpty, "An identifier should be generated when enabled")
-                #expect(accessibilityIdentifier2.hasPrefix("test"), "Generated ID should start with namespace")
+                #expect(accessibilityIdentifier2.contains(".test."), "Generated ID should contain namespace")
             } catch {
                 Issue.record("Failed to inspect accessibility identifier: \(error)")
             }

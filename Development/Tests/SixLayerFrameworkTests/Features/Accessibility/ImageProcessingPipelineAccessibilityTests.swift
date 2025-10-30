@@ -25,6 +25,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     
 @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
+        await setupTestEnvironment()
         let processor = ImageProcessor()
         
         // When & Then
@@ -43,6 +44,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
+        await setupTestEnvironment()
         let processor = ImageProcessor()
         
         // When & Then
