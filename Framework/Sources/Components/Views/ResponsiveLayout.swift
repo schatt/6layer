@@ -200,6 +200,7 @@ public struct ResponsiveLayoutExample: View {
                 .cornerRadius(8)
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -225,5 +226,6 @@ public struct ResponsiveNavigationExample: View {
                 }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }

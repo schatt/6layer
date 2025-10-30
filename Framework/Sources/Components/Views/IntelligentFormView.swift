@@ -103,7 +103,8 @@ public struct IntelligentFormView {
                     )
                 )
             }
-        })
+        }
+        .automaticAccessibilityIdentifiers())
     }
     
     /// Generate a form for updating existing data with data binding integration

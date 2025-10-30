@@ -417,6 +417,7 @@ public struct ResponsiveCardView: View {
         .cornerRadius(12)
         .shadow(radius: 2)
         .frame(height: 120)
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder

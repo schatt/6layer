@@ -1773,6 +1773,7 @@ public struct ModalFormView: View {
         }
         .frame(minWidth: 400, minHeight: 300)
         .background(Color.platformBackground)
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder
