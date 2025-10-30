@@ -260,6 +260,7 @@ public func platformPresentMediaData_L1(
     AccessibilityIdentifierConfig.shared.setScreenContext("screen")
     
     return GenericMediaView(media: media, hints: hints)
+        .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
         .automaticAccessibilityIdentifiers()
 }
 
@@ -286,6 +287,8 @@ public func platformPresentMediaData_L1(
         hints: hints,
         customMediaView: { AnyView(customMediaView($0)) }
     )
+    .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting media data with custom views and enhanced hints
@@ -314,6 +317,8 @@ public func platformPresentMediaData_L1(
         customMediaView: { AnyView(customMediaView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting hierarchical data
@@ -920,6 +925,8 @@ public func platformPresentMediaData_L1(
     
     return GenericMediaView(media: media, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
+        .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting hierarchical data with enhanced hints

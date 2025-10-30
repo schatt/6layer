@@ -122,10 +122,10 @@ open class Layer1AccessibilityTests {
         print("🔍 Testing platformPresentNumericData_L1 accessibility identifier generation")
     }
     
-    /// BUSINESS PURPOSE: Document that platformPresentMediaData_L1 currently does NOT generate accessibility identifiers
-    /// TESTING SCOPE: Verify the current behavior (no accessibility identifiers)
-    /// METHODOLOGY: Test the actual current state, not the desired state
-    @Test func testPlatformPresentMediaDataL1CurrentlyDoesNotGenerateAccessibilityIdentifiers() async {
+    /// BUSINESS PURPOSE: Validates that platformPresentMediaData_L1 generates proper accessibility identifiers
+    /// TESTING SCOPE: Verify accessibility identifier generation
+    /// METHODOLOGY: Test that accessibility identifiers are properly generated
+    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -138,25 +138,24 @@ open class Layer1AccessibilityTests {
         // Then: View should be created
         #expect(view != nil, "platformPresentMediaData_L1 should create a view")
         
-        // CURRENT BEHAVIOR: platformPresentMediaData_L1 does NOT generate accessibility identifiers
-        // This test documents the current state - the function needs .automaticAccessibilityIdentifiers() added
+        // TDD GREEN PHASE: platformPresentMediaData_L1 should generate accessibility identifiers
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "*.screen.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
-            componentName: "MediaData"
+            componentName: "platformPresentMediaData_L1"
         )
         
-        // EXPECTED CURRENT BEHAVIOR: Should NOT have accessibility identifiers
-        #expect(!hasSpecificAccessibilityID, "platformPresentMediaData_L1 currently does NOT generate accessibility identifiers - needs .automaticAccessibilityIdentifiers() added to implementation")
+        // EXPECTED BEHAVIOR: Should have accessibility identifiers
+        #expect(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers")
         
-        print("🔍 DOCUMENTED: platformPresentMediaData_L1 currently does NOT generate accessibility identifiers")
+        print("✅ platformPresentMediaData_L1 generates accessibility identifiers")
     }
     
-    /// BUSINESS PURPOSE: Document that platformPresentSettings_L1 currently does NOT generate accessibility identifiers
-    /// TESTING SCOPE: Verify the current behavior (no accessibility identifiers)
-    /// METHODOLOGY: Test the actual current state, not the desired state
-    @Test func testPlatformPresentSettingsL1CurrentlyDoesNotGenerateAccessibilityIdentifiers() async {
+    /// BUSINESS PURPOSE: Validates that platformPresentSettings_L1 generates proper accessibility identifiers
+    /// TESTING SCOPE: Verify accessibility identifier generation
+    /// METHODOLOGY: Test that accessibility identifiers are properly generated
+    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiers() async {
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -177,19 +176,18 @@ open class Layer1AccessibilityTests {
         // Then: View should be created
         #expect(view != nil, "platformPresentSettings_L1 should create a view")
         
-        // CURRENT BEHAVIOR: platformPresentSettings_L1 does NOT generate accessibility identifiers
-        // This test documents the current state - the function needs .automaticAccessibilityIdentifiers() added
+        // TDD GREEN PHASE: platformPresentSettings_L1 should generate accessibility identifiers
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "*.screen.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
-            componentName: "SettingsData"
+            componentName: "platformPresentSettings_L1"
         )
         
-        // EXPECTED CURRENT BEHAVIOR: Should NOT have accessibility identifiers
-        #expect(!hasSpecificAccessibilityID, "platformPresentSettings_L1 currently does NOT generate accessibility identifiers - needs .automaticAccessibilityIdentifiers() added to implementation")
+        // EXPECTED BEHAVIOR: Should have accessibility identifiers
+        #expect(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers")
         
-        print("🔍 DOCUMENTED: platformPresentSettings_L1 currently does NOT generate accessibility identifiers")
+        print("✅ platformPresentSettings_L1 generates accessibility identifiers")
     }
 }
 
