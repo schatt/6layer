@@ -339,20 +339,25 @@ struct ComprehensiveCapabilityTestRunner {
             }
             // iPad can have both touch and hover (when mouse/trackpad connected)
             // Both can be true, so no mutual exclusivity check
+            break
         case .macOS:
             // macOS typically supports hover (mouse/trackpad), but runtime detection is authoritative
             // macOS CAN also support touch if external touchscreen is connected
             // Both can be true, so no mutual exclusivity check
+            break
         case .watchOS:
             // watchOS typically supports touch, but runtime detection is authoritative
             // watchOS typically does not support hover, but runtime detection is authoritative
             // No assertions - runtime detection is authoritative
+            break
         case .tvOS:
             // tvOS typically does not support touch or hover, but runtime detection is authoritative
             // No assertions - runtime detection is authoritative
+            break
         case .visionOS:
             // visionOS typically supports BOTH touch and hover, but runtime detection is authoritative
             // No assertions - runtime detection is authoritative
+            break
         }
     }
     
