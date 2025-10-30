@@ -1,5 +1,14 @@
 # Changelog
 
+## v4.9.1
+- Feature: Deterministic field ordering for IntelligentFormView via FieldOrderRules (explicit lists, per-field weights, groups, trait overrides)
+- Integration: IntelligentFormView consumes FieldOrderRules with title/name-first default (no alphabetic-by-type)
+- Debug: Added inspectEffectiveOrder helper; example demonstrating runtime provider
+- Accessibility: Fixed disabled-mode regex handling and helper fallbacks; clarified that mixing manual accessibilityIdentifier with .named/.exactNamed is undefined priority
+- Platform (L5): Positive default minTouchTarget for macOS config
+- Tests: Removed tests asserting overriding manually-set accessibilityIdentifier (undefined behavior); added resolver tests
+- Docs: Added warning note about mixing manual IDs with .named/.exactNamed; updated guidance
+
 All notable changes to SixLayerFramework will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
