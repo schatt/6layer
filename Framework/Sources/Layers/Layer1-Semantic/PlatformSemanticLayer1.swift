@@ -3176,6 +3176,7 @@ private struct GenericFallbackView: View {
         .padding()
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(12)
+        .automaticAccessibilityIdentifiers()
     }
 }
 
