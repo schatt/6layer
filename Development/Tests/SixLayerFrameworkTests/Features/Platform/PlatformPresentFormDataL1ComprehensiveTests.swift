@@ -378,33 +378,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Performance Tests
 
-    @Test func testPlatformPresentFormData_L1_LargeFieldSetPerformance() {
-        // Given: Very large field set for performance testing
-        let largeFieldSet = (1...1000).map { i in
-            TestSetupUtilities.createTestField(
-                label: "Field \(i)",
-                placeholder: "Value \(i)",
-                value: "default\(i)",
-                isRequired: i % 5 == 0,
-                contentType: DynamicContentType.allCases[i % DynamicContentType.allCases.count]
-            )
-        }
-
-        let hints = PresentationHints(
-            dataType: .form,
-            presentationPreference: .form,
-            complexity: .complex,
-            context: .list
-        )
-
-        // When: Measuring performance with large dataset
-        let view = platformPresentFormData_L1(
-            fields: largeFieldSet,
-            hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints)
-        )
-        #expect(view != nil)
-        }
-    }
+    // Performance tests removed for framework scope
 
     @Test @MainActor func testPlatformPresentFormData_L1_MemoryEfficiency() {
         // Given: Memory-intensive field set

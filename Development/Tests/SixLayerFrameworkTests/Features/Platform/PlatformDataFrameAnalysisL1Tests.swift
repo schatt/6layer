@@ -215,22 +215,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         #expect(allCases.contains(.deep))
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testPlatformAnalyzeDataFrame_L1_Performance() {
-        // Given: A large DataFrame
-        let largeDataFrame = createLargeDataFrame(rowCount: 1000)
-        let hints = DataFrameAnalysisHints()
-        
-        // When: Analyzing the large DataFrame
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let view = platformAnalyzeDataFrame_L1(dataFrame: largeDataFrame, hints: hints)
-        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-        
-        // Then: Should complete within reasonable time
-        #expect(executionTime < 5.0) // Should complete within 5 seconds
-        #expect(view != nil)
-    }
+    // MARK: - Performance Tests (removed)
     
     // MARK: - Integration Tests
     

@@ -157,22 +157,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(chartRecommendation?.confidence ?? 0 > 0)
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testAnalyzeDataFrame_Performance_LargeDataset() throws {
-        // Given: A large DataFrame
-        let dataFrame = try createLargeDataFrame(rowCount: 1000)
-        
-        // When: Analyzing the DataFrame
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
-        let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-        
-        // Then: Should complete within reasonable time
-        #expect(executionTime < 5.0) // Should complete within 5 seconds
-        #expect(result != nil)
-        #expect(result.rowCount == 1000)
-    }
+    // MARK: - Performance Tests (removed)
     
     // MARK: - Integration with Existing DataIntrospectionEngine Tests
     

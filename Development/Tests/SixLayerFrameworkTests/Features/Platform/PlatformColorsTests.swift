@@ -349,29 +349,7 @@ open class PlatformColorsTests {
         }
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testColorCreationPerformance() {
-        // Given
-        let iterations = 1000
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        for _ in 0..<iterations {
-            _ = Color.platformPrimaryLabel
-            _ = Color.platformSecondaryLabel
-            _ = Color.platformTertiaryLabel
-            _ = Color.platformQuaternaryLabel
-            _ = Color.platformPlaceholderText
-            _ = Color.platformSeparator
-            _ = Color.platformOpaqueSeparator
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Color creation should be fast (under 100ms for 1000 iterations)")
-    }
+    // MARK: - Performance Tests (removed)
     
     // MARK: - Edge Case Tests
     

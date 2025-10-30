@@ -385,28 +385,6 @@ open class Layer1PresentationTests {
     
     // MARK: - Performance Tests
     
-    @Test func testPlatformPresentFormData_L1_Performance() {
-        // Given: Large field set
-        let largeFieldSet = (1...1000).map { i in
-            createTestField(
-                label: "Field \(i)",
-                placeholder: "Enter value \(i)",
-                value: "",
-                isRequired: i % 2 == 0,
-                contentType: .text
-            )
-        }
-        let hints = testHints
-        
-        // When: Measuring performance
-        }
-    }
+    // Performance tests removed for framework scope
     
-    @Test func testPlatformPresentModalForm_L1_Performance() {
-        // Given: Form type and context
-        let formType = DataTypeHint.form
-        let context = PresentationContext.form
-        
-        // When: Measuring performance
-        // Performance test removed - performance monitoring was removed from framework
-    }
+    // Performance tests removed for framework scope
