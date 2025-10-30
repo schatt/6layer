@@ -21,6 +21,8 @@ public struct IntelligentDetailView {
         public static func platformDetailView<T>(
         for data: T,
         hints: PresentationHints? = nil,
+        showEditButton: Bool = true,
+        onEdit: (() -> Void)? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { fieldName, value, fieldType in
             Text(String(describing: value))
                 .foregroundColor(.secondary)
@@ -34,6 +36,8 @@ public struct IntelligentDetailView {
             return AnyView(platformCompactDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             )
             .automaticAccessibilityIdentifiers())
@@ -41,6 +45,8 @@ public struct IntelligentDetailView {
             return AnyView(platformStandardDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             )
             .automaticAccessibilityIdentifiers())
@@ -48,6 +54,8 @@ public struct IntelligentDetailView {
             return AnyView(platformDetailedDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             )
             .automaticAccessibilityIdentifiers())
@@ -55,6 +63,8 @@ public struct IntelligentDetailView {
             return AnyView(platformTabbedDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             )
             .automaticAccessibilityIdentifiers())
@@ -62,6 +72,8 @@ public struct IntelligentDetailView {
             return AnyView(platformAdaptiveDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             )
             .automaticAccessibilityIdentifiers())
@@ -71,6 +83,8 @@ public struct IntelligentDetailView {
     /// Generate a detail view using default layout strategy
         public static func platformDetailView<T>(
         for data: T,
+        showEditButton: Bool = true,
+        onEdit: (() -> Void)? = nil,
         @ViewBuilder customFieldView: @escaping (String, String, FieldType) -> some View = { fieldName, value, fieldType in
             Text(value)
                 .foregroundColor(.secondary)
@@ -79,6 +93,8 @@ public struct IntelligentDetailView {
         platformDetailView(
             for: data,
             hints: nil,
+            showEditButton: showEditButton,
+            onEdit: onEdit,
             customFieldView: { fieldName, value, fieldType in
                 customFieldView(fieldName, String(describing: value), fieldType)
             }
@@ -146,9 +162,23 @@ public extension IntelligentDetailView {
     static func platformCompactDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
+        showEditButton: Bool,
+        onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
+            if showEditButton, let onEdit = onEdit {
+                HStack {
+                    Spacer()
+                    Button(action: onEdit) {
+                        Label("Edit", systemImage: "pencil")
+                            .font(.headline)
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding(.bottom, 8)
+            }
+
             ForEach(analysis.fields, id: \.name) { field in
                 platformFieldView(
                     field: field,
@@ -164,10 +194,24 @@ public extension IntelligentDetailView {
     static func platformStandardDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
+        showEditButton: Bool,
+        onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
+                if showEditButton, let onEdit = onEdit {
+                    HStack {
+                        Spacer()
+                        Button(action: onEdit) {
+                            Label("Edit", systemImage: "pencil")
+                                .font(.headline)
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding(.bottom, 8)
+                }
+
                 // Group fields by type for better organization
                 let groupedFields = groupFieldsByType(analysis.fields)
                 
@@ -198,6 +242,8 @@ public extension IntelligentDetailView {
     static func platformDetailedDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
+        showEditButton: Bool,
+        onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         ScrollView {
@@ -213,7 +259,20 @@ public extension IntelligentDetailView {
                         .foregroundColor(.secondary)
                 }
                 .padding(.horizontal)
-                
+
+                if showEditButton, let onEdit = onEdit {
+                    HStack {
+                        Spacer()
+                        Button(action: onEdit) {
+                            Label("Edit", systemImage: "pencil")
+                                .font(.headline)
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)
+                }
+
                 // Fields organized by importance
                 let prioritizedFields = prioritizeFields(analysis.fields)
                 
@@ -244,6 +303,8 @@ public extension IntelligentDetailView {
     static func platformTabbedDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
+        showEditButton: Bool,
+        onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         #if os(iOS)
@@ -254,6 +315,8 @@ public extension IntelligentDetailView {
                     platformStandardDetailView(
                         data: data,
                         analysis: analysis,
+                        showEditButton: showEditButton,
+                        onEdit: onEdit,
                         customFieldView: customFieldView
                     )
                     .tabItem {
@@ -265,6 +328,8 @@ public extension IntelligentDetailView {
                     platformDetailedDetailView(
                         data: data,
                         analysis: analysis,
+                        showEditButton: showEditButton,
+                        onEdit: onEdit,
                         customFieldView: customFieldView
                     )
                     .tabItem {
@@ -298,6 +363,8 @@ public extension IntelligentDetailView {
                     platformStandardDetailView(
                         data: data,
                         analysis: analysis,
+                        showEditButton: showEditButton,
+                        onEdit: onEdit,
                         customFieldView: customFieldView
                     )
                     .tabItem {
@@ -309,6 +376,8 @@ public extension IntelligentDetailView {
                     platformDetailedDetailView(
                         data: data,
                         analysis: analysis,
+                        showEditButton: showEditButton,
+                        onEdit: onEdit,
                         customFieldView: customFieldView
                     )
                     .tabItem {
@@ -330,6 +399,8 @@ public extension IntelligentDetailView {
                 platformDetailedDetailView(
                     data: data,
                     analysis: analysis,
+                    showEditButton: showEditButton,
+                    onEdit: onEdit,
                     customFieldView: customFieldView
                 )
             )
@@ -339,6 +410,8 @@ public extension IntelligentDetailView {
             platformDetailedDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             )
         )
@@ -349,6 +422,8 @@ public extension IntelligentDetailView {
     static func platformAdaptiveDetailView<T>(
         data: T,
         analysis: DataAnalysisResult,
+        showEditButton: Bool,
+        onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         // Use device characteristics to choose the best strategy
@@ -359,18 +434,24 @@ public extension IntelligentDetailView {
             return AnyView(platformStandardDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             ))
         case .pad, .mac:
             return AnyView(platformDetailedDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             ))
         default:
             return AnyView(platformStandardDetailView(
                 data: data,
                 analysis: analysis,
+                showEditButton: showEditButton,
+                onEdit: onEdit,
                 customFieldView: customFieldView
             ))
         }
