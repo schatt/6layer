@@ -369,8 +369,11 @@ final class PlatformTestUtilities {
     // MARK: - Platform Configuration Helpers
     
     /// Get platform configuration for a specific platform using centralized helpers
+    /// Sets the test platform in RuntimeCapabilityDetection so capabilities match the requested platform
     @MainActor
     static func getPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilitiesTestSnapshot {
+        // Set the test platform so RuntimeCapabilityDetection returns capabilities for the requested platform
+        RuntimeCapabilityDetection.setTestPlatform(platform)
         return buildPlatformCapabilitiesSnapshot()
     }
     

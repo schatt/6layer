@@ -311,30 +311,36 @@ struct ComprehensiveCapabilityTestRunner {
         #expect(testView != nil, "Should be able to create test view with platform config for \(platform)")
         
         // Test platform-specific consistency
+        // Note: Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
+        // Only true constraints: Haptic requires touch, AssistiveTouch requires touch
         switch platform {
         case .iOS:
-            // iOS should support touch and haptic feedback
+            // iOS should support touch. If touch is enabled, haptic should be enabled (dependency)
             if platformConfig.supportsTouch {
                 #expect(platformConfig.supportsHapticFeedback, "iOS should support haptic feedback when touch is enabled")
             }
+            // iPad can have both touch and hover (when mouse/trackpad connected)
+            // Both can be true, so no mutual exclusivity check
         case .macOS:
-            // macOS should support hover but not touch
-            if platformConfig.supportsHover {
-                #expect(platformConfig.supportsTouch, "macOS should not support touch when hover is enabled")
-            }
+            // macOS should support hover by default (mouse/trackpad)
+            #expect(platformConfig.supportsHover, "macOS should support hover (mouse/trackpad)")
+            // macOS CAN also support touch if external touchscreen is connected
+            // Both can be true, so no mutual exclusivity check
         case .watchOS:
             // watchOS should support touch and haptic feedback
             if platformConfig.supportsTouch {
                 #expect(platformConfig.supportsHapticFeedback, "watchOS should support haptic feedback when touch is enabled")
             }
+            // watchOS does not support hover
+            #expect(!platformConfig.supportsHover, "watchOS should not support hover")
         case .tvOS:
-            // tvOS should not support touch or hover
-            #expect(platformConfig.supportsTouch, "tvOS should not support touch")
-            #expect(platformConfig.supportsHover, "tvOS should not support hover")
+            // tvOS typically does not support touch or hover
+            #expect(!platformConfig.supportsTouch, "tvOS should not support touch")
+            #expect(!platformConfig.supportsHover, "tvOS should not support hover")
         case .visionOS:
-            // visionOS should not support touch or hover
-            #expect(platformConfig.supportsTouch, "visionOS should not support touch")
-            #expect(platformConfig.supportsHover, "visionOS should not support hover")
+            // visionOS supports BOTH touch and hover
+            #expect(platformConfig.supportsTouch, "visionOS should support touch")
+            #expect(platformConfig.supportsHover, "visionOS should support hover")
         }
     }
     

@@ -248,13 +248,30 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     }
     
     @Test func testConflictingCombinations() {
+        // Touch and hover CAN coexist:
+        // - iPad with mouse/trackpad: touch=true, hover=true
+        // - macOS with touchscreen: hover=true (default), touch=true (with touchscreen)
+        // - visionOS: touch=true, hover=true
+        // There are no actual conflicts between touch and hover - they can both be true
+        // The only true constraints are dependencies (haptic requires touch, AssistiveTouch requires touch)
+        // This test verifies that the framework correctly handles coexisting capabilities
+        
         let platform = SixLayerPlatform.current
         
-        if platform != SixLayerPlatform.iOS {
-            // Touch and hover should be mutually exclusive (except on iPad)
-            #expect(!(RuntimeCapabilityDetection.supportsTouch && RuntimeCapabilityDetection.supportsHover), 
-                          "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
+        // On platforms that support both, verify they can coexist
+        if platform == .visionOS {
+            // visionOS supports both touch and hover
+            #expect(RuntimeCapabilityDetection.supportsTouch && RuntimeCapabilityDetection.supportsHover,
+                         "visionOS should support both touch and hover")
         }
+        
+        // On macOS, hover is always true, touch can be true with external touchscreen
+        if platform == .macOS {
+            #expect(RuntimeCapabilityDetection.supportsHover, "macOS should support hover")
+            // Touch may or may not be true depending on hardware - both are valid
+        }
+        
+        // No conflict to test - these capabilities are designed to coexist
     }
     
     // MARK: - Comprehensive Combination Test
