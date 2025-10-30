@@ -300,6 +300,41 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with enhanced hints and custom view should generate accessibility identifiers")
     }
     
+    /// Test platformPresentHierarchicalData_L1 single-item variant (delegates to array version)
+    @Test func testPlatformPresentHierarchicalDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        let testData = GenericHierarchicalItem(
+            title: "Root Item",
+            level: 0,
+            children: [
+                GenericHierarchicalItem(title: "Child 1", level: 1)
+            ]
+        )
+        
+        let hints = PresentationHints(
+            dataType: .hierarchical,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .modal,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentHierarchicalData_L1(
+            item: testData,
+            hints: hints
+        )
+        
+        let hasAccessibilityID = await MainActor.run {
+            testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "platformPresentHierarchicalData_L1"
+            )
+        }
+        
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 single-item variant should generate accessibility identifiers")
+    }
+    
     // MARK: - Temporal Data Variant Tests
     
     /// Test platformPresentTemporalData_L1 with EnhancedPresentationHints variant
@@ -413,5 +448,38 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         }
         
         #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with enhanced hints and custom view should generate accessibility identifiers")
+    }
+    
+    /// Test platformPresentTemporalData_L1 single-item variant (delegates to array version)
+    @Test func testPlatformPresentTemporalDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        let testData = GenericTemporalItem(
+            title: "Event 1",
+            date: Date(),
+            duration: 3600
+        )
+        
+        let hints = PresentationHints(
+            dataType: .temporal,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .modal,
+            customPreferences: [:]
+        )
+        
+        let view = platformPresentTemporalData_L1(
+            item: testData,
+            hints: hints
+        )
+        
+        let hasAccessibilityID = await MainActor.run {
+            testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "platformPresentTemporalData_L1"
+            )
+        }
+        
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 single-item variant should generate accessibility identifiers")
     }
 }

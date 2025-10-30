@@ -190,6 +190,25 @@ open class Layer1AccessibilityTests {
         #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with all custom views should generate accessibility identifiers")
     }
     
+    /// Test platformPresentFormData_L1 single-field variant (delegates to array version)
+    @Test func testPlatformPresentFormDataL1SingleFieldGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let view = platformPresentFormData_L1(
+            field: DynamicFormField(id: "test", contentType: .text, label: "Test Field"),
+            hints: PresentationHints()
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentFormData_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 single-field variant should generate accessibility identifiers")
+    }
+    
     /// TDD RED PHASE: platformPresentFormData_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
     @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
@@ -335,6 +354,25 @@ open class Layer1AccessibilityTests {
         #expect(hasAccessibilityID, "platformPresentNumericData_L1 with enhanced hints and custom view should generate accessibility identifiers")
     }
     
+    /// Test platformPresentNumericData_L1 single-item variant (delegates to array version)
+    @Test func testPlatformPresentNumericDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let view = platformPresentNumericData_L1(
+            data: GenericNumericData(value: 123.45, label: "Test Value", unit: "units"),
+            hints: PresentationHints()
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentNumericData_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 single-item variant should generate accessibility identifiers")
+    }
+    
     /// BUSINESS PURPOSE: Validates that platformPresentMediaData_L1 generates proper accessibility identifiers
     /// TESTING SCOPE: Verify accessibility identifier generation
     /// METHODOLOGY: Test that accessibility identifiers are properly generated
@@ -450,6 +488,25 @@ open class Layer1AccessibilityTests {
         )
         
         #expect(hasAccessibilityID, "platformPresentMediaData_L1 with enhanced hints and custom view should generate accessibility identifiers")
+    }
+    
+    /// Test platformPresentMediaData_L1 single-item variant (delegates to array version)
+    @Test func testPlatformPresentMediaDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let view = platformPresentMediaData_L1(
+            media: GenericMediaItem(title: "Test Media", url: "https://example.com"),
+            hints: PresentationHints()
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentMediaData_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 single-item variant should generate accessibility identifiers")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentSettings_L1 generates proper accessibility identifiers

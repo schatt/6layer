@@ -443,6 +443,179 @@ open class PlatformSemanticLayer1Tests {
         #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS")
     }
     
+    // MARK: - platformPresentContent_L1 All Delegate Path Tests
+    
+    /// Test platformPresentContent_L1 delegates to form function when content is [DynamicFormField]
+    @Test func testPlatformPresentContentL1DelegatesToFormFunction() async {
+        let formFields = [
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+        ]
+        
+        let view = platformPresentContent_L1(content: formFields, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to form function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to media function when content is [GenericMediaItem]
+    @Test func testPlatformPresentContentL1DelegatesToMediaFunction() async {
+        let mediaItems = [
+            GenericMediaItem(title: "Test Media", url: "https://example.com")
+        ]
+        
+        let view = platformPresentContent_L1(content: mediaItems, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to media function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to numeric function when content is [GenericNumericData]
+    @Test func testPlatformPresentContentL1DelegatesToNumericFunction() async {
+        let numericData = [
+            GenericNumericData(value: 123.45, label: "Test", unit: "units")
+        ]
+        
+        let view = platformPresentContent_L1(content: numericData, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to numeric function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to hierarchical function when content is [GenericHierarchicalItem]
+    @Test func testPlatformPresentContentL1DelegatesToHierarchicalFunction() async {
+        let hierarchicalItems = [
+            GenericHierarchicalItem(title: "Root", level: 0)
+        ]
+        
+        let view = platformPresentContent_L1(content: hierarchicalItems, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to hierarchical function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to temporal function when content is [GenericTemporalItem]
+    @Test func testPlatformPresentContentL1DelegatesToTemporalFunction() async {
+        let temporalItems = [
+            GenericTemporalItem(title: "Event", date: Date(), duration: 3600)
+        ]
+        
+        let view = platformPresentContent_L1(content: temporalItems, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to temporal function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to item collection function when content is identifiable array
+    @Test func testPlatformPresentContentL1DelegatesToItemCollectionFunction() async {
+        struct TestItem: Identifiable {
+            let id = UUID()
+            let name: String
+        }
+        
+        let items = [TestItem(name: "Item 1"), TestItem(name: "Item 2")]
+        
+        let view = platformPresentContent_L1(content: items, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to item collection function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to basic value function when content is basic numeric type
+    @Test func testPlatformPresentContentL1DelegatesToBasicValueFunctionForNumeric() async {
+        let view = platformPresentContent_L1(content: 42, hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic value function for numeric")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to basic array function when content is basic array
+    @Test func testPlatformPresentContentL1DelegatesToBasicArrayFunction() async {
+        let view = platformPresentContent_L1(content: [1, 2, 3], hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic array function")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to basic value function when content is String
+    @Test func testPlatformPresentContentL1DelegatesToBasicValueFunctionForString() async {
+        let view = platformPresentContent_L1(content: "Test String", hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic value function for string")
+    }
+    
+    /// Test platformPresentContent_L1 delegates to GenericFallbackView for unknown types
+    @Test func testPlatformPresentContentL1DelegatesToFallbackView() async {
+        struct UnknownType {
+            let value: String
+        }
+        
+        let view = platformPresentContent_L1(content: UnknownType(value: "test"), hints: PresentationHints())
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentContent_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to fallback view")
+    }
+    
     // MARK: - platformResponsiveCard_L1 Tests
     
     @Test func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnIOS() async {

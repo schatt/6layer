@@ -1726,6 +1726,7 @@ public struct GenericHierarchicalView: View {
                 .font(.caption)
         }
         .padding()
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -1742,6 +1743,7 @@ public struct GenericTemporalView: View {
                 .font(.caption)
         }
         .padding()
+        .automaticAccessibilityIdentifiers()
     }
 }
 
