@@ -1616,6 +1616,7 @@ public struct GenericNumericDataView: View {
             .automaticAccessibility()
             .platformPatterns()
             .visualConsistency()
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -1708,6 +1709,7 @@ public struct GenericMediaView: View {
                 .font(.caption)
         }
         .padding()
+        .automaticAccessibilityIdentifiers()
     }
 }
 

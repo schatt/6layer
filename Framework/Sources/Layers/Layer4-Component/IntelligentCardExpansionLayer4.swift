@@ -78,6 +78,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                     layoutDecision: layoutDecision,
                     strategy: strategy
                 )
+                .automaticAccessibilityIdentifiers()
             }
         }
     }
@@ -160,6 +161,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         .accessibilityAction(named: "Activate") {
             handleTap()
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder

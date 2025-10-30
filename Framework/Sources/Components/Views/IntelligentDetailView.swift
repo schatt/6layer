@@ -35,31 +35,36 @@ public struct IntelligentDetailView {
                 data: data,
                 analysis: analysis,
                 customFieldView: customFieldView
-            ))
+            )
+            .automaticAccessibilityIdentifiers())
         case .standard:
             return AnyView(platformStandardDetailView(
                 data: data,
                 analysis: analysis,
                 customFieldView: customFieldView
-            ))
+            )
+            .automaticAccessibilityIdentifiers())
         case .detailed:
             return AnyView(platformDetailedDetailView(
                 data: data,
                 analysis: analysis,
                 customFieldView: customFieldView
-            ))
+            )
+            .automaticAccessibilityIdentifiers())
         case .tabbed:
             return AnyView(platformTabbedDetailView(
                 data: data,
                 analysis: analysis,
                 customFieldView: customFieldView
-            ))
+            )
+            .automaticAccessibilityIdentifiers())
         case .adaptive:
             return AnyView(platformAdaptiveDetailView(
                 data: data,
                 analysis: analysis,
                 customFieldView: customFieldView
-            ))
+            )
+            .automaticAccessibilityIdentifiers())
         }
     }
     

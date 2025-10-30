@@ -16,5 +16,6 @@ public struct OCRDisambiguationView: View {
     public var body: some View {
         Text("OCR Disambiguation View (Stub)")
             .foregroundColor(.secondary)
+            .automaticAccessibilityIdentifiers()
     }
 }
