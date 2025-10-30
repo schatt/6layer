@@ -441,7 +441,7 @@ open class Layer1AccessibilityTests {
             customMediaView: { media in
                 VStack {
                     Text(media.title)
-                    Text(media.url)
+                    Text(media.url ?? "")
                 }
             }
         )
@@ -475,7 +475,7 @@ open class Layer1AccessibilityTests {
             customMediaView: { media in
                 VStack {
                     Text(media.title)
-                    Text(media.url)
+                    Text(media.url ?? "")
                 }
             }
         )
