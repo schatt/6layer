@@ -38,7 +38,7 @@ open class CrossPlatformNavigationTests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformNavigationView"
         )
@@ -51,7 +51,7 @@ open class CrossPlatformNavigationTests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: .macOS,
             componentName: "CrossPlatformNavigationView"
         )

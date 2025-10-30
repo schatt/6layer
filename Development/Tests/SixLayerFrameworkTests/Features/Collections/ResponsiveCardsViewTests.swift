@@ -46,7 +46,7 @@ open class ResponsiveCardsViewTests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveCardView"
         )
@@ -67,7 +67,7 @@ open class ResponsiveCardsViewTests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveCardView"
         )

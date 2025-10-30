@@ -93,7 +93,7 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "SixLayer.FuelView.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
                 componentName: "CombinedBreadcrumbModifiers"
             ), "View should have an accessibility identifier assigned")

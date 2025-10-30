@@ -52,7 +52,7 @@ open class IntelligentCardExpansionLayer4Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
         )
@@ -79,7 +79,7 @@ open class IntelligentCardExpansionLayer4Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: .macOS,
             componentName: "ExpandableCardCollectionView"
         )

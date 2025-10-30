@@ -47,7 +47,7 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
             )
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentModalForm_L1"
             )
@@ -84,7 +84,7 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
             )
             return testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentModalForm_L1"
             )

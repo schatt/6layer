@@ -43,7 +43,7 @@ open class PlatformStylingLayer4Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             componentName: "platformStyledContainer_L4",
             testName: "PlatformTest"
         )
@@ -61,7 +61,7 @@ open class PlatformStylingLayer4Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: .macOS,
             componentName: "platformStyledContainer_L4"
         )

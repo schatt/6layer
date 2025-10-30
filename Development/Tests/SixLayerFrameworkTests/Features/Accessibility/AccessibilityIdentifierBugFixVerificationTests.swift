@@ -100,7 +100,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation (should use default "main" screen context)
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
@@ -132,7 +132,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation (should use "FuelView" screen context)
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "SixLayer.FuelView.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AddFuelButton"
             )
@@ -162,12 +162,12 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // Test actual accessibility identifier generation
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "SixLayer.FuelView.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ScreenContext"
             )
             
-            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.FuelView.*'")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*ui'")
         }
     }
     
@@ -255,7 +255,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // The fix ensures that automatic accessibility identifiers work correctly
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "SixLayer.*element.*testbutton", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
             ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")

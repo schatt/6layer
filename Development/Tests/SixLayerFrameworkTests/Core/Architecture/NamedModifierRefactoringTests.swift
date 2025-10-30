@@ -43,7 +43,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should get full hierarchy path ending with "SaveButton"
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "HierarchyReplacement"
             ), "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID")
@@ -65,7 +65,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should get full path including both names
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "FullHierarchyPath"
             ), "RED PHASE: .named() should generate full hierarchy path as accessibility identifier")
@@ -90,7 +90,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should get complete hierarchy path
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NestedHierarchy"
             ), "RED PHASE: Multiple .named() calls should build complete hierarchy path")
@@ -118,14 +118,14 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should get different full paths
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view1, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention1"
             ), "RED PHASE: First SaveButton should include UserProfile in path")
             
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view2, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention2"
             ), "RED PHASE: Second SaveButton should include Settings in path")
@@ -146,7 +146,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should still get full hierarchy path even with global system disabled
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "IndependentNamedModifier"
             ), "RED PHASE: .named() should work independently of global automatic accessibility settings")
@@ -166,7 +166,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should get full hierarchy path, not "OriginalID"
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "OverrideTest"
             ), "RED PHASE: .named() should override existing accessibility identifier with full hierarchy path")
@@ -188,7 +188,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Button should include "ActionContainer" in its generated ID
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "HierarchyInheritance"
             ), "RED PHASE: Subcomponents should inherit modified hierarchy context")
@@ -228,7 +228,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should work without changing global settings
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NoGlobalChanges"
             ), "RED PHASE: .named() should not change global environment settings")
@@ -275,7 +275,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Button should get exact name, VStack should get hierarchy
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedHierarchyTest"
             ), "RED PHASE: .exactNamed() should not modify hierarchy for other components")
@@ -342,7 +342,7 @@ open class NamedModifierRefactoringTDDTests {
             // Then: Should get hierarchical path for the container
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "TestApp.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "CombinedModifiersTest"
             ), "RED PHASE: .named() and .exactNamed() should work together")
