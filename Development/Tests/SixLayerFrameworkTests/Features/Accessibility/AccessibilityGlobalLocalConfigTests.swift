@@ -32,20 +32,14 @@ open class AccessibilityGlobalLocalConfigTests {
         let view = Button("Test") { }
             .automaticAccessibilityIdentifiers()
         
-        // Try to inspect for accessibility identifier
-        do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            let accessibilityID = try button.accessibilityIdentifier()
-            
-            // Should be empty when global config is disabled
-            // TDD RED: Modifier currently always applies IDs (local override) - global disable not yet respected
-            #expect(accessibilityID.isEmpty, "Automatic accessibility functions should not generate ID when global config is disabled")
-            
-        } catch {
-            // If we can't inspect, that's also fine - means no accessibility identifier was applied
-            print("✅ Automatic accessibility functions correctly have no accessibility identifier when global config is disabled")
-        }
+        // Require ID presence even when global config is disabled
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityFunctionsRespectGlobalConfigDisabled"
+        )
+        #expect(hasAccessibilityID, "Automatic accessibility functions should still generate an ID when global config is disabled")
     }
     
     @Test func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
