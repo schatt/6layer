@@ -530,8 +530,8 @@ open class Layer1AccessibilityTests {
             hints: PresentationHints()
         )
         
-        // Then: View should be created
-        #expect(view != nil, "platformPresentSettings_L1 should create a view")
+        // Then: View should be created (view is non-optional, so this just documents the expectation)
+        // #expect(view != nil, "platformPresentSettings_L1 should create a view")
         
         // TDD GREEN PHASE: platformPresentSettings_L1 should generate accessibility identifiers
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
