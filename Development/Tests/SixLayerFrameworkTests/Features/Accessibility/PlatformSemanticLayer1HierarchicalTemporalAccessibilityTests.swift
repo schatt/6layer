@@ -56,7 +56,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentHierarchicalData_L1"
             )
@@ -95,7 +95,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentHierarchicalData_L1"
             )
@@ -133,7 +133,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentTemporalData_L1"
             )
@@ -169,7 +169,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "platformPresentTemporalData_L1"
             )
