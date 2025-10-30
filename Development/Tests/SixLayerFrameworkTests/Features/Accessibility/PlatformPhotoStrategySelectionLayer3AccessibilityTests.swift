@@ -44,8 +44,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testSelectPhotoCaptureStrategy_L3_UserPreference() async {
         let purpose = PhotoPurpose.vehiclePhoto
-        var preferences = PhotoPreferences()
-        preferences.preferredSource = .camera
+        let preferences = PhotoPreferences(preferredSource: .camera)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -119,8 +118,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testShouldEnablePhotoEditing_VehiclePhoto() async {
         let purpose = PhotoPurpose.vehiclePhoto
-        var preferences = PhotoPreferences()
-        preferences.allowEditing = true
+        let preferences = PhotoPreferences(allowEditing: true)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -134,8 +132,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testShouldEnablePhotoEditing_Receipt() async {
         let purpose = PhotoPurpose.fuelReceipt
-        var preferences = PhotoPreferences()
-        preferences.allowEditing = true
+        let preferences = PhotoPreferences(allowEditing: true)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -149,8 +146,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testShouldEnablePhotoEditing_EditingNotSupported() async {
         let purpose = PhotoPurpose.vehiclePhoto
-        var preferences = PhotoPreferences()
-        preferences.allowEditing = true
+        let preferences = PhotoPreferences(allowEditing: true)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -166,8 +162,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testOptimalCompressionQuality_VehiclePhoto() async {
         let purpose = PhotoPurpose.vehiclePhoto
-        var preferences = PhotoPreferences()
-        preferences.compressionQuality = 0.8
+        let preferences = PhotoPreferences(compressionQuality: 0.8)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -182,8 +177,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testOptimalCompressionQuality_Receipt() async {
         let purpose = PhotoPurpose.fuelReceipt
-        var preferences = PhotoPreferences()
-        preferences.compressionQuality = 0.8
+        let preferences = PhotoPreferences(compressionQuality: 0.8)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -198,8 +192,7 @@ open class PlatformPhotoStrategySelectionLayer3AccessibilityTests: BaseTestClass
     
     @Test func testOptimalCompressionQuality_Maintenance() async {
         let purpose = PhotoPurpose.maintenance
-        var preferences = PhotoPreferences()
-        preferences.compressionQuality = 0.8
+        let preferences = PhotoPreferences(compressionQuality: 0.8)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),

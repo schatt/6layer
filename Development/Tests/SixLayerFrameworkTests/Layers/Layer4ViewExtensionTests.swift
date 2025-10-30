@@ -770,8 +770,9 @@ open class Layer4ViewExtensionTests {
         let testImage = PlatformImage()
         let options = TextRecognitionOptions(
             language: .english,
-            recognitionLevel: .accurate,
-            customWords: []
+            confidenceThreshold: 0.8,
+            enableBoundingBoxes: true,
+            enableTextCorrection: true
         )
         
         var resultReceived: OCRResult?

@@ -90,8 +90,7 @@ open class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
     
     @Test func testDeterminePhotoCaptureStrategy_L2_UserPreferenceCamera() async {
         let purpose = PhotoPurpose.vehiclePhoto
-        var preferences = PhotoPreferences()
-        preferences.preferredSource = .camera
+        let preferences = PhotoPreferences(preferredSource: .camera)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
@@ -105,8 +104,7 @@ open class PlatformPhotoLayoutDecisionLayer2AccessibilityTests: BaseTestClass {
     
     @Test func testDeterminePhotoCaptureStrategy_L2_UserPreferencePhotoLibrary() async {
         let purpose = PhotoPurpose.document
-        var preferences = PhotoPreferences()
-        preferences.preferredSource = .photoLibrary
+        let preferences = PhotoPreferences(preferredSource: .photoLibrary)
         let context = PhotoContext(
             screenSize: PlatformSize(width: 375, height: 812),
             availableSpace: PlatformSize(width: 375, height: 400),
