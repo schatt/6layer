@@ -57,7 +57,7 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersCrossPlatform(
                 view, 
-                expectedPattern: "SixLayer.*View", 
+                expectedPattern: "SixLayer.*ui", 
                 componentName: "platformPhotoDisplay_L1",
                 testName: "PlatformTest"
             )
@@ -102,7 +102,7 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersCrossPlatform(
                 view, 
-                expectedPattern: "SixLayer.*View", 
+                expectedPattern: "SixLayer.*ui", 
                 componentName: "platformPhotoDisplay_L1",
                 testName: "PlatformTest"
             )

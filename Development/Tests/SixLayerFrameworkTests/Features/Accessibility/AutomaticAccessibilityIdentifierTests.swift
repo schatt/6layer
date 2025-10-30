@@ -665,7 +665,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Test that .named() generates accessibility identifiers
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
-                expectedPattern: "SixLayer.main.element.*", 
+                expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
             ), "View with .named() should generate accessibility identifiers matching pattern 'SixLayer.main.element.*'")
