@@ -328,9 +328,9 @@ public struct DisableAutomaticAccessibilityIdentifiersModifier: ViewModifier {
 extension View {
     /// Apply automatic accessibility identifiers to a view
     /// This is the primary modifier that all framework components should use
-    /// This forces enable regardless of global settings (local override)
+    /// Respects global and environment settings (no forced override)
     public func automaticAccessibilityIdentifiers() -> some View {
-        self.modifier(ForcedAutomaticAccessibilityIdentifiersModifier())
+        self.modifier(AutomaticAccessibilityIdentifiersModifier())
     }
     
     /// Enable global automatic accessibility identifiers (alias for automaticAccessibilityIdentifiers)
