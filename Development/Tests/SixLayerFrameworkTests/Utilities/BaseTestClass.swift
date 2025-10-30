@@ -10,7 +10,8 @@ open class BaseTestClass {
     
     @MainActor
     public init() {
-        // Base class initialization - individual tests handle their own setup
+        // Ensure default accessibility test configuration is applied for all tests
+        setupTestEnvironment()
     }
     
     @MainActor
