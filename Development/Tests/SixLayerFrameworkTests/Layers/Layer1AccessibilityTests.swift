@@ -64,6 +64,132 @@ open class Layer1AccessibilityTests {
         print("🔍 Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
     
+    /// Test platformPresentItemCollection_L1 with EnhancedPresentationHints variant
+    @Test func testPlatformPresentItemCollectionL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let testItems = createTestItems()
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .list,
+            customPreferences: [:],
+            extensibleHints: [:]
+        )
+        
+        let view = platformPresentItemCollection_L1(
+            items: testItems,
+            hints: enhancedHints
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentItemCollection_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with EnhancedPresentationHints should generate accessibility identifiers")
+    }
+    
+    /// Test platformPresentItemCollection_L1 with custom view variant
+    @Test func testPlatformPresentItemCollectionL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let testItems = createTestItems()
+        let testHints = createTestHints()
+        
+        let view = platformPresentItemCollection_L1(
+            items: testItems,
+            hints: testHints,
+            customItemView: { item in
+                VStack {
+                    Text(item.title)
+                    Text(item.subtitle)
+                }
+            }
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentItemCollection_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with custom view should generate accessibility identifiers")
+    }
+    
+    /// Test platformPresentItemCollection_L1 with enhanced hints and custom view variant
+    @Test func testPlatformPresentItemCollectionL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let testItems = createTestItems()
+        let enhancedHints = EnhancedPresentationHints(
+            dataType: .generic,
+            presentationPreference: .automatic,
+            complexity: .moderate,
+            context: .list,
+            customPreferences: [:],
+            extensibleHints: [:]
+        )
+        
+        let view = platformPresentItemCollection_L1(
+            items: testItems,
+            hints: enhancedHints,
+            customItemView: { item in
+                VStack {
+                    Text(item.title)
+                    Text(item.subtitle)
+                }
+            }
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentItemCollection_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with enhanced hints and custom view should generate accessibility identifiers")
+    }
+    
+    /// Test platformPresentItemCollection_L1 with all custom views variant
+    @Test func testPlatformPresentItemCollectionL1WithAllCustomViewsGeneratesAccessibilityIdentifiers() async {
+        AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+        
+        let testItems = createTestItems()
+        let testHints = createTestHints()
+        
+        let view = platformPresentItemCollection_L1(
+            items: testItems,
+            hints: testHints,
+            customItemView: { item in
+                VStack {
+                    Text(item.title)
+                    Text(item.subtitle)
+                }
+            },
+            customCreateView: {
+                Text("Create")
+            },
+            customEditView: { item in
+                Text("Edit \(item.title)")
+            }
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentItemCollection_L1"
+        )
+        
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with all custom views should generate accessibility identifiers")
+    }
+    
     /// TDD RED PHASE: platformPresentFormData_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
     @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
