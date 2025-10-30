@@ -157,6 +157,141 @@ open class L3StrategySelectionTests {
         #expect(complexStrategy != nil, "Complex complexity should return a strategy")
     }
     
+    // MARK: - chooseGridStrategy Tests
+    
+    @Test func testChooseGridStrategy_SmallContent() {
+        let screenWidth: CGFloat = 375
+        let deviceType = DeviceType.phone
+        let contentCount = 3
+        
+        let strategy = chooseGridStrategy(
+            screenWidth: screenWidth,
+            deviceType: deviceType,
+            contentCount: contentCount
+        )
+        
+        #expect(strategy.columns == contentCount, "Small content should use fixed columns matching content count")
+        #expect(strategy.spacing > 0, "Should have positive spacing")
+    }
+    
+    @Test func testChooseGridStrategy_MediumContent() {
+        let screenWidth: CGFloat = 768
+        let deviceType = DeviceType.pad
+        let contentCount = 6
+        
+        let strategy = chooseGridStrategy(
+            screenWidth: screenWidth,
+            deviceType: deviceType,
+            contentCount: contentCount
+        )
+        
+        #expect(strategy.columns > 1, "Medium content should use adaptive grid with multiple columns")
+        #expect(strategy.spacing > 0, "Should have positive spacing")
+        #expect(!strategy.breakpoints.isEmpty, "Adaptive grid should have breakpoints")
+    }
+    
+    @Test func testChooseGridStrategy_LargeContent() {
+        let screenWidth: CGFloat = 1024
+        let deviceType = DeviceType.mac
+        let contentCount = 20
+        
+        let strategy = chooseGridStrategy(
+            screenWidth: screenWidth,
+            deviceType: deviceType,
+            contentCount: contentCount
+        )
+        
+        #expect(strategy.columns > 1, "Large content should use lazy grid with multiple columns")
+        #expect(strategy.spacing > 0, "Should have positive spacing")
+        #expect(!strategy.breakpoints.isEmpty, "Lazy grid should have breakpoints")
+    }
+    
+    @Test func testChooseGridStrategy_DifferentDeviceTypes() {
+        let contentCount = 10
+        let screenWidth: CGFloat = 1024
+        
+        let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .tv, .watch, .vision, .car]
+        
+        for deviceType in deviceTypes {
+            let strategy = chooseGridStrategy(
+                screenWidth: screenWidth,
+                deviceType: deviceType,
+                contentCount: contentCount
+            )
+            
+            #expect(strategy.columns > 0, "Device type \(deviceType) should return valid columns")
+            #expect(strategy.spacing > 0, "Device type \(deviceType) should have positive spacing")
+        }
+    }
+    
+    // MARK: - determineResponsiveBehavior Tests
+    
+    @Test func testDetermineResponsiveBehavior_Phone() {
+        let deviceType = DeviceType.phone
+        let complexities: [ContentComplexity] = [.simple, .moderate, .complex, .veryComplex]
+        
+        for complexity in complexities {
+            let behavior = determineResponsiveBehavior(
+                deviceType: deviceType,
+                contentComplexity: complexity
+            )
+            
+            #expect(behavior.type == .fixed, "Phone should use fixed responsive behavior")
+            #expect(behavior.adaptive == false, "Phone should not be adaptive")
+        }
+    }
+    
+    @Test func testDetermineResponsiveBehavior_Pad() {
+        let deviceType = DeviceType.pad
+        
+        let simpleBehavior = determineResponsiveBehavior(
+            deviceType: deviceType,
+            contentComplexity: .simple
+        )
+        #expect(simpleBehavior.type == .adaptive, "Pad with simple content should use adaptive")
+        #expect(simpleBehavior.adaptive == true, "Pad should be adaptive")
+        
+        let complexBehavior = determineResponsiveBehavior(
+            deviceType: deviceType,
+            contentComplexity: .complex
+        )
+        #expect(complexBehavior.type == .fluid, "Pad with complex content should use fluid")
+        #expect(complexBehavior.adaptive == true, "Pad should be adaptive")
+    }
+    
+    @Test func testDetermineResponsiveBehavior_Mac() {
+        let deviceType = DeviceType.mac
+        
+        let simpleBehavior = determineResponsiveBehavior(
+            deviceType: deviceType,
+            contentComplexity: .simple
+        )
+        #expect(simpleBehavior.type == .adaptive, "Mac with simple content should use adaptive")
+        #expect(simpleBehavior.adaptive == true, "Mac should be adaptive")
+        
+        let complexBehavior = determineResponsiveBehavior(
+            deviceType: deviceType,
+            contentComplexity: .complex
+        )
+        #expect(complexBehavior.type == .breakpoint, "Mac with complex content should use breakpoint")
+        #expect(complexBehavior.adaptive == true, "Mac should be adaptive")
+    }
+    
+    @Test func testDetermineResponsiveBehavior_AllDeviceTypes() {
+        let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .tv, .watch, .vision, .car]
+        let complexity = ContentComplexity.moderate
+        
+        for deviceType in deviceTypes {
+            let behavior = determineResponsiveBehavior(
+                deviceType: deviceType,
+                contentComplexity: complexity
+            )
+            
+            #expect(behavior.type != nil, "Device type \(deviceType) should return valid responsive type")
+            #expect(!behavior.breakpoints.isEmpty || behavior.type == .fixed, "Non-fixed behaviors should have breakpoints")
+        }
+    }
+    
     // MARK: - Form Strategy Tests
     
     @Test func testSelectFormStrategy_AddFuelView_L3() {
