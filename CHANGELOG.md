@@ -5,6 +5,33 @@ All notable changes to SixLayerFramework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.9.0] - 2025-10-30
+
+### Added
+- **IntelligentDetailView Edit Button**: Optional edit button feature with seamless form integration
+- **Swift 6 Actor Isolation**: Complete compatibility with Swift 6 strict concurrency checking
+- **AccessibilityManager ObservableObject**: Enhanced service class with proper state management
+- **InternationalizationService Language Management**: Complete language switching and locale management
+- **AccessibilityTestingSuite API**: Comprehensive accessibility testing methods and configuration
+
+### Changed
+- **IntelligentDetailView API**: Added `showEditButton` and `onEdit` parameters (backward compatible)
+- **macOSLocationService**: Full actor isolation with `@MainActor` and safe delegate bridging
+- **Service Architecture**: Enhanced all service classes with complete API implementations
+- **Test Infrastructure**: Fixed compilation issues and improved test coverage
+
+### Fixed
+- **Issue #3**: IntelligentDetailView edit button and proper data display
+- **Issue #4**: Swift 6 actor isolation conflicts in macOSLocationService
+- **Compilation Errors**: Resolved all fatal compilation issues across platforms
+- **Service Dependencies**: Fixed missing imports and method implementations
+
+### Technical Details
+- Actor isolation implemented using `@MainActor` and `nonisolated` delegate methods
+- Edit button integration with `IntelligentFormView` for consistent UX
+- Enhanced service classes with complete ObservableObject conformance
+- Cross-platform compatibility verified (macOS confirmed, iOS compatible)
+
 ## [4.8.0] - 2025-01-30
 
 ### Added

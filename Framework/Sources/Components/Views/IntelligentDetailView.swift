@@ -351,6 +351,8 @@ public extension IntelligentDetailView {
                 platformDetailedDetailView(
                     data: data,
                     analysis: analysis,
+                    showEditButton: showEditButton,
+                    onEdit: onEdit,
                     customFieldView: customFieldView
                 )
             )

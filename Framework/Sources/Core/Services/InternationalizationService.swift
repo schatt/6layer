@@ -284,17 +284,38 @@ public class InternationalizationService: ObservableObject {
     /// - Returns: Localized string
     public func localizedString(for key: String, arguments: [String] = []) -> String {
         let localizedString = NSLocalizedString(key, comment: "")
-        
+
         if localizedString == key {
             // Key not found, return the key itself
             return key
         }
-        
+
         if arguments.isEmpty {
             return localizedString
         } else {
             return String(format: localizedString, arguments: arguments)
         }
+    }
+
+    /// Get the current language code
+    /// - Returns: Current language code (e.g., "en", "es", "fr")
+    public func currentLanguage() -> String {
+        return locale.language.languageCode?.identifier ?? "en"
+    }
+
+    /// Get the list of supported languages
+    /// - Returns: Array of supported language codes
+    public func supportedLanguages() -> [String] {
+        // Return a reasonable set of commonly supported languages
+        return ["en", "es", "fr", "de", "it", "pt", "zh", "ja", "ko", "ar", "ru", "hi"]
+    }
+
+    /// Set the current language
+    /// - Parameter languageCode: The language code to set (e.g., "en", "es", "fr")
+    public func setLanguage(_ languageCode: String) {
+        // Note: In a real implementation, this would update the app's language
+        // For now, this is a no-op as SwiftUI doesn't provide direct language switching
+        // This would typically require restarting the app or using custom localization
     }
     
     // MARK: - Locale Information

@@ -1,19 +1,12 @@
 import Foundation
 
-/// Direction for keyboard navigation
-public enum FocusDirection {
-    case next
-    case previous
-    case first
-    case last
-}
 
 /// Manager for keyboard navigation accessibility features
 @MainActor
-public class KeyboardNavigationManager {
-    
-    public var focusableItems: [String] = []
-    public var currentFocusIndex: Int = 0
+public class KeyboardNavigationManager: ObservableObject {
+
+    @Published public var focusableItems: [String] = []
+    @Published public var currentFocusIndex: Int = 0
     
     public init() {}
     

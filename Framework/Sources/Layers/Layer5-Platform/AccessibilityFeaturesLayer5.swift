@@ -85,42 +85,6 @@ public enum VoiceOverPriority: String, CaseIterable {
 
 // MARK: - Keyboard Navigation
 
-/// Keyboard navigation manager
-public class KeyboardNavigationManager: ObservableObject {
-    @Published public var currentFocusIndex: Int = 0
-    @Published public var focusableItems: [String] = []
-    
-    public init() {}
-    
-        func addFocusableItem(_ identifier: String) {
-        if !focusableItems.contains(identifier) {
-            focusableItems.append(identifier)
-        }
-    }
-    
-        func removeFocusableItem(_ identifier: String) {
-        focusableItems.removeAll { $0 == identifier }
-    }
-    
-        func moveFocus(direction: FocusDirection) {
-        switch direction {
-        case .next:
-            currentFocusIndex = (currentFocusIndex + 1) % max(focusableItems.count, 1)
-        case .previous:
-            currentFocusIndex = currentFocusIndex > 0 ? currentFocusIndex - 1 : max(focusableItems.count - 1, 0)
-        case .first:
-            currentFocusIndex = 0
-        case .last:
-            currentFocusIndex = max(focusableItems.count - 1, 0)
-        }
-    }
-    
-        func focusItem(_ identifier: String) {
-        if let index = focusableItems.firstIndex(of: identifier) {
-            currentFocusIndex = index
-        }
-    }
-}
 
 /// Focus movement direction
 public enum FocusDirection: String, CaseIterable {

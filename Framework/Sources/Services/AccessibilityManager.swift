@@ -27,7 +27,7 @@ public struct AccessibilityValidationResult {
 
 /// Manager for handling accessibility features and settings
 @MainActor
-public class AccessibilityManager {
+public class AccessibilityManager: ObservableObject {
     
     public init() {}
     

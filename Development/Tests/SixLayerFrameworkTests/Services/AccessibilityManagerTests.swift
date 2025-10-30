@@ -1,4 +1,5 @@
 import Testing
+import SwiftUI
 @testable import SixLayerFramework
 
 /// Functional tests for AccessibilityManager

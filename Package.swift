@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.7.0 - Core Data Introspection Fix + ViewInspector macOS Exclusion
+// SixLayerFramework v4.9.0 - IntelligentDetailView Edit Button + Swift 6 Actor Isolation Fixes
 
 import PackageDescription
 
@@ -35,7 +35,9 @@ let package = Package(
                 "Layers",
                 "Components",
                 "Platform",
-                "Extensions"
+                "Extensions",
+                "Services",
+                "Shared"
             ]
         ),
         
@@ -56,16 +58,6 @@ let package = Package(
                 "BugReports/PlatformTypes_v4.6.4/README.md",
                 "BugReports/PlatformPhotoPicker_v4.6.5/README.md",
                 "BugReports/PlatformTypes_v4.6.6/README.md"
-            ],
-            sources: [
-                "Core",
-                "Layers",
-                "Features",
-                "Integration",
-                "Utilities",
-                "BugReports",
-                "Components",
-                "Services"  // Root-level Services tests (macOSLocationServiceTests, etc.)
             ]
         ),
         

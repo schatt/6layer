@@ -358,10 +358,11 @@ struct ExternalModuleIntegrationTests {
     
     /// Tests AccessibilityManager is accessible
     @Test("AccessibilityManager is accessible")
+    @MainActor
     func testAccessibilityManagerAccessible() async throws {
         // Test that AccessibilityManager can be created
         let manager = AccessibilityManager()
-        
+
         #expect(true, "AccessibilityManager is accessible from external modules")
     }
 }
