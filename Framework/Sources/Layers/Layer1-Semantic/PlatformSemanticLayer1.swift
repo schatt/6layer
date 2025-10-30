@@ -274,6 +274,38 @@ public func platformPresentMediaData_L1(
     return platformPresentMediaData_L1(media: [media], hints: hints)
 }
 
+/// Present a single media item with enhanced hints
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentMediaData_L1(
+    media: GenericMediaItem,
+    hints: EnhancedPresentationHints
+) -> some View {
+    return platformPresentMediaData_L1(media: [media], hints: hints)
+}
+
+/// Present a single media item with custom view
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentMediaData_L1(
+    media: GenericMediaItem,
+    hints: PresentationHints,
+    @ViewBuilder customMediaView: @escaping (GenericMediaItem) -> some View
+) -> some View {
+    return platformPresentMediaData_L1(media: [media], hints: hints, customMediaView: customMediaView)
+}
+
+/// Present a single media item with enhanced hints and custom view
+/// Internally wraps the single item in an array and delegates to the array version
+@MainActor
+public func platformPresentMediaData_L1(
+    media: GenericMediaItem,
+    hints: EnhancedPresentationHints,
+    @ViewBuilder customMediaView: @escaping (GenericMediaItem) -> some View
+) -> some View {
+    return platformPresentMediaData_L1(media: [media], hints: hints, customMediaView: customMediaView)
+}
+
 /// Generic function for presenting media data with custom views
 /// Allows specifying custom views for individual media items
 @MainActor
