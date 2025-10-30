@@ -8,25 +8,14 @@ import ViewInspector
 /// Ensures ImageProcessingPipeline classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
-            }
-    
+
     // MARK: - ImageProcessor Tests
-    
+
     /// BUSINESS PURPOSE: Validates that ImageProcessor generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
 @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        await setupTestEnvironment()
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         let processor = ImageProcessor()
         
         // When & Then
@@ -45,8 +34,6 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        await setupTestEnvironment()
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
         let processor = ImageProcessor()
         
         // When & Then
@@ -60,4 +47,4 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
         }
     }
-
+}

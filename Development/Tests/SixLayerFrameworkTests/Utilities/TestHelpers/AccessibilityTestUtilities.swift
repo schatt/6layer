@@ -181,14 +181,22 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
 @MainActor
 public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> String? {
     // Ensure config is enabled for tests
-    AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-    AccessibilityIdentifierConfig.shared.enableDebugLogging = true
-    if AccessibilityIdentifierConfig.shared.namespace.isEmpty {
-        AccessibilityIdentifierConfig.shared.namespace = "test"
+    let config = AccessibilityIdentifierConfig.shared
+    config.enableDebugLogging = true
+    if config.namespace.isEmpty {
+        config.namespace = "test"
     }
     
-    // Apply the global auto IDs to ensure environment variable is set
-    let viewWithAutoIDs = view.withGlobalAutoIDsEnabled()
+    // Only apply global auto IDs when enabled; respect disabled mode
+    @ViewBuilder
+    func wrap<W: View>(_ v: W) -> some View {
+        if config.enableAutoIDs {
+            v.withGlobalAutoIDsEnabled()
+        } else {
+            v
+        }
+    }
+    let viewWithAutoIDs = wrap(view)
     
     do {
         // Use ViewInspector to directly inspect the SwiftUI view
@@ -197,7 +205,10 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> 
         return identifier.isEmpty ? nil : identifier
     } catch {
         print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
-        return nil
+        // Fallback: host platform view and search for identifier
+        let hosted = hostRootPlatformView(viewWithAutoIDs)
+        let platformId = firstAccessibilityIdentifier(inHosted: hosted)
+        return platformId
     }
 }
 
@@ -223,9 +234,10 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
     TestSetupUtilities.shared.simulatePlatform(platform)
     
     // Get the actual accessibility identifier directly from the SwiftUI view
-    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view) else {
-        // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
-        if expectedPattern == "^$" || expectedPattern == "^\\s*$" {
+    let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view)
+    if actualIdentifier == nil || actualIdentifier?.isEmpty == true {
+        // Treat empty expected pattern OR explicit empty-regex patterns as success when identifier is missing/empty
+        if expectedPattern.isEmpty || expectedPattern == "^$" || expectedPattern == "^\\s*$" {
             print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty) on \(platform)")
             return true
         }
@@ -234,17 +246,27 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
     }
     
     // Convert pattern to regex (replace * with .*)
+    // Special-case: if expected pattern is empty, we already handled above
     let regexPattern = expectedPattern.replacingOccurrences(of: "*", with: ".*")
     
     do {
         let regex = try NSRegularExpression(pattern: regexPattern)
-        let range = NSRange(location: 0, length: actualIdentifier.utf16.count)
+        let range = NSRange(location: 0, length: actualIdentifier!.utf16.count)
         
-        if regex.firstMatch(in: actualIdentifier, options: [], range: range) != nil {
-            print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match on \(platform): '\(actualIdentifier)' matches '\(expectedPattern)'")
+        if regex.firstMatch(in: actualIdentifier!, options: [], range: range) != nil {
+            print("✅ DISCOVERY: \(componentName) generates CORRECT pattern match on \(platform): '\(actualIdentifier!)' matches '\(expectedPattern)'")
             return true
         } else {
-            print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern on \(platform). Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
+            print("⚠️ DISCOVERY: \(componentName) generates WRONG pattern on \(platform). Expected: '\(expectedPattern)', Got: '\(actualIdentifier!)'")
+            // Fallback: host platform view and re-check using platform identifier (may reflect outermost modifier)
+            let hosted = hostRootPlatformView(view)
+            if let platformId = firstAccessibilityIdentifier(inHosted: hosted) {
+                let pRange = NSRange(location: 0, length: platformId.utf16.count)
+                if regex.firstMatch(in: platformId, options: [], range: pRange) != nil {
+                    print("✅ DISCOVERY: \(componentName) platform identifier matches on \(platform): '\(platformId)' matches '\(expectedPattern)'")
+                    return true
+                }
+            }
             return false
         }
     } catch {

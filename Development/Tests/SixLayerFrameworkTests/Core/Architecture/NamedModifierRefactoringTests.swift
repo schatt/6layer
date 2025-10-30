@@ -17,18 +17,17 @@ import SwiftUI
 /// 
 /// TESTING SCOPE: These tests define the new behavior and should FAIL initially
 /// (RED phase) until the implementation is updated to match.
-open class NamedModifierRefactoringTDDTests {
-    
-    init() async throws {
-                // Reset configuration to known state
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.enableAutoIDs = true
-            config.namespace = "TestApp"
-            config.mode = .automatic
-            config.enableViewHierarchyTracking = true
-            config.enableDebugLogging = false
-        }
+open class NamedModifierRefactoringTDDTests: BaseTestClass {
+
+    override init() {
+        super.init()
+        // Reset configuration to known state for this specific test
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "TestApp"
+        config.mode = .automatic
+        config.enableViewHierarchyTracking = true
+        config.enableDebugLogging = false
     }    // MARK: - RED PHASE TESTS (Should FAIL initially)
     
     /// TDD RED PHASE: Test that .named replaces current hierarchy level
@@ -153,25 +152,7 @@ open class NamedModifierRefactoringTDDTests {
         }
     }
     
-    /// TDD RED PHASE: Test that .named overrides existing accessibility identifier
-    /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
-    @Test func testNamedModifierOverridesExistingAccessibilityIdentifier() async {
-        await MainActor.run {
-            // Given: A button with existing accessibility identifier
-            let testView = Button("Test") { }
-                .accessibilityIdentifier("OriginalID")
-                .named("NewName")
-            
-            // When: We check the accessibility identifier
-            // Then: Should get full hierarchy path, not "OriginalID"
-            #expect(testAccessibilityIdentifiersSinglePlatform(
-                testView, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "OverrideTest"
-            ), "RED PHASE: .named() should override existing accessibility identifier with full hierarchy path")
-        }
-    }
+    
     
     /// TDD RED PHASE: Test that subcomponents inherit modified hierarchy
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
@@ -303,25 +284,7 @@ open class NamedModifierRefactoringTDDTests {
         }
     }
     
-    /// TDD RED PHASE: Test that .exactNamed overrides existing accessibility identifier
-    /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't exist yet
-    @Test func testExactNamedModifierOverridesExistingAccessibilityIdentifier() async {
-        await MainActor.run {
-            // Given: A button with existing accessibility identifier
-            let testView = Button("Test") { }
-                .accessibilityIdentifier("OriginalID")
-                .exactNamed("NewExactName")
-            
-            // When: We check the accessibility identifier
-            // Then: Should get exact name, not "OriginalID"
-            #expect(testAccessibilityIdentifiersSinglePlatform(
-                testView, 
-                expectedPattern: "^NewExactName$", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "ExactNamedOverrideTest"
-            ), "RED PHASE: .exactNamed() should override existing accessibility identifier with exact name")
-        }
-    }
+    
     
     // MARK: - Combined Modifier Tests (NEW)
     

@@ -50,7 +50,6 @@ public func testAccessibilityIdentifierGeneration<T: View>(
 ) -> Bool {
     // Setup: Configure test environment
     let config = AccessibilityIdentifierConfig.shared
-    config.enableAutoIDs = true
     config.namespace = "SixLayer"
     config.mode = .automatic
     

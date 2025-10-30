@@ -260,3 +260,80 @@ The framework automatically applies field hints when rendering forms. Simply inc
 4. **File-Based**: Similar to CoreData models, hints are stored in JSON files
 5. **Flexible**: Support for both file-based and runtime configuration
 
+## Deterministic Field Ordering (Explicit Order, Groups, Traits)
+
+You can control the display order of fields in IntelligentFormView.
+
+### Quick Start: Runtime Provider
+
+Install a provider once (e.g., at app launch):
+
+```swift
+IntelligentFormView.orderRulesProvider = { analysis in
+    let names = Set(analysis.fields.map { $0.name })
+    let isTask = ["title","status","priority","sizeUnit","estimatedHours","notes"].allSatisfy { names.contains($0) }
+    if isTask {
+        let base = FieldOrderRules(
+            explicitOrder: ["title","status","priority","sizeUnit","estimatedHours","notes"]
+        )
+        let compact = FieldOrderRules(explicitOrder: ["title","priority","status"])
+        return FieldOrderRules(
+            explicitOrder: base.explicitOrder,
+            perFieldWeights: base.perFieldWeights,
+            groups: base.groups,
+            traitOverrides: [.compact: compact]
+        )
+    }
+    return nil // fallback to defaults (title/name first)
+}
+```
+
+Rules are applied trait-aware (phones -> `.compact`, others -> `.regular`). When no provider returns rules, 6Layer defaults to a sensible order that prioritizes common primary fields like `title` or `name` first.
+
+### API Reference
+
+```swift
+public struct FieldGroup: Equatable, Sendable {
+    public let id: String
+    public let title: String?
+    public let fields: [String]
+}
+
+public enum FieldTrait: Hashable, Sendable { case compact, regular }
+
+public struct FieldOrderRules: Equatable, Sendable {
+    public let explicitOrder: [String]?          // Highest precedence
+    public let perFieldWeights: [String: Int]    // Higher weight -> earlier
+    public let groups: [FieldGroup]              // Declaration order respected
+    public let traitOverrides: [FieldTrait: FieldOrderRules]
+}
+```
+
+Resolver behavior:
+- Sort by explicitOrder when provided; unknown keys are ignored.
+- Then append remaining fields by weight (desc), then by name for deterministic tie-break.
+- Groups render in declaration order; order within each group follows the same rules.
+- Trait overrides replace the base rules for that trait.
+
+Validation helper:
+
+```swift
+let (sorted, warnings) = IntelligentFormView.inspectEffectiveOrder(analysis: analysis)
+// warnings contains any unknown keys detected in explicitOrder/weights/groups
+```
+
+### Using Hints
+
+`EnhancedPresentationHints` includes an optional `fieldOrderRules` to carry deterministic ordering through hints if you prefer to keep ordering near your hint definitions:
+
+```swift
+let hints = EnhancedPresentationHints(
+    dataType: .form,
+    fieldOrderRules: FieldOrderRules(
+        explicitOrder: ["title","status","priority"]
+    )
+)
+```
+
+If both hints and the runtime provider are present, your app-level provider can decide priority by merging or preferring one.
+

@@ -41,9 +41,9 @@ public class AccessibilityIdentifierGenerator {
         
         // Generate the identifier using the same logic as AutomaticAccessibilityIdentifiersModifier
         let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
-        let namespace = config.namespace.isEmpty ? "main" : config.namespace
-        let screenContext = config.currentScreenContext ?? "main"
-        let viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+        let namespace = config.namespace.isEmpty ? "SixLayer" : config.namespace
+        let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
+        let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
         
         var identifierComponents: [String] = [prefix, namespace, screenContext, viewHierarchyPath]
         
@@ -73,9 +73,6 @@ public class AccessibilityIdentifierGenerator {
     /// - Parameter identifier: The identifier to check
     /// - Returns: True if collision detected, false otherwise
     public func checkForCollision(_ identifier: String) -> Bool {
-        // TDD RED PHASE: Stub implementation that fails until real code is implemented
-        // TODO: Implement actual collision detection logic
-        // For now, return false to make test fail until implemented
-        return false // This will make the test fail until real implementation
+        return generatedIDs.contains(identifier)
     }
 }

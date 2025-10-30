@@ -14,18 +14,9 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
+
 @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        await setupTestEnvironment()
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
             enableCustomActions: true,

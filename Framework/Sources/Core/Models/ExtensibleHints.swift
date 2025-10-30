@@ -139,6 +139,9 @@ public struct EnhancedPresentationHints: Sendable {
     /// Field-level display hints keyed by field ID
     public let fieldHints: [String: FieldDisplayHints]
     
+    /// Optional deterministic field ordering rules (non-breaking default: nil)
+    public let fieldOrderRules: FieldOrderRules?
+    
     public init(
         dataType: DataTypeHint,
         presentationPreference: PresentationPreference = .automatic,
@@ -146,7 +149,8 @@ public struct EnhancedPresentationHints: Sendable {
         context: PresentationContext = .dashboard,
         customPreferences: [String: String] = [:],
         extensibleHints: [ExtensibleHint] = [],
-        fieldHints: [String: FieldDisplayHints] = [:]
+        fieldHints: [String: FieldDisplayHints] = [:],
+        fieldOrderRules: FieldOrderRules? = nil
     ) {
         self.dataType = dataType
         self.presentationPreference = presentationPreference
@@ -155,6 +159,7 @@ public struct EnhancedPresentationHints: Sendable {
         self.customPreferences = customPreferences
         self.extensibleHints = extensibleHints
         self.fieldHints = fieldHints
+        self.fieldOrderRules = fieldOrderRules
     }
     
     /// Get field-level hints for a specific field

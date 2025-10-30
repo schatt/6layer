@@ -29,6 +29,59 @@ public enum ErrorSeverity: String, CaseIterable {
     }
 }
 
+// MARK: - Ordering Helpers
+
+extension IntelligentFormView {
+    /// Optional provider for external order rules (e.g., EnhancedHints/registry)
+    public static var orderRulesProvider: ((DataAnalysisResult) -> FieldOrderRules?)?
+    
+    /// Default priority-based ordering: prefer common primary fields like "title" or "name" first.
+    /// Falls back to stable name ordering; avoids alphabetic-by-type grouping.
+    internal static func orderFieldsByPriority(_ fields: [DataField]) -> [DataField] {
+        // If external rules exist, resolve first
+        if let analysis = _currentAnalysisContext, let rules = orderRulesProvider?(analysis) {
+            let names = fields.map { $0.name }
+            let trait = activeTrait()
+            let orderedNames = FieldOrderResolver.resolve(fields: names, rules: rules, activeTrait: trait)
+            let byName = Dictionary(uniqueKeysWithValues: fields.map { ($0.name, $0) })
+            return orderedNames.compactMap { byName[$0] } + names.filter { !orderedNames.contains($0) }.compactMap { byName[$0] }
+        }
+        
+        return fields.sorted { lhs, rhs in
+            let wl = defaultWeight(for: lhs.name)
+            let wr = defaultWeight(for: rhs.name)
+            if wl != wr { return wl > wr }
+            return lhs.name < rhs.name
+        }
+    }
+    
+    private static func defaultWeight(for fieldName: String) -> Int {
+        let n = fieldName.lowercased()
+        if n == "title" { return 1_000 }
+        if n == "name" { return 900 }
+        if n.contains("title") { return 800 }
+        if n.contains("summary") { return 700 }
+        return 0
+    }
+    
+    // MARK: - Trait/Context
+    internal static func activeTrait() -> FieldTrait {
+        // Simple heuristic: phones are compact, others regular
+        switch SixLayerPlatform.deviceType {
+        case .phone: return .compact
+        default: return .regular
+        }
+    }
+    
+    // Store the latest analysis so the provider can use it without changing signatures widely
+    @TaskLocal static var _currentAnalysisContext: DataAnalysisResult?
+    
+    // Wrap content generation to set the analysis context
+    static func withAnalysisContext<T>(_ analysis: DataAnalysisResult, build: () -> T) -> T {
+        return Self.$_currentAnalysisContext.withValue(analysis) { build() }
+    }
+}
+
 // MARK: - Intelligent Form View
 
 /// Intelligent form generation using our 6-layer platform architecture
@@ -57,7 +110,8 @@ public struct IntelligentFormView {
         let analysis = DataIntrospectionEngine.analyze(initialData)
         let formStrategy = determineFormStrategy(analysis: analysis)
         
-        return AnyView(Group {
+        return AnyView(withAnalysisContext(analysis) {
+            Group {
             switch formStrategy.containerType {
             case .form:
                 platformFormContainer_L4(
@@ -103,8 +157,9 @@ public struct IntelligentFormView {
                     )
                 )
             }
-        }
-        .automaticAccessibilityIdentifiers())
+            }
+            .automaticAccessibilityIdentifiers()
+        })
     }
     
     /// Generate a form for updating existing data with data binding integration
@@ -119,7 +174,8 @@ public struct IntelligentFormView {
         let analysis = DataIntrospectionEngine.analyze(data)
         let formStrategy = determineFormStrategy(analysis: analysis)
         
-        return platformFormContainer_L4(
+        return withAnalysisContext(analysis) {
+            platformFormContainer_L4(
             strategy: formStrategy,
             content: {
                 generateFormContent(
@@ -131,14 +187,15 @@ public struct IntelligentFormView {
                     formStrategy: formStrategy
                 )
             }
-        )
-        .overlay(
-            generateFormActions(
-                initialData: data,
-                onSubmit: { onUpdate($0) },
-                onCancel: onCancel
             )
-        )
+            .overlay(
+                generateFormActions(
+                    initialData: data,
+                    onSubmit: { onUpdate($0) },
+                    onCancel: onCancel
+                )
+            )
+        }
     }
     
     // MARK: - Private Implementation
@@ -255,45 +312,16 @@ public struct IntelligentFormView {
         customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         VStack(spacing: 16) {
-            let groupedFields = groupFieldsByType(analysis.fields)
-            
-            ForEach(groupedFields.keys.sorted(by: { $0.rawValue < $1.rawValue }), id: \.self) { fieldType in
-                if let fields = groupedFields[fieldType] {
-                    if fields.count > 1 {
-                        // Group multiple fields of the same type
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text(getFieldTypeTitle(fieldType))
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundColor(Color.platformLabel)
-                                .padding(.horizontal, 4)
-                            
-                            VStack(spacing: 8) {
-                                ForEach(fields, id: \.name) { field in
-                                    generateFieldView(
-                                        field: field,
-                                        initialData: initialData,
-                                        dataBinder: dataBinder,
-                                        inputHandlingManager: inputHandlingManager,
-                                        customFieldView: customFieldView
-                                    )
-                                }
-                            }
-                            .padding()
-                            .background(Color.platformSecondaryBackground)
-                            .cornerRadius(8)
-                        }
-                    } else {
-                        // Single field, no grouping needed
-                        generateFieldView(
-                            field: fields[0],
-                            initialData: initialData,
-                            dataBinder: dataBinder,
-                            inputHandlingManager: inputHandlingManager,
-                            customFieldView: customFieldView
-                        )
-                    }
-                }
+            // Prefer explicit important fields first (e.g., title/name), avoid alphabetic-by-type
+            let orderedFields = orderFieldsByPriority(analysis.fields)
+            ForEach(orderedFields, id: \.name) { field in
+                generateFieldView(
+                    field: field,
+                    initialData: initialData,
+                    dataBinder: dataBinder,
+                    inputHandlingManager: inputHandlingManager,
+                    customFieldView: customFieldView
+                )
             }
         }
     }
@@ -310,7 +338,8 @@ public struct IntelligentFormView {
             GridItem(.flexible()),
             GridItem(.flexible())
         ], spacing: 16) {
-            ForEach(analysis.fields, id: \.name) { field in
+            let orderedFields = orderFieldsByPriority(analysis.fields)
+            ForEach(orderedFields, id: \.name) { field in
                 generateFieldView(
                     field: field,
                     initialData: initialData,
@@ -333,7 +362,8 @@ public struct IntelligentFormView {
         let columns = min(3, max(1, Int(sqrt(Double(analysis.fields.count)))))
         
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
-            ForEach(analysis.fields, id: \.name) { field in
+            let orderedFields = orderFieldsByPriority(analysis.fields)
+            ForEach(orderedFields, id: \.name) { field in
                 generateFieldView(
                     field: field,
                     initialData: initialData,

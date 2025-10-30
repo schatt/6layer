@@ -91,6 +91,12 @@ Button("Save") { }
 
 **Important:** Apply `.accessibilityIdentifier()` AFTER framework modifiers to ensure manual IDs take precedence.
 
+### Warning: Mixing Manual IDs with .named/.exactNamed
+
+- If you apply both a manual `.accessibilityIdentifier(...)` and SixLayer’s `.named(...)` or `.exactNamed(...)` to the same view, the final identifier may be framework- and order-dependent.
+- There is no guaranteed priority between two manually-specified identifiers (they are both explicit).
+- Recommendation: avoid mixing. Pick one approach per view. If you must combine them, document the intended order locally and verify via tests.
+
 ### Enabling Automatic IDs for Custom Views
 
 **For complex custom views, enable automatic IDs:**

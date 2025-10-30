@@ -7,6 +7,13 @@ import ViewInspector
 /// Test that framework components respect global accessibility config
 @MainActor
 open class FrameworkComponentGlobalConfigTests: BaseTestClass {
+
+    override init() {
+        super.init()
+        // Set up test-specific configuration
+        let config = AccessibilityIdentifierConfig.shared
+        config.namespace = "TestApp"
+    }
     
     @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
         setupTestEnvironment()
@@ -43,10 +50,9 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
         
         // Test that framework components DO generate IDs when global config is enabled
         
-        // Set custom namespace AFTER setup (which resets to defaults)
+        // Set custom config for this test
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
-        config.namespace = "TestApp"
         
         // Create a framework component (this SHOULD generate an ID)
         let view = Button("Test") { }

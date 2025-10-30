@@ -14,16 +14,12 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
     @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
-        await setupTestEnvironment()
+        
         
         // Given
         let preferences = PhotoPreferences(
@@ -68,7 +64,7 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
     }
     
     @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
-        await setupTestEnvironment()
+        
         
         // Given
         let preferences = PhotoPreferences(

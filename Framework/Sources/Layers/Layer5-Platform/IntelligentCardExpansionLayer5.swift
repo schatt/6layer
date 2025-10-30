@@ -116,7 +116,7 @@ private func visionOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
-        minTouchTarget: 60, // Larger targets for spatial interface
+        minTouchTarget: RuntimeCapabilityDetection.supportsTouch ? 60 : 0, // Larger targets for spatial interface when touch is supported
         hoverDelay: 0.0,
         animationEasing: .easeInOut(duration: 0.4) // Slower for spatial interface
     )
@@ -132,7 +132,7 @@ private func watchOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
-        minTouchTarget: 44,
+        minTouchTarget: RuntimeCapabilityDetection.supportsTouch ? 44 : 0,
         hoverDelay: 0.0,
         animationEasing: .easeInOut(duration: 0.15) // Very fast for watch
     )
@@ -148,7 +148,7 @@ private func tvOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
-        minTouchTarget: 60, // Larger targets for TV
+        minTouchTarget: RuntimeCapabilityDetection.supportsTouch ? 60 : 0, // Larger targets for TV when touch is supported
         hoverDelay: 0.0,
         animationEasing: .easeInOut(duration: 0.4) // Slower for TV viewing
     )

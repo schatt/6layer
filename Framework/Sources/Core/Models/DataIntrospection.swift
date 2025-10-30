@@ -73,7 +73,7 @@ public struct DataIntrospectionEngine {
 // MARK: - Field Analysis
 
 /// Represents a field in a data model
-public struct DataField {
+public struct DataField: Sendable {
     public let name: String
     public let type: FieldType
     public let isOptional: Bool
@@ -99,7 +99,7 @@ public struct DataField {
 }
 
 /// Types of fields that can be detected
-public enum FieldType: String, CaseIterable {
+public enum FieldType: String, CaseIterable, Sendable {
     case string = "string"
     case number = "number"
     case boolean = "boolean"
@@ -129,7 +129,7 @@ public enum ContentRichness {
 // MARK: - Pattern Detection
 
 /// Data patterns that influence UI decisions
-public struct DataPatterns {
+public struct DataPatterns: Sendable {
     public let hasMedia: Bool
     public let hasDates: Bool
     public let hasRelationships: Bool
@@ -172,7 +172,7 @@ public enum CollectionType: String, CaseIterable {
 // MARK: - Analysis Results
 
 /// Result of data structure analysis
-public struct DataAnalysisResult {
+public struct DataAnalysisResult: Sendable {
     public let fields: [DataField]
     public let complexity: ContentComplexity
     public let patterns: DataPatterns
@@ -214,7 +214,7 @@ public struct CollectionAnalysisResult {
 // MARK: - UI Recommendations
 
 /// UI recommendations based on data analysis
-public struct UIRecommendation {
+public struct UIRecommendation: Sendable {
     public let type: RecommendationType
     public let priority: RecommendationPriority
     public let description: String
@@ -234,7 +234,7 @@ public struct UIRecommendation {
 }
 
 /// Types of UI recommendations
-public enum RecommendationType: String, CaseIterable {
+public enum RecommendationType: String, CaseIterable, Sendable {
     case layout = "layout"
     case navigation = "navigation"
     case presentation = "presentation"
@@ -244,7 +244,7 @@ public enum RecommendationType: String, CaseIterable {
 }
 
 /// Priority levels for recommendations
-public enum RecommendationPriority: String, CaseIterable {
+public enum RecommendationPriority: String, CaseIterable, Sendable {
     case low = "low"
     case medium = "medium"
     case high = "high"

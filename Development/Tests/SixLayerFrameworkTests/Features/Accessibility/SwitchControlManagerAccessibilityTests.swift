@@ -62,13 +62,3 @@ open class SwitchControlManagerAccessibilityTests: BaseTestClass {
     }
 }
 
-// MARK: - Test Extensions
-extension SwitchControlManagerAccessibilityTests {
-    private func setupTestEnvironment() async {
-        TestSetupUtilities.shared.setupTestingEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        TestSetupUtilities.shared.cleanupTestingEnvironment()
-    }
-}

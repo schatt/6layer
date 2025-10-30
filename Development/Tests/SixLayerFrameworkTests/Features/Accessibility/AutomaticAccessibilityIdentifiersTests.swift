@@ -10,25 +10,20 @@ import ViewInspector
 /// TESTING SCOPE: All functions in AutomaticAccessibilityIdentifiers.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @MainActor
-open class AutomaticAccessibilityIdentifiersTests {
+open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     // MARK: - Test Setup
-    
-    init() async throws {
-                await setupTestEnvironment()
+
+    override init() {
+        super.init()
         let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
         config.enableAutoIDs = true
         // namespace is automatically detected as "SixLayer" for tests
         config.mode = .automatic
         config.enableDebugLogging = false
     }
-    
+
     // MARK: - Namespace Detection Tests
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
     
     @Test func testAutomaticNamespaceDetectionForTests() async {
         // GIVEN: We're running in a test environment

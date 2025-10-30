@@ -7,14 +7,17 @@ import ViewInspector
 /// Test the "global disable, local enable" functionality
 @MainActor
 open class LocalEnableOverrideTests: BaseTestClass {
+
+    override init() {
+        super.init()
+        // Set up test-specific configuration
+        let config = AccessibilityIdentifierConfig.shared
+        config.namespace = "TestApp"
+    }
     
     @Test func testGlobalDisableLocalEnable() {
-        setupTestEnvironment()
-        
         // Configure test environment
         let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = true  // Enable debug to see what's happening
         
@@ -52,11 +55,9 @@ open class LocalEnableOverrideTests: BaseTestClass {
     @Test func testNamedModifierAlwaysWorksRegardlessOfGlobalSettings() {
         // Test that .named() always works regardless of global settings
         // This is the correct behavior - explicit naming should not be affected by global config
-        
+
         // Configure test environment
         let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = true
         
@@ -93,12 +94,8 @@ open class LocalEnableOverrideTests: BaseTestClass {
     }
     
     @Test func testNamedModifierAlwaysWorksEvenWhenGlobalConfigDisabled() {
-        setupTestEnvironment()
-        
         // Configure test environment
         let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "TestApp"
         config.mode = .automatic
         config.enableDebugLogging = true
         

@@ -6,21 +6,17 @@ import SwiftUI
 import ViewInspector
 /// Debug test to understand environment variable propagation
 @MainActor
-open class EnvironmentVariableDebugTests {
-    
-    // MARK: - Helper Methods
-    
-    private func setupTestEnvironment() {
+open class EnvironmentVariableDebugTests: BaseTestClass {
+
+    override init() {
+        super.init()
+        // Additional setup for this specific test class
         let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
         config.namespace = "TestApp"
-        config.mode = .automatic
         config.enableDebugLogging = true
     }
     
     @Test func testEnvironmentVariablePropagation() {
-        // Setup test environment first
-        setupTestEnvironment()
         
         // Test: Does the environment variable get set properly?
         
