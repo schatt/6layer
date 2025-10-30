@@ -23,7 +23,7 @@ open class FormUsageExampleComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "FormUsageExample"
         )

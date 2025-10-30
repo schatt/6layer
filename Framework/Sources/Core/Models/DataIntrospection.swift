@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 // MARK: - Data Structure Analysis
 
@@ -19,7 +20,7 @@ public struct DataIntrospectionEngine {
         if let managedObject = data as? NSManagedObject {
             return analyzeCoreData(managedObject)
         }
-        
+
         // Use standard Mirror introspection for non-Core Data objects
         let mirror = Mirror(reflecting: data)
         let fields = extractFields(from: mirror)
@@ -30,7 +31,7 @@ public struct DataIntrospectionEngine {
             complexity: complexity,
             patterns: patterns
         )
-        
+
         return DataAnalysisResult(
             fields: fields,
             complexity: complexity,
@@ -291,23 +292,23 @@ public extension DataIntrospectionEngine {
 // MARK: - Private Implementation
 
 private extension DataIntrospectionEngine {
-    
+
     /// Analyze Core Data managed objects using NSEntityDescription
     static func analyzeCoreData(_ managedObject: NSManagedObject) -> DataAnalysisResult {
         let entity = managedObject.entity
         let properties = entity.propertiesByName
-        
+
         // If no properties, fallback to Mirror
         if properties.isEmpty {
             return analyzeWithMirror(managedObject)
         }
-        
+
         var fields: [DataField] = []
-        
+
         for (name, property) in properties {
             // Skip relationships for now
             guard let attribute = property as? NSAttributeDescription else { continue }
-            
+
             let fieldType = inferCoreDataFieldType(attributeType: attribute.attributeType)
             let field = DataField(
                 name: name,
@@ -319,7 +320,7 @@ private extension DataIntrospectionEngine {
             )
             fields.append(field)
         }
-        
+
         let complexity = calculateComplexity(fields: fields, data: managedObject)
         let patterns = detectPatterns(fields: fields)
         let recommendations = generateRecommendations(
@@ -327,7 +328,7 @@ private extension DataIntrospectionEngine {
             complexity: complexity,
             patterns: patterns
         )
-        
+
         return DataAnalysisResult(
             fields: fields,
             complexity: complexity,
@@ -335,7 +336,7 @@ private extension DataIntrospectionEngine {
             recommendations: recommendations
         )
     }
-    
+
     /// Infer field type from Core Data attribute type
     static func inferCoreDataFieldType(attributeType: NSAttributeType) -> FieldType {
         switch attributeType {
@@ -356,7 +357,7 @@ private extension DataIntrospectionEngine {
             return .custom
         }
     }
-    
+
     /// Analyze with Mirror (fallback for non-Core Data or empty Core Data entities)
     static func analyzeWithMirror<T>(_ data: T) -> DataAnalysisResult {
         let mirror = Mirror(reflecting: data)

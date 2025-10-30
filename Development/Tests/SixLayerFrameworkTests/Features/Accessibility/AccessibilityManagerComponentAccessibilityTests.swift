@@ -23,11 +23,12 @@ open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MA
             Text("Accessibility Manager Content")
         }
         .environmentObject(manager)
+        .automaticAccessibilityIdentifiers()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityManager"
         )

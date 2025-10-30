@@ -392,8 +392,10 @@ public struct AccessibilityHostingView<Content: View>: View {
         AccessibilityHostingControllerWrapper {
             content()
         }
+        .automaticAccessibilityIdentifiers()
         #else
         content()
+        .automaticAccessibilityIdentifiers()
         #endif
     }
 }
@@ -519,6 +521,7 @@ public struct AccessibilityTestingView: View {
         }
         .padding()
         .environmentObject(testingManager)
+        .automaticAccessibilityIdentifiers()
     }
     
     private func statusIcon(for status: TestStatus) -> String {

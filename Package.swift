@@ -64,7 +64,8 @@ let package = Package(
                 "Integration",
                 "Utilities",
                 "BugReports",
-                "Components"
+                "Components",
+                "Services"  // Root-level Services tests (macOSLocationServiceTests, etc.)
             ]
         ),
         
