@@ -86,6 +86,29 @@ open class IntelligentCardExpansionLayer4Tests {
         
         #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS")
     }
+    
+    @Test func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
+        // Test empty state
+        let view = ExpandableCardCollectionView(
+            items: [],
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
+        )
+        
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "ExpandableCardCollectionView"
+        )
+        
+        #expect(hasAccessibilityID, "ExpandableCardCollectionView empty state should generate accessibility identifiers")
+    }
 }
 
 // MARK: - Test Support Types
