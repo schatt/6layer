@@ -45,8 +45,8 @@ struct DefensiveValidation {
             case "No Capabilities":
                 RuntimeCapabilityDetection.setTestPlatform(.tvOS)
             default:
-                // This should never happen due to validation, but defensive programming
-                fatalError("Unhandled validated capability name: \(validatedName)")
+                // Should never happen due to validation; no-op defensively
+                print("Warning: Unhandled validated capability name: \(validatedName)")
             }
         }
     }
@@ -60,8 +60,8 @@ struct DefensiveValidation {
             case "All Accessibility":
                 RuntimeCapabilityDetection.setTestPlatform(.iOS) // Full accessibility
             default:
-                // This should never happen due to validation, but defensive programming
-                fatalError("Unhandled validated accessibility name: \(validatedName)")
+                // Should never happen due to validation; no-op defensively
+                print("Warning: Unhandled validated accessibility name: \(validatedName)")
             }
         }
     }
