@@ -456,9 +456,12 @@ public struct IntelligentFormView {
                 Spacer()
 
                 Button(initialData != nil ? "Update" : "Create") {
-                    // For now, just call onSubmit with empty data
-                    // In a real implementation, we'd collect the form data
-                    onSubmit(initialData ?? T.self as! T)
+                    // For now, only submit when initial data is available; otherwise no-op
+                    if let data = initialData {
+                        onSubmit(data)
+                    } else {
+                        print("Warning: Submit attempted without initialData; ignoring")
+                    }
                 }
                     .buttonStyle(.borderedProminent)
                     .foregroundColor(Color.platformBackground)
