@@ -82,9 +82,9 @@ open class CapabilityMatrixTests {
             testSupported: { RuntimeCapabilityDetection.supportsHover },
             testBehavior: {
                 if RuntimeCapabilityDetection.supportsHover {
-                    // Hover platforms should not support touch (mutually exclusive)
-                    #expect(!RuntimeCapabilityDetection.supportsTouch, 
-                                 "Hover platforms should not support touch")
+                    // Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
+                    // We trust what the OS reports - if both are available, both are available
+                    // No mutual exclusivity check needed
                 } else {
                     // Non-hover platforms should not have hover-specific features
                     // This is more of a logical test - we can't test hoverDelay directly

@@ -185,7 +185,8 @@ open class CapabilityAwareFunctionTests {
             // Test that hover-related functions work when hover is supported
             #expect(config.supportsHover, "Hover should be supported when enabled on \(platform)")
             #expect(config.hoverDelay >= 0, "Hover delay should be set when hover is supported on \(platform)")
-            #expect(!config.supportsTouch, "Touch should not be supported when hover is enabled on \(platform)")
+            // Note: Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
+            // We trust what the OS reports - if both are available, both are available
         }
         
         // Clean up

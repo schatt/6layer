@@ -276,9 +276,9 @@ final class PlatformTestUtilities {
         #expect(capabilities.hoverDelay >= 0, 
                                    "\(platformName) should have hover delay set")
         
-        // Hover platforms should not support touch (mutually exclusive)
-        #expect(!capabilities.supportsTouch, 
-                      "\(platformName) should not support touch (hover exclusive)")
+        // macOS always supports hover (mouse/trackpad), but CAN also support touch if touchscreen is connected
+        // We trust what the OS reports - if both are available, both are available
+        // No mutual exclusivity check needed
         
         // Clean up test platform
         RuntimeCapabilityDetection.setTestPlatform(nil)

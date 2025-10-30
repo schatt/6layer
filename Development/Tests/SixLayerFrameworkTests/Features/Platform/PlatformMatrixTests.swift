@@ -378,20 +378,20 @@ struct PlatformFeatureMatrix {
     let supportsOCR: Bool
     
     func isInternallyConsistent() -> Bool {
-        // Touch and haptic feedback should be consistent
-        if supportsTouch && !supportsHapticFeedback {
+        // Dependencies (logical constraints, not OS-reported):
+        // - Haptic feedback requires touch
+        if supportsHapticFeedback && !supportsTouch {
             return false
         }
         
-        // Hover and touch should be mutually exclusive
-        if supportsHover && supportsTouch {
-            return false
-        }
-        
-        // AssistiveTouch should only be available on touch platforms
+        // - AssistiveTouch requires touch
         if supportsAssistiveTouch && !supportsTouch {
             return false
         }
+        
+        // Note: Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
+        // We trust what the OS reports - if both are available, both are available
+        // No mutual exclusivity check needed
         
         // OCR should only be available if Vision is available
         if supportsOCR && !supportsVision {

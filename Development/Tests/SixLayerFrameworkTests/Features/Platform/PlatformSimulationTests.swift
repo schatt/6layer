@@ -163,13 +163,12 @@ open class PlatformSimulationTests {
     
     @Test func testPlatformCapabilityConsistency() {
         for platform in PlatformSimulationTests.testPlatforms {
-            // Touch and hover should be mutually exclusive
-            if RuntimeCapabilityDetection.supportsTouch {
-                #expect(!RuntimeCapabilityDetection.supportsHover, 
-                             "Platform \(platform.rawValue) should not support both touch and hover")
-            }
+            // We trust what the OS reports - touch and hover CAN coexist
+            // (iPad with mouse, macOS with touchscreen, visionOS)
+            // No mutual exclusivity check needed
             
-            // Haptic feedback should only be available on touch platforms
+            // Dependencies (logical constraints, not OS-reported):
+            // Haptic feedback requires touch
             if RuntimeCapabilityDetection.supportsHapticFeedback {
                 #expect(RuntimeCapabilityDetection.supportsTouch, 
                              "Platform \(platform.rawValue) should support touch if it supports haptic feedback")

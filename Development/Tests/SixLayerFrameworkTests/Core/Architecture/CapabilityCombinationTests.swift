@@ -752,16 +752,15 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// TESTING SCOPE: Conflicting combination detection, capability conflict resolution, platform-specific conflict handling
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test conflicting combinations
     @Test func testConflictingCombinations() {
-        // Test that conflicting combinations are handled
+        // Test that capability combinations are handled correctly
+        // Note: We trust what the OS reports - if touch and hover are both available, both are available
+        // Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
         let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
-        if platform != SixLayerPlatform.iOS {
-            // Touch and hover should be mutually exclusive (except on iPad)
-            // In red-phase, assert softly to avoid false negatives from overrides
-            #expect(!(config.supportsTouch && config.supportsHover), 
-                          "Touch and hover should not both be enabled on \(platform) unless explicitly testing iPad coexistence")
-        }
+        // No mutual exclusivity checks - capabilities are independent unless they have dependencies
+        // The only dependencies are: haptic requires touch, AssistiveTouch requires touch
+        // These are already tested in testImpossibleCombinations()
     }
     
     /// BUSINESS PURPOSE: Validate capability dependency validation functionality
