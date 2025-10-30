@@ -197,7 +197,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             complexity: .moderate,
             context: .modal,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentHierarchicalData_L1(
@@ -274,7 +274,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             complexity: .moderate,
             context: .modal,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentHierarchicalData_L1(
@@ -316,7 +316,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             complexity: .moderate,
             context: .modal,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentTemporalData_L1(
@@ -389,7 +389,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             complexity: .moderate,
             context: .modal,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentTemporalData_L1(

@@ -90,7 +90,7 @@ open class IntelligentCardExpansionLayer4Tests {
     @Test func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
         // Test empty state
         let view = ExpandableCardCollectionView(
-            items: [],
+            items: [] as [IntelligentCardExpansionLayer4TestItem],
             hints: PresentationHints(
                 dataType: .generic,
                 presentationPreference: .automatic,

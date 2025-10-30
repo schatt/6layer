@@ -75,7 +75,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentItemCollection_L1(
@@ -132,7 +132,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentItemCollection_L1(
@@ -258,7 +258,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentNumericData_L1(
@@ -311,7 +311,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentNumericData_L1(
@@ -375,7 +375,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentMediaData_L1(
@@ -428,7 +428,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentMediaData_L1(
@@ -534,7 +534,7 @@ open class Layer1AccessibilityTests {
             complexity: .moderate,
             context: .list,
             customPreferences: [:],
-            extensibleHints: [:]
+            extensibleHints: []
         )
         
         let view = platformPresentSettings_L1(
