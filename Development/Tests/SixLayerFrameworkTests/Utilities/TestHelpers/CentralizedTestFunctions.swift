@@ -311,7 +311,7 @@ public func testComponentAccessibilityDisabled<T: View>(
     let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
         component,
         componentName: componentName,
-        expectedPattern: "SixLayer.*ui",
+        expectedPattern: "",
         testName: testName
     )
     
