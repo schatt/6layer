@@ -25,6 +25,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
     
 @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
+        await setupTestEnvironment()
         let service = InternationalizationService()
         
         // When & Then
