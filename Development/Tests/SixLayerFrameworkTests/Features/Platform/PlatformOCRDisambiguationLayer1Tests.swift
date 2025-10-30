@@ -55,7 +55,7 @@ open class PlatformOCRDisambiguationLayer1Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             componentName: "platformOCRDisambiguation_L1",
             testName: "PlatformTest"
         )
@@ -85,7 +85,7 @@ open class PlatformOCRDisambiguationLayer1Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             componentName: "platformOCRDisambiguation_L1",
             testName: "PlatformTest"
         )

@@ -40,7 +40,7 @@ open class ResponsiveLayoutTests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: .iOS,
             componentName: "ResponsiveLayout"
         )
@@ -55,7 +55,7 @@ open class ResponsiveLayoutTests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.element.*", 
+            expectedPattern: "SixLayer.*ui", 
             platform: .macOS,
             componentName: "ResponsiveLayout"
         )
