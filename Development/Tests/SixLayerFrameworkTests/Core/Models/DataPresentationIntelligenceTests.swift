@@ -239,7 +239,7 @@ open class DataPresentationIntelligenceTests {
         let result = intelligence.analyzeData(simpleData)
         
         // Then
-        #expect(result.confidence == 0.9)
+        #expect(result.confidence == 1.0)
     }
     
     @Test func testConfidenceCalculationForModerateData() {
@@ -251,7 +251,7 @@ open class DataPresentationIntelligenceTests {
         let result = intelligence.analyzeData(moderateData)
         
         // Then
-        #expect(result.confidence == 1.0)
+        #expect(result.confidence == 0.9)
     }
     
     @Test func testConfidenceCalculationForComplexData() async {

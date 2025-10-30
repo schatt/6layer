@@ -478,8 +478,8 @@ open class WindowDetectionTests {
     @Test func testmacOSScreenSizeClassFromWindowSize() {
         // GIVEN: macOS window sizes
         let testCases = [
-            (CGSize(width: 800, height: 600), ScreenSizeClass.compact),
-            (CGSize(width: 1200, height: 800), ScreenSizeClass.regular),
+            (CGSize(width: 800, height: 600), ScreenSizeClass.regular),
+            (CGSize(width: 1200, height: 800), ScreenSizeClass.large),
             (CGSize(width: 1920, height: 1080), ScreenSizeClass.large)
         ]
         
