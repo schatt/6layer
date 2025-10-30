@@ -110,6 +110,8 @@ public func platformPresentNumericData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericNumericDataView(data: data, hints: hints)
+        .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Present a single numeric data item
@@ -135,6 +137,8 @@ public func platformPresentNumericData_L1(
         hints: hints,
         customDataView: { AnyView(customDataView($0)) }
     )
+    .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting numeric data with custom views and enhanced hints
@@ -163,6 +167,8 @@ public func platformPresentNumericData_L1(
         customDataView: { AnyView(customDataView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting responsive cards
@@ -317,6 +323,8 @@ public func platformPresentHierarchicalData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericHierarchicalView(items: items, hints: hints)
+        .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Present a single hierarchical item
@@ -342,6 +350,8 @@ public func platformPresentHierarchicalData_L1(
         hints: hints,
         customItemView: { AnyView(customItemView($0)) }
     )
+    .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting hierarchical data with custom views and enhanced hints
@@ -370,6 +380,8 @@ public func platformPresentHierarchicalData_L1(
         customItemView: { AnyView(customItemView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting temporal data
@@ -379,6 +391,8 @@ public func platformPresentTemporalData_L1(
     hints: PresentationHints
 ) -> some View {
     return GenericTemporalView(items: items, hints: hints)
+        .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Present a single temporal item
@@ -404,6 +418,8 @@ public func platformPresentTemporalData_L1(
         hints: hints,
         customItemView: { AnyView(customItemView($0)) }
     )
+    .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting temporal data with custom views and enhanced hints
@@ -432,6 +448,8 @@ public func platformPresentTemporalData_L1(
         customItemView: { AnyView(customItemView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting unknown content at runtime
@@ -529,6 +547,8 @@ public func platformPresentSettings_L1(
         onSettingsCancelled: onSettingsCancelled,
         customSettingView: { AnyView(customSettingView($0)) }
     )
+    .environment(\.accessibilityIdentifierName, "platformPresentSettings_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting settings interface with custom views and enhanced hints
@@ -563,6 +583,8 @@ public func platformPresentSettings_L1(
         customSettingView: { AnyView(customSettingView($0)) }
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentSettings_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 // MARK: - Enhanced Presentation Hints Overloads
@@ -600,6 +622,8 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemEdited: onItemEdited
     )
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 // MARK: - Custom View Support Overloads
@@ -624,6 +648,8 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemDeleted: onItemDeleted,
         onItemEdited: onItemEdited
     ))
+    .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting any collection of identifiable items with custom views and enhanced hints
@@ -659,6 +685,8 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemEdited: onItemEdited
     ))
     .environment(\.extensibleHints, hints.extensibleHints)
+    .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting any collection of identifiable items with custom views for all actions
@@ -682,6 +710,8 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemDeleted: onItemDeleted,
         onItemEdited: onItemEdited
     ))
+    .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting numeric data with enhanced hints
@@ -703,6 +733,8 @@ public func platformPresentNumericData_L1(
     
     return GenericNumericDataView(data: data, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
+        .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting responsive cards with enhanced hints
@@ -909,6 +941,8 @@ public func platformPresentHierarchicalData_L1(
     
     return GenericHierarchicalView(items: items, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
+        .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting temporal data with enhanced hints
@@ -930,6 +964,8 @@ public func platformPresentTemporalData_L1(
     
     return GenericTemporalView(items: items, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
+        .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
+        .automaticAccessibilityIdentifiers()
 }
 
 // MARK: - Generic View Structures
