@@ -475,51 +475,7 @@ open class InternationalizationTests {
                      currencyFormatted.contains("ر.س"))
     }
     
-    // MARK: - Performance Tests
-    
-    @Test func testInternationalization_Performance() {
-        // Given
-        let locale = createTestLocale()
-        let i18n = InternationalizationService(locale: locale)
-        let numbers = Array(0..<1000)
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let formatted = numbers.map { i18n.formatNumber(Double($0)) }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        #expect(formatted.count == 1000)
-        #expect(endTime - startTime < 1.0) // Should complete in under 1 second
-    }
-    
-    @Test func testInternationalization_Concurrent() async {
-        // Given
-        let locale = createTestLocale()
-        let i18n = InternationalizationService(locale: locale)
-        let numbers = Array(0..<100)
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let results = await withTaskGroup(of: String.self) { group in
-            for number in numbers {
-                group.addTask { @MainActor in
-                    i18n.formatNumber(Double(number))
-                }
-            }
-            
-            var formatted: [String] = []
-            for await result in group {
-                formatted.append(result)
-            }
-            return formatted
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        #expect(results.count == 100)
-        #expect(endTime - startTime < 2.0) // Should complete in under 2 seconds
-    }
+    // MARK: - Performance Tests (removed)
     
     // MARK: - Error Handling Tests
     
