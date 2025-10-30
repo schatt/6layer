@@ -50,7 +50,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             extensibleHints: []
         )
     }
-    
+}
     /// Helper function to create DynamicFormField with proper binding for tests
     public func createTestField(
         label: String,

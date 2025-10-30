@@ -386,5 +386,4 @@ open class Layer1PresentationTests {
     // MARK: - Performance Tests
     
     // Performance tests removed for framework scope
-    
-    // Performance tests removed for framework scope
+}
