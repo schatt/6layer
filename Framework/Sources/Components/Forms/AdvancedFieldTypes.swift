@@ -46,6 +46,7 @@ public struct RichTextEditorField: View {
                 .cornerRadius(8)
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -247,6 +248,7 @@ public struct AutocompleteField: View {
                 )
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     private func filterSuggestions(query: String) {
@@ -343,6 +345,7 @@ public struct EnhancedFileUploadField: View {
                 }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     private func updateFormState() {
@@ -503,6 +506,7 @@ public struct FileList: View {
                 FileRow(file: file, onRemove: onRemove)
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -578,6 +582,7 @@ public struct DatePickerField: View {
                 }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -617,6 +622,7 @@ public struct TimePickerField: View {
                 }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -658,6 +664,7 @@ public struct DateTimePickerField: View {
                 }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -676,6 +683,7 @@ public struct CustomFieldView: View {
             set: { formState.setValue($0, for: field.id) }
         ))
         .textFieldStyle(.roundedBorder)
+        .automaticAccessibilityIdentifiers()
     }
 }
 
