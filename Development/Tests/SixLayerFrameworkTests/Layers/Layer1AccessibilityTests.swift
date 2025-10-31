@@ -228,7 +228,7 @@ open class Layer1AccessibilityTests {
         // TDD RED PHASE: Test accessibility identifiers across both platforms (platform-dependent behavior)
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "*.screen.*", 
+            expectedPattern: "*.main.ui.element.*", 
             componentName: "FormField",
             testName: "platformPresentFormData_L1"
         )
