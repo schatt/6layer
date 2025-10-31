@@ -30,12 +30,15 @@ import AppKit
 // MARK: - Test Extensions for Accessibility Identifier Testing
 
 extension View {
-    /// Wrap the view with the global automatic accessibility identifier modifier so
-    /// that auto-ID assignment is enabled in hosted test environments.
+    /// Set the environment variable to enable automatic accessibility identifiers.
+    /// Framework components should check this environment variable and apply .automaticAccessibilityIdentifiers() themselves.
+    /// This should NOT apply the modifier directly - that's the component's responsibility.
     func withGlobalAutoIDsEnabled() -> some View {
         self
             .environment(\.globalAutomaticAccessibilityIdentifiers, true)
-            .automaticAccessibilityIdentifiers()
+        // NOTE: We do NOT apply .automaticAccessibilityIdentifiers() here because:
+        // 1. Framework components should apply it themselves based on the environment variable
+        // 2. Plain views (Text, Button, etc.) don't need it unless explicitly enabled by the app
     }
 }
 
@@ -178,6 +181,10 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
 
 /// Convenience: Return the accessibility identifier directly from a SwiftUI view
 /// This is much simpler than hosting the view and searching platform views
+/// 
+/// IMPORTANT: This function does NOT apply .automaticAccessibilityIdentifiers() to the view.
+/// Framework components should apply it themselves based on the environment variable.
+/// We're testing that components do this, not that the test helper can do it.
 @MainActor
 public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> String? {
     // Ensure config is enabled for tests
@@ -187,26 +194,22 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> 
         config.namespace = "test"
     }
     
-    // Only apply global auto IDs when enabled; respect disabled mode
-    @ViewBuilder
-    func wrap<W: View>(_ v: W) -> some View {
-        if config.enableAutoIDs {
-            v.withGlobalAutoIDsEnabled()
-        } else {
-            v
-        }
-    }
-    let viewWithAutoIDs = wrap(view)
+    // Set up environment variable only - components should check this and apply the modifier themselves
+    // We do NOT apply .automaticAccessibilityIdentifiers() here because that would test the test helper,
+    // not the framework components.
+    let viewWithEnvironment = view
+        .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
     
     do {
         // Use ViewInspector to directly inspect the SwiftUI view
-        let identifier = try viewWithAutoIDs.inspect().accessibilityIdentifier()
+        // This will find identifiers that the COMPONENT applied, not the test helper
+        let identifier = try viewWithEnvironment.inspect().accessibilityIdentifier()
         print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from SwiftUI view")
         return identifier.isEmpty ? nil : identifier
     } catch {
         print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
         // Fallback: host platform view and search for identifier
-        let hosted = hostRootPlatformView(viewWithAutoIDs)
+        let hosted = hostRootPlatformView(viewWithEnvironment)
         let platformId = firstAccessibilityIdentifier(inHosted: hosted)
         return platformId
     }

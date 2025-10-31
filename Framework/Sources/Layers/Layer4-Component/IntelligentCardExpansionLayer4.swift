@@ -683,6 +683,7 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
     let item: Item
     let layoutDecision: IntelligentCardLayoutDecision
     let hints: PresentationHints
+    let platformConfig: CardExpansionPlatformConfig?
     let onItemSelected: ((Item) -> Void)?
     let onItemDeleted: ((Item) -> Void)?
     let onItemEdited: ((Item) -> Void)?
@@ -691,6 +692,7 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         item: Item,
         layoutDecision: IntelligentCardLayoutDecision,
         hints: PresentationHints,
+        platformConfig: CardExpansionPlatformConfig? = nil,
         onItemSelected: ((Item) -> Void)? = nil,
         onItemDeleted: ((Item) -> Void)? = nil,
         onItemEdited: ((Item) -> Void)? = nil
@@ -698,13 +700,16 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         self.item = item
         self.layoutDecision = layoutDecision
         self.hints = hints
+        self.platformConfig = platformConfig
         self.onItemSelected = onItemSelected
         self.onItemDeleted = onItemDeleted
         self.onItemEdited = onItemEdited
     }
     
     public var body: some View {
-        VStack {
+        let config = platformConfig ?? getCardExpansionPlatformConfig()
+        
+        let baseView = VStack {
             // Display item icon or fallback
             Image(systemName: cardIcon)
                 .font(.title2)
@@ -721,9 +726,52 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(12)
         .shadow(radius: 4)
-        .onTapGesture {
-            onItemSelected?(item)
+        
+        // Apply modifiers conditionally based on capabilities
+        return buildViewWithCapabilities(baseView, config: config)
+    }
+    
+    private func buildViewWithCapabilities<Content: View>(_ content: Content, config: CardExpansionPlatformConfig) -> AnyView {
+        var view = AnyView(content)
+        
+        // Conditionally apply touch-based modifiers
+        if config.supportsTouch {
+            view = AnyView(view.onTapGesture {
+                onItemSelected?(item)
+            })
+            
+            view = AnyView(view.onLongPressGesture {
+                // Long press support
+            })
+            
+            // Apply touch target sizing in addition to layout frame
+            view = AnyView(view.frame(minWidth: config.minTouchTarget, minHeight: config.minTouchTarget))
         }
+        
+        // Conditionally apply hover-based modifiers
+        if config.supportsHover {
+            view = AnyView(view.onHover { _ in
+                // Hover support
+            })
+        }
+        
+        // Conditionally apply accessibility modifiers
+        if config.supportsVoiceOver || config.supportsSwitchControl {
+            view = AnyView(view.accessibilityAddTraits(.isButton))
+            view = AnyView(view.accessibilityAction(named: "Activate") {
+                onItemSelected?(item)
+            })
+        }
+        
+        // Apply keyboard shortcut when touch is not supported
+        if !config.supportsTouch {
+            view = AnyView(view.keyboardShortcut(" ", modifiers: []))
+        }
+        
+        // Always apply animation support
+        view = AnyView(view.animation(.easeInOut(duration: 0.3), value: config.supportsTouch))
+        
+        return view
     }
     
     // MARK: - Card Displayable Support
