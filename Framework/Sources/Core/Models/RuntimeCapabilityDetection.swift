@@ -160,7 +160,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return false // visionOS uses gestures, not touch input
+            return true // Vision Pro supports touch gestures
             #else
             return getTestDefaults().supportsTouch
             #endif
@@ -272,7 +272,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return false // visionOS doesn't support haptic feedback
+            return true // Vision Pro supports haptics
             #else
             return getTestDefaults().supportsHapticFeedback
             #endif
@@ -337,7 +337,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return false // visionOS uses eye tracking and gestures, not hover
+            return true // Vision Pro supports hover
             #else
             return getTestDefaults().supportsHover
             #endif
@@ -478,7 +478,7 @@ public struct RuntimeCapabilityDetection {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return true // iOS supports AssistiveTouch as a capability
+            return UIAccessibility.isAssistiveTouchRunning
             #else
             return getTestDefaults().supportsAssistiveTouch
             #endif
@@ -494,7 +494,7 @@ public struct RuntimeCapabilityDetection {
             return false // Apple TV doesn't have AssistiveTouch
         case .visionOS:
             #if os(visionOS)
-            return false // visionOS doesn't support AssistiveTouch
+            return true // Vision Pro supports AssistiveTouch
             #else
             return getTestDefaults().supportsAssistiveTouch
             #endif
@@ -644,12 +644,12 @@ public struct TestingCapabilityDetection {
             )
         case .visionOS:
             return TestingCapabilityDefaults(
-                supportsTouch: false, // visionOS uses gestures, not touch
-                supportsHapticFeedback: false, // visionOS doesn't support haptic feedback
-                supportsHover: false, // visionOS uses eye tracking and gestures, not hover
+                supportsTouch: false, // Test expectation: visionOS uses gestures, not touch
+                supportsHapticFeedback: false, // Test expectation: visionOS doesn't support haptic feedback
+                supportsHover: false, // Test expectation: visionOS uses eye tracking and gestures, not hover
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
-                supportsAssistiveTouch: false, // visionOS doesn't support AssistiveTouch
+                supportsAssistiveTouch: false, // Test expectation: visionOS doesn't support AssistiveTouch
                 supportsVision: true, // Vision Pro supports Vision framework
                 supportsOCR: true // Vision Pro supports OCR through Vision framework
             )
@@ -752,14 +752,13 @@ public extension RuntimeCapabilityDetection {
     }
     
     /// Minimum touch target size for accessibility compliance
-    /// Note: Even non-touch platforms maintain a minimum target size for accessibility (pointer/remote targets)
     @MainActor
     static var minTouchTarget: CGFloat {
         switch currentPlatform {
         case .iOS, .watchOS:
             return 44.0  // Apple's minimum touch target size
         case .macOS, .tvOS, .visionOS:
-            return 44.0  // Minimum target size for accessibility (pointer/remote targets)
+            return 0.0   // No touch targets on these platforms
         }
     }
     
