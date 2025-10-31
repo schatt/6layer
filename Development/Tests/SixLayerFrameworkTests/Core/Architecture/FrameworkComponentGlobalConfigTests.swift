@@ -50,12 +50,14 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
         setupTestEnvironment()
         
         // Test that framework components DO generate IDs when global config is enabled
+        // Note: .named() modifier always generates IDs regardless of global config
+        // This is the correct behavior - explicit naming should always work
         
-        // Set custom config for this test
+        // Set global config to enabled
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
         
-        // Create a framework component (this SHOULD generate an ID)
+        // Create a framework component with .named() (this SHOULD generate an ID)
         let view = Button("Test") { }
             .named("TestButton")
         
@@ -65,9 +67,8 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             let button = try inspectedView.button()
             let accessibilityID = try button.accessibilityIdentifier()
             
-            // Should have an ID when global config is enabled
-            #expect(!accessibilityID.isEmpty, "Framework component should generate ID when global config is enabled")
-            // Removed old expectation - .named() always works
+            // .named() should always generate an ID (ignoring global settings)
+            #expect(!accessibilityID.isEmpty, "Framework component with .named() should generate ID")
             #expect(accessibilityID.contains("main"), "ID should contain screen context")
             #expect(accessibilityID.contains("TestButton"), "ID should contain view name")
             
