@@ -54,7 +54,7 @@ open class Layer1AccessibilityTests {
         // TDD RED PHASE: Test accessibility identifiers across both platforms
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "*.main.element.*", 
+            expectedPattern: "*.main.ui.element.*", 
             componentName: "ItemCollection",
             testName: "platformPresentItemCollection_L1"
         )
@@ -257,7 +257,7 @@ open class Layer1AccessibilityTests {
         // TDD RED PHASE: Test accessibility identifiers (representative sampling on iOS)
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "*.main.element.*", 
+            expectedPattern: "*.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "NumericData"
         )
