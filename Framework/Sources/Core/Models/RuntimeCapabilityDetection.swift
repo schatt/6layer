@@ -160,7 +160,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports touch gestures
+            return false // visionOS uses gestures, not touch input
             #else
             return getTestDefaults().supportsTouch
             #endif
@@ -272,7 +272,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports haptics
+            return false // visionOS doesn't support haptic feedback
             #else
             return getTestDefaults().supportsHapticFeedback
             #endif
@@ -337,7 +337,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports hover
+            return false // visionOS uses eye tracking and gestures, not hover
             #else
             return getTestDefaults().supportsHover
             #endif
@@ -478,7 +478,7 @@ public struct RuntimeCapabilityDetection {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return UIAccessibility.isAssistiveTouchRunning
+            return true // iOS supports AssistiveTouch as a capability
             #else
             return getTestDefaults().supportsAssistiveTouch
             #endif
@@ -494,7 +494,7 @@ public struct RuntimeCapabilityDetection {
             return false // Apple TV doesn't have AssistiveTouch
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports AssistiveTouch
+            return false // visionOS doesn't support AssistiveTouch
             #else
             return getTestDefaults().supportsAssistiveTouch
             #endif
@@ -605,7 +605,7 @@ public struct TestingCapabilityDetection {
                 supportsHover: false, // Will be true for iPad in actual detection
                 supportsVoiceOver: true, // iOS supports VoiceOver
                 supportsSwitchControl: true, // iOS supports Switch Control
-                supportsAssistiveTouch: false, // iOS testing default simplified for testing
+                supportsAssistiveTouch: true, // iOS supports AssistiveTouch
                 supportsVision: true, // iOS supports Vision framework
                 supportsOCR: true // iOS supports OCR through Vision framework
             )
@@ -644,12 +644,12 @@ public struct TestingCapabilityDetection {
             )
         case .visionOS:
             return TestingCapabilityDefaults(
-                supportsTouch: true,
-                supportsHapticFeedback: true,
-                supportsHover: true,
+                supportsTouch: false, // visionOS uses gestures, not touch
+                supportsHapticFeedback: false, // visionOS doesn't support haptic feedback
+                supportsHover: false, // visionOS uses eye tracking and gestures, not hover
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
-                supportsAssistiveTouch: true, // Vision Pro supports AssistiveTouch
+                supportsAssistiveTouch: false, // visionOS doesn't support AssistiveTouch
                 supportsVision: true, // Vision Pro supports Vision framework
                 supportsOCR: true // Vision Pro supports OCR through Vision framework
             )
@@ -752,13 +752,14 @@ public extension RuntimeCapabilityDetection {
     }
     
     /// Minimum touch target size for accessibility compliance
+    /// Note: Even non-touch platforms maintain a minimum target size for accessibility (pointer/remote targets)
     @MainActor
     static var minTouchTarget: CGFloat {
         switch currentPlatform {
         case .iOS, .watchOS:
             return 44.0  // Apple's minimum touch target size
         case .macOS, .tvOS, .visionOS:
-            return 0.0   // No touch targets on these platforms
+            return 44.0  // Minimum target size for accessibility (pointer/remote targets)
         }
     }
     

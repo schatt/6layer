@@ -100,13 +100,20 @@ public enum FieldOrderResolver {
                 result.append(key)
                 used.insert(key)
             }
-            // 2) Remaining by weights desc, then name asc for determinism
+            // 2) Remaining by weights desc; if no weights, preserve original relative order; else name asc for determinism
             let remaining = fields.filter { !used.contains($0) }
-            let sortedRemaining = remaining.sorted { lhs, rhs in
-                let wl = rules.perFieldWeights[lhs] ?? Int.min
-                let wr = rules.perFieldWeights[rhs] ?? Int.min
-                if wl != wr { return wl > wr }
-                return lhs < rhs
+            let hasAnyWeights = remaining.contains { rules.perFieldWeights[$0] != nil }
+            let sortedRemaining: [String]
+            if hasAnyWeights {
+                sortedRemaining = remaining.sorted { lhs, rhs in
+                    let wl = rules.perFieldWeights[lhs] ?? Int.min
+                    let wr = rules.perFieldWeights[rhs] ?? Int.min
+                    if wl != wr { return wl > wr }
+                    return lhs < rhs
+                }
+            } else {
+                // Preserve original relative order when no weights specified
+                sortedRemaining = remaining
             }
             return result + sortedRemaining
         }

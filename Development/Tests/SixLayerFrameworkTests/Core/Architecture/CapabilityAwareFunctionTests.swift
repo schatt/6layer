@@ -114,6 +114,10 @@ open class CapabilityAwareFunctionTests {
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use real system capability detection to test enabled touch state
     @Test func testTouchFunctionsEnabled() {
+        // Set platform to iOS (which natively supports touch) to test touch-enabled state
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
+        
         // Test that touch-related functions work correctly when touch is supported
         let config = getCardExpansionPlatformConfig()
         

@@ -81,6 +81,9 @@ open class PlatformSimulationTests {
         let phonePlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .iOS }
         
         for platform in phonePlatforms {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
+            
             // Phone platforms should support touch
             #expect(RuntimeCapabilityDetection.supportsTouch, 
                          "Phone platform \(platform.rawValue) should support touch")
@@ -109,6 +112,9 @@ open class PlatformSimulationTests {
         let watchPlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .watchOS }
         
         for platform in watchPlatforms {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
+            
             // Watch platforms should support touch
             #expect(RuntimeCapabilityDetection.supportsTouch, 
                          "Watch platform \(platform.rawValue) should support touch")
