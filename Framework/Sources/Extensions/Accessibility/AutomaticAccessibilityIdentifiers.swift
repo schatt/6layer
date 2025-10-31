@@ -26,9 +26,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        // If globalAutomaticAccessibilityIdentifiers is explicitly set to false, disable (view-level override)
-        // Otherwise, respect the config.enableAutoIDs setting (global configuration)
-        let shouldApply = globalAutomaticAccessibilityIdentifiers ? config.enableAutoIDs : false
+        // Logic:
+        // - global on → on (no local override needed)
+        // - global off, local enable (env=true) → on
+        // - global off, no local enable (env=false) → off
+        // We don't need local opt-out when global is on
+        let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
         if config.enableDebugLogging {
             print("🔍 MODIFIER DEBUG: enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)")
@@ -222,9 +225,10 @@ public struct ExactNamedModifier: ViewModifier {
 
 // MARK: - Environment Keys
 
-/// Environment key for enabling/disabling automatic accessibility identifiers globally
+/// Environment key for enabling automatic accessibility identifiers locally (when global is off)
+/// Defaults to false - only set to true when explicitly enabling via .enableGlobalAutomaticAccessibilityIdentifiers()
 public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
-    public static let defaultValue: Bool = true
+    public static let defaultValue: Bool = false
 }
 
 /// Environment key for setting the accessibility identifier prefix
@@ -355,10 +359,12 @@ extension View {
         self.modifier(AutomaticAccessibilityIdentifiersModifier())
     }
     
-    /// Enable global automatic accessibility identifiers (alias for automaticAccessibilityIdentifiers)
-    /// This is provided for backward compatibility with tests
+    /// Enable automatic accessibility identifiers locally (for custom views when global is off)
+    /// Sets the environment variable to true, then applies the modifier
     public func enableGlobalAutomaticAccessibilityIdentifiers() -> some View {
-        self.automaticAccessibilityIdentifiers()
+        self
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true)
+            .automaticAccessibilityIdentifiers()
     }
     
     /// Disable automatic accessibility identifiers
