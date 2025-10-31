@@ -26,9 +26,9 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        // If globalAutomaticAccessibilityIdentifiers is explicitly set to false, disable
-        // Otherwise, respect the config setting
-        let shouldApply = globalAutomaticAccessibilityIdentifiers && config.enableAutoIDs
+        // If globalAutomaticAccessibilityIdentifiers is explicitly set to false, disable (view-level override)
+        // Otherwise, respect the config.enableAutoIDs setting (global configuration)
+        let shouldApply = globalAutomaticAccessibilityIdentifiers ? config.enableAutoIDs : false
         
         if config.enableDebugLogging {
             print("🔍 MODIFIER DEBUG: enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)")
