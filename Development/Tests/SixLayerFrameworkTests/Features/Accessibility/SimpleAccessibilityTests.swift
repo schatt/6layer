@@ -29,7 +29,7 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
         // Should look for automatic accessibility identifier: "SimpleTest.button.Test"
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedPattern: "SimpleTest.main.element.*", 
+            expectedPattern: "*.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifierModifier"
         ), "Should have some accessibility identifier")

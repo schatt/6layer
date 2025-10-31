@@ -150,7 +150,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.TestScreen.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ScreenContextModifier"
         )
@@ -303,7 +303,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         // When: Checking hierarchical accessibility identifier
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.TestScreen.element.testview.*",
+            expectedPattern: "*.main.ui.TestView",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierHierarchy"
         )

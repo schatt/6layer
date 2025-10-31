@@ -168,7 +168,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing screen matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.TestScreen.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierScreenMatching"
         )
