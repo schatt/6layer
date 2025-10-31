@@ -323,9 +323,10 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .named("AnotherTestView") // This should not collide
         
         // When: Checking collision prevention
+        // Note: .named() generates IDs like *.main.ui.TestView, not *.main.ui.element.*
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "*.main.ui.TestView",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierCollisionPrevention"
         )
