@@ -337,7 +337,7 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(enhancedView != nil, "Should return accessibility enhanced view")
         #expect(testAccessibilityIdentifiersSinglePlatform(
             enhancedView, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedViewModifier"
         ), "Enhanced view should have accessibility identifier")
@@ -361,7 +361,7 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(enhancedView != nil, "Should return accessibility enhanced view with default config")
         #expect(testAccessibilityIdentifiersSinglePlatform(
             enhancedView, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
         ), "Enhanced view with default config should have accessibility identifier")
@@ -443,7 +443,7 @@ open class AccessibilityFeaturesLayer5Tests {
         #expect(integratedView != nil, "Should return integrated accessibility view")
         #expect(testAccessibilityIdentifiersSinglePlatform(
             integratedView, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityViewModifiersIntegration"
         ), "Integrated accessibility view should have accessibility identifier")

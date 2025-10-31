@@ -31,9 +31,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // Then: Should generate accessibility identifiers
+        // Note: AccessibilityEnhancedView uses Layer 5 ID format without "ui" segment
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.*ui",
+            expectedPattern: "*.main.element.accessibility-enhanced-*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedView"
         )
@@ -131,9 +132,10 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         }
         
         // Then: Should generate accessibility identifiers
+        // Note: AccessibilityHostingView uses Layer 5 ID format without "ui" segment
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.*ui",
+            expectedPattern: "*.main.element.accessibility-enhanced-*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityHostingView"
         )

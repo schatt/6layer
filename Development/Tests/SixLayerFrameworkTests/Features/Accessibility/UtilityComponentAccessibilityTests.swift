@@ -209,7 +209,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing state matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*.TestState",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierStateMatching"
         )

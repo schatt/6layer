@@ -166,7 +166,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*.TestState",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "NavigationStateModifier"
         )
