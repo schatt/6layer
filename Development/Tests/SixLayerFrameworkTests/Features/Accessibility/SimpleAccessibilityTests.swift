@@ -26,7 +26,7 @@ open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessib
         let testView = Button("Test") { }
             .automaticAccessibilityIdentifiers()
         
-        // Should look for automatic accessibility identifier: "SimpleTest.button.Test"
+        // Should look for automatic accessibility identifier with ui segment
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "*.main.ui.element.*", 

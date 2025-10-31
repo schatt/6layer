@@ -128,9 +128,9 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             Text("Test Content")
             Button("Test Button") { }
         }
-        .automaticAccessibilityIdentifiers()
+        .exactNamed("ExactTestView")
         
-        // Then: Should generate accessibility identifiers
+        // Then: Should generate accessibility identifiers with exact name
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "ExactTestView",
@@ -138,7 +138,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             componentName: "ExactNamedModifier"
         )
         
-        #expect(hasAccessibilityID, ".exactNamed() modifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, ".exactNamed() modifier should generate accessibility identifiers with exact name")
     }
     
     @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
@@ -301,6 +301,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         .named("TestView")
         
         // When: Checking hierarchical accessibility identifier
+        // Note: IDs use "main" as screen context unless .screenContext() is applied
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.TestView",

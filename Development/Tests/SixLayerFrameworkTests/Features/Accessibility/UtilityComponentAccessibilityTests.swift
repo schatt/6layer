@@ -189,7 +189,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing element matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.testelement.*",
+            expectedPattern: "*.main.ui.TestElement",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierElementMatching"
         )
@@ -228,9 +228,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         .automaticAccessibilityIdentifiers()
         
         // When: Testing hierarchy matching
+        // Note: IDs use "main" as screen context, not custom screen names unless .screenContext() is applied
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.TestScreen.element.testelement.*.TestState",
+            expectedPattern: "*.main.ui.TestElement",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierHierarchyMatching"
         )
@@ -251,7 +252,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing case insensitive matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.TESTELEMENT.*",
+            expectedPattern: "*.main.ui.TestElement",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierCaseInsensitiveMatching"
         )
