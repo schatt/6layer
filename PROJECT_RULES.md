@@ -70,6 +70,21 @@ This script will:
 
 ## Development Standards
 
+### Git Workflow and Commit Practices
+**MANDATORY**: Commit early and often.
+
+- **Commit frequently**: Make commits after completing logical units of work
+- **Small, focused commits**: Each commit should represent a single, cohesive change
+- **Clear commit messages**: Write descriptive commit messages that explain what and why
+- **Don't accumulate changes**: Avoid making many changes without committing
+- **Commit before switching contexts**: Commit when pausing work or switching to different tasks
+
+#### Benefits
+- Easier to review changes
+- Simpler to identify and revert problematic commits
+- Better git history for debugging
+- Reduces risk of losing work
+
 ### Test-Driven Development (TDD) Requirement
 **MANDATORY**: All development must follow Test-Driven Development principles.
 
