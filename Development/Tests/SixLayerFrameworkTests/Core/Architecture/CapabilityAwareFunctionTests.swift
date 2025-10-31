@@ -77,7 +77,9 @@ open class CapabilityAwareFunctionTests {
             #expect(config.supportsTouch, "Touch should be supported when enabled on \(platform)")
             #expect(config.supportsHapticFeedback, "Haptic feedback should be available when touch is supported on \(platform)")
             #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available when touch is supported on \(platform)")
-            #expect(config.minTouchTarget >= 44, "Touch targets should be adequate when touch is supported on \(platform)")
+            // Verify minTouchTarget returns platform-correct value
+            let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+            #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
         }
         
         // Clean up
@@ -103,7 +105,9 @@ open class CapabilityAwareFunctionTests {
             #expect(!config.supportsHapticFeedback, "Haptic feedback should not be available when touch is disabled on \(platform)")
             #expect(!config.supportsAssistiveTouch, "AssistiveTouch should not be available when touch is disabled on \(platform)")
             // Note: minTouchTarget is platform-specific and doesn't change based on touch support
-            #expect(config.minTouchTarget >= 44, "Touch targets should still be adequate for accessibility on \(platform)")
+            // Verify it returns the platform-correct value
+            let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+            #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
         }
         
         // Clean up
@@ -121,9 +125,10 @@ open class CapabilityAwareFunctionTests {
         // Test that touch-related functions work correctly when touch is supported
         let config = getCardExpansionPlatformConfig()
         
-        // Touch targets should be appropriate size
-        #expect(config.minTouchTarget >= 44, 
-                                   "Touch targets should be adequate when touch is supported")
+        // Touch targets should be platform-correct (iOS = 44.0, macOS = 0.0)
+        let expectedMinTouchTarget: CGFloat = 44.0 // iOS platform
+        #expect(config.minTouchTarget == expectedMinTouchTarget, 
+                                   "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for iOS")
         
         // Haptic feedback should be available
         #expect(config.supportsHapticFeedback, 
@@ -156,9 +161,11 @@ open class CapabilityAwareFunctionTests {
         #expect(!config.supportsAssistiveTouch, 
                       "AssistiveTouch should not be available when touch is disabled")
         
-        // Touch targets should still be reasonable for accessibility
-        #expect(config.minTouchTarget >= 44, 
-                                   "Touch targets should still be adequate for accessibility")
+        // Touch targets should be platform-correct (uses current platform, which is macOS in tests)
+        let currentPlatform = SixLayerPlatform.current
+        let expectedMinTouchTarget: CGFloat = (currentPlatform == .iOS || currentPlatform == .watchOS) ? 44.0 : 0.0
+        #expect(config.minTouchTarget == expectedMinTouchTarget, 
+                                   "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(currentPlatform)")
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     

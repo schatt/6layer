@@ -752,13 +752,19 @@ public extension RuntimeCapabilityDetection {
     }
     
     /// Minimum touch target size for accessibility compliance
+    /// Respects test platform override - returns platform-correct value based on mocked platform
+    /// Platform-native values: iOS/watchOS = 44.0, macOS/tvOS/visionOS = 0.0
     @MainActor
     static var minTouchTarget: CGFloat {
-        switch currentPlatform {
+        // Use test platform if set, otherwise use current platform
+        let platform = testPlatform ?? currentPlatform
+        
+        // Return platform-native value regardless of touch support state
+        switch platform {
         case .iOS, .watchOS:
-            return 44.0  // Apple's minimum touch target size
+            return 44.0  // Apple's minimum touch target size (native touch platforms)
         case .macOS, .tvOS, .visionOS:
-            return 0.0   // No touch targets on these platforms
+            return 0.0   // No touch targets on these platforms (platform-native)
         }
     }
     
