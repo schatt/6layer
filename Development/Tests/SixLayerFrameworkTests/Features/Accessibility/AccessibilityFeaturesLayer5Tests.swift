@@ -35,6 +35,7 @@ import Combine
 
 /// Comprehensive TDD tests for AccessibilityFeaturesLayer5.swift
 /// Tests keyboard navigation algorithms, color calculation, and accessibility label application
+@Suite("Accessibility Features Layer")
 @MainActor
 open class AccessibilityFeaturesLayer5Tests {
     

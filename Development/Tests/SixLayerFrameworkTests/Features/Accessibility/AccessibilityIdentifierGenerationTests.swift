@@ -5,6 +5,7 @@ import ViewInspector
 /// TDD Tests for Accessibility Identifier Generation
 /// Following proper TDD: Test drives design, write best code to make tests pass
 @MainActor
+@Suite("Accessibility Identifier Generation")
 open class AccessibilityIdentifierGenerationTests: BaseTestClass {
     
     // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior

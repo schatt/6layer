@@ -23,9 +23,11 @@
 //  Real tests need to be written that test actual OCR service functionality.
 
 @testable import SixLayerFramework
+import Testing
 
 /// Tests for OCR service functionality
 /// TODO: Implement real tests that test actual OCR service behavior
+@Suite("O C R Service Functional")
 open class OCRServiceFunctionalTests {
     
     // MARK: - Test Setup

@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Example Component Accessibility")
 open class ExampleComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Example Component Tests

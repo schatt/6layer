@@ -11,6 +11,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Apple H I G Compliance Component Accessibility")
 open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - AppleHIGComplianceModifier Tests

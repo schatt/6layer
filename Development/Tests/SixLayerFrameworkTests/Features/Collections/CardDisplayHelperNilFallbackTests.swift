@@ -5,6 +5,7 @@ import SwiftUI
 
 /// RED PHASE: Tests for CardDisplayHelper returning nil instead of hardcoded fallbacks
 /// This test suite should FAIL until we refactor CardDisplayHelper to return nil
+@Suite("Card Display Helper Nil Fallback")
 struct CardDisplayHelperNilFallbackTests {
     
     /// Mock entity for testing

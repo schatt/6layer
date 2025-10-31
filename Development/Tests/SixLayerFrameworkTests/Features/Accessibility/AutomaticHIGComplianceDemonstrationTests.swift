@@ -28,6 +28,7 @@ struct DemonstrationTestItem: Identifiable {
  * METHODOLOGY: Creates views using Layer 1 functions and verifies they automatically have
  * compliance features without requiring manual modifier application
  */
+@Suite("Automatic H I G Compliance Demonstration")
 open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     
     // MARK: - Test Data Setup

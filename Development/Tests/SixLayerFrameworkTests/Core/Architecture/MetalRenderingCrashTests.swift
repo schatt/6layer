@@ -9,6 +9,7 @@ import ViewInspector
 /// 
 /// UPDATE: Performance layer has been removed entirely, eliminating the Metal crash bug
 @MainActor
+@Suite("Metal Rendering Crash T D D")
 open class MetalRenderingCrashTDDTests {
     
     init() async throws {

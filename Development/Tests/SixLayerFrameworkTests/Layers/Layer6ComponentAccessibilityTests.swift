@@ -10,6 +10,7 @@ import SwiftUI
 //  Tests Layer 6 optimization components for accessibility - these are classes with methods that return Views
 //
 
+@Suite("Layer Component Accessibility")
 @MainActor
 open class Layer6ComponentAccessibilityTests: BaseTestClass {
     

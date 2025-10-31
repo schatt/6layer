@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Test what happens when automatic accessibility IDs are disabled
 @MainActor
+@Suite("Accessibility Identifier Disabled")
 open class AccessibilityIdentifierDisabledTests {
     
     init() async throws {

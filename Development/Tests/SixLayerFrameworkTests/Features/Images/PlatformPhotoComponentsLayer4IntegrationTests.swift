@@ -34,6 +34,7 @@ import AppKit
 
 
 @MainActor
+@Suite("Platform Photo Components Layer Integration")
 open class PlatformPhotoComponentsLayer4IntegrationTests {
     
     // MARK: - Integration Tests for Camera Interface

@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Core Framework Component Accessibility")
 open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Core Framework Component Tests

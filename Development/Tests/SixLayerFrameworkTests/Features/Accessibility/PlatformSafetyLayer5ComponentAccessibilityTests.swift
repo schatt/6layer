@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Safety Layer Component Accessibility")
 open class PlatformSafetyLayer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Platform Safety Layer 5 Component Tests
     
     @Test func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {

@@ -9,6 +9,7 @@ import Testing
 import Foundation
 @testable import SixLayerFramework
 
+@Suite("Field Hints Loader")
 struct FieldHintsLoaderTests {
     
     // MARK: - JSON Parsing

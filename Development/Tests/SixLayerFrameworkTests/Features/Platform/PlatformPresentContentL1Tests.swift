@@ -36,6 +36,7 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 @MainActor
+@Suite("Platform Present Content L")
 open class PlatformPresentContentL1Tests {
     
     // MARK: - Test Data Setup

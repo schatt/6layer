@@ -13,6 +13,7 @@ import CoreLocation
 /// Functional tests for macOSLocationService
 /// Tests the actual functionality of the macOS location service
 @MainActor
+@Suite("mac O S Location Service")
 open class macOSLocationServiceTests {
     
     // MARK: - Service Initialization Tests

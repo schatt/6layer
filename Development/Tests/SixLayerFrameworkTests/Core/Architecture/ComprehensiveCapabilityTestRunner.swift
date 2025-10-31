@@ -250,7 +250,10 @@ struct ComprehensiveCapabilityTestRunner {
             // Touch should match the enabled state (runtime detection)
             #expect(config.supportsTouch == enabled, "Touch UI should be \(enabled ? "generated" : "not generated") based on runtime detection")
             if enabled {
-                #expect(config.minTouchTarget >= 44, "Touch targets should be adequate")
+                // Verify platform-correct minTouchTarget value
+                let platform = RuntimeCapabilityDetection.currentPlatform
+                let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+                #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
             }
         case .hover:
             // Hover should match the enabled state (runtime detection)
@@ -395,8 +398,12 @@ struct ComprehensiveCapabilityTestRunner {
         #expect(testView != nil, "Should be able to create functional view with config for \(platform)")
         
         // Test that the configuration produces appropriate UI behavior
+        // Always verify platform-correct minTouchTarget value (based on platform, not capability overrides)
+        let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+        #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
+        
         if config.supportsTouch {
-            #expect(config.minTouchTarget >= 44, "Touch targets should be adequate on \(platform)")
+            // Additional touch-specific validations can go here
         }
         
         if config.supportsHover {
@@ -445,7 +452,10 @@ struct ComprehensiveCapabilityTestRunner {
             // Touch should match the enabled state (runtime detection)
             #expect(config.supportsTouch == enabled, "Touch behavior should be \(enabled ? "enabled" : "disabled") based on runtime detection")
             if enabled {
-                #expect(config.minTouchTarget >= 44, "Touch targets should be adequate")
+                // Verify platform-correct minTouchTarget value
+                let platform = RuntimeCapabilityDetection.currentPlatform
+                let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+                #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
             }
         case .hover:
             // Hover should match the enabled state (runtime detection)

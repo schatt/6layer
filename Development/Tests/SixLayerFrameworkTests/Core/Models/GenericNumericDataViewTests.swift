@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure GenericNumericDataView generates proper accessibility identifiers
 /// TESTING SCOPE: GenericNumericDataView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Generic Numeric Data View")
 @MainActor
 open class GenericNumericDataViewTests {
     

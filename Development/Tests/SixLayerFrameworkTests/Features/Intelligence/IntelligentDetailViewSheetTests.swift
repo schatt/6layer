@@ -14,6 +14,7 @@ import ViewInspector
 /// BUSINESS PURPOSE:
 /// Apps using the framework need to display detail views in sheets, and these must work correctly.
 
+@Suite("Intelligent Detail View Sheet")
 @MainActor
 struct IntelligentDetailViewSheetTests {
     

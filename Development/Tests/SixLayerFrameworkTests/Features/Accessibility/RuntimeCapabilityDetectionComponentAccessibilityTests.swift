@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Runtime Capability Detection Component Accessibility")
 open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Runtime Capability Detection Component Tests

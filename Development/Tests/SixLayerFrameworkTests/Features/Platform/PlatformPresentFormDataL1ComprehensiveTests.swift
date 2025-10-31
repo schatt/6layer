@@ -35,6 +35,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Present Form Data L Comprehensive")
 open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // MARK: - Test Helpers

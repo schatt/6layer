@@ -3,6 +3,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Data Presentation Intelligence")
 open class DataPresentationIntelligenceTests {
     
     // MARK: - Helper Methods

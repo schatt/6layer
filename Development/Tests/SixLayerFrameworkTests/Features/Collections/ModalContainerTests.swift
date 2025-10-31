@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Modal Container")
 open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Test Data

@@ -4,6 +4,7 @@ import Foundation
 
 /// Tests for DataIntrospectionEngine functionality
 @MainActor
+@Suite("Data Introspection")
 open class DataIntrospectionTests {
     
     @Test func testDataIntrospectionBasicAnalysis() {

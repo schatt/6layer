@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Test that framework components respect global accessibility config
 @MainActor
+@Suite("Framework Component Global Config")
 open class FrameworkComponentGlobalConfigTests: BaseTestClass {
 
     override init() {

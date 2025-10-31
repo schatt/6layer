@@ -18,6 +18,7 @@ import AppKit
 #endif
 
 
+@Suite("Photo Functionality Phase")
 open class PhotoFunctionalityPhase1Tests {
     
     // MARK: - Enhanced PlatformImage Tests

@@ -7,6 +7,7 @@ import ViewInspector
 /// View Generation Integration Tests
 /// Tests the actual view generation pipeline with different capability states
 @MainActor
+@Suite("View Generation Integration")
 open class ViewGenerationIntegrationTests {
     
     // MARK: - Test Configuration

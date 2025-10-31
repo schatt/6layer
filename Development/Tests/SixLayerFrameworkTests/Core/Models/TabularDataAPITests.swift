@@ -10,6 +10,7 @@ import Testing
 
 import TabularData
 
+@Suite("Tabular Data A P I")
 open class TabularDataAPITest {
     
     @Test func testTabularDataAPI() throws {

@@ -8,6 +8,7 @@
 import Testing
 @testable import SixLayerFramework
 
+@Suite("Field Display Hints")
 struct FieldDisplayHintsTests {
     
     // MARK: - Basic Creation

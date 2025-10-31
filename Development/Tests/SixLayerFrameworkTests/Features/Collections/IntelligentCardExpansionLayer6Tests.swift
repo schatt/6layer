@@ -13,6 +13,7 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 @MainActor
+@Suite("Intelligent Card Expansion Layer")
 open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Test Data
@@ -255,7 +256,12 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         #expect(config.supportsVoiceOver != nil, "Should have VoiceOver support setting")
         #expect(config.supportsSwitchControl != nil, "Should have Switch Control support setting")
         #expect(config.supportsAssistiveTouch != nil, "Should have AssistiveTouch support setting")
-        #expect(config.minTouchTarget > 0, "Should have positive min touch target")
+        
+        // Verify platform-correct minTouchTarget value
+        let platform = RuntimeCapabilityDetection.currentPlatform
+        let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+        #expect(config.minTouchTarget == expectedMinTouchTarget, "Should have platform-correct minTouchTarget (\(expectedMinTouchTarget)) for \(platform)")
+        
         #expect(config.hoverDelay >= 0, "Should have non-negative hover delay")
     }
     

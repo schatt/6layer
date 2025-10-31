@@ -14,6 +14,7 @@ import Foundation
 
 @testable import SixLayerFramework
 
+@Suite("Liquid Glass Design System")
 struct LiquidGlassDesignSystemTests {
     
     // MARK: - Material Tests

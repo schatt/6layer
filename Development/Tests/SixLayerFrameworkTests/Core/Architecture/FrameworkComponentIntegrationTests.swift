@@ -7,6 +7,7 @@ import ViewInspector
 /// Integration Tests for Framework Component Accessibility
 /// Tests that components can be created and work in real view hierarchies
 @MainActor
+@Suite("Framework Component Integration")
 open class FrameworkComponentIntegrationTests {
     
     init() async throws {

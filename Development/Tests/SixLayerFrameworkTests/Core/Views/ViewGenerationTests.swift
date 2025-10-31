@@ -7,6 +7,7 @@ import ViewInspector
 /// Tests that the framework correctly generates SwiftUI views with proper structure and properties
 /// These tests focus on what we can actually verify when running on macOS
 @MainActor
+@Suite("View Generation")
 open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Test Data

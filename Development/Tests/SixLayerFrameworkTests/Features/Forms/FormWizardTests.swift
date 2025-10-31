@@ -36,6 +36,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Form Wizard")
 open class FormWizardTests {
     
     // MARK: - Form Wizard Step Tests

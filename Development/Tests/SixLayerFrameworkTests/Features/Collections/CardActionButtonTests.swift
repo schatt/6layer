@@ -43,6 +43,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
+@Suite("Card Action Button")
 open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Test Data

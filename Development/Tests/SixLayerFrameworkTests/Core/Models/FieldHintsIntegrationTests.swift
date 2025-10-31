@@ -11,6 +11,7 @@ import Foundation
 
 private class _FieldHintsTestBundleMarker {}
 
+@Suite("Field Hints Integration")
 struct FieldHintsIntegrationTests {
     
     @Test func testLoadHintsFromTestFile() throws {

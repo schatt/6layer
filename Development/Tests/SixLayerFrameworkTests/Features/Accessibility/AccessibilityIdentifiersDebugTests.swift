@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
+@Suite("Accessibility Identifiers Debug")
 open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
         // Test .automaticAccessibilityIdentifiers() directly
         let testView = Button("Test") { }

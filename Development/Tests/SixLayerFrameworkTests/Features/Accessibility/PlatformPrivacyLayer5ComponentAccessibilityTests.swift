@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Privacy Layer Component Accessibility")
 open class PlatformPrivacyLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Privacy Layer 5 Component Tests

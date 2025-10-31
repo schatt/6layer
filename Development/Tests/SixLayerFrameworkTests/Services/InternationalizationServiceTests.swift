@@ -6,6 +6,7 @@ import Foundation
 /// Tests the actual functionality of the internationalization service
 /// Consolidates API tests and business logic tests
 @MainActor
+@Suite("Internationalization Service")
 open class InternationalizationServiceTests {
     
     // MARK: - Service Initialization Tests

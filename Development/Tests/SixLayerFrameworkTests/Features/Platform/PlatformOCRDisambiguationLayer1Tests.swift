@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure all OCR disambiguation Layer 1 functions generate proper accessibility identifiers
 /// TESTING SCOPE: All functions in PlatformOCRDisambiguationLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Platform O C R Disambiguation Layer")
 @MainActor
 open class PlatformOCRDisambiguationLayer1Tests {
     

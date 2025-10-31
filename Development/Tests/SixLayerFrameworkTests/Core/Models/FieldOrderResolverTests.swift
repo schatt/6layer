@@ -2,6 +2,7 @@ import Testing
 @testable import SixLayerFramework
 
 /// TDD: Core ordering behavior for field display
+@Suite("Field Order Resolver")
 struct FieldOrderResolverTests {
     
     // MARK: - Helpers

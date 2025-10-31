@@ -38,11 +38,13 @@
 
 import SwiftUI
 @testable import SixLayerFramework
+import Testing
 
 // MARK: - DEPRECATED: This test class uses SimpleFormView which depends on GenericFormField
 // TODO: Replace with DynamicFormView tests using DynamicFormField
 /*
 @MainActor
+@Suite("Interactive Form")
 open class InteractiveFormTests: XCTestCase {
     
     // MARK: - Test Helpers

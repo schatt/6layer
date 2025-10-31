@@ -7,6 +7,7 @@ import ViewInspector
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
+@Suite("Platform O C R Semantic Layer Accessibility")
 open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MARK: - OCR Visual Correction Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers

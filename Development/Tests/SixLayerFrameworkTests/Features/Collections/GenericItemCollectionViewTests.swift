@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure GenericItemCollectionView generates proper accessibility identifiers
 /// TESTING SCOPE: GenericItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Generic Item Collection View")
 @MainActor
 open class GenericItemCollectionViewTests {
     

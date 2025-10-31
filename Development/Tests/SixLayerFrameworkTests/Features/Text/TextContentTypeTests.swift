@@ -28,6 +28,7 @@ import SwiftUI
 /// Text content type testing
 /// Tests that all field types have proper text content type support
 @MainActor
+@Suite("Text Content Type")
 open class TextContentTypeTests {
     
     // MARK: - Text Content Type Mapping Tests

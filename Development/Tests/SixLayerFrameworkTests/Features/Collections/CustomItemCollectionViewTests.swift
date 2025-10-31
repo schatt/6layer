@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure CustomItemCollectionView generates proper accessibility identifiers
 /// TESTING SCOPE: CustomItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Custom Item Collection View")
 @MainActor
 open class CustomItemCollectionViewTests {
     

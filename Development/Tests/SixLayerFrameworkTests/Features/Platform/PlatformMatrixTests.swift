@@ -39,6 +39,7 @@ import SwiftUI
 /// Comprehensive platform matrix testing for cross-platform framework
 /// Tests all platform combinations, device types, and capability matrices
 @MainActor
+@Suite("Platform Matrix")
 open class PlatformMatrixTests {
     
     // MARK: - Platform Detection Tests
@@ -133,21 +134,19 @@ open class PlatformMatrixTests {
     // MARK: - Screen Size and Device Type Matrix
     
     @Test func testScreenSizeCapabilityMatrix() {
-        let config = getCardExpansionPlatformConfig()
-        
-        // Test touch target sizes based on platform
-        switch SixLayerPlatform.current {
-        case .iOS:
-            #expect(config.minTouchTarget >= 44, 
-                                       "iOS should have 44pt minimum touch targets")
-        case .watchOS:
-            #expect(config.minTouchTarget >= 44, 
-                                       "watchOS should have 44pt minimum touch targets")
-        case .macOS, .tvOS, .visionOS:
-            // Non-touch platforms still need minimum sizes for accessibility
-            #expect(config.minTouchTarget >= 44, 
-                                       "All platforms should have 44pt minimum targets")
+        // Test with each platform to verify platform-correct values
+        for platform in SixLayerPlatform.allCases {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            let config = getCardExpansionPlatformConfig()
+            
+            // Verify platform-correct minTouchTarget value
+            let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+            #expect(config.minTouchTarget == expectedMinTouchTarget, 
+                   "Platform \(platform) should have platform-correct minTouchTarget (\(expectedMinTouchTarget))")
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.setTestPlatform(nil)
     }
     
     // MARK: - Vision Framework Availability Matrix

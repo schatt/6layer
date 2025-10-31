@@ -7,6 +7,7 @@ import ViewInspector
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
+@Suite("Platform Semantic Layer Modal Form Accessibility")
 open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
     
     

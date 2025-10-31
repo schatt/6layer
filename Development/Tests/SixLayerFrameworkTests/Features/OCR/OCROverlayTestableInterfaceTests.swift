@@ -24,11 +24,13 @@
 //  Real tests need to be written that test actual OCR overlay testable interface behavior.
 
 import SwiftUI
+import Testing
 @testable import SixLayerFramework
 
 /// Tests for OCR overlay testable interface functionality
 /// TODO: Implement real tests that test actual OCR overlay testable interface functionality
 @MainActor
+@Suite("O C R Overlayable Interface")
 open class OCROverlayTestableInterfaceTests: BaseTestClass {
     
     

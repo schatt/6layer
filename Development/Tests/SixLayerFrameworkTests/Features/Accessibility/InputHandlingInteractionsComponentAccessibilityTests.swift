@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Input Handling Interactions Component Accessibility")
 open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformInteractionButton Tests

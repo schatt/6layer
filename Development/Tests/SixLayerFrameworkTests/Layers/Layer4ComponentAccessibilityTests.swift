@@ -10,6 +10,7 @@ import SwiftUI
 //  Tests Layer 4 components for accessibility - these are View extensions that add platform-specific styling
 //
 
+@Suite("Layer Component Accessibility")
 @MainActor
 open class Layer4ComponentAccessibilityTests: BaseTestClass {
     

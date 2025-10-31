@@ -7,6 +7,7 @@ import SwiftUI
 /// Test Layer 2 layout decision functions
 /// Layer 2: Platform Layout Decisions - Content-aware layout analysis and decision making
 /// Layer 2 functions return layout decisions, not Views
+@Suite("Layer Component Accessibility")
 @MainActor
 final class Layer2ComponentAccessibilityTests {
     

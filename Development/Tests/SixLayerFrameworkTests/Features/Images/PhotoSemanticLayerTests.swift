@@ -4,6 +4,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Photo Semantic Layer")
 open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Layer 1: Semantic Photo Functions Tests

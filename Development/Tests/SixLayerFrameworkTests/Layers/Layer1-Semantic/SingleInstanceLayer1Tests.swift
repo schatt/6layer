@@ -7,6 +7,7 @@ import SwiftUI
 /// Tests for single-instance Layer 1 functions
 /// Following TDD principles - these tests define the expected behavior
 @MainActor
+@Suite("Single Instance Layer")
 open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Helper Methods

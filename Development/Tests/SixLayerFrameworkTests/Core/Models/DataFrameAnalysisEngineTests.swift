@@ -13,6 +13,7 @@ import Foundation
 import TabularData
 
 @MainActor
+@Suite("Data Frame Analysis Engine")
 open class DataFrameAnalysisEngineTests: BaseTestClass {
     
     // MARK: - Helper Methods

@@ -7,6 +7,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure CollectionEmptyStateView generates proper accessibility identifiers
 /// TESTING SCOPE: CollectionEmptyStateView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Uses centralized test functions following DRY principles
+@Suite("Collection Empty State View")
 @MainActor
 open class CollectionEmptyStateViewTests {
     

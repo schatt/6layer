@@ -10,6 +10,7 @@ import ViewInspector
 /// 
 /// TESTING PATTERN: Uses parameterized testing to reduce duplication across platforms
 /// See Development/docs/TestingPatterns.md for pattern documentation
+@Suite("Platform Photo Components Layer Accessibility")
 open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    // MARK: - Photo Picker Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 returns the correct platform-specific implementation

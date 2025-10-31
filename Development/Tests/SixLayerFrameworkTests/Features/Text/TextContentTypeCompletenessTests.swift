@@ -5,6 +5,7 @@ import SixLayerFramework
 
 /// Tests to verify that SixLayerTextContentType covers all UITextContentType cases
 /// This ensures our cross-platform enum is complete and future-proof
+@Suite("Text Content Type Completeness")
 open class TextContentTypeCompletenessTests {
     
     /// Test that all UITextContentType cases exist in SixLayerTextContentType

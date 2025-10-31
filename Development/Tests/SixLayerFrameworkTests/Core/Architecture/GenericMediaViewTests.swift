@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure GenericMediaView generates proper accessibility identifiers
 /// TESTING SCOPE: GenericMediaView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Generic Media View")
 @MainActor
 open class GenericMediaViewTests {
     

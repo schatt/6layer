@@ -7,6 +7,7 @@ import ViewInspector
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 @MainActor
+@Suite("Global Disable Local Enable T D D")
 open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
 
     override init() {

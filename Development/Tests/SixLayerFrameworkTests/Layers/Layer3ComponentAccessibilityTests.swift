@@ -11,6 +11,7 @@ import SwiftUI
 //  Layer 3 components don't have accessibility properties since they're data structures
 //
 
+@Suite("Layer Component Accessibility")
 @MainActor
 open class Layer3ComponentAccessibilityTests: BaseTestClass {
     

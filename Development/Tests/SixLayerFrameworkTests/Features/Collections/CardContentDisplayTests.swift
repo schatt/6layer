@@ -7,6 +7,7 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
+@Suite("Card Content Display")
 open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Test Data

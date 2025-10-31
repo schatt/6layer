@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure all OCR Layer 1 semantic functions generate proper accessibility identifiers
 /// TESTING SCOPE: All functions in PlatformOCRSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Platform O C R Semantic Layer")
 @MainActor
 open class PlatformOCRSemanticLayer1Tests {
     

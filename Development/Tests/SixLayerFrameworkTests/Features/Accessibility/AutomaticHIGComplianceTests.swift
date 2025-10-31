@@ -32,6 +32,7 @@ struct AutomaticHIGComplianceTestItem: Identifiable {
  * functions and verifies they have proper accessibility features, platform-specific behavior, and HIG compliance
  * without requiring manual modifier application.
  */
+@Suite("Automatic H I G Compliance")
 open class AutomaticHIGComplianceTests {
     
     // MARK: - Test Data Setup

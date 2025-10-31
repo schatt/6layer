@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Internationalization Service Component Accessibility")
 open class InternationalizationServiceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - InternationalizationService Tests

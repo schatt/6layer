@@ -30,6 +30,7 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 @MainActor
+@Suite("Photo Components Layer")
 open class PhotoComponentsLayer4Tests {
     
     // MARK: - Test Data Setup

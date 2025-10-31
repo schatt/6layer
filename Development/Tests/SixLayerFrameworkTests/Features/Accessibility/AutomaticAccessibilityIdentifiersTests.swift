@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure automatic accessibility identifier system functions correctly
 /// TESTING SCOPE: All functions in AutomaticAccessibilityIdentifiers.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Automatic Accessibility Identifiers")
 @MainActor
 open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     

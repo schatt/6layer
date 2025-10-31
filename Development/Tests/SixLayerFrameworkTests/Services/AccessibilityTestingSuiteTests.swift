@@ -6,6 +6,7 @@ import SwiftUI
 /// Tests the actual functionality of the accessibility testing suite
 /// Consolidates API tests and comprehensive business logic tests
 @MainActor
+@Suite("Accessibilitying Suite")
 open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     // MARK: - Suite Initialization Tests

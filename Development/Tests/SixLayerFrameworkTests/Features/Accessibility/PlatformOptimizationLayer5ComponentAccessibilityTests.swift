@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Optimization Layer Component Accessibility")
 open class PlatformOptimizationLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Optimization Layer 5 Component Tests

@@ -36,6 +36,7 @@ import Foundation
 
 @testable import SixLayerFramework
 
+@Suite("Liquid Glass Capability Detection")
 open class LiquidGlassCapabilityDetectionTests {
     
     init() async throws {

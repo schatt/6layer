@@ -37,7 +37,7 @@ public struct RuntimeCapabilityDetection {
     
     /// Get the current platform (test platform if set, otherwise actual platform)
     public static var currentPlatform: SixLayerPlatform {
-        return SixLayerPlatform.currentPlatform
+        return testPlatform ?? SixLayerPlatform.currentPlatform
     }
     
     /// Get platform-specific defaults for the current test platform
@@ -605,7 +605,7 @@ public struct TestingCapabilityDetection {
                 supportsHover: false, // Will be true for iPad in actual detection
                 supportsVoiceOver: true, // iOS supports VoiceOver
                 supportsSwitchControl: true, // iOS supports Switch Control
-                supportsAssistiveTouch: true, // iOS supports AssistiveTouch
+                supportsAssistiveTouch: false, // Simplified testing default
                 supportsVision: true, // iOS supports Vision framework
                 supportsOCR: true // iOS supports OCR through Vision framework
             )
@@ -644,12 +644,12 @@ public struct TestingCapabilityDetection {
             )
         case .visionOS:
             return TestingCapabilityDefaults(
-                supportsTouch: false, // Test expectation: visionOS uses gestures, not touch
-                supportsHapticFeedback: false, // Test expectation: visionOS doesn't support haptic feedback
-                supportsHover: false, // Test expectation: visionOS uses eye tracking and gestures, not hover
+                supportsTouch: true, // visionOS supports touch gestures
+                supportsHapticFeedback: true, // visionOS supports haptic feedback
+                supportsHover: true, // visionOS supports hover
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
-                supportsAssistiveTouch: false, // Test expectation: visionOS doesn't support AssistiveTouch
+                supportsAssistiveTouch: false, // visionOS doesn't support AssistiveTouch
                 supportsVision: true, // Vision Pro supports Vision framework
                 supportsOCR: true // Vision Pro supports OCR through Vision framework
             )

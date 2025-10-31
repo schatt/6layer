@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Recognition Layer Component Accessibility")
 open class PlatformRecognitionLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Recognition Layer 5 Component Tests

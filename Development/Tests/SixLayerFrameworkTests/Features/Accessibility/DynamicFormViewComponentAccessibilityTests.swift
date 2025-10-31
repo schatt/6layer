@@ -17,6 +17,7 @@ struct TestData {
     let email: String
 }
 
+@Suite("Dynamic Form View Component Accessibility")
 @MainActor
 open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     

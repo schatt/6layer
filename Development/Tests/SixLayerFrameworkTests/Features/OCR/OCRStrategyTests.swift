@@ -25,10 +25,12 @@
 
 import SwiftUI
 @testable import SixLayerFramework
+import Testing
 
 /// Tests for OCR strategy functionality
 /// TODO: Implement real tests that test actual OCR strategy functionality
 @MainActor
+@Suite("O C R Strategy")
 open class OCRStrategyTests: BaseTestClass {
     
 

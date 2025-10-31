@@ -24,11 +24,13 @@
 //  Real tests need to be written that test actual OCR disambiguation behavior.
 
 import SwiftUI
+import Testing
 @testable import SixLayerFramework
 
 /// Tests for OCR disambiguation functionality
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
 @MainActor
+@Suite("O C R Disambiguation")
 open class OCRDisambiguationTests: BaseTestClass {// MARK: - Real OCR Disambiguation Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test OCR disambiguation functionality:

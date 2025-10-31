@@ -23,9 +23,11 @@
 //  view creation and hosting, not actual Layer 1 OCR visual correction functionality.
 //  Real tests need to be written that test actual Layer 1 OCR visual correction behavior.
 
+import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+@Suite("O C R L Visual Correction")
 /// Tests for Layer 1 OCR visual correction functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR visual correction functionality
 @MainActor

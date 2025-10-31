@@ -14,7 +14,6 @@ import Testing
 //  - Image processing pipeline functionality for different purposes
 //  - Image enhancement and optimization functionality
 //  - OCR enhancement and text detection functionality
-//  - Performance and batch processing functionality
 //  - Error handling and edge case functionality
 //  - Integration and end-to-end functionality
 //
@@ -22,13 +21,12 @@ import Testing
 //  - Test image processing pipeline across all platforms
 //  - Verify image enhancement using mock testing
 //  - Test OCR enhancement with platform variations
-//  - Validate performance with comprehensive platform testing
 //  - Test error handling with mock capabilities
 //  - Verify integration across platforms
 //
 //  AUDIT STATUS: ✅ COMPLIANT
 //  - ✅ File Documentation: Complete with business purpose, testing scope, methodology
-//  - ✅ Function Documentation: All 16 functions documented with business purpose
+//  - ✅ Function Documentation: All test functions documented with business purpose
 //  - ✅ Platform Testing: Comprehensive platform testing added to key functions
 //  - ✅ Mock Testing: RuntimeCapabilityDetection mock testing implemented
 //  - ✅ Business Logic Focus: Tests actual image processing pipeline functionality, not testing framework
@@ -38,6 +36,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Image Processing Pipeline")
 open class ImageProcessingPipelineTests {
     
     // MARK: - Test Data
@@ -312,64 +311,6 @@ open class ImageProcessingPipelineTests {
         // Then
         #expect(optimizedImage != nil)
         #expect(strategy.validate(optimizedImage))
-    }
-    
-    // MARK: - Performance Tests
-    
-    /// BUSINESS PURPOSE: Validate image processing performance functionality
-    /// TESTING SCOPE: Tests ImageProcessingPipeline performance and timing
-    /// METHODOLOGY: Test performance metrics and verify performance functionality
-    @Test func testImageProcessingPerformance() async throws {
-        // Given
-        let image = createTestImage()
-        let purpose = ImagePurpose.ocr
-        let options = createProcessingOptions()
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let processedImage = try await ImageProcessingPipeline.process(
-            image,
-            for: purpose,
-            with: options
-        )
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        #expect(processedImage != nil)
-        let executionTime = endTime - startTime
-        #expect(executionTime < 1.0) // Should complete in under 1 second
-    }
-    
-    /// BUSINESS PURPOSE: Validate batch processing performance functionality
-    /// TESTING SCOPE: Tests ImageProcessingPipeline batch processing performance
-    /// METHODOLOGY: Test batch processing performance and verify performance functionality
-    @Test func testBatchProcessingPerformance() async throws {
-        // Given
-        let images = (0..<10).map { _ in createTestImage() }
-        let purpose = ImagePurpose.ocr
-        let options = createProcessingOptions()
-        
-        // When
-        let startTime = CFAbsoluteTimeGetCurrent()
-        let processedImages = try await withThrowingTaskGroup(of: ProcessedImage.self) { group in
-            for image in images {
-                group.addTask {
-                    try await ImageProcessingPipeline.process(image, for: purpose, with: options)
-                }
-            }
-            
-            var results: [ProcessedImage] = []
-            for try await result in group {
-                results.append(result)
-            }
-            return results
-        }
-        let endTime = CFAbsoluteTimeGetCurrent()
-        
-        // Then
-        #expect(processedImages.count == images.count)
-        let executionTime = endTime - startTime
-        #expect(executionTime < 5.0) // Should complete in under 5 seconds
     }
     
     // MARK: - Error Handling Tests

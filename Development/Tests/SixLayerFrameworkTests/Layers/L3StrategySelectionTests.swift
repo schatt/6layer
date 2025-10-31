@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("L Strategy Selection")
 open class L3StrategySelectionTests {
     
     // MARK: - Test Data

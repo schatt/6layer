@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure all Layer 1 semantic presentation functions generate proper accessibility identifiers
 /// TESTING SCOPE: All functions in PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Platform Semantic Layer")
 @MainActor
 open class PlatformSemanticLayer1Tests {
     

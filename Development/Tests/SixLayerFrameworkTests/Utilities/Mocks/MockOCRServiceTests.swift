@@ -23,9 +23,11 @@
 //  Real tests need to be written that test actual mock service functionality.
 
 @testable import SixLayerFramework
+import Testing
 
 /// Tests for MockOCRService functionality
 /// TODO: Implement real tests that test actual mock service behavior
+@Suite("Mock O C R Service")
 open class MockOCRServiceTests {
     
     // MARK: - Test Setup

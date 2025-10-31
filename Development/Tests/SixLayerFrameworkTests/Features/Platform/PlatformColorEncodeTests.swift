@@ -37,6 +37,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+@Suite("Platform Color Encode")
 open class PlatformColorEncodeTests {
     
     // MARK: - Basic Color Encoding Tests

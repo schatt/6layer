@@ -5,6 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Automatic Accessibility Identifiers Component Accessibility")
 open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Automatic Accessibility Identifier Component Tests
@@ -17,7 +18,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifierModifier"
         )
@@ -33,7 +34,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ComprehensiveAccessibilityModifier"
         )

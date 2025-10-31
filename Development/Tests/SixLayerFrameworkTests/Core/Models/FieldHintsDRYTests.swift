@@ -8,6 +8,7 @@
 import Testing
 @testable import SixLayerFramework
 
+@Suite("Field Hints D R Y")
 struct FieldHintsDRYTests {
     
     @Test func testFieldHintsAreDRY() {

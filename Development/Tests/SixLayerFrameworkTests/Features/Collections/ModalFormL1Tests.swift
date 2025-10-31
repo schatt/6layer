@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Modal Form L")
 open class ModalFormL1Tests: BaseTestClass {
     
     // MARK: - Test Data

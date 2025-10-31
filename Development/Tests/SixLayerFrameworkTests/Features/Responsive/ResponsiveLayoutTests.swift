@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure ResponsiveLayout generates proper accessibility identifiers
 /// TESTING SCOPE: All components in ResponsiveLayout.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Responsive Layout")
 @MainActor
 open class ResponsiveLayoutTests {
     

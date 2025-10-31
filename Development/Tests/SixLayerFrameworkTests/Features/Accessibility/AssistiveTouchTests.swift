@@ -17,6 +17,7 @@ import SwiftUI
  * accessibility validation, and performance benchmarking. Tests both enabled and disabled states of capabilities
  * using RuntimeCapabilityDetection mock framework.
  */
+@Suite("Assistive Touch")
 @MainActor
 open class AssistiveTouchTests: BaseTestClass {
     

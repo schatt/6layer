@@ -13,6 +13,7 @@ import SwiftUI
 /// Comprehensive tests for the Intelligent Card Expansion System
 /// Tests all 6 layers with edge cases, performance, and integration scenarios
 @MainActor
+@Suite("Intelligent Card Expansion Comprehensive")
 open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MARK: - Test Data
     
     private var sampleMenuItems: [MenuItem] {
@@ -522,7 +523,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             assistiveTouch: true
         )
         
-        #expect(config.minTouchTarget >= 44)
+        // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
+        #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
     }
     
     @Test func testGetCardExpansionPerformanceConfig() {

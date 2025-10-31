@@ -6,6 +6,7 @@ import SwiftUI
 /// TDD Red Phase tests for CardDisplayable protocol bug
 /// These tests should FAIL initially, demonstrating the bug described in the bug report
 @MainActor
+@Suite("Card Displayable Bug")
 struct CardDisplayableBugTests {
     
     // MARK: - Test Data Types

@@ -13,6 +13,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Layer Platform Optimization")
 open class Layer6PlatformOptimizationTests {
     
     // MARK: - Cross-Platform Benchmarking Tests (RED PHASE)

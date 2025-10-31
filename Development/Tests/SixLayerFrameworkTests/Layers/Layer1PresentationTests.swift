@@ -11,6 +11,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Layer Presentation")
 open class Layer1PresentationTests {
     
     // MARK: - Test Helpers

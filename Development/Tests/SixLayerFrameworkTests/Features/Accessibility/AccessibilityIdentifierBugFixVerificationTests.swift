@@ -16,6 +16,7 @@ import SwiftUI
  * METHODOLOGY: Reproduces the exact configuration and usage pattern from the bug report
  * and verifies that accessibility identifiers are now generated correctly.
  */
+@Suite("Accessibility Identifier Bug Fix Verification")
 open class AccessibilityIdentifierBugFixVerificationTests {
     
     init() async throws {

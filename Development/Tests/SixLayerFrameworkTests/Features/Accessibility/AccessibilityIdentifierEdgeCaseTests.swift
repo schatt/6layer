@@ -7,6 +7,7 @@ import ViewInspector
 /// Edge case tests for accessibility identifier generation bug fix
 /// These tests ensure our fix handles all edge cases properly
 @MainActor
+@Suite("Accessibility Identifier Edge Case")
 open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - Edge Case 1: Empty String Parameters
     
     @Test func testEmptyStringParameters() {

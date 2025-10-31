@@ -5,6 +5,7 @@ import SwiftUI
 /// Comprehensive tests for Layer 5 platform optimization functions
 /// Ensures all Layer 5 functions are tested
 @MainActor
+@Suite("Layer Platform Optimization")
 open class Layer5PlatformOptimizationTests {
     
     // MARK: - getCardExpansionPlatformConfig Tests
@@ -14,8 +15,8 @@ open class Layer5PlatformOptimizationTests {
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.supportsTouch == true, "iOS should support touch")
-        #expect(config.minTouchTarget >= 44, "iOS should have minimum touch target of 44")
-        #expect(config.hoverDelay >= 0, "iOS hover delay should be non-negative")
+        #expect(config.minTouchTarget == 44.0, "iOS should have 44.0 touch target (platform-native)")
+        #expect(config.hoverDelay == 0.0, "iOS should have 0.0 hover delay (platform-native)")
     }
     
     @Test func testGetCardExpansionPlatformConfig_macOS() async {
@@ -23,32 +24,32 @@ open class Layer5PlatformOptimizationTests {
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.supportsHover == true, "macOS should support hover")
-        #expect(config.minTouchTarget >= 44, "macOS should have minimum touch target")
-        #expect(config.hoverDelay >= 0, "macOS hover delay should be non-negative")
+        #expect(config.minTouchTarget == 0.0, "macOS should have 0.0 touch target (platform-native)")
+        #expect(config.hoverDelay == 0.5, "macOS should have 0.5s hover delay")
     }
     
     @Test func testGetCardExpansionPlatformConfig_visionOS() async {
         RuntimeCapabilityDetection.setTestPlatform(.visionOS)
         let config = getCardExpansionPlatformConfig()
         
-        #expect(config.minTouchTarget >= 60, "visionOS should have larger touch targets for spatial interface")
-        #expect(config.hoverDelay >= 0, "visionOS hover delay should be non-negative")
+        #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
+        #expect(config.hoverDelay == 0.0, "visionOS should have 0.0 hover delay (platform-native)")
     }
     
     @Test func testGetCardExpansionPlatformConfig_watchOS() async {
         RuntimeCapabilityDetection.setTestPlatform(.watchOS)
         let config = getCardExpansionPlatformConfig()
         
-        #expect(config.minTouchTarget >= 44, "watchOS should have minimum touch target")
-        #expect(config.hoverDelay >= 0, "watchOS hover delay should be non-negative")
+        #expect(config.minTouchTarget == 44.0, "watchOS should have 44.0 touch target (platform-native)")
+        #expect(config.hoverDelay == 0.0, "watchOS should have 0.0 hover delay (platform-native)")
     }
     
     @Test func testGetCardExpansionPlatformConfig_tvOS() async {
         RuntimeCapabilityDetection.setTestPlatform(.tvOS)
         let config = getCardExpansionPlatformConfig()
         
-        #expect(config.minTouchTarget >= 60, "tvOS should have larger touch targets for TV")
-        #expect(config.hoverDelay >= 0, "tvOS hover delay should be non-negative")
+        #expect(config.minTouchTarget == 0.0, "tvOS should have 0.0 touch target (platform-native)")
+        #expect(config.hoverDelay == 0.0, "tvOS should have 0.0 hover delay (platform-native)")
     }
     
     @Test func testGetCardExpansionPlatformConfig_AllPlatforms() async {
@@ -58,8 +59,12 @@ open class Layer5PlatformOptimizationTests {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             let config = getCardExpansionPlatformConfig()
             
-            #expect(config.minTouchTarget > 0, "Platform \(platform) should have positive touch target")
-            #expect(config.hoverDelay >= 0, "Platform \(platform) should have non-negative hover delay")
+            // Verify platform-correct values
+            let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+            let expectedHoverDelay: TimeInterval = (platform == .macOS) ? 0.5 : 0.0
+            
+            #expect(config.minTouchTarget == expectedMinTouchTarget, "Platform \(platform) should have platform-correct minTouchTarget (\(expectedMinTouchTarget))")
+            #expect(config.hoverDelay == expectedHoverDelay, "Platform \(platform) should have platform-correct hoverDelay (\(expectedHoverDelay))")
         }
     }
     

@@ -18,6 +18,7 @@ struct TestImage {
     let name: String
 }
 
+@Suite("Shared Component Accessibility")
 @MainActor
 open class SharedComponentAccessibilityTests: BaseTestClass {
     

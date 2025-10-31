@@ -30,6 +30,7 @@ import SwiftUI
 /// Accessibility state simulation testing
 /// Tests accessibility configuration and platform-specific behavior
 @MainActor
+@Suite("Accessibility State Simulation")
 open class AccessibilityStateSimulationTests {
     
     // MARK: - Configuration Initialization Tests

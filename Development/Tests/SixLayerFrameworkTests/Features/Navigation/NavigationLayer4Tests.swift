@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 @MainActor
+@Suite("Navigation Layer")
 open class NavigationLayer4Tests {
     
     // MARK: - Navigation Link Tests

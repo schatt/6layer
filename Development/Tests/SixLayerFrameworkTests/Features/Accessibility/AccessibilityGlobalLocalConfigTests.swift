@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Test that accessibility functions respect both global and local configuration options
 @MainActor
+@Suite("Accessibility Global Local Config")
 open class AccessibilityGlobalLocalConfigTests {
     
     init() async throws {

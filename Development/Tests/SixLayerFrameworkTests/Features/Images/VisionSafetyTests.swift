@@ -11,6 +11,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+@Suite("Vision Safety")
 open class VisionSafetyTests {
     
     // MARK: - Vision Availability Tests

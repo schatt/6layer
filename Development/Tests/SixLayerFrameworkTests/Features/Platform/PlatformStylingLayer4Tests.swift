@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure all styling Layer 4 components generate proper accessibility identifiers
 /// TESTING SCOPE: All components in PlatformStylingLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Platform Styling Layer")
 @MainActor
 open class PlatformStylingLayer4Tests {
     

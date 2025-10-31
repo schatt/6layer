@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Test the "global disable, local enable" functionality
 @MainActor
+@Suite("Local Enable Override")
 open class LocalEnableOverrideTests: BaseTestClass {
 
     override init() {

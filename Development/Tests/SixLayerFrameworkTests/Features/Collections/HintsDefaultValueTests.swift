@@ -6,6 +6,7 @@ import SwiftUI
 /// TDD Red Phase tests for hints default value feature
 /// These tests should FAIL initially, demonstrating the need for default value support
 @MainActor
+@Suite("Hints Default Value")
 struct HintsDefaultValueTests {
     
     // MARK: - Test Data Types

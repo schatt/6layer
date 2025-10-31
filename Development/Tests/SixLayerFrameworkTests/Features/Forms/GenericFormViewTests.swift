@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure GenericFormView generates proper accessibility identifiers
 /// TESTING SCOPE: GenericFormView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Generic Form View")
 @MainActor
 open class GenericFormViewTests {
     

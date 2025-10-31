@@ -37,6 +37,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Dynamic Form")
 open class DynamicFormTests: BaseTestClass {
     
     // MARK: - Dynamic Form Field Tests

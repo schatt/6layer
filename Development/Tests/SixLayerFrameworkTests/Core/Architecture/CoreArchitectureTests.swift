@@ -40,6 +40,7 @@ import CoreGraphics
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Core Architecture")
 open class CoreArchitectureTests {
     
     // MARK: - Test Helpers

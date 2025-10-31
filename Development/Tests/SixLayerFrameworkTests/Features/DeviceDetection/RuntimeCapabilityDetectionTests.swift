@@ -39,6 +39,7 @@ import SwiftUI
 /// TDD Tests for Runtime Capability Detection
 /// These tests define the expected behavior and will initially fail
 @MainActor
+@Suite("Runtime Capability Detection T D D")
 open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
     // MARK: - Testing Mode Detection Tests

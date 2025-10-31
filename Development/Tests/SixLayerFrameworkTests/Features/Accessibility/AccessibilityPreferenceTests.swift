@@ -39,6 +39,7 @@ import SwiftUI
 /// Accessibility preference testing
 /// Tests that every function behaves correctly based on accessibility preferences
 @MainActor
+@Suite("Accessibility Preference")
 open class AccessibilityPreferenceTests {
     
     // MARK: - Test Data Setup
@@ -275,6 +276,10 @@ open class AccessibilityPreferenceTests {
         
         // When: Check accessibility features for each platform
         for platform in simulatedPlatforms {
+            // Set the test platform before getting the config
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            
             // Get platform capabilities using the framework's capability detection
             let config = getCardExpansionPlatformConfig()
             
@@ -282,7 +287,10 @@ open class AccessibilityPreferenceTests {
             // Each platform should have consistent accessibility support
             #expect(config.supportsVoiceOver != nil, "VoiceOver should be detectable on \(platform)")
             #expect(config.supportsSwitchControl != nil, "Switch Control should be detectable on \(platform)")
-            #expect(config.minTouchTarget >= 44, "Touch targets should meet minimum size on \(platform)")
+            
+            // Verify platform-correct minTouchTarget value
+            let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
+            #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
         }
     }
 }

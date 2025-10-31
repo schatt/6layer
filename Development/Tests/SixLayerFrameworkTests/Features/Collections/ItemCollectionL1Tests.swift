@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Item Collection L")
 open class ItemCollectionL1Tests: BaseTestClass {
     
     // MARK: - Item Collection Tests

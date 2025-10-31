@@ -10,6 +10,7 @@ import SwiftUI
 //  Tests Layer 5 platform components for accessibility - these are classes with methods that return Views
 //
 
+@Suite("Layer Component Accessibility")
 @MainActor
 open class Layer5ComponentAccessibilityTests: BaseTestClass {
     

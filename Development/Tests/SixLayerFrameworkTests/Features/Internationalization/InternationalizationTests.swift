@@ -14,6 +14,7 @@ import SwiftUI
 
 /// Comprehensive tests for Internationalization & Localization
 @MainActor
+@Suite("Internationalization")
 open class InternationalizationTests {
     
     // MARK: - Helper Methods

@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
 @MainActor
+@Suite("Layer Form Container")
 open class Layer4FormContainerTests {
     
     // MARK: - Test Data

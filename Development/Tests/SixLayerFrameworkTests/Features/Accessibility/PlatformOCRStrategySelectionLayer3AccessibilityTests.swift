@@ -7,6 +7,7 @@ import ViewInspector
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
+@Suite("Platform O C R Strategy Selection Layer Accessibility")
 open class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {// MARK: - OCR Strategy Selection Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRStrategy_L3 generates proper accessibility identifiers

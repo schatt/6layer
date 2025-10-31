@@ -7,6 +7,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoSemanticLayer1.swift functions
 /// Ensures Photo semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@Suite("Platform Photo Semantic Layer Accessibility")
 open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK: - Photo Capture Tests
     
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers

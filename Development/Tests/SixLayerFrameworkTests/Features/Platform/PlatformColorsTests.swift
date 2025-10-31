@@ -37,6 +37,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+@Suite("Platform Colors")
 open class PlatformColorsTests {
     
     init() async throws {

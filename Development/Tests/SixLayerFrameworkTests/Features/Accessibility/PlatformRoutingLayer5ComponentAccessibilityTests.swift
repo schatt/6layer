@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Routing Layer Component Accessibility")
 open class PlatformRoutingLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Routing Layer 5 Component Tests

@@ -6,6 +6,7 @@ import ViewInspector
 /// Comprehensive tests for Layer 4 View extension functions
 /// Ensures all View extension functions in Layer 4 are tested
 @MainActor
+@Suite("Layer View Extension")
 open class Layer4ViewExtensionTests {
     
     // MARK: - platformFormField Tests

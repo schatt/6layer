@@ -7,6 +7,7 @@ import ViewInspector
 /// Ensures hierarchical and temporal data presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
+@Suite("Platform Semantic Layer Hierarchical Temporal Accessibility")
 open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTestClass {
     
     

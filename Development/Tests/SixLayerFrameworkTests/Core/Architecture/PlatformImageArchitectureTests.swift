@@ -33,6 +33,7 @@ import AppKit
 
 
 @MainActor
+@Suite("Platform Image Architecture")
 open class PlatformImageArchitectureTests {
     
     // MARK: - Architecture Enforcement Tests

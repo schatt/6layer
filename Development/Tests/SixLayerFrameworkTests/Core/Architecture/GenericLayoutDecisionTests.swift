@@ -29,6 +29,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Generic Layout Decision")
 open class GenericLayoutDecisionTests {
     
     // MARK: - Test Data

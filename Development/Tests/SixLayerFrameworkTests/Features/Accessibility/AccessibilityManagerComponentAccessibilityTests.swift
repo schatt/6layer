@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Accessibility Manager Component Accessibility")
 open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MARK: - AccessibilityManager Tests
     
     @Test func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {

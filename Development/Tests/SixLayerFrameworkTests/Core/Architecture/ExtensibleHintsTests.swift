@@ -32,6 +32,7 @@ import Testing
 
 @testable import SixLayerFramework
 
+@Suite("Extensible Hints")
 open class ExtensibleHintsTests {
     
     /// BUSINESS PURPOSE: Validate ExtensibleHints initialization functionality

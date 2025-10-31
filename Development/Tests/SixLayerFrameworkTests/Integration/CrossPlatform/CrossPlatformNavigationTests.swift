@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure CrossPlatformNavigation generates proper accessibility identifiers
 /// TESTING SCOPE: All components in CrossPlatformNavigation.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Cross Platform Navigation")
 @MainActor
 open class CrossPlatformNavigationTests {
     

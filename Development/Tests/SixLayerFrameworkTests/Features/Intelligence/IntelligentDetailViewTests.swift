@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure IntelligentDetailView generates proper accessibility identifiers
 /// TESTING SCOPE: All components in IntelligentDetailView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Intelligent Detail View")
 @MainActor
 open class IntelligentDetailViewTests {
     

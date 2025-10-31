@@ -51,6 +51,7 @@ struct MockDataContainer: Equatable {
     }
 }
 
+@Suite("Native Types")
 @MainActor
 open class NativeTypesTests: BaseTestClass {
     

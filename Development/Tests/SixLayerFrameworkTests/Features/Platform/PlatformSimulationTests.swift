@@ -37,6 +37,7 @@ import Foundation
 /// Platform simulation tests that can test different platform combinations
 /// without requiring actual hardware for each platform
 @MainActor
+@Suite("Platform Simulation")
 open class PlatformSimulationTests {
     
     // MARK: - Platform Testing

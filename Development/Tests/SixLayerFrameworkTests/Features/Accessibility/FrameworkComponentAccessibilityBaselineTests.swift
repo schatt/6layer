@@ -13,6 +13,7 @@ struct MockTaskItemBaseline: Identifiable {
 
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
+@Suite("Framework Component Accessibility Baseline")
 @MainActor
 open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // MARK: - TDD Green Phase: Components That SHOULD Work (Have .automaticAccessibility())
     

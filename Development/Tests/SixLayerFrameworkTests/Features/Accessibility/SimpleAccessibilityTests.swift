@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
+@Suite("Simple Accessibility")
 open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessibilityIdentifierWorks() {
         // Test manual accessibility identifier to make sure ViewInspector works
         let testView = Button("Test") { }

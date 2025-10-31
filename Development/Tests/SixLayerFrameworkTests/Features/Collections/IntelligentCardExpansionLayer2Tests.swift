@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure Layer 2 card expansion decision functions generate proper accessibility identifiers
 /// TESTING SCOPE: All functions in IntelligentCardExpansionLayer2.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Intelligent Card Expansion Layer")
 @MainActor
 open class IntelligentCardExpansionLayer2Tests {
     

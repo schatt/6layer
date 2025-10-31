@@ -26,11 +26,13 @@
 //  OCR service behavior with real Vision framework integration.
 
 import SwiftUI
+import Testing
 @preconcurrency @testable import SixLayerFramework
 
 /// Comprehensive tests for OCR functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
+@Suite("O C R Comprehensive")
 open class OCRComprehensiveTests: BaseTestClass {// MARK: - Real OCR Comprehensive Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test comprehensive OCR functionality:

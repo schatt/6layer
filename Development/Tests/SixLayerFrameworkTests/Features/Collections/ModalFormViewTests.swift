@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure ModalFormView generates proper accessibility identifiers
 /// TESTING SCOPE: ModalFormView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Modal Form View")
 @MainActor
 open class ModalFormViewTests {
     

@@ -12,6 +12,7 @@ import CoreData
 /// THE BUG: Mirror cannot see @NSManaged properties, so analysis returns empty fields
 /// EXPECTED: Should detect Core Data entity properties using NSEntityDescription
 
+@Suite("Data Introspection Core Data")
 @MainActor
 struct DataIntrospectionCoreDataTests {
     

@@ -3,6 +3,7 @@ import Testing
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Six Layer Framework")
 open class SixLayerFrameworkTests: BaseTestClass {
     
 

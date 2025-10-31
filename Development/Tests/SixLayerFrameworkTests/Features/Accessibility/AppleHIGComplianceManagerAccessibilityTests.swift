@@ -7,6 +7,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for AppleHIGComplianceManager.swift classes
 /// Ensures AppleHIGComplianceManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@Suite("Apple H I G Compliance Manager Accessibility")
 open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {// MARK: - AppleHIGComplianceManager Tests
     
     /// BUSINESS PURPOSE: Validates that AppleHIGComplianceManager generates proper accessibility identifiers

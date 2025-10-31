@@ -36,6 +36,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Eye Tracking")
 open class EyeTrackingTests: BaseTestClass {
     
     // MARK: - Helper Methods

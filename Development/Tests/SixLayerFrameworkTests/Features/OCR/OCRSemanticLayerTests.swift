@@ -26,6 +26,7 @@
 //  OCR service behavior with real Vision framework integration.
 
 import SwiftUI
+import Testing
 @testable import SixLayerFramework
 
 #if os(iOS)
@@ -37,6 +38,7 @@ import AppKit
 /// Tests for OCR semantic layer functionality
 /// TODO: Implement real tests that test actual OCR functionality
 @MainActor
+@Suite("O C R Semantic Layer")
 open class OCRSemanticLayerTests: BaseTestClass {
         
     // MARK: - Real OCR Tests (To Be Implemented)

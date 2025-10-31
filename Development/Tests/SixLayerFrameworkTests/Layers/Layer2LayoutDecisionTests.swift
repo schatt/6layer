@@ -26,6 +26,7 @@ import Foundation
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Layer Layout Decision")
 open class Layer2LayoutDecisionTests {
     
     // MARK: - determineOptimalLayout_L2 Tests

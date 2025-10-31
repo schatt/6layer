@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure all internationalization Layer 1 functions generate proper accessibility identifiers
 /// TESTING SCOPE: All functions in PlatformInternationalizationL1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Platform Internationalization L")
 @MainActor
 open class PlatformInternationalizationL1Tests {
     

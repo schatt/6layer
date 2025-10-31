@@ -7,6 +7,7 @@ import SwiftUI
 /// BUSINESS PURPOSE: Ensure CardDisplayHelper can extract meaningful content from items using configurable hints
 /// TESTING SCOPE: CardDisplayHelper hint system from CardDisplayable.swift
 /// METHODOLOGY: Test hint-based extraction with different item types and hint configurations
+@Suite("Card Display Helper Hint")
 @MainActor
 open class CardDisplayHelperHintTests {
     

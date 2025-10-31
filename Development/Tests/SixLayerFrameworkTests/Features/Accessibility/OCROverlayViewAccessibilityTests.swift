@@ -8,6 +8,7 @@ import ViewInspector
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
 @MainActor
+@Suite("O C R Overlay View Real Accessibility T D D")
 open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
     
     @Test @MainActor func testOCROverlayView_AppliesCorrectModifiersOnIOS() {

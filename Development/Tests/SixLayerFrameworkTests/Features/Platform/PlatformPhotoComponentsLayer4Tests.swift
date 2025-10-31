@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure all photo Layer 4 components generate proper accessibility identifiers
 /// TESTING SCOPE: All components in PlatformPhotoComponentsLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Platform Photo Components Layer")
 @MainActor
 open class PlatformPhotoComponentsLayer4Tests {
     

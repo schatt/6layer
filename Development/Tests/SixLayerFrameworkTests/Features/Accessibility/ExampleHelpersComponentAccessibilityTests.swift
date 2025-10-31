@@ -13,6 +13,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Example Helpers Component Accessibility")
 open class ExampleHelpersComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - ExampleProjectCard Tests

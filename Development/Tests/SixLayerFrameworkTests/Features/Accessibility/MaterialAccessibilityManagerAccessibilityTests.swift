@@ -7,6 +7,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Accessibility tests for MaterialAccessibilityManager.swift classes
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
+@Suite("Material Accessibility Manager Accessibility")
 open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MARK: - MaterialAccessibilityManager Tests
     
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers

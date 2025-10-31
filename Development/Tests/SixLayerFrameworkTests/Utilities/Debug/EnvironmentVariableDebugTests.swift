@@ -6,6 +6,7 @@ import SwiftUI
 import ViewInspector
 /// Debug test to understand environment variable propagation
 @MainActor
+@Suite("Environment Variable Debug")
 open class EnvironmentVariableDebugTests: BaseTestClass {
 
     override init() {

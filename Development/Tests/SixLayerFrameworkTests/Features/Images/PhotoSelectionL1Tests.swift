@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Photo Selection L")
 open class PhotoSelectionL1Tests: BaseTestClass {
     
     // MARK: - Test Data

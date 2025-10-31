@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Intelligent Card Expansion Component Accessibility")
 open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 4 Components Tests

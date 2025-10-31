@@ -12,6 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
+@Suite("Platform Messaging Layer Component Accessibility")
 open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Messaging Layer 5 Component Tests

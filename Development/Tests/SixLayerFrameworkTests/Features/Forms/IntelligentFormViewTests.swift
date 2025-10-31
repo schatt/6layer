@@ -9,6 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure IntelligentFormView generates proper accessibility identifiers
 /// TESTING SCOPE: All components in IntelligentFormView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
+@Suite("Intelligent Form View")
 @MainActor
 open class IntelligentFormViewTests {
     
