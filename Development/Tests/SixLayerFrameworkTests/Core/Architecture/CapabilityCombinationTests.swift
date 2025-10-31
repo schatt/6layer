@@ -825,9 +825,12 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         }
         
         if config.supportsHover {
-            // Hover platforms should have appropriate hover delays
-            #expect(config.hoverDelay >= 0, 
-                                       "Hover platforms should have hover delay")
+            // Hover platforms should have platform-correct hover delays
+            // macOS = 0.5, other platforms = 0.0 (though they shouldn't support hover natively)
+            let platform = RuntimeCapabilityDetection.testPlatform ?? SixLayerPlatform.current
+            let expectedHoverDelay: TimeInterval = (platform == .macOS) ? 0.5 : 0.0
+            #expect(config.hoverDelay == expectedHoverDelay, 
+                                       "Hover delay should be platform-correct (\(expectedHoverDelay)) for \(platform)")
         }
     }
 }

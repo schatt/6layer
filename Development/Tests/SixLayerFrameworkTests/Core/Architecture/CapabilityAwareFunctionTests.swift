@@ -195,7 +195,9 @@ open class CapabilityAwareFunctionTests {
             
             // Test that hover-related functions work when hover is supported
             #expect(config.supportsHover, "Hover should be supported when enabled on \(platform)")
-            #expect(config.hoverDelay >= 0, "Hover delay should be set when hover is supported on \(platform)")
+            // Verify hoverDelay returns platform-correct value (macOS = 0.5, others = 0.0)
+            let expectedHoverDelay: TimeInterval = (platform == .macOS) ? 0.5 : 0.0
+            #expect(config.hoverDelay == expectedHoverDelay, "Hover delay should be platform-correct (\(expectedHoverDelay)) for \(platform)")
             // Note: Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
             // We trust what the OS reports - if both are available, both are available
         }
@@ -219,8 +221,9 @@ open class CapabilityAwareFunctionTests {
             
             // Test that hover-related functions handle disabled state gracefully
             #expect(!config.supportsHover, "Hover should not be supported when disabled on \(platform)")
-            // Allow small non-zero delays introduced by debounce policies
-            #expect(config.hoverDelay <= 0.1, "Hover delay should be effectively zero when hover is disabled on \(platform)")
+            // Verify hoverDelay returns platform-correct value regardless of hover state (macOS = 0.5, others = 0.0)
+            let expectedHoverDelay: TimeInterval = (platform == .macOS) ? 0.5 : 0.0
+            #expect(config.hoverDelay == expectedHoverDelay, "Hover delay should be platform-correct (\(expectedHoverDelay)) for \(platform), regardless of hover state")
             // Do not assert touch state when hover is disabled; it can vary by platform/config
         }
         

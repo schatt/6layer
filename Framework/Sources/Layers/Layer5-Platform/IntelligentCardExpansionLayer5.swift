@@ -70,7 +70,7 @@ private func iOSCardExpansionConfig(deviceType: DeviceType) -> CardExpansionPlat
             supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
             supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
             minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-native touch target size
-            hoverDelay: 0.0,
+            hoverDelay: RuntimeCapabilityDetection.hoverDelay, // Platform-native hover delay
             animationEasing: .easeInOut(duration: 0.25)
         )
     case .pad:
@@ -82,7 +82,7 @@ private func iOSCardExpansionConfig(deviceType: DeviceType) -> CardExpansionPlat
             supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
             supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
             minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-native touch target size
-            hoverDelay: 0.1,
+            hoverDelay: RuntimeCapabilityDetection.hoverDelay, // Platform-native hover delay
             animationEasing: .easeInOut(duration: 0.3)
         )
     default:
@@ -101,7 +101,7 @@ private func macOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
         minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-native touch target size
-        hoverDelay: 0.1,
+        hoverDelay: RuntimeCapabilityDetection.hoverDelay, // Platform-native hover delay
         animationEasing: .easeInOut(duration: 0.3)
     )
 }
@@ -117,7 +117,7 @@ private func visionOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
         minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-native touch target size
-        hoverDelay: 0.0,
+        hoverDelay: RuntimeCapabilityDetection.hoverDelay, // Platform-native hover delay
         animationEasing: .easeInOut(duration: 0.4) // Slower for spatial interface
     )
 }
@@ -133,7 +133,7 @@ private func watchOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
         minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-native touch target size
-        hoverDelay: 0.0,
+        hoverDelay: RuntimeCapabilityDetection.hoverDelay, // Platform-native hover delay
         animationEasing: .easeInOut(duration: 0.15) // Very fast for watch
     )
 }
@@ -149,7 +149,7 @@ private func tvOSCardExpansionConfig() -> CardExpansionPlatformConfig {
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
         minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-native touch target size
-        hoverDelay: 0.0,
+        hoverDelay: RuntimeCapabilityDetection.hoverDelay, // Platform-native hover delay
         animationEasing: .easeInOut(duration: 0.4) // Slower for TV viewing
     )
 }
