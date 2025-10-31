@@ -769,9 +769,13 @@ public extension RuntimeCapabilityDetection {
     }
     
     /// Hover delay for platforms that support hover
+    /// Respects test platform override - returns platform-correct value based on mocked platform
     @MainActor
     static var hoverDelay: TimeInterval {
-        switch currentPlatform {
+        // Use test platform if set, otherwise use current platform
+        let platform = testPlatform ?? currentPlatform
+        
+        switch platform {
         case .macOS:
             return 0.5   // macOS hover delay
         case .iOS, .watchOS, .tvOS, .visionOS:
