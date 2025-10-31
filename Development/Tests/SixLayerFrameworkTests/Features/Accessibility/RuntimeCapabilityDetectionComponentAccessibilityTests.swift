@@ -24,7 +24,7 @@ open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass 
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "RuntimeCapabilityDetection"
         )

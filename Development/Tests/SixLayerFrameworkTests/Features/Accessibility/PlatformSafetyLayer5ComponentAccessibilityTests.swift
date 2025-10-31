@@ -22,7 +22,7 @@ open class PlatformSafetyLayer5ComponentAccessibilityTests: BaseTestClass {// MA
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSafetyLayer5"
         )

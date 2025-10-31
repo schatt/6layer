@@ -26,7 +26,7 @@ open class InternationalizationServiceComponentAccessibilityTests: BaseTestClass
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "InternationalizationService"
         )

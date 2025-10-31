@@ -50,7 +50,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "GlobalAutomaticAccessibilityIdentifierModifier"
         )
@@ -66,7 +66,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "DisableAutomaticAccessibilityIdentifierModifier"
         )
@@ -82,7 +82,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierAssignmentModifier"
         )
@@ -98,7 +98,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ViewHierarchyTrackingModifier"
         )
@@ -114,7 +114,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ScreenContextModifier"
         )
@@ -130,7 +130,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "WorkingAccessibilityIdentifierModifier"
         )
@@ -146,7 +146,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ExactAccessibilityIdentifierModifier"
         )
@@ -162,7 +162,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "HierarchicalNamedModifier"
         )
@@ -178,7 +178,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityLabelAssignmentModifier"
         )
@@ -194,7 +194,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityHintAssignmentModifier"
         )
@@ -210,7 +210,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityTraitsAssignmentModifier"
         )
@@ -226,7 +226,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.element.*",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityValueAssignmentModifier"
         )
