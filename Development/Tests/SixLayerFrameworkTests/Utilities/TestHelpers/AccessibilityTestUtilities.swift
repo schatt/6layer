@@ -187,12 +187,9 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
 /// We're testing that components do this, not that the test helper can do it.
 @MainActor
 public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> String? {
-    // Ensure config is enabled for tests
+    // DO NOT modify shared config - tests set their own values
+    // This function is called multiple times in parameterized tests, so we must not leak state
     let config = AccessibilityIdentifierConfig.shared
-    config.enableDebugLogging = true
-    if config.namespace.isEmpty {
-        config.namespace = "test"
-    }
     
     // Set up environment variable only - components should check this and apply the modifier themselves
     // We do NOT apply .automaticAccessibilityIdentifiers() here because that would test the test helper,
@@ -204,10 +201,14 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> 
         // Use ViewInspector to directly inspect the SwiftUI view
         // This will find identifiers that the COMPONENT applied, not the test helper
         let identifier = try viewWithEnvironment.inspect().accessibilityIdentifier()
-        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from SwiftUI view")
+        if config.enableDebugLogging {
+            print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from SwiftUI view")
+        }
         return identifier.isEmpty ? nil : identifier
     } catch {
-        print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
+        if config.enableDebugLogging {
+            print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
+        }
         // Fallback: host platform view and search for identifier
         let hosted = hostRootPlatformView(viewWithEnvironment)
         let platformId = firstAccessibilityIdentifier(inHosted: hosted)
