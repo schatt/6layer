@@ -670,20 +670,198 @@ public struct DateTimePickerField: View {
 
 // MARK: - Custom Field View
 
-/// Custom field view that uses the registry to find appropriate components
+/// Custom field view that routes to appropriate components based on field type
+/// This ensures tests actually test the components they claim to test
 public struct CustomFieldView: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
     
     public var body: some View {
-        // For now, fallback to a basic text field for custom types
-        // The registry system will be enhanced in future iterations
-        TextField(field.placeholder ?? field.label, text: Binding(
+        // Use specific components when they exist, otherwise create appropriate view
+        if let contentType = field.contentType {
+            switch contentType {
+            case .color:
+                DynamicColorField(field: field, formState: formState)
+            case .toggle:
+                DynamicToggleField(field: field, formState: formState)
+            case .checkbox:
+                DynamicCheckboxField(field: field, formState: formState)
+            case .textarea:
+                DynamicTextAreaField(field: field, formState: formState)
+            case .select:
+                DynamicSelectField(field: field, formState: formState)
+            default:
+                // For other types, create the appropriate view inline
+                createFieldViewForContentType(contentType)
+            }
+        } else if let textContentType = field.textContentType {
+            // Handle text fields using OS UITextContentType
+            TextField(field.placeholder ?? field.label, text: Binding(
+                get: { formState.getValue(for: field.id) ?? "" },
+                set: { formState.setValue($0, for: field.id) }
+            ))
+            .textFieldStyle(.roundedBorder)
+            #if canImport(UIKit)
+            .textContentType(textContentType.uiTextContentType)
+            #endif
+            .automaticAccessibilityIdentifiers()
+        } else {
+            // Fallback for fields with neither textContentType nor contentType
+            TextField(field.placeholder ?? field.label, text: Binding(
+                get: { formState.getValue(for: field.id) ?? "" },
+                set: { formState.setValue($0, for: field.id) }
+            ))
+            .textFieldStyle(.roundedBorder)
+            .automaticAccessibilityIdentifiers()
+        }
+    }
+    
+    @ViewBuilder
+    private func createFieldViewForContentType(_ contentType: DynamicContentType) -> some View {
+        let binding = Binding(
             get: { formState.getValue(for: field.id) ?? "" },
             set: { formState.setValue($0, for: field.id) }
-        ))
-        .textFieldStyle(.roundedBorder)
-        .automaticAccessibilityIdentifiers()
+        )
+        
+        switch contentType {
+        case .text, .email, .phone:
+            TextField(field.placeholder ?? field.label, text: binding)
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(contentType == .email ? .emailAddress : contentType == .phone ? .phonePad : .default)
+                .autocapitalization(.none)
+                #endif
+                .automaticAccessibilityIdentifiers()
+        case .password:
+            SecureField(field.placeholder ?? field.label, text: binding)
+                .textFieldStyle(.roundedBorder)
+                .automaticAccessibilityIdentifiers()
+        case .number, .integer:
+            TextField(field.placeholder ?? field.label, text: binding)
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(.decimalPad)
+                #endif
+                .automaticAccessibilityIdentifiers()
+        case .url:
+            TextField(field.placeholder ?? field.label, text: binding)
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(.URL)
+                .autocapitalization(.none)
+                #endif
+                .automaticAccessibilityIdentifiers()
+        case .date:
+            DatePicker(
+                "",
+                selection: Binding(
+                    get: { DateFormatter.iso8601.date(from: binding.wrappedValue) ?? Date() },
+                    set: { binding.wrappedValue = DateFormatter.iso8601.string(from: $0) }
+                ),
+                displayedComponents: .date
+            )
+            .datePickerStyle(.compact)
+            .automaticAccessibilityIdentifiers()
+        case .time:
+            DatePicker(
+                "",
+                selection: Binding(
+                    get: { DateFormatter.timeFormatter.date(from: binding.wrappedValue) ?? Date() },
+                    set: { binding.wrappedValue = DateFormatter.timeFormatter.string(from: $0) }
+                ),
+                displayedComponents: .hourAndMinute
+            )
+            .datePickerStyle(.compact)
+            .automaticAccessibilityIdentifiers()
+        case .datetime:
+            DatePicker(
+                "",
+                selection: Binding(
+                    get: { DateFormatter.iso8601.date(from: binding.wrappedValue) ?? Date() },
+                    set: { binding.wrappedValue = DateFormatter.iso8601.string(from: $0) }
+                ),
+                displayedComponents: [.date, .hourAndMinute]
+            )
+            .datePickerStyle(.compact)
+            .automaticAccessibilityIdentifiers()
+        case .radio:
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(field.options ?? [], id: \.self) { option in
+                    HStack {
+                        Button(action: {
+                            formState.setValue(option, for: field.id)
+                        }) {
+                            HStack {
+                                Image(systemName: binding.wrappedValue == option ? "largecircle.fill.circle" : "circle")
+                                    .foregroundColor(.accentColor)
+                                Text(option)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        Spacer()
+                    }
+                }
+            }
+            .automaticAccessibilityIdentifiers()
+        case .file, .image, .data, .array:
+            // For complex types, show a placeholder with proper accessibility
+            VStack(alignment: .leading) {
+                Text(field.label)
+                    .font(.subheadline)
+                Text("\(contentType.rawValue.capitalized) field: \(field.label)")
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .automaticAccessibilityIdentifiers()
+        case .enum:
+            Picker(field.placeholder ?? "Select option", selection: binding) {
+                Text("Select an option").tag("")
+                ForEach(field.options ?? [], id: \.self) { option in
+                    Text(option).tag(option)
+                }
+            }
+            .pickerStyle(.menu)
+            .automaticAccessibilityIdentifiers()
+        case .autocomplete:
+            AutocompleteField(field: field, formState: formState, suggestions: field.options ?? [])
+        case .richtext:
+            RichTextEditorField(field: field, formState: formState)
+        case .multiselect:
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(field.options ?? [], id: \.self) { option in
+                    HStack {
+                        Button(action: {
+                            let currentValue = formState.getValue(for: field.id) ?? ""
+                            let values = currentValue.isEmpty ? [] : currentValue.components(separatedBy: ",")
+                            if values.contains(option) {
+                                formState.setValue(values.filter { $0 != option }.joined(separator: ","), for: field.id)
+                            } else {
+                                formState.setValue((values + [option]).joined(separator: ","), for: field.id)
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: (formState.getValue(for: field.id) ?? "").contains(option) ? "checkmark.square.fill" : "square")
+                                    .foregroundColor(.accentColor)
+                                Text(option)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        Spacer()
+                    }
+                }
+            }
+            .automaticAccessibilityIdentifiers()
+        case .custom:
+            // For custom types, fallback to basic text field
+            TextField(field.placeholder ?? field.label, text: binding)
+                .textFieldStyle(.roundedBorder)
+                .automaticAccessibilityIdentifiers()
+        default:
+            // Fallback for any missed types
+            TextField(field.placeholder ?? field.label, text: binding)
+                .textFieldStyle(.roundedBorder)
+                .automaticAccessibilityIdentifiers()
+        }
     }
 }
 
