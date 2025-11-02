@@ -430,7 +430,7 @@ public extension IntelligentDetailView {
     /// Determine adaptive detail view strategy based on device type
     /// This is PURE business logic - testable WITHOUT rendering views
     /// Returns which view strategy to use for a given device type
-    static func determineAdaptiveDetailStrategy(for deviceType: DeviceType) -> AdaptiveDetailStrategy {
+    nonisolated static func determineAdaptiveDetailStrategy(for deviceType: DeviceType) -> AdaptiveDetailStrategy {
         switch deviceType {
         case .phone:
             return .standard

@@ -12,17 +12,15 @@ public struct ExampleHelpers: View {
         VStack(spacing: 12) {
             Text("Example Helpers")
                 .font(.headline)
-                .accessibilityIdentifier("SixLayer.main.element.examplehelpers.title")
             
             Text("Helper examples and utilities")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .accessibilityIdentifier("SixLayer.main.element.examplehelpers.description")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .accessibilityIdentifier("SixLayer.main.element.examplehelpers.container")
+        .automaticAccessibilityIdentifiers()
     }
 }
 
