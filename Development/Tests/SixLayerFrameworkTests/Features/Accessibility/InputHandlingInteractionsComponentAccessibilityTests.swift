@@ -34,7 +34,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformInteractionButton"
         )
@@ -58,7 +58,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = hasAccessibilityIdentifierWithPattern(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "InputHandlingManager"
         )
@@ -78,7 +78,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "KeyboardShortcutManager"
         )
@@ -98,7 +98,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "HapticFeedbackManager"
         )
@@ -118,7 +118,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "DragDropManager"
         )

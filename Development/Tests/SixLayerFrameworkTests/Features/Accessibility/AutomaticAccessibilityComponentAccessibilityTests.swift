@@ -27,7 +27,7 @@ open class AutomaticAccessibilityComponentAccessibilityTests: BaseTestClass {
         // Then: Framework component should automatically generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )

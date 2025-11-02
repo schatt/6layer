@@ -27,7 +27,7 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPhotoComponentsLayer4"
         )

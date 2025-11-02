@@ -29,21 +29,21 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers for components
         let hasAlertAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             alertButton,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AlertButton"
         )
         
         let hasToastAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             toastNotification,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ToastNotification"
         )
         
         let hasBannerAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             bannerNotification,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "BannerNotification"
         )

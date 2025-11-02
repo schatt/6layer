@@ -31,7 +31,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AppleHIGComplianceModifier"
         )
@@ -54,7 +54,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "SystemAccessibilityModifier"
         )
@@ -77,7 +77,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPatternModifier"
         )
@@ -100,7 +100,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "VisualConsistencyModifier"
         )
@@ -123,7 +123,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "InteractionPatternModifier"
         )
@@ -146,7 +146,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "VoiceOverSupportModifier"
         )
@@ -169,7 +169,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "KeyboardNavigationModifier"
         )
@@ -192,7 +192,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "HighContrastModifier"
         )
@@ -215,7 +215,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ReducedMotionModifier"
         )
@@ -238,7 +238,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicTypeModifier"
         )
@@ -261,7 +261,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformNavigationModifier"
         )
@@ -284,7 +284,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformStylingModifier"
         )
@@ -307,7 +307,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformIconModifier"
         )
@@ -330,7 +330,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "SystemColorModifier"
         )
@@ -353,7 +353,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "SystemTypographyModifier"
         )
@@ -376,7 +376,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "SpacingModifier"
         )
@@ -399,7 +399,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "TouchTargetModifier"
         )
@@ -422,7 +422,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformInteractionModifier"
         )
@@ -445,7 +445,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "HapticFeedbackModifier"
         )
@@ -468,7 +468,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "GestureRecognitionModifier"
         )
@@ -491,7 +491,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AppleHIGComplianceManager"
         )

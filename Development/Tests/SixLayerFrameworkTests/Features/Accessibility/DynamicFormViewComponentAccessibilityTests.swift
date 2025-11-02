@@ -69,7 +69,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     ) -> Bool {
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.element.*",
             platform: platform,
             componentName: componentName
         )

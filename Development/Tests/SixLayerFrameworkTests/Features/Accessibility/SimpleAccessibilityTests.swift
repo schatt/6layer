@@ -33,7 +33,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
         // Framework component should automatically generate accessibility identifier
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedPattern: "*.main.ui.element.*", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         ), "Framework component should automatically generate accessibility identifiers")
