@@ -25,13 +25,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             GridItemData(title: "Grid Item 3", subtitle: "Subtitle 3", icon: "circle", color: .green)
         ]
         
-        // When: Creating ResponsiveGrid
+        // When: Creating ResponsiveGrid with framework components
         let view = ResponsiveGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
             ForEach(gridItems) { item in
-                VStack {
-                    Text(item.title)
-                    Text(item.subtitle)
-                }
+                platformPresentContent_L1(
+                    content: "\(item.title) - \(item.subtitle)",
+                    hints: PresentationHints()
+                )
             }
         }
         

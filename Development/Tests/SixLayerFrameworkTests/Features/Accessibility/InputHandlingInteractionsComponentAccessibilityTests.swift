@@ -18,13 +18,13 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - PlatformInteractionButton Tests
     
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiers() async {
-        // Given: Test label
-        let testLabel = VStack {
-            Text("Platform Interaction Button")
-            Image(systemName: "button")
-        }
+        // Given: Framework component as label (testing our framework, not SwiftUI)
+        let testLabel = platformPresentContent_L1(
+            content: "Platform Interaction Button",
+            hints: PresentationHints()
+        )
         
-        // When: Creating PlatformInteractionButton
+        // When: Creating PlatformInteractionButton with framework component label
         let view = PlatformInteractionButton(style: .primary, action: {
             // Button action
         }, label: {
@@ -45,13 +45,14 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - InputHandlingManager Tests
     
     @Test func testInputHandlingManagerGeneratesAccessibilityIdentifiers() async {
-        // Given: InputHandlingManager
+        // Given: Framework component with InputHandlingManager
         let manager = InputHandlingManager()
         
-        // When: Creating a view with InputHandlingManager
-        let view = VStack {
-            Text("Input Handling Manager Content")
-        }
+        // When: Creating a framework component view with InputHandlingManager
+        let view = platformPresentContent_L1(
+            content: "Input Handling Manager Content",
+            hints: PresentationHints()
+        )
         .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
@@ -68,10 +69,11 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - KeyboardShortcutManager Tests
     
     @Test func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a view with KeyboardShortcutManager
-        let view = VStack {
-            Text("Keyboard Shortcut Manager Content")
-        }
+        // When: Creating a framework component
+        let view = platformPresentContent_L1(
+            content: "Keyboard Shortcut Manager Content",
+            hints: PresentationHints()
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -87,10 +89,11 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - HapticFeedbackManager Tests
     
     @Test func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a view with HapticFeedbackManager
-        let view = VStack {
-            Text("Haptic Feedback Manager Content")
-        }
+        // When: Creating a framework component
+        let view = platformPresentContent_L1(
+            content: "Haptic Feedback Manager Content",
+            hints: PresentationHints()
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -106,10 +109,11 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     // MARK: - DragDropManager Tests
     
     @Test func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
-        // When: Creating a view with DragDropManager
-        let view = VStack {
-            Text("Drag Drop Manager Content")
-        }
+        // When: Creating a framework component
+        let view = platformPresentContent_L1(
+            content: "Drag Drop Manager Content",
+            hints: PresentationHints()
+        )
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

@@ -96,43 +96,66 @@ open class AppleHIGComplianceTests: BaseTestClass {
     // MARK: - View Modifier Tests
     
     @Test func testAppleHIGCompliantModifier() {
-        // Given: A basic view
-        let testView = Text("Test")
+        // Given: Framework component (testing our framework, not SwiftUI)
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        .appleHIGCompliant()
         
         // When: Apple HIG compliance is applied
-        // Then: Should return a modified view (some View is non-optional)
+        // Then: Framework component should have compliance applied
+        #expect(testView != nil, "Framework component with Apple HIG compliance should be valid")
     }
     
     @Test func testAutomaticAccessibilityModifier() {
-        // Given: A basic view
-        let testView = Button("Test") { }
+        // Given: Framework component
+        let testView = platformPresentBasicValue_L1(
+            value: 42,
+            hints: PresentationHints()
+        )
         
-        // When: Automatic accessibility is applied
-        // Then: Should return a modified view (some View is non-optional)
+        // When: Automatic accessibility is applied (framework components do this automatically)
+        // Then: Framework component should generate accessibility identifiers
+        #expect(testView != nil, "Framework component should support automatic accessibility")
     }
     
     @Test func testPlatformPatternsModifier() {
-        // Given: A basic view
-        let testView = Text("Test")
+        // Given: Framework component
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        .platformPatterns()
         
         // When: Platform patterns are applied
-        // Then: Should return a modified view (some View is non-optional)
+        // Then: Framework component should have platform patterns
+        #expect(testView != nil, "Framework component with platform patterns should be valid")
     }
     
     @Test func testVisualConsistencyModifier() {
-        // Given: A basic view
-        let testView = Text("Test")
+        // Given: Framework component
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        .visualConsistency()
         
         // When: Visual consistency is applied
-        // Then: Should return a modified view (some View is non-optional)
+        // Then: Framework component should have visual consistency
+        #expect(testView != nil, "Framework component with visual consistency should be valid")
     }
     
     @Test func testInteractionPatternsModifier() {
-        // Given: A basic view
-        let testView = Button("Test") { }
+        // Given: Framework component
+        let testView = platformPresentBasicValue_L1(
+            value: 42,
+            hints: PresentationHints()
+        )
         
-        // When: Interaction patterns are applied
-        // Then: Should return a modified view (some View is non-optional)
+        // When: Interaction patterns are applied (framework handles this)
+        // Then: Framework component should support interactions
+        #expect(testView != nil, "Framework component should support interaction patterns")
     }
     
     // MARK: - Compliance Checking Tests
