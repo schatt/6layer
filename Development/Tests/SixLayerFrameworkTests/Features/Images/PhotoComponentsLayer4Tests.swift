@@ -37,8 +37,9 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
     
     private var testImage: PlatformImage!
     
-    init() async throws {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    @MainActor
+    public override init() {
+        super.init()
         // Create a test image (placeholder for now)
         #if os(iOS)
         testImage = PlatformImage(uiImage: UIImage(systemName: "photo") ?? UIImage())

@@ -31,56 +31,57 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        if items.isEmpty {
-            VStack(spacing: 16) {
-                Image(systemName: "tray")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                
-                Text("No items available")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                if let onCreateItem = onCreateItem {
-                    Button("Add Item") {
-                        onCreateItem()
+        Group {
+            if items.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    
+                    Text("No items available")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if let onCreateItem = onCreateItem {
+                        Button("Add Item") {
+                            onCreateItem()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.platformBackground)
+            } else {
+                GeometryReader { geometry in
+                    let screenWidth = geometry.size.width
+                    
+                    // Get layout decision from Layer 2
+                    let layoutDecision = determineIntelligentCardLayout_L2(
+                        contentCount: items.count,
+                        screenWidth: screenWidth,
+                        deviceType: SixLayerPlatform.deviceType,
+                        contentComplexity: hints.complexity
+                    )
+                    
+                    // Get strategy from Layer 3
+                    let strategy = selectCardExpansionStrategy_L3(
+                        contentCount: items.count,
+                        screenWidth: screenWidth,
+                        deviceType: SixLayerPlatform.deviceType,
+                        interactionStyle: .expandable,
+                        contentDensity: .balanced
+                    )
+                    
+                    // Render the appropriate layout
+                    renderCardLayout(
+                        layoutDecision: layoutDecision,
+                        strategy: strategy
+                    )
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.platformBackground)
-            .automaticAccessibilityIdentifiers()
-        } else {
-            GeometryReader { geometry in
-                let screenWidth = geometry.size.width
-                
-                // Get layout decision from Layer 2
-                let layoutDecision = determineIntelligentCardLayout_L2(
-                    contentCount: items.count,
-                    screenWidth: screenWidth,
-                    deviceType: SixLayerPlatform.deviceType,
-                    contentComplexity: hints.complexity
-                )
-                
-                // Get strategy from Layer 3
-                let strategy = selectCardExpansionStrategy_L3(
-                    contentCount: items.count,
-                    screenWidth: screenWidth,
-                    deviceType: SixLayerPlatform.deviceType,
-                    interactionStyle: .expandable,
-                    contentDensity: .balanced
-                )
-                
-                // Render the appropriate layout
-                renderCardLayout(
-                    layoutDecision: layoutDecision,
-                    strategy: strategy
-                )
-                .automaticAccessibilityIdentifiers()
-            }
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder
@@ -320,43 +321,44 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        if items.isEmpty {
-            VStack(spacing: 16) {
-                Image(systemName: "tray")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                
-                Text("No items available")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                if let onCreateItem = onCreateItem {
-                    Button("Add Item") {
-                        onCreateItem()
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.platformBackground)
-            .automaticAccessibilityIdentifiers()
-        } else {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    ForEach(items) { item in
-                        CoverFlowCardComponent(
-                            item: item,
-                            onItemSelected: onItemSelected,
-                            onItemDeleted: onItemDeleted,
-                            onItemEdited: onItemEdited
-                        )
+        Group {
+            if items.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    
+                    Text("No items available")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if let onCreateItem = onCreateItem {
+                        Button("Add Item") {
+                            onCreateItem()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
                 }
-                .padding(.horizontal, 40)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.platformBackground)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
+                        ForEach(items) { item in
+                            CoverFlowCardComponent(
+                                item: item,
+                                onItemSelected: onItemSelected,
+                                onItemDeleted: onItemDeleted,
+                                onItemEdited: onItemEdited
+                            )
+                        }
+                    }
+                    .padding(.horizontal, 40)
+                }
             }
-            .automaticAccessibilityIdentifiers()
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -445,55 +447,56 @@ public struct GridCollectionView<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        if items.isEmpty {
-            VStack(spacing: 16) {
-                Image(systemName: "tray")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                
-                Text("No items available")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                if let onCreateItem = onCreateItem {
-                    Button("Add Item") {
-                        onCreateItem()
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.platformBackground)
-            .automaticAccessibilityIdentifiers()
-        } else {
-            GeometryReader { geometry in
-                let layoutDecision = determineIntelligentCardLayout_L2(
-                    contentCount: items.count,
-                    screenWidth: geometry.size.width,
-                    deviceType: SixLayerPlatform.deviceType,
-                    contentComplexity: hints.complexity
-                )
-                
-                LazyVGrid(
-                    columns: Array(repeating: GridItem(.flexible(), spacing: layoutDecision.spacing), count: layoutDecision.columns),
-                    spacing: layoutDecision.spacing
-                ) {
-                    ForEach(items) { item in
-                        SimpleCardComponent(
-                            item: item, 
-                            layoutDecision: layoutDecision,
-                            hints: hints,
-                            onItemSelected: onItemSelected,
-                            onItemDeleted: onItemDeleted,
-                            onItemEdited: onItemEdited
-                        )
+        Group {
+            if items.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    
+                    Text("No items available")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if let onCreateItem = onCreateItem {
+                        Button("Add Item") {
+                            onCreateItem()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
                 }
-                .padding(layoutDecision.padding)
-                .automaticAccessibilityIdentifiers()
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.platformBackground)
+            } else {
+                GeometryReader { geometry in
+                    let layoutDecision = determineIntelligentCardLayout_L2(
+                        contentCount: items.count,
+                        screenWidth: geometry.size.width,
+                        deviceType: SixLayerPlatform.deviceType,
+                        contentComplexity: hints.complexity
+                    )
+                    
+                    LazyVGrid(
+                        columns: Array(repeating: GridItem(.flexible(), spacing: layoutDecision.spacing), count: layoutDecision.columns),
+                        spacing: layoutDecision.spacing
+                    ) {
+                        ForEach(items) { item in
+                            SimpleCardComponent(
+                                item: item, 
+                                layoutDecision: layoutDecision,
+                                hints: hints,
+                                onItemSelected: onItemSelected,
+                                onItemDeleted: onItemDeleted,
+                                onItemEdited: onItemEdited
+                            )
+                        }
+                    }
+                    .padding(layoutDecision.padding)
+                }
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -523,42 +526,43 @@ public struct ListCollectionView<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        if items.isEmpty {
-            VStack(spacing: 16) {
-                Image(systemName: "tray")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                
-                Text("No items available")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                if let onCreateItem = onCreateItem {
-                    Button("Add Item") {
-                        onCreateItem()
+        Group {
+            if items.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    
+                    Text("No items available")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if let onCreateItem = onCreateItem {
+                        Button("Add Item") {
+                            onCreateItem()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
                 }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.platformBackground)
-            .automaticAccessibilityIdentifiers()
-        } else {
-            LazyVStack(spacing: 12) {
-                ForEach(items) { item in
-                    ListCardComponent(
-                        item: item,
-                        hints: hints,
-                        onItemSelected: onItemSelected,
-                        onItemDeleted: onItemDeleted,
-                        onItemEdited: onItemEdited
-                    )
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.platformBackground)
+            } else {
+                LazyVStack(spacing: 12) {
+                    ForEach(items) { item in
+                        ListCardComponent(
+                            item: item,
+                            hints: hints,
+                            onItemSelected: onItemSelected,
+                            onItemDeleted: onItemDeleted,
+                            onItemEdited: onItemEdited
+                        )
+                    }
                 }
+                .padding(16)
             }
-            .padding(16)
-            .automaticAccessibilityIdentifiers()
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -588,39 +592,40 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        if items.isEmpty {
-            VStack(spacing: 16) {
-                Image(systemName: "tray")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                
-                Text("No items available")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                if let onCreateItem = onCreateItem {
-                    Button("Add Item") {
-                        onCreateItem()
+        Group {
+            if items.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    
+                    Text("No items available")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if let onCreateItem = onCreateItem {
+                        Button("Add Item") {
+                            onCreateItem()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
                 }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.platformBackground)
-            .automaticAccessibilityIdentifiers()
-        } else {
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible()), count: 3),
-                spacing: 16
-            ) {
-                ForEach(items) { item in
-                    MasonryCardComponent(item: item, hints: hints)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.platformBackground)
+            } else {
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.flexible()), count: 3),
+                    spacing: 16
+                ) {
+                    ForEach(items) { item in
+                        MasonryCardComponent(item: item, hints: hints)
+                    }
                 }
+                .padding(16)
             }
-            .padding(16)
-            .automaticAccessibilityIdentifiers()
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -650,40 +655,39 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
     }
     
     public var body: some View {
-        if items.isEmpty {
-            VStack(spacing: 16) {
-                Image(systemName: "tray")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                
-                Text("No items available")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                if let onCreateItem = onCreateItem {
-                    Button("Add Item") {
-                        onCreateItem()
+        Group {
+            if items.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 48))
+                        .foregroundColor(.secondary)
+                    
+                    Text("No items available")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if let onCreateItem = onCreateItem {
+                        Button("Add Item") {
+                            onCreateItem()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.platformBackground)
+            } else {
+                // Choose the best layout based on content and device
+                if items.count <= 2 {
+                    ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+                } else if SixLayerPlatform.deviceType == .phone {
+                    ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+                } else {
+                    GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.platformBackground)
-            .automaticAccessibilityIdentifiers()
-        } else {
-            // Choose the best layout based on content and device
-            if items.count <= 2 {
-                ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
-                    .automaticAccessibilityIdentifiers()
-            } else if SixLayerPlatform.deviceType == .phone {
-                ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
-                    .automaticAccessibilityIdentifiers()
-            } else {
-                GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
-                    .automaticAccessibilityIdentifiers()
-            }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 

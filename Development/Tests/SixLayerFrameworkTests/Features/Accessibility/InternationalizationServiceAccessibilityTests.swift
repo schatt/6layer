@@ -26,7 +26,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // Test that the service can be configured with accessibility settings
         await MainActor.run {
-            let config = testConfig
+            let config = self.testConfig
             #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
         }
@@ -44,7 +44,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // Test that the service can be configured with accessibility settings
         await MainActor.run {
-            let config = testConfig
+            let config = self.testConfig
             #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
         }

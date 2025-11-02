@@ -677,43 +677,44 @@ public struct CustomFieldView: View {
     @ObservedObject var formState: DynamicFormState
     
     public var body: some View {
-        // Use specific components when they exist, otherwise create appropriate view
-        if let contentType = field.contentType {
-            switch contentType {
-            case .color:
-                DynamicColorField(field: field, formState: formState)
-            case .toggle:
-                DynamicToggleField(field: field, formState: formState)
-            case .checkbox:
-                DynamicCheckboxField(field: field, formState: formState)
-            case .textarea:
-                DynamicTextAreaField(field: field, formState: formState)
-            case .select:
-                DynamicSelectField(field: field, formState: formState)
-            default:
-                // For other types, create the appropriate view inline
-                createFieldViewForContentType(contentType)
+        Group {
+            // Use specific components when they exist, otherwise create appropriate view
+            if let contentType = field.contentType {
+                switch contentType {
+                case .color:
+                    DynamicColorField(field: field, formState: formState)
+                case .toggle:
+                    DynamicToggleField(field: field, formState: formState)
+                case .checkbox:
+                    DynamicCheckboxField(field: field, formState: formState)
+                case .textarea:
+                    DynamicTextAreaField(field: field, formState: formState)
+                case .select:
+                    DynamicSelectField(field: field, formState: formState)
+                default:
+                    // For other types, create the appropriate view inline
+                    createFieldViewForContentType(contentType)
+                }
+            } else if let textContentType = field.textContentType {
+                // Handle text fields using OS UITextContentType
+                TextField(field.placeholder ?? field.label, text: Binding(
+                    get: { formState.getValue(for: field.id) ?? "" },
+                    set: { formState.setValue($0, for: field.id) }
+                ))
+                .textFieldStyle(.roundedBorder)
+                #if canImport(UIKit)
+                .textContentType(textContentType.uiTextContentType)
+                #endif
+            } else {
+                // Fallback for fields with neither textContentType nor contentType
+                TextField(field.placeholder ?? field.label, text: Binding(
+                    get: { formState.getValue(for: field.id) ?? "" },
+                    set: { formState.setValue($0, for: field.id) }
+                ))
+                .textFieldStyle(.roundedBorder)
             }
-        } else if let textContentType = field.textContentType {
-            // Handle text fields using OS UITextContentType
-            TextField(field.placeholder ?? field.label, text: Binding(
-                get: { formState.getValue(for: field.id) ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            #if canImport(UIKit)
-            .textContentType(textContentType.uiTextContentType)
-            #endif
-            .automaticAccessibilityIdentifiers()
-        } else {
-            // Fallback for fields with neither textContentType nor contentType
-            TextField(field.placeholder ?? field.label, text: Binding(
-                get: { formState.getValue(for: field.id) ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            .automaticAccessibilityIdentifiers()
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder
