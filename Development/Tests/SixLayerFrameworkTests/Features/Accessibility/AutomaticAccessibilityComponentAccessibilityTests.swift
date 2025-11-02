@@ -18,19 +18,21 @@ open class AutomaticAccessibilityComponentAccessibilityTests: BaseTestClass {
     // MARK: - Automatic Accessibility Component Tests
     
     @Test func testAutomaticAccessibilityIdentifiersGeneratesAccessibilityIdentifiers() async {
-        // Given: AutomaticAccessibilityIdentifiers modifier applied to a view
-        let testView = Text("Test")
-            .automaticAccessibilityIdentifiers()
+        // Given: Framework component (testing our framework, not SwiftUI)
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers
+        // Then: Framework component should automatically generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "AutomaticAccessibilityIdentifiers"
+            componentName: "platformPresentContent_L1"
         )
         
-        #expect(hasAccessibilityID, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers")
     }
 }
 

@@ -52,8 +52,10 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Given: Test navigation content
         let navigationContent = { (isHorizontal: Bool) in
             VStack {
-                Text("Navigation Content")
-                Button("Test Button") { }
+                platformPresentContent_L1(
+                    content: "Navigation Content",
+                    hints: PresentationHints()
+                )
             }
         }
         
@@ -77,9 +79,9 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Given: Test stack content
         let stackContent = {
             VStack {
-                Text("Stack Item 1")
-                Text("Stack Item 2")
-                Text("Stack Item 3")
+                platformPresentContent_L1(content: "Stack Item 1", hints: PresentationHints())
+                platformPresentContent_L1(content: "Stack Item 2", hints: PresentationHints())
+                platformPresentContent_L1(content: "Stack Item 3", hints: PresentationHints())
             }
         }
         
@@ -135,7 +137,10 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     
     @Test func testResponsivePaddingModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
-        let testContent = Text("Test Content")
+        let testContent = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Applying ResponsivePadding modifier
         let view = testContent.modifier(ResponsivePadding())
