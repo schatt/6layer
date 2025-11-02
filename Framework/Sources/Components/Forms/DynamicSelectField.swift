@@ -50,6 +50,7 @@ public struct DynamicSelectField: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(field.isRequired && (selectedValue.wrappedValue.isEmpty) ? Color.red : Color.gray.opacity(0.3), lineWidth: 1)
         )
+        .automaticAccessibilityIdentifiers()
     }
 }
 

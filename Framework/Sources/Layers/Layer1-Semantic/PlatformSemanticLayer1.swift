@@ -1958,6 +1958,7 @@ public struct ModalFormView: View {
                     .textFieldStyle(.roundedBorder)
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -2442,6 +2443,7 @@ public struct SimpleFormView: View {
                     .foregroundColor(.red)
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     // MARK: - Helper Methods

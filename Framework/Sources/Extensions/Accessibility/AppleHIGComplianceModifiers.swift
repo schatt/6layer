@@ -72,6 +72,7 @@ public struct PlatformPatternModifier: ViewModifier {
             .modifier(PlatformNavigationModifier(platform: platform))
             .modifier(PlatformStylingModifier(designSystem: designSystem))
             .modifier(PlatformIconModifier(iconSystem: designSystem.iconSystem))
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -88,6 +89,7 @@ public struct VisualConsistencyModifier: ViewModifier {
             .modifier(SystemTypographyModifier(typographySystem: designSystem.typographySystem))
             .modifier(SpacingModifier(spacingSystem: designSystem.spacingSystem))
             .modifier(TouchTargetModifier(platform: platform))
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -146,29 +148,32 @@ public struct KeyboardNavigationModifier: ViewModifier {
     let hasFullKeyboardAccess: Bool
     
     public func body(content: Content) -> some View {
+        let modifiedContent: AnyView
         if hasKeyboardSupport {
             #if os(macOS)
             if #available(macOS 14.0, *) {
-                content
-                    .focusable()
-                    .onKeyPress(.return) {
-                        // Handle keyboard activation
-                        return .handled
-                    }
+                modifiedContent = AnyView(
+                    content
+                        .focusable()
+                        .onKeyPress(.return) {
+                            // Handle keyboard activation
+                            return .handled
+                        }
+                )
             } else {
-                content
+                modifiedContent = AnyView(content)
             }
             #else
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                content
-                    .focusable()
+                modifiedContent = AnyView(content.focusable())
             } else {
-                content
+                modifiedContent = AnyView(content)
             }
             #endif
         } else {
-            content
+            modifiedContent = AnyView(content)
         }
+        return modifiedContent.automaticAccessibilityIdentifiers()
     }
 }
 
@@ -292,12 +297,13 @@ public struct TouchTargetModifier: ViewModifier {
     let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
+        let modifiedContent: AnyView
         if platform == .iOS {
-            content
-                .frame(minHeight: 44) // iOS minimum touch target
+            modifiedContent = AnyView(content.frame(minHeight: 44)) // iOS minimum touch target
         } else {
-            content
+            modifiedContent = AnyView(content)
         }
+        return modifiedContent.automaticAccessibilityIdentifiers()
     }
 }
 
@@ -306,19 +312,22 @@ public struct PlatformInteractionModifier: ViewModifier {
     let platform: SixLayerPlatform
     
     public func body(content: Content) -> some View {
+        let modifiedContent: AnyView
         switch platform {
         case .iOS:
-            content
-                .buttonStyle(.bordered)
+            modifiedContent = AnyView(content.buttonStyle(.bordered))
         case .macOS:
-            content
-                .buttonStyle(.bordered)
-                .onHover { _ in
-                    // Handle hover state
-                }
+            modifiedContent = AnyView(
+                content
+                    .buttonStyle(.bordered)
+                    .onHover { _ in
+                        // Handle hover state
+                    }
+            )
         default:
-            content
+            modifiedContent = AnyView(content)
         }
+        return modifiedContent.automaticAccessibilityIdentifiers()
     }
 }
 
