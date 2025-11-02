@@ -11,226 +11,269 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     // MARK: - Automatic Accessibility Identifier Component Tests
     
     @Test func testAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Plain test view (test helper will apply .automaticAccessibilityIdentifiers() via global settings)
-        let testView = Text("Test Content")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global settings are enabled (via test helper)
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "AutomaticAccessibilityIdentifierModifier"
+            componentName: "platformPresentContent_L1"
         )
         
-        #expect(hasAccessibilityID, "AutomaticAccessibilityIdentifierModifier should generate accessibility identifiers via global settings")
+        #expect(hasAccessibilityID, "Framework component (platformPresentContent_L1) should generate accessibility identifiers")
     }
     
     @Test func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with basic accessibility (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityLabel("Test Label")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentBasicValue_L1(
+            value: 42,
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "ComprehensiveAccessibilityModifier"
+            componentName: "platformPresentBasicValue_L1"
         )
         
-        #expect(hasAccessibilityID, "ComprehensiveAccessibilityModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers")
     }
     
     @Test func testGlobalAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with basic accessibility (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityHint("Test Hint")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentBasicArray_L1(
+            array: [1, 2, 3],
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "GlobalAutomaticAccessibilityIdentifierModifier"
+            componentName: "platformPresentBasicArray_L1"
         )
         
-        #expect(hasAccessibilityID, "GlobalAutomaticAccessibilityIdentifierModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicArray_L1) should generate accessibility identifiers")
     }
     
     @Test func testDisableAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with explicit accessibility identifier (should use the explicit one, not generate)
-        let testView = Text("Test Content")
-            .accessibilityIdentifier("test-id")
+        // Given: Framework component with explicit .named() identifier (should use explicit one, not generate)
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("test-id")
         
-        // Then: Should use the explicit identifier (explicit IDs take precedence over automatic)
+        // Then: Should use the explicit identifier from .named() (explicit IDs take precedence over automatic)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "test-id",  // Explicit IDs should be used as-is
+            expectedPattern: "*.main.ui.test-id",  // .named() generates hierarchical ID
             platform: SixLayerPlatform.iOS,
-            componentName: "DisableAutomaticAccessibilityIdentifierModifier"
+            componentName: "platformPresentContent_L1 with .named()"
         )
         
-        #expect(hasAccessibilityID, "DisableAutomaticAccessibilityIdentifierModifier should use explicit identifier")
+        #expect(hasAccessibilityID, "Framework component with .named() should use explicit identifier")
     }
     
     @Test func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with explicit accessibility identifier
-        let testView = Text("Test Content")
-            .accessibilityIdentifier("test-id")
+        // Given: Framework component with explicit .named() identifier
+        let testView = platformPresentBasicValue_L1(
+            value: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("test-id")
         
-        // Then: Should use the explicit identifier (explicit IDs take precedence over automatic)
+        // Then: Should use the explicit identifier from .named() (explicit IDs take precedence over automatic)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "test-id",  // Explicit IDs should be used as-is
+            expectedPattern: "*.main.ui.test-id",  // .named() generates hierarchical ID
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityIdentifierAssignmentModifier"
+            componentName: "platformPresentBasicValue_L1 with .named()"
         )
         
-        #expect(hasAccessibilityID, "AccessibilityIdentifierAssignmentModifier should use explicit identifier")
+        #expect(hasAccessibilityID, "Framework component with .named() should use explicit identifier")
     }
     
+    // MARK: - Test Support Types
+    
+    struct TestItem: Identifiable {
+        let id: String
+        let title: String
+    }
+    
+    // MARK: - Framework Component Tests
+    
     @Test func testViewHierarchyTrackingModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with accessibility label (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityLabel("Test Label")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentItemCollection_L1(
+            items: [TestItem(id: "1", title: "Test")],
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "ViewHierarchyTrackingModifier"
+            componentName: "platformPresentItemCollection_L1"
         )
         
-        #expect(hasAccessibilityID, "ViewHierarchyTrackingModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentItemCollection_L1) should generate accessibility identifiers")
     }
     
     @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with accessibility hint (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityHint("Test Hint")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentNumericData_L1(
+            data: [GenericNumericData(label: "Test", value: 42)],
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "ScreenContextModifier"
+            componentName: "platformPresentNumericData_L1"
         )
         
-        #expect(hasAccessibilityID, "ScreenContextModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentNumericData_L1) should generate accessibility identifiers")
     }
     
     @Test func testWorkingAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with explicit accessibility identifier
-        let testView = Button("Test Button") { }
-            .accessibilityIdentifier("working-test")
+        // Given: Framework component with explicit .named() identifier
+        let testView = platformPresentBasicValue_L1(
+            value: 42,
+            hints: PresentationHints()
+        )
+        .named("working-test")
         
-        // Then: Should use the explicit identifier (explicit IDs take precedence over automatic)
+        // Then: Should use the explicit identifier from .named() (explicit IDs take precedence over automatic)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "working-test",  // Explicit IDs should be used as-is
+            expectedPattern: "*.main.ui.working-test",  // .named() generates hierarchical ID
             platform: SixLayerPlatform.iOS,
-            componentName: "WorkingAccessibilityIdentifierModifier"
+            componentName: "platformPresentBasicValue_L1 with .named()"
         )
         
-        #expect(hasAccessibilityID, "WorkingAccessibilityIdentifierModifier should use explicit identifier")
+        #expect(hasAccessibilityID, "Framework component with .named() should use explicit identifier")
     }
     
     @Test func testExactAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with accessibility value (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityValue("Test Value")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentContent_L1(
+            content: "Test Value",
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "ExactAccessibilityIdentifierModifier"
+            componentName: "platformPresentContent_L1"
         )
         
-        #expect(hasAccessibilityID, "ExactAccessibilityIdentifierModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentContent_L1) should generate accessibility identifiers")
     }
     
     @Test func testHierarchicalNamedModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with explicit accessibility identifier (should use explicit one)
-        let testView = Text("Test Content")
-            .accessibilityIdentifier("hierarchical-test")
+        // Given: Framework component with explicit .named() identifier (should use explicit one)
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("hierarchical-test")
         
-        // Then: Should use the explicit identifier
+        // Then: Should use the explicit identifier from .named() (hierarchical ID)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "hierarchical-test",  // Explicit IDs take precedence
+            expectedPattern: "*.main.ui.hierarchical-test",  // .named() generates hierarchical ID
             platform: SixLayerPlatform.iOS,
-            componentName: "HierarchicalNamedModifier"
+            componentName: "platformPresentContent_L1 with .named()"
         )
         
-        #expect(hasAccessibilityID, "HierarchicalNamedModifier should use explicit identifier")
+        #expect(hasAccessibilityID, "Framework component with .named() should use explicit identifier")
     }
     
     @Test func testAccessibilityLabelAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with accessibility label (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityLabel("Custom Label")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentBasicValue_L1(
+            value: "Custom Label",
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityLabelAssignmentModifier"
+            componentName: "platformPresentBasicValue_L1"
         )
         
-        #expect(hasAccessibilityID, "AccessibilityLabelAssignmentModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers")
     }
     
     @Test func testAccessibilityHintAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with accessibility hint (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityHint("Custom Hint")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentBasicArray_L1(
+            array: ["Custom", "Hint"],
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityHintAssignmentModifier"
+            componentName: "platformPresentBasicArray_L1"
         )
         
-        #expect(hasAccessibilityID, "AccessibilityHintAssignmentModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicArray_L1) should generate accessibility identifiers")
     }
     
     @Test func testAccessibilityTraitsAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with explicit accessibility identifier (should use explicit one)
-        let testView = Button("Test Button") { }
-            .accessibilityIdentifier("traits-test")
+        // Given: Framework component with explicit .named() identifier (should use explicit one)
+        let testView = platformPresentItemCollection_L1(
+            items: [TestItem(id: "1", title: "Test")],
+            hints: PresentationHints()
+        )
+        .named("traits-test")
         
-        // Then: Should use the explicit identifier
+        // Then: Should use the explicit identifier from .named() (hierarchical ID)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "traits-test",  // Explicit IDs take precedence
+            expectedPattern: "*.main.ui.traits-test",  // .named() generates hierarchical ID
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityTraitsAssignmentModifier"
+            componentName: "platformPresentItemCollection_L1 with .named()"
         )
         
-        #expect(hasAccessibilityID, "AccessibilityTraitsAssignmentModifier should use explicit identifier")
+        #expect(hasAccessibilityID, "Framework component with .named() should use explicit identifier")
     }
     
     @Test func testAccessibilityValueAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test view with accessibility value (global setting applies automatic IDs)
-        let testView = Text("Test Content")
-            .accessibilityValue("Custom Value")
+        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        let testView = platformPresentBasicValue_L1(
+            value: "Custom Value",
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers when global setting is enabled
+        // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityValueAssignmentModifier"
+            componentName: "platformPresentBasicValue_L1"
         )
         
-        #expect(hasAccessibilityID, "AccessibilityValueAssignmentModifier should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers")
     }
 }
 
