@@ -41,12 +41,12 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             let fuelView = VStack(spacing: 0) {
                 // Filter controls
                 VStack {
-                    Text("Filter Content")
+                    platformPresentContent_L1(content: "Filter Content", hints: PresentationHints())
                 }
                 
                 // Main content
                 VStack {
-                    Text("No Fuel Records")
+                    platformPresentContent_L1(content: "No Fuel Records", hints: PresentationHints())
                 }
             }
             .platformNavigationTitle("Fuel")
@@ -55,8 +55,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             
             .platformToolbarWithTrailingActions {
                 HStack(spacing: 16) {
-                    Button(action: { /* add fuel action */ }) {
-                        Label("Add Fuel", systemImage: "plus")
+                    PlatformInteractionButton(style: .primary, action: { /* add fuel action */ }) {
+                        platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
                     }
                     .named("AddFuelButton")  // ✅ Applied
                     .accessibilityIdentifier("manual-add-fuel-button")  // ✅ Manual ID works
@@ -90,8 +90,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             config.clearDebugLog()
             
             // When: Using ONLY .named() modifier (no screen context)
-            let testView = Button(action: {}) {
-                Label("Add Fuel", systemImage: "plus")
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
             .named("AddFuelButton")
             
@@ -123,8 +123,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             config.enableDebugLogging = true
             config.clearDebugLog()
             
-            let testView = Button(action: {}) {
-                Label("Add Fuel", systemImage: "plus")
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
             .named("AddFuelButton")
             
@@ -215,8 +215,8 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             config.mode = .automatic
             
             // When: Using manual accessibility identifier (the working case from bug report)
-            let testView = Button(action: {}) {
-                Label("Add Fuel", systemImage: "plus")
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
             .accessibilityIdentifier("manual-add-fuel-button")
             

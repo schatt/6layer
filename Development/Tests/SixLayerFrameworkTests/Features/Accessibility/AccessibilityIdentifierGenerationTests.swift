@@ -15,7 +15,9 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD: Define the behavior I want - short, clean IDs
-        let view = Button("Add Fuel") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -44,8 +46,10 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         
         // TDD: Define the behavior I want - no hierarchy duplication
         let view = VStack {
-            Button("Test") { }
-                .named("TestButton")
+            PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+            .named("TestButton")
         }
         .named("Container")
         .named("OuterContainer") // Multiple .named() calls
@@ -76,9 +80,11 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         
         // TDD: Define the behavior I want - semantic, meaningful IDs
         let view = VStack {
-            Text("User Profile")
+            platformPresentContent_L1(content: "User Profile", hints: PresentationHints())
                 .named("ProfileTitle")
-            Button("Edit") { }
+            PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Edit", hints: PresentationHints())
+            }
                 .named("EditButton")
         }
         .named("UserProfile")

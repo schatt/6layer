@@ -24,8 +24,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             let testPassed = testComponentAccessibility(
                 componentName: "AutomaticAccessibilityIdentifiers",
                 createComponent: {
-                    Button(action: {}) {
-                        Label("Test Button", systemImage: "plus")
+                    PlatformInteractionButton(style: .primary, action: {}) {
+                        platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
                     }
                     .automaticAccessibilityIdentifiers()
                 }
@@ -51,8 +51,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             let testPassed = testComponentAccessibility(
                 componentName: "NamedModifier",
                 createComponent: {
-                    Button(action: {}) {
-                        Label("Add Fuel", systemImage: "plus")
+                    PlatformInteractionButton(style: .primary, action: {}) {
+                        platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
                     }
                     .named("AddFuelButton")
                 }
@@ -81,8 +81,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             config.enableDebugLogging = true
             
             // When: Using the exact combination from the bug report
-            let testView = Button(action: {}) {
-                Label("Add Fuel", systemImage: "plus")
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
             .named("AddFuelButton")
             
@@ -113,7 +113,10 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             
             // When: Creating view with manual identifier
             let manualID = "manual-custom-id"
-            let testView = Text("Test")
+            let testView = platformPresentContent_L1(
+                content: "Test",
+                hints: PresentationHints()
+            )
                 .accessibilityIdentifier(manualID)
                 .automaticAccessibilityIdentifiers()
             
@@ -143,8 +146,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             // Test Case 1: When automatic IDs are disabled
             config.enableAutoIDs = false
             
-            let testView1 = Button(action: {}) {
-                Label("Test", systemImage: "plus")
+            let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
             .automaticAccessibilityIdentifiers()
             
@@ -164,8 +167,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             // Test Case 2: When automatic IDs are enabled
             config.enableAutoIDs = true
             
-            let testView2 = Button(action: {}) {
-                Label("Test", systemImage: "plus")
+            let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
             .automaticAccessibilityIdentifiers()
             

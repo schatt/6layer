@@ -23,11 +23,10 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // enableAutoIDs is true by default
             // globalAutomaticAccessibilityIdentifiers is now true by default
             
-            // When: Creating a view with automatic accessibility identifiers
-            let testView = Button(action: {}) {
-                Label("Test Button", systemImage: "plus")
+            // When: Using framework component (testing our framework, not SwiftUI)
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
             }
-            .automaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully with accessibility identifier
             #expect(testAccessibilityIdentifiersSinglePlatform(
@@ -54,9 +53,9 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             config.enableDebugLogging = true
             // clearDebugLog method doesn't exist, so we skip that
             
-            // When: Using automatic accessibility identifiers without explicit global enabling
-            let testView = Button(action: {}) {
-                Label("Test Button", systemImage: "plus")
+            // When: Using framework component with .named() modifier
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
             }
             .named("TestButton")
 
@@ -77,9 +76,9 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // Given: Default configuration
             // config is non-optional, so no need to check for nil
             
-            // When: Using manual accessibility identifier
-            let testView = Button(action: {}) {
-                Label("Test Button", systemImage: "plus")
+            // When: Using framework component with manual accessibility identifier
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
             }
             .accessibilityIdentifier("manual-test-button")
             
@@ -104,9 +103,9 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // Verify config is properly configured
             #expect(config != nil, "AccessibilityIdentifierConfig should be available")
             
-            // When: Using opt-out modifier
-            let testView = Button(action: {}) {
-                Label("Decorative Button", systemImage: "star")
+            // When: Using framework component with opt-out modifier
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Decorative Button", hints: PresentationHints())
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, false)
             

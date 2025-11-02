@@ -178,7 +178,10 @@ open class SwitchControlTests: BaseTestClass {
     
     @Test func testSwitchControlViewModifier() {
         // Given: A view with Switch Control support
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .switchControlEnabled()
         
         // Then: View should support Switch Control
@@ -188,7 +191,10 @@ open class SwitchControlTests: BaseTestClass {
     @Test func testSwitchControlViewModifierWithConfiguration() {
         // Given: A view with Switch Control configuration
         let config = SwitchControlConfig(enableNavigation: true)
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .switchControlEnabled(config: config)
         
         // Then: View should support Switch Control with configuration
@@ -198,10 +204,10 @@ open class SwitchControlTests: BaseTestClass {
     // MARK: - Switch Control Compliance Tests
     
     @Test func testSwitchControlCompliance() {
-        // Given: A view with Switch Control support
+        // Given: Framework components with Switch Control support
         let view = VStack {
-            Text("Title")
-            Button("Action") { }
+            platformPresentContent_L1(content: "Title", hints: PresentationHints())
+            platformPresentBasicValue_L1(value: "Action", hints: PresentationHints())
         }
         .switchControlEnabled()
         
@@ -215,7 +221,10 @@ open class SwitchControlTests: BaseTestClass {
     
     @Test func testSwitchControlComplianceWithIssues() {
         // Given: A view without proper Switch Control support
-        let view = Text("No Switch Control support")
+        let view = platformPresentContent_L1(
+            content: "No Switch Control support",
+            hints: PresentationHints()
+        )
         
         // When: Checking Switch Control compliance
         let compliance = SwitchControlManager.checkCompliance(for: view)

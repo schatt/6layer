@@ -17,7 +17,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // TDD: This test SHOULD FAIL initially - IDs are not persistent
         // We want IDs to be the same across app launches
         
-        let view1 = Button("Add Fuel") { }
+        let view1 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -31,7 +33,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         config.namespace = "SixLayer"
         config.mode = .automatic
         
-        let view2 = Button("Add Fuel") { }
+        let view2 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -54,14 +58,18 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // TDD: This test SHOULD FAIL initially - IDs contain timestamps
         // Same view with same hierarchy should generate same ID
         
-        let view1 = Button("Add Fuel") { }
+        let view1 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let id1 = generateIDForView(view1)
         
         // Generate ID for identical view immediately after
-        let view2 = Button("Add Fuel") { }
+        let view2 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -83,7 +91,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // TDD: This test SHOULD FAIL initially - IDs contain timestamps
         // IDs should be based on view structure, not time
         
-        let view = Button("Add Fuel") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -92,7 +102,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // Wait a bit to ensure timestamp would change
         Thread.sleep(forTimeInterval: 0.1)
         
-        let view2 = Button("Add Fuel") { }
+        let view2 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -125,7 +137,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         
         // Generate IDs for all test cases
         for (buttonName, screenContext) in testCases {
-            let view = Button("Test") { }
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
                 .named(buttonName)
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
@@ -141,7 +155,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         
         // Generate IDs again for same test cases
         for (buttonName, screenContext) in testCases {
-            let view = Button("Test") { }
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
                 .named(buttonName)
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
@@ -165,7 +181,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // TDD: This test SHOULD FAIL initially
         // IDs should be based on view hierarchy and context, not random factors
         
-        let view1 = Button("Add Fuel") { }
+        let view1 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -174,7 +192,9 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // Same structure, different time
         Thread.sleep(forTimeInterval: 0.1)
         
-        let view2 = Button("Add Fuel") { }
+        let view2 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         

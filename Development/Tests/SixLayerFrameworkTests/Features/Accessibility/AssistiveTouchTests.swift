@@ -266,7 +266,10 @@ open class AssistiveTouchTests: BaseTestClass {
     /// METHODOLOGY: Applies modifiers to test views and verifies they return valid view instances
     @Test func testAssistiveTouchViewModifier() {
         // Given: A view with AssistiveTouch support
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .assistiveTouchEnabled()
         
         // Then: View should support AssistiveTouch
@@ -279,7 +282,10 @@ open class AssistiveTouchTests: BaseTestClass {
     @Test func testAssistiveTouchViewModifierWithConfiguration() {
         // Given: A view with AssistiveTouch configuration
         let config = AssistiveTouchConfig(enableIntegration: true)
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .assistiveTouchEnabled(config: config)
         
         // Then: View should support AssistiveTouch with configuration
@@ -314,7 +320,10 @@ open class AssistiveTouchTests: BaseTestClass {
     /// METHODOLOGY: Creates non-compliant views and verifies compliance issues are properly identified
     @Test func testAssistiveTouchComplianceWithIssues() {
         // Given: A view without proper AssistiveTouch support
-        let view = Text("No AssistiveTouch support")
+        let view = platformPresentContent_L1(
+            content: "No AssistiveTouch support",
+            hints: PresentationHints()
+        )
         
         // When: Checking AssistiveTouch compliance
         let compliance = AssistiveTouchManager.checkCompliance(for: view)

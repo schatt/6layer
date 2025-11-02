@@ -20,7 +20,9 @@ open class AccessibilityIdentifierDisabledTests {
     
     @Test func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
         // Test: When automatic IDs are disabled, views should not have accessibility identifier modifiers
-        let view = Button("Test Button") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
+        }
             .named("TestButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -38,7 +40,9 @@ open class AccessibilityIdentifierDisabledTests {
     
     @Test func testManualIDsStillWorkWhenAutomaticDisabled() {
         // Test: Manual accessibility identifiers should still work when automatic is disabled
-        let view = Button("Test Button") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
+        }
             .accessibilityIdentifier("manual-test-button")
         
         do {
@@ -58,7 +62,7 @@ open class AccessibilityIdentifierDisabledTests {
     @Test func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
         // Test: Named modifiers should still work for tracking
         let view = VStack {
-            Text("Content")
+            platformPresentContent_L1(content: "Content", hints: PresentationHints())
         }
         .named("TestView")
         

@@ -30,7 +30,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = false
         
         // Create a view with automatic accessibility identifiers (should NOT generate ID)
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .automaticAccessibilityIdentifiers()
         
         // Expect NO identifier when global config is disabled and no local enable is present
@@ -53,7 +55,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = true
         
         // Create a view with automatic accessibility identifiers (should generate ID)
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .automaticAccessibilityIdentifiers()
         
         // Test that the view has an accessibility identifier using the same method as working tests
@@ -81,7 +85,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableDebugLogging = true  // ← Enable debug logging
         
         // Create a view with local disable modifier (apply disable BEFORE other modifiers)
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Apply disable FIRST
             .automaticAccessibilityIdentifiers()
         
@@ -110,7 +116,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = false
         
         // Create a view with local enable modifier
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .automaticAccessibilityIdentifiers()  // ← Local enable
         
         // Test that the view has an accessibility identifier using the same method as working tests
@@ -137,7 +145,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = true
         
         // Create a view with local disable (should override global enable)
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Should override global enable
             .automaticAccessibilityIdentifiers()
         
@@ -165,7 +175,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = false
         
         // Create a view with local enable (should override global disable)
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .automaticAccessibilityIdentifiers()  // ← Should override global disable
         
         // Test that the view has an accessibility identifier using the same method as working tests
@@ -192,7 +204,9 @@ open class AccessibilityGlobalLocalConfigTests {
         config.enableAutoIDs = true
         
         // Create a view with environment variable override
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Environment override
             .automaticAccessibilityIdentifiers()
         

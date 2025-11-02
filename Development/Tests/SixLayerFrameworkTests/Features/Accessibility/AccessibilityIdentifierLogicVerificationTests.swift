@@ -79,17 +79,17 @@ open class AccessibilityIdentifierLogicVerificationTests {
             // We can't easily test the environment variable directly in unit tests,
             // but we can verify that the modifier chain compiles and the configuration is correct
             
-            let testView1 = Button(action: {}) {
-                Label("Test", systemImage: "plus")
+            let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
             .named("TestButton")
             
-            let testView2 = Button(action: {}) {
-                Label("Test", systemImage: "plus")
+            let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
             
-            let testView3 = Button(action: {}) {
-                Label("Test", systemImage: "plus")
+            let testView3 = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
             
             // Verify that all modifier chains compile successfully

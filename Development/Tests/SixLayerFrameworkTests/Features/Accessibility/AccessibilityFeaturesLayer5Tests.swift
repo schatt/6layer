@@ -321,7 +321,10 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testAccessibilityEnhancedViewModifier() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view and accessibility config
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         let config = AccessibilityConfig(
             enableVoiceOver: true,
             enableKeyboardNavigation: true,
@@ -352,7 +355,10 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testAccessibilityEnhancedViewModifierDefaultConfig() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         
         // WHEN: Applying accessibility enhanced modifier with default config
         let enhancedView = testView.accessibilityEnhanced()
@@ -376,7 +382,10 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testVoiceOverEnabledViewModifier() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         
         // WHEN: Applying VoiceOver enabled modifier
         let voiceOverView = testView.voiceOverEnabled()
@@ -394,7 +403,10 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testKeyboardNavigableViewModifier() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         
         // WHEN: Applying keyboard navigable modifier
         let keyboardView = testView.keyboardNavigable()
@@ -412,7 +424,10 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testHighContrastEnabledViewModifier() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         
         // WHEN: Applying high contrast enabled modifier
         let highContrastView = testView.highContrastEnabled()
@@ -430,7 +445,10 @@ open class AccessibilityFeaturesLayer5Tests {
     @Test func testAccessibilityViewModifiersIntegration() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         
         // WHEN: Applying multiple accessibility modifiers
         let integratedView = testView

@@ -54,7 +54,10 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     // MARK: - automaticAccessibilityIdentifiers() Modifier Tests
     
     @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnIOS() async {
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .automaticAccessibilityIdentifiers()
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -68,7 +71,10 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     }
     
     @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnMacOS() async {
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .automaticAccessibilityIdentifiers()
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -84,7 +90,10 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     // MARK: - named() Modifier Tests
     
     @Test func testNamedModifierGeneratesIdentifiersOnIOS() async {
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .named("TestElement")
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -98,7 +107,10 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     }
     
     @Test func testNamedModifierGeneratesIdentifiersOnMacOS() async {
-        let view = Text("Test")
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
             .named("TestElement")
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

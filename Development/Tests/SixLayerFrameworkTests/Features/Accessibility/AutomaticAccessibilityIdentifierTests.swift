@@ -217,7 +217,10 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             
             // When: Creating view with manual identifier
             let manualID = "manual-custom-id"
-            let view = Text("Test")
+            let view = platformPresentContent_L1(
+                content: "Test",
+                hints: PresentationHints()
+            )
                 .accessibilityIdentifier(manualID)
                 .automaticAccessibilityIdentifiers()
             
@@ -243,7 +246,10 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             AccessibilityIdentifierConfig.shared.enableAutoIDs = false
             
             // When: Creating view with automatic accessibility identifiers modifier
-            let view = Text("Test")
+            let view = platformPresentContent_L1(
+                content: "Test",
+                hints: PresentationHints()
+            )
                 .automaticAccessibilityIdentifiers()
             
             // Then: No automatic identifier should be generated
@@ -271,7 +277,10 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             AccessibilityIdentifierConfig.shared.namespace = "hig"
             
             // When: Creating view with HIG compliance
-            let view = Text("Test")
+            let view = platformPresentContent_L1(
+                content: "Test",
+                hints: PresentationHints()
+            )
                 .appleHIGCompliant()
             
             // Then: View should be created with both HIG compliance and automatic IDs
@@ -643,8 +652,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             config.enableDebugLogging = true
             
             // When: A view uses .named() modifier (as per user's bug report)
-            let testView = Button(action: {}) {
-                Label("Add Fuel", systemImage: "plus")
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
             .named("AddFuelButton")
             

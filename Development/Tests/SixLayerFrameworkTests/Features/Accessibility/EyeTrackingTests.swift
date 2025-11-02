@@ -261,7 +261,10 @@ open class EyeTrackingTests: BaseTestClass {
     /// TESTING SCOPE: Tests DwellEvent initialization with target and duration
     /// METHODOLOGY: Create DwellEvent with parameters and verify all properties are set correctly
     @Test func testDwellEventInitialization() {
-        let targetView = AnyView(Text("Test"))
+        let targetView = AnyView(platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        ))
         let position = CGPoint(x: 100, y: 200)
         let duration = 1.5
         let timestamp = Date()

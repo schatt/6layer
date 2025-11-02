@@ -9,7 +9,9 @@ import ViewInspector
 @Suite("Accessibility Identifiers Debug")
 open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
         // Test .automaticAccessibilityIdentifiers() directly
-        let testView = Button("Test") { }
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .automaticAccessibilityIdentifiers()
         
         // Should look for button-specific accessibility identifier with current format
@@ -24,7 +26,9 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
     
     @Test func testNamedModifierWorks() {
         // Test .named() modifier
-        let testView = Button("Test") { }
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .named("TestButton")
             .automaticAccessibilityIdentifiers()
         
@@ -40,7 +44,9 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
     
     @Test func testAutomaticAccessibilityModifierWorks() {
         // Test AutomaticAccessibilityModifier directly
-        let testView = Button("Test") { }
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .modifier(SystemAccessibilityModifier(
                 accessibilityState: AccessibilitySystemState(),
                 platform: .iOS
@@ -58,7 +64,9 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
     
     @Test func testAutomaticAccessibilityExtensionWorks() {
         // Test .automaticAccessibility() extension
-        let testView = Button("Test") { }
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .automaticAccessibility()
         
         // Should look for extension-specific accessibility identifier with current format

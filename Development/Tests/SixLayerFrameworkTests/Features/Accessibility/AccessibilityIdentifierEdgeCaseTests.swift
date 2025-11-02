@@ -13,7 +13,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
     @Test func testEmptyStringParameters() {
         setupTestEnvironment()
         
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .named("")  // ← Empty string
         
         do {
@@ -37,7 +39,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
         setupTestEnvironment()
         
         // Test: How are special characters handled in names?
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .named("Button@#$%^&*()")  // ← Special characters
         
         do {
@@ -63,7 +67,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
         
         // Test: Does it handle extremely long names gracefully?
         let longName = String(repeating: "VeryLongName", count: 50)  // 600+ chars
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .named(longName)
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -185,11 +191,15 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
         setupTestEnvironment()
         
         // Test: Does exactNamed() use exact names without hierarchy?
-        let view1 = Button("Test1") { }
+        let view1 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test1", hints: PresentationHints())
+        }
             .exactNamed("SameName")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let view2 = Button("Test2") { }
+        let view2 = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test2", hints: PresentationHints())
+        }
             .exactNamed("SameName")  // ← Same exact name
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -311,7 +321,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
         // Test: What happens if configuration changes during view creation?
         let config = AccessibilityIdentifierConfig.shared
         
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .named("TestButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -373,7 +385,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
         setupTestEnvironment()
         
         // Test: How are Unicode characters handled?
-        let view = Button("Test") { }
+        let view = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        }
             .named("按钮")  // ← Chinese characters
         
         do {

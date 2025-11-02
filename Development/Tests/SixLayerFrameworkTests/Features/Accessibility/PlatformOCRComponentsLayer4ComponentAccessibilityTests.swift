@@ -18,19 +18,21 @@ open class PlatformOCRComponentsLayer4ComponentAccessibilityTests: BaseTestClass
     // MARK: - Platform OCR Components Layer 4 Tests
     
     @Test func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
-        // Given: OCRService (replacement for deprecated PlatformOCRComponentsLayer4)
-        let testView = Text("OCR Service Test")
-            .automaticAccessibilityIdentifiers()
+        // Given: Framework component (testing our framework, not SwiftUI)
+        let testView = platformPresentContent_L1(
+            content: "OCR Service Test",
+            hints: PresentationHints()
+        )
         
-        // Then: Should generate accessibility identifiers
+        // Then: Framework component should automatically generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "OCRService"
+            componentName: "platformPresentContent_L1"
         )
         
-        #expect(hasAccessibilityID, "OCRService should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers")
     }
 }
 
