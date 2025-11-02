@@ -26,11 +26,9 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         let config = AccessibilityIdentifierConfig.shared
-        // Logic:
-        // - global on → on (no local override needed)
-        // - global off, local enable (env=true) → on
-        // - global off, no local enable (env=false) → off
-        // We don't need local opt-out when global is on
+        // config.enableAutoIDs IS the global setting - it's the single source of truth
+        // The environment variable allows local opt-in when global is off (defaults to false)
+        // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
         let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
         if config.enableDebugLogging {
@@ -226,7 +224,8 @@ public struct ExactNamedModifier: ViewModifier {
 // MARK: - Environment Keys
 
 /// Environment key for enabling automatic accessibility identifiers locally (when global is off)
-/// Defaults to false - only set to true when explicitly enabling via .enableGlobalAutomaticAccessibilityIdentifiers()
+/// Defaults to false - only set to true via .enableGlobalAutomaticAccessibilityIdentifiers() for local opt-in
+/// config.enableAutoIDs is the global setting; this env var only matters when global is off
 public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
     public static let defaultValue: Bool = false
 }
