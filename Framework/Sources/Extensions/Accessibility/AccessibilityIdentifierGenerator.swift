@@ -40,21 +40,24 @@ public class AccessibilityIdentifierGenerator {
         let config = AccessibilityIdentifierConfig.shared
         
         // Generate the identifier using the same logic as AutomaticAccessibilityIdentifiersModifier
-        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
-        let namespace = config.namespace.isEmpty ? "SixLayer" : config.namespace
+        // Get configured values (empty means skip entirely - no framework forcing)
+        let namespace = config.namespace.isEmpty ? nil : config.namespace
+        let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
         let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
         let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
         
-        // Build identifier components, avoiding duplication unless explicitly configured
+        // Build identifier components in order: namespace.prefix.main.ui...
         var identifierComponents: [String] = []
         
-        // Add prefix
-        identifierComponents.append(prefix)
-        
-        // Add namespace only if it's different from prefix (to avoid duplication)
-        // This prevents "SixLayer.SixLayer.main.ui..." when prefix == namespace
-        if namespace != prefix {
+        // Add namespace first (top-level organizer)
+        if let namespace = namespace {
             identifierComponents.append(namespace)
+        }
+        
+        // Add prefix second (feature/view organizer within namespace)
+        // Allow duplication: Foo.Foo.main.ui for main view, Foo.Bar.main.ui for other views
+        if let prefix = prefix {
+            identifierComponents.append(prefix)
         }
         
         // Add screen context and view hierarchy path

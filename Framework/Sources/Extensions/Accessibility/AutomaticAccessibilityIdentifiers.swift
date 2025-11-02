@@ -53,11 +53,9 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     private func generateIdentifier() -> String {
         let config = AccessibilityIdentifierConfig.shared
         
-        // Use the configured global prefix
-        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
-        
-        // Use the configured namespace (avoid duplication with prefix)
-        let namespace = config.namespace.isEmpty ? "main" : config.namespace
+        // Get configured values (empty means skip entirely - no framework forcing)
+        let namespace = config.namespace.isEmpty ? nil : config.namespace
+        let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
         
         // Use simplified context in UI test integration to stabilize patterns
         let screenContext: String
@@ -76,18 +74,19 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Determine element type
         let elementType = accessibilityIdentifierElementType ?? "View" // Default to "View" if not specified
         
-        // Build identifier components, avoiding duplication
+        // Build identifier components in order: namespace.prefix.main.ui.element...
+        // Skip empty values entirely - framework should work with developers, not against them
         var identifierComponents: [String] = []
         
-        // Add prefix
-        identifierComponents.append(prefix)
-        
-        // Add namespace only if it's different from prefix (to avoid duplication)
-        // Rationale: If a developer wants both prefix and namespace in the ID, they should set them to different values.
-        // Duplicating "SixLayer.SixLayer" serves no semantic purpose and creates unnecessarily long IDs.
-        // The comment about "UI test integration" was incorrect - it was causing duplicates in test output.
-        if namespace != prefix {
+        // Add namespace first (top-level organizer)
+        if let namespace = namespace {
             identifierComponents.append(namespace)
+        }
+        
+        // Add prefix second (feature/view organizer within namespace)
+        // Allow duplication: Foo.Foo.main.ui for main view, Foo.Bar.main.ui for other views
+        if let prefix = prefix {
+            identifierComponents.append(prefix)
         }
         
         // Add screen context
@@ -149,20 +148,24 @@ public struct NamedModifier: ViewModifier {
             print("🔍 NAMED MODIFIER DEBUG: Generating identifier for explicit name (ignoring global settings)")
         }
         
-        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
-        let namespace = config.namespace.isEmpty ? "SixLayer" : config.namespace
+        // Get configured values (empty means skip entirely - no framework forcing)
+        let namespace = config.namespace.isEmpty ? nil : config.namespace
+        let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
         let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
         let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
         
-        // Build identifier components, avoiding duplication
+        // Build identifier components in order: namespace.prefix.main.ui.name
         var identifierComponents: [String] = []
         
-        // Add prefix
-        identifierComponents.append(prefix)
-        
-        // Add namespace only if it's different from prefix
-        if namespace != prefix {
+        // Add namespace first (top-level organizer)
+        if let namespace = namespace {
             identifierComponents.append(namespace)
+        }
+        
+        // Add prefix second (feature/view organizer within namespace)
+        // Allow duplication: Foo.Foo.main.ui for main view, Foo.Bar.main.ui for other views
+        if let prefix = prefix {
+            identifierComponents.append(prefix)
         }
         
         // Add screen context
@@ -295,23 +298,25 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     
     private func generateIdentifier() -> String {
         let config = AccessibilityIdentifierConfig.shared
-        let prefix = config.globalPrefix.isEmpty ? "SixLayer" : config.globalPrefix
-        let namespace = config.namespace.isEmpty ? "SixLayer" : config.namespace
+        
+        // Get configured values (empty means skip entirely - no framework forcing)
+        let namespace = config.namespace.isEmpty ? nil : config.namespace
+        let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
         let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
         let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
         
-        // Build identifier components, avoiding duplication
+        // Build identifier components in order: namespace.prefix.main.ui.element...
         var identifierComponents: [String] = []
         
-        // Add prefix
-        identifierComponents.append(prefix)
-        
-        // Add namespace only if it's different from prefix (to avoid duplication)
-        // Rationale: If a developer wants both prefix and namespace in the ID, they should set them to different values.
-        // Duplicating "SixLayer.SixLayer" serves no semantic purpose and creates unnecessarily long IDs.
-        // The comment about "UI test integration" was incorrect - it was causing duplicates in test output.
-        if namespace != prefix {
+        // Add namespace first (top-level organizer)
+        if let namespace = namespace {
             identifierComponents.append(namespace)
+        }
+        
+        // Add prefix second (feature/view organizer within namespace)
+        // Allow duplication: Foo.Foo.main.ui for main view, Foo.Bar.main.ui for other views
+        if let prefix = prefix {
+            identifierComponents.append(prefix)
         }
         
         // Add screen context

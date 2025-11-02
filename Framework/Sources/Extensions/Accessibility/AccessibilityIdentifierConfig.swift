@@ -31,11 +31,13 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Whether automatic accessibility identifiers are enabled
     @Published public var enableAutoIDs: Bool = true
     
-    /// Global prefix for accessibility identifiers
-    @Published public var globalPrefix: String = "SixLayer"
+    /// Global prefix for accessibility identifiers (feature/view organizer)
+    /// Empty string means skip in ID generation - framework works with developers, not against them
+    @Published public var globalPrefix: String = ""
     
-    /// Namespace for accessibility identifiers (legacy support)
-    @Published public var namespace: String = "SixLayer"
+    /// Namespace for accessibility identifiers (top-level organizer)
+    /// Empty string means skip in ID generation - framework works with developers, not against them
+    @Published public var namespace: String = ""
     
     /// Whether to include component names in identifiers
     @Published public var includeComponentNames: Bool = true
@@ -75,10 +77,11 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     private init() {}
     
     /// Reset configuration to defaults
+    /// Sets empty strings for namespace and prefix - framework should work with developers, not force framework values
     public func resetToDefaults() {
         enableAutoIDs = true
-        globalPrefix = "SixLayer"
-        namespace = "SixLayer"
+        globalPrefix = ""  // Empty = skip in ID generation
+        namespace = ""      // Empty = skip in ID generation
         includeComponentNames = true
         includeElementTypes = true
         currentViewHierarchy = []
@@ -90,7 +93,7 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Configure for testing mode
     public func configureForTesting() {
         enableAutoIDs = true
-        globalPrefix = "DebugTest"
+        globalPrefix = ""  // Tests should set namespace only (unless testing prefix)
         namespace = "DebugTest"
         includeComponentNames = true
         includeElementTypes = true
