@@ -92,4 +92,10 @@ public class AccessibilityIdentifierGenerator {
     public func checkForCollision(_ identifier: String) -> Bool {
         return generatedIDs.contains(identifier)
     }
+    
+    /// Clear all generated IDs (for testing - prevents state accumulation)
+    /// CRITICAL: Tests should call this to prevent ID registry from leaking between tests
+    public func clearGeneratedIDs() {
+        generatedIDs.removeAll()
+    }
 }

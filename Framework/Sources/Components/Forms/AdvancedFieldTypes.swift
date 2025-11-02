@@ -718,6 +718,15 @@ public struct CustomFieldView: View {
     
     @ViewBuilder
     private func createFieldViewForContentType(_ contentType: DynamicContentType) -> some View {
+        // Handle custom types separately to enable registry lookup
+        if contentType == .custom {
+            let registryKey = field.metadata?["customFieldType"] ?? field.id
+            if let factory = CustomFieldRegistry.shared.getFactory(for: registryKey) {
+                let customComponent = factory(field, formState)
+                return AnyView(customComponent)
+            }
+        }
+        
         let binding = Binding(
             get: { formState.getValue(for: field.id) ?? "" },
             set: { formState.setValue($0, for: field.id) }
@@ -851,11 +860,6 @@ public struct CustomFieldView: View {
                 }
             }
             .automaticAccessibilityIdentifiers()
-        case .custom:
-            // For custom types, fallback to basic text field
-            TextField(field.placeholder ?? field.label, text: binding)
-                .textFieldStyle(.roundedBorder)
-                .automaticAccessibilityIdentifiers()
         default:
             // Fallback for any missed types
             TextField(field.placeholder ?? field.label, text: binding)
@@ -868,6 +872,24 @@ public struct CustomFieldView: View {
 // MARK: - Custom Field Component Protocol
 
 /// Protocol for custom field components
+/// 
+/// **GREEN PHASE STATUS**: Tests exist, but production code doesn't use registry yet
+/// 
+/// **TECHNICAL LIMITATION**: Swift doesn't allow direct instantiation from protocol metatypes.
+/// The registry stores `any CustomFieldComponent.Type`, but we can't call `Type.init(field:formState:)`
+/// directly because protocols don't have required initializers.
+///
+/// **SOLUTION REQUIRED**: Need factory pattern - store factory closures instead of types:
+/// ```swift
+/// private var customFields: [String: (DynamicFormField, DynamicFormState) -> any CustomFieldComponent] = [:]
+/// ```
+///
+/// **ALTERNATIVE**: Add required initializer to protocol (breaking change):
+/// ```swift
+/// protocol CustomFieldComponent: View {
+///     init(field: DynamicFormField, formState: DynamicFormState)
+/// }
+/// ```
 public protocol CustomFieldComponent: View {
     var field: DynamicFormField { get }
     var formState: DynamicFormState { get }
@@ -875,22 +897,123 @@ public protocol CustomFieldComponent: View {
 
 // MARK: - Custom Field Registry
 
-/// Registry for custom field components
+/// Registry for custom field components using factory pattern
+/// 
+/// **STATUS: NOW INTEGRATED INTO PRODUCTION CODE**
+/// - Uses factory closures to enable dynamic instantiation
+/// - Integrated into `CustomFieldView` for `.custom` content types
+/// - Uses global registry in production, thread-local in test mode (prevents state leakage)
+///
+/// **USAGE**:
+/// ```swift
+/// CustomFieldRegistry.shared.register("slider") { field, formState in
+///     CustomSliderField(field: field, formState: formState)
+/// }
+/// ```
 @MainActor
 public class CustomFieldRegistry: ObservableObject, @unchecked Sendable {
     @MainActor
     public static let shared = CustomFieldRegistry()
     
-    private var customFields: [String: any CustomFieldComponent.Type] = [:]
+    /// Factory type: takes field and formState, returns custom component
+    public typealias CustomFieldFactory = (DynamicFormField, DynamicFormState) -> any CustomFieldComponent
+    
+    /// Global registry (shared across all threads for production use)
+    private var globalRegistry: [String: CustomFieldFactory] = [:]
+    
+    /// Thread-local storage key for test isolation (only used in test mode)
+    private static var testRegistryKey: String { "CustomFieldRegistry.test.\(Thread.current.hash)" }
+    
+    /// Check if we're in testing mode (for test isolation)
+    private static var isTestingMode: Bool {
+        #if DEBUG
+        let environment = ProcessInfo.processInfo.environment
+        return environment["XCTestConfigurationFilePath"] != nil ||
+               environment["XCTestSessionIdentifier"] != nil ||
+               NSClassFromString("XCTestCase") != nil
+        #else
+        return false
+        #endif
+    }
+    
+    /// Get registry - uses thread-local in test mode, global in production
+    private func getRegistry() -> [String: CustomFieldFactory] {
+        if Self.isTestingMode {
+            // Test mode: use thread-local for isolation
+            if let cached = Thread.current.threadDictionary[Self.testRegistryKey] as? [String: CustomFieldFactory] {
+                return cached
+            }
+            let newRegistry: [String: CustomFieldFactory] = [:]
+            Thread.current.threadDictionary[Self.testRegistryKey] = newRegistry
+            return newRegistry
+        } else {
+            // Production mode: use global shared registry
+            return globalRegistry
+        }
+    }
+    
+    /// Set registry - uses thread-local in test mode, global in production
+    private func setRegistry(_ registry: [String: CustomFieldFactory]) {
+        if Self.isTestingMode {
+            // Test mode: store in thread-local
+            Thread.current.threadDictionary[Self.testRegistryKey] = registry
+        } else {
+            // Production mode: store in global
+            globalRegistry = registry
+        }
+    }
     
     private init() {}
     
-        func register<T: CustomFieldComponent>(_ fieldType: String, component: T.Type) {
-        customFields[fieldType] = component
+    /// Register a custom field component factory
+    /// - Parameters:
+    ///   - fieldType: String identifier for the custom field type
+    ///   - factory: Closure that creates the custom component given field and formState
+    /// - Note: In test mode, registrations are thread-local. In production, they're global.
+    public func register(_ fieldType: String, factory: @escaping CustomFieldFactory) {
+        var registry = getRegistry()
+        registry[fieldType] = factory
+        setRegistry(registry)
     }
     
-        func getComponent(for fieldType: String) -> (any CustomFieldComponent.Type)? {
-        return customFields[fieldType]
+    /// Convenience registration method that creates factory from component type
+    /// This method is deprecated - use register(_:factory:) with explicit factory closure instead
+    /// Swift protocols can't require initializers, so we can't safely instantiate from metatypes
+    /// - Parameters:
+    ///   - fieldType: String identifier for the custom field type
+    ///   - componentType: The component type
+    /// - Note: This method intentionally fails - use the factory-based registration instead
+    @available(*, deprecated, message: "Use register(_:factory:) with explicit factory closure instead. Protocols can't require initializers.")
+    public func register<T: CustomFieldComponent>(
+        _ fieldType: String,
+        component: T.Type
+    ) {
+        // Can't safely instantiate from protocol metatype without required initializer
+        // Developers must use register(_:factory:) with explicit closure
+        fatalError("""
+            CustomFieldRegistry.register(_:component:) is not supported.
+            Use register(_:factory:) instead:
+            
+            registry.register("\(fieldType)") { field, formState in
+                YourComponentType(field: field, formState: formState)
+            }
+            """)
+    }
+    
+    /// Get factory for a custom field type
+    /// - Parameter fieldType: String identifier for the custom field type
+    /// - Returns: Factory closure if registered, nil otherwise
+    /// - Note: In test mode, checks thread-local registry. In production, checks global registry.
+    public func getFactory(for fieldType: String) -> CustomFieldFactory? {
+        let registry = getRegistry()
+        return registry[fieldType]
+    }
+    
+    /// Legacy method name for backward compatibility (deprecated)
+    /// Use `getFactory(for:)` instead
+    @available(*, deprecated, message: "Use getFactory(for:) instead")
+    public func getComponent(for fieldType: String) -> CustomFieldFactory? {
+        return getFactory(for: fieldType)
     }
 }
 

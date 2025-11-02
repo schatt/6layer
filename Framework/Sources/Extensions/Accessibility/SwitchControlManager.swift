@@ -157,8 +157,18 @@ public class SwitchControlManager: ObservableObject {
     private let config: SwitchControlConfig
     
     // Test-specific counter for differentiating test cases
+    // Uses thread-local storage to prevent state leakage in parallel tests
     @MainActor
-    private static var testCallCounter = 0
+    private static var testCallCounter: Int {
+        get {
+            let key = "SwitchControlManager.testCallCounter.\(Thread.current.hash)"
+            return Thread.current.threadDictionary[key] as? Int ?? 0
+        }
+        set {
+            let key = "SwitchControlManager.testCallCounter.\(Thread.current.hash)"
+            Thread.current.threadDictionary[key] = newValue
+        }
+    }
     
     // MARK: - Initialization
     

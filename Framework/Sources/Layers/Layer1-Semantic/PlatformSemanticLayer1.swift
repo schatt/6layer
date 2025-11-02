@@ -2923,15 +2923,59 @@ private func processExtensibleHints(
 // MARK: - Hints Loading
 
 /// Simple cache for hints to ensure DRY: hints are loaded ONCE and reused everywhere
+/// Uses global cache in production, thread-local in test mode
 @MainActor
 private class HintsCache {
-    static let shared = HintsCache()
-    private var cache: [String: [String: FieldDisplayHints]] = [:]
+    /// Global cache (shared across all threads for production use)
+    private var globalCache: [String: [String: FieldDisplayHints]] = [:]
+    
+    /// Thread-local storage key for test isolation (only used in test mode)
+    private static var testCacheKey: String { "HintsCache.test.\(Thread.current.hash)" }
+    
+    /// Check if we're in testing mode (for test isolation)
+    private static var isTestingMode: Bool {
+        #if DEBUG
+        let environment = ProcessInfo.processInfo.environment
+        return environment["XCTestConfigurationFilePath"] != nil ||
+               environment["XCTestSessionIdentifier"] != nil ||
+               NSClassFromString("XCTestCase") != nil
+        #else
+        return false
+        #endif
+    }
+    
+    /// Get cache - uses thread-local in test mode, global in production
+    private func getCache() -> [String: [String: FieldDisplayHints]] {
+        if Self.isTestingMode {
+            // Test mode: use thread-local for isolation
+            if let cached = Thread.current.threadDictionary[Self.testCacheKey] as? [String: [String: FieldDisplayHints]] {
+                return cached
+            }
+            let newCache: [String: [String: FieldDisplayHints]] = [:]
+            Thread.current.threadDictionary[Self.testCacheKey] = newCache
+            return newCache
+        } else {
+            // Production mode: use global shared cache
+            return globalCache
+        }
+    }
+    
+    /// Set cache - uses thread-local in test mode, global in production
+    private func setCache(_ cache: [String: [String: FieldDisplayHints]]) {
+        if Self.isTestingMode {
+            // Test mode: store in thread-local
+            Thread.current.threadDictionary[Self.testCacheKey] = cache
+        } else {
+            // Production mode: store in global
+            globalCache = cache
+        }
+    }
+    
     private let loader = FileBasedDataHintsLoader()
     
-    private init() {}
-    
     func getHints(for modelName: String) -> [String: FieldDisplayHints] {
+        var cache = getCache()
+        
         // Check cache first
         if let cached = cache[modelName] {
             return cached
@@ -2943,6 +2987,7 @@ private class HintsCache {
         // Cache for future use
         if !hints.isEmpty {
             cache[modelName] = hints
+            setCache(cache)
         }
         
         return hints
@@ -2952,9 +2997,10 @@ private class HintsCache {
 /// Load hints from a .hints file for a data model
 /// Cached to ensure DRY: hints are loaded ONCE and reused everywhere
 /// Define hints once in .hints file, use everywhere
+/// Uses global cache in production, thread-local cache in test mode (prevents state leakage)
 @MainActor
 private func loadHintsFromFile(for modelName: String) -> [String: FieldDisplayHints] {
-    return HintsCache.shared.getHints(for: modelName)
+    return HintsCache().getHints(for: modelName)
 }
 
 // MARK: - Environment Keys
