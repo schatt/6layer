@@ -8,19 +8,21 @@ import SwiftUI
 open class MinimalAccessibilityTest {
     
     @Test func testMinimalAccessibilityIdentifier() async {
-        // Given: A simple view with automatic accessibility identifiers
-        let testView = Text("Hello World")
-            .automaticAccessibilityIdentifiers()
+        // Given: Framework component (testing our framework, not SwiftUI Text)
+        let testView = platformPresentContent_L1(
+            content: "Hello World",
+            hints: PresentationHints()
+        )
         
-        // When: We check if it has an accessibility identifier
+        // When: We check if framework component generates accessibility identifier
         let hasID = testAccessibilityIdentifiersSinglePlatform(
             testView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "Text"
+            componentName: "platformPresentContent_L1"
         )
         
-        // Then: It should have an accessibility identifier
-        #expect(hasID, "Text view should generate accessibility identifier")
+        // Then: Framework component should automatically generate accessibility identifier
+        #expect(hasID, "Framework component should automatically generate accessibility identifier")
     }
 }

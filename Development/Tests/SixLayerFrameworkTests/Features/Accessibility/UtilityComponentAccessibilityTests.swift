@@ -18,37 +18,35 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     // MARK: - Utility Component Tests
     
     @Test func testAccessibilityTestUtilitiesGeneratesAccessibilityIdentifiers() async {
-        // Given: AccessibilityTestUtilities
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        // Given: Framework component (testing our framework, not SwiftUI)
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Using hasAccessibilityIdentifier utility
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityTestUtilities"
+            componentName: "platformPresentContent_L1"
         )
         
-        // Then: Should work correctly
-        #expect(hasAccessibilityID, "AccessibilityTestUtilities should work correctly")
+        // Then: Framework component should generate accessibility identifiers
+        #expect(hasAccessibilityID, "Framework component should generate accessibility identifiers")
     }
     
     @Test func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
-        // Given: Accessibility identifier validation
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        // Given: Framework component (testing our framework, not SwiftUI)
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Validating accessibility identifier
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierValidation"
         )
@@ -59,16 +57,15 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierPatternMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier pattern matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing pattern matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierPatternMatching"
         )
@@ -79,10 +76,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierExactMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier exact matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .accessibilityIdentifier("ExactTestView")
         
         // When: Testing exact matching
@@ -99,16 +96,15 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierWildcardMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier wildcard matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing wildcard matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierWildcardMatching"
         )
@@ -119,16 +115,15 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierComponentNameMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier component name matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing component name matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierComponentNameMatching"
         )
@@ -139,16 +134,15 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierNamespaceMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier namespace matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing namespace matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierNamespaceMatching"
         )
@@ -159,11 +153,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierScreenMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier screen matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing screen matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -179,12 +172,11 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierElementMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier element matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .named("TestElement")
-        .automaticAccessibilityIdentifiers()
         
         // When: Testing element matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -200,11 +192,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierStateMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier state matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing state matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -220,12 +211,11 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierHierarchyMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier hierarchy matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .named("TestElement")
-        .automaticAccessibilityIdentifiers()
         
         // When: Testing hierarchy matching
         // Note: IDs use "main" as screen context, not custom screen names unless .screenContext() is applied
@@ -242,12 +232,11 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier case insensitive matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .named("TestElement")
-        .automaticAccessibilityIdentifiers()
         
         // When: Testing case insensitive matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -263,11 +252,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier partial matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing partial matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -283,11 +271,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier regex matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing regex matching
         // Updated to include ui segment in pattern
@@ -304,16 +291,15 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier performance matching
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierPerformanceMatching"
         )
@@ -324,11 +310,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier error handling
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing error handling with invalid pattern
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -344,16 +329,16 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier null handling
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        // Note: No accessibility identifiers applied
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        // Note: Framework component automatically applies accessibility identifiers
         
         // When: Testing null handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierNullHandling"
         )
@@ -364,11 +349,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier empty handling
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing empty handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -384,11 +368,10 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier whitespace handling
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
-        .automaticAccessibilityIdentifiers()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         
         // When: Testing whitespace handling
         // Note: Pattern matching should trim whitespace; updated to match actual generated IDs (may have duplicate prefix)
@@ -405,17 +388,16 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier special character handling
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .named("Test-Element_With.Special@Characters")
-        .automaticAccessibilityIdentifiers()
         
         // When: Testing special character handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierSpecialCharacterHandling"
         )
@@ -426,17 +408,16 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier unicode handling
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .named("TestElementWithUnicode测试")
-        .automaticAccessibilityIdentifiers()
         
         // When: Testing unicode handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierUnicodeHandling"
         )
@@ -448,17 +429,16 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
     @Test func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier long string handling
         let longString = String(repeating: "A", count: 1000)
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
         .named(longString)
-        .automaticAccessibilityIdentifiers()
         
         // When: Testing long string handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui",
+            expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierLongStringHandling"
         )

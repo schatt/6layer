@@ -7,42 +7,46 @@ import ViewInspector
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
 @Suite("Simple Accessibility")
-open class SimpleAccessibilityTest: BaseTestClass {@Test func testManualAccessibilityIdentifierWorks() {
-        // Test manual accessibility identifier to make sure ViewInspector works
-        let testView = Button("Test") { }
-            .accessibilityIdentifier("manual-test-id")
+open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkComponentWithNamedModifier() {
+        // Test that framework components work with .named() modifier
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("test-component")
         
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
-            expectedPattern: "manual-test-id", 
+            expectedPattern: "*.main.ui.test-component", 
             platform: SixLayerPlatform.iOS,
-            componentName: "ManualAccessibilityIdentifier"
-        ), "Manual accessibility identifier should work")
-        print("✅ Manual accessibility identifier works")
+            componentName: "FrameworkComponentWithNamedModifier"
+        ), "Framework component with .named() should generate correct ID")
     }
     
     @Test func testAutomaticAccessibilityIdentifierModifierApplied() {
-        // Test if the modifier is applied at all
-        let testView = Button("Test") { }
-            .automaticAccessibilityIdentifiers()
+        // Test that framework components automatically apply accessibility identifiers
+        let testView = platformPresentBasicValue_L1(
+            value: 42,
+            hints: PresentationHints()
+        )
         
-        // Should look for automatic accessibility identifier with ui segment
+        // Framework component should automatically generate accessibility identifier
         #expect(testAccessibilityIdentifiersSinglePlatform(
             testView, 
             expectedPattern: "*.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
-            componentName: "AutomaticAccessibilityIdentifierModifier"
-        ), "Should have some accessibility identifier")
+            componentName: "platformPresentBasicValue_L1"
+        ), "Framework component should automatically generate accessibility identifiers")
         
-        // Check if ANY accessibility identifier modifier is present
+        // Check if accessibility identifier is present
         do {
             let inspectedView = try testView.inspect()
             let accessibilityID = try inspectedView.accessibilityIdentifier()
             print("🔍 Found accessibility ID: '\(accessibilityID)'")
-            #expect(accessibilityID != "", "Should have some accessibility identifier")
+            #expect(accessibilityID != "", "Framework component should have accessibility identifier")
         } catch {
             print("🔍 Error inspecting view: \(error)")
-            Issue.record("Should be able to inspect view: \(error)")
+            Issue.record("Should be able to inspect framework component: \(error)")
         }
     }
     
