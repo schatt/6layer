@@ -18,17 +18,20 @@ open class BaseTestClass {
     open func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
         let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        // Just set what we need - no reset needed since each test sets its own values
+        // Tests only set namespace (not prefix) as per framework design
         config.enableAutoIDs = true
         config.namespace = "SixLayer"
+        config.globalPrefix = ""  // Explicitly empty - tests don't set prefix unless testing it
         config.mode = .automatic
         config.enableDebugLogging = false
     }
     
     @MainActor
     open func cleanupTestEnvironment() {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        // No cleanup needed - each test sets what it needs
+        // If Swift Testing truly runs tests in isolation, singleton state shouldn't leak
+        // But keeping this empty method for potential future cleanup needs
     }
     
     // MARK: - Common Test Data Creation
