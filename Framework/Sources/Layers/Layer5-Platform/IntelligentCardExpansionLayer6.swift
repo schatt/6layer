@@ -305,6 +305,7 @@ public struct visionOSExpandableCardView<Item: Identifiable>: View {
             accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
         .modifier(FocusableModifier())
+        .automaticAccessibilityIdentifiers()
     }
 }
 

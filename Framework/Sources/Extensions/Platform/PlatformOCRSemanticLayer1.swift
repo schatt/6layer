@@ -151,6 +151,7 @@ private struct OCRWithVisualCorrectionWrapper: View {
                 initialView
             }
         }
+        .automaticAccessibilityIdentifiers()
         .onAppear {
             processImage()
         }

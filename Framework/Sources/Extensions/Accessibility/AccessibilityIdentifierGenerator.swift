@@ -45,7 +45,21 @@ public class AccessibilityIdentifierGenerator {
         let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
         let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
         
-        var identifierComponents: [String] = [prefix, namespace, screenContext, viewHierarchyPath]
+        // Build identifier components, avoiding duplication unless explicitly configured
+        var identifierComponents: [String] = []
+        
+        // Add prefix
+        identifierComponents.append(prefix)
+        
+        // Add namespace only if it's different from prefix (to avoid duplication)
+        // This prevents "SixLayer.SixLayer.main.ui..." when prefix == namespace
+        if namespace != prefix {
+            identifierComponents.append(namespace)
+        }
+        
+        // Add screen context and view hierarchy path
+        identifierComponents.append(screenContext)
+        identifierComponents.append(viewHierarchyPath)
         
         if config.includeComponentNames {
             identifierComponents.append(componentName)

@@ -82,13 +82,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Add prefix
         identifierComponents.append(prefix)
         
-        // In UI test integration, include namespace explicitly to satisfy pattern checks
-        if config.enableUITestIntegration {
+        // Add namespace only if it's different from prefix (to avoid duplication)
+        // Rationale: If a developer wants both prefix and namespace in the ID, they should set them to different values.
+        // Duplicating "SixLayer.SixLayer" serves no semantic purpose and creates unnecessarily long IDs.
+        // The comment about "UI test integration" was incorrect - it was causing duplicates in test output.
+        if namespace != prefix {
             identifierComponents.append(namespace)
-        } else {
-            if namespace != prefix {
-                identifierComponents.append(namespace)
-            }
         }
         
         // Add screen context
@@ -307,13 +306,12 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Add prefix
         identifierComponents.append(prefix)
         
-        // In UI test integration, include namespace explicitly to satisfy pattern checks
-        if config.enableUITestIntegration {
+        // Add namespace only if it's different from prefix (to avoid duplication)
+        // Rationale: If a developer wants both prefix and namespace in the ID, they should set them to different values.
+        // Duplicating "SixLayer.SixLayer" serves no semantic purpose and creates unnecessarily long IDs.
+        // The comment about "UI test integration" was incorrect - it was causing duplicates in test output.
+        if namespace != prefix {
             identifierComponents.append(namespace)
-        } else {
-            if namespace != prefix {
-                identifierComponents.append(namespace)
-            }
         }
         
         // Add screen context
