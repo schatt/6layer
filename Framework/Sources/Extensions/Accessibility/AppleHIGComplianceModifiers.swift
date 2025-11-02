@@ -105,6 +105,7 @@ public struct InteractionPatternModifier: ViewModifier {
             .modifier(PlatformInteractionModifier(platform: platform))
             .modifier(HapticFeedbackModifier(platform: platform))
             .modifier(GestureRecognitionModifier(platform: platform))
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -120,8 +121,10 @@ public struct VoiceOverSupportModifier: ViewModifier {
                 .accessibilityLabel(extractAccessibilityLabel(from: content))
                 .accessibilityHint(extractAccessibilityHint(from: content))
                 .accessibilityAddTraits(extractAccessibilityTraits(from: content))
+                .automaticAccessibilityIdentifiers()
         } else {
             content
+                .automaticAccessibilityIdentifiers()
         }
     }
     
@@ -190,8 +193,10 @@ public struct HighContrastModifier: ViewModifier {
                 #else
                 .background(.gray)
                 #endif
+                .automaticAccessibilityIdentifiers()
         } else {
             content
+                .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -204,8 +209,10 @@ public struct ReducedMotionModifier: ViewModifier {
         if isEnabled {
             content
                 .animation(.none, value: UUID())
+                .automaticAccessibilityIdentifiers()
         } else {
             content
+                .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -215,6 +222,7 @@ public struct DynamicTypeModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .dynamicTypeSize(.accessibility1...)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -226,16 +234,14 @@ public struct PlatformNavigationModifier: ViewModifier {
         switch platform {
         case .iOS:
             #if os(iOS)
-            content
-                .navigationBarTitleDisplayMode(.inline)
+            return AnyView(content.navigationBarTitleDisplayMode(.inline).automaticAccessibilityIdentifiers())
             #else
-            content
+            return AnyView(content.automaticAccessibilityIdentifiers())
             #endif
         case .macOS:
-            content
-                .navigationTitle("")
+            return AnyView(content.navigationTitle("").automaticAccessibilityIdentifiers())
         default:
-            content
+            return AnyView(content.automaticAccessibilityIdentifiers())
         }
     }
 }
@@ -248,6 +254,7 @@ public struct PlatformStylingModifier: ViewModifier {
         content
             .foregroundStyle(designSystem.colorSystem.text)
             .background(designSystem.colorSystem.background)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -258,6 +265,7 @@ public struct PlatformIconModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .imageScale(.medium)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -269,6 +277,7 @@ public struct SystemColorModifier: ViewModifier {
         content
             .foregroundStyle(colorSystem.text)
             .background(colorSystem.background)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -279,6 +288,7 @@ public struct SystemTypographyModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .font(typographySystem.body)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -289,6 +299,7 @@ public struct SpacingModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .padding(spacingSystem.md)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -338,17 +349,18 @@ public struct HapticFeedbackModifier: ViewModifier {
     public func body(content: Content) -> some View {
         if platform == .iOS {
             #if os(iOS)
-            content
+            return AnyView(content
                 .onTapGesture {
                     // Add haptic feedback
                     let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
                     impactFeedback.impactOccurred()
                 }
+                .automaticAccessibilityIdentifiers())
             #else
-            content
+            return AnyView(content.automaticAccessibilityIdentifiers())
             #endif
         } else {
-            content
+            return AnyView(content.automaticAccessibilityIdentifiers())
         }
     }
 }
@@ -360,20 +372,22 @@ public struct GestureRecognitionModifier: ViewModifier {
     public func body(content: Content) -> some View {
         switch platform {
         case .iOS:
-            content
+            return AnyView(content
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
                             // Handle tap gesture
                         }
                 )
+                .automaticAccessibilityIdentifiers())
         case .macOS:
-            content
+            return AnyView(content
                 .onTapGesture {
                     // Handle click gesture
                 }
+                .automaticAccessibilityIdentifiers())
         default:
-            content
+            return AnyView(content.automaticAccessibilityIdentifiers())
         }
     }
 }

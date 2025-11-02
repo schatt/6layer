@@ -354,8 +354,8 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
                     }
                 }
                 .padding(.horizontal, 40)
-                .automaticAccessibilityIdentifiers()
             }
+            .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -557,6 +557,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
                 }
             }
             .padding(16)
+            .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -674,10 +675,13 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
             // Choose the best layout based on content and device
             if items.count <= 2 {
                 ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+                    .automaticAccessibilityIdentifiers()
             } else if SixLayerPlatform.deviceType == .phone {
                 ListCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+                    .automaticAccessibilityIdentifiers()
             } else {
                 GridCollectionView(items: items, hints: hints, onCreateItem: onCreateItem)
+                    .automaticAccessibilityIdentifiers()
             }
         }
     }

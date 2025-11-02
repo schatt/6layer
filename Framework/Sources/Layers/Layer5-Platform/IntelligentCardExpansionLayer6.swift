@@ -58,6 +58,7 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
         .accessibilityValue(accessibilityValue)
+        .automaticAccessibilityIdentifiers()
     }
     
     @ViewBuilder
@@ -269,6 +270,7 @@ public struct iOSExpandableCardView<Item: Identifiable>: View {
             performanceConfig: getCardExpansionPerformanceConfig(),
             accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -288,6 +290,7 @@ public struct macOSExpandableCardView<Item: Identifiable>: View {
         .onHover { hovering in
             // macOS-specific hover behavior
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 
@@ -317,23 +320,26 @@ public struct PlatformAwareExpandableCardView<Item: Identifiable>: View {
     let expansionStrategy: ExpansionStrategy
     
     public var body: some View {
-        switch SixLayerPlatform.current {
-        case .iOS:
-            iOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
-        case .macOS:
-            macOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
-        case .visionOS:
-            visionOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
-        case .watchOS, .tvOS:
-            // Fallback to native implementation for constrained platforms
-            NativeExpandableCardView(
-                item: item,
-                expansionStrategy: expansionStrategy,
-                platformConfig: getCardExpansionPlatformConfig(),
-                performanceConfig: getCardExpansionPerformanceConfig(),
-                accessibilityConfig: getCardExpansionAccessibilityConfig()
-            )
+        Group {
+            switch SixLayerPlatform.current {
+            case .iOS:
+                iOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
+            case .macOS:
+                macOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
+            case .visionOS:
+                visionOSExpandableCardView(item: item, expansionStrategy: expansionStrategy)
+            case .watchOS, .tvOS:
+                // Fallback to native implementation for constrained platforms
+                NativeExpandableCardView(
+                    item: item,
+                    expansionStrategy: expansionStrategy,
+                    platformConfig: getCardExpansionPlatformConfig(),
+                    performanceConfig: getCardExpansionPerformanceConfig(),
+                    accessibilityConfig: getCardExpansionAccessibilityConfig()
+                )
+            }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 

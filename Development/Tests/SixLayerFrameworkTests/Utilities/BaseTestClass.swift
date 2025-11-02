@@ -1,4 +1,5 @@
 import Testing
+import SwiftUI
 @testable import SixLayerFramework
 
 /// Base class for all tests following DRY principle
@@ -57,8 +58,8 @@ import Testing
     /// Helper to inject test config into a view for isolated testing
     /// Usage: `let viewWithConfig = withTestConfig(myView)`
     @MainActor
-    public func withTestConfig<V: View>(_ view: V) -> some View {
-        return view.environment(\.accessibilityIdentifierConfig, testConfig)
+    public func withTestConfig<V: SwiftUI.View>(_ view: V) -> AnyView {
+        return AnyView(view.environment(\.accessibilityIdentifierConfig, testConfig))
     }
     
     // MARK: - Common Test Data Creation
