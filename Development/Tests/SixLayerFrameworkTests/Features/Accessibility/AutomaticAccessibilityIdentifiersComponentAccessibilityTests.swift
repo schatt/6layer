@@ -130,7 +130,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
         let testView = platformPresentNumericData_L1(
-            data: [GenericNumericData(label: "Test", value: 42)],
+            data: [GenericNumericData(value: 42, label: "Test")],
             hints: PresentationHints()
         )
         
