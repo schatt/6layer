@@ -191,8 +191,11 @@ public struct NamedModifier: ViewModifier {
         // Use injected config from environment (for testing), fall back to shared (for production)
         let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
         
+        // .named() should ALWAYS apply when explicitly called, regardless of global settings
+        // This is an explicit modifier call - user intent is clear
+        
         if config.enableDebugLogging {
-            print("🔍 NAMED MODIFIER DEBUG: Generating identifier for explicit name (ignoring global settings)")
+            print("🔍 NAMED MODIFIER DEBUG: Generating identifier for explicit name (applies regardless of global settings)")
         }
         
         // Get configured values (empty means skip entirely - no framework forcing)
@@ -257,9 +260,9 @@ public struct ExactNamedModifier: ViewModifier {
         // Use injected config from environment (for testing), fall back to shared (for production)
         let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
         
-        // Should apply if global is enabled OR local enable is set (same logic as AutomaticAccessibilityIdentifiersModifier)
-        let shouldApply = config.enableAutoIDs || globalEnabled
-        guard shouldApply else { return "" }
+        // .exactNamed() should ALWAYS apply when explicitly called, regardless of global settings
+        // This is an explicit modifier call - user intent is clear
+        // No guard needed - always apply when modifier is explicitly used
         
         // GREEN PHASE: Return ONLY the exact name - no framework additions
         let exactIdentifier = name
@@ -276,10 +279,10 @@ public struct ExactNamedModifier: ViewModifier {
 // MARK: - Environment Keys
 
 /// Environment key for enabling automatic accessibility identifiers locally (when global is off)
-/// Defaults to false - only set to true via .enableGlobalAutomaticAccessibilityIdentifiers() for local opt-in
-/// config.enableAutoIDs is the global setting; this env var only matters when global is off
+/// Defaults to true - automatic identifiers are enabled by default
+/// config.enableAutoIDs is the global setting; this env var allows local opt-in when global is off
 public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
-    public static let defaultValue: Bool = false
+    public static let defaultValue: Bool = true
 }
 
 /// Environment key for setting the accessibility identifier prefix

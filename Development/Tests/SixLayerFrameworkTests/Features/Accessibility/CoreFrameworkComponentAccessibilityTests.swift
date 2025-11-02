@@ -36,9 +36,8 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
         // When: Checking default value
         let defaultValue = GlobalAutomaticAccessibilityIdentifiersKey.defaultValue
         
-        // Then: Should have the documented default value (false - local opt-in only)
-        // The actual global setting is config.enableAutoIDs, not this environment variable
-        #expect(!defaultValue, "GlobalAutomaticAccessibilityIdentifiersKey defaults to false (local opt-in only)")
+        // Then: Should default to true (automatic identifiers enabled by default)
+        #expect(defaultValue, "GlobalAutomaticAccessibilityIdentifiersKey should default to true")
     }
     
     @Test func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
