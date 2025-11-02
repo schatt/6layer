@@ -500,6 +500,7 @@ public struct IntelligentFormView {
             .padding()
             .background(Color.platformSecondaryBackground)
             .cornerRadius(8)
+            .automaticAccessibilityIdentifiers()
         }
     }
     
