@@ -113,6 +113,13 @@ public enum DetailLayoutStrategy: String, CaseIterable {
     case adaptive = "adaptive"     // Automatically choose best strategy
 }
 
+/// Strategy for adaptive detail views based on device type
+/// This is pure data - testable without SwiftUI
+public enum AdaptiveDetailStrategy: Equatable {
+    case standard  // Use standard detail view
+    case detailed  // Use detailed detail view
+}
+
 // MARK: - Private Implementation
 
 public extension IntelligentDetailView {
@@ -420,6 +427,20 @@ public extension IntelligentDetailView {
         #endif
     }
     
+    /// Determine adaptive detail view strategy based on device type
+    /// This is PURE business logic - testable WITHOUT rendering views
+    /// Returns which view strategy to use for a given device type
+    static func determineAdaptiveDetailStrategy(for deviceType: DeviceType) -> AdaptiveDetailStrategy {
+        switch deviceType {
+        case .phone:
+            return .standard
+        case .pad, .mac:
+            return .detailed
+        default:
+            return .standard
+        }
+    }
+    
     /// Generate an adaptive detail view
     static func platformAdaptiveDetailView<T>(
         data: T,
@@ -428,11 +449,13 @@ public extension IntelligentDetailView {
         onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
-        // Use device characteristics to choose the best strategy
+        // Use extracted decision logic
         let deviceType = SixLayerPlatform.deviceType
+        let strategy = determineAdaptiveDetailStrategy(for: deviceType)
         
-        switch deviceType {
-        case .phone:
+        // Render based on the strategy decision
+        switch strategy {
+        case .standard:
             return AnyView(platformStandardDetailView(
                 data: data,
                 analysis: analysis,
@@ -440,16 +463,8 @@ public extension IntelligentDetailView {
                 onEdit: onEdit,
                 customFieldView: customFieldView
             ))
-        case .pad, .mac:
+        case .detailed:
             return AnyView(platformDetailedDetailView(
-                data: data,
-                analysis: analysis,
-                showEditButton: showEditButton,
-                onEdit: onEdit,
-                customFieldView: customFieldView
-            ))
-        default:
-            return AnyView(platformStandardDetailView(
                 data: data,
                 analysis: analysis,
                 showEditButton: showEditButton,
