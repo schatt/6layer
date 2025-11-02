@@ -11,34 +11,9 @@ import ViewInspector
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Modal Form View")
 @MainActor
-open class ModalFormViewTests {
-    
-    // MARK: - Helper Methods
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func configureAccessibilityIdentifiers() {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
-    
-    // MARK: - ModalFormView Tests
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+open class ModalFormViewTests: BaseTestClass {
     
     @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        // Setup test environment
-        await setupTestEnvironment()
-        configureAccessibilityIdentifiers()
-        
         let testFields = [
             DynamicFormField(
                 id: "field1",
@@ -50,7 +25,7 @@ open class ModalFormViewTests {
             )
         ]
         
-        let view = ModalFormView(
+        let view = withTestConfig(ModalFormView(
             fields: testFields,
             formType: .generic,
             context: .modal,
@@ -61,11 +36,11 @@ open class ModalFormViewTests {
                 context: .modal,
                 customPreferences: [:]
             )
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "ModalFormView"
         )
@@ -74,10 +49,6 @@ open class ModalFormViewTests {
     }
     
     @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        // Setup test environment
-        await setupTestEnvironment()
-        configureAccessibilityIdentifiers()
-        
         let testFields = [
             DynamicFormField(
                 id: "field1",
@@ -89,7 +60,7 @@ open class ModalFormViewTests {
             )
         ]
         
-        let view = ModalFormView(
+        let view = withTestConfig(ModalFormView(
             fields: testFields,
             formType: .generic,
             context: .modal,
@@ -100,12 +71,12 @@ open class ModalFormViewTests {
                 context: .modal,
                 customPreferences: [:]
             )
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
+            expectedPattern: "SixLayer.main.ui.element.*", 
+            platform: SixLayerPlatform.macOS,
             componentName: "ModalFormView"
         )
         

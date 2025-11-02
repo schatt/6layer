@@ -174,6 +174,7 @@ public struct NamedModifier: ViewModifier {
     let name: String
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalEnabled
     @Environment(\.accessibilityIdentifierPrefix) private var prefix
+    @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
     
     public func body(content: Content) -> some View {
         // Compute once

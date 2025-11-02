@@ -211,18 +211,18 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     /// METHODOLOGY: Creates view with manual identifier and verifies it's used instead of automatic
     @Test func testManualAccessibilityIdentifiersOverrideAutomatic() async {
         await MainActor.run {
-            // Given: Automatic IDs enabled
-            AccessibilityIdentifierConfig.shared.enableAutoIDs = true
-            AccessibilityIdentifierConfig.shared.namespace = "auto"
+            // Given: Automatic IDs enabled, set namespace for this test
+            testConfig.enableAutoIDs = true
+            testConfig.namespace = "auto"
             
             // When: Creating view with manual identifier
             let manualID = "manual-custom-id"
-            let view = platformPresentContent_L1(
+            let view = withTestConfig(platformPresentContent_L1(
                 content: "Test",
                 hints: PresentationHints()
             )
                 .accessibilityIdentifier(manualID)
-                .automaticAccessibilityIdentifiers()
+                .automaticAccessibilityIdentifiers())
             
             // Then: Manual identifier should be used
             // We test this by verifying the view has the manual identifier
@@ -243,14 +243,14 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testViewLevelOptOutDisablesAutomaticIDs() async {
         await MainActor.run {
             // Given: Automatic IDs disabled globally
-            AccessibilityIdentifierConfig.shared.enableAutoIDs = false
+            testConfig.enableAutoIDs = false
             
             // When: Creating view with automatic accessibility identifiers modifier
-            let view = platformPresentContent_L1(
+            let view = withTestConfig(platformPresentContent_L1(
                 content: "Test",
                 hints: PresentationHints()
             )
-                .automaticAccessibilityIdentifiers()
+                .automaticAccessibilityIdentifiers())
             
             // Then: No automatic identifier should be generated
             // We test this by verifying the view does NOT have an automatic identifier

@@ -11,40 +11,19 @@ import ViewInspector
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform Internationalization L")
 @MainActor
-open class PlatformInternationalizationL1Tests {
-    
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - platformPresentLocalizedContent_L1 Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+open class PlatformInternationalizationL1Tests: BaseTestClass {
     
 @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let hints = InternationalizationHints()
         
-        let view = platformPresentLocalizedContent_L1(
-            content: Text("Test Localized Content"),
+        let view = withTestConfig(platformPresentLocalizedContent_L1(
+            content: platformPresentContent_L1(content: "Test Localized Content", hints: PresentationHints()),
             hints: hints
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             componentName: "platformPresentLocalizedContent_L1",
             testName: "PlatformTest"
         )
@@ -55,14 +34,14 @@ open class PlatformInternationalizationL1Tests {
     @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let hints = InternationalizationHints()
         
-        let view = platformPresentLocalizedContent_L1(
-            content: Text("Test Localized Content"),
+        let view = withTestConfig(platformPresentLocalizedContent_L1(
+            content: platformPresentContent_L1(content: "Test Localized Content", hints: PresentationHints()),
             hints: hints
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             componentName: "platformPresentLocalizedContent_L1",
             testName: "PlatformTest"
         )
@@ -75,11 +54,11 @@ open class PlatformInternationalizationL1Tests {
     @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let hints = InternationalizationHints()
         
-        let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
+        let view = withTestConfig(platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints))
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             componentName: "platformPresentLocalizedText_L1",
             testName: "PlatformTest"
         )
@@ -90,11 +69,11 @@ open class PlatformInternationalizationL1Tests {
     @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let hints = InternationalizationHints()
         
-        let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
+        let view = withTestConfig(platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints))
         
         let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             componentName: "platformPresentLocalizedText_L1",
             testName: "PlatformTest"
         )
