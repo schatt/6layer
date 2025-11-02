@@ -110,7 +110,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                 )
             }
             .padding(layoutDecision.padding)
-            .automaticAccessibility()
+            .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -354,6 +354,7 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
                     }
                 }
                 .padding(.horizontal, 40)
+                .automaticAccessibilityIdentifiers()
             }
         }
     }
@@ -392,6 +393,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
         .onTapGesture {
             onItemSelected?(item)
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     // MARK: - Card Displayable Support
@@ -463,6 +465,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.platformBackground)
+            .automaticAccessibilityIdentifiers()
         } else {
             GeometryReader { geometry in
                 let layoutDecision = determineIntelligentCardLayout_L2(
@@ -488,6 +491,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
                     }
                 }
                 .padding(layoutDecision.padding)
+                .automaticAccessibilityIdentifiers()
             }
         }
     }
@@ -614,6 +618,7 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
                 }
             }
             .padding(16)
+            .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -771,6 +776,9 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         // Always apply animation support
         view = AnyView(view.animation(.easeInOut(duration: 0.3), value: config.supportsTouch))
         
+        // Always apply automatic accessibility identifiers
+        view = AnyView(view.automaticAccessibilityIdentifiers())
+        
         return view
     }
     
@@ -864,6 +872,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .accessibilityAction(named: "Activate") {
             onItemSelected?(item)
         }
+        .automaticAccessibilityIdentifiers()
     }
     
     // MARK: - Card Displayable Support
@@ -924,6 +933,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(12)
         .shadow(radius: 4)
+        .automaticAccessibilityIdentifiers()
     }
     
     // MARK: - Card Displayable Support

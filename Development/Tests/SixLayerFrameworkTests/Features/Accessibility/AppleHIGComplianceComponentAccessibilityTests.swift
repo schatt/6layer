@@ -17,10 +17,12 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     // MARK: - AppleHIGComplianceModifier Tests
     
     @Test func testAppleHIGComplianceModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
+        // Given: Framework components (testing our framework, not SwiftUI)
         let testContent = VStack {
-            Text("HIG Compliance Content")
-            Button("Test Button") { }
+            platformPresentContent_L1(content: "HIG Compliance Content", hints: PresentationHints())
+            PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
+            }
         }
         
         // When: Applying AppleHIGComplianceModifier
