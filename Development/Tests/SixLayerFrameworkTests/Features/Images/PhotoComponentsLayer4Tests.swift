@@ -201,5 +201,4 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // This is an example of a function that does NOT need platform mocking
         }
     }
-    
-
+}
