@@ -286,7 +286,10 @@ open class EyeTrackingTests: BaseTestClass {
     /// METHODOLOGY: Create DwellEvent without timestamp and verify automatic timestamp generation
     @Test func testDwellEventDefaultTimestamp() {
         let dwellEvent = EyeTrackingDwellEvent(
-            targetView: AnyView(Text("Test")),
+            targetView: AnyView(platformPresentContent_L1(
+                content: "Test",
+                hints: PresentationHints()
+            )),
             position: CGPoint(x: 50, y: 75),
             duration: 1.0
         )
@@ -378,7 +381,10 @@ open class EyeTrackingTests: BaseTestClass {
     /// TESTING SCOPE: Tests SwiftUI eyeTrackingEnabled convenience modifier
     /// METHODOLOGY: Apply eyeTrackingEnabled modifier and verify modifier application
     @Test func testEyeTrackingEnabledViewModifier() {
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         let modifiedView = testView.eyeTrackingEnabled()
         
         // Test that the modifier can be applied and the view can be hosted
@@ -391,7 +397,10 @@ open class EyeTrackingTests: BaseTestClass {
     /// TESTING SCOPE: Tests SwiftUI eyeTrackingEnabled modifier with custom configuration
     /// METHODOLOGY: Apply eyeTrackingEnabled with config and verify configuration
     @Test func testEyeTrackingEnabledWithConfig() {
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         let config = EyeTrackingConfig(sensitivity: .low)
         let modifiedView = testView.eyeTrackingEnabled(config: config)
         
@@ -405,7 +414,10 @@ open class EyeTrackingTests: BaseTestClass {
     /// TESTING SCOPE: Tests SwiftUI eyeTrackingEnabled modifier with callback invocation
     /// METHODOLOGY: Apply eyeTrackingEnabled with callbacks and verify callback execution
     @Test func testEyeTrackingEnabledWithCallbacks() {
-        let testView = Text("Test")
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
         let modifiedView = testView.eyeTrackingEnabled(
             onGaze: { _ in },
             onDwell: { _ in }

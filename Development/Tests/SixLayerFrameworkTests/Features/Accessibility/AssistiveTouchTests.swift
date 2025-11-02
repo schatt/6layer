@@ -300,8 +300,10 @@ open class AssistiveTouchTests: BaseTestClass {
     @Test func testAssistiveTouchCompliance() {
         // Given: A view with AssistiveTouch support
         let view = VStack {
-            Text("Title")
-            Button("Action") { }
+            platformPresentContent_L1(content: "Title", hints: PresentationHints())
+            PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Action", hints: PresentationHints())
+            }
         }
         .assistiveTouchEnabled()
         
