@@ -11,28 +11,7 @@ import ViewInspector
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Generic Item Collection View")
 @MainActor
-open class GenericItemCollectionViewTests {
-    
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - GenericItemCollectionView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+open class GenericItemCollectionViewTests: BaseTestClass {
     
 @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
@@ -40,10 +19,10 @@ open class GenericItemCollectionViewTests {
             GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
         ]
         
-        let view = GenericItemCollectionView(
+        let view = withTestConfig(GenericItemCollectionView(
             items: testItems,
             hints: PresentationHints()
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
@@ -61,10 +40,10 @@ open class GenericItemCollectionViewTests {
             GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
         ]
         
-        let view = GenericItemCollectionView(
+        let view = withTestConfig(GenericItemCollectionView(
             items: testItems,
             hints: PresentationHints()
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 

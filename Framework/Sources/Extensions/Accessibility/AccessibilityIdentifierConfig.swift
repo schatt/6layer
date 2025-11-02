@@ -26,7 +26,8 @@ public enum AccessibilityMode: String, CaseIterable, Sendable {
 @MainActor
 public class AccessibilityIdentifierConfig: ObservableObject {
     /// Shared instance for global configuration
-    public static let shared = AccessibilityIdentifierConfig()
+    /// Production code uses this; tests should inject their own via environment
+    public static let shared = AccessibilityIdentifierConfig(singleton: true)
     
     /// Whether automatic accessibility identifiers are enabled
     @Published public var enableAutoIDs: Bool = true
@@ -52,7 +53,16 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     @Published public var currentScreenContext: String? = nil
     
     /// Debug logging mode
-    @Published public var enableDebugLogging: Bool = false
+    /// Automatically enabled if SIXLAYER_DEBUG_A11Y environment variable is set to "1" or "true"
+    @Published public var enableDebugLogging: Bool = false {
+        didSet {
+            if enableDebugLogging && !oldValue {
+                print("🔍 SixLayer Accessibility ID debugging enabled")
+                print("   Use AccessibilityIdentifierConfig.shared.printDebugLog() to see generated IDs")
+                fflush(stdout) // Ensure output appears immediately
+            }
+        }
+    }
     
     /// UI test integration mode
     @Published public var enableUITestIntegration: Bool = false
@@ -74,20 +84,34 @@ public class AccessibilityIdentifierConfig: ObservableObject {
         currentViewHierarchy.append(viewName)
     }
     
-    private init() {}
+    /// Initialize a new config instance (allows tests to create isolated instances)
+    public init() {}
+    
+    /// Private initializer for singleton pattern
+    private init(singleton: Bool) {
+        // Used only by shared instance
+        // Check environment variable to auto-enable debug logging
+        let envValue = ProcessInfo.processInfo.environment["SIXLAYER_DEBUG_A11Y"]
+        if envValue == "1" || envValue == "true" {
+            enableDebugLogging = true
+        }
+    }
     
     /// Reset configuration to defaults
     /// Sets empty strings for namespace and prefix - framework should work with developers, not force framework values
+    /// CRITICAL: Also clears ALL accumulating state (debug logs, view hierarchy) to prevent test leakage
     public func resetToDefaults() {
         enableAutoIDs = true
         globalPrefix = ""  // Empty = skip in ID generation
         namespace = ""      // Empty = skip in ID generation
         includeComponentNames = true
         includeElementTypes = true
-        currentViewHierarchy = []
+        currentViewHierarchy = []  // Clear accumulating view hierarchy
         currentScreenContext = nil
         enableDebugLogging = false
         mode = .automatic
+        // CRITICAL: Clear accumulating data stores to prevent test state leakage
+        debugLogEntries.removeAll()  // Clear debug log accumulation
     }
     
     /// Configure for testing mode
@@ -116,6 +140,18 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     /// Get the current debug log as a formatted string
     public func getDebugLog() -> String {
         return debugLogEntries.joined(separator: "\n")
+    }
+    
+    /// Print the debug log to console
+    /// Convenience method for debugging - prints all debug log entries
+    public func printDebugLog() {
+        let log = getDebugLog()
+        if log.isEmpty {
+            print("📋 Accessibility Debug Log: (empty)")
+        } else {
+            print("📋 Accessibility Debug Log:")
+            print(log)
+        }
     }
     
     /// Clear the debug log

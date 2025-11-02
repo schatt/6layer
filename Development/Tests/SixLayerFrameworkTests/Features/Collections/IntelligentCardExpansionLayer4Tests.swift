@@ -11,28 +11,7 @@ import ViewInspector
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Card Expansion Layer")
 @MainActor
-open class IntelligentCardExpansionLayer4Tests {
-    
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - ExpandableCardCollectionView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     
 @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testItems = [
@@ -40,7 +19,7 @@ open class IntelligentCardExpansionLayer4Tests {
             IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
         ]
         
-        let view = ExpandableCardCollectionView(
+        let view = withTestConfig(ExpandableCardCollectionView(
             items: testItems,
             hints: PresentationHints(
                 dataType: .generic,
@@ -49,11 +28,11 @@ open class IntelligentCardExpansionLayer4Tests {
                 context: .modal,
                 customPreferences: [:]
             )
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
         )
@@ -67,7 +46,7 @@ open class IntelligentCardExpansionLayer4Tests {
             IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
         ]
         
-        let view = ExpandableCardCollectionView(
+        let view = withTestConfig(ExpandableCardCollectionView(
             items: testItems,
             hints: PresentationHints(
                 dataType: .generic,
@@ -76,11 +55,11 @@ open class IntelligentCardExpansionLayer4Tests {
                 context: .modal,
                 customPreferences: [:]
             )
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             platform: .macOS,
             componentName: "ExpandableCardCollectionView"
         )
@@ -90,7 +69,7 @@ open class IntelligentCardExpansionLayer4Tests {
     
     @Test func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
         // Test empty state
-        let view = ExpandableCardCollectionView(
+        let view = withTestConfig(ExpandableCardCollectionView(
             items: [] as [IntelligentCardExpansionLayer4TestItem],
             hints: PresentationHints(
                 dataType: .generic,
@@ -103,7 +82,7 @@ open class IntelligentCardExpansionLayer4Tests {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.*ui", 
+            expectedPattern: "SixLayer.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
         )

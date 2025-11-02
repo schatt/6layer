@@ -26,14 +26,14 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         ]
         
         // When: Creating ResponsiveGrid with framework components
-        let view = ResponsiveGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+        let view = withTestConfig(ResponsiveGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
             ForEach(gridItems) { item in
                 platformPresentContent_L1(
                     content: "\(item.title) - \(item.subtitle)",
                     hints: PresentationHints()
                 )
             }
-        }
+        })
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -60,7 +60,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         }
         
         // When: Creating ResponsiveNavigation
-        let view = ResponsiveNavigation(content: navigationContent)
+        let view = withTestConfig(ResponsiveNavigation(content: navigationContent))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -86,7 +86,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         }
         
         // When: Creating ResponsiveStack
-        let view = ResponsiveStack(content: stackContent)
+        let view = withTestConfig(ResponsiveStack(content: stackContent))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -103,7 +103,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     
     @Test func testResponsiveLayoutExampleGeneratesAccessibilityIdentifiers() async {
         // When: Creating ResponsiveLayoutExample
-        let view = ResponsiveLayoutExample()
+        let view = withTestConfig(ResponsiveLayoutExample())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -120,7 +120,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     
     @Test func testResponsiveNavigationExampleGeneratesAccessibilityIdentifiers() async {
         // When: Creating ResponsiveNavigationExample
-        let view = ResponsiveNavigationExample()
+        let view = withTestConfig(ResponsiveNavigationExample())
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -143,7 +143,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Applying ResponsivePadding modifier
-        let view = testContent.modifier(ResponsivePadding())
+        let view = withTestConfig(testContent.modifier(ResponsivePadding()))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

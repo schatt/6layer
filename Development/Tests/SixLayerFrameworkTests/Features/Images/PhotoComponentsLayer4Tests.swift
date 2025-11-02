@@ -31,7 +31,7 @@ import SwiftUI
 import ViewInspector
 @MainActor
 @Suite("Photo Components Layer")
-open class PhotoComponentsLayer4Tests {
+open class PhotoComponentsLayer4Tests: BaseTestClass {
     
     // MARK: - Test Data Setup
     
@@ -47,7 +47,7 @@ open class PhotoComponentsLayer4Tests {
         #else
         testImage = PlatformImage()
         #endif
-    }    }
+    }
     
     // MARK: - Layer 4 Photo Component Tests
     
@@ -63,12 +63,14 @@ open class PhotoComponentsLayer4Tests {
             var capturedImage: PlatformImage?
             
             // When: Call Layer 4 function
-            
-            let result = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
+            let cameraView = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
                 onImageCaptured: { image in
                     capturedImage = image
                 }
             )
+            
+            // Wrap with test config to ensure namespace is set
+            let result = withTestConfig(cameraView)
             
             // Verify callback is properly configured
             #expect(result != nil, "Camera interface should be created")

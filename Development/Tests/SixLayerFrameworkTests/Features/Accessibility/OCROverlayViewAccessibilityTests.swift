@@ -23,14 +23,12 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         )
         
         // Test the ACTUAL OCROverlayView component on iOS
-        let ocrView = OCROverlayView(
+        let ocrView = withTestConfig(OCROverlayView(
             image: mockImage,
             result: mockResult,
             onTextEdit: { _, _ in },
             onTextDelete: { _ in }
-        )
-        
-        #expect(ocrView != nil, "OCROverlayView should be creatable")
+        ))
         
         // MANDATORY: Test that accessibility identifiers are applied on iOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
@@ -58,21 +56,19 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         )
         
         // Test the ACTUAL OCROverlayView component on macOS
-        let ocrView = OCROverlayView(
+        let ocrView = withTestConfig(OCROverlayView(
             image: mockImage,
             result: mockResult,
             onTextEdit: { _, _ in },
             onTextDelete: { _ in }
-        )
-        
-        #expect(ocrView != nil, "OCROverlayView should be creatable")
+        ))
         
         // MANDATORY: Test that accessibility identifiers are applied on macOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
         #expect(testAccessibilityIdentifiersSinglePlatform(
             ocrView, 
             expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
+            platform: SixLayerPlatform.macOS,
             componentName: "OCROverlayView"
         ), "OCROverlayView should generate OCR-specific accessibility ID on macOS")
         

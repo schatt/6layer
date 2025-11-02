@@ -11,33 +11,12 @@ import ViewInspector
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Responsive Layout")
 @MainActor
-open class ResponsiveLayoutTests {
-    
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - ResponsiveLayout Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+open class ResponsiveLayoutTests: BaseTestClass {
     
 @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = ResponsiveLayout.adaptiveGrid {
-            Text("Test Content")
-        }
+        let view = withTestConfig(ResponsiveLayout.adaptiveGrid {
+            platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
+        })
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
@@ -50,9 +29,9 @@ open class ResponsiveLayoutTests {
     }
     
     @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = ResponsiveLayout.adaptiveGrid {
-            Text("Test Content")
-        }
+        let view = withTestConfig(ResponsiveLayout.adaptiveGrid {
+            platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
+        })
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 

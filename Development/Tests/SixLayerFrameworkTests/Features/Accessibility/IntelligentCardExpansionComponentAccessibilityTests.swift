@@ -28,7 +28,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating ExpandableCardCollectionView
-        let view = ExpandableCardCollectionView(items: testItems, hints: hints)
+        let view = withTestConfig(ExpandableCardCollectionView(items: testItems, hints: hints))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -48,7 +48,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "Test Card")
         
         // When: Creating ExpandableCardComponent
-        let view = ExpandableCardComponent(
+        let view = withTestConfig(ExpandableCardComponent(
             item: testItem,
             layoutDecision: IntelligentCardLayoutDecision(
                 columns: 2,
@@ -71,7 +71,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -95,13 +95,13 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating CoverFlowCollectionView
-        let view = CoverFlowCollectionView(
+        let view = withTestConfig(CoverFlowCollectionView(
             items: testItems,
             hints: hints,
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -121,12 +121,12 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "CoverFlow Card")
         
         // When: Creating CoverFlowCardComponent
-        let view = CoverFlowCardComponent(
+        let view = withTestConfig(CoverFlowCardComponent(
             item: testItem,
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -150,7 +150,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating GridCollectionView
-        let view = GridCollectionView(items: testItems, hints: hints)
+        let view = withTestConfig(GridCollectionView(items: testItems, hints: hints))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -174,7 +174,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating ListCollectionView
-        let view = ListCollectionView(items: testItems, hints: hints)
+        let view = withTestConfig(ListCollectionView(items: testItems, hints: hints))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -198,7 +198,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating MasonryCollectionView
-        let view = MasonryCollectionView(items: testItems, hints: hints)
+        let view = withTestConfig(MasonryCollectionView(items: testItems, hints: hints))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -222,10 +222,10 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // When: Creating AdaptiveCollectionView
-        let view = AdaptiveCollectionView(
+        let view = withTestConfig(AdaptiveCollectionView(
             items: testItems,
             hints: hints
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -245,7 +245,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "Simple Card")
         
         // When: Creating SimpleCardComponent
-        let view = SimpleCardComponent(
+        let view = withTestConfig(SimpleCardComponent(
             item: testItem,
             layoutDecision: IntelligentCardLayoutDecision(
                 columns: 1,
@@ -258,7 +258,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -278,7 +278,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "List Card")
         
         // When: Creating ListCardComponent
-        let view = ListCardComponent(item: testItem, hints: PresentationHints())
+        let view = withTestConfig(ListCardComponent(item: testItem, hints: PresentationHints()))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -298,7 +298,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let testItem = CardTestItem(id: "1", title: "Masonry Card")
         
         // When: Creating MasonryCardComponent
-        let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
+        let view = withTestConfig(MasonryCardComponent(item: testItem, hints: PresentationHints()))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -324,7 +324,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let view = iOSExpandableCardView(
             item: testItem,
             expansionStrategy: expansionStrategy
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -345,10 +345,10 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let expansionStrategy = ExpansionStrategy.hoverExpand
         
         // When: Creating iOSExpandableCardView
-        let view = iOSExpandableCardView(
+        let view = withTestConfig(iOSExpandableCardView(
             item: testItem,
             expansionStrategy: expansionStrategy
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -369,10 +369,10 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let expansionStrategy = ExpansionStrategy.hoverExpand
         
         // When: Creating macOSExpandableCardView
-        let view = macOSExpandableCardView(
+        let view = withTestConfig(macOSExpandableCardView(
             item: testItem,
             expansionStrategy: expansionStrategy
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -393,10 +393,10 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let expansionStrategy = ExpansionStrategy.hoverExpand
         
         // When: Creating visionOSExpandableCardView
-        let view = visionOSExpandableCardView(
+        let view = withTestConfig(visionOSExpandableCardView(
             item: testItem,
             expansionStrategy: expansionStrategy
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -417,10 +417,10 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let expansionStrategy = ExpansionStrategy.hoverExpand
         
         // When: Creating PlatformAwareExpandableCardView
-        let view = PlatformAwareExpandableCardView(
+        let view = withTestConfig(PlatformAwareExpandableCardView(
             item: testItem,
             expansionStrategy: expansionStrategy
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

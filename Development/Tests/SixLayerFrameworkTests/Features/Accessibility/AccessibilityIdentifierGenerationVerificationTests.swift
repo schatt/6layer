@@ -10,24 +10,24 @@ import ViewInspector
  * METHODOLOGY: Leverages centralized accessibility testing functions for consistent validation
  */
 @Suite("Accessibility Identifier Generation Verification")
-open class AccessibilityIdentifierGenerationVerificationTests {
+open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
     /// TESTING SCOPE: Tests that the basic automatic identifier modifier works end-to-end
     /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
         await MainActor.run {
-            // Setup: Configure test environment with automatic mode and debug logging
-            setupTestEnvironment(enableDebugLogging: true, mode: .automatic)
-            
             // Test: Use centralized component accessibility testing
+            // BaseTestClass already sets up testConfig, just enable debug logging if needed
+            testConfig.enableDebugLogging = true
+            
             let testPassed = testComponentAccessibility(
                 componentName: "AutomaticAccessibilityIdentifiers",
                 createComponent: {
-                    PlatformInteractionButton(style: .primary, action: {}) {
+                    withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
                         platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
                     }
-                    .automaticAccessibilityIdentifiers()
+                    .automaticAccessibilityIdentifiers())
                 }
             )
             
@@ -44,17 +44,17 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testNamedActuallyGeneratesIdentifiers() async {
         await MainActor.run {
-            // Setup: Configure test environment with specific namespace and automatic mode
-            setupTestEnvironment(enableDebugLogging: true, namespace: "SixLayer", mode: .automatic)
+            // BaseTestClass already sets up testConfig with namespace "SixLayer"
+            testConfig.enableDebugLogging = true
             
             // Test: Use centralized component accessibility testing
             let testPassed = testComponentAccessibility(
                 componentName: "NamedModifier",
                 createComponent: {
-                    PlatformInteractionButton(style: .primary, action: {}) {
+                    withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
                         platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
                     }
-                    .named("AddFuelButton")
+                    .named("AddFuelButton"))
                 }
             )
             
@@ -106,19 +106,18 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     /// METHODOLOGY: Tests that manual identifiers work even when automatic generation is enabled
     @Test func testManualIdentifiersOverrideAutomaticGeneration() async {
         await MainActor.run {
-            // Given: Automatic IDs enabled
-            let config = AccessibilityIdentifierConfig.shared
-            config.enableAutoIDs = true
-            config.namespace = "auto"
+            // Given: Automatic IDs enabled, set namespace for this test
+            testConfig.namespace = "auto"
+            testConfig.enableAutoIDs = true
             
             // When: Creating view with manual identifier
             let manualID = "manual-custom-id"
-            let testView = platformPresentContent_L1(
+            let testView = withTestConfig(platformPresentContent_L1(
                 content: "Test",
                 hints: PresentationHints()
             )
                 .accessibilityIdentifier(manualID)
-                .automaticAccessibilityIdentifiers()
+                .automaticAccessibilityIdentifiers())
             
             // Then: Test the two critical aspects
             
@@ -140,16 +139,16 @@ open class AccessibilityIdentifierGenerationVerificationTests {
     /// METHODOLOGY: Tests that enabling/disabling automatic IDs actually works
     @Test func testGlobalConfigActuallyControlsIdentifierGeneration() async {
         await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.namespace = "test"
+            // Use isolated testConfig instead of shared
+            testConfig.namespace = "test"
             
             // Test Case 1: When automatic IDs are disabled
-            config.enableAutoIDs = false
+            testConfig.enableAutoIDs = false
             
-            let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
+            let testView1 = withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticAccessibilityIdentifiers())
             
             // 1. View created - The view can be instantiated successfully
             #expect(testView1 != nil, "View should be created even when automatic IDs are disabled")
@@ -165,12 +164,12 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             }
             
             // Test Case 2: When automatic IDs are enabled
-            config.enableAutoIDs = true
+            testConfig.enableAutoIDs = true
             
-            let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
+            let testView2 = withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticAccessibilityIdentifiers())
             
             // 1. View created - The view can be instantiated successfully
             #expect(testView2 != nil, "View should be created when automatic IDs are enabled")
@@ -179,7 +178,8 @@ open class AccessibilityIdentifierGenerationVerificationTests {
             do {
                 let accessibilityIdentifier2 = try testView2.inspect().button().accessibilityIdentifier()
                 #expect(!accessibilityIdentifier2.isEmpty, "An identifier should be generated when enabled")
-                #expect(accessibilityIdentifier2.contains(".test."), "Generated ID should contain namespace")
+                // ID format: test.main.ui.element.View (namespace is first)
+                #expect(accessibilityIdentifier2.hasPrefix("test."), "Generated ID should start with namespace 'test.'")
             } catch {
                 Issue.record("Failed to inspect accessibility identifier: \(error)")
             }

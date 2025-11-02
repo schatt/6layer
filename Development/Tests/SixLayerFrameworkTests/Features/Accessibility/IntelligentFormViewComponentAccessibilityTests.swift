@@ -27,12 +27,12 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         let sampleData = SampleData(name: "Test User", email: "test@example.com")
         
         // When: Creating IntelligentFormView using static method
-        let view = IntelligentFormView.generateForm(
+        let view = withTestConfig(IntelligentFormView.generateForm(
             for: SampleData.self,
             initialData: sampleData,
             onSubmit: { _ in },
             onCancel: { }
-        )
+        ))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -57,7 +57,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating IntelligentDetailView
-        let view = IntelligentDetailView.platformDetailView(for: detailData)
+        let view = withTestConfig(IntelligentDetailView.platformDetailView(for: detailData))
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

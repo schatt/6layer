@@ -95,8 +95,9 @@ public struct ResponsiveStack<Content: View>: View {
 
 // MARK: - Responsive Padding
 public struct ResponsivePadding: ViewModifier {
-        public func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content.padding(paddingValue)
+            .automaticAccessibilityIdentifiers()
     }
 
     private var paddingValue: CGFloat {
@@ -144,6 +145,7 @@ public struct ResponsiveLayout {
                 content()
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 
     @MainActor
@@ -158,6 +160,7 @@ public struct ResponsiveLayout {
                 content()
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 
     @MainActor
@@ -172,6 +175,7 @@ public struct ResponsiveLayout {
                 content()
             }
         }
+        .automaticAccessibilityIdentifiers()
     }
 }
 

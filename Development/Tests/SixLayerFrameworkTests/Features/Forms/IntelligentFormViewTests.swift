@@ -11,36 +11,15 @@ import ViewInspector
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Form View")
 @MainActor
-open class IntelligentFormViewTests {
-    
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - IntelligentFormView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+open class IntelligentFormViewTests: BaseTestClass {
     
 @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
-        let view = IntelligentFormView.generateForm(
+        let view = withTestConfig(IntelligentFormView.generateForm(
             for: TestFormDataModel.self,
             initialData: testData
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
@@ -55,10 +34,10 @@ open class IntelligentFormViewTests {
     @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
-        let view = IntelligentFormView.generateForm(
+        let view = withTestConfig(IntelligentFormView.generateForm(
             for: TestFormDataModel.self,
             initialData: testData
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 

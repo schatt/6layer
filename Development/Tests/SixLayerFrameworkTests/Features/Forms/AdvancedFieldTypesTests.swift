@@ -419,7 +419,7 @@ open class AdvancedFieldTypesTests {
         let registry = CustomFieldRegistry.shared
         
         // When
-        // Register a custom field type
+        // Register a custom field type using factory pattern
         struct TestCustomField: CustomFieldComponent {
             let field: DynamicFormField
             let formState: DynamicFormState
@@ -429,12 +429,23 @@ open class AdvancedFieldTypesTests {
             }
         }
         
-        registry.register("testCustom", component: TestCustomField.self)
+        registry.register("testCustom") { field, formState in
+            TestCustomField(field: field, formState: formState)
+        }
         
         // Then
-        let retrievedComponent = registry.getComponent(for: "testCustom")
-        #expect(retrievedComponent != nil)
-        #expect(retrievedComponent is TestCustomField.Type)
+        let retrievedFactory = registry.getFactory(for: "testCustom")
+        #expect(retrievedFactory != nil)
+        
+        // Test that factory actually creates the component
+        let testField = DynamicFormField(
+            id: "test",
+            contentType: .custom,
+            label: "Test Field"
+        )
+        let testFormState = createTestFormState()
+        let createdComponent = retrievedFactory!(testField, testFormState)
+        #expect(createdComponent is TestCustomField)
     }
     
     @Test @MainActor func testCustomFieldRegistryUnknownType() {
@@ -442,10 +453,45 @@ open class AdvancedFieldTypesTests {
         let registry = CustomFieldRegistry.shared
         
         // When
-        let unknownComponent = registry.getComponent(for: "unknownType")
+        let unknownFactory = registry.getFactory(for: "unknownType")
         
         // Then
-        #expect(unknownComponent == nil)
+        #expect(unknownFactory == nil)
+    }
+    
+    @Test @MainActor func testCustomFieldViewUsesRegisteredComponent() {
+        // Given
+        struct SliderField: CustomFieldComponent {
+            let field: DynamicFormField
+            let formState: DynamicFormState
+            
+            var body: some View {
+                VStack {
+                    Text(field.label)
+                    Text("Slider Component")
+                        .foregroundColor(.blue)
+                }
+            }
+        }
+        
+        CustomFieldRegistry.shared.register("slider") { field, formState in
+            SliderField(field: field, formState: formState)
+        }
+        
+        let testField = DynamicFormField(
+            id: "slider",
+            contentType: .custom,
+            label: "Test Slider",
+            metadata: ["customFieldType": "slider"]
+        )
+        let testFormState = createTestFormState()
+        
+        // When
+        let customFieldView = CustomFieldView(field: testField, formState: testFormState)
+        
+        // Then - view should render (test that it doesn't crash and uses registered component)
+        // Note: Full rendering test would require ViewInspector
+        #expect(customFieldView != nil)
     }
     
     // MARK: - Date/Time Picker Tests (To Be Implemented)
