@@ -862,11 +862,15 @@ public struct CustomFieldView: View {
                 }
             }
             .automaticAccessibilityIdentifiers()
+        case .range:
+            // Range fields not yet implemented
+            Text("Range field type not yet implemented")
         default:
             // Fallback for any missed types
             TextField(field.placeholder ?? field.label, text: binding)
                 .textFieldStyle(.roundedBorder)
                 .automaticAccessibilityIdentifiers()
+            }
         }
     }
 }
