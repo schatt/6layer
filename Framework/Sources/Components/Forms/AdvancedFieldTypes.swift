@@ -741,18 +741,18 @@ public struct CustomFieldView: View {
                 .autocapitalization(.none)
                 #endif
                 .automaticAccessibilityIdentifiers()
-        case .password:
+            case .password:
             SecureField(field.placeholder ?? field.label, text: binding)
                 .textFieldStyle(.roundedBorder)
                 .automaticAccessibilityIdentifiers()
-        case .number, .integer:
+            case .number, .integer:
             TextField(field.placeholder ?? field.label, text: binding)
                 .textFieldStyle(.roundedBorder)
                 #if os(iOS)
                 .keyboardType(.decimalPad)
                 #endif
                 .automaticAccessibilityIdentifiers()
-        case .url:
+            case .url:
             TextField(field.placeholder ?? field.label, text: binding)
                 .textFieldStyle(.roundedBorder)
                 #if os(iOS)
@@ -760,7 +760,7 @@ public struct CustomFieldView: View {
                 .autocapitalization(.none)
                 #endif
                 .automaticAccessibilityIdentifiers()
-        case .date:
+            case .date:
             DatePicker(
                 "",
                 selection: Binding(
@@ -771,7 +771,7 @@ public struct CustomFieldView: View {
             )
             .datePickerStyle(.compact)
             .automaticAccessibilityIdentifiers()
-        case .time:
+            case .time:
             DatePicker(
                 "",
                 selection: Binding(
@@ -782,7 +782,7 @@ public struct CustomFieldView: View {
             )
             .datePickerStyle(.compact)
             .automaticAccessibilityIdentifiers()
-        case .datetime:
+            case .datetime:
             DatePicker(
                 "",
                 selection: Binding(
@@ -793,7 +793,7 @@ public struct CustomFieldView: View {
             )
             .datePickerStyle(.compact)
             .automaticAccessibilityIdentifiers()
-        case .radio:
+            case .radio:
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(field.options ?? [], id: \.self) { option in
                     HStack {
@@ -812,7 +812,7 @@ public struct CustomFieldView: View {
                 }
             }
             .automaticAccessibilityIdentifiers()
-        case .file, .image, .data, .array:
+            case .file, .image, .data, .array:
             // For complex types, show a placeholder with proper accessibility
             VStack(alignment: .leading) {
                 Text(field.label)
@@ -822,7 +822,7 @@ public struct CustomFieldView: View {
             }
             .padding()
             .automaticAccessibilityIdentifiers()
-        case .enum:
+            case .enum:
             Picker(field.placeholder ?? "Select option", selection: binding) {
                 Text("Select an option").tag("")
                 ForEach(field.options ?? [], id: \.self) { option in
@@ -831,11 +831,11 @@ public struct CustomFieldView: View {
             }
             .pickerStyle(.menu)
             .automaticAccessibilityIdentifiers()
-        case .autocomplete:
+            case .autocomplete:
             AutocompleteField(field: field, formState: formState, suggestions: field.options ?? [])
-        case .richtext:
+            case .richtext:
             RichTextEditorField(field: field, formState: formState)
-        case .multiselect:
+            case .multiselect:
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(field.options ?? [], id: \.self) { option in
                     HStack {
@@ -860,7 +860,7 @@ public struct CustomFieldView: View {
                 }
             }
             .automaticAccessibilityIdentifiers()
-        default:
+            default:
             // Fallback for any missed types
             TextField(field.placeholder ?? field.label, text: binding)
                 .textFieldStyle(.roundedBorder)
