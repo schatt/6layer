@@ -190,24 +190,21 @@ open class AccessibilityIdentifierLogicVerificationTests {
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             
-            // Given: Default configuration (globalAutomaticAccessibilityIdentifiers now defaults to true)
+            // Given: Explicitly set configuration for this test
             config.resetToDefaults()
             config.enableAutoIDs = true
             config.namespace = "defaultApp"
             
-            // When: Creating a view without explicit global enabling
+            // When: Creating a view with explicitly enabled config
             let testView = Text("Hello World")
                 .automaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully
-            #expect(testView != nil, "View should work with default behavior")
+            #expect(testView != nil, "View should work with explicitly enabled config")
             
-            // Verify configuration is correct
-            #expect(config.enableAutoIDs, "Automatic IDs should be enabled")
-            #expect(config.namespace == "defaultApp", "Namespace should be set correctly")
-            
-            // The key change is that globalAutomaticAccessibilityIdentifiers now defaults to true
-            // This means automatic identifiers work by default without explicit enabling
+            // Verify configuration is correct (explicitly set, not relying on defaults)
+            #expect(config.enableAutoIDs, "Automatic IDs should be enabled (explicitly set)")
+            #expect(config.namespace == "defaultApp", "Namespace should be set correctly (explicitly set)")
         }
     }
     

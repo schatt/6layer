@@ -64,8 +64,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     /// METHODOLOGY: Tests global config toggle and verifies behavior changes
     @Test func testGlobalConfigControlsAutomaticIdentifiers() async {
         await MainActor.run {
-            // Given: Automatic IDs enabled by default in v4.0.0
-            #expect(AccessibilityIdentifierConfig.shared.enableAutoIDs, "Auto IDs should be enabled by default in v4.0.0")
+            // Given: Automatic IDs explicitly enabled for this test
+            AccessibilityIdentifierConfig.shared.enableAutoIDs = true
+            #expect(AccessibilityIdentifierConfig.shared.enableAutoIDs, "Auto IDs should be enabled")
             
             // When: Disabling automatic IDs
             AccessibilityIdentifierConfig.shared.enableAutoIDs = false

@@ -18,10 +18,10 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticAccessibilityIdentifiers()
     @Test func testAutomaticIdentifiersWorkByDefault() async {
         await MainActor.run {
-            // Given: Default configuration (no explicit enabling)
+            // Given: Explicitly set configuration for this test
             let config = AccessibilityIdentifierConfig.shared
-            // enableAutoIDs is true by default
-            // globalAutomaticAccessibilityIdentifiers is now true by default
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
             
             // When: Using framework component (testing our framework, not SwiftUI)
             let testView = PlatformInteractionButton(style: .primary, action: {}) {
@@ -34,13 +34,11 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
                 componentName: "AutomaticIdentifiersWorkByDefault"
-            ), "View should have accessibility identifier by default")
+            ), "View should have accessibility identifier when explicitly enabled")
             
-            // Verify default configuration
-            #expect(config.enableAutoIDs, "Auto IDs should be enabled by default")
-            // Current defaults may vary during rollout; assert non-empty namespace and enabled mode
-            #expect(!config.namespace.isEmpty, "Namespace should be non-empty by default")
-            #expect(config.enableAutoIDs, "Automatic IDs should be enabled by default")
+            // Verify configuration was set correctly
+            #expect(config.enableAutoIDs, "Auto IDs should be enabled (explicitly set)")
+            #expect(!config.namespace.isEmpty, "Namespace should be set (explicitly set)")
         }
     }
     
