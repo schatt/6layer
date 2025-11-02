@@ -321,7 +321,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
         let expansionStrategy = ExpansionStrategy.hoverExpand
         
         // When: Creating NativeExpandableCardView
-        let view = iOSExpandableCardView(
+        let view = withTestConfig(iOSExpandableCardView(
             item: testItem,
             expansionStrategy: expansionStrategy
         ))

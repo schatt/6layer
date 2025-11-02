@@ -78,7 +78,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 context: .modal,
                 customPreferences: [:]
             )
-        )
+        ))
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 

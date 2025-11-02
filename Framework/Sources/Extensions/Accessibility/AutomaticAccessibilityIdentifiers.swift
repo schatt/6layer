@@ -254,11 +254,12 @@ public struct ExactNamedModifier: ViewModifier {
     }
     
     private func generateExactNamedAccessibilityIdentifier() -> String {
-        guard globalEnabled else { return "" }
-        
         // Use injected config from environment (for testing), fall back to shared (for production)
         let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
-        guard config.enableAutoIDs else { return "" }  // ← Add this check
+        
+        // Should apply if global is enabled OR local enable is set (same logic as AutomaticAccessibilityIdentifiersModifier)
+        let shouldApply = config.enableAutoIDs || globalEnabled
+        guard shouldApply else { return "" }
         
         // GREEN PHASE: Return ONLY the exact name - no framework additions
         let exactIdentifier = name
