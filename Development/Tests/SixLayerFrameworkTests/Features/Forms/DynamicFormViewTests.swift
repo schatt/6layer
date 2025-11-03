@@ -35,69 +35,83 @@ open class DynamicFormViewTests {
     }
     
 @Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let testField = DynamicFormField(
-            id: "testField",
-            contentType: .text,
-            label: "Test Field",
-            placeholder: "Enter text",
-            isRequired: true,
-            validationRules: [:]
+        // Given: A DynamicFormView with configuration
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            description: "A test form for accessibility testing",
+            sections: [
+                DynamicFormSection(
+                    id: "testSection",
+                    title: "Test Section",
+                    fields: [
+                        DynamicFormField(
+                            id: "testField",
+                            contentType: .text,
+                            label: "Test Field",
+                            placeholder: "Enter text",
+                            isRequired: true
+                        )
+                    ]
+                )
+            ]
         )
-        
-        // Verify test field is properly configured
-        #expect(testField.id == "testField", "Test field should have correct ID")
-        #expect(testField.contentType == .text, "Test field should have correct content type")
-        #expect(testField.label == "Test Field", "Test field should have correct label")
-        #expect(testField.isRequired, "Test field should be required")
-        
-        let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
-        
+
         let view = DynamicFormView(
             configuration: configuration,
-            onSubmit: { _ in }
+            onSubmit: { _ in /* Test callback */ }
         )
-        
+
+        // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
+            view,
+            expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicFormView"
         )
-        
-        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers on iOS")
+
+        // Then: Should generate accessibility identifiers
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on iOS")
     }
     
     @Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testField = DynamicFormField(
-            id: "testField",
-            contentType: .text,
-            label: "Test Field",
-            placeholder: "Enter text",
-            isRequired: true,
-            validationRules: [:]
+        // Given: A DynamicFormView with configuration
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            description: "A test form for accessibility testing",
+            sections: [
+                DynamicFormSection(
+                    id: "testSection",
+                    title: "Test Section",
+                    fields: [
+                        DynamicFormField(
+                            id: "testField",
+                            contentType: .text,
+                            label: "Test Field",
+                            placeholder: "Enter text",
+                            isRequired: true
+                        )
+                    ]
+                )
+            ]
         )
-        
-        // Verify test field is properly configured
-        #expect(testField.id == "testField", "Test field should have correct ID")
-        #expect(testField.contentType == .text, "Test field should have correct content type")
-        #expect(testField.label == "Test Field", "Test field should have correct label")
-        #expect(testField.isRequired, "Test field should be required")
-        
-        let configuration = DynamicFormConfiguration(id: "testForm", title: "Test Form")
-        
+
         let view = DynamicFormView(
             configuration: configuration,
-            onSubmit: { _ in }
+            onSubmit: { _ in /* Test callback */ }
         )
-        
+
+        // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
+            view,
+            expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
+            platform: SixLayerPlatform.macOS,
             componentName: "DynamicFormView"
         )
-        
-        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers on macOS")
+
+        // Then: Should generate accessibility identifiers
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on macOS")
     }
 }
 

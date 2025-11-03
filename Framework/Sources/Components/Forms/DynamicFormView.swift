@@ -30,7 +30,7 @@ public struct DynamicFormView: View {
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "DynamicFormView")
     }
 }
 
@@ -57,7 +57,7 @@ public struct DynamicFormSectionView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
     }
 }
 
@@ -84,7 +84,7 @@ public struct DynamicFormFieldView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "DynamicFormFieldView")
     }
 }
 
@@ -117,7 +117,7 @@ public struct FormWizardView<Content: View, Navigation: View>: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "FormWizardView")
     }
 }
 

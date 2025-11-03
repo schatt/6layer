@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "4.1.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "4.9.1")
 ]
 ```
 
@@ -41,7 +41,7 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v4.8.0
+## 🆕 Latest Release: v4.9.1
 
 ### **Field-Level Display Hints System**
 🎯 **New Feature**: Declarative `.hints` files that describe how to present data models.
@@ -93,8 +93,8 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v4.1.2 (Automatic Accessibility Identifiers Fix for Layers 2-6)  
-**Phase**: Patch Release (Bug Fix)  
+**Version**: v4.9.1 (Deterministic Field Ordering for IntelligentFormView)
+**Phase**: Feature Release
 **Next**: Continue framework development and stability improvements
 
 ## 🤝 Contributing

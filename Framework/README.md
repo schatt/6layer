@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v4.6.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v4.6.0)
+[![Version](https://img.shields.io/badge/version-v4.9.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v4.9.1)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -89,6 +89,23 @@ platformPresentFormData_L1(
 ```
 
 **📚 Full documentation**: [Field Hints Complete Guide](docs/FieldHintsCompleteGuide.md)
+
+## 🆕 What's New in v4.9.1
+
+### **Deterministic Field Ordering for IntelligentFormView**
+- **FieldOrderRules**: Explicit field ordering with lists, weights, groups, and trait overrides
+- **Trait-Aware Overrides**: Different ordering for `.compact` and `.regular` size classes
+- **App-Wide Provider**: Runtime configuration via `IntelligentFormView.orderRulesProvider`
+- **Title/Name First Default**: Smart prioritization of important fields (no more alphabetic sorting)
+- **Debug Support**: `inspectEffectiveOrder` helper for runtime analysis
+
+### **Accessibility Improvements**
+- **Stable Identifier Generation**: Consistent accessibility IDs in UI test mode
+- **Disabled Mode Corrections**: Fixed regex handling and test helper fallbacks
+- **Priority Clarification**: Clear guidance on mixing manual IDs with `.named`/`.exactNamed`
+
+### **Platform Optimization (L5)**
+- **macOS Touch Target**: Positive default `minTouchTarget` for macOS configuration
 
 ---
 
@@ -277,7 +294,7 @@ platformPresentFormData_L1(
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "1.7.4")
+    .package(url: "https://github.com/schatt/6layer.git", from: "4.9.1")
 ]
 ```
 

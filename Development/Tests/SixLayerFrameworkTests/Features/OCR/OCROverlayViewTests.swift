@@ -11,28 +11,10 @@ import ViewInspector
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("OCR Overlay View")
 @MainActor
-open class OCROverlayViewTests {
+open class OCROverlayViewTests: BaseTestClass {
     
-    // MARK: - Test Setup
-    
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - OCROverlayView Tests
-    
-    
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
+    // MARK: - OCROverlayView Tests
+    // BaseTestClass.init() handles setupTestEnvironment() automatically
     
 @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testImage = PlatformImage()
@@ -53,15 +35,15 @@ open class OCROverlayViewTests {
             onTextDelete: { _ in }
         )
         
-        // OCROverlayView generates "SixLayer.main.ui" pattern (correct for basic UI component)
+        // OCROverlayView generates "SixLayer.main.ui.*OCROverlayView.*" pattern (with component name)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui", 
+            expectedPattern: "SixLayer.main.ui.*OCROverlayView.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         )
         
-        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers on iOS")
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on iOS")
     }
     
     @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -83,15 +65,15 @@ open class OCROverlayViewTests {
             onTextDelete: { _ in }
         )
         
-        // OCROverlayView generates "SixLayer.main.ui" pattern (correct for basic UI component)
+        // OCROverlayView generates "SixLayer.main.ui.*OCROverlayView.*" pattern (with component name)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui", 
-            platform: SixLayerPlatform.iOS,
+            expectedPattern: "SixLayer.main.ui.*OCROverlayView.*", 
+            platform: SixLayerPlatform.macOS,
             componentName: "OCROverlayView"
         )
         
-        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers on macOS")
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on macOS")
     }
 }
 

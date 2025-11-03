@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.9.0 - IntelligentDetailView Edit Button + Swift 6 Actor Isolation Fixes
+// SixLayerFramework v4.9.1 - Deterministic Field Ordering for IntelligentFormView
 
 import PackageDescription
 

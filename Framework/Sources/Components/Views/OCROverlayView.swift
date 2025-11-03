@@ -23,9 +23,14 @@ public struct OCROverlayView: View {
     }
     
     public var body: some View {
-        Text("OCR Overlay View (Stub)")
-            .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers()
+        // Use Layer 1 semantic function for platform-independent text presentation
+        // Then apply component-specific accessibility identifier
+        platformPresentLocalizedText_L1(
+            text: "OCR Overlay View (Stub)",
+            hints: InternationalizationHints()
+        )
+        .foregroundColor(.secondary)
+        .automaticAccessibilityIdentifiers(named: "OCROverlayView")
     }
     
     // MARK: - Interactive Methods (Red-phase stubs)

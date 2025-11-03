@@ -21,14 +21,14 @@ open class PlatformKnowledgeLayer5ComponentAccessibilityTests: BaseTestClass {
         // Given: PlatformKnowledgeLayer5
         let testView = PlatformKnowledgeLayer5()
         
-        // Then: Should generate accessibility identifiers
+        // Then: Should generate accessibility identifiers with component name
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*PlatformKnowledgeLayer5.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformKnowledgeLayer5"
         )
         
-        #expect(hasAccessibilityID, "PlatformKnowledgeLayer5 should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "PlatformKnowledgeLayer5 should generate accessibility identifiers with component name")
     }
 }

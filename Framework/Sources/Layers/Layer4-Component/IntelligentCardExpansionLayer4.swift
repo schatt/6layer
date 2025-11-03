@@ -147,6 +147,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         .background(cardBackground)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: isExpanded ? 8 : 4, x: 0, y: 2)
+        .automaticAccessibilityIdentifiers(named: "ExpandableCardComponent")
         .scaleEffect(scale)
         .animation(animation, value: scale)
         .animation(animation, value: isExpanded)

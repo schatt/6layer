@@ -16,14 +16,20 @@ public struct PlatformKnowledgeLayer5: View {
     
     public var body: some View {
         VStack {
-            Text("Platform Knowledge Layer 5")
-                .font(.headline)
-            Text("Knowledge management and intelligence features")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            platformPresentLocalizedText_L1(
+                text: "Platform Knowledge Layer 5",
+                hints: InternationalizationHints()
+            )
+            .font(.headline)
+            platformPresentLocalizedText_L1(
+                text: "Knowledge management and intelligence features",
+                hints: InternationalizationHints()
+            )
+            .font(.caption)
+            .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "PlatformKnowledgeLayer5")
     }
 }
 

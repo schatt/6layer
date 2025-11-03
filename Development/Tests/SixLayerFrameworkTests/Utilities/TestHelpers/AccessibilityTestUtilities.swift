@@ -200,11 +200,181 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> 
     do {
         // Use ViewInspector to directly inspect the SwiftUI view
         // This will find identifiers that the COMPONENT applied, not the test helper
-        let identifier = try viewWithEnvironment.inspect().accessibilityIdentifier()
         if config.enableDebugLogging {
-            print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from SwiftUI view")
+            print("🔍 SWIFTUI DEBUG: Attempting to inspect view of type: \(type(of: viewWithEnvironment))")
         }
-        return identifier.isEmpty ? nil : identifier
+        let inspected = try viewWithEnvironment.inspect()
+        if config.enableDebugLogging {
+            print("🔍 SWIFTUI DEBUG: Successfully inspected view")
+        }
+        
+        // CRITICAL: Check root view first - this IS the component's body when we pass the component directly
+        // This ensures we're testing the component's identifier, not a parent's
+        do {
+            let identifier = try inspected.accessibilityIdentifier()
+            if !identifier.isEmpty {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from root view (component's body)")
+                }
+                return identifier
+            } else {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Root view (component's body) has empty identifier")
+                }
+            }
+        } catch {
+            if config.enableDebugLogging {
+                print("🔍 SWIFTUI DEBUG: Root view (component's body) doesn't have identifier: \(error)")
+            }
+        }
+        
+        // If root doesn't have identifier, check if root IS a container type (component's body structure)
+        // This ensures we're checking the component's direct body, not searching for nested containers
+        // Try to directly cast root to container types before searching deeper
+        if let vStack = try? inspected.vStack() {
+            do {
+                let identifier = try vStack.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from root VStack (component's body)")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Root VStack (component's body) doesn't have identifier: \(error)")
+                }
+            }
+        }
+        
+        if let hStack = try? inspected.hStack() {
+            do {
+                let identifier = try hStack.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from root HStack (component's body)")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Root HStack (component's body) doesn't have identifier: \(error)")
+                }
+            }
+        }
+        
+        if let zStack = try? inspected.zStack() {
+            do {
+                let identifier = try zStack.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from root ZStack (component's body)")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Root ZStack (component's body) doesn't have identifier: \(error)")
+                }
+            }
+        }
+        
+        // Only if root isn't a container, search deeper for containers
+        // This is a fallback for components that wrap their body in another view
+        // But we still prefer direct body access above
+        // Handle each container type separately since they have different return types
+        if let vStack = try? inspected.find(ViewType.VStack.self) {
+            do {
+                let identifier = try vStack.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from nested VStack (fallback search)")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Nested VStack doesn't have identifier: \(error)")
+                }
+            }
+        }
+        
+        if let hStack = try? inspected.find(ViewType.HStack.self) {
+            do {
+                let identifier = try hStack.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from nested HStack (fallback search)")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Nested HStack doesn't have identifier: \(error)")
+                }
+            }
+        }
+        
+        if let zStack = try? inspected.find(ViewType.ZStack.self) {
+            do {
+                let identifier = try zStack.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from nested ZStack (fallback search)")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: Nested ZStack doesn't have identifier: \(error)")
+                }
+            }
+        }
+        
+        // If root is AnyView, try to unwrap it and find identifier in content
+        // First try to get the identifier from the AnyView itself
+        if let anyView = try? inspected.anyView() {
+            do {
+                let identifier = try anyView.accessibilityIdentifier()
+                if !identifier.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from unwrapped AnyView")
+                    }
+                    return identifier
+                }
+            } catch {
+                if config.enableDebugLogging {
+                    print("🔍 SWIFTUI DEBUG: AnyView doesn't have identifier directly: \(error)")
+                }
+            }
+            
+            // Try to find identifier deeper in the view hierarchy
+            // The identifier might be on a modifier applied to the AnyView
+            // Try to find Text or other views that might have the identifier
+            if let text = try? anyView.find(ViewType.Text.self) {
+                do {
+                    let textId = try text.accessibilityIdentifier()
+                    if !textId.isEmpty {
+                        if config.enableDebugLogging {
+                            print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(textId)' from Text inside AnyView")
+                        }
+                        return textId
+                    }
+                } catch {
+                    if config.enableDebugLogging {
+                        print("🔍 SWIFTUI DEBUG: Text inside AnyView doesn't have identifier: \(error)")
+                    }
+                }
+            }
+        }
+        
+        // Fallback: host platform view and search for identifier
+        if config.enableDebugLogging {
+            print("🔍 SWIFTUI DEBUG: ViewInspector couldn't find identifier, falling back to platform view inspection")
+        }
+        let hosted = hostRootPlatformView(viewWithEnvironment)
+        let platformId = firstAccessibilityIdentifier(inHosted: hosted)
+        return platformId
     } catch {
         if config.enableDebugLogging {
             print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
@@ -422,7 +592,9 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     config.namespace = "SixLayer"
     config.globalPrefix = ""
     config.mode = .automatic
-    config.enableDebugLogging = false
+    config.enableDebugLogging = true  // Enable to debug identifier generation
+    config.includeComponentNames = true  // Required for component name to appear in identifiers
+    config.includeElementTypes = true   // Required for element type to appear in identifiers
     
     // Set the test platform for this test case
     RuntimeCapabilityDetection.setTestPlatform(platform)

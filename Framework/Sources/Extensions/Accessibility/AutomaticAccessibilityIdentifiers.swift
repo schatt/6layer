@@ -71,6 +71,7 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
                 print(debugMsg)
                 config.addDebugLogEntry(debugMsg)
             }
+            // Wrap in AnyView to satisfy type erasure requirement (different branches return different types)
             return AnyView(content.accessibilityIdentifier(identifier))
         } else {
             if config.enableDebugLogging {
@@ -174,17 +175,40 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     let componentName: String
     @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
     @ObservedObject private var configObserver = ConfigObserver.shared
     
     public func body(content: Content) -> some View {
         // Use injected config from environment (for testing), fall back to shared (for production)
         let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
-        let shouldApply = config.enableAutoIDs
+        // Same logic as AutomaticAccessibilityIdentifiersModifier: respect both global and local settings
+        let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        
+        // Debug logging to help diagnose identifier generation
+        if config.enableDebugLogging {
+            let debugMsg = "🔍 NAMED MODIFIER DEBUG: body() called for '\(componentName)' - enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)"
+            print(debugMsg)
+            fflush(stdout)
+            config.addDebugLogEntry(debugMsg)
+        }
         
         if shouldApply {
             let identifier = generateIdentifier()
+            if config.enableDebugLogging {
+                let debugMsg = "🔍 NAMED MODIFIER DEBUG: Applying identifier '\(identifier)' to view '\(componentName)'"
+                print(debugMsg)
+                fflush(stdout)
+                config.addDebugLogEntry(debugMsg)
+            }
+            // Wrap in AnyView to satisfy type erasure requirement (different branches return different types)
             return AnyView(content.accessibilityIdentifier(identifier))
         } else {
+            if config.enableDebugLogging {
+                let debugMsg = "🔍 NAMED MODIFIER DEBUG: NOT applying identifier for '\(componentName)' - conditions not met"
+                print(debugMsg)
+                fflush(stdout)
+                config.addDebugLogEntry(debugMsg)
+            }
             return AnyView(content)
         }
     }
@@ -343,10 +367,10 @@ public struct ExactNamedModifier: ViewModifier {
 // MARK: - Environment Keys
 
 /// Environment key for enabling automatic accessibility identifiers locally (when global is off)
-/// Defaults to true - automatic identifiers are enabled by default
+/// Defaults to false - only enables when explicitly set via environment
 /// config.enableAutoIDs is the global setting; this env var allows local opt-in when global is off
 public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
-    public static let defaultValue: Bool = true
+    public static let defaultValue: Bool = false
 }
 
 /// Environment key for setting the accessibility identifier prefix
