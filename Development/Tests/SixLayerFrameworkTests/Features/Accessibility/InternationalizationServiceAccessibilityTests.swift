@@ -26,9 +26,10 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        // Use testConfig (isolated instance) - accessible directly in @MainActor test
-        #expect(testConfig.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        #expect(testConfig.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        // BaseTestClass.init() sets up AccessibilityIdentifierConfig.shared for backward compatibility
+        let config = AccessibilityIdentifierConfig.shared
+        #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+        #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
     }
     
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
@@ -43,7 +44,8 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        // Use testConfig (isolated instance) - accessible directly in @MainActor test
-        #expect(testConfig.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        #expect(testConfig.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        // BaseTestClass.init() sets up AccessibilityIdentifierConfig.shared for backward compatibility
+        let config = AccessibilityIdentifierConfig.shared
+        #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+        #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
     }
