@@ -1,0 +1,82 @@
+# Sample buildconfig.yml
+# project_name: Required. The name of your Xcode project (without .xcodeproj). Used for all build commands.
+project_name: CarManager
+# exclude_from_globals: List of top-level keys that should NOT be propagated as global variables.
+exclude_from_globals:
+  - tasks
+  - platforms
+  - build_groups
+  - logging
+  - exclude_from_globals
+  - name
+  - args
+  - command
+  - type
+  - dependencies
+  - children
+platforms:
+  - name: macOS
+    build_command: xcodebuild build -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=macOS"
+    artifact_dir: build/macos
+    artifact_patterns:
+      - build/macos/*.app
+    # scheme: Required. The Xcode scheme to build for this platform.
+  - name: macOS_tests
+    build_command: swift test
+    artifact_dir: build/macos
+    artifact_patterns:
+      - build/macos/*.app
+    # scheme: Required. The Xcode scheme to build for this platform.
+  - name: iOS_build
+    build_command: xcodebuild build -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework   -destination "platform=iOS Simulator,name=iPhone 16 Pro"
+    artifact_dir: build/ios
+    artifact_patterns:
+      - build/ios/*.ipa
+    # scheme: Required. The Xcode scheme to build for this platform.
+  - name: iOS_tests
+    build_command: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=iOS Simulator,name=iPhone 17 Pro Max"
+    artifact_dir: build/ios
+    artifact_patterns:
+      - build/ios/*.ipa
+    # scheme: Required. The Xcode scheme to build for this platform.
+tasks:
+  - name: generate-file-list
+    # Example: passing a secret as an environment variable (uncomment to use)
+    # command: "MY_SECRET=foo ./myscript.sh $arg1"
+    # command: "MY_SECRET=$arg1 ./myscript.sh $arg2"
+    # command: "MY_SECRET=$(secret_key_program.sh) ./myscript.sh $arg2"
+    command: ./Scripts/generate_file_list.sh
+    log_file: build/logs/generate-file-list.log
+    always_run: false
+    requires: []
+  - name: commit-changes
+    description: "Commit all changes with version message (optional platform argument)"
+    command: "./Scripts/commit_and_tag.sh commit $arg1"
+    args_optional: true
+build_groups:
+  all:
+    continue_on_error: true
+    parallel: false
+    targets:
+      - build
+      - test
+  build:
+    continue_on_error: true
+    parallel: true
+    targets:
+      - macOS
+      - iOS_build
+  test:
+    continue_on_error: true
+    parallel: true
+    targets:
+      - macOS_tests
+      - iOS_tests
+  mac:
+    targets:
+      - macOS
+      - macOS_tests
+  iOS:
+    targets:
+      - iOS_build
+      - iOS_tests

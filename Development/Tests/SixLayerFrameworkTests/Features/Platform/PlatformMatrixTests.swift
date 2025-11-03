@@ -285,6 +285,10 @@ open class PlatformMatrixTests {
         if UIScreen.screens.count > 1 && !CarPlayCapabilityDetection.isCarPlayActive {
             #expect(deviceContext == .externalDisplay, "Device context should be externalDisplay when multiple screens are present")
         }
+        #elseif os(macOS)
+        // macOS doesn't have UIScreen - external displays are handled differently
+        // Test that macOS device context is appropriate for desktop platform
+        #expect(deviceContext != .carPlay, "macOS should not be in CarPlay context")
         #endif
     }
     
