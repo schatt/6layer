@@ -118,14 +118,12 @@ open class CapabilityMatrixTests {
             testSupported: { RuntimeCapabilityDetection.supportsAssistiveTouch },
             testBehavior: {
                 if RuntimeCapabilityDetection.supportsAssistiveTouch {
-                    // AssistiveTouch should only be on touch platforms
+                    // AssistiveTouch requires touch support (logical dependency)
                     #expect(RuntimeCapabilityDetection.supportsTouch, 
                                 "AssistiveTouch should only be on touch platforms")
-                } else {
-                    // Non-AssistiveTouch platforms should not have touch
-                    #expect(!RuntimeCapabilityDetection.supportsTouch, 
-                                 "Non-AssistiveTouch platforms should not support touch")
                 }
+                // Note: If AssistiveTouch is not supported, touch might still be supported
+                // (touch hardware can exist without AssistiveTouch software feature)
             },
             expectedPlatforms: [SixLayerPlatform.iOS, SixLayerPlatform.watchOS]
         ),
@@ -236,18 +234,44 @@ open class CapabilityMatrixTests {
     }
     
     @MainActor private func testCapability(_ capabilityTest: CapabilityTest) {
-        let platform = SixLayerPlatform.current
-        let isSupported = capabilityTest.testSupported()
-        let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
+        // Test each expected platform individually
+        for platform in capabilityTest.expectedPlatforms {
+            // Mock the platform for this test
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            
+            let isSupported = capabilityTest.testSupported()
+            let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
+            
+            // Test 1: Platform detection should be correct for this platform
+            #expect(isSupported == shouldBeSupported, 
+                         "\(capabilityTest.name) detection should be correct for \(platform)")
+            
+            // Test 2: Behavior should be appropriate for support status
+            capabilityTest.testBehavior()
+            
+            // Test 3: Log the capability status for verification
+            print("✅ \(capabilityTest.name) on \(platform): \(isSupported ? "SUPPORTED" : "NOT SUPPORTED")")
+        }
         
-        // Test 1: Platform detection should be correct
-        #expect(isSupported == shouldBeSupported, 
-                     "\(capabilityTest.name) detection should be correct for \(platform)")
+        // Also test on platforms where it should NOT be supported
+        let allPlatforms = SixLayerPlatform.allCases
+        let platformsWithoutCapability = allPlatforms.filter { !capabilityTest.expectedPlatforms.contains($0) }
         
-        // Test 2: Behavior should be appropriate for support status
-        capabilityTest.testBehavior()
-        
-        // Test 3: Log the capability status for verification
-        print("✅ \(capabilityTest.name) on \(platform): \(isSupported ? "SUPPORTED" : "NOT SUPPORTED")")
+        for platform in platformsWithoutCapability {
+            // Mock the platform for this test
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            
+            let isSupported = capabilityTest.testSupported()
+            let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
+            
+            // Test: Platform detection should be correct (should NOT be supported)
+            #expect(isSupported == shouldBeSupported, 
+                         "\(capabilityTest.name) detection should be correct for \(platform) (should NOT be supported)")
+            
+            // Log the capability status for verification
+            print("✅ \(capabilityTest.name) on \(platform): \(isSupported ? "SUPPORTED" : "NOT SUPPORTED")")
+        }
     }
 }
