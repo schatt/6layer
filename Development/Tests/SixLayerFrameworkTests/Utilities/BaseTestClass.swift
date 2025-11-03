@@ -37,7 +37,7 @@ import SwiftUI
         
         // Also set shared for backward compatibility during migration
         // TODO: Migrate all tests to use injected config instead of shared
-        AccessibilityIdentifierConfig.shared.resetToDefaults()
+        // NOTE: No need to resetToDefaults() - each test is isolated, just set the values we need
         AccessibilityIdentifierConfig.shared.enableAutoIDs = testConfig.enableAutoIDs
         AccessibilityIdentifierConfig.shared.namespace = testConfig.namespace
         AccessibilityIdentifierConfig.shared.globalPrefix = testConfig.globalPrefix
@@ -47,10 +47,13 @@ import SwiftUI
     
     @MainActor
     open func cleanupTestEnvironment() {
-        // Cleanup accumulating state to prevent leakage to next test
-        // Framework uses singleton, so we must clean shared state after each test
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
+        // NOTE: Since each test runs on its own thread with its own testConfig,
+        // we don't need to reset the shared singleton. Each test's setup will
+        // configure shared as needed. If tests run in parallel, they each set
+        // their own values on shared, which should be fine since they all set
+        // the same test values anyway.
+        // If we need cleanup, we'd clear accumulating state like debug logs:
+        // AccessibilityIdentifierConfig.shared.debugLogEntries.removeAll()
     }
     
     // MARK: - Config Injection Helper

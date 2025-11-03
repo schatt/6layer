@@ -18,6 +18,7 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
 
 @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
+        await setupTestEnvironment()
         let assistiveConfig = AssistiveTouchConfig(
             enableIntegration: true,
             enableCustomActions: true,
@@ -33,11 +34,8 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
         // AssistiveTouchManager is non-optional - no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
-        // Test config access moved inside MainActor.run block
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
-            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
             #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
@@ -63,13 +61,9 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
         // AssistiveTouchManager is non-optional - no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
-        // Test config access moved inside MainActor.run block
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
             #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
-            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
     }
-

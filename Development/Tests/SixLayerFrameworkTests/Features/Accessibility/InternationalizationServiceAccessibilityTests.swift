@@ -16,8 +16,9 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
 
-@Test func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
+        // setupTestEnvironment() is already called in BaseTestClass.init()
         let service = InternationalizationService()
         
         // When & Then
@@ -25,17 +26,17 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
-        }
+        // Use testConfig (isolated instance) instead of shared singleton
+        #expect(testConfig.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+        #expect(testConfig.namespace == "SixLayer", "InternationalizationService should use correct namespace")
     }
     
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
+        setupTestEnvironment() // Runs on MainActor since test is @MainActor
+        
         let service = InternationalizationService()
         
         // When & Then
@@ -43,10 +44,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
-        }
+        let config = AccessibilityIdentifierConfig.shared
+        #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+        #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
     }
-
