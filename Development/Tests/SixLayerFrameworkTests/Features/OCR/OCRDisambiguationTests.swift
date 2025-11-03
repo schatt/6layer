@@ -53,8 +53,8 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
                 text: alt.text,
                 boundingBox: CGRect(x: 0, y: 0, width: 100, height: 20),
                 confidence: alt.confidence,
-                suggestedType: .text,
-                alternativeTypes: [.text]
+                suggestedType: .general,
+                alternativeTypes: [.general]
             )
         }
 
@@ -105,8 +105,8 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
                 text: alt.text,
                 boundingBox: CGRect(x: 0, y: 0, width: 100, height: 20),
                 confidence: alt.confidence,
-                suggestedType: .text,
-                alternativeTypes: [.text]
+                suggestedType: .general,
+                alternativeTypes: [.general]
             )
         }
 

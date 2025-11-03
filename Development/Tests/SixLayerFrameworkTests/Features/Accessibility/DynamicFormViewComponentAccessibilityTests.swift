@@ -84,8 +84,9 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = CustomFieldView(field: field, formState: formState)
         
         // Test that the component generates accessibility identifiers
-        let hasAccessibilityID = testFieldAccessibility(
-            fieldType: fieldType,
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*\(componentName).*",
             platform: platform,
             componentName: componentName
         )
@@ -101,9 +102,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
-            view: view,
-            platform: SixLayerPlatform.iOS,
+            view,
             componentName: "DynamicFormView",
+            expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
+            platform: SixLayerPlatform.iOS,
             testName: "DynamicFormView should generate accessibility identifiers"
         )
         
@@ -118,9 +120,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
-            view: view,
-            platform: SixLayerPlatform.iOS,
+            view,
             componentName: "DynamicFormHeader",
+            expectedPattern: "SixLayer.*ui.*DynamicFormHeader.*",
+            platform: SixLayerPlatform.iOS,
             testName: "DynamicFormHeader should generate accessibility identifiers"
         )
         

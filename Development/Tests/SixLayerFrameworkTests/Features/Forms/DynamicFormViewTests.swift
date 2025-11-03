@@ -197,8 +197,8 @@ open class DynamicFormViewTests {
         // 4. Proper accessibility identifier
 
         let steps = [
-            FormWizardStep(id: "step1", title: "Step 1", description: "First step"),
-            FormWizardStep(id: "step2", title: "Step 2", description: "Second step")
+            FormWizardStep(id: "step1", title: "Step 1", description: "First step", stepOrder: 1),
+            FormWizardStep(id: "step2", title: "Step 2", description: "Second step", stepOrder: 2)
         ]
 
         let view = FormWizardView(
