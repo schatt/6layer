@@ -747,7 +747,7 @@ public protocol AccessibleElement {
     var accessibilityHint: String? { get }
 
     /// The accessibility traits
-    var accessibilityTraits: AccessibilityTraits { get }
+    var accessibilityTraits: Set<AccessibilityTrait> { get }
 
     /// The frame of the element
     var frame: CGRect { get }

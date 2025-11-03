@@ -91,8 +91,11 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         let result = manager.validateAccessibility(for: mockElement)
 
         // Should return a proper validation result
-        #expect(result.isValid == true, "Currently stub returns valid result")
-        #expect(result.issues.isEmpty, "Currently stub returns no issues")
+        #expect(result != nil, "Should return a validation result")
+        if let validationResult = result {
+            #expect(validationResult.isValid == true, "Currently stub returns valid result")
+            #expect(validationResult.issues.isEmpty, "Currently stub returns no issues")
+        }
 
         // TODO: When implemented, should perform actual validation
         // #expect(result.isValid == actualValidationStatus, "Should validate actual accessibility")
@@ -163,7 +166,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
 private struct MockAccessibleElement: View, AccessibleElement {
     var accessibilityLabel: String? = "Mock Element"
     var accessibilityHint: String? = "Mock hint"
-    var accessibilityTraits: AccessibilityTraits = []
+    var accessibilityTraits: Set<AccessibilityTrait> = []
     var frame: CGRect = .zero
 
     var body: some View {

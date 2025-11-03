@@ -138,9 +138,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
-            view: view,
-            platform: SixLayerPlatform.iOS,
+            view,
             componentName: "DynamicFormSectionView",
+            expectedPattern: "SixLayer.*ui.*DynamicFormSectionView.*",
+            platform: SixLayerPlatform.iOS,
             testName: "DynamicFormSectionView should generate accessibility identifiers"
         )
         
@@ -155,9 +156,10 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifierGeneration(
-            view: view,
-            platform: SixLayerPlatform.iOS,
+            view,
             componentName: "DynamicFormActions",
+            expectedPattern: "SixLayer.*ui.*DynamicFormActions.*",
+            platform: SixLayerPlatform.iOS,
             testName: "DynamicFormActions should generate accessibility identifiers"
         )
         
