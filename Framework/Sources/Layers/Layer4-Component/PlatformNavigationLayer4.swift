@@ -97,6 +97,7 @@ public extension View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
         .accessibilityAddTraits(.isButton)
+        .automaticAccessibilityIdentifiers()
     }
 
     /// Platform-specific navigation title configuration

@@ -32,10 +32,13 @@ public extension View {
     func platformPadding() -> some View {
         #if os(iOS)
         return self.padding(16)
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self.padding(12)
+            .automaticAccessibilityIdentifiers()
         #else
         return self.padding(16)
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -52,6 +55,7 @@ public extension View {
     /// Platform-specific reduced padding values
     func platformReducedPadding() -> some View {
         return self.padding(8)
+            .automaticAccessibilityIdentifiers()
     }
     
     // MARK: - Visual Effects
@@ -60,10 +64,13 @@ public extension View {
     func platformCornerRadius() -> some View {
         #if os(iOS)
         return self.cornerRadius(12)
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self.cornerRadius(8)
+            .automaticAccessibilityIdentifiers()
         #else
         return self.cornerRadius(8)
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -158,10 +165,13 @@ public extension View {
     func platformMinFrame() -> some View {
         #if os(iOS)
         return self
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self.frame(minWidth: 600, minHeight: 800)
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -180,10 +190,13 @@ public extension View {
     func platformIdealFrame() -> some View {
         #if os(iOS)
         return self
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self.frame(idealWidth: 800, idealHeight: 900)
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -204,10 +217,13 @@ public extension View {
     func platformFormStyle() -> some View {
         #if os(iOS)
         return self
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self.formStyle(.grouped)
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     
@@ -217,10 +233,13 @@ public extension View {
     func platformContentSpacing() -> some View {
         #if os(iOS)
         return self
+            .automaticAccessibilityIdentifiers()
         #elseif os(macOS)
         return self
+            .automaticAccessibilityIdentifiers()
         #else
         return self
+            .automaticAccessibilityIdentifiers()
         #endif
     }
     

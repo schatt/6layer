@@ -87,6 +87,7 @@ public extension View {
     func platformFormSpacing(_ size: FormSpacing) -> some View {
         Spacer()
             .frame(height: size.rawValue)
+            .automaticAccessibilityIdentifiers()
     }
 }
 
