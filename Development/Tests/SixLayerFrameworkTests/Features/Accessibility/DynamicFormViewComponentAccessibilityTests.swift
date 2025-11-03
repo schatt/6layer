@@ -64,7 +64,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     private func testFieldComponentFunctionality(
         fieldType: DynamicContentType,
         platform: SixLayerPlatform,
-        componentName: String,
+            componentName: String,
         testName: String
     ) -> Bool {
         let field = DynamicFormField(
@@ -82,7 +82,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
 
         let view = CustomFieldView(field: field, formState: formState)
-
+        
         // Test that the component generates accessibility identifiers
         let hasAccessibilityID = testFieldAccessibility(
             fieldType: fieldType,
@@ -162,7 +162,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     // MARK: - DynamicTextField Tests
-
+    
     @Test func testDynamicTextFieldRendersTextFieldWithCorrectBindingAndAccessibility() async {
         // TDD: DynamicTextField should render a VStack with:
         // 1. A Text label showing the field label
@@ -218,7 +218,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     // MARK: - DynamicNumberField Tests
-
+    
     @Test func testDynamicNumberFieldRendersTextFieldWithNumericKeyboard() async {
         // TDD: DynamicNumberField should render a VStack with:
         // 1. A Text label showing "Age"
@@ -280,7 +280,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     // MARK: - DynamicTextAreaField Tests
-
+    
     @Test func testDynamicTextAreaFieldRendersMultilineTextEditor() async {
         // TDD: DynamicTextAreaField should render a VStack with:
         // 1. A Text label showing "Description"
@@ -333,7 +333,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     // MARK: - DynamicSelectField Tests
-
+    
     @Test func testDynamicSelectFieldRendersPickerWithSelectableOptions() async {
         // TDD: DynamicSelectField should render a VStack with:
         // 1. A Text label showing "Country"
@@ -387,7 +387,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     // MARK: - DynamicMultiSelectField Tests
-
+    
     @Test func testDynamicMultiSelectFieldRendersMultipleSelectionControls() async {
         // TDD: DynamicMultiSelectField should render a VStack with:
         // 1. A Text label showing "Interests"
@@ -440,9 +440,9 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented: \(error)")
         }
     }
-
+    
     // MARK: - DynamicRadioField Tests
-
+    
     @Test func testDynamicRadioFieldRendersRadioButtonGroup() async {
         // TDD: DynamicRadioField should render a VStack with:
         // 1. A Text label showing "Gender"
@@ -494,9 +494,9 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicRadioField inspection failed - component not properly implemented: \(error)")
         }
     }
-
+    
     // MARK: - DynamicCheckboxField Tests
-
+    
     @Test func testDynamicCheckboxFieldRendersToggleControl() async {
         // TDD: DynamicCheckboxField should render a VStack with:
         // 1. A Text label showing "Subscribe to Newsletter"
@@ -548,7 +548,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     }
     
     // MARK: - DynamicToggleField Tests
-
+    
     @Test func testDynamicToggleFieldRendersToggleControl() async {
         // TDD: DynamicToggleField should render a VStack with:
         // 1. A Text label showing "Enable Feature"
