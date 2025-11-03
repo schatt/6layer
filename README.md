@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "4.9.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.0.0")
 ]
 ```
 
@@ -41,23 +41,22 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v4.9.1
+## 🆕 Latest Release: v5.0.0
 
-### **Field-Level Display Hints System**
-🎯 **New Feature**: Declarative `.hints` files that describe how to present data models.
+### **Major Testing and Accessibility Release**
+🎯 **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
+♿ **Advanced Accessibility Overhaul**: Complete accessibility system with automatic identifier generation
+🧪 **Testing Infrastructure Revolution**: Comprehensive testing with 800+ tests and full platform coverage
 
 **Highlights:**
-- ✅ **Field-Level Hints** - Define display properties for individual fields
-- ✅ **DRY Architecture** - Define hints once in `.hints` files, use everywhere
-- ✅ **Automatic Discovery** - 6Layer reads hints from `Hints/` folder based on model name
-- ✅ **Cached Loading** - Hints loaded once and reused for performance
-- ✅ **Organized Storage** - All hints in `Hints/` subfolder
-- ✅ **Display Width System** - `narrow`, `medium`, `wide`, or numeric values
-- ✅ **Character Counter** - Optional character count overlay
-- ✅ **Type-Safe** - Strongly-typed `FieldDisplayHints` structure
-- ✅ **Backward Compatible** - Existing code continues to work without changes
-- ✅ **Comprehensive Tests** - Complete test coverage for hint system
-- ✅ **Documentation** - Complete guides and examples
+- ✅ **Complete TDD Implementation** - Strict Test-Driven Development throughout
+- ✅ **Advanced Accessibility System** - Automatic identifier generation for all components
+- ✅ **800+ Comprehensive Tests** - Full platform coverage with behavioral verification
+- ✅ **Apple HIG Compliance** - Complete compliance with Human Interface Guidelines
+- ✅ **Platform Capability Detection** - Accurate runtime detection for all platforms
+- ✅ **Component Architecture** - All components support automatic accessibility
+- ✅ **Testing Infrastructure** - Suite organization with Xcode test navigator integration
+- ✅ **Cross-Platform Validation** - Enhanced testing across iOS, macOS, visionOS
 
 **See [Field Hints Complete Guide](Framework/docs/FieldHintsCompleteGuide.md) for full documentation**
 
@@ -93,8 +92,8 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v4.9.1 (Deterministic Field Ordering for IntelligentFormView)
-**Phase**: Feature Release
+**Version**: v5.0.0 (Major Testing and Accessibility Release)
+**Phase**: Major Release
 **Next**: Continue framework development and stability improvements
 
 ## 🤝 Contributing

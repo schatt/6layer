@@ -1,5 +1,63 @@
 # Changelog
 
+## v5.0.0 - Major Testing and Accessibility Release
+
+### 🎯 **TDD (Test-Driven Development) Maturity**
+- **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
+- **Green Phase Completion**: All stub components replaced with comprehensive behavioral tests
+- **Test Coverage Enhancement**: Added comprehensive TDD tests for all framework components
+- **Behavior Verification**: Replaced stub-verification tests with proper behavior validation
+
+### ♿ **Advanced Accessibility System Overhaul**
+- **Automatic Accessibility Identifier Generation**: Complete overhaul of accessibility ID system
+- **Component Integration**: Added `.automaticAccessibilityIdentifiers()` to all framework components
+- **Global Accessibility Configuration**: Unified accessibility settings across all layers
+- **Pattern Standardization**: Consistent accessibility identifier patterns across platforms
+- **Apple HIG Compliance**: Full compliance with Apple's Human Interface Guidelines
+
+### 🧪 **Testing Infrastructure Revolution**
+- **Suite Organization**: Added `@Suite` annotations for better Xcode test navigator integration
+- **Platform Test Coverage**: Complete iOS/macOS platform test branch coverage
+- **Test Documentation**: Comprehensive testing commands documentation for macOS and iOS
+- **Cross-Platform Testing**: Enhanced platform mocking and capability testing
+
+### 🔧 **Platform Capability Detection Fixes**
+- **AssistiveTouch Detection**: Proper runtime detection for iOS AssistiveTouch functionality
+- **VisionOS Capabilities**: Accurate touch/hover/haptic capability detection for visionOS
+- **Touch Target Optimization**: Platform-native minTouchTarget values (0 for macOS/tvOS/visionOS)
+- **Hover Delay Configuration**: Runtime capability detection for hover delay settings
+
+### 🏗️ **Component Architecture Improvements**
+- **Accessibility Integration**: All components now support automatic accessibility identifier generation
+- **Card Expansion Components**: Enhanced with automatic accessibility identifiers
+- **Form Field Components**: Complete accessibility integration for all form types
+- **Dynamic Form Components**: Accessibility support for complex form structures
+
+### 🐛 **Critical Bug Fixes**
+- **Accessibility Pattern Matching**: Fixed component name verification in accessibility identifiers
+- **OCR Overlay Accessibility**: Corrected accessibility identifier generation for OCR components
+- **Platform Image Properties**: Clarified platform-specific PlatformImage behavior
+- **Compilation Errors**: Resolved all accessibility-related compilation issues
+- **Test Helper Behavior**: Fixed automatic accessibility identifier application in tests
+
+### 📚 **Documentation and Developer Experience**
+- **Testing Commands**: Complete documentation for iOS and macOS testing workflows
+- **Platform Testing Guide**: Instructions for testing iOS paths on macOS
+- **Code Quality Standards**: Added "commit early and often" development practice
+- **Test Organization**: Improved test suite structure and naming conventions
+
+### 🔄 **Internal Architecture Refactoring**
+- **Namespace Management**: Improved accessibility identifier namespace handling
+- **Configuration Management**: Better separation of accessibility configuration logic
+- **Test Infrastructure**: Enhanced BaseTestClass and test configuration management
+- **Platform Detection**: More robust platform capability detection and testing
+
+### 📊 **Quality Assurance**
+- **Test Suite Expansion**: 800+ comprehensive tests with improved coverage
+- **Accessibility Compliance**: Verified compliance with WCAG and Apple HIG standards
+- **Cross-Platform Validation**: Enhanced testing across iOS, macOS, and visionOS
+- **Performance Optimization**: Maintained native performance with accessibility enhancements
+
 ## v4.9.1
 - Feature: Deterministic field ordering for IntelligentFormView via FieldOrderRules (explicit lists, per-field weights, groups, trait overrides)
 - Integration: IntelligentFormView consumes FieldOrderRules with title/name-first default (no alphabetic-by-type)

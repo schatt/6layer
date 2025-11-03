@@ -21,6 +21,13 @@ import UniformTypeIdentifiers
  */
 @Suite("Advanced Field Types")
 open class AdvancedFieldTypesTests {
+
+    // MARK: - Test Setup/Teardown
+
+    init() async throws {
+        // Reset registry before each test to ensure isolation
+        CustomFieldRegistry.shared.reset()
+    }
     
     // MARK: - Test Data Setup
     
@@ -446,6 +453,9 @@ open class AdvancedFieldTypesTests {
         let testFormState = createTestFormState()
         let createdComponent = registry.createComponent(for: testField, formState: testFormState)
         #expect(createdComponent is TestCustomField)
+
+        // Clean up: reset registry for next test
+        registry.reset()
     }
 
     @Test @MainActor func testCustomFieldRegistryUnknownType() {
@@ -457,6 +467,9 @@ open class AdvancedFieldTypesTests {
 
         // Then
         #expect(!isRegistered)
+
+        // Clean up: reset registry for next test
+        registry.reset()
     }
     
     @Test @MainActor func testCustomFieldViewUsesRegisteredComponent() {
@@ -492,6 +505,9 @@ open class AdvancedFieldTypesTests {
         // Then - view should render (test that it doesn't crash and uses registered component)
         // Note: Full rendering test would require ViewInspector
         #expect(customFieldView != nil)
+
+        // Clean up: reset registry for next test
+        CustomFieldRegistry.shared.reset()
     }
     
     // MARK: - Date/Time Picker Tests (To Be Implemented)

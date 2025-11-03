@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v4.9.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v4.9.1)
+[![Version](https://img.shields.io/badge/version-v5.0.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.0.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -89,6 +89,40 @@ platformPresentFormData_L1(
 ```
 
 **📚 Full documentation**: [Field Hints Complete Guide](docs/FieldHintsCompleteGuide.md)
+
+## 🆕 What's New in v5.0.0
+
+### **Major Testing and Accessibility Release**
+🎯 **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
+♿ **Advanced Accessibility Overhaul**: Complete accessibility system with automatic identifier generation
+🧪 **Testing Infrastructure Revolution**: Comprehensive testing with 800+ tests and full platform coverage
+
+### **TDD (Test-Driven Development) Maturity**
+- **Complete TDD Implementation**: Strict TDD principles throughout all development phases
+- **Green Phase Completion**: All stub components replaced with comprehensive behavioral tests
+- **Test Coverage Enhancement**: Added comprehensive TDD tests for all framework components
+- **Behavior Verification**: Replaced stub-verification tests with proper behavior validation
+
+### **Advanced Accessibility System**
+- **Automatic Accessibility Identifier Generation**: Complete overhaul of accessibility ID system
+- **Component Integration**: Added `.automaticAccessibilityIdentifiers()` to all framework components
+- **Global Accessibility Configuration**: Unified accessibility settings across all layers
+- **Pattern Standardization**: Consistent accessibility identifier patterns across platforms
+- **Apple HIG Compliance**: Full compliance with Apple's Human Interface Guidelines
+
+### **Testing Infrastructure Revolution**
+- **Suite Organization**: Added `@Suite` annotations for better Xcode test navigator integration
+- **Platform Test Coverage**: Complete iOS/macOS platform test branch coverage
+- **Test Documentation**: Comprehensive testing commands documentation for macOS and iOS
+- **Cross-Platform Testing**: Enhanced platform mocking and capability testing
+
+### **Platform Capability Detection**
+- **AssistiveTouch Detection**: Proper runtime detection for iOS AssistiveTouch functionality
+- **VisionOS Capabilities**: Accurate touch/hover/haptic capability detection for visionOS
+- **Touch Target Optimization**: Platform-native minTouchTarget values (0 for macOS/tvOS/visionOS)
+- **Hover Delay Configuration**: Runtime capability detection for hover delay settings
+
+---
 
 ## 🆕 What's New in v4.9.1
 
@@ -294,7 +328,7 @@ platformPresentFormData_L1(
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "4.9.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.0.0")
 ]
 ```
 

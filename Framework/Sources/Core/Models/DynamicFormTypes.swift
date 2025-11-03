@@ -726,6 +726,14 @@ public final class CustomFieldRegistry: @unchecked Sendable {
         defer { lock.unlock() }
         return Array(componentFactories.keys)
     }
+
+    /// Reset the registry (primarily for testing)
+    /// - Note: This clears all registered components
+    public func reset() {
+        lock.lock()
+        defer { lock.unlock() }
+        componentFactories.removeAll()
+    }
 }
 
 // MARK: - Accessibility Support

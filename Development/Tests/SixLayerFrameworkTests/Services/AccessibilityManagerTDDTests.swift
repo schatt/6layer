@@ -160,9 +160,15 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
 }
 
 // Mock accessible element for testing
-private struct MockAccessibleElement: AccessibleElement {
+private struct MockAccessibleElement: View, AccessibleElement {
     var accessibilityLabel: String? = "Mock Element"
     var accessibilityHint: String? = "Mock hint"
-    var accessibilityTraits: AccessibilityTraits = .button
+    var accessibilityTraits: AccessibilityTraits = []
     var frame: CGRect = .zero
+
+    var body: some View {
+        Text(accessibilityLabel ?? "Mock")
+            .accessibilityLabel(accessibilityLabel ?? "")
+            .accessibilityHint(accessibilityHint ?? "")
+    }
 }

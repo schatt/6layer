@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v4.9.1 - Deterministic Field Ordering for IntelligentFormView
+// SixLayerFramework v5.0.0 - Major Testing and Accessibility Release
 
 import PackageDescription
 
