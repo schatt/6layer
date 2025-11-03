@@ -738,11 +738,6 @@ public final class CustomFieldRegistry: @unchecked Sendable {
 
 // MARK: - Accessibility Support
 
-/// Simple accessibility traits type for the protocol
-public struct AccessibilityTraits {
-    public init() {}
-}
-
 /// Protocol for elements that support accessibility validation
 public protocol AccessibleElement {
     /// The accessibility label
