@@ -428,6 +428,15 @@ extension View {
         self.modifier(AutomaticAccessibilityIdentifiersModifier())
     }
     
+    /// Apply automatic accessibility identifiers with a specific component name
+    /// Framework components should use this to set their own name for better identifier generation
+    /// - Parameter componentName: The name of the component (e.g., "CoverFlowCardComponent")
+    public func automaticAccessibilityIdentifiers(named componentName: String) -> some View {
+        self
+            .environment(\.accessibilityIdentifierName, componentName)
+            .automaticAccessibilityIdentifiers()
+    }
+    
     /// Enable automatic accessibility identifiers locally (for custom views when global is off)
     /// Sets the environment variable to true, then applies the modifier
     public func enableGlobalAutomaticAccessibilityIdentifiers() -> some View {

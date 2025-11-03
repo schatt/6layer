@@ -395,7 +395,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
         .onTapGesture {
             onItemSelected?(item)
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "CoverFlowCardComponent")
     }
     
     // MARK: - Card Displayable Support
@@ -410,6 +410,13 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
     
     private var cardSubtitle: String? {
         CardDisplayHelper.extractSubtitle(from: item)
+    }
+    
+    private var cardDescription: String? {
+        if let displayable = item as? CardDisplayable {
+            return displayable.cardDescription
+        }
+        return nil
     }
     
     private var cardIcon: String {
@@ -562,7 +569,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
                 .padding(16)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "ListCollectionView")
     }
 }
 
@@ -625,7 +632,7 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
                 .padding(16)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "MasonryCollectionView")
     }
 }
 
@@ -687,7 +694,7 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "GridCollectionView")
     }
 }
 
@@ -784,8 +791,8 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         // Always apply animation support
         view = AnyView(view.animation(.easeInOut(duration: 0.3), value: config.supportsTouch))
         
-        // Always apply automatic accessibility identifiers
-        view = AnyView(view.automaticAccessibilityIdentifiers())
+        // Always apply automatic accessibility identifiers with component name
+        view = AnyView(view.automaticAccessibilityIdentifiers(named: "SimpleCardComponent"))
         
         return view
     }

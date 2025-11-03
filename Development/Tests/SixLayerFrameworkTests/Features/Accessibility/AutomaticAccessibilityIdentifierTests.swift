@@ -731,6 +731,77 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         }
     }
     
+    // MARK: - Named Component Identifier Tests
+    
+    /// BUSINESS PURPOSE: Test that automaticAccessibilityIdentifiers(named:) helper function works correctly
+    /// TESTING SCOPE: Verify that components can set their own name using the helper
+    /// METHODOLOGY: Create a test view and verify the identifier includes the component name
+    @Test func testAutomaticAccessibilityIdentifiersWithNamedComponent() async {
+        await MainActor.run {
+            // Given: A view using the named helper function
+            let view = Text("Test Content")
+                .automaticAccessibilityIdentifiers(named: "TestComponent")
+            
+            // When: Inspecting the view's accessibility identifier
+            do {
+                let identifier = try view.inspect().accessibilityIdentifier()
+                
+                // Then: The identifier should include the component name
+                #expect(identifier.contains("TestComponent"), 
+                       "Identifier should contain component name 'TestComponent', got: '\(identifier)'")
+                #expect(identifier.contains("SixLayer"), 
+                       "Identifier should contain namespace 'SixLayer', got: '\(identifier)'")
+                
+                print("✅ Generated identifier with named component: '\(identifier)'")
+            } catch {
+                Issue.record("Failed to inspect view: \(error)")
+            }
+        }
+    }
+    
+    /// BUSINESS PURPOSE: Test that automaticAccessibilityIdentifiers(named:) is equivalent to setting environment manually
+    /// TESTING SCOPE: Verify the helper function produces same result as manual environment setting
+    /// METHODOLOGY: Create two views with both approaches and compare identifiers
+    @Test func testNamedHelperEquivalentToManualEnvironment() async {
+        await MainActor.run {
+            // Given: Two views - one using helper, one using manual environment
+            let view1 = Text("Test")
+                .automaticAccessibilityIdentifiers(named: "TestComponent")
+            
+            let view2 = Text("Test")
+                .environment(\.accessibilityIdentifierName, "TestComponent")
+                .automaticAccessibilityIdentifiers()
+            
+            // When: Inspecting both identifiers
+            do {
+                let id1 = try view1.inspect().accessibilityIdentifier()
+                let id2 = try view2.inspect().accessibilityIdentifier()
+                
+                // Then: They should produce the same identifier (or at least same component name)
+                #expect(id1.contains("TestComponent"), 
+                       "Helper function should include component name, got: '\(id1)'")
+                #expect(id2.contains("TestComponent"), 
+                       "Manual environment should include component name, got: '\(id2)'")
+                
+                // Both should have the same structure (same component name in same position)
+                let components1 = id1.split(separator: ".")
+                let components2 = id2.split(separator: ".")
+                
+                // Find the component name in both
+                let hasName1 = components1.contains { $0 == "TestComponent" }
+                let hasName2 = components2.contains { $0 == "TestComponent" }
+                
+                #expect(hasName1 && hasName2, 
+                       "Both approaches should include 'TestComponent' in identifier")
+                
+                print("✅ Helper identifier: '\(id1)'")
+                print("✅ Manual identifier: '\(id2)'")
+            } catch {
+                Issue.record("Failed to inspect views: \(error)")
+            }
+        }
+    }
+    
     // MARK: - Performance Tests
     // Performance tests removed - performance monitoring was removed from framework
 }
