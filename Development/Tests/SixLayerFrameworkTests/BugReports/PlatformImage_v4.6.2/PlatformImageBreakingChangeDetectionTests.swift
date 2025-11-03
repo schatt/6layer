@@ -148,8 +148,12 @@ open class PlatformImageBreakingChangeDetectionTests {
         // Then: Verify it works (would have failed in 4.6.2)
         #expect(platformImage != nil, "Implicit parameter pattern should work")
         #expect(platformImage.nsImage == nsImage, "Implicit parameter should produce correct result")
-        // Note: On macOS, uiImage property doesn't exist (only nsImage is available)
-        // This is by design - each platform only exposes its native image type
+        
+        // Note: Platform mocking cannot test uiImage here because:
+        // 1. uiImage is compile-time conditional (#if os(iOS)) - it doesn't exist in macOS build
+        // 2. Platform mocking affects runtime behavior, not compile-time conditionals
+        // 3. The iOS branch above verifies uiImage, macOS branch verifies nsImage
+        // 4. Together, both test paths ensure complete coverage across platforms
         #endif
     }
     
