@@ -167,6 +167,70 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     }
 }
 
+// MARK: - Named Automatic Accessibility Identifiers Modifier
+
+/// Modifier that applies automatic accessibility identifiers with a specific component name
+/// This is used by the .automaticAccessibilityIdentifiers(named:) helper
+public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
+    let componentName: String
+    @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+    @ObservedObject private var configObserver = ConfigObserver.shared
+    
+    public func body(content: Content) -> some View {
+        // Use injected config from environment (for testing), fall back to shared (for production)
+        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        let shouldApply = config.enableAutoIDs
+        
+        if shouldApply {
+            let identifier = generateIdentifier()
+            return AnyView(content.accessibilityIdentifier(identifier))
+        } else {
+            return AnyView(content)
+        }
+    }
+    
+    @MainActor
+    private func generateIdentifier() -> String {
+        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        
+        let namespace = config.namespace.isEmpty ? nil : config.namespace
+        let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
+        
+        let screenContext: String
+        let viewHierarchyPath: String
+        if config.enableUITestIntegration {
+            screenContext = "main"
+            viewHierarchyPath = "ui"
+        } else {
+            screenContext = config.currentScreenContext ?? "main"
+            viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+        }
+        
+        var identifierComponents: [String] = []
+        
+        if let namespace = namespace {
+            identifierComponents.append(namespace)
+        }
+        
+        if let prefix = prefix {
+            identifierComponents.append(prefix)
+        }
+        
+        identifierComponents.append(screenContext)
+        identifierComponents.append(viewHierarchyPath)
+        
+        if config.includeComponentNames {
+            identifierComponents.append(componentName)
+        }
+        
+        if config.includeElementTypes {
+            identifierComponents.append("View")
+        }
+        
+        return identifierComponents.joined(separator: ".")
+    }
+}
+
 // MARK: - Named Component Modifier
 
 /// Modifier that allows components to be named for more specific accessibility identifiers
@@ -432,9 +496,8 @@ extension View {
     /// Framework components should use this to set their own name for better identifier generation
     /// - Parameter componentName: The name of the component (e.g., "CoverFlowCardComponent")
     public func automaticAccessibilityIdentifiers(named componentName: String) -> some View {
-        self
-            .environment(\.accessibilityIdentifierName, componentName)
-            .automaticAccessibilityIdentifiers()
+        // Create a modifier that accepts the name directly
+        self.modifier(NamedAutomaticAccessibilityIdentifiersModifier(componentName: componentName))
     }
     
     /// Enable automatic accessibility identifiers locally (for custom views when global is off)

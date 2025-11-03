@@ -43,6 +43,8 @@ import SwiftUI
         AccessibilityIdentifierConfig.shared.globalPrefix = testConfig.globalPrefix
         AccessibilityIdentifierConfig.shared.mode = testConfig.mode
         AccessibilityIdentifierConfig.shared.enableDebugLogging = testConfig.enableDebugLogging
+        AccessibilityIdentifierConfig.shared.includeComponentNames = true
+        AccessibilityIdentifierConfig.shared.includeElementTypes = true
     }
     
     @MainActor
