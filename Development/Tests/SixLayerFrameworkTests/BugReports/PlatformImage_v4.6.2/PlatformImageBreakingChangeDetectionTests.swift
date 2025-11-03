@@ -149,11 +149,20 @@ open class PlatformImageBreakingChangeDetectionTests {
         #expect(platformImage != nil, "Implicit parameter pattern should work")
         #expect(platformImage.nsImage == nsImage, "Implicit parameter should produce correct result")
         
-        // Note: Platform mocking cannot test uiImage here because:
-        // 1. uiImage is compile-time conditional (#if os(iOS)) - it doesn't exist in macOS build
-        // 2. Platform mocking affects runtime behavior, not compile-time conditionals
-        // 3. The iOS branch above verifies uiImage, macOS branch verifies nsImage
-        // 4. Together, both test paths ensure complete coverage across platforms
+        // PLATFORM TESTING NOTE:
+        // Tests use conditional compilation (#if os(iOS) vs #if os(macOS)) for platform-specific code.
+        // 
+        // To fully test both platforms:
+        // 1. macOS build: Only macOS code paths (#if os(macOS)) are compiled and tested
+        // 2. iOS Simulator: Only iOS code paths (#if os(iOS)) are compiled and tested
+        // 
+        // Run tests on both destinations:
+        // - `swift test` on macOS → tests macOS paths (nsImage)
+        // - Run tests in Xcode with iOS Simulator destination → tests iOS paths (uiImage)
+        // - Or use CI/CD to run tests on both platforms
+        //
+        // Platform mocking (RuntimeCapabilityDetection.setTestPlatform) affects runtime behavior
+        // but cannot overcome compile-time conditionals - uiImage doesn't exist in macOS builds.
         #endif
     }
     
