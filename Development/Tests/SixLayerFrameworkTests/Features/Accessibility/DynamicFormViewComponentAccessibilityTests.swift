@@ -333,7 +333,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
             // Form state should contain the multiline text
-            let storedValue = formState.getValue(for: "test-textarea-field") as? String
+            let storedValue: String? = formState.getValue(for: "test-textarea-field")
             #expect(storedValue == "This is a\nmultiline description\nwith line breaks", "Form state should contain multiline text")
 
         } catch {
@@ -441,7 +441,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
             // Form state should contain the selected values array
-            let storedValue = formState.getValue(for: "test-multiselect-field") as? [String]
+            let storedValue: [String]? = formState.getValue(for: "test-multiselect-field")
             #expect(storedValue == ["Reading", "Music"], "Form state should contain selected values array")
 
         } catch {
