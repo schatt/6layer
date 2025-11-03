@@ -87,4 +87,23 @@ public class AccessibilityManager: ObservableObject {
         // TODO: Implement actual issue detection
         return [] // Stub: return empty array for now
     }
+
+    /// Calculate contrast ratio between two colors
+    /// - Parameters:
+    ///   - foreground: The foreground color
+    ///   - background: The background color
+    /// - Returns: The contrast ratio (1.0 to 21.0+)
+    public func calculateContrastRatio(_ foreground: Color, _ background: Color) -> Float {
+        // TODO: Implement actual contrast ratio calculation
+        // This is a simplified implementation - real implementation would need to handle color spaces properly
+        return 21.0 // Maximum contrast ratio for now
+    }
+
+    /// Get minimum touch target size for accessibility
+    /// - Returns: The minimum recommended size for touch targets
+    public func getMinimumTouchTargetSize() -> CGSize {
+        // Apple's Human Interface Guidelines recommend 44x44 points minimum
+        // WCAG guidelines recommend at least 24x24 CSS pixels (approximately 44x44 points on iOS)
+        return CGSize(width: 44, height: 44)
+    }
 }

@@ -47,10 +47,21 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
             OCRDisambiguationAlternative(text: "Hallo", confidence: 0.4)
         ]
 
+        // Convert alternatives to OCRDataCandidate format
+        let candidates = alternatives.map { alt in
+            OCRDataCandidate(
+                text: alt.text,
+                boundingBox: CGRect(x: 0, y: 0, width: 100, height: 20),
+                confidence: alt.confidence,
+                suggestedType: .text,
+                alternativeTypes: [.text]
+            )
+        }
+
         let result = OCRDisambiguationResult(
-            originalText: "Hallo",
-            alternatives: alternatives,
-            context: "greeting"
+            candidates: candidates,
+            confidence: 0.5,
+            requiresUserSelection: true
         )
 
         var selectedAlternative: OCRDisambiguationSelection? = nil
@@ -88,10 +99,21 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
             OCRDisambiguationAlternative(text: "Hallo", confidence: 0.1)
         ]
 
+        // Convert alternatives to OCRDataCandidate format
+        let candidates = alternatives.map { alt in
+            OCRDataCandidate(
+                text: alt.text,
+                boundingBox: CGRect(x: 0, y: 0, width: 100, height: 20),
+                confidence: alt.confidence,
+                suggestedType: .text,
+                alternativeTypes: [.text]
+            )
+        }
+
         let result = OCRDisambiguationResult(
-            originalText: "Hallo",
-            alternatives: alternatives,
-            context: "greeting"
+            candidates: candidates,
+            confidence: 0.5,
+            requiresUserSelection: true
         )
 
         let view = OCRDisambiguationView(

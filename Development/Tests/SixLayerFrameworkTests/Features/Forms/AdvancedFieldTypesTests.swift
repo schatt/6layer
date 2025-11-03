@@ -417,26 +417,26 @@ open class AdvancedFieldTypesTests {
     @Test @MainActor func testCustomFieldRegistry() {
         // Given
         let registry = CustomFieldRegistry.shared
-        
+
         // When
         // Register a custom field type using factory pattern
         struct TestCustomField: CustomFieldComponent {
             let field: DynamicFormField
             let formState: DynamicFormState
-            
+
             var body: some View {
                 Text("Custom Field")
             }
         }
-        
+
         registry.register("testCustom") { field, formState in
             TestCustomField(field: field, formState: formState)
         }
-        
+
         // Then
-        let retrievedFactory = registry.getFactory(for: "testCustom")
-        #expect(retrievedFactory != nil)
-        
+        let isRegistered = registry.isRegistered("testCustom")
+        #expect(isRegistered)
+
         // Test that factory actually creates the component
         let testField = DynamicFormField(
             id: "test",
@@ -444,19 +444,19 @@ open class AdvancedFieldTypesTests {
             label: "Test Field"
         )
         let testFormState = createTestFormState()
-        let createdComponent = retrievedFactory!(testField, testFormState)
+        let createdComponent = registry.createComponent(for: testField, formState: testFormState)
         #expect(createdComponent is TestCustomField)
     }
-    
+
     @Test @MainActor func testCustomFieldRegistryUnknownType() {
         // Given
         let registry = CustomFieldRegistry.shared
-        
+
         // When
-        let unknownFactory = registry.getFactory(for: "unknownType")
-        
+        let isRegistered = registry.isRegistered("unknownType")
+
         // Then
-        #expect(unknownFactory == nil)
+        #expect(!isRegistered)
     }
     
     @Test @MainActor func testCustomFieldViewUsesRegisteredComponent() {
@@ -464,7 +464,7 @@ open class AdvancedFieldTypesTests {
         struct SliderField: CustomFieldComponent {
             let field: DynamicFormField
             let formState: DynamicFormState
-            
+
             var body: some View {
                 VStack {
                     Text(field.label)
@@ -473,7 +473,7 @@ open class AdvancedFieldTypesTests {
                 }
             }
         }
-        
+
         CustomFieldRegistry.shared.register("slider") { field, formState in
             SliderField(field: field, formState: formState)
         }

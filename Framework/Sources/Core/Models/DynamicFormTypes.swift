@@ -435,6 +435,14 @@ public class DynamicFormState: ObservableObject {
         isDirty = true
         clearErrors(for: fieldId)
     }
+
+    /// Initialize a field with its default value
+    /// - Parameter field: The field to initialize
+    public func initializeField(_ field: DynamicFormField) {
+        if let defaultValue = field.defaultValue {
+            fieldValues[field.id] = defaultValue
+        }
+    }
     
     /// Check if field has errors
     public func hasErrors(for fieldId: String) -> Bool {
@@ -641,4 +649,98 @@ public struct DynamicFormBuilder {
             cancelButtonText: cancelButtonText
         )
     }
+}
+
+// MARK: - Custom Field Components
+
+/// Protocol for custom field components in the dynamic form system
+/// Allows registration of custom field types that can be rendered by CustomFieldView
+public protocol CustomFieldComponent: View {
+    /// The field configuration this component should render
+    var field: DynamicFormField { get }
+
+    /// The form state for data binding
+    var formState: DynamicFormState { get }
+
+    /// Initialize the component with field configuration and form state
+    init(field: DynamicFormField, formState: DynamicFormState)
+}
+
+/// Registry for custom field components
+/// Allows registering custom field types by key for dynamic rendering
+public final class CustomFieldRegistry: @unchecked Sendable {
+    /// Shared instance for global registration
+    public static let shared = CustomFieldRegistry()
+
+    /// Dictionary mapping field type keys to component factories
+    private var componentFactories: [String: (DynamicFormField, DynamicFormState) -> any CustomFieldComponent] = [:]
+    private let lock = NSLock()
+
+    private init() {}
+
+    /// Register a custom field component factory
+    /// - Parameters:
+    ///   - key: The field type key (e.g., "slider", "color-picker")
+    ///   - factory: Factory closure that creates the component
+    public func register(_ key: String, factory: @escaping (DynamicFormField, DynamicFormState) -> any CustomFieldComponent) {
+        lock.lock()
+        defer { lock.unlock() }
+        componentFactories[key] = factory
+    }
+
+    /// Unregister a custom field component
+    /// - Parameter key: The field type key to remove
+    public func unregister(_ key: String) {
+        lock.lock()
+        defer { lock.unlock() }
+        componentFactories.removeValue(forKey: key)
+    }
+
+    /// Create a component for the given field if registered
+    /// - Parameters:
+    ///   - field: The field configuration
+    ///   - formState: The form state
+    /// - Returns: The custom component if registered, nil otherwise
+    public func createComponent(for field: DynamicFormField, formState: DynamicFormState) -> (any CustomFieldComponent)? {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let factory = componentFactories[field.contentType?.rawValue ?? ""] else {
+            return nil
+        }
+        return factory(field, formState)
+    }
+
+    /// Check if a field type is registered
+    /// - Parameter key: The field type key
+    /// - Returns: True if registered, false otherwise
+    public func isRegistered(_ key: String) -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return componentFactories[key] != nil
+    }
+
+    /// Get all registered field type keys
+    /// - Returns: Array of registered keys
+    public func registeredKeys() -> [String] {
+        lock.lock()
+        defer { lock.unlock() }
+        return Array(componentFactories.keys)
+    }
+}
+
+// MARK: - Accessibility Support
+
+/// Protocol for elements that support accessibility validation
+public protocol AccessibleElement {
+    /// The accessibility label
+    var accessibilityLabel: String? { get }
+
+    /// The accessibility hint
+    var accessibilityHint: String? { get }
+
+    /// The accessibility traits
+    var accessibilityTraits: AccessibilityTraits { get }
+
+    /// The frame of the element
+    var frame: CGRect { get }
 }

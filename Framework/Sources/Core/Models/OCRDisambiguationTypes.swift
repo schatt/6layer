@@ -211,3 +211,16 @@ public func findIdenticalTextCandidates(
 ) -> [String: [OCRDataCandidate]] {
     return Dictionary(grouping: candidates) { $0.text }
 }
+
+// MARK: - OCR Disambiguation Alternative (for backward compatibility)
+
+/// Alternative representation for OCR disambiguation (legacy support)
+public struct OCRDisambiguationAlternative {
+    public let text: String
+    public let confidence: Float
+
+    public init(text: String, confidence: Float) {
+        self.text = text
+        self.confidence = confidence
+    }
+}

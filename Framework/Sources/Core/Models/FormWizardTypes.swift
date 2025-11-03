@@ -118,6 +118,11 @@ public class FormWizardState: ObservableObject {
         }
         validationErrors[stepId]?.append(error)
     }
+
+    /// Check if wizard is on the last step
+    public var isLastStep: Bool {
+        return currentStepIndex >= steps.count - 1
+    }
 }
 
 /// Protocol for form wizard step content
