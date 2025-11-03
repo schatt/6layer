@@ -148,6 +148,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         // Then: Verify it works (would have failed in 4.6.2)
         #expect(platformImage != nil, "Implicit parameter pattern should work")
         #expect(platformImage.nsImage == nsImage, "Implicit parameter should produce correct result")
+        // Note: On macOS, uiImage property doesn't exist (only nsImage is available)
+        // This is by design - each platform only exposes its native image type
         #endif
     }
     
