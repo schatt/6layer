@@ -27,16 +27,15 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // Test that the service can be configured with accessibility settings
         // Use testConfig (isolated instance) instead of shared singleton
-        #expect(testConfig.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        #expect(testConfig.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        #expect(self.testConfig.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+        #expect(self.testConfig.namespace == "SixLayer", "InternationalizationService should use correct namespace")
     }
     
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        setupTestEnvironment() // Runs on MainActor since test is @MainActor
-        
+        // setupTestEnvironment() is already called in BaseTestClass.init()
         let service = InternationalizationService()
         
         // When & Then
@@ -44,7 +43,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
-        #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        // Use testConfig (isolated instance) instead of shared singleton
+        #expect(self.testConfig.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+        #expect(self.testConfig.namespace == "SixLayer", "InternationalizationService should use correct namespace")
     }
