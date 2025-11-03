@@ -45,11 +45,13 @@ public extension View {
     /// Platform-specific padding with directional control
     func platformPadding(_ edges: Edge.Set, _ length: CGFloat? = nil) -> some View {
         return self.padding(edges, length)
+            .automaticAccessibilityIdentifiers()
     }
     
     /// Platform-specific padding with explicit value
     func platformPadding(_ value: CGFloat) -> some View {
         return self.padding(value)
+            .automaticAccessibilityIdentifiers()
     }
     
     /// Platform-specific reduced padding values
