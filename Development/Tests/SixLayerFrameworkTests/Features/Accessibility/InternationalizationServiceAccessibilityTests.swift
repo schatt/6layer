@@ -18,7 +18,16 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
 
 @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
-        // setupTestEnvironment() is already called in BaseTestClass.init()
+        // Ensure config is set up (BaseTestClass.init() should have done this, but ensure it's on MainActor)
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.globalPrefix = ""
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
+        
         let service = InternationalizationService()
         
         // When & Then
@@ -26,17 +35,27 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        // BaseTestClass.init() sets up AccessibilityIdentifierConfig.shared for backward compatibility
-        let config = AccessibilityIdentifierConfig.shared
-        #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
-        // setupTestEnvironment() is already called in BaseTestClass.init()
+        // Ensure config is set up (BaseTestClass.init() should have done this, but ensure it's on MainActor)
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.globalPrefix = ""
+            config.mode = .automatic
+            config.enableDebugLogging = false
+        }
+        
         let service = InternationalizationService()
         
         // When & Then
@@ -44,8 +63,9 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         #expect(true, "Service should be instantiable")
         
         // Test that the service can be configured with accessibility settings
-        // BaseTestClass.init() sets up AccessibilityIdentifierConfig.shared for backward compatibility
-        let config = AccessibilityIdentifierConfig.shared
-        #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
-        #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
+        }
     }
