@@ -33,8 +33,11 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
         // AssistiveTouchManager is non-optional - no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
-        let config = testConfig
+        // Test config access moved inside MainActor.run block
         await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
             #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
@@ -60,8 +63,11 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
         // AssistiveTouchManager is non-optional - no need to check for nil
         
         // Test that the manager can be configured with accessibility settings
-        let config = testConfig
+        // Test config access moved inside MainActor.run block
         await MainActor.run {
+            let config = AccessibilityIdentifierConfig.shared
+            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
             #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }

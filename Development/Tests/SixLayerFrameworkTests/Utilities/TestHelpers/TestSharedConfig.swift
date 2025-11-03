@@ -15,8 +15,8 @@ func buildPlatformCapabilitiesSnapshot() -> PlatformCapabilitiesTestSnapshot {
         supportsVoiceOver: RuntimeCapabilityDetection.supportsVoiceOver,
         supportsSwitchControl: RuntimeCapabilityDetection.supportsSwitchControl,
         supportsAssistiveTouch: RuntimeCapabilityDetection.supportsAssistiveTouch,
-        minTouchTarget: touch ? 44 : 0,
-        hoverDelay: hover ? 0.1 : 0.0
+        minTouchTarget: RuntimeCapabilityDetection.minTouchTarget, // Platform-correct value (respects test platform mocking)
+        hoverDelay: RuntimeCapabilityDetection.hoverDelay // Platform-correct value (respects test platform mocking)
     )
 }
 
