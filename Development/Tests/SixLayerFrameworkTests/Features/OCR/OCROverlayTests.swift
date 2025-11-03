@@ -12,7 +12,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-@Suite("O C R Overlay")
+@Suite("OCR Overlay")
 open class OCROverlayTests: BaseTestClass {
     
     // Test data will be created locally in each test method for parallel execution

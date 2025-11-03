@@ -9,7 +9,7 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure OCROverlayView generates proper accessibility identifiers
 /// TESTING SCOPE: All components in OCROverlayView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
-@Suite("O C R Overlay View")
+@Suite("OCR Overlay View")
 @MainActor
 open class OCROverlayViewTests {
     
