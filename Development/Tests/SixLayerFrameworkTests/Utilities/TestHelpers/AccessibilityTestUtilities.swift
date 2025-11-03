@@ -416,6 +416,14 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     platform: SixLayerPlatform,
     componentName: String
 ) -> Bool {
+    // Set up default accessibility config (centralized setup)
+    let config = AccessibilityIdentifierConfig.shared
+    config.enableAutoIDs = true
+    config.namespace = "SixLayer"
+    config.globalPrefix = ""
+    config.mode = .automatic
+    config.enableDebugLogging = false
+    
     // Set the test platform for this test case
     RuntimeCapabilityDetection.setTestPlatform(platform)
     
