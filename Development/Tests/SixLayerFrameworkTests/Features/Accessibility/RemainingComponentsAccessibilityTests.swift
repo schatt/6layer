@@ -51,7 +51,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
+            expectedPattern: "SixLayer.main.ui.*ExpandableCardComponent.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardComponent"
         )
@@ -97,8 +97,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
-            platform: SixLayerPlatform.iOS,
+            expectedPattern: "SixLayer.main.ui.*ExpandableCardComponent.*", 
+            platform: SixLayerPlatform.macOS,
             componentName: "ExpandableCardComponent"
         )
         
@@ -126,7 +126,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
+            expectedPattern: "SixLayer.main.ui.*CoverFlowCollectionView.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "CoverFlowCollectionView"
         )
@@ -153,8 +153,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
-            platform: SixLayerPlatform.iOS,
+            expectedPattern: "SixLayer.main.ui.*CoverFlowCollectionView.*", 
+            platform: SixLayerPlatform.macOS,
             componentName: "CoverFlowCollectionView"
         )
         
@@ -175,7 +175,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
+            expectedPattern: "SixLayer.main.ui.*CoverFlowCardComponent.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "CoverFlowCardComponent"
         )
@@ -195,8 +195,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
-            platform: SixLayerPlatform.iOS,
+            expectedPattern: "SixLayer.main.ui.*CoverFlowCardComponent.*", 
+            platform: SixLayerPlatform.macOS,
             componentName: "CoverFlowCardComponent"
         )
         
@@ -229,7 +229,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "GridCollectionView"
         )
         
-        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers on iOS")
     }
     
     @Test func testGridCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -256,7 +256,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "GridCollectionView"
         )
         
-        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - ListCollectionView Tests
@@ -285,7 +285,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCollectionView"
         )
         
-        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers on iOS")
     }
     
     @Test func testListCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -312,7 +312,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCollectionView"
         )
         
-        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - MasonryCollectionView Tests
@@ -341,7 +341,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCollectionView"
         )
         
-        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on iOS")
     }
     
     @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -368,7 +368,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCollectionView"
         )
         
-        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - AdaptiveCollectionView Tests
@@ -397,7 +397,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "AdaptiveCollectionView"
         )
         
-        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on iOS")
     }
     
     @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -424,7 +424,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "AdaptiveCollectionView"
         )
         
-        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on macOS")
     }
     
     // MARK: - SimpleCardComponent Tests
@@ -458,7 +458,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "SimpleCardComponent"
         )
         
-        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on iOS")
     }
     
     @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -490,7 +490,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "SimpleCardComponent"
         )
         
-        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on macOS")
     }
     
     // MARK: - ListCardComponent Tests
@@ -513,7 +513,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCardComponent"
         )
         
-        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on iOS")
     }
     
     @Test func testListCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -534,7 +534,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCardComponent"
         )
         
-        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on macOS")
     }
     
     // MARK: - MasonryCardComponent Tests
@@ -551,7 +551,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCardComponent"
         )
         
-        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers with component name on iOS")
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on iOS")
     }
     
     @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -566,7 +566,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCardComponent"
         )
         
-        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers with component name on macOS")
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on macOS")
     }
 }
 
