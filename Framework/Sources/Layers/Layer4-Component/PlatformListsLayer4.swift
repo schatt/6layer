@@ -8,6 +8,32 @@ public extension View {
     
     /// Platform-specific list row with consistent styling
     /// Provides standardized list row appearance across platforms
+    /// - Parameter title: The title text to display (automatically extracted for accessibility identifiers)
+    /// - Parameter trailingContent: Optional trailing content (e.g., chevron, badge, etc.)
+    /// 
+    /// Usage:
+    /// ```swift
+    /// .platformListRow(title: "Item Title") {
+    ///     Image(systemName: "chevron.right")
+    /// }
+    /// ```
+    func platformListRow<TrailingContent: View>(
+        title: String,
+        @ViewBuilder trailingContent: () -> TrailingContent = { EmptyView() }
+    ) -> some View {
+        HStack {
+            Text(title)
+            Spacer()
+            trailingContent()
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
+        .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Automatically extract label from title parameter
+        .automaticAccessibilityIdentifiers(named: "platformListRow")
+    }
+    
+    /// Platform-specific list row with custom content (legacy support)
+    /// Use the title-based version when possible for automatic label extraction
     /// - Parameter label: Optional label text to include in accessibility identifier
     /// - Parameter content: The view content to display in the row
     func platformListRow<Content: View>(
