@@ -50,35 +50,39 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests InputHandlingManager initialization and setup
     /// METHODOLOGY: Initialize InputHandlingManager and verify initial state properties
     @Test func testInputHandlingManagerInitialization() {
-        // Test across all platforms
-        for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
-            
-            // Given
-            let testPlatform = platform
-            
-            // When
-            let manager = InputHandlingManager(platform: testPlatform)
-            
-            // Then
-            #expect(manager.currentPlatform == testPlatform)
-            #expect(manager.interactionPatterns.platform == testPlatform)
-            #expect(manager.hapticManager.platform == testPlatform)
-            #expect(manager.dragDropManager.platform == testPlatform)
-            
-            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        try runWithTaskLocalConfig {
+            // Test across all platforms
+            for platform in SixLayerPlatform.allCases {
+                RuntimeCapabilityDetection.setTestPlatform(platform)
+                
+                // Given
+                let testPlatform = platform
+                
+                // When
+                let manager = InputHandlingManager(platform: testPlatform)
+                
+                // Then
+                #expect(manager.currentPlatform == testPlatform)
+                #expect(manager.interactionPatterns.platform == testPlatform)
+                #expect(manager.hapticManager.platform == testPlatform)
+                #expect(manager.dragDropManager.platform == testPlatform)
+                
+                RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
+            }
     }
     
     /// BUSINESS PURPOSE: Validate InputHandlingManager default platform functionality
     /// TESTING SCOPE: Tests InputHandlingManager default platform initialization
     /// METHODOLOGY: Initialize InputHandlingManager with default platform and verify functionality
     @Test func testInputHandlingManagerDefaultPlatform() {
-        // Given & When
-        let manager = InputHandlingManager()
-        
-        // Then
-        #expect(manager.currentPlatform == SixLayerPlatform.current)
+        try runWithTaskLocalConfig {
+            // Given & When
+            let manager = InputHandlingManager()
+            
+            // Then
+            #expect(manager.currentPlatform == SixLayerPlatform.current)
+        }
     }
     
     // MARK: - InteractionBehavior Tests
@@ -87,57 +91,63 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests interaction behavior for supported gestures
     /// METHODOLOGY: Test supported gesture interaction and verify behavior functionality
     @Test func testInteractionBehaviorForSupportedGesture() {
-        // Given
-        let manager = InputHandlingManager(platform: .iOS)
-        let gesture = SixLayerFramework.GestureType.tap
-        
-        // When
-        let behavior = manager.getInteractionBehavior(for: gesture)
-        
-        // Then
-        #expect(behavior.isSupported)
-        #expect(behavior.gesture == gesture)
-        #expect(behavior.inputMethod == .touch)
-        #expect(behavior.shouldProvideHapticFeedback)
-        #expect(!behavior.shouldProvideSoundFeedback)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = InputHandlingManager(platform: .iOS)
+            let gesture = SixLayerFramework.GestureType.tap
+            
+            // When
+            let behavior = manager.getInteractionBehavior(for: gesture)
+            
+            // Then
+            #expect(behavior.isSupported)
+            #expect(behavior.gesture == gesture)
+            #expect(behavior.inputMethod == .touch)
+            #expect(behavior.shouldProvideHapticFeedback)
+            #expect(!behavior.shouldProvideSoundFeedback)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate unsupported gesture interaction functionality
     /// TESTING SCOPE: Tests interaction behavior for unsupported gestures
     /// METHODOLOGY: Test unsupported gesture interaction and verify behavior functionality
     @Test func testInteractionBehaviorForUnsupportedGesture() {
-        // Given
-        let manager = InputHandlingManager(platform: .iOS)
-        let gesture = SixLayerFramework.GestureType.rightClick // Not supported on iOS
-        
-        // When
-        let behavior = manager.getInteractionBehavior(for: gesture)
-        
-        // Then
-        #expect(!behavior.isSupported)
-        #expect(behavior.gesture == gesture)
-        #expect(behavior.inputMethod == SixLayerFramework.InputType.mouse)
-        #expect(!behavior.shouldProvideHapticFeedback)
-        #expect(!behavior.shouldProvideSoundFeedback)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = InputHandlingManager(platform: .iOS)
+            let gesture = SixLayerFramework.GestureType.rightClick // Not supported on iOS
+            
+            // When
+            let behavior = manager.getInteractionBehavior(for: gesture)
+            
+            // Then
+            #expect(!behavior.isSupported)
+            #expect(behavior.gesture == gesture)
+            #expect(behavior.inputMethod == SixLayerFramework.InputType.mouse)
+            #expect(!behavior.shouldProvideHapticFeedback)
+            #expect(!behavior.shouldProvideSoundFeedback)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate macOS interaction behavior functionality
     /// TESTING SCOPE: Tests interaction behavior specific to macOS
     /// METHODOLOGY: Test macOS interaction behavior and verify platform-specific functionality
     @Test func testInteractionBehaviorForMacOS() {
-        // Given
-        let manager = InputHandlingManager(platform: .macOS)
-        let gesture = SixLayerFramework.GestureType.click
-        
-        // When
-        let behavior = manager.getInteractionBehavior(for: gesture)
-        
-        // Then
-        #expect(behavior.isSupported)
-        #expect(behavior.gesture == gesture)
-        #expect(behavior.inputMethod == SixLayerFramework.InputType.mouse)
-        #expect(!behavior.shouldProvideHapticFeedback)
-        #expect(behavior.shouldProvideSoundFeedback)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = InputHandlingManager(platform: .macOS)
+            let gesture = SixLayerFramework.GestureType.click
+            
+            // When
+            let behavior = manager.getInteractionBehavior(for: gesture)
+            
+            // Then
+            #expect(behavior.isSupported)
+            #expect(behavior.gesture == gesture)
+            #expect(behavior.inputMethod == SixLayerFramework.InputType.mouse)
+            #expect(!behavior.shouldProvideHapticFeedback)
+            #expect(behavior.shouldProvideSoundFeedback)
+        }
     }
     
     // MARK: - KeyboardShortcutManager Tests
@@ -146,116 +156,130 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests KeyboardShortcutManager initialization and setup
     /// METHODOLOGY: Initialize KeyboardShortcutManager and verify initial state properties
     @Test func testKeyboardShortcutManagerInitialization() {
-        // Given
-        let platform = SixLayerPlatform.macOS
-        
-        // When
-        let manager = KeyboardShortcutManager(for: platform)
-        
-        // Then
-        #expect(manager.platform == platform)
+        try runWithTaskLocalConfig {
+            // Given
+            let platform = SixLayerPlatform.macOS
+            
+            // When
+            let manager = KeyboardShortcutManager(for: platform)
+            
+            // Then
+            #expect(manager.platform == platform)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate macOS keyboard shortcut creation functionality
     /// TESTING SCOPE: Tests keyboard shortcut creation for macOS
     /// METHODOLOGY: Create macOS keyboard shortcut and verify creation functionality
     @Test func testCreateKeyboardShortcutForMacOS() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .macOS)
-        let key = KeyEquivalent("s")
-        let modifiers = EventModifiers.command
-        
-        // When
-        let shortcut = manager.createShortcut(key: key, modifiers: modifiers) {
-            // Test action
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .macOS)
+            let key = KeyEquivalent("s")
+            let modifiers = EventModifiers.command
+            
+            // When
+            let shortcut = manager.createShortcut(key: key, modifiers: modifiers) {
+                // Test action
+            }
+            
+            // Then
+            #expect(shortcut.key == key)
+            #expect(shortcut.modifiers == modifiers)
         }
-        
-        // Then
-        #expect(shortcut.key == key)
-        #expect(shortcut.modifiers == modifiers)
     }
     
     /// BUSINESS PURPOSE: Validate iOS keyboard shortcut creation functionality
     /// TESTING SCOPE: Tests keyboard shortcut creation for iOS
     /// METHODOLOGY: Create iOS keyboard shortcut and verify creation functionality
     @Test func testCreateKeyboardShortcutForIOS() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .iOS)
-        let key = KeyEquivalent("s")
-        let modifiers = EventModifiers.command
-        
-        // When
-        let shortcut = manager.createShortcut(key: key, modifiers: modifiers) {
-            // Test action
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .iOS)
+            let key = KeyEquivalent("s")
+            let modifiers = EventModifiers.command
+            
+            // When
+            let shortcut = manager.createShortcut(key: key, modifiers: modifiers) {
+                // Test action
+            }
+            
+            // Then
+            #expect(shortcut.key == key)
+            #expect(shortcut.modifiers == []) // iOS should have empty modifiers
         }
-        
-        // Then
-        #expect(shortcut.key == key)
-        #expect(shortcut.modifiers == []) // iOS should have empty modifiers
     }
     
     /// BUSINESS PURPOSE: Validate macOS shortcut description functionality
     /// TESTING SCOPE: Tests keyboard shortcut description for macOS
     /// METHODOLOGY: Get macOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForMacOS() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .macOS)
-        let key = KeyEquivalent("s")
-        let modifiers = EventModifiers.command
-        
-        // When
-        let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
-        
-        // Then
-        #expect(description == "⌘s")
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .macOS)
+            let key = KeyEquivalent("s")
+            let modifiers = EventModifiers.command
+            
+            // When
+            let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
+            
+            // Then
+            #expect(description == "⌘s")
+        }
     }
     
     /// BUSINESS PURPOSE: Validate iOS shortcut description functionality
     /// TESTING SCOPE: Tests keyboard shortcut description for iOS
     /// METHODOLOGY: Get iOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForIOS() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .iOS)
-        let key = KeyEquivalent("s")
-        let modifiers = EventModifiers.command
-        
-        // When
-        let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
-        
-        // Then
-        #expect(description == "Swipe or tap gesture")
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .iOS)
+            let key = KeyEquivalent("s")
+            let modifiers = EventModifiers.command
+            
+            // When
+            let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
+            
+            // Then
+            #expect(description == "Swipe or tap gesture")
+        }
     }
     
     /// BUSINESS PURPOSE: Validate watchOS shortcut description functionality
     /// TESTING SCOPE: Tests keyboard shortcut description for watchOS
     /// METHODOLOGY: Get watchOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForWatchOS() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .watchOS)
-        let key = KeyEquivalent("s")
-        let modifiers = EventModifiers.command
-        
-        // When
-        let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
-        
-        // Then
-        #expect(description == "Digital Crown or tap")
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .watchOS)
+            let key = KeyEquivalent("s")
+            let modifiers = EventModifiers.command
+            
+            // When
+            let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
+            
+            // Then
+            #expect(description == "Digital Crown or tap")
+        }
     }
     
     /// BUSINESS PURPOSE: Validate tvOS shortcut description functionality
     /// TESTING SCOPE: Tests keyboard shortcut description for tvOS
     /// METHODOLOGY: Get tvOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForTVOS() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .tvOS)
-        let key = KeyEquivalent("s")
-        let modifiers = EventModifiers.command
-        
-        // When
-        let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
-        
-        // Then
-        #expect(description == "Remote button")
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .tvOS)
+            let key = KeyEquivalent("s")
+            let modifiers = EventModifiers.command
+            
+            // When
+            let description = manager.getShortcutDescription(key: key, modifiers: modifiers)
+            
+            // Then
+            #expect(description == "Remote button")
+        }
     }
     
     // MARK: - HapticFeedbackManager Tests
@@ -264,66 +288,76 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests HapticFeedbackManager initialization and setup
     /// METHODOLOGY: Initialize HapticFeedbackManager and verify initial state properties
     @Test func testHapticFeedbackManagerInitialization() {
-        // Given
-        let platform = SixLayerPlatform.iOS
-        
-        // When
-        let manager = HapticFeedbackManager(for: platform)
-        
-        // Then
-        #expect(manager.platform == platform)
+        try runWithTaskLocalConfig {
+            // Given
+            let platform = SixLayerPlatform.iOS
+            
+            // When
+            let manager = HapticFeedbackManager(for: platform)
+            
+            // Then
+            #expect(manager.platform == platform)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate iOS haptic feedback functionality
     /// TESTING SCOPE: Tests haptic feedback triggering for iOS
     /// METHODOLOGY: Trigger iOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForIOS() {
-        // Given
-        let manager = HapticFeedbackManager(for: .iOS)
-        let feedback = PlatformHapticFeedback.light
-        
-        // When & Then
-        // This should not crash and should execute without error
-        #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = HapticFeedbackManager(for: .iOS)
+            let feedback = PlatformHapticFeedback.light
+            
+            // When & Then
+            // This should not crash and should execute without error
+            #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        }
     }
     
     /// BUSINESS PURPOSE: Validate macOS haptic feedback functionality
     /// TESTING SCOPE: Tests haptic feedback triggering for macOS
     /// METHODOLOGY: Trigger macOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForMacOS() {
-        // Given
-        let manager = HapticFeedbackManager(for: .macOS)
-        let feedback = PlatformHapticFeedback.light
-        
-        // When & Then
-        // This should not crash and should execute without error
-        #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = HapticFeedbackManager(for: .macOS)
+            let feedback = PlatformHapticFeedback.light
+            
+            // When & Then
+            // This should not crash and should execute without error
+            #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        }
     }
     
     /// BUSINESS PURPOSE: Validate watchOS haptic feedback functionality
     /// TESTING SCOPE: Tests haptic feedback triggering for watchOS
     /// METHODOLOGY: Trigger watchOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForWatchOS() {
-        // Given
-        let manager = HapticFeedbackManager(for: .watchOS)
-        let feedback = PlatformHapticFeedback.light
-        
-        // When & Then
-        // This should not crash and should execute without error
-        #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = HapticFeedbackManager(for: .watchOS)
+            let feedback = PlatformHapticFeedback.light
+            
+            // When & Then
+            // This should not crash and should execute without error
+            #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        }
     }
     
     /// BUSINESS PURPOSE: Validate tvOS haptic feedback functionality
     /// TESTING SCOPE: Tests haptic feedback triggering for tvOS
     /// METHODOLOGY: Trigger tvOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForTVOS() {
-        // Given
-        let manager = HapticFeedbackManager(for: .tvOS)
-        let feedback = PlatformHapticFeedback.light
-        
-        // When & Then
-        // This should not crash and should execute without error
-        #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = HapticFeedbackManager(for: .tvOS)
+            let feedback = PlatformHapticFeedback.light
+            
+            // When & Then
+            // This should not crash and should execute without error
+            #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        }
     }
     
     // MARK: - DragDropManager Tests
@@ -332,82 +366,92 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests DragDropManager initialization and setup
     /// METHODOLOGY: Initialize DragDropManager and verify initial state properties
     @Test func testDragDropManagerInitialization() {
-        // Given
-        let platform = SixLayerPlatform.iOS
-        
-        // When
-        let manager = DragDropManager(for: platform)
-        
-        // Then
-        #expect(manager.platform == platform)
+        try runWithTaskLocalConfig {
+            // Given
+            let platform = SixLayerPlatform.iOS
+            
+            // When
+            let manager = DragDropManager(for: platform)
+            
+            // Then
+            #expect(manager.platform == platform)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate iOS drag behavior functionality
     /// TESTING SCOPE: Tests drag behavior for iOS
     /// METHODOLOGY: Get iOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForIOS() {
-        // Given
-        let manager = DragDropManager(for: .iOS)
-        
-        // When
-        let behavior = manager.getDragBehavior()
-        
-        // Then
-        #expect(behavior.supportsDrag)
-        #expect(behavior.supportsDrop)
-        #expect(behavior.dragPreview == .platform)
-        #expect(behavior.dropIndicator == .platform)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = DragDropManager(for: .iOS)
+            
+            // When
+            let behavior = manager.getDragBehavior()
+            
+            // Then
+            #expect(behavior.supportsDrag)
+            #expect(behavior.supportsDrop)
+            #expect(behavior.dragPreview == .platform)
+            #expect(behavior.dropIndicator == .platform)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate macOS drag behavior functionality
     /// TESTING SCOPE: Tests drag behavior for macOS
     /// METHODOLOGY: Get macOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForMacOS() {
-        // Given
-        let manager = DragDropManager(for: .macOS)
-        
-        // When
-        let behavior = manager.getDragBehavior()
-        
-        // Then
-        #expect(behavior.supportsDrag)
-        #expect(behavior.supportsDrop)
-        #expect(behavior.dragPreview == .custom)
-        #expect(behavior.dropIndicator == .custom)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = DragDropManager(for: .macOS)
+            
+            // When
+            let behavior = manager.getDragBehavior()
+            
+            // Then
+            #expect(behavior.supportsDrag)
+            #expect(behavior.supportsDrop)
+            #expect(behavior.dragPreview == .custom)
+            #expect(behavior.dropIndicator == .custom)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate watchOS drag behavior functionality
     /// TESTING SCOPE: Tests drag behavior for watchOS
     /// METHODOLOGY: Get watchOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForWatchOS() {
-        // Given
-        let manager = DragDropManager(for: .watchOS)
-        
-        // When
-        let behavior = manager.getDragBehavior()
-        
-        // Then
-        #expect(!behavior.supportsDrag)
-        #expect(!behavior.supportsDrop)
-        #expect(behavior.dragPreview == .none)
-        #expect(behavior.dropIndicator == .none)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = DragDropManager(for: .watchOS)
+            
+            // When
+            let behavior = manager.getDragBehavior()
+            
+            // Then
+            #expect(!behavior.supportsDrag)
+            #expect(!behavior.supportsDrop)
+            #expect(behavior.dragPreview == .none)
+            #expect(behavior.dropIndicator == .none)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate tvOS drag behavior functionality
     /// TESTING SCOPE: Tests drag behavior for tvOS
     /// METHODOLOGY: Get tvOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForTVOS() {
-        // Given
-        let manager = DragDropManager(for: .tvOS)
-        
-        // When
-        let behavior = manager.getDragBehavior()
-        
-        // Then
-        #expect(!behavior.supportsDrag)
-        #expect(!behavior.supportsDrop)
-        #expect(behavior.dragPreview == .none)
-        #expect(behavior.dropIndicator == .none)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = DragDropManager(for: .tvOS)
+            
+            // When
+            let behavior = manager.getDragBehavior()
+            
+            // Then
+            #expect(!behavior.supportsDrag)
+            #expect(!behavior.supportsDrop)
+            #expect(behavior.dragPreview == .none)
+            #expect(behavior.dropIndicator == .none)
+        }
     }
     
     // MARK: - SwipeDirection Tests
@@ -416,75 +460,85 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests swipe direction detection from left drag
     /// METHODOLOGY: Test left drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragLeft() {
-        // Given - Test the SwipeDirection enum values directly
-        let direction = SwipeDirection.left
-        
-        // When - Verify the enum works correctly
-        let isLeft = direction == .left
-        
-        // Then
-        #expect(isLeft)
-        #expect(direction == .left)
+        try runWithTaskLocalConfig {
+            // Given - Test the SwipeDirection enum values directly
+            let direction = SwipeDirection.left
+            
+            // When - Verify the enum works correctly
+            let isLeft = direction == .left
+            
+            // Then
+            #expect(isLeft)
+            #expect(direction == .left)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate right swipe direction functionality
     /// TESTING SCOPE: Tests swipe direction detection from right drag
     /// METHODOLOGY: Test right drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragRight() {
-        // Given - Test the SwipeDirection enum values directly
-        let direction = SwipeDirection.right
-        
-        // When - Verify the enum works correctly
-        let isRight = direction == .right
-        
-        // Then
-        #expect(isRight)
-        #expect(direction == .right)
+        try runWithTaskLocalConfig {
+            // Given - Test the SwipeDirection enum values directly
+            let direction = SwipeDirection.right
+            
+            // When - Verify the enum works correctly
+            let isRight = direction == .right
+            
+            // Then
+            #expect(isRight)
+            #expect(direction == .right)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate up swipe direction functionality
     /// TESTING SCOPE: Tests swipe direction detection from up drag
     /// METHODOLOGY: Test up drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragUp() {
-        // Given - Test the SwipeDirection enum values directly
-        let direction = SwipeDirection.up
-        
-        // When - Verify the enum works correctly
-        let isUp = direction == .up
-        
-        // Then
-        #expect(isUp)
-        #expect(direction == .up)
+        try runWithTaskLocalConfig {
+            // Given - Test the SwipeDirection enum values directly
+            let direction = SwipeDirection.up
+            
+            // When - Verify the enum works correctly
+            let isUp = direction == .up
+            
+            // Then
+            #expect(isUp)
+            #expect(direction == .up)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate down swipe direction functionality
     /// TESTING SCOPE: Tests swipe direction detection from down drag
     /// METHODOLOGY: Test down drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragDown() {
-        // Given - Test the SwipeDirection enum values directly
-        let direction = SwipeDirection.down
-        
-        // When - Verify the enum works correctly
-        let isDown = direction == .down
-        
-        // Then
-        #expect(isDown)
-        #expect(direction == .down)
+        try runWithTaskLocalConfig {
+            // Given - Test the SwipeDirection enum values directly
+            let direction = SwipeDirection.down
+            
+            // When - Verify the enum works correctly
+            let isDown = direction == .down
+            
+            // Then
+            #expect(isDown)
+            #expect(direction == .down)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate diagonal swipe direction functionality
     /// TESTING SCOPE: Tests swipe direction detection from diagonal drag
     /// METHODOLOGY: Test diagonal drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragDiagonal() {
-        // Given - Test that SwipeDirection enum supports all directions
-        let directions: [SwipeDirection] = [.left, .right, .up, .down]
-        
-        // When - Verify all directions are distinct
-        let uniqueDirections = Set(directions)
-        
-        // Then
-        #expect(uniqueDirections.count == 4) // All directions should be unique
-        #expect(directions.contains(.right)) // Should include right direction
+        try runWithTaskLocalConfig {
+            // Given - Test that SwipeDirection enum supports all directions
+            let directions: [SwipeDirection] = [.left, .right, .up, .down]
+            
+            // When - Verify all directions are distinct
+            let uniqueDirections = Set(directions)
+            
+            // Then
+            #expect(uniqueDirections.count == 4) // All directions should be unique
+            #expect(directions.contains(.right)) // Should include right direction
+        }
     }
     
     // MARK: - PlatformInteractionButton Tests
@@ -493,34 +547,38 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests PlatformInteractionButton initialization and setup
     /// METHODOLOGY: Initialize PlatformInteractionButton and verify initial state properties
     @Test func testPlatformInteractionButtonInitialization() {
-        // Given
-        let action = {}
-        let label = Text("Test Button")
-        
-        // When
-        let button = PlatformInteractionButton(style: .primary, action: action) {
-            label
+        try runWithTaskLocalConfig {
+            // Given
+            let action = {}
+            let label = Text("Test Button")
+            
+            // When
+            let button = PlatformInteractionButton(style: .primary, action: action) {
+                label
+            }
+            
+            // Then
+            // Button should be created without crashing
+            #expect(button != nil)
         }
-        
-        // Then
-        // Button should be created without crashing
-        #expect(button != nil)
     }
     
     /// BUSINESS PURPOSE: Validate PlatformInteractionButton style functionality
     /// TESTING SCOPE: Tests PlatformInteractionButton with different styles
     /// METHODOLOGY: Create PlatformInteractionButton with different styles and verify functionality
     @Test func testPlatformInteractionButtonWithDifferentStyles() {
-        // Given
-        let styles: [InteractionButtonStyle] = [.adaptive, .primary, .secondary, .destructive]
-        
-        // When & Then
-        for style in styles {
-            let button = PlatformInteractionButton(style: style, action: {}) {
-                Text("Test")
-            }
-            #expect(button != nil)
+        try runWithTaskLocalConfig {
+            // Given
+            let styles: [InteractionButtonStyle] = [.adaptive, .primary, .secondary, .destructive]
+            
+            // When & Then
+            for style in styles {
+                let button = PlatformInteractionButton(style: style, action: {}) {
+                    Text("Test")
+                }
+                #expect(button != nil)
         }
+            }
     }
     
     // MARK: - Integration Tests
@@ -529,35 +587,39 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests input handling integration and end-to-end workflow
     /// METHODOLOGY: Test complete input handling integration and verify integration functionality
     @Test func testInputHandlingIntegration() {
-        // Given
-        let manager = InputHandlingManager(platform: .iOS)
-        
-        // When
-        let behavior = manager.getInteractionBehavior(for: .tap)
-        let dragBehavior = manager.dragDropManager.getDragBehavior()
-        
-        // Then
-        #expect(behavior.isSupported)
-        #expect(dragBehavior.supportsDrag)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = InputHandlingManager(platform: .iOS)
+            
+            // When
+            let behavior = manager.getInteractionBehavior(for: .tap)
+            let dragBehavior = manager.dragDropManager.getDragBehavior()
+            
+            // Then
+            #expect(behavior.isSupported)
+            #expect(dragBehavior.supportsDrag)
+        }
     }
     
     /// BUSINESS PURPOSE: Validate cross-platform consistency functionality
     /// TESTING SCOPE: Tests cross-platform consistency across all platforms
     /// METHODOLOGY: Test consistency across platforms and verify consistency functionality
     @Test func testCrossPlatformConsistency() {
-        // Given
-        let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
-        
-        // When & Then
-        for platform in platforms {
-            let manager = InputHandlingManager(platform: platform)
+        try runWithTaskLocalConfig {
+            // Given
+            let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
             
-            // Each platform should have consistent behavior
-            #expect(manager.currentPlatform == platform)
-            #expect(manager.interactionPatterns.platform == platform)
-            #expect(manager.hapticManager.platform == platform)
-            #expect(manager.dragDropManager.platform == platform)
+            // When & Then
+            for platform in platforms {
+                let manager = InputHandlingManager(platform: platform)
+                
+                // Each platform should have consistent behavior
+                #expect(manager.currentPlatform == platform)
+                #expect(manager.interactionPatterns.platform == platform)
+                #expect(manager.hapticManager.platform == platform)
+                #expect(manager.dragDropManager.platform == platform)
         }
+            }
     }
     
     
@@ -567,76 +629,84 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests interaction behavior with all gesture types
     /// METHODOLOGY: Test all gesture types and verify behavior functionality
     @Test func testInteractionBehaviorWithAllGestureTypes() {
-        // Given
-        let manager = InputHandlingManager(platform: .iOS)
-        let allGestures = SixLayerFramework.GestureType.allCases
-        
-        // When & Then
-        for gesture in allGestures {
-            let behavior = manager.getInteractionBehavior(for: gesture)
-            #expect(behavior.gesture == gesture)
-            #expect(behavior.platform == .iOS)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = InputHandlingManager(platform: .iOS)
+            let allGestures = SixLayerFramework.GestureType.allCases
+            
+            // When & Then
+            for gesture in allGestures {
+                let behavior = manager.getInteractionBehavior(for: gesture)
+                #expect(behavior.gesture == gesture)
+                #expect(behavior.platform == .iOS)
         }
+            }
     }
     
     /// BUSINESS PURPOSE: Validate keyboard shortcut with all modifiers functionality
     /// TESTING SCOPE: Tests keyboard shortcut with all modifier combinations
     /// METHODOLOGY: Test all modifier combinations and verify shortcut functionality
     @Test func testKeyboardShortcutWithAllModifiers() {
-        // Given
-        let manager = KeyboardShortcutManager(for: .macOS)
-        let key = KeyEquivalent("s")
-        let modifiers: [EventModifiers] = [
-            .command,
-            .option,
-            .control,
-            .shift,
-            [.command, .option],
-            [.command, .control],
-            [.command, .shift],
-            [.option, .control],
-            [.option, .shift],
-            [.control, .shift]
-        ]
-        
-        // When & Then
-        for modifier in modifiers {
-            let shortcut = manager.createShortcut(key: key, modifiers: modifier) {}
-            #expect(shortcut.key == key)
-            #expect(shortcut.modifiers == modifier)
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = KeyboardShortcutManager(for: .macOS)
+            let key = KeyEquivalent("s")
+            let modifiers: [EventModifiers] = [
+                .command,
+                .option,
+                .control,
+                .shift,
+                [.command, .option],
+                [.command, .control],
+                [.command, .shift],
+                [.option, .control],
+                [.option, .shift],
+                [.control, .shift]
+            ]
+            
+            // When & Then
+            for modifier in modifiers {
+                let shortcut = manager.createShortcut(key: key, modifiers: modifier) {}
+                #expect(shortcut.key == key)
+                #expect(shortcut.modifiers == modifier)
         }
+            }
     }
     
     /// BUSINESS PURPOSE: Validate haptic feedback with all types functionality
     /// TESTING SCOPE: Tests haptic feedback with all feedback types
     /// METHODOLOGY: Test all haptic feedback types and verify feedback functionality
     @Test func testHapticFeedbackWithAllTypes() {
-        // Given
-        let manager = HapticFeedbackManager(for: .iOS)
-        let allFeedbackTypes = PlatformHapticFeedback.allCases
-        
-        // When & Then
-        for feedback in allFeedbackTypes {
-            #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
+        try runWithTaskLocalConfig {
+            // Given
+            let manager = HapticFeedbackManager(for: .iOS)
+            let allFeedbackTypes = PlatformHapticFeedback.allCases
+            
+            // When & Then
+            for feedback in allFeedbackTypes {
+                #expect(throws: Never.self) { manager.triggerFeedback(feedback) }
         }
+            }
     }
     
     /// BUSINESS PURPOSE: Validate drag behavior with all platforms functionality
     /// TESTING SCOPE: Tests drag behavior across all platforms
     /// METHODOLOGY: Test drag behavior on all platforms and verify platform-specific functionality
     @Test func testDragBehaviorWithAllPlatforms() {
-        // Given
-        let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
-        
-        // When & Then
-        for platform in platforms {
-            let manager = DragDropManager(for: platform)
-            let behavior = manager.getDragBehavior()
+        try runWithTaskLocalConfig {
+            // Given
+            let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
             
-            // Each platform should have a defined behavior
-            #expect(behavior.dragPreview == .none || behavior.dragPreview == .platform || behavior.dragPreview == .custom)
-            #expect(behavior.dropIndicator == .none || behavior.dropIndicator == .platform || behavior.dropIndicator == .custom)
+            // When & Then
+            for platform in platforms {
+                let manager = DragDropManager(for: platform)
+                let behavior = manager.getDragBehavior()
+                
+                // Each platform should have a defined behavior
+                #expect(behavior.dragPreview == .none || behavior.dragPreview == .platform || behavior.dragPreview == .custom)
+                #expect(behavior.dropIndicator == .none || behavior.dropIndicator == .platform || behavior.dropIndicator == .custom)
         }
+            }
     }
     
     // MARK: - Accessibility Tests
@@ -644,46 +714,50 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnIOS() async {
-        // Given
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = true  // Enable debug logging
-        
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            Text("Test Button")
+        try await runWithTaskLocalConfig {
+            // Given
+            let config = testConfig
+            config.resetToDefaults()
+            config.enableAutoIDs = true
+            config.namespace = "SixLayer"
+            config.mode = .automatic
+            config.enableDebugLogging = true  // Enable debug logging
+            
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                Text("Test Button")
+            }
+            
+            // When & Then
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "PlatformInteractionButton"
+            )
+            
+            #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on iOS")
         }
-        
-        // When & Then
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "PlatformInteractionButton"
-        )
-        
-        #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnMacOS() async {
-        // Given
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            Text("Test Button")
+        try await runWithTaskLocalConfig {
+            // Given
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                Text("Test Button")
+            }
+            
+            // When & Then
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.macOS,
+                componentName: "PlatformInteractionButton"
+            )
+            
+            #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS")
         }
-        
-        // When & Then
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.macOS,
-            componentName: "PlatformInteractionButton"
-        )
-        
-        #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS")
     }
 }
 

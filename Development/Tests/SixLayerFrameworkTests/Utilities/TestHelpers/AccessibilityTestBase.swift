@@ -24,8 +24,9 @@ public enum AccessibilityTestUtilities {
     // MARK: - Shared Configuration Methods
     
     /// Configures accessibility settings for tests
+    /// Uses task-local config if available (for tests), otherwise falls back to shared
     private static func configureAccessibilitySettings() {
-        let config = AccessibilityIdentifierConfig.shared
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
         config.enableAutoIDs = true
         config.namespace = "SixLayer"
@@ -34,8 +35,9 @@ public enum AccessibilityTestUtilities {
     }
     
     /// Resets accessibility settings after tests
+    /// Uses task-local config if available (for tests), otherwise falls back to shared
     private static func resetAccessibilitySettings() {
-        let config = AccessibilityIdentifierConfig.shared
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
     }
 }

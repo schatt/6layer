@@ -411,7 +411,7 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
 ) -> Bool {
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
     // This allows tests to use runWithTaskLocalConfig() for automatic isolation
-    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
     
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)
@@ -475,7 +475,7 @@ public func hasAccessibilityIdentifierExact<T: View>(
     componentName: String = "Component"
 ) -> Bool {
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
-    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
     
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)
@@ -511,7 +511,7 @@ public func hasAccessibilityIdentifierSimple<T: View>(
     componentName: String = "Component"
 ) -> Bool {
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
-    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
     
     // Get the actual accessibility identifier directly from the SwiftUI view
     guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config) else {
@@ -602,7 +602,7 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     componentName: String
 ) -> Bool {
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
-    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
     
     // Configure the test-specific settings
     config.enableAutoIDs = true

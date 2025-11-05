@@ -48,8 +48,8 @@ public func testAccessibilityIdentifierGeneration<T: View>(
     platform: SixLayerPlatform? = nil,
     testName: String = "AccessibilityTest"
 ) -> Bool {
-    // Setup: Configure test environment
-    let config = AccessibilityIdentifierConfig.shared
+    // Setup: Configure test environment - auto-detect task-local config
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     config.namespace = "SixLayer"
     config.mode = .automatic
     
@@ -93,7 +93,7 @@ public func testCrossPlatformAccessibilityIdentifierGeneration<T: View>(
     testName: String = "CrossPlatformAccessibilityTest"
 ) -> Bool {
     // Setup: Configure test environment
-    let config = AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     config.enableAutoIDs = true
     config.namespace = "SixLayer"
     config.mode = .automatic
@@ -217,7 +217,7 @@ public func testComponentAccessibilityManual<T: View>(
     let component = createComponent()
     
     // Test: Accessibility identifier should behave differently in manual mode
-    let config = AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     let originalMode = config.mode
     
     // Set to manual mode for this test
@@ -259,7 +259,7 @@ public func testComponentAccessibilitySemantic<T: View>(
     let component = createComponent()
     
     // Test: Accessibility identifier should behave differently in semantic mode
-    let config = AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     let originalMode = config.mode
     
     // Set to semantic mode for this test
@@ -301,7 +301,7 @@ public func testComponentAccessibilityDisabled<T: View>(
     let component = createComponent()
     
     // Test: Accessibility identifier should NOT be generated when disabled
-    let config = AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     let autoIDsWereEnabled = config.enableAutoIDs
     
     // Disable auto IDs for this test
@@ -380,7 +380,7 @@ public func setupTestEnvironment(
 ) {
     // Setup: Configure accessibility
     if enableAccessibility {
-        let config = AccessibilityIdentifierConfig.shared
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = enableAutoIDs
         config.namespace = namespace
         config.mode = mode
@@ -396,7 +396,7 @@ public func setupTestEnvironment(
 @MainActor
 public func cleanupTestEnvironment() {
     // Cleanup: Reset accessibility configuration
-    let config = AccessibilityIdentifierConfig.shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     config.resetToDefaults()
     
     // Cleanup: Reset test utilities

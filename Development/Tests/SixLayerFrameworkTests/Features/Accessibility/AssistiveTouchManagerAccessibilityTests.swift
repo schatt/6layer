@@ -17,55 +17,59 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
 
     @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-        // Given
-        await setupTestEnvironment()
-        let assistiveConfig = AssistiveTouchConfig(
-            enableIntegration: true,
-            enableCustomActions: true,
-            enableMenuSupport: true,
-            enableGestureRecognition: true,
-            gestureSensitivity: .medium,
-            menuStyle: .floating
-        )
-        let manager = AssistiveTouchManager(config: assistiveConfig)
+        try await runWithTaskLocalConfig {
+            // Given
+            await setupTestEnvironment()
+            let assistiveConfig = AssistiveTouchConfig(
+                enableIntegration: true,
+                enableCustomActions: true,
+                enableMenuSupport: true,
+                enableGestureRecognition: true,
+                gestureSensitivity: .medium,
+                menuStyle: .floating
+            )
+            let manager = AssistiveTouchManager(config: assistiveConfig)
 
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        // AssistiveTouchManager is non-optional - no need to check for nil
+            // When & Then
+            // Manager classes don't directly generate views, but we test their configuration
+            // AssistiveTouchManager is non-optional - no need to check for nil
 
-        // Test that the manager can be configured with accessibility settings
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.namespace = "SixLayer" // Set expected namespace for test
-            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
+            // Test that the manager can be configured with accessibility settings
+            await MainActor.run {
+                let config = testConfig
+                config.namespace = "SixLayer" // Set expected namespace for test
+                #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
+                #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
+            }
     }
     
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        // Given
-        await setupTestEnvironment()
-        let assistiveConfig = AssistiveTouchConfig(
-            enableIntegration: true,
-            enableCustomActions: true,
-            enableMenuSupport: true,
-            enableGestureRecognition: true,
-            gestureSensitivity: .medium,
-            menuStyle: .floating
-        )
-        let manager = AssistiveTouchManager(config: assistiveConfig)
+        try await runWithTaskLocalConfig {
+            // Given
+            await setupTestEnvironment()
+            let assistiveConfig = AssistiveTouchConfig(
+                enableIntegration: true,
+                enableCustomActions: true,
+                enableMenuSupport: true,
+                enableGestureRecognition: true,
+                gestureSensitivity: .medium,
+                menuStyle: .floating
+            )
+            let manager = AssistiveTouchManager(config: assistiveConfig)
 
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        // AssistiveTouchManager is non-optional - no need to check for nil
+            // When & Then
+            // Manager classes don't directly generate views, but we test their configuration
+            // AssistiveTouchManager is non-optional - no need to check for nil
 
-        // Test that the manager can be configured with accessibility settings
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            config.namespace = "SixLayer" // Set expected namespace for test
-            #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
+            // Test that the manager can be configured with accessibility settings
+            await MainActor.run {
+                let config = testConfig
+                config.namespace = "SixLayer" // Set expected namespace for test
+                #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
+                #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
+            }
     }

@@ -9,14 +9,7 @@ import ViewInspector
 @Suite("Accessibility Global Local Config")
 open class AccessibilityGlobalLocalConfigTests {
     
-    init() async throws {
-                let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        // namespace is automatically detected as "SixLayer" for tests
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
+    // BaseTestClass handles setup automatically - no need for custom init
     
     // BaseTestClass handles cleanup automatically
     
@@ -25,210 +18,223 @@ open class AccessibilityGlobalLocalConfigTests {
     @Test @MainActor func testAccessibilityFunctionsRespectGlobalConfigDisabled() async {
         // Test that automatic accessibility functions don't generate IDs when global config is disabled
         
-        // Disable global config
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = false
-        config.namespace = "" // Ensure namespace is empty to test basic behavior
-        config.globalPrefix = ""
-        config.enableDebugLogging = true // Enable debug logging to see what's happening
-        
-        // Create a view WITHOUT automatic accessibility identifiers modifier
-        // Use a simple Text view instead of PlatformInteractionButton to avoid internal modifiers
-        let view = Text("Test")
-            .automaticAccessibilityIdentifiers()
-        
-        // Verify config is actually disabled
-        #expect(config.enableAutoIDs == false, "Config should be disabled")
-        
-        // Expect NO identifier when global config is disabled and no local enable is present
-        do {
-            let inspectedView = try view.inspect()
-            let text = try inspectedView.text()
-            let accessibilityID = try text.accessibilityIdentifier()
-            #expect(accessibilityID.isEmpty, "Global disable without local enable should result in no accessibility identifier, got: '\(accessibilityID)'")
-        } catch {
-            // If inspection fails, treat as no identifier applied
-            #expect(Bool(true), "Inspection failed, treating as no ID applied")
+        // Disable global config - use testConfig from BaseTestClass
+        try await runWithTaskLocalConfig {
+            let config = testConfig
+            config.enableAutoIDs = false
+            config.namespace = "" // Ensure namespace is empty to test basic behavior
+            config.globalPrefix = ""
+            config.enableDebugLogging = true // Enable debug logging to see what's happening
+            
+            // Create a view WITHOUT automatic accessibility identifiers modifier
+            // Use a simple Text view instead of PlatformInteractionButton to avoid internal modifiers
+            let view = Text("Test")
+                .automaticAccessibilityIdentifiers()
+            
+            // Verify config is actually disabled
+            #expect(config.enableAutoIDs == false, "Config should be disabled")
+            
+            // Expect NO identifier when global config is disabled and no local enable is present
+            do {
+                let inspectedView = try view.inspect()
+                let text = try inspectedView.text()
+                let accessibilityID = try text.accessibilityIdentifier()
+                #expect(accessibilityID.isEmpty, "Global disable without local enable should result in no accessibility identifier, got: '\(accessibilityID)'")
+            } catch {
+                // If inspection fails, treat as no identifier applied
+                #expect(Bool(true), "Inspection failed, treating as no ID applied")
+            }
         }
-    }
     
     @Test func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
-        // Test that automatic accessibility functions DO generate IDs when global config is enabled
-        
-        // Ensure global config is enabled (default)
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = true
-        
-        // Create a view with automatic accessibility identifiers (should generate ID)
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        try runWithTaskLocalConfig {
+            // Test that automatic accessibility functions DO generate IDs when global config is enabled
+            
+            // Ensure global config is enabled (default)
+            let config = testConfig
+            config.enableAutoIDs = true
+            
+            // Create a view with automatic accessibility identifiers (should generate ID)
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .automaticAccessibilityIdentifiers()
+            
+            // Test that the view has an accessibility identifier using the same method as working tests
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "AccessibilityFunctionsRespectGlobalConfigEnabled"
+            )
+            
+            // Should have an ID when global config is enabled
+            #expect(hasAccessibilityID, "Automatic accessibility functions should generate ID when global config is enabled")
+            
+            print("✅ Automatic accessibility functions correctly generate ID when global config is enabled")
         }
-            .automaticAccessibilityIdentifiers()
-        
-        // Test that the view has an accessibility identifier using the same method as working tests
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityFunctionsRespectGlobalConfigEnabled"
-        )
-        
-        // Should have an ID when global config is enabled
-        #expect(hasAccessibilityID, "Automatic accessibility functions should generate ID when global config is enabled")
-        
-        print("✅ Automatic accessibility functions correctly generate ID when global config is enabled")
     }
     
     // MARK: - Local Config Tests
     
     @Test func testAccessibilityFunctionsRespectLocalDisableModifier() {
-        // Test that accessibility functions respect local disable modifier
-        
-        // Global config is enabled
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = true
-        config.enableDebugLogging = true  // ← Enable debug logging
-        
-        // Create a view with local disable modifier (apply disable BEFORE other modifiers)
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            platformPresentContent_L1(content: "Test", hints: PresentationHints())
-        }
-            .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Apply disable FIRST
-            .automaticAccessibilityIdentifiers()
-        
-        // Try to inspect for accessibility identifier
-        do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            let accessibilityID = try button.accessibilityIdentifier()
+        try runWithTaskLocalConfig {
+            // Test that accessibility functions respect local disable modifier
             
-            // Should be empty when local disable is applied
-            // NOTE: Environment variable override is not working as expected
-            // The modifier still generates an ID despite the environment variable being set to false
-            #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
+            // Global config is enabled
+            let config = testConfig
+            config.enableAutoIDs = true
+            config.enableDebugLogging = true  // ← Enable debug logging
             
-        } catch {
-            // If we can't inspect, that's also fine - means no accessibility identifier was applied
-            print("✅ Accessibility functions correctly respect local disable modifier")
+            // Create a view with local disable modifier (apply disable BEFORE other modifiers)
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Apply disable FIRST
+                .automaticAccessibilityIdentifiers()
+            
+            // Try to inspect for accessibility identifier
+            do {
+                let inspectedView = try view.inspect()
+                let button = try inspectedView.button()
+                let accessibilityID = try button.accessibilityIdentifier()
+                
+                // Should be empty when local disable is applied
+                // NOTE: Environment variable override is not working as expected
+                // The modifier still generates an ID despite the environment variable being set to false
+                #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
+                
+            } catch {
+                // If we can't inspect, that's also fine - means no accessibility identifier was applied
+                print("✅ Accessibility functions correctly respect local disable modifier")
         }
+            }
     }
     
     @Test func testAccessibilityFunctionsRespectLocalEnableModifier() {
-        // Test that accessibility functions respect local enable modifier
-        
-        // Global config is disabled
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = false
-        
-        // Create a view with local enable modifier
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        try runWithTaskLocalConfig {
+            // Test that accessibility functions respect local enable modifier
+            
+            // Global config is disabled
+            let config = testConfig
+            config.enableAutoIDs = false
+            
+            // Create a view with local enable modifier
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .automaticAccessibilityIdentifiers()  // ← Local enable
+            
+            // Test that the view has an accessibility identifier using the same method as working tests
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "AccessibilityFunctionsRespectLocalEnableModifier"
+            )
+            
+            // Should have an ID when local enable is applied (even with global disabled)
+            #expect(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied")
+            
+            print("✅ Accessibility functions correctly respect local enable modifier")
         }
-            .automaticAccessibilityIdentifiers()  // ← Local enable
-        
-        // Test that the view has an accessibility identifier using the same method as working tests
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "AccessibilityFunctionsRespectLocalEnableModifier"
-        )
-        
-        // Should have an ID when local enable is applied (even with global disabled)
-        #expect(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied")
-        
-        print("✅ Accessibility functions correctly respect local enable modifier")
     }
     
     // MARK: - Priority Tests
     
     @Test func testLocalDisableOverridesGlobalEnable() {
-        // Test that local disable takes precedence over global enable
-        
-        // Global config is enabled
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = true
-        
-        // Create a view with local disable (should override global enable)
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            platformPresentContent_L1(content: "Test", hints: PresentationHints())
-        }
-            .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Should override global enable
-            .automaticAccessibilityIdentifiers()
-        
-        // Try to inspect for accessibility identifier
-        do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            let accessibilityID = try button.accessibilityIdentifier()
+        try runWithTaskLocalConfig {
+            // Test that local disable takes precedence over global enable
             
-            // Should be empty - local disable should override global enable
-            // NOTE: Environment variable override is not working as expected
-            // The modifier still generates an ID despite the environment variable being set to false
-            #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
+            // Global config is enabled
+            let config = testConfig
+            config.enableAutoIDs = true
             
-        } catch {
-            print("✅ Local disable correctly overrides global enable")
+            // Create a view with local disable (should override global enable)
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Should override global enable
+                .automaticAccessibilityIdentifiers()
+            
+            // Try to inspect for accessibility identifier
+            do {
+                let inspectedView = try view.inspect()
+                let button = try inspectedView.button()
+                let accessibilityID = try button.accessibilityIdentifier()
+                
+                // Should be empty - local disable should override global enable
+                // NOTE: Environment variable override is not working as expected
+                // The modifier still generates an ID despite the environment variable being set to false
+                #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
+                
+            } catch {
+                print("✅ Local disable correctly overrides global enable")
         }
+            }
     }
     
     @Test func testLocalEnableOverridesGlobalDisable() {
-        // Test that local enable takes precedence over global disable
-        
-        // Global config is disabled
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = false
-        
-        // Create a view with local enable (should override global disable)
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            platformPresentContent_L1(content: "Test", hints: PresentationHints())
+        try runWithTaskLocalConfig {
+            // Test that local enable takes precedence over global disable
+            
+            // Global config is disabled
+            let config = testConfig
+            config.enableAutoIDs = false
+            
+            // Create a view with local enable (should override global disable)
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .automaticAccessibilityIdentifiers()  // ← Should override global disable
+            
+            // Test that the view has an accessibility identifier using the same method as working tests
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "LocalEnableOverridesGlobalDisable"
+            )
+            
+            // Should have an ID - local enable should override global disable
+            #expect(hasAccessibilityID, "Local enable should override global disable")
+            
+            print("✅ Local enable correctly overrides global disable")
         }
-            .automaticAccessibilityIdentifiers()  // ← Should override global disable
-        
-        // Test that the view has an accessibility identifier using the same method as working tests
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "LocalEnableOverridesGlobalDisable"
-        )
-        
-        // Should have an ID - local enable should override global disable
-        #expect(hasAccessibilityID, "Local enable should override global disable")
-        
-        print("✅ Local enable correctly overrides global disable")
     }
     
     // MARK: - Environment Variable Tests
     
     @Test func testEnvironmentVariablesAreRespected() {
-        // Test that environment variables are properly respected
-        
-        // Global config is enabled
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = true
-        
-        // Create a view with environment variable override
-        let view = PlatformInteractionButton(style: .primary, action: {}) {
-            platformPresentContent_L1(content: "Test", hints: PresentationHints())
-        }
-            .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Environment override
-            .automaticAccessibilityIdentifiers()
-        
-        // Try to inspect for accessibility identifier
-        do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            let accessibilityID = try button.accessibilityIdentifier()
+        try runWithTaskLocalConfig {
+            // Test that environment variables are properly respected
             
-            // Should be empty - environment variable should override
-            // NOTE: Environment variable override is not working as expected
-            // The modifier still generates an ID despite the environment variable being set to false
-            #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
+            // Global config is enabled
+            let config = testConfig
+            config.enableAutoIDs = true
             
-        } catch {
-            print("✅ Environment variable correctly overrides global config")
+            // Create a view with environment variable override
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Environment override
+                .automaticAccessibilityIdentifiers()
+            
+            // Try to inspect for accessibility identifier
+            do {
+                let inspectedView = try view.inspect()
+                let button = try inspectedView.button()
+                let accessibilityID = try button.accessibilityIdentifier()
+                
+                // Should be empty - environment variable should override
+                // NOTE: Environment variable override is not working as expected
+                // The modifier still generates an ID despite the environment variable being set to false
+                #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
+                
+            } catch {
+                print("✅ Environment variable correctly overrides global config")
         }
+            }
     }
     
     // MARK: - Helper Methods

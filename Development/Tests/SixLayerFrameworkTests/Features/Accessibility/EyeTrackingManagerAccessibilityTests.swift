@@ -14,36 +14,40 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-        // Given
-        let manager = await MainActor.run { EyeTrackingManager() }
-        
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        #expect(true, "EyeTrackingManager should be instantiable")
-        
-        // Test that the manager can be configured with accessibility settings
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
-        }
+    try await runWithTaskLocalConfig {
+            // Given
+            let manager = await MainActor.run { EyeTrackingManager() }
+            
+            // When & Then
+            // Manager classes don't directly generate views, but we test their configuration
+            #expect(true, "EyeTrackingManager should be instantiable")
+            
+            // Test that the manager can be configured with accessibility settings
+            await MainActor.run {
+                let config = testConfig
+                #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
+                #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
+    }
+            }
     }
     
     /// BUSINESS PURPOSE: Validates that EyeTrackingManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        // Given
-        let manager = await MainActor.run { EyeTrackingManager() }
-        
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        #expect(true, "EyeTrackingManager should be instantiable")
-        
-        // Test that the manager can be configured with accessibility settings
-        await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
-            #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
+        try await runWithTaskLocalConfig {
+            // Given
+            let manager = await MainActor.run { EyeTrackingManager() }
+            
+            // When & Then
+            // Manager classes don't directly generate views, but we test their configuration
+            #expect(true, "EyeTrackingManager should be instantiable")
+            
+            // Test that the manager can be configured with accessibility settings
+            await MainActor.run {
+                let config = testConfig
+                #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
+                #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
         }
+            }
     }
 }

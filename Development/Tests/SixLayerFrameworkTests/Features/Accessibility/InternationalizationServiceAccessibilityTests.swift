@@ -20,7 +20,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         // Given
         // Ensure config is set up (BaseTestClass.init() should have done this, but ensure it's on MainActor)
         await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
+            let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
             config.enableAutoIDs = true
             config.namespace = "SixLayer"
             config.globalPrefix = ""
@@ -36,7 +36,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // Test that the service can be configured with accessibility settings
         await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
+            let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
             #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
         }
@@ -48,7 +48,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         // Given
         // Ensure config is set up (BaseTestClass.init() should have done this, but ensure it's on MainActor)
         await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
+            let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
             config.enableAutoIDs = true
             config.namespace = "SixLayer"
             config.globalPrefix = ""
@@ -64,7 +64,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
         
         // Test that the service can be configured with accessibility settings
         await MainActor.run {
-            let config = AccessibilityIdentifierConfig.shared
+            let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
             #expect(config.enableAutoIDs, "InternationalizationService should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
         }

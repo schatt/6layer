@@ -22,7 +22,7 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {// MARK: 
         #expect(manager != nil, "AppleHIGComplianceManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
         #expect(config.enableAutoIDs, "AppleHIGComplianceManager should work with accessibility enabled")
         #expect(config.namespace == "SixLayer", "AppleHIGComplianceManager should use correct namespace")
     }
@@ -39,7 +39,7 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {// MARK: 
         #expect(manager != nil, "AppleHIGComplianceManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.shared
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
         #expect(config.enableAutoIDs, "AppleHIGComplianceManager should work with accessibility enabled")
         #expect(config.namespace == "SixLayer", "AppleHIGComplianceManager should use correct namespace")
     }
