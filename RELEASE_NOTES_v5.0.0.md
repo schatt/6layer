@@ -105,6 +105,7 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Platform Testing Guide**: Complete instructions for testing iOS paths when running on macOS
 - **Testing Commands**: Comprehensive documentation for iOS and macOS testing workflows
 - **Suite Naming**: Improved test suite structure and organization
+- **API Migration Tools**: Migration scripts for platformListRow API updates with comprehensive test coverage
 
 ### Code Quality Standards
 - **Commit Early and Often**: Added development practice for frequent, small commits

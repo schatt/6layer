@@ -14,6 +14,9 @@
 - **Global Accessibility Configuration**: Unified accessibility settings across all layers
 - **Pattern Standardization**: Consistent accessibility identifier patterns across platforms
 - **Apple HIG Compliance**: Full compliance with Apple's Human Interface Guidelines
+- **Label Text Inclusion**: All components with String labels/titles now automatically include label text in accessibility identifiers
+- **Label Sanitization**: Automatic sanitization of label text (lowercase, hyphenated, alphanumeric) for identifier compatibility
+- **Environment-Based Label Passing**: Components pass label text via `accessibilityIdentifierLabel` environment key for automatic inclusion
 
 ### 🤖 **Advanced OCR Form-Filling Intelligence**
 - **Calculation Groups**: Fields can belong to multiple calculation groups with priority-based conflict resolution
@@ -39,6 +42,11 @@
 - **Card Expansion Components**: Enhanced with automatic accessibility identifiers
 - **Form Field Components**: Complete accessibility integration for all form types
 - **Dynamic Form Components**: Accessibility support for complex form structures
+- **platformListRow API Refactoring**: New title-based API that automatically extracts label text for accessibility identifiers
+  - **New API**: `EmptyView().platformListRow(title: "Item Title") { trailingContent }`
+  - **Automatic Label Extraction**: Title parameter is automatically used for accessibility identifier generation
+  - **Legacy Support**: Maintains backward-compatible overload for custom content scenarios
+  - **Migration Tools**: Provided migration script and test suite for automated API updates
 
 ### 🐛 **Critical Bug Fixes**
 - **Accessibility Pattern Matching**: Fixed component name verification in accessibility identifiers
@@ -55,6 +63,7 @@
 - **Platform Testing Guide**: Instructions for testing iOS paths on macOS
 - **Code Quality Standards**: Added "commit early and often" development practice
 - **Test Organization**: Improved test suite structure and naming conventions
+- **API Migration Tools**: Migration scripts for platformListRow API updates with comprehensive test coverage
 
 ### 🔄 **Internal Architecture Refactoring**
 - **Namespace Management**: Improved accessibility identifier namespace handling
