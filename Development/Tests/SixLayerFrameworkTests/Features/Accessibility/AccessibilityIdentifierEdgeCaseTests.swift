@@ -8,7 +8,8 @@ import ViewInspector
 /// These tests ensure our fix handles all edge cases properly
 @MainActor
 @Suite("Accessibility Identifier Edge Case")
-open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - Edge Case 1: Empty String Parameters
+open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
+    // MARK: - Edge Case 1: Empty String Parameters
     
     @Test func testEmptyStringParameters() {
         try runWithTaskLocalConfig {
@@ -278,7 +279,10 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {    // MARK: - E
             setupTestEnvironment()
             
             // Test: exactNamed() should ignore view hierarchy context
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.pushViewHierarchy("NavigationView")
             config.pushViewHierarchy("ProfileSection")
             config.setScreenContext("UserProfile")

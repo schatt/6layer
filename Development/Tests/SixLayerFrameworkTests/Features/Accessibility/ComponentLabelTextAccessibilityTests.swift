@@ -1964,75 +1964,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     
     // MARK: - Recommendation Row Tests
     
-    /// Test that PlatformRecommendation items in ForEach get unique identifiers
-    @Test func testPlatformRecommendationRowsGetUniqueIdentifiers() {
-        setupTestEnvironment()
-        
-        // TDD RED: PlatformRecommendation items displayed in ForEach should include title in identifier
-        let recommendation1 = PlatformRecommendation(
-            title: "Enable Lazy Loading",
-            description: "Use lazy loading for better performance",
-            category: .performance,
-            priority: .high,
-            platform: .iOS
-        )
-        
-        let recommendation2 = PlatformRecommendation(
-            title: "Use Adaptive Layouts",
-            description: "Implement adaptive layouts for different screen sizes",
-            category: .uiPattern,
-            priority: .medium,
-            platform: .iOS
-        )
-        
-        // Simulate the VStack that displays each recommendation
-        let row1 = VStack(alignment: .leading, spacing: 4) {
-            Text(recommendation1.title)
-                .font(.subheadline)
-                .fontWeight(.medium)
-            Text(recommendation1.description)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 4)
-        .environment(\.accessibilityIdentifierLabel, recommendation1.title)
-        .automaticAccessibilityIdentifiers(named: "PlatformRecommendationRow")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
-        
-        let row2 = VStack(alignment: .leading, spacing: 4) {
-            Text(recommendation2.title)
-                .font(.subheadline)
-                .fontWeight(.medium)
-            Text(recommendation2.description)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 4)
-        .environment(\.accessibilityIdentifierLabel, recommendation2.title)
-        .automaticAccessibilityIdentifiers(named: "PlatformRecommendationRow")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
-        
-        do {
-            let inspected1 = try row1.inspect()
-            let row1ID = try inspected1.accessibilityIdentifier()
-            
-            let inspected2 = try row2.inspect()
-            let row2ID = try inspected2.accessibilityIdentifier()
-            
-            // TDD RED: Should FAIL - recommendations with different titles should have different IDs
-            #expect(row1ID != row2ID, 
-                   "PlatformRecommendation items with different titles should have different identifiers")
-            #expect(row1ID.contains("lazy") || row1ID.contains("loading") || row1ID.contains("Lazy"), 
-                   "PlatformRecommendation identifier should include recommendation title")
-            
-            print("🔴 RED: Recommendation Row 1 ID: '\(row1ID)'")
-            print("🔴 RED: Recommendation Row 2 ID: '\(row2ID)'")
-        } catch {
-            Issue.record("Failed to inspect PlatformRecommendation rows: \(error)")
-        }
-        
-        cleanupTestEnvironment()
-    }
+    // NOTE: PlatformRecommendation tests have been moved to possible-features/PlatformRecommendationEngineTests.swift
     
     /// Test that VisualizationRecommendationRow includes recommendation data in identifier
     @Test func testVisualizationRecommendationRowIncludesDataInIdentifier() {

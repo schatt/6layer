@@ -413,6 +413,8 @@ struct L6TestDataFactory {
     }
     
     /// Create sample platform recommendation for testing
+    // NOTE: PlatformRecommendation moved to possible-features/ - factory methods moved there
+    /*
     static func createSamplePlatformRecommendation() -> PlatformRecommendation {
         return PlatformRecommendation(
             title: "Test Recommendation",
@@ -427,6 +429,7 @@ struct L6TestDataFactory {
     static func createSampleRecommendationCategory() -> RecommendationCategory {
         return .performance
     }
+    */
     
     /// Create sample performance level for testing
     static func createSamplePerformanceLevel() -> PerformanceLevel {

@@ -92,20 +92,16 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testCrossPlatformOptimizationLayer6GetPlatformRecommendations() async {
+        // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
         // Given: Layer 6 cross-platform optimization component
         let crossPlatformOptimization = CrossPlatformOptimizationManager()
         
         // When: Getting platform recommendations
-        let recommendations = crossPlatformOptimization.getPlatformRecommendations()
+        // let recommendations = crossPlatformOptimization.getPlatformRecommendations()
         
         // Then: Should return recommendations (may be empty if not implemented yet)
-        // TODO: Implement platform recommendations in CrossPlatformOptimizationManager
-        #expect(recommendations.isEmpty, "Platform recommendations not yet implemented")
-        
-        // Check that recommendations have required properties
-        for recommendation in recommendations {
-            #expect(!recommendation.title.isEmpty, "Recommendation should have a title")
-            #expect(!recommendation.description.isEmpty, "Recommendation should have a description")
+        // NOTE: Tests for PlatformRecommendationEngine moved to possible-features/PlatformRecommendationEngineTests.swift
+        #expect(true, "PlatformRecommendationEngine moved to possible-features/ - test disabled")
             #expect(recommendation.priority != nil, "Recommendation should have a priority")
         }
     }

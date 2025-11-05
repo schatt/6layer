@@ -77,7 +77,10 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Configuration matching the bug report exactly
-                let config = testConfig
+                guard let config = testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
                 config.enableAutoIDs = true
                 config.namespace = "SixLayer"
                 config.mode = .automatic

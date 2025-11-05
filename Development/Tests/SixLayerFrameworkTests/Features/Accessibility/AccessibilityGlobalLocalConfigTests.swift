@@ -7,7 +7,7 @@ import ViewInspector
 /// Test that accessibility functions respect both global and local configuration options
 @MainActor
 @Suite("Accessibility Global Local Config")
-open class AccessibilityGlobalLocalConfigTests {
+open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically - no need for custom init
     
@@ -20,7 +20,10 @@ open class AccessibilityGlobalLocalConfigTests {
         
         // Disable global config - use testConfig from BaseTestClass
         try await runWithTaskLocalConfig {
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false
             config.namespace = "" // Ensure namespace is empty to test basic behavior
             config.globalPrefix = ""
@@ -45,13 +48,17 @@ open class AccessibilityGlobalLocalConfigTests {
                 #expect(Bool(true), "Inspection failed, treating as no ID applied")
             }
         }
+    }
     
     @Test func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
         try runWithTaskLocalConfig {
             // Test that automatic accessibility functions DO generate IDs when global config is enabled
             
             // Ensure global config is enabled (default)
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = true
             
             // Create a view with automatic accessibility identifiers (should generate ID)
@@ -82,7 +89,10 @@ open class AccessibilityGlobalLocalConfigTests {
             // Test that accessibility functions respect local disable modifier
             
             // Global config is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = true
             config.enableDebugLogging = true  // ← Enable debug logging
             
@@ -107,8 +117,8 @@ open class AccessibilityGlobalLocalConfigTests {
             } catch {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
                 print("✅ Accessibility functions correctly respect local disable modifier")
-        }
             }
+        }
     }
     
     @Test func testAccessibilityFunctionsRespectLocalEnableModifier() {
@@ -116,7 +126,10 @@ open class AccessibilityGlobalLocalConfigTests {
             // Test that accessibility functions respect local enable modifier
             
             // Global config is disabled
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false
             
             // Create a view with local enable modifier
@@ -147,7 +160,10 @@ open class AccessibilityGlobalLocalConfigTests {
             // Test that local disable takes precedence over global enable
             
             // Global config is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = true
             
             // Create a view with local disable (should override global enable)
@@ -170,8 +186,8 @@ open class AccessibilityGlobalLocalConfigTests {
                 
             } catch {
                 print("✅ Local disable correctly overrides global enable")
-        }
             }
+        }
     }
     
     @Test func testLocalEnableOverridesGlobalDisable() {
@@ -179,7 +195,10 @@ open class AccessibilityGlobalLocalConfigTests {
             // Test that local enable takes precedence over global disable
             
             // Global config is disabled
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false
             
             // Create a view with local enable (should override global disable)
@@ -210,7 +229,10 @@ open class AccessibilityGlobalLocalConfigTests {
             // Test that environment variables are properly respected
             
             // Global config is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = true
             
             // Create a view with environment variable override
@@ -233,8 +255,8 @@ open class AccessibilityGlobalLocalConfigTests {
                 
             } catch {
                 print("✅ Environment variable correctly overrides global config")
-        }
             }
+        }
     }
     
     // MARK: - Helper Methods

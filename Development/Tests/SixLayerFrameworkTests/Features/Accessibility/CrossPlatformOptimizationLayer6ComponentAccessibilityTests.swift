@@ -106,6 +106,8 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // MARK: - PlatformRecommendationEngine Tests
     
+    // NOTE: PlatformRecommendationEngine moved to possible-features/ - test disabled
+    /*
     @Test func testPlatformRecommendationEngineGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRecommendationEngine
         let engine = PlatformRecommendationEngine()
@@ -125,6 +127,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         
         #expect(hasAccessibilityID, "PlatformRecommendationEngine should generate accessibility identifiers")
     }
+    */
     
     // MARK: - CrossPlatformTesting Tests
     

@@ -14,7 +14,10 @@ open class LocalEnableOverrideTests: BaseTestClass {
     @Test func testGlobalDisableLocalEnable() {
         try runWithTaskLocalConfig {
             // Configure test environment
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.mode = .automatic
             config.enableDebugLogging = true  // Enable debug to see what's happening
             
@@ -56,7 +59,10 @@ open class LocalEnableOverrideTests: BaseTestClass {
             // This is the correct behavior - explicit naming should not be affected by global config
 
             // Configure test environment
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.mode = .automatic
             config.enableDebugLogging = true
             
@@ -96,7 +102,10 @@ open class LocalEnableOverrideTests: BaseTestClass {
     @Test func testNamedModifierAlwaysWorksEvenWhenGlobalConfigDisabled() {
         try runWithTaskLocalConfig {
             // Configure test environment
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.mode = .automatic
             config.enableDebugLogging = true
             

@@ -129,22 +129,24 @@ open class Layer6PlatformOptimizationTests {
         // Given: Cross-platform optimization manager
         let manager = CrossPlatformOptimizationManager()
         
+        // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
         // When: Getting platform recommendations
-        let recommendations = manager.getPlatformRecommendations()
+        // let recommendations = manager.getPlatformRecommendations()
         
         // Then: Should have platform-specific recommendations
-        #expect(recommendations.count > 0, "Should have platform-specific recommendations")
+        // #expect(recommendations.count > 0, "Should have platform-specific recommendations")
         
         // Should include performance recommendations
-        let performanceRecs = recommendations.filter { $0.category == .performance }
-        #expect(performanceRecs.count > 0, "Should have performance recommendations")
+        // let performanceRecs = recommendations.filter { $0.category == .performance }
+        // #expect(performanceRecs.count > 0, "Should have performance recommendations")
         
         // Should include UI pattern recommendations
-        let uiRecs = recommendations.filter { $0.category == .uiPattern }
-        #expect(uiRecs.count > 0, "Should have UI pattern recommendations")
+        // let uiRecs = recommendations.filter { $0.category == .uiPattern }
+        // #expect(uiRecs.count > 0, "Should have UI pattern recommendations")
         
         // THIS SHOULD FAIL - Current implementation may not generate real recommendations
-        #expect(recommendations.allSatisfy { $0.isRealRecommendation }, "All recommendations should be real, not placeholder")
+        // #expect(recommendations.allSatisfy { $0.isRealRecommendation }, "All recommendations should be real, not placeholder")
+        #expect(true, "PlatformRecommendationEngine moved to possible-features/ - test disabled")
     }
     
     // MARK: - Memory Management Tests (RED PHASE)
@@ -235,18 +237,6 @@ extension AccessibilityTestingSuite {
     }
 }
 
-extension CrossPlatformOptimizationManager {
-    /// Get platform recommendations
-    func getPlatformRecommendations() -> [PlatformRecommendation] {
-        // This should be implemented to generate real recommendations
-        return PlatformRecommendationEngine.generateRecommendations(
-            for: currentPlatform,
-            settings: optimizationSettings,
-            metrics: performanceMetrics
-        )
-    }
-}
-
 extension CrossPlatformPerformanceMetrics {
     /// Current memory usage
     var currentMemoryUsage: UInt64 {
@@ -261,12 +251,26 @@ extension CrossPlatformPerformanceMetrics {
     }
 }
 
-extension PlatformRecommendation {
-    /// Whether this is a real recommendation (not placeholder)
+// NOTE: PlatformRecommendation and getPlatformRecommendations() moved to possible-features/
+/*
+extension CrossPlatformOptimizationManager {
+    /// Get platform recommendations
+    func getPlatformRecommendations() -> [PlatformRecommendation] {
+        // This should be implemented to generate real recommendations
+        return PlatformRecommendationEngine.generateRecommendations(
+            for: currentPlatform,
+            settings: optimizationSettings,
+            metrics: performanceMetrics
+        )
+    }
+}
+
     var isRealRecommendation: Bool {
         // This should be implemented to indicate real recommendations
         return false // Should be true for real implementation
     }
+}
+*/
 }
 
 // MARK: - Test Result Types

@@ -93,17 +93,18 @@ open class CrossPlatformOptimizationLayer6Tests {
     }
     
     @Test func testCrossPlatformOptimizationManager_PlatformRecommendations() {
+        // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
         // Given: Manager
         let manager = CrossPlatformOptimizationManager()
         
         // When: Getting platform recommendations
-        let recommendations = manager.getPlatformRecommendations()
+        // let recommendations = manager.getPlatformRecommendations()
         
         // Then: Should return platform recommendations (L6 function responsibility)
         // Note: recommendations is an array, so it cannot be nil
         // Note: Recommendations may be empty if no platform-specific issues are detected
-        #expect(recommendations.count >= 0, "Should return valid recommendations array")
-        // This is valid behavior for L6 functions
+        // NOTE: Tests for PlatformRecommendationEngine moved to possible-features/PlatformRecommendationEngineTests.swift
+        #expect(true, "PlatformRecommendationEngine moved to possible-features/ - test disabled")
     }
     
     // MARK: - PlatformOptimizationSettings Tests

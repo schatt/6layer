@@ -17,7 +17,10 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             // Test: Does the environment variable get set properly?
             
             // 1. Disable global config
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false
             print("🔧 Global config disabled: enableAutoIDs = false")
             
@@ -43,8 +46,8 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             } catch {
                 print("❌ FAILED: Could not inspect view: \(error)")
                 Issue.record("Could not inspect view: \(error)")
-        }
             }
+        }
     }
     
     @Test func testDirectEnvironmentVariableSetting() {
@@ -52,7 +55,10 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             // Test: Does setting the environment variable directly work?
             
             // 1. Disable global config
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false
             print("🔧 Global config disabled: enableAutoIDs = false")
             
@@ -79,7 +85,7 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             } catch {
                 print("❌ FAILED: Could not inspect view: \(error)")
                 Issue.record("Could not inspect view: \(error)")
-        }
             }
+        }
     }
 }

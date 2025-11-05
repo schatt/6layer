@@ -18,14 +18,9 @@ class L6PlatformSystemTests {
     private var samplePlatformOptimizationSettings: PlatformOptimizationSettings = PlatformOptimizationSettings(for: .iOS)
     private var sampleCrossPlatformPerformanceMetrics: CrossPlatformPerformanceMetrics = CrossPlatformPerformanceMetrics()
     private var samplePlatformUIPatterns: PlatformUIPatterns = PlatformUIPatterns(for: .iOS)
-    private var samplePlatformRecommendation: PlatformRecommendation = PlatformRecommendation(
-        title: "Test Recommendation",
-        description: "Test Description",
-        category: .performance,
-        priority: .medium,
-        platform: .iOS
-    )
-    private var sampleRecommendationCategory: RecommendationCategory = .performance
+    // NOTE: PlatformRecommendation moved to possible-features/ - removed from framework tests
+    // private var samplePlatformRecommendation: PlatformRecommendation = ...
+    // private var sampleRecommendationCategory: RecommendationCategory = .performance
     private var samplePerformanceLevel: PerformanceLevel = .balanced
     private var sampleMemoryStrategy: MemoryStrategy = .adaptive
     private var sampleRenderingOptimizations: RenderingOptimizations = RenderingOptimizations(for: .iOS)
@@ -38,8 +33,9 @@ class L6PlatformSystemTests {
         samplePlatformOptimizationSettings = L6TestDataFactory.createSamplePlatformOptimizationSettings()
         sampleCrossPlatformPerformanceMetrics = L6TestDataFactory.createSampleCrossPlatformPerformanceMetrics()
         samplePlatformUIPatterns = L6TestDataFactory.createSamplePlatformUIPatterns()
-        samplePlatformRecommendation = L6TestDataFactory.createSamplePlatformRecommendation()
-        sampleRecommendationCategory = L6TestDataFactory.createSampleRecommendationCategory()
+        // NOTE: PlatformRecommendation moved to possible-features/
+        // samplePlatformRecommendation = L6TestDataFactory.createSamplePlatformRecommendation()
+        // sampleRecommendationCategory = L6TestDataFactory.createSampleRecommendationCategory()
         samplePerformanceLevel = L6TestDataFactory.createSamplePerformanceLevel()
         sampleMemoryStrategy = L6TestDataFactory.createSampleMemoryStrategy()
         sampleRenderingOptimizations = L6TestDataFactory.createSampleRenderingOptimizations()
@@ -82,6 +78,8 @@ class L6PlatformSystemTests {
         LayeredTestUtilities.verifyViewCreation(optimizedView, testName: "CrossPlatformOptimizationManager.optimizeView")
     }
     
+    // NOTE: PlatformRecommendationEngine tests moved to possible-features/PlatformRecommendationEngineTests.swift
+    /*
     @Test func testCrossPlatformOptimizationManagerGetPlatformRecommendations() {
         // Given
         let manager = CrossPlatformOptimizationManager(platform: samplePlatform)
@@ -93,6 +91,7 @@ class L6PlatformSystemTests {
         #expect(recommendations != nil, "Should return recommendations")
         #expect(recommendations is [PlatformRecommendation], "Should return array of recommendations")
     }
+    */
     
     // MARK: - Platform Optimization Settings Tests
     
