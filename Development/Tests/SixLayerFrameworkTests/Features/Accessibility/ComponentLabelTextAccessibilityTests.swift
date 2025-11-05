@@ -19,7 +19,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: This should FAIL - AdaptiveButton should include "Submit" in identifier
-        let button = AdaptiveButton("Submit", action: { })
+        let button = AdaptiveUIPatterns.AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -40,10 +40,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @Test func testAdaptiveButtonDifferentLabelsDifferentIdentifiers() {
         setupTestEnvironment()
         
-        let submitButton = AdaptiveButton("Submit", action: { })
+        let submitButton = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let cancelButton = AdaptiveButton("Cancel", action: { })
+        let cancelButton = AdaptiveUIPatterns.AdaptiveButton("Cancel", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -163,7 +163,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @Test func testLabelTextSanitizationHandlesSpaces() {
         setupTestEnvironment()
         
-        let button = AdaptiveButton("Add New Item", action: { })
+        let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -187,7 +187,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @Test func testLabelTextSanitizationHandlesSpecialCharacters() {
         setupTestEnvironment()
         
-        let button = AdaptiveButton("Save & Close!", action: { })
+        let button = AdaptiveUIPatterns.AdaptiveButton("Save & Close!", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -209,7 +209,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @Test func testLabelTextSanitizationHandlesCase() {
         setupTestEnvironment()
         
-        let button = AdaptiveButton("CamelCaseLabel", action: { })
+        let button = AdaptiveUIPatterns.AdaptiveButton("CamelCaseLabel", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -846,10 +846,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let item1 = TestItem(id: "item-1", name: "Product A")
         let item2 = TestItem(id: "item-2", name: "Product B")
         
-        let button1 = AdaptiveButton("Add to Cart", action: { })
+        let button1 = AdaptiveUIPatterns.AdaptiveButton("Add to Cart", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let button2 = AdaptiveButton("Add to Cart", action: { })
+        let button2 = AdaptiveUIPatterns.AdaptiveButton("Add to Cart", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // In a real list, each button would be in context of its item
