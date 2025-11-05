@@ -406,5 +406,384 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - Additional DynamicField Components Tests
+    
+    @Test func testDynamicPhoneFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "phone-field",
+            contentType: .phone,
+            label: "Mobile Phone",
+            placeholder: "Enter phone number"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicPhoneField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("mobile") || fieldID.contains("phone") || fieldID.contains("Mobile"), 
+                   "DynamicPhoneField identifier should include field label 'Mobile Phone'")
+            
+            print("🔴 RED: DynamicPhoneField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicPhoneField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicURLFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "url-field",
+            contentType: .url,
+            label: "Website URL",
+            placeholder: "Enter URL"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("website") || fieldID.contains("url") || fieldID.contains("Website"), 
+                   "DynamicURLField identifier should include field label 'Website URL'")
+            
+            print("🔴 RED: DynamicURLField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicURLField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicNumberFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "number-field",
+            contentType: .number,
+            label: "Total Amount",
+            placeholder: "Enter amount"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicNumberField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("total") || fieldID.contains("amount") || fieldID.contains("Total"), 
+                   "DynamicNumberField identifier should include field label 'Total Amount'")
+            
+            print("🔴 RED: DynamicNumberField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicNumberField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicDateFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "date-field",
+            contentType: .date,
+            label: "Birth Date",
+            placeholder: "Select date"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicDateField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("birth") || fieldID.contains("date") || fieldID.contains("Birth"), 
+                   "DynamicDateField identifier should include field label 'Birth Date'")
+            
+            print("🔴 RED: DynamicDateField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicDateField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicToggleFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "toggle-field",
+            contentType: .toggle,
+            label: "Enable Notifications",
+            placeholder: nil
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicToggleField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("enable") || fieldID.contains("notifications") || fieldID.contains("Enable"), 
+                   "DynamicToggleField identifier should include field label 'Enable Notifications'")
+            
+            print("🔴 RED: DynamicToggleField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicToggleField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicMultiSelectFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "multiselect-field",
+            contentType: .multiselect,
+            label: "Favorite Colors",
+            placeholder: nil,
+            options: ["Red", "Green", "Blue"]
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicMultiSelectField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("favorite") || fieldID.contains("colors") || fieldID.contains("Favorite"), 
+                   "DynamicMultiSelectField identifier should include field label 'Favorite Colors'")
+            
+            print("🔴 RED: DynamicMultiSelectField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicMultiSelectField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicCheckboxFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "checkbox-field",
+            contentType: .checkbox,
+            label: "Agree to Terms",
+            placeholder: nil,
+            options: ["I agree"]
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicCheckboxField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("agree") || fieldID.contains("terms") || fieldID.contains("Agree"), 
+                   "DynamicCheckboxField identifier should include field label 'Agree to Terms'")
+            
+            print("🔴 RED: DynamicCheckboxField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicCheckboxField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicFileFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "file-field",
+            contentType: .file,
+            label: "Upload Document",
+            placeholder: nil
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicFileField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("upload") || fieldID.contains("document") || fieldID.contains("Upload"), 
+                   "DynamicFileField identifier should include field label 'Upload Document'")
+            
+            print("🔴 RED: DynamicFileField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicFileField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicEnumFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "enum-field",
+            contentType: .enum,
+            label: "Priority Level",
+            placeholder: nil,
+            options: ["Low", "Medium", "High"]
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicEnumField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("priority") || fieldID.contains("level") || fieldID.contains("Priority"), 
+                   "DynamicEnumField identifier should include field label 'Priority Level'")
+            
+            print("🔴 RED: DynamicEnumField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicEnumField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicIntegerFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "integer-field",
+            contentType: .integer,
+            label: "Quantity",
+            placeholder: "Enter quantity"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicIntegerField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("quantity") || fieldID.contains("Quantity"), 
+                   "DynamicIntegerField identifier should include field label 'Quantity'")
+            
+            print("🔴 RED: DynamicIntegerField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicIntegerField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicTextAreaFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "textarea-field",
+            contentType: .textarea,
+            label: "Comments",
+            placeholder: "Enter comments"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicTextAreaField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            #expect(fieldID.contains("comments") || fieldID.contains("Comments"), 
+                   "DynamicTextAreaField identifier should include field label 'Comments'")
+            
+            print("🔴 RED: DynamicTextAreaField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicTextAreaField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
