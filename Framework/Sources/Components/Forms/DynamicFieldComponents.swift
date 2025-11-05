@@ -1042,7 +1042,8 @@ public struct DynamicToggleField: View {
             Toggle("Toggle Field - TDD Red Phase Stub", isOn: .constant(false))
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
+        .automaticAccessibilityIdentifiers(named: "DynamicToggleField")
     }
 }
 
