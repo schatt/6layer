@@ -94,15 +94,15 @@ public struct DynamicTextField: View {
             Text(field.label)
                 .font(.subheadline)
 
-            HStack {
-                TextField(field.placeholder ?? "Enter text", text: Binding(
-                    get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                    set: { formState.setValue($0, for: field.id) }
-                ))
-                .textFieldStyle(.roundedBorder)
-                .automaticAccessibilityIdentifiers()
+            if field.supportsOCR {
+                HStack {
+                    TextField(field.placeholder ?? "Enter text", text: Binding(
+                        get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
+                        set: { formState.setValue($0, for: field.id) }
+                    ))
+                    .textFieldStyle(.roundedBorder)
+                    .automaticAccessibilityIdentifiers()
 
-                if field.supportsOCR {
                     Button(action: {
                         // TODO: Implement OCR scanning workflow
                         // This should trigger OCROverlayView and populate the field
@@ -116,6 +116,13 @@ public struct DynamicTextField: View {
                     .accessibilityHint(field.ocrHint ?? "Scan document to fill this field")
                     .automaticAccessibilityIdentifiers()
                 }
+            } else {
+                TextField(field.placeholder ?? "Enter text", text: Binding(
+                    get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
+                    set: { formState.setValue($0, for: field.id) }
+                ))
+                .textFieldStyle(.roundedBorder)
+                .automaticAccessibilityIdentifiers()
             }
         }
         .padding()
