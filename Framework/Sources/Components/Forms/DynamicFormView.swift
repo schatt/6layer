@@ -72,6 +72,7 @@ public struct DynamicFormView: View {
             .automaticAccessibilityIdentifiers(named: "SubmitButton")
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicFormView")
     }
 }
@@ -114,6 +115,7 @@ public struct DynamicFormSectionView: View {
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(8)
+        .environment(\.accessibilityIdentifierLabel, section.title) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
     }
 }
@@ -157,10 +159,12 @@ public struct DynamicFormFieldView: View {
                     Text(error)
                         .font(.caption)
                         .foregroundColor(.red)
+                        .environment(\.accessibilityIdentifierLabel, error) // TDD GREEN: Pass error text to identifier generation
                         .automaticAccessibilityIdentifiers(named: "FieldError")
                 }
             }
         }
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicFormFieldView")
     }
 
