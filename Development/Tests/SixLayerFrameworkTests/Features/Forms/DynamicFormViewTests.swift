@@ -522,7 +522,7 @@ open class DynamicFormViewTests {
             id: "test-form-ocr",
             title: "Form with OCR",
             sections: [
-                DynamicFormSection(fields: [ocrField, regularField])
+                DynamicFormSection(id: "section1", title: "Section 1", fields: [ocrField, regularField])
             ]
         )
 
@@ -530,7 +530,7 @@ open class DynamicFormViewTests {
             id: "test-form-no-ocr",
             title: "Form without OCR",
             sections: [
-                DynamicFormSection(fields: [regularField])
+                DynamicFormSection(id: "section1", title: "Section 1", fields: [regularField])
             ]
         )
 
@@ -706,9 +706,9 @@ open class DynamicFormViewTests {
 
         // OCR results with multiple numbers (different confidence levels)
         let ocrResults: [OCRDataCandidate] = [
-            OCRDataCandidate(text: "10.5", confidence: 0.95, suggestedType: .number, alternativeTypes: [.number]),
-            OCRDataCandidate(text: "25.3", confidence: 0.90, suggestedType: .number, alternativeTypes: [.number]),
-            OCRDataCandidate(text: "5.1", confidence: 0.85, suggestedType: .number, alternativeTypes: [.number])
+            OCRDataCandidate(text: "10.5", boundingBox: CGRect(x: 10, y: 10, width: 40, height: 20), confidence: 0.95, suggestedType: .number, alternativeTypes: [.number]),
+            OCRDataCandidate(text: "25.3", boundingBox: CGRect(x: 50, y: 10, width: 40, height: 20), confidence: 0.90, suggestedType: .number, alternativeTypes: [.number]),
+            OCRDataCandidate(text: "5.1", boundingBox: CGRect(x: 100, y: 10, width: 30, height: 20), confidence: 0.85, suggestedType: .number, alternativeTypes: [.number])
         ]
 
         let ocrEnabledFields = config.getOCREnabledFields()
