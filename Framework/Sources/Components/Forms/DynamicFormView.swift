@@ -75,12 +75,10 @@ public struct DynamicFormSectionView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            if let title = section.title {
-                Text(title)
-                    .font(.title3)
-                    .bold()
-                    .automaticAccessibilityIdentifiers(named: "SectionTitle")
-            }
+            Text(section.title)
+                .font(.title3)
+                .bold()
+                .automaticAccessibilityIdentifiers(named: "SectionTitle")
 
             // Render each field in the section
             ForEach(section.fields) { field in

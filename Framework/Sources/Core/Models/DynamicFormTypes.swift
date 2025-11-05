@@ -260,11 +260,6 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.ocrFieldIdentifier = nil
     }
     
-    /// Get all OCR-enabled fields in the form for batch processing
-    /// - Returns: Array of fields that support OCR
-    public func getOCREnabledFields() -> [DynamicFormField] {
-        return sections.flatMap { $0.fields }.filter { $0.supportsOCR }
-    }
 
     /// Discover field-level display hints from the field's metadata
     /// Hints are automatically discovered from the data description, not passed in separately
@@ -436,6 +431,12 @@ public struct DynamicFormConfiguration: Identifiable, Hashable {
     /// Get section by ID
         func getSection(by id: String) -> DynamicFormSection? {
         return sections.first { $0.id == id }
+    }
+
+    /// Get all OCR-enabled fields in the form for batch processing
+    /// - Returns: Array of fields that support OCR
+    public func getOCREnabledFields() -> [DynamicFormField] {
+        return sections.flatMap { $0.fields }.filter { $0.supportsOCR }
     }
 }
 
