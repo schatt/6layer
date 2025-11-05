@@ -385,7 +385,15 @@ open class DynamicFormViewTests {
             label: "Regular Field"
         )
 
-        let formState = DynamicFormState(configuration: testFormConfig)
+        let testConfig = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            description: "Test form for OCR",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+        let formState = DynamicFormState(configuration: testConfig)
         formState.initializeField(ocrField)
         formState.initializeField(regularField)
 
@@ -428,7 +436,15 @@ open class DynamicFormViewTests {
             supportsOCR: true
         )
 
-        let formState = DynamicFormState(configuration: testFormConfig)
+        let testConfig = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            description: "Test form for OCR",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+        let formState = DynamicFormState(configuration: testConfig)
         formState.initializeField(field)
 
         // Simulate OCR result
@@ -457,7 +473,15 @@ open class DynamicFormViewTests {
             ocrValidationTypes: [.email]
         )
 
-        let formState = DynamicFormState(configuration: testFormConfig)
+        let testConfig = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            description: "Test form for OCR",
+            sections: [],
+            submitButtonText: "Submit",
+            cancelButtonText: "Cancel"
+        )
+        let formState = DynamicFormState(configuration: testConfig)
         formState.initializeField(emailField)
 
         // Valid OCR result (email type)
