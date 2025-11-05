@@ -161,6 +161,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         .accessibilityAction(named: "Activate") {
             handleTap()
         }
+        .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "ExpandableCardComponent")
     }
     
@@ -394,6 +395,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
         .onTapGesture {
             onItemSelected?(item)
         }
+        .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "CoverFlowCardComponent")
     }
     
@@ -791,7 +793,8 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         view = AnyView(view.animation(.easeInOut(duration: 0.3), value: config.supportsTouch))
         
         // Always apply automatic accessibility identifiers with component name
-        view = AnyView(view.automaticAccessibilityIdentifiers(named: "SimpleCardComponent"))
+        view = AnyView(view.environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
+            .automaticAccessibilityIdentifiers(named: "SimpleCardComponent"))
         
         return view
     }
@@ -886,6 +889,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .accessibilityAction(named: "Activate") {
             onItemSelected?(item)
         }
+        .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "ListCardComponent")
     }
     
@@ -947,6 +951,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(12)
         .shadow(radius: 4)
+        .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "MasonryCardComponent")
     }
     
