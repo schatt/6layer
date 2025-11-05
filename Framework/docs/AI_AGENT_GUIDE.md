@@ -21,7 +21,8 @@ AI agents need to understand:
 5. **[Settings Management](#️-settings-management)** - Centralized settings system
 6. **[Field-Level Display Hints (v4.8.0)](#6-field-level-display-hints-new-in-v480)** - Declarative data presentation hints
 7. **[OCR Intelligence Features (v5.0.0)](#7-ocr-intelligence-features-new-in-v500)** - Advanced OCR form-filling with calculation groups and field hints
-8. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
+8. **[Accessibility Improvements (v5.0.0)](#8-accessibility-improvements-new-in-v500)** - Label text inclusion and platformListRow API refactoring
+9. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
 9. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
 10. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
 
@@ -392,6 +393,143 @@ let fuelFields = [
 - [Calculation Groups Guide](CalculationGroupsGuide.md) - Intelligent form calculations
 - [OCR Field Hints Guide](OCRFieldHintsGuide.md) - Enhanced OCR recognition
 - [Dynamic Forms Guide](DynamicFormsGuide.md) - Complete form configuration
+
+### **8. Accessibility Improvements (NEW in v5.0.0):**
+
+#### **🏷️ Label Text Inclusion in Accessibility Identifiers**
+
+All components with String labels/titles now automatically include label text in their accessibility identifiers. This enables unique identification of components with the same type but different content.
+
+**How It Works:**
+```swift
+// ✅ Components automatically include label text in identifiers
+Button("Save")
+    .automaticAccessibilityIdentifiers(named: "ActionButton")
+// Generates: "sixlayer.main.ui.element.actionbutton-save"
+
+DynamicTextField(field: DynamicFormField(
+    id: "email",
+    contentType: .email,
+    label: "Email Address"
+))
+// Generates: "sixlayer.main.ui.element.dynamictextfield-email-address"
+
+ListCardComponent(item: vehicle)
+// Generates: "sixlayer.main.ui.element.listcardcomponent-2024-toyota-camry"
+```
+
+**Label Sanitization:**
+- Labels are automatically sanitized (lowercase, hyphenated, alphanumeric)
+- Special characters are converted to hyphens
+- Multiple spaces/hyphens are collapsed
+- Leading/trailing hyphens are removed
+
+**Environment-Based Label Passing:**
+```swift
+// Components pass labels via environment key
+Text(field.label)
+    .environment(\.accessibilityIdentifierLabel, field.label)
+    .automaticAccessibilityIdentifiers(named: "FieldLabel")
+```
+
+#### **📋 platformListRow API Refactoring**
+
+The `platformListRow` function has been refactored to accept a `title` parameter for automatic label extraction.
+
+**New API (Recommended):**
+```swift
+// ✅ NEW: Title-based API with automatic label extraction
+EmptyView()
+    .platformListRow(title: "Item Title") {
+        Image(systemName: "chevron.right")
+    }
+// Automatically generates identifier with "item-title" included
+```
+
+**Old API (Legacy Support):**
+```swift
+// ⚠️ LEGACY: Still works but requires manual label parameter
+.platformListRow(label: "Item Title") {
+    Text("Item Title")
+    Spacer()
+    Image(systemName: "chevron.right")
+}
+```
+
+**Benefits of New API:**
+- **Automatic Label Extraction**: No need to pass label separately
+- **Cleaner Code**: Title string is passed directly, not embedded in view
+- **Type Safety**: We have the String value at compile time
+- **Unique Identifiers**: Each row in ForEach loops gets unique identifier with item title
+
+**Migration Pattern:**
+```swift
+// Old way
+ForEach(items) { item in
+    Text(item.title)
+        .platformListRow { Text(item.title) }
+}
+
+// New way
+ForEach(items) { item in
+    EmptyView()
+        .platformListRow(title: item.title) { }
+}
+```
+
+**Migration Tool:**
+- Use `scripts/migrate_platform_list_row.py` for automated migration
+- Test script available: `scripts/test_migrate_platform_list_row.py`
+- All test patterns validated before running on codebase
+
+#### **🤖 AI Agent Usage Patterns:**
+
+**When Creating Components with Labels:**
+```swift
+// ✅ CORRECT: Always pass label text to accessibility system
+struct CustomField: View {
+    let label: String
+    
+    var body: some View {
+        VStack {
+            Text(label)
+        }
+        .environment(\.accessibilityIdentifierLabel, label)
+        .automaticAccessibilityIdentifiers(named: "CustomField")
+    }
+}
+```
+
+**When Using platformListRow:**
+```swift
+// ✅ CORRECT: Use new title-based API
+ForEach(items) { item in
+    EmptyView()
+        .platformListRow(title: item.title) {
+            if item.hasBadge {
+                BadgeView(count: item.badgeCount)
+            }
+        }
+}
+```
+
+**When Creating Lists with Dynamic Content:**
+```swift
+// ✅ CORRECT: Each item gets unique identifier
+List {
+    ForEach(items) { item in
+        EmptyView()
+            .platformListRow(title: item.title) {
+                Image(systemName: "chevron.right")
+            }
+    }
+}
+// Each row gets unique identifier: "platformlistrow-{sanitized-title}"
+```
+
+**📚 For complete accessibility documentation, see:**
+- [Automatic Accessibility Identifiers](AutomaticAccessibilityIdentifiers.md) - Complete identifier generation system
+- [Apple HIG Compliance](AppleHIGCompliance.md) - Human Interface Guidelines compliance
 
 ## 🔧 **How to Actually Use the Framework**
 
