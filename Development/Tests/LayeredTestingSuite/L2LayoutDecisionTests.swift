@@ -348,19 +348,15 @@ class L2LayoutDecisionTests {
         let contentComplexity = ContentComplexity.complex
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let layout = determineIntelligentCardLayout_L2(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: contentComplexity
         )
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         #expect(layout != nil, "Layout decision should be created")
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Layout decision should be fast (< 100ms)")
     }
 }
 

@@ -101,6 +101,14 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         do {
             let inspected = try view.inspect()
 
+            // Should NOT show stub text
+            do {
+                let viewText = try inspected.find(text: "Platform Performance Layer 6 (Stub)")
+                Issue.record("PlatformPerformanceLayer6 still shows stub text - needs implementation")
+            } catch {
+                // Good - stub text not found
+            }
+
             // Should have proper UI structure for performance metrics
             let vStack = try inspected.vStack()
             #expect(vStack.count >= 1, "Should have performance monitoring elements")

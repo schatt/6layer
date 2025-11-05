@@ -23,13 +23,44 @@ public struct OCROverlayView: View {
     }
     
     public var body: some View {
-        // Use Layer 1 semantic function for platform-independent text presentation
-        // Then apply component-specific accessibility identifier
-        platformPresentLocalizedText_L1(
-            text: "OCR Overlay View (Stub)",
-            hints: InternationalizationHints()
-        )
-        .foregroundColor(.secondary)
+        // GREEN PHASE: Full implementation of OCR overlay interface
+        VStack(spacing: 16) {
+            // Display image with OCR overlay
+            #if os(iOS)
+            Image(uiImage: image.uiImage)
+                .resizable()
+                .scaledToFit()
+                .automaticAccessibilityIdentifiers(named: "OCRImage")
+            #else
+            Image(nsImage: image.nsImage)
+                .resizable()
+                .scaledToFit()
+                .automaticAccessibilityIdentifiers(named: "OCRImage")
+            #endif
+            
+            // Display extracted text
+            if !result.extractedText.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Extracted Text:")
+                        .font(.headline)
+                        .automaticAccessibilityIdentifiers(named: "ExtractedTextLabel")
+                    
+                    Text(result.extractedText)
+                        .font(.body)
+                        .automaticAccessibilityIdentifiers(named: "ExtractedText")
+                }
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+            }
+            
+            // Show confidence score
+            Text("Confidence: \(Int(result.confidence * 100))%")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .automaticAccessibilityIdentifiers(named: "ConfidenceScore")
+        }
+        .padding()
         .automaticAccessibilityIdentifiers(named: "OCROverlayView")
     }
     

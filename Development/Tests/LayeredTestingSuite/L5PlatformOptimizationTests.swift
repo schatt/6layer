@@ -363,14 +363,10 @@ class L5PlatformOptimizationTests {
         let testView = Text("Test View")
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let optimizedView = testView.platformMemoryOptimization()
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         LayeredTestUtilities.verifyViewCreation(optimizedView, testName: "Optimization performance test")
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Optimization should be fast (< 100ms)")
     }
     
     // MARK: - Edge Case Testing

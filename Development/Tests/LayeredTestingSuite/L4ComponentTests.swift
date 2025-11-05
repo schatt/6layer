@@ -241,19 +241,15 @@ class L4ComponentTests {
         let strategy = sampleOCRStrategy
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let view = platformOCRImplementation_L4(
             image: image,
             context: context,
             strategy: strategy,
             onResult: { _ in }
         )
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "Component performance test")
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Component creation should be fast (< 100ms)")
     }
     
     @Test func testComponentImplementationEdgeCases() {

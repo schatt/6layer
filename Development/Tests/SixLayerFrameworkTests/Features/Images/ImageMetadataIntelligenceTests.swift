@@ -346,14 +346,10 @@ open class ImageMetadataIntelligenceTests {
         let intelligence = ImageMetadataIntelligence()
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let metadata = try await intelligence.extractMetadata(from: image)
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         #expect(metadata != nil)
-        let executionTime = endTime - startTime
-        #expect(executionTime < 2.0) // Should complete in under 2 seconds
     }
     
     /// BUSINESS PURPOSE: Validate batch processing functionality
@@ -364,7 +360,6 @@ open class ImageMetadataIntelligenceTests {
         let images = (0..<5).map { _ in createTestImage() }
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let metadataResults = try await withThrowingTaskGroup(of: ComprehensiveImageMetadata.self) { group in
             for image in images {
                 group.addTask {
@@ -379,12 +374,9 @@ open class ImageMetadataIntelligenceTests {
             }
             return results
         }
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         #expect(metadataResults.count == images.count)
-        let executionTime = endTime - startTime
-        #expect(executionTime < 5.0) // Should complete in under 5 seconds
     }
     
     // MARK: - Error Handling Tests

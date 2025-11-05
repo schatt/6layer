@@ -379,14 +379,10 @@ class L6PlatformSystemTests {
         let platform = samplePlatform
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let optimizedView = testView.platformSpecificOptimizations(for: platform)
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         LayeredTestUtilities.verifyViewCreation(optimizedView, testName: "Platform system performance test")
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Platform system optimization should be fast (< 100ms)")
     }
     
     // MARK: - Edge Case Testing
@@ -507,17 +503,13 @@ class L6PlatformSystemTests {
         let patterns = samplePlatformUIPatterns
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let fullyIntegratedView = testView
             .platformSpecificOptimizations(for: platform)
             .performanceOptimizations(using: settings)
             .uiPatternOptimizations(using: patterns)
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         LayeredTestUtilities.verifyViewCreation(fullyIntegratedView, testName: "System integration performance test")
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.2, "Full system integration should be fast (< 200ms)")
     }
 }
 

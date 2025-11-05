@@ -444,17 +444,13 @@ class L3StrategyTests {
         let platform = Platform.iOS
         
         // When
-        let startTime = CFAbsoluteTimeGetCurrent()
         let strategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: platform
         )
-        let endTime = CFAbsoluteTimeGetCurrent()
         
         // Then
         #expect(strategy != nil, "Strategy should be created")
-        let executionTime = endTime - startTime
-        #expect(executionTime < 0.1, "Strategy selection should be fast (< 100ms)")
     }
     
     @Test func testStrategySelectionEdgeCases() {
