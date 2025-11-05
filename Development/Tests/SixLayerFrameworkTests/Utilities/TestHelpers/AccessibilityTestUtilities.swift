@@ -411,7 +411,7 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
 ) -> Bool {
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
     // This allows tests to use runWithTaskLocalConfig() for automatic isolation
-    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)

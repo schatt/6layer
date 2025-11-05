@@ -127,6 +127,7 @@ public struct DynamicTextField: View {
             }
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
         .automaticAccessibilityIdentifiers(named: "DynamicTextField")
     }
 }
@@ -159,6 +160,7 @@ public struct DynamicEmailField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
         .automaticAccessibilityIdentifiers(named: "DynamicEmailField")
     }
 }
@@ -188,6 +190,7 @@ public struct DynamicPasswordField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
         .automaticAccessibilityIdentifiers(named: "DynamicPasswordField")
     }
 }
@@ -220,6 +223,7 @@ public struct DynamicPhoneField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
         .automaticAccessibilityIdentifiers(named: "DynamicPhoneField")
     }
 }
@@ -252,6 +256,7 @@ public struct DynamicURLField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
         .automaticAccessibilityIdentifiers(named: "DynamicURLField")
     }
 }
@@ -284,6 +289,7 @@ public struct DynamicNumberField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
         .automaticAccessibilityIdentifiers(named: "DynamicNumberField")
     }
 }
