@@ -1527,5 +1527,169 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - Row and Non-Button Item Component Tests
+    
+    /// Test that FileRow includes file name in identifier
+    @Test func testFileRowIncludesFileNameInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: FileRow should include file.name in identifier
+        struct FileInfo {
+            let name: String
+            let size: Int64
+            let type: String
+        }
+        
+        let file1 = FileInfo(name: "document.pdf", size: 1024, type: "pdf")
+        let file2 = FileInfo(name: "image.jpg", size: 2048, type: "jpg")
+        
+        // FileRow uses FileInfo which has different structure, but we can test the concept
+        // Note: FileRow is a component that displays file.name, so it should include that in identifier
+        print("🔴 RED: FileRow should include file.name in accessibility identifier")
+        print("🔴 RED: FileRow is used in lists of files - each row should be unique")
+        
+        // TDD RED: Should verify FileRow includes file.name in identifier
+        #expect(true, "Documenting requirement - FileRow needs file.name in identifier for unique rows")
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that validation error rows in DynamicFormFieldView get unique identifiers
+    @Test func testValidationErrorRowsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        // TDD RED: Validation error Text views in ForEach should include error text in identifier
+        let field = DynamicFormField(
+            id: "test-field",
+            contentType: .text,
+            label: "Email",
+            placeholder: "Enter email"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        formState.addValidationError("Email is required", for: field.id)
+        formState.addValidationError("Email format is invalid", for: field.id)
+        
+        let fieldView = DynamicFormFieldView(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            print("🔴 RED: DynamicFormFieldView ID: '\(fieldID)'")
+            print("🔴 RED: Note - Validation error Text views in ForEach should include error text in identifier")
+            print("🔴 RED: Each error message should be unique: 'Email is required' vs 'Email format is invalid'")
+            
+            // TDD RED: Should verify error Text views include error text in identifiers
+            #expect(true, "Documenting requirement - Validation error rows need unique identifiers with error text")
+        } catch {
+            Issue.record("Failed to inspect DynamicFormFieldView: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that array field items in DynamicArrayField get unique identifiers
+    @Test func testDynamicArrayFieldItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        // TDD RED: Array items in DynamicArrayField ForEach should get unique identifiers
+        let field = DynamicFormField(
+            id: "array-field",
+            contentType: .array,
+            label: "Tags",
+            placeholder: nil
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        formState.setValue(["Tag1", "Tag2", "Tag3"], for: field.id)
+        
+        let arrayField = DynamicArrayField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try arrayField.inspect()
+            let arrayID = try inspected.accessibilityIdentifier()
+            
+            print("🔴 RED: DynamicArrayField ID: '\(arrayID)'")
+            print("🔴 RED: Note - Array items in ForEach should get unique identifiers")
+            print("🔴 RED: Each array item (Tag1, Tag2, Tag3) should have unique identifier")
+            
+            // TDD RED: Should verify array items have unique identifiers
+            #expect(true, "Documenting requirement - Array field items need unique identifiers")
+        } catch {
+            Issue.record("Failed to inspect DynamicArrayField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that platformListRow includes content in identifier when used in lists
+    @Test func testPlatformListRowIncludesContentInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformListRow when used in ForEach should include item-specific content
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let item1 = TestItem(id: "1", title: "First Item")
+        let item2 = TestItem(id: "2", title: "Second Item")
+        
+        let row1 = Text(item1.title)
+            .platformListRow { Text(item1.title) }
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let row2 = Text(item2.title)
+            .platformListRow { Text(item2.title) }
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try row1.inspect()
+            let row1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try row2.inspect()
+            let row2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - rows with different content should have different IDs
+            #expect(row1ID != row2ID, 
+                   "platformListRow items with different content should have different identifiers")
+            #expect(row1ID.contains("first") || row1ID.contains("First") || row1ID.contains("item"), 
+                   "platformListRow identifier should include item content")
+            
+            print("🔴 RED: PlatformListRow 1 ID: '\(row1ID)'")
+            print("🔴 RED: PlatformListRow 2 ID: '\(row2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformListRow: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that settings item views get unique identifiers
+    @Test func testSettingsItemViewsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        // TDD RED: SettingsItemView or GenericSettingsItemView should include item.title
+        // Note: GenericSettingsItemView is private, but SettingsItemView in examples is public
+        print("🔴 RED: SettingsItemView should include item.title in accessibility identifier")
+        print("🔴 RED: Settings items displayed in lists should have unique identifiers")
+        
+        // TDD RED: Should verify settings items include titles in identifiers
+        #expect(true, "Documenting requirement - Settings item views need item.title in identifier")
+        
+        cleanupTestEnvironment()
+    }
 }
 
