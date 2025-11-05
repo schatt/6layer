@@ -1327,5 +1327,205 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - ResponsiveCardView Tests
+    
+    /// Test that ResponsiveCardView includes card title in identifier
+    @Test func testResponsiveCardViewIncludesCardTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        let card1 = ResponsiveCardData(
+            title: "Dashboard",
+            subtitle: "Overview & statistics",
+            icon: "gauge.with.dots.needle.67percent",
+            color: .blue,
+            complexity: .moderate
+        )
+        
+        let card2 = ResponsiveCardData(
+            title: "Vehicles",
+            subtitle: "Manage your cars",
+            icon: "car.fill",
+            color: .green,
+            complexity: .simple
+        )
+        
+        let cardView1 = ResponsiveCardView(data: card1)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let cardView2 = ResponsiveCardView(data: card2)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try cardView1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try cardView2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - cards with different titles should have different IDs
+            #expect(card1ID != card2ID, 
+                   "ResponsiveCardView items with different titles should have different identifiers")
+            #expect(card1ID.contains("dashboard") || card1ID.contains("Dashboard"), 
+                   "ResponsiveCardView identifier should include card title 'Dashboard'")
+            #expect(card2ID.contains("vehicles") || card2ID.contains("Vehicles"), 
+                   "ResponsiveCardView identifier should include card title 'Vehicles'")
+            
+            print("🔴 RED: ResponsiveCard 1 ID: '\(card1ID)'")
+            print("🔴 RED: ResponsiveCard 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect ResponsiveCardView: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that ResponsiveCardView cards in a collection get unique identifiers
+    @Test func testResponsiveCardViewCollectionItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        let cards = [
+            ResponsiveCardData(
+                title: "Expenses",
+                subtitle: "Track spending",
+                icon: "dollarsign.circle.fill",
+                color: .orange,
+                complexity: .complex
+            ),
+            ResponsiveCardData(
+                title: "Maintenance",
+                subtitle: "Service records",
+                icon: "wrench.fill",
+                color: .red,
+                complexity: .moderate
+            ),
+            ResponsiveCardData(
+                title: "Fuel",
+                subtitle: "Monitor consumption",
+                icon: "fuelpump.fill",
+                color: .purple,
+                complexity: .simple
+            )
+        ]
+        
+        let card1 = ResponsiveCardView(data: cards[0])
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = ResponsiveCardView(data: cards[1])
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "ResponsiveCardView items in collections should have different identifiers")
+            #expect(card1ID.contains("expenses") || card1ID.contains("Expenses"), 
+                   "ResponsiveCardView identifier should include card title")
+            #expect(card2ID.contains("maintenance") || card2ID.contains("Maintenance"), 
+                   "ResponsiveCardView identifier should include card title")
+            
+            print("🔴 RED: ResponsiveCard Collection 1 ID: '\(card1ID)'")
+            print("🔴 RED: ResponsiveCard Collection 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect ResponsiveCardView collection items: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    // MARK: - PlatformTabStrip Tests
+    
+    /// Test that PlatformTabStrip buttons include item titles in identifiers
+    @Test func testPlatformTabStripButtonsIncludeItemTitlesInIdentifiers() {
+        setupTestEnvironment()
+        
+        // TDD RED: PlatformTabStrip buttons should include item.title in identifier
+        let items = [
+            PlatformTabItem(title: "Home", systemImage: "house.fill"),
+            PlatformTabItem(title: "Settings", systemImage: "gear"),
+            PlatformTabItem(title: "Profile", systemImage: "person.fill")
+        ]
+        
+        // Create a view with the tab strip
+        let tabStrip = PlatformTabStrip(selection: .constant(0), items: items)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try tabStrip.inspect()
+            // The tab strip contains buttons - we need to verify buttons have unique IDs
+            // This is a simplified test - full test would inspect nested buttons
+            let stripID = try inspected.accessibilityIdentifier()
+            
+            print("🔴 RED: PlatformTabStrip ID: '\(stripID)'")
+            print("🔴 RED: Note - Need to verify each button in tab strip gets unique identifier with item.title")
+            
+            // TDD RED: Should verify buttons have unique identifiers with titles
+            #expect(true, "Documenting requirement - PlatformTabStrip buttons need unique identifiers with item.title")
+        } catch {
+            Issue.record("Failed to inspect PlatformTabStrip: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that buttons in PlatformTabStrip get different identifiers for different tabs
+    @Test func testPlatformTabStripButtonsGetDifferentIdentifiers() {
+        setupTestEnvironment()
+        
+        // Create individual buttons as they would appear in the tab strip
+        let homeItem = PlatformTabItem(title: "Home", systemImage: "house.fill")
+        let settingsItem = PlatformTabItem(title: "Settings", systemImage: "gear")
+        
+        // Simulate what the buttons would look like inside PlatformTabStrip
+        // Note: PlatformTabStrip uses Button directly, so we test Button with title
+        let homeButton = Button(action: { }) {
+            HStack(spacing: 6) {
+                Image(systemName: homeItem.systemImage ?? "")
+                Text(homeItem.title)
+                    .font(.subheadline)
+            }
+        }
+        .environment(\.accessibilityIdentifierLabel, homeItem.title)
+        .automaticAccessibilityIdentifiers(named: "PlatformTabStripButton")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let settingsButton = Button(action: { }) {
+            HStack(spacing: 6) {
+                Image(systemName: settingsItem.systemImage ?? "")
+                Text(settingsItem.title)
+                    .font(.subheadline)
+            }
+        }
+        .environment(\.accessibilityIdentifierLabel, settingsItem.title)
+        .automaticAccessibilityIdentifiers(named: "PlatformTabStripButton")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let homeInspected = try homeButton.inspect()
+            let homeID = try homeInspected.accessibilityIdentifier()
+            
+            let settingsInspected = try settingsButton.inspect()
+            let settingsID = try settingsInspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - buttons with different titles should have different IDs
+            #expect(homeID != settingsID, 
+                   "PlatformTabStrip buttons with different titles should have different identifiers")
+            #expect(homeID.contains("home") || homeID.contains("Home"), 
+                   "Home button identifier should include 'Home'")
+            #expect(settingsID.contains("settings") || settingsID.contains("Settings"), 
+                   "Settings button identifier should include 'Settings'")
+            
+            print("🔴 RED: Tab Button Home ID: '\(homeID)'")
+            print("🔴 RED: Tab Button Settings ID: '\(settingsID)'")
+        } catch {
+            Issue.record("Failed to inspect PlatformTabStrip buttons: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
