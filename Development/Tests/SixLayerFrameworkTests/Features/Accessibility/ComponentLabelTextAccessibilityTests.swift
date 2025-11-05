@@ -903,8 +903,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         )
         
         let strategy = CardExpansionStrategy(
-            supportedStrategies: [.scale, .contentReveal],
-            primaryStrategy: .scale,
+            supportedStrategies: [.contentReveal],
+            primaryStrategy: .contentReveal,
             expansionScale: 1.15,
             animationDuration: 0.3
         )
@@ -1061,16 +1061,35 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         let hints = PresentationHints()
         let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
             cardWidth: 200,
             cardHeight: 150,
-            spacing: 16,
-            columns: 2
+            padding: 8,
+            expansionScale: 1.15,
+            animationDuration: 0.3
         )
         
-        let card1 = SimpleCardComponent(item: item1, layoutDecision: layoutDecision, hints: hints)
+        let card1 = SimpleCardComponent(
+            item: item1,
+            layoutDecision: layoutDecision,
+            hints: hints,
+            platformConfig: nil,
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let card2 = SimpleCardComponent(item: item2, layoutDecision: layoutDecision, hints: hints)
+        let card2 = SimpleCardComponent(
+            item: item2,
+            layoutDecision: layoutDecision,
+            hints: hints,
+            platformConfig: nil,
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -1301,28 +1320,49 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let item = TestItem(id: "test", title: "Test Item")
         let hints = PresentationHints()
         let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
             cardWidth: 200,
             cardHeight: 150,
-            spacing: 16,
-            columns: 2
+            padding: 8,
+            expansionScale: 1.15,
+            animationDuration: 0.3
+        )
+        
+        let strategy = CardExpansionStrategy(
+            supportedStrategies: [.contentReveal],
+            primaryStrategy: .contentReveal,
+            expansionScale: 1.15,
+            animationDuration: 0.3
         )
         
         let expandableCard = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
-            strategy: CardExpansionStrategy(),
+            strategy: strategy,
             isExpanded: false,
             isHovered: false,
             onExpand: { },
             onCollapse: { },
-            onHover: { _ in }
+            onHover: { _ in },
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
         )
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let listCard = ListCardComponent(item: item, hints: hints)
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let simpleCard = SimpleCardComponent(item: item, layoutDecision: layoutDecision, hints: hints)
+        let simpleCard = SimpleCardComponent(
+            item: item,
+            layoutDecision: layoutDecision,
+            hints: hints,
+            platformConfig: nil,
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let coverFlowCard = CoverFlowCardComponent(item: item, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
