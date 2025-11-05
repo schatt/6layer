@@ -483,22 +483,27 @@ public class DynamicFormState: ObservableObject {
             resultsByType[result.suggestedType, default: []].append(result)
         }
 
-        // For each OCR-enabled field, find the best matching OCR result
+        // For each OCR-enabled field, find the best available OCR result
         for field in ocrEnabledFields {
             guard let validationTypes = field.ocrValidationTypes else { continue }
 
-            // Find OCR results that match the field's expected types
-            var candidateResults: [OCRDataCandidate] = []
+            // Find the highest confidence OCR result that matches the field's expected types
+            // and hasn't been assigned yet
+            var bestMatch: OCRDataCandidate?
+            var bestConfidence: Float = 0.0
+
             for validationType in validationTypes {
                 if let typeResults = resultsByType[validationType] {
-                    candidateResults.append(contentsOf: typeResults)
+                    for result in typeResults {
+                        if result.confidence > bestConfidence {
+                            bestMatch = result
+                            bestConfidence = result.confidence
+                        }
+                    }
                 }
             }
 
-            // Sort by confidence (highest first)
-            candidateResults.sort { $0.confidence > $1.confidence }
-
-            if let bestMatch = candidateResults.first {
+            if let bestMatch = bestMatch {
                 // Use ocrFieldIdentifier if provided, otherwise use field.id
                 let targetFieldId = field.ocrFieldIdentifier ?? field.id
                 assignments[targetFieldId] = bestMatch.text
@@ -506,9 +511,9 @@ public class DynamicFormState: ObservableObject {
                 // Set the value in form state
                 setValue(bestMatch.text, for: targetFieldId)
 
-                // Remove this result from available candidates to avoid duplicate assignments
-                if let index = candidateResults.firstIndex(where: { $0.id == bestMatch.id }) {
-                    candidateResults.remove(at: index)
+                // Remove this result from all type lists to prevent duplicate assignments
+                for (type, results) in resultsByType {
+                    resultsByType[type] = results.filter { $0.id != bestMatch.id }
                 }
             }
         }
