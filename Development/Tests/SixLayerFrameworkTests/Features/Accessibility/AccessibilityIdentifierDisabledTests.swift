@@ -56,18 +56,19 @@ open class AccessibilityIdentifierDisabledTests {
                 platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
             }
                 .accessibilityIdentifier("manual-test-button")
-        
-        do {
-            let inspectedView = try view.inspect()
-            let buttonID = try inspectedView.accessibilityIdentifier()
             
-            // Manual ID should work regardless of automatic setting
-            #expect(buttonID == "manual-test-button", "Manual accessibility identifier should work when automatic is disabled")
-            
-            print("🔍 Manual ID when automatic disabled: '\(buttonID)'")
-            
-        } catch {
-            Issue.record("Failed to inspect view: \(error)")
+            do {
+                let inspectedView = try view.inspect()
+                let buttonID = try inspectedView.accessibilityIdentifier()
+                
+                // Manual ID should work regardless of automatic setting
+                #expect(buttonID == "manual-test-button", "Manual accessibility identifier should work when automatic is disabled")
+                
+                print("🔍 Manual ID when automatic disabled: '\(buttonID)'")
+                
+            } catch {
+                Issue.record("Failed to inspect view: \(error)")
+            }
         }
     }
     
