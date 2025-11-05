@@ -405,6 +405,8 @@ public struct AdaptiveUIPatterns {
             .animation(accessibility.reducedMotion ? nil : .easeInOut(duration: 0.1), value: false)
             .accessibilityLabel(title)
             .accessibilityAddTraits(.isButton)
+            .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
+            .automaticAccessibilityIdentifiers(named: "AdaptiveButton")
         }
         
         private var textFont: Font {

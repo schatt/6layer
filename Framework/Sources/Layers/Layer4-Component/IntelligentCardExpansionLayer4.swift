@@ -81,7 +81,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "ExpandableCardCollectionView")
     }
     
     @ViewBuilder
@@ -111,7 +111,6 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                 )
             }
             .padding(layoutDecision.padding)
-            .automaticAccessibilityIdentifiers()
         }
     }
 }
@@ -147,7 +146,6 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         .background(cardBackground)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: isExpanded ? 8 : 4, x: 0, y: 2)
-        .automaticAccessibilityIdentifiers(named: "ExpandableCardComponent")
         .scaleEffect(scale)
         .animation(animation, value: scale)
         .animation(animation, value: isExpanded)
@@ -163,7 +161,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         .accessibilityAction(named: "Activate") {
             handleTap()
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "ExpandableCardComponent")
     }
     
     @ViewBuilder
@@ -359,7 +357,7 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "CoverFlowCollectionView")
     }
 }
 
@@ -504,7 +502,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "GridCollectionView")
     }
 }
 
@@ -695,7 +693,7 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers(named: "GridCollectionView")
+        .automaticAccessibilityIdentifiers(named: "AdaptiveCollectionView")
     }
 }
 
@@ -888,7 +886,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .accessibilityAction(named: "Activate") {
             onItemSelected?(item)
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "ListCardComponent")
     }
     
     // MARK: - Card Displayable Support
@@ -949,7 +947,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
         .background(.regularMaterial)
         .cornerRadius(12)
         .shadow(radius: 4)
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "MasonryCardComponent")
     }
     
     // MARK: - Card Displayable Support

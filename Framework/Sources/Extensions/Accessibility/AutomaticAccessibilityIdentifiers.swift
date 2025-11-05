@@ -44,6 +44,7 @@ import Combine
 public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
     @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
+    @Environment(\.accessibilityIdentifierLabel) private var accessibilityIdentifierLabel
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
     @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
     @ObservedObject private var configObserver = ConfigObserver.shared
@@ -136,6 +137,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
             identifierComponents.append(componentName)
         }
         
+        // TDD GREEN: Include sanitized label text if available
+        if let label = accessibilityIdentifierLabel, !label.isEmpty {
+            let sanitizedLabel = sanitizeLabelText(label)
+            identifierComponents.append(sanitizedLabel)
+        }
+        
         if config.includeElementTypes {
             identifierComponents.append(elementType)
         }
@@ -151,6 +158,7 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
                 "   - screenContext: '\(screenContext)'",
                 "   - viewHierarchyPath: '\(viewHierarchyPath)'",
                 "   - componentName: '\(componentName)'",
+                "   - label: '\(accessibilityIdentifierLabel ?? "none")'",
                 "   - elementType: '\(elementType)'",
                 "   - includeComponentNames: \(config.includeComponentNames)",
                 "   - includeElementTypes: \(config.includeElementTypes)"
@@ -167,6 +175,17 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         }
         
         return identifier
+    }
+    
+    /// Sanitize label text for use in accessibility identifiers
+    /// Converts to lowercase, replaces spaces and special chars with hyphens
+    private func sanitizeLabelText(_ label: String) -> String {
+        return label
+            .lowercased()
+            .replacingOccurrences(of: " ", with: "-")
+            .replacingOccurrences(of: "[^a-z0-9-]", with: "-", options: .regularExpression)
+            .replacingOccurrences(of: "-+", with: "-", options: .regularExpression) // Collapse multiple hyphens
+            .trimmingCharacters(in: CharacterSet(charactersIn: "-")) // Remove leading/trailing hyphens
     }
 }
 
@@ -393,6 +412,12 @@ public struct AccessibilityIdentifierElementTypeKey: EnvironmentKey {
     public static let defaultValue: String? = nil
 }
 
+/// Environment key for passing label text to identifier generation
+/// Components with String labels can set this to include label text in identifiers
+public struct AccessibilityIdentifierLabelKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
 /// Environment key for injecting AccessibilityIdentifierConfig (for testing)
 /// Allows tests to provide isolated config instances instead of using singleton
 public struct AccessibilityIdentifierConfigKey: EnvironmentKey {
@@ -420,6 +445,11 @@ extension EnvironmentValues {
     public var accessibilityIdentifierElementType: String? {
         get { self[AccessibilityIdentifierElementTypeKey.self] }
         set { self[AccessibilityIdentifierElementTypeKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierLabel: String? {
+        get { self[AccessibilityIdentifierLabelKey.self] }
+        set { self[AccessibilityIdentifierLabelKey.self] = newValue }
     }
     
     public var accessibilityIdentifierConfig: AccessibilityIdentifierConfig? {

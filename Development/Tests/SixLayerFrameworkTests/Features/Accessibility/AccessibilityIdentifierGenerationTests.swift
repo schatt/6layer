@@ -155,4 +155,70 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         // Cleanup
         cleanupTestEnvironment()
     }
+    
+    // MARK: - TDD Red Phase: Label Text in Identifiers
+    
+    @Test func testAccessibilityIdentifiersIncludeLabelTextForStringLabels() {
+        // Setup test environment
+        setupTestEnvironment()
+        
+        // TDD: Define the behavior I want - labels from String parameters should be in identifiers
+        // This test SHOULD FAIL initially - labels are not included in identifiers
+        let submitButton = AdaptiveButton("Submit", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let cancelButton = AdaptiveButton("Cancel", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let submitInspected = try submitButton.inspect()
+            let submitID = try submitInspected.accessibilityIdentifier()
+            
+            let cancelInspected = try cancelButton.inspect()
+            let cancelID = try cancelInspected.accessibilityIdentifier()
+            
+            // TDD RED: These should FAIL - labels not currently included
+            #expect(submitID.contains("Submit"), "Submit button identifier should include 'Submit' label")
+            #expect(cancelID.contains("Cancel"), "Cancel button identifier should include 'Cancel' label")
+            #expect(submitID != cancelID, "Buttons with different labels should have different identifiers")
+            
+            print("✅ Submit ID: '\(submitID)'")
+            print("✅ Cancel ID: '\(cancelID)'")
+            
+        } catch {
+            Issue.record("Failed to inspect views: \(error)")
+        }
+        
+        // Cleanup
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testAccessibilityIdentifiersSanitizeLabelText() {
+        // Setup test environment
+        setupTestEnvironment()
+        
+        // TDD: Labels should be sanitized (lowercase, spaces to hyphens, etc.)
+        let button = AdaptiveButton("Add New Item", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try button.inspect()
+            let buttonID = try inspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - labels not sanitized
+            // Should contain sanitized version: "add-new-item" or similar
+            #expect(buttonID.contains("add") || buttonID.contains("new") || buttonID.contains("item"), 
+                   "Identifier should include sanitized label text")
+            #expect(!buttonID.contains("Add New Item"), 
+                   "Identifier should not contain raw label with spaces")
+            
+            print("✅ Sanitized ID: '\(buttonID)'")
+            
+        } catch {
+            Issue.record("Failed to inspect view: \(error)")
+        }
+        
+        // Cleanup
+        cleanupTestEnvironment()
+    }
 }

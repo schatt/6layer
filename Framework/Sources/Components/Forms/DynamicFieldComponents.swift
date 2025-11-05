@@ -72,6 +72,7 @@ public struct CustomFieldView: View {
                 DynamicCustomField(field: field, formState: formState)
             }
         }
+        .automaticAccessibilityIdentifiers(named: "CustomFieldView")
     }
 }
 
