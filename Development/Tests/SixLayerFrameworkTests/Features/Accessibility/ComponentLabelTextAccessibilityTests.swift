@@ -989,5 +989,343 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - Additional Card Component Tests
+    
+    /// Test that CoverFlowCardComponent includes item title in identifier
+    @Test func testCoverFlowCardComponentIncludesItemTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let item1 = TestItem(id: "cover-1", title: "Cover Flow Item A")
+        let item2 = TestItem(id: "cover-2", title: "Cover Flow Item B")
+        
+        let card1 = CoverFlowCardComponent(item: item1, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = CoverFlowCardComponent(item: item2, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "CoverFlowCardComponent items with different titles should have different identifiers")
+            #expect(card1ID.contains("cover") || card1ID.contains("flow") || card1ID.contains("item") || card1ID.contains("Cover"), 
+                   "CoverFlowCardComponent identifier should include item title")
+            
+            print("🔴 RED: CoverFlowCard 1 ID: '\(card1ID)'")
+            print("🔴 RED: CoverFlowCard 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect CoverFlowCardComponent: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that SimpleCardComponent includes item title in identifier
+    @Test func testSimpleCardComponentIncludesItemTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let item1 = TestItem(id: "simple-1", title: "Simple Card Alpha")
+        let item2 = TestItem(id: "simple-2", title: "Simple Card Beta")
+        
+        let hints = PresentationHints()
+        let layoutDecision = IntelligentCardLayoutDecision(
+            cardWidth: 200,
+            cardHeight: 150,
+            spacing: 16,
+            columns: 2
+        )
+        
+        let card1 = SimpleCardComponent(item: item1, layoutDecision: layoutDecision, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = SimpleCardComponent(item: item2, layoutDecision: layoutDecision, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "SimpleCardComponent items with different titles should have different identifiers")
+            #expect(card1ID.contains("simple") || card1ID.contains("card") || card1ID.contains("alpha") || card1ID.contains("Simple"), 
+                   "SimpleCardComponent identifier should include item title")
+            
+            print("🔴 RED: SimpleCard 1 ID: '\(card1ID)'")
+            print("🔴 RED: SimpleCard 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect SimpleCardComponent: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that MasonryCardComponent includes item title in identifier
+    @Test func testMasonryCardComponentIncludesItemTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let item1 = TestItem(id: "masonry-1", title: "Masonry Item One")
+        let item2 = TestItem(id: "masonry-2", title: "Masonry Item Two")
+        
+        let hints = PresentationHints()
+        
+        let card1 = MasonryCardComponent(item: item1, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = MasonryCardComponent(item: item2, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "MasonryCardComponent items with different titles should have different identifiers")
+            #expect(card1ID.contains("masonry") || card1ID.contains("item") || card1ID.contains("one") || card1ID.contains("Masonry"), 
+                   "MasonryCardComponent identifier should include item title")
+            
+            print("🔴 RED: MasonryCard 1 ID: '\(card1ID)'")
+            print("🔴 RED: MasonryCard 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect MasonryCardComponent: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that all card components in a grid get unique identifiers
+    @Test func testGridCollectionItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let name: String
+        }
+        
+        let items = [
+            TestItem(id: "grid-1", name: "Grid Item 1"),
+            TestItem(id: "grid-2", name: "Grid Item 2"),
+            TestItem(id: "grid-3", name: "Grid Item 3")
+        ]
+        
+        let hints = PresentationHints()
+        let layoutDecision = IntelligentCardLayoutDecision(
+            cardWidth: 200,
+            cardHeight: 150,
+            spacing: 16,
+            columns: 2
+        )
+        
+        // Test that each SimpleCardComponent gets unique identifier
+        let card1 = SimpleCardComponent(item: items[0], layoutDecision: layoutDecision, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = SimpleCardComponent(item: items[1], layoutDecision: layoutDecision, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "Grid items should have different identifiers based on their titles")
+            #expect(card1ID.contains("1") || card1ID.contains("grid"), 
+                   "Grid item 1 identifier should include item name")
+            #expect(card2ID.contains("2") || card2ID.contains("grid"), 
+                   "Grid item 2 identifier should include item name")
+            
+            print("🔴 RED: Grid Card 1 ID: '\(card1ID)'")
+            print("🔴 RED: Grid Card 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect grid items: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that cover flow items get unique identifiers
+    @Test func testCoverFlowCollectionItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let items = [
+            TestItem(id: "cover-1", title: "Cover A"),
+            TestItem(id: "cover-2", title: "Cover B"),
+            TestItem(id: "cover-3", title: "Cover C")
+        ]
+        
+        let card1 = CoverFlowCardComponent(item: items[0], onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = CoverFlowCardComponent(item: items[1], onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "Cover flow items should have different identifiers")
+            
+            print("🔴 RED: CoverFlow Card 1 ID: '\(card1ID)'")
+            print("🔴 RED: CoverFlow Card 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect cover flow items: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that masonry collection items get unique identifiers
+    @Test func testMasonryCollectionItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let items = [
+            TestItem(id: "masonry-1", title: "Masonry A"),
+            TestItem(id: "masonry-2", title: "Masonry B")
+        ]
+        
+        let hints = PresentationHints()
+        
+        let card1 = MasonryCardComponent(item: items[0], hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = MasonryCardComponent(item: items[1], hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            #expect(card1ID != card2ID, 
+                   "Masonry collection items should have different identifiers")
+            
+            print("🔴 RED: Masonry Card 1 ID: '\(card1ID)'")
+            print("🔴 RED: Masonry Card 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect masonry items: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test comprehensive: all card types in mixed collections
+    @Test func testAllCardTypesGetUniqueIdentifiersInCollections() {
+        setupTestEnvironment()
+        
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        // Test that all card component types get unique identifiers
+        let item = TestItem(id: "test", title: "Test Item")
+        let hints = PresentationHints()
+        let layoutDecision = IntelligentCardLayoutDecision(
+            cardWidth: 200,
+            cardHeight: 150,
+            spacing: 16,
+            columns: 2
+        )
+        
+        let expandableCard = ExpandableCardComponent(
+            item: item,
+            layoutDecision: layoutDecision,
+            strategy: CardExpansionStrategy(),
+            isExpanded: false,
+            isHovered: false,
+            onExpand: { },
+            onCollapse: { },
+            onHover: { _ in }
+        )
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let listCard = ListCardComponent(item: item, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let simpleCard = SimpleCardComponent(item: item, layoutDecision: layoutDecision, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let coverFlowCard = CoverFlowCardComponent(item: item, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let masonryCard = MasonryCardComponent(item: item, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            // All should include item title in their identifiers
+            let expandableID = try expandableCard.inspect().accessibilityIdentifier()
+            let listID = try listCard.inspect().accessibilityIdentifier()
+            let simpleID = try simpleCard.inspect().accessibilityIdentifier()
+            let coverFlowID = try coverFlowCard.inspect().accessibilityIdentifier()
+            let masonryID = try masonryCard.inspect().accessibilityIdentifier()
+            
+            // TDD RED: All should include "test" or "item" from the title
+            #expect(expandableID.contains("test") || expandableID.contains("item") || expandableID.contains("Test"), 
+                   "ExpandableCardComponent should include item title")
+            #expect(listID.contains("test") || listID.contains("item") || listID.contains("Test"), 
+                   "ListCardComponent should include item title")
+            #expect(simpleID.contains("test") || simpleID.contains("item") || simpleID.contains("Test"), 
+                   "SimpleCardComponent should include item title")
+            #expect(coverFlowID.contains("test") || coverFlowID.contains("item") || coverFlowID.contains("Test"), 
+                   "CoverFlowCardComponent should include item title")
+            #expect(masonryID.contains("test") || masonryID.contains("item") || masonryID.contains("Test"), 
+                   "MasonryCardComponent should include item title")
+            
+            print("🔴 RED: ExpandableCard ID: '\(expandableID)'")
+            print("🔴 RED: ListCard ID: '\(listID)'")
+            print("🔴 RED: SimpleCard ID: '\(simpleID)'")
+            print("🔴 RED: CoverFlowCard ID: '\(coverFlowID)'")
+            print("🔴 RED: MasonryCard ID: '\(masonryID)'")
+        } catch {
+            Issue.record("Failed to inspect card components: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
