@@ -78,3 +78,4 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
             }
         }
     }
+}

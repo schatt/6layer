@@ -79,3 +79,4 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
             #expect(config.namespace == "SixLayer", "InternationalizationService should use correct namespace")
         }
     }
+}
