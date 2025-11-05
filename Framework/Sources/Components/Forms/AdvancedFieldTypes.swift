@@ -543,6 +543,8 @@ public struct FileRow: View {
         .padding(8)
         .background(Color.tertiaryBackground)
         .cornerRadius(6)
+        .environment(\.accessibilityIdentifierLabel, file.name) // TDD GREEN: Pass label to identifier generation
+        .automaticAccessibilityIdentifiers(named: "FileRow")
     }
 }
 

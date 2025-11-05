@@ -23,6 +23,8 @@ public struct PlatformTabStrip: View {
                         .cornerRadius(8)
                     }
                     .buttonStyle(.plain)
+                    .environment(\.accessibilityIdentifierLabel, item.title) // TDD GREEN: Pass label to identifier generation
+                    .automaticAccessibilityIdentifiers(named: "PlatformTabStripButton")
                 }
             }
             .padding(.horizontal, 8)

@@ -417,6 +417,7 @@ public struct ResponsiveCardView: View {
         .cornerRadius(12)
         .shadow(radius: 2)
         .frame(height: 120)
+        .environment(\.accessibilityIdentifierLabel, data.title) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers()
     }
     
