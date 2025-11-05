@@ -49,7 +49,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testGenerateIDRespectsDebugLoggingWhenEnabled() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -71,7 +77,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testGenerateIDDoesNotLogWhenDebugLoggingDisabled() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is disabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = false
             config.clearDebugLog()
             
@@ -92,7 +104,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testGetDebugLogMethodExists() async {
         try await runWithTaskLocalConfig {
             // Given: AccessibilityIdentifierConfig
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             
             // When: Getting debug log
             let debugLog = config.getDebugLog()
@@ -106,7 +124,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testClearDebugLogMethodExists() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled and we have some log entries
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             
             let generator = AccessibilityIdentifierGenerator()
@@ -129,7 +153,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLogAccumulatesMultipleEntries() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -152,7 +182,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLogIncludesTimestamps() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -171,7 +207,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLogFormatIsConsistent() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -195,7 +237,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLoggingRespectsEnableFlag() async {
         try await runWithTaskLocalConfig {
             // Given: AccessibilityIdentifierConfig
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.clearDebugLog()
             
             let generator = AccessibilityIdentifierGenerator()
@@ -223,7 +271,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLogPersistsAcrossGeneratorInstances() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -247,7 +301,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLoggingHandlesEmptyComponentNames() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -267,7 +327,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLoggingHandlesSpecialCharacters() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             
@@ -288,7 +354,13 @@ open class DebugLoggingTDDTests: BaseTestClass {
     @Test func testDebugLogHasReasonableSizeLimits() async {
         try await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             

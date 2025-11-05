@@ -20,7 +20,13 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Explicitly set configuration for this test
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 config.enableAutoIDs = true
                 config.namespace = "SixLayer"
                 
@@ -50,7 +56,13 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Default configuration
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 config.enableDebugLogging = true
                 // clearDebugLog method doesn't exist, so we skip that
                 
@@ -103,7 +115,13 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Default configuration
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 
                 // Verify config is properly configured
                 #expect(config != nil, "AccessibilityIdentifierConfig should be available")

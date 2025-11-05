@@ -344,7 +344,13 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             setupTestEnvironment()
             
             // Test: What happens if configuration changes during view creation?
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             
             let view = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())

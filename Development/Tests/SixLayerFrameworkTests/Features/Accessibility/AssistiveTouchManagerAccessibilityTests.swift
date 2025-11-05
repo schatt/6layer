@@ -35,12 +35,15 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
 
             // Test that the manager can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
                 config.namespace = "SixLayer" // Set expected namespace for test
                 #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
-        }
             }
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
@@ -65,10 +68,13 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
 
             // Test that the manager can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
                 config.namespace = "SixLayer" // Set expected namespace for test
                 #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
-        }
             }
+        }
     }

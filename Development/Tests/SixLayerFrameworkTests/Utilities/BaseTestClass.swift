@@ -32,11 +32,16 @@ import SwiftUI
         // Each test runs in its own task, so @TaskLocal provides automatic isolation
         // Framework code automatically uses task-local config via AccessibilityIdentifierConfig.currentTaskLocalConfig
         testConfig = AccessibilityIdentifierConfig()
-        testConfig.enableAutoIDs = true
-        testConfig.namespace = "SixLayer"
-        testConfig.globalPrefix = ""  // Explicitly empty - tests don't set prefix unless testing it
-        testConfig.mode = .automatic
-        testConfig.enableDebugLogging = false
+        guard let config = testConfig else {
+            Issue.record("testConfig is nil")
+            return
+        }
+
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.globalPrefix = ""  // Explicitly empty - tests don't set prefix unless testing it
+        config.mode = .automatic
+        config.enableDebugLogging = false
         
         // Task-local config will be set via runWithTaskLocalConfig() when tests wrap their execution
         // Framework code checks: taskLocalConfig ?? injectedConfig ?? shared

@@ -137,7 +137,12 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Global automatic accessibility disabled
-                testConfig.enableAutoIDs = false
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = false
                 
                 let testView = Button("Test") { }
                     .named("TestButton")
@@ -207,7 +212,12 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Global settings are disabled
-                testConfig.enableAutoIDs = false
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = false
                 
                 let testView = Button("Test") { }
                     .named("TestButton")
@@ -222,7 +232,12 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 ), "RED PHASE: .named() should not change global environment settings")
                 
                 // And global settings should remain unchanged
-                #expect(!testConfig.enableAutoIDs, 
+                guard let config = testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                #expect(!config.enableAutoIDs, 
                               "Global settings should remain unchanged after .named()")
         }
             }
@@ -281,7 +296,12 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Global automatic accessibility disabled
-                testConfig.enableAutoIDs = false
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = false
                 
                 let testView = Button("Test") { }
                     .exactNamed("TestButton")

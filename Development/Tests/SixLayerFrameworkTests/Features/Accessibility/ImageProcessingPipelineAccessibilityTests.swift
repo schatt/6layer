@@ -26,7 +26,13 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             
             // Test that the processor can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "ImageProcessor should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
     }
@@ -46,7 +52,13 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             
             // Test that the processor can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "ImageProcessor should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
         }

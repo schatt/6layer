@@ -28,7 +28,12 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // GIVEN: We're running in a test environment
             // WHEN: Using test config (isolated per test)
             // THEN: Should use configured namespace from BaseTestClass
-            #expect(testConfig.namespace == "SixLayer", "Should use configured namespace for tests")
+            guard let config = self.testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+
+            #expect(config.namespace == "SixLayer", "Should use configured namespace for tests")
         }
     }
     
@@ -37,9 +42,14 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // GIVEN: We're simulating a real app environment (not in tests)
             // WHEN: Using test config
             // THEN: Should use configured namespace
-            #expect(testConfig.namespace != nil, "Should have a configured namespace")
-            #expect(!testConfig.namespace.isEmpty, "Namespace should not be empty")
-            #expect(testConfig.namespace == "SixLayer", "Should use configured SixLayer namespace")
+            guard let config = self.testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+
+            #expect(config.namespace != nil, "Should have a configured namespace")
+            #expect(!config.namespace.isEmpty, "Namespace should not be empty")
+            #expect(config.namespace == "SixLayer", "Should use configured SixLayer namespace")
         }
     }
     

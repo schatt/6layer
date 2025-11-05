@@ -59,7 +59,12 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Enable debug logging to see what identifier is generated
-                testConfig.enableDebugLogging = true
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableDebugLogging = true
                 
                 // Given: Layer 4 function with test data
                 var capturedImage: PlatformImage?

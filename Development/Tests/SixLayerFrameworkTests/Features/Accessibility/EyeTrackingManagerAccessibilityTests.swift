@@ -24,7 +24,13 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
             
             // Test that the manager can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
     }
@@ -44,7 +50,13 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
             
             // Test that the manager can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
         }

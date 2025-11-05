@@ -28,7 +28,13 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             let id1 = generateIDForView(view1)
             
             // Simulate app restart (reset config to simulate new session)
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.resetToDefaults()
             config.enableAutoIDs = true
             config.namespace = "SixLayer"
@@ -154,7 +160,13 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             }
             
             // Simulate app restart
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.resetToDefaults()
             config.enableAutoIDs = true
             config.namespace = "SixLayer"
@@ -236,7 +248,12 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             let id1 = generateIDForView(view1)
             
             // Clear hierarchy to prevent accumulation between identical views
-            testConfig.clearDebugLog()
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+
+            config.clearDebugLog()
             
             // Wait to ensure any timing-based differences would show
             Thread.sleep(forTimeInterval: 0.1)
@@ -272,7 +289,13 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             let id1 = generateIDForView(view1)
             
             // Reset config (simulate app restart)
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.resetToDefaults()
             config.enableAutoIDs = true
             config.namespace = "SixLayer"

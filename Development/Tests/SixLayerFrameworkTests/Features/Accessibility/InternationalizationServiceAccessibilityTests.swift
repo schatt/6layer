@@ -14,8 +14,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that InternationalizationService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-
-@Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         // Ensure config is set up (BaseTestClass.init() should have done this, but ensure it's on MainActor)
         await MainActor.run {

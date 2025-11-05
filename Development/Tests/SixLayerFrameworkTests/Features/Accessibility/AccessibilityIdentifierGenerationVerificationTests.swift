@@ -20,7 +20,12 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             await MainActor.run {
                 // Test: Use centralized component accessibility testing
                 // BaseTestClass already sets up testConfig, just enable debug logging if needed
-                testConfig.enableDebugLogging = true
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableDebugLogging = true
                 
                 let testPassed = testComponentAccessibility(
                     componentName: "AutomaticAccessibilityIdentifiers",
@@ -48,7 +53,12 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // BaseTestClass already sets up testConfig with namespace "SixLayer"
-                testConfig.enableDebugLogging = true
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableDebugLogging = true
                 
                 // Test: Use centralized component accessibility testing
                 let testPassed = testComponentAccessibility(
@@ -117,8 +127,13 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled, set namespace for this test
-                testConfig.namespace = "auto"
-                testConfig.enableAutoIDs = true
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.namespace = "auto"
+                config.enableAutoIDs = true
                 
                 // When: Creating view with manual identifier
                 let manualID = "manual-custom-id"
@@ -152,10 +167,15 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Use isolated testConfig instead of shared
-                testConfig.namespace = "test"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.namespace = "test"
                 
                 // Test Case 1: When automatic IDs are disabled
-                testConfig.enableAutoIDs = false
+                config.enableAutoIDs = false
                 
                 let testView1 = withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
                     platformPresentContent_L1(content: "Test", hints: PresentationHints())

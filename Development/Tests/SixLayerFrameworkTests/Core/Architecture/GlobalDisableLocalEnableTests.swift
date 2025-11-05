@@ -17,7 +17,13 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TDD: Test with actual framework component - this should work
             
             // 1. Disable global config
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableAutoIDs = false
             config.enableDebugLogging = true
             
@@ -44,7 +50,13 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TDD: This test SHOULD FAIL initially - .named() always works regardless of global settings
             
             // 1. Enable global config
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableAutoIDs = true
             
             // 2. Create a view with explicit naming (should always work)
@@ -68,7 +80,13 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TDD: This test SHOULD PASS - .named() always works regardless of global config
             
             // 1. Disable global config
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableAutoIDs = false
             
             // 2. Create a view with explicit naming (should always work)
@@ -91,7 +109,13 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TDD: This test SHOULD PASS - .named() always works regardless of global config
             
             // 1. Disable global config
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableAutoIDs = false
             
             // 2. Create a view with explicit naming (should always work)

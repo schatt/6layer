@@ -18,7 +18,13 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             // Test that framework components don't generate IDs when global config is disabled
             
             // Disable global config AFTER setup (which resets to defaults)
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableAutoIDs = false
             
             // Create a framework component WITHOUT .named() (this should NOT generate an ID)
@@ -52,7 +58,13 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             // This is the correct behavior - explicit naming should always work
             
             // Set global config to enabled
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableAutoIDs = true
             
             // Create a framework component with .named() (this SHOULD generate an ID)

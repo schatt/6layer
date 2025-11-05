@@ -31,7 +31,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test @MainActor
     private func testAccessibilityIdentifierConfiguration() -> Bool {
         try runWithTaskLocalConfig {
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             return config.enableAutoIDs && !config.namespace.isEmpty
         }
     }
@@ -68,20 +74,25 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs explicitly enabled for this test
-                testConfig.enableAutoIDs = true
-                #expect(testConfig.enableAutoIDs, "Auto IDs should be enabled")
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                #expect(config.enableAutoIDs, "Auto IDs should be enabled")
                 
                 // When: Disabling automatic IDs
-                testConfig.enableAutoIDs = false
+                config.enableAutoIDs = false
                 
                 // Then: Config should reflect the change
-                #expect(!testConfig.enableAutoIDs, "Auto IDs should be disabled")
+                #expect(!config.enableAutoIDs, "Auto IDs should be disabled")
                 
                 // When: Re-enabling automatic IDs
-                testConfig.enableAutoIDs = true
+                config.enableAutoIDs = true
                 
                 // Then: Config should reflect the change
-                #expect(testConfig.enableAutoIDs, "Auto IDs should be enabled")
+                #expect(config.enableAutoIDs, "Auto IDs should be enabled")
             }
         }
     }
@@ -94,10 +105,15 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             await MainActor.run {
                 // Given: Custom namespace
                 let customNamespace = "myapp.users"
-                testConfig.namespace = customNamespace
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.namespace = customNamespace
                 
                 // When: Getting the namespace
-                let retrievedNamespace = testConfig.namespace
+                let retrievedNamespace = config.namespace
                 
                 // Then: Should match the set value
                 #expect(retrievedNamespace == customNamespace, "Namespace should match set value")
@@ -112,7 +128,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Test configuration properties
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "Auto IDs should be enabled")
                 #expect(!config.namespace.isEmpty, "Namespace should not be empty")
         }
@@ -128,8 +150,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "test"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "test"
                 
                 // Setup test data first
                 setupTestData()
@@ -168,8 +195,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled with namespace
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "app"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "app"
                 
                 // Setup test data first
                 setupTestData()
@@ -202,8 +234,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "test"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "test"
                 
                 let generator = AccessibilityIdentifierGenerator()
                 
@@ -228,8 +265,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled, set namespace for this test
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "auto"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "auto"
                 
                 // When: Creating view with manual identifier
                 let manualID = "manual-custom-id"
@@ -261,7 +303,12 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs disabled globally
-                testConfig.enableAutoIDs = false
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = false
                 
                 // When: Creating view with automatic accessibility identifiers modifier
                 let view = withTestConfig(platformPresentContent_L1(
@@ -293,8 +340,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "hig"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "hig"
                 
                 // When: Creating view with HIG compliance
                 let view = platformPresentContent_L1(
@@ -316,8 +368,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Automatic IDs enabled
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "layer1"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "layer1"
                 
                 // Setup test data first
                 setupTestData()
@@ -365,8 +422,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 setupTestData()
                 
                 // Given: Automatic IDs enabled
-                testConfig.enableAutoIDs = true
-                testConfig.namespace = "collision"
+                guard let config = self.testConfig else {
+                    Issue.record("testConfig is nil")
+                    return
+                }
+
+                config.enableAutoIDs = true
+                config.namespace = "collision"
                 
                 let generator = AccessibilityIdentifierGenerator()
                 
@@ -411,7 +473,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testDebugLoggingCapturesGeneratedIDs() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 let generator = AccessibilityIdentifierGenerator()
                 
                 // Enable debug logging
@@ -436,7 +504,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testDebugLoggingDisabledWhenTurnedOff() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 let generator = AccessibilityIdentifierGenerator()
                 
                 // Disable debug logging
@@ -459,7 +533,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testDebugLogFormatting() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 let generator = AccessibilityIdentifierGenerator()
                 
                 // Enable debug logging
@@ -485,7 +565,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testDebugLogClearing() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 let generator = AccessibilityIdentifierGenerator()
                 
                 // Enable debug logging and generate some IDs
@@ -515,7 +601,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testViewHierarchyTracking() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 
                 // Enable debug logging
                 config.enableDebugLogging = true
@@ -549,7 +641,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testUITestCodeGeneration() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 
                 // Enable UI test integration and view hierarchy tracking
                 // Enable debug logging
@@ -581,7 +679,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testUITestHelpers() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 
                 // Test element reference generation
                 let elementRef = "app.test.button"
@@ -606,7 +710,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testUITestCodeFileGeneration() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 
                 // Enable UI test integration and view hierarchy tracking
                 // Enable debug logging
@@ -651,7 +761,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     @Test func testUITestCodeClipboardGeneration() async {
         try await runWithTaskLocalConfig {
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 
                 // Enable UI test integration
                 // Enable debug logging
@@ -690,7 +806,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Configuration is enabled (as per user's bug report)
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 config.enableAutoIDs = true
                 config.namespace = "SixLayer"
                 config.mode = .automatic
@@ -726,7 +848,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Configuration is enabled
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 config.enableAutoIDs = true
                 config.namespace = "SixLayer"
                 config.mode = .automatic
@@ -751,7 +879,13 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
         try await runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Configuration with view hierarchy tracking
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 config.enableAutoIDs = true
                 config.namespace = "SixLayer"
                 config.mode = .automatic

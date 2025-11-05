@@ -20,7 +20,13 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     @Test func testAccessibilityIdentifierConfigGeneratesAccessibilityIdentifiers() async {
         try await runWithTaskLocalConfig {
             // Given: AccessibilityIdentifierConfig singleton
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             
             // When: Enabling automatic identifiers
             config.enableAutoIDs = true
@@ -376,7 +382,13 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     @Test func testAccessibilityIdentifierDebugLoggingGeneratesAccessibilityIdentifiers() async {
         try await runWithTaskLocalConfig {
             // Given: Accessibility identifier debug logging
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.enableDebugLogging = true
             config.clearDebugLog()
             

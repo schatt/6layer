@@ -127,6 +127,63 @@ open class DynamicFormTests: BaseTestClass {
         #expect(section.fields[1].id == "field2")
     }
     
+    // MARK: - Dynamic Form Section Layout Style Tests (TDD RED)
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormSection supports optional layoutStyle
+    /// TESTING SCOPE: Tests DynamicFormSection initialization with layoutStyle property
+    /// METHODOLOGY: Create DynamicFormSection with various layoutStyle values and verify property is set correctly
+    @Test func testDynamicFormSectionWithLayoutStyle() {
+        // TDD RED: Should support layoutStyle property
+        let fields = [
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+            DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
+        ]
+        
+        let section = DynamicFormSection(
+            id: "testSection",
+            title: "Test Section",
+            fields: fields,
+            layoutStyle: .horizontal  // This should compile and work
+        )
+        
+        #expect(section.layoutStyle == .horizontal)
+        #expect(section.title == "Test Section")  // Existing properties still work
+        #expect(section.fields.count == 2)
+    }
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormSection layoutStyle is optional
+    /// TESTING SCOPE: Tests DynamicFormSection initialization without layoutStyle (backward compatibility)
+    /// METHODOLOGY: Create DynamicFormSection without layoutStyle and verify it defaults to nil
+    @Test func testDynamicFormSectionWithoutLayoutStyle() {
+        // TDD RED: Should support nil layoutStyle (backward compatibility)
+        let section = DynamicFormSection(
+            id: "testSection",
+            title: "Test Section",
+            fields: []
+        )
+        
+        #expect(section.layoutStyle == nil)  // Should default to nil
+    }
+    
+    /// BUSINESS PURPOSE: Validate all FieldLayout values work with DynamicFormSection
+    /// TESTING SCOPE: Tests DynamicFormSection with all FieldLayout enum cases
+    /// METHODOLOGY: Create DynamicFormSection with each FieldLayout value and verify all work
+    @Test func testDynamicFormSectionAllLayoutStyles() {
+        // TDD RED: Should support all FieldLayout enum values
+        let layoutStyles: [FieldLayout] = [.standard, .compact, .spacious, .adaptive, .vertical, .horizontal, .grid]
+        
+        for layoutStyle in layoutStyles {
+            let section = DynamicFormSection(
+                id: "section-\(layoutStyle.rawValue)",
+                title: "Section \(layoutStyle.rawValue)",
+                fields: [],
+                layoutStyle: layoutStyle
+            )
+            
+            #expect(section.layoutStyle == layoutStyle, "Should support \(layoutStyle.rawValue)")
+        }
+    }
+    
     // MARK: - Dynamic Form Configuration Tests
     
     /// BUSINESS PURPOSE: Validate DynamicFormConfiguration creation functionality

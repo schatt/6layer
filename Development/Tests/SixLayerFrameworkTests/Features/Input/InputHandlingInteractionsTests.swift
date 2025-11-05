@@ -716,7 +716,13 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnIOS() async {
         try await runWithTaskLocalConfig {
             // Given
-            let config = testConfig
+            guard let config = testConfig else {
+
+                Issue.record("testConfig is nil")
+
+                return
+
+            }
             config.resetToDefaults()
             config.enableAutoIDs = true
             config.namespace = "SixLayer"

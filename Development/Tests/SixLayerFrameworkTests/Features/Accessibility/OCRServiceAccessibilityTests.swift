@@ -26,7 +26,13 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
             
             // Test that the service can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
         }
@@ -46,7 +52,13 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
             
             // Test that the service can be configured with accessibility settings
             await MainActor.run {
-                let config = testConfig
+                guard let config = testConfig else {
+
+                    Issue.record("testConfig is nil")
+
+                    return
+
+                }
                 #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
                 #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
         }
