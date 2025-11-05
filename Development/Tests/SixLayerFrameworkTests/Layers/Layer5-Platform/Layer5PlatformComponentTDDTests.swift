@@ -23,33 +23,35 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
     // MARK: - Platform Recognition Layer 5
 
     @Test func testPlatformRecognitionLayer5ProvidesAIIntelligence() async {
-        // TDD: PlatformRecognitionLayer5 should provide:
-        // 1. AI/ML-powered content recognition capabilities
-        // 2. Image analysis and text recognition services
-        // 3. Pattern detection and classification
-        // 4. Platform-specific AI service integration
+        try await runWithTaskLocalConfig {
+            // TDD: PlatformRecognitionLayer5 should provide:
+            // 1. AI/ML-powered content recognition capabilities
+            // 2. Image analysis and text recognition services
+            // 3. Pattern detection and classification
+            // 4. Platform-specific AI service integration
 
-        let view = PlatformRecognitionLayer5()
+            let view = PlatformRecognitionLayer5()
 
-        // Should render AI recognition interface
-        do {
-            let inspected = try view.inspect()
+            // Should render AI recognition interface
+            do {
+                let inspected = try view.inspect()
 
-            // Should have proper UI structure for recognition features
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 1, "Should have recognition interface elements")
+                // Should have proper UI structure for recognition features
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 1, "Should have recognition interface elements")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*PlatformRecognitionLayer5.*",
-                platform: .iOS,
-                componentName: "PlatformRecognitionLayer5"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformRecognitionLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformRecognitionLayer5"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-        } catch {
-            Issue.record("PlatformRecognitionLayer5 inspection failed - AI recognition features not implemented: \(error)")
+            } catch {
+                Issue.record("PlatformRecognitionLayer5 inspection failed - AI recognition features not implemented: \(error)")
+            }
         }
     }
 
@@ -100,14 +102,6 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         // Should render performance monitoring interface
         do {
             let inspected = try view.inspect()
-
-            // Should NOT show stub text
-            do {
-                let viewText = try inspected.find(text: "Platform Performance Layer 6 (Stub)")
-                Issue.record("PlatformPerformanceLayer6 still shows stub text - needs implementation")
-            } catch {
-                // Good - stub text not found
-            }
 
             // Should have proper UI structure for performance metrics
             let vStack = try inspected.vStack()

@@ -49,8 +49,10 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     @ObservedObject private var configObserver = ConfigObserver.shared
 
     public func body(content: Content) -> some View {
-        // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+        // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+        // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         // config.enableAutoIDs IS the global setting - it's the single source of truth
         // The environment variable allows local opt-in when global is off (defaults to false)
         // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
@@ -85,8 +87,8 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     
     @MainActor
     private func generateIdentifier() -> String {
-        // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local test config (for per-test isolation), then injected config, then shared (for production)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
@@ -179,8 +181,10 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     @ObservedObject private var configObserver = ConfigObserver.shared
     
     public func body(content: Content) -> some View {
-        // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+        // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+        // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         // Same logic as AutomaticAccessibilityIdentifiersModifier: respect both global and local settings
         let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
@@ -215,7 +219,8 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     
     @MainActor
     private func generateIdentifier() -> String {
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local test config (for per-test isolation), then injected config, then shared (for production)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
@@ -276,8 +281,8 @@ public struct NamedModifier: ViewModifier {
     }
     
     private func generateNamedAccessibilityIdentifier() -> String {
-        // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
         // .named() should ALWAYS apply when explicitly called, regardless of global settings
         // This is an explicit modifier call - user intent is clear
@@ -345,8 +350,8 @@ public struct ExactNamedModifier: ViewModifier {
     }
     
     private func generateExactNamedAccessibilityIdentifier() -> String {
-        // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
         // .exactNamed() should ALWAYS apply when explicitly called, regardless of global settings
         // This is an explicit modifier call - user intent is clear
@@ -433,8 +438,10 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
 
     public func body(content: Content) -> some View {
-        // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+        // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+        // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
         if config.enableDebugLogging {
             print("🔍 FORCED MODIFIER DEBUG: Always applying identifier (local override)")

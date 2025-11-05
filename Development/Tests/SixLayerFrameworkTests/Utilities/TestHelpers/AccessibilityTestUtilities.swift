@@ -185,11 +185,16 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
 /// IMPORTANT: This function does NOT apply .automaticAccessibilityIdentifiers() to the view.
 /// Framework components should apply it themselves based on the environment variable.
 /// We're testing that components do this, not that the test helper can do it.
+/// 
+/// PARALLEL TEST SAFETY: Tests MUST pass their isolated config instance (from BaseTestClass.testConfig)
+/// to prevent race conditions. Do NOT use .shared - each test should have its own config.
 @MainActor
-public func getAccessibilityIdentifierFromSwiftUIView<V: View>(from view: V) -> String? {
-    // DO NOT modify shared config - tests set their own values
-    // This function is called multiple times in parameterized tests, so we must not leak state
-    let config = AccessibilityIdentifierConfig.shared
+public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
+    from view: V,
+    config: AccessibilityIdentifierConfig
+) -> String? {
+    // CRITICAL: Tests must pass their isolated config instance to prevent singleton race conditions
+    // Each test should use testConfig from BaseTestClass, not .shared
     
     // Set up environment variable only - components should check this and apply the modifier themselves
     // We do NOT apply .automaticAccessibilityIdentifiers() here because that would test the test helper,
@@ -404,11 +409,15 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
     platform: SixLayerPlatform,
     componentName: String = "Component"
 ) -> Bool {
+    // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
+    // This allows tests to use runWithTaskLocalConfig() for automatic isolation
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)
     
     // Get the actual accessibility identifier directly from the SwiftUI view
-    let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view)
+    let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config)
     if actualIdentifier == nil || actualIdentifier?.isEmpty == true {
         // Treat empty expected pattern OR explicit empty-regex patterns as success when identifier is missing/empty
         if expectedPattern.isEmpty || expectedPattern == "^$" || expectedPattern == "^\\s*$" {
@@ -465,11 +474,14 @@ public func hasAccessibilityIdentifierExact<T: View>(
     platform: SixLayerPlatform,
     componentName: String = "Component"
 ) -> Bool {
+    // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    
     // Set up platform mocking as required by mandatory testing guidelines
     TestSetupUtilities.shared.simulatePlatform(platform)
     
     // Get the actual accessibility identifier directly from the SwiftUI view
-    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view) else {
+    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config) else {
         print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
         return false
     }
@@ -498,8 +510,11 @@ public func hasAccessibilityIdentifierSimple<T: View>(
     expectedPattern: String,
     componentName: String = "Component"
 ) -> Bool {
+    // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    
     // Get the actual accessibility identifier directly from the SwiftUI view
-    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view) else {
+    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config) else {
         // Special-case: treat nil identifier as empty string for tests explicitly expecting empty
         if expectedPattern.isEmpty {
             print("✅ DISCOVERY: \(componentName) has no accessibility identifier as expected (empty)")
@@ -586,8 +601,10 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     platform: SixLayerPlatform,
     componentName: String
 ) -> Bool {
-    // Set up default accessibility config (centralized setup)
-    let config = AccessibilityIdentifierConfig.shared
+    // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
+    let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+    
+    // Configure the test-specific settings
     config.enableAutoIDs = true
     config.namespace = "SixLayer"
     config.globalPrefix = ""

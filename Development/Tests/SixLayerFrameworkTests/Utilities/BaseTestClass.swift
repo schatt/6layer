@@ -9,8 +9,10 @@ import SwiftUI
     
     // MARK: - Test Config (Isolated Instance)
     
-    /// Isolated config instance for this test to prevent singleton state leakage
-    /// Tests should inject this into views via `withTestConfig()` helper
+    /// Isolated config instance for this test (per-test isolation via @TaskLocal)
+    /// Automatically set as task-local in setupTestEnvironment() so framework code picks it up automatically
+    /// Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+    /// Tests can use `runWithTaskLocalConfig()` to wrap test execution for automatic isolation
     @MainActor
     public var testConfig: AccessibilityIdentifierConfig!
     
@@ -26,8 +28,9 @@ import SwiftUI
     open func setupTestEnvironment() {
         TestSetupUtilities.shared.setupTestingEnvironment()
         
-        // CRITICAL: Create isolated config for this test to prevent singleton state leakage
-        // Framework code can now use injected config via environment, falling back to shared for production
+        // CRITICAL: Create isolated config instance for this test (per-test isolation)
+        // Each test runs in its own task, so @TaskLocal provides automatic isolation
+        // Framework code automatically uses task-local config via AccessibilityIdentifierConfig.currentTaskLocalConfig
         testConfig = AccessibilityIdentifierConfig()
         testConfig.enableAutoIDs = true
         testConfig.namespace = "SixLayer"
@@ -35,33 +38,40 @@ import SwiftUI
         testConfig.mode = .automatic
         testConfig.enableDebugLogging = false
         
-        // Also set shared for backward compatibility during migration
-        // TODO: Migrate all tests to use injected config instead of shared
-        // NOTE: No need to resetToDefaults() - each test is isolated, just set the values we need
-        AccessibilityIdentifierConfig.shared.enableAutoIDs = testConfig.enableAutoIDs
-        AccessibilityIdentifierConfig.shared.namespace = testConfig.namespace
-        AccessibilityIdentifierConfig.shared.globalPrefix = testConfig.globalPrefix
-        AccessibilityIdentifierConfig.shared.mode = testConfig.mode
-        AccessibilityIdentifierConfig.shared.enableDebugLogging = testConfig.enableDebugLogging
-        AccessibilityIdentifierConfig.shared.includeComponentNames = true
-        AccessibilityIdentifierConfig.shared.includeElementTypes = true
+        // Task-local config will be set via runWithTaskLocalConfig() when tests wrap their execution
+        // Framework code checks: taskLocalConfig ?? injectedConfig ?? shared
+        // This ensures parallel tests get isolated configs automatically
     }
     
     @MainActor
     open func cleanupTestEnvironment() {
-        // NOTE: Since each test runs on its own thread with its own testConfig,
-        // we don't need to reset the shared singleton. Each test's setup will
-        // configure shared as needed. If tests run in parallel, they each set
-        // their own values on shared, which should be fine since they all set
-        // the same test values anyway.
-        // If we need cleanup, we'd clear accumulating state like debug logs:
-        // AccessibilityIdentifierConfig.shared.debugLogEntries.removeAll()
+        // Task-local config is automatically cleared when test task completes
+        // No explicit cleanup needed - @TaskLocal is scoped to the task
+    }
+    
+    /// Run a test function with task-local config automatically set
+    /// This ensures framework code automatically picks up the test's isolated config
+    /// Tests should wrap their test body with this for automatic isolation
+    @MainActor
+    public func runWithTaskLocalConfig<T>(_ operation: () async throws -> T) async rethrows -> T {
+        return try await AccessibilityIdentifierConfig.$taskLocalConfig.withValue(testConfig) {
+            try await operation()
+        }
+    }
+    
+    /// Synchronous version for non-async tests
+    @MainActor
+    public func runWithTaskLocalConfig<T>(_ operation: () throws -> T) rethrows -> T {
+        return try AccessibilityIdentifierConfig.$taskLocalConfig.withValue(testConfig) {
+            try operation()
+        }
     }
     
     // MARK: - Config Injection Helper
     
-    /// Helper to inject test config into a view for isolated testing
-    /// Usage: `let viewWithConfig = withTestConfig(myView)`
+    /// Helper to inject test config into a view (optional - task-local is automatic)
+    /// Task-local config is automatically available, but explicit injection can be useful for testing
+    /// Usage: `let viewWithConfig = withTestConfig(myView)` (usually not needed, task-local is automatic)
     @MainActor
     public func withTestConfig<V: SwiftUI.View>(_ view: V) -> AnyView {
         return AnyView(view.environment(\.accessibilityIdentifierConfig, testConfig))

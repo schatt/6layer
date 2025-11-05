@@ -17,39 +17,30 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
 
     override init() {
         super.init()
-        let config = AccessibilityIdentifierConfig.shared
-        config.enableAutoIDs = true
-        // namespace is automatically detected as "SixLayer" for tests
-        config.mode = .automatic
-        config.enableDebugLogging = false
+        // BaseTestClass already sets up testConfig - no need to access .shared
+        // Tests will use runWithTaskLocalConfig() to automatically use isolated config
     }
 
     // MARK: - Namespace Detection Tests
     
     @Test func testAutomaticNamespaceDetectionForTests() async {
-        // GIVEN: We're running in a test environment
-        // WHEN: Creating a new config
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "SixLayer" // Set namespace for test
-
-        // THEN: Should use configured namespace
-        #expect(config.namespace == "SixLayer", "Should use configured namespace for tests")
+        try await runWithTaskLocalConfig {
+            // GIVEN: We're running in a test environment
+            // WHEN: Using test config (isolated per test)
+            // THEN: Should use configured namespace from BaseTestClass
+            #expect(testConfig.namespace == "SixLayer", "Should use configured namespace for tests")
+        }
     }
     
     @Test func testAutomaticNamespaceDetectionForRealApps() async {
-        // GIVEN: We're simulating a real app environment (not in tests)
-        // WHEN: Creating a config (this would normally detect the real app name)
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "SixLayer" // Set namespace for test environment
-
-        // THEN: Should use configured namespace
-        #expect(config.namespace != nil, "Should have a configured namespace")
-        #expect(!config.namespace.isEmpty, "Namespace should not be empty")
-
-        // In test environment, it should be "SixLayer"
-        #expect(config.namespace == "SixLayer", "Should use configured SixLayer namespace")
+        try await runWithTaskLocalConfig {
+            // GIVEN: We're simulating a real app environment (not in tests)
+            // WHEN: Using test config
+            // THEN: Should use configured namespace
+            #expect(testConfig.namespace != nil, "Should have a configured namespace")
+            #expect(!testConfig.namespace.isEmpty, "Namespace should not be empty")
+            #expect(testConfig.namespace == "SixLayer", "Should use configured SixLayer namespace")
+        }
     }
     
     // MARK: - automaticAccessibilityIdentifiers() Modifier Tests

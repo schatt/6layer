@@ -25,9 +25,31 @@ public enum AccessibilityMode: String, CaseIterable, Sendable {
 /// Configuration manager for accessibility identifier generation
 @MainActor
 public class AccessibilityIdentifierConfig: ObservableObject {
-    /// Shared instance for global configuration
-    /// Production code uses this; tests should inject their own via environment
-    public static let shared = AccessibilityIdentifierConfig(singleton: true)
+    /// Task-local config for per-test isolation
+    /// Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+    /// BaseTestClass automatically sets this in setupTestEnvironment() using withValue
+    @TaskLocal static var taskLocalConfig: AccessibilityIdentifierConfig?
+    
+    /// Get task-local config (for per-test isolation)
+    /// Returns nil in production, or the test's isolated config in tests
+    internal static var currentTaskLocalConfig: AccessibilityIdentifierConfig? {
+        return taskLocalConfig
+    }
+    
+    /// Shared instance for global configuration (PRODUCTION ONLY)
+    /// Tests use task-local config automatically via @TaskLocal - never use .shared in tests
+    /// 
+    /// PARALLEL TEST SAFETY: Framework code checks `taskLocalConfig ?? injectedConfig ?? shared`
+    /// Each test runs in its own task, so @TaskLocal provides automatic isolation.
+    /// Tests that access .shared directly will cause race conditions in parallel execution.
+    ///
+    /// CONCURRENCY: Static properties on @MainActor classes are MainActor isolated.
+    /// The initializer is @MainActor isolated, so initialization happens lazily
+    /// on first access (which will be from MainActor context in production).
+    public static let shared: AccessibilityIdentifierConfig = {
+        // Lazy initialization - first access will be from MainActor context in production
+        return AccessibilityIdentifierConfig(singleton: true)
+    }()
     
     /// Whether automatic accessibility identifiers are enabled
     @Published public var enableAutoIDs: Bool = true

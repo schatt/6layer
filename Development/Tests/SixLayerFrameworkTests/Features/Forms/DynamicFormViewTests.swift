@@ -11,19 +11,12 @@ import ViewInspector
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Dynamic Form View")
 @MainActor
-open class DynamicFormViewTests {
+open class DynamicFormViewTests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - DynamicFormView Tests
+    // BaseTestClass handles setup automatically - no need for custom init
+    // MARK: - DynamicFormView Tests
     
     
     private func setupTestEnvironment() async {
