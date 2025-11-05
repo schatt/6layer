@@ -7,21 +7,17 @@ import ViewInspector
 /// Test what happens when automatic accessibility IDs are disabled
 @MainActor
 @Suite("Accessibility Identifier Disabled")
-open class AccessibilityIdentifierDisabledTests {
+open class AccessibilityIdentifierDisabledTests: BaseTestClass {
     
-    init() async throws {
-                let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = false  // ← DISABLED
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
+    // BaseTestClass handles setup automatically - no need for custom init
     
     @Test func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
         try runWithTaskLocalConfig {
             // Test: When automatic IDs are disabled, views should not have accessibility identifier modifiers
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false  // ← DISABLED
             config.namespace = "SixLayer"
             config.mode = .automatic
@@ -48,7 +44,10 @@ open class AccessibilityIdentifierDisabledTests {
     
     @Test func testManualIDsStillWorkWhenAutomaticDisabled() {
         try runWithTaskLocalConfig {
-            let config = testConfig
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
             config.enableAutoIDs = false  // ← DISABLED
             
             // Test: Manual accessibility identifiers should still work when automatic is disabled

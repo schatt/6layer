@@ -9,7 +9,6 @@ import ViewInspector
 /// for automated testing and accessibility tools compliance
 @Suite("Assistive Touch Manager Accessibility")
 open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
-            }
     
     // MARK: - AssistiveTouchManager Tests
     

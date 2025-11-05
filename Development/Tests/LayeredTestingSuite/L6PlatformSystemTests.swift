@@ -128,6 +128,8 @@ class L6PlatformSystemTests {
     
     // MARK: - Platform Recommendation Tests
     
+    // NOTE: PlatformRecommendation tests moved to possible-features/PlatformRecommendationEngineTests.swift
+    /*
     @Test func testPlatformRecommendation() {
         // Given
         let recommendation = samplePlatformRecommendation
@@ -171,6 +173,7 @@ class L6PlatformSystemTests {
             #expect(RecommendationCategory.allCases.contains(category), "Category should be valid")
         }
     }
+    */
     
     // MARK: - Performance Level Tests
     

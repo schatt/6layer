@@ -102,8 +102,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         // Then: Should return recommendations (may be empty if not implemented yet)
         // NOTE: Tests for PlatformRecommendationEngine moved to possible-features/PlatformRecommendationEngineTests.swift
         #expect(true, "PlatformRecommendationEngine moved to possible-features/ - test disabled")
-            #expect(recommendation.priority != nil, "Recommendation should have a priority")
-        }
     }
     
     @Test func testPlatformPerformanceLayer6GeneratesAccessibilityIdentifiers() async {
