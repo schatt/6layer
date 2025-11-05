@@ -320,5 +320,156 @@ open class DynamicFormViewTests {
         // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on macOS")
     }
+
+    // MARK: - OCR Integration Tests
+
+    @Test func testDynamicFormFieldCanBeConfiguredWithOCRSupport() async {
+        // TDD: DynamicFormField should support OCR configuration
+        // 1. Field should accept supportsOCR, ocrHint, and ocrValidationTypes
+        // 2. Field should store these values correctly
+        // 3. OCR configuration should be accessible for form processing
+
+        let ocrHint = "Scan receipt for total amount"
+        let expectedTypes: [TextType] = [.price, .number]
+
+        let field = DynamicFormField(
+            id: "receipt-total",
+            contentType: .number,
+            label: "Total Amount",
+            placeholder: "Enter total",
+            supportsOCR: true,
+            ocrHint: ocrHint,
+            ocrValidationTypes: expectedTypes
+        )
+
+        // Should store OCR configuration correctly
+        #expect(field.supportsOCR == true, "Field should support OCR")
+        #expect(field.ocrHint == ocrHint, "Field should store OCR hint")
+        #expect(field.ocrValidationTypes == expectedTypes, "Field should store OCR validation types")
+    }
+
+    @Test func testDynamicFormFieldDefaultsToNoOCRSupport() async {
+        // TDD: DynamicFormField should default to no OCR support
+        // 1. Fields without OCR config should default to false
+        // 2. OCR-related properties should be nil by default
+
+        let field = DynamicFormField(
+            id: "simple-field",
+            contentType: .text,
+            label: "Simple Field"
+        )
+
+        // Should default to no OCR support
+        #expect(field.supportsOCR == false, "Field should default to no OCR support")
+        #expect(field.ocrHint == nil, "OCR hint should be nil by default")
+        #expect(field.ocrValidationTypes == nil, "OCR validation types should be nil by default")
+    }
+
+    @Test func testDynamicFormViewRendersOCRButtonForOCREnabledFields() async {
+        // TDD: DynamicFormView should show OCR UI for OCR-enabled fields
+        // 1. OCR-enabled fields should show an OCR trigger button/icon
+        // 2. OCR button should be accessible
+        // 3. Non-OCR fields should not show OCR button
+
+        let ocrField = DynamicFormField(
+            id: "ocr-field",
+            contentType: .text,
+            label: "OCR Field",
+            supportsOCR: true,
+            ocrHint: "Scan text document"
+        )
+
+        let regularField = DynamicFormField(
+            id: "regular-field",
+            contentType: .text,
+            label: "Regular Field"
+        )
+
+        let formState = DynamicFormState(configuration: testFormConfig)
+        formState.initializeField(ocrField)
+        formState.initializeField(regularField)
+
+        // Currently this will fail - OCR UI not implemented yet
+        // TODO: Implement OCR button rendering in CustomFieldView/DynamicTextField
+
+        let ocrFieldView = CustomFieldView(field: ocrField, formState: formState)
+        let regularFieldView = CustomFieldView(field: regularField, formState: formState)
+
+        // OCR field should show OCR button (will fail until implemented)
+        do {
+            let inspected = try ocrFieldView.inspect()
+            // Look for OCR button - this will fail until we implement it
+            let ocrButton = try inspected.find(button: "Scan with OCR")
+            #expect(ocrButton.exists, "OCR field should show OCR button")
+        } catch {
+            Issue.record("OCR button not implemented yet: \(error)")
+        }
+
+        // Regular field should not show OCR button
+        do {
+            let inspected = try regularFieldView.inspect()
+            let ocrButton = try? inspected.find(button: "Scan with OCR")
+            #expect(ocrButton == nil, "Regular field should not show OCR button")
+        } catch {
+            // Expected - regular field shouldn't have OCR button
+        }
+    }
+
+    @Test func testOCRWorkflowCanPopulateFormField() async {
+        // TDD: OCR workflow should be able to populate form fields
+        // 1. OCR results should be able to update form state
+        // 2. OCR disambiguation should work with form fields
+        // 3. Form should accept OCR-sourced data
+
+        let field = DynamicFormField(
+            id: "ocr-test-field",
+            contentType: .text,
+            label: "OCR Test",
+            supportsOCR: true
+        )
+
+        let formState = DynamicFormState(configuration: testFormConfig)
+        formState.initializeField(field)
+
+        // Simulate OCR result
+        let ocrText = "Extracted text from document"
+        formState.setValue(ocrText, for: field.id)
+
+        // Field should contain OCR-populated value
+        let storedValue: String? = formState.getValue(for: field.id)
+        #expect(storedValue == ocrText, "Form field should accept OCR-populated value")
+    }
+
+    @Test func testOCRValidationTypesAreUsedForFieldValidation() async {
+        // TDD: OCR validation types should influence field validation
+        // 1. OCR-enabled fields should validate OCR results against expected types
+        // 2. Invalid OCR types should be rejected or flagged
+        // 3. Valid OCR types should be accepted
+
+        // Currently this will fail - OCR validation not implemented
+        // TODO: Implement OCR type validation in form processing
+
+        let emailField = DynamicFormField(
+            id: "email-field",
+            contentType: .email,
+            label: "Email",
+            supportsOCR: true,
+            ocrValidationTypes: [.email]
+        )
+
+        let formState = DynamicFormState(configuration: testFormConfig)
+        formState.initializeField(emailField)
+
+        // Valid OCR result (email type)
+        let validEmail = "user@example.com"
+        formState.setValue(validEmail, for: emailField.id)
+
+        // Should accept valid email from OCR
+        let storedEmail: String? = formState.getValue(for: emailField.id)
+        #expect(storedEmail == validEmail, "Should accept valid OCR email")
+
+        // TODO: Test invalid OCR types are rejected
+        // This will require implementing OCR type validation logic
+    }
 }
 

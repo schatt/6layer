@@ -137,6 +137,11 @@ public struct DynamicFormField: Identifiable, Hashable {
     public let options: [String]? // For select/radio/checkbox fields
     public let defaultValue: String?
     public let metadata: [String: String]?
+
+    // OCR Configuration
+    public let supportsOCR: Bool // Whether this field can use OCR for input
+    public let ocrHint: String? // Hint for OCR processing (e.g., "expect phone number", "expect address")
+    public let ocrValidationTypes: [TextType]? // Expected OCR text types for validation
     
     public init(
         id: String,
@@ -149,7 +154,10 @@ public struct DynamicFormField: Identifiable, Hashable {
         validationRules: [String: String]? = nil,
         options: [String]? = nil,
         defaultValue: String? = nil,
-        metadata: [String: String]? = nil
+        metadata: [String: String]? = nil,
+        supportsOCR: Bool = false,
+        ocrHint: String? = nil,
+        ocrValidationTypes: [TextType]? = nil
     ) {
         self.id = id
         self.textContentType = textContentType
@@ -162,6 +170,9 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.options = options
         self.defaultValue = defaultValue
         self.metadata = metadata
+        self.supportsOCR = supportsOCR
+        self.ocrHint = ocrHint
+        self.ocrValidationTypes = ocrValidationTypes
     }
     
     /// Convenience initializer for text fields using cross-platform text content type
@@ -187,7 +198,10 @@ public struct DynamicFormField: Identifiable, Hashable {
             validationRules: validationRules,
             options: nil,
             defaultValue: defaultValue,
-            metadata: metadata
+            metadata: metadata,
+            supportsOCR: false,
+            ocrHint: nil,
+            ocrValidationTypes: nil
         )
     }
     
@@ -215,7 +229,10 @@ public struct DynamicFormField: Identifiable, Hashable {
             validationRules: validationRules,
             options: options,
             defaultValue: defaultValue,
-            metadata: metadata
+            metadata: metadata,
+            supportsOCR: false,
+            ocrHint: nil,
+            ocrValidationTypes: nil
         )
     }
     
@@ -232,6 +249,9 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.options = options
         self.defaultValue = value
         self.metadata = nil
+        self.supportsOCR = false
+        self.ocrHint = nil
+        self.ocrValidationTypes = nil
     }
     
     /// Discover field-level display hints from the field's metadata
