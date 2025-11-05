@@ -12,17 +12,17 @@ public struct VisionSafety: View {
         VStack(spacing: 12) {
             Text("Vision Safety")
                 .font(.headline)
-                .accessibilityIdentifier("SixLayer.main.element.visionsafety.title")
+                .automaticAccessibilityIdentifiers(named: "Title")
             
             Text("Safety features for spatial computing")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .accessibilityIdentifier("SixLayer.main.element.visionsafety.description")
+                .automaticAccessibilityIdentifiers(named: "Description")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .accessibilityIdentifier("SixLayer.main.element.visionsafety.container")
+        .automaticAccessibilityIdentifiers(named: "VisionSafety")
     }
 }
 

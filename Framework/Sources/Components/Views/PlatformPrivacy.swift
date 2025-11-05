@@ -12,17 +12,17 @@ public struct PlatformPrivacy: View {
         VStack(spacing: 12) {
             Text("Platform Privacy")
                 .font(.headline)
-                .accessibilityIdentifier("SixLayer.main.element.platformprivacy.title")
+                .automaticAccessibilityIdentifiers(named: "Title")
             
             Text("Privacy features across platforms")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .accessibilityIdentifier("SixLayer.main.element.platformprivacy.description")
+                .automaticAccessibilityIdentifiers(named: "Description")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .accessibilityIdentifier("SixLayer.main.element.platformprivacy.container")
+        .automaticAccessibilityIdentifiers(named: "PlatformPrivacy")
     }
 }
 

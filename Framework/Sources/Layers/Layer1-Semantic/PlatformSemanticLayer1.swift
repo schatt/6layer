@@ -3068,7 +3068,8 @@ public struct GenericContentView: View {
             return AnyView(platformPresentBasicValue_L1(value: content, hints: hints))
         } else {
             // Fallback to generic presentation for truly unknown types
-            return AnyView(GenericFallbackView(content: content, hints: hints))
+            return AnyView(GenericFallbackView(content: content, hints: hints)
+                .automaticAccessibilityIdentifiers(named: "GenericContentView"))
         }
     }
     
@@ -3167,6 +3168,7 @@ private struct BasicValueView: View {
         .padding()
         .background(Color.blue.opacity(0.1))
         .cornerRadius(12)
+        .automaticAccessibilityIdentifiers(named: "BasicValueView")
     }
 }
 
@@ -3215,6 +3217,7 @@ private struct BasicArrayView: View {
         .padding()
         .background(Color.orange.opacity(0.1))
         .cornerRadius(12)
+        .automaticAccessibilityIdentifiers(named: "BasicArrayView")
     }
 }
 
@@ -3256,7 +3259,7 @@ private struct GenericFallbackView: View {
         .padding()
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(12)
-        .automaticAccessibilityIdentifiers()
+        .automaticAccessibilityIdentifiers(named: "GenericFallbackView")
     }
 }
 
@@ -3462,6 +3465,7 @@ public struct GenericSettingsView: View {
         .onAppear {
             initializeValues()
         }
+        .automaticAccessibilityIdentifiers(named: "GenericSettingsView")
     }
     
     private func initializeValues() {
