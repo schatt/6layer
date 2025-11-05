@@ -16,6 +16,21 @@
 import SwiftUI
 import Foundation
 
+// MARK: - Label Text Sanitization
+
+/// Sanitize label text for use in accessibility identifiers
+/// Converts to lowercase, replaces spaces and special chars with hyphens
+/// - Parameter label: The label text to sanitize
+/// - Returns: Sanitized label suitable for use in identifiers (lowercase, hyphenated, alphanumeric only)
+private func sanitizeLabelText(_ label: String) -> String {
+    return label
+        .lowercased()
+        .replacingOccurrences(of: " ", with: "-")
+        .replacingOccurrences(of: "[^a-z0-9-]", with: "-", options: .regularExpression)
+        .replacingOccurrences(of: "-+", with: "-", options: .regularExpression) // Collapse multiple hyphens
+        .trimmingCharacters(in: CharacterSet(charactersIn: "-")) // Remove leading/trailing hyphens
+}
+
 // MARK: - Config Observer Helper
 
 /// Helper class to observe AccessibilityIdentifierConfig changes so modifiers re-execute
@@ -137,10 +152,9 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
             identifierComponents.append(componentName)
         }
         
-        // TDD GREEN: Include sanitized label text if available
+        // Include sanitized label text if available (for components with String labels)
         if let label = accessibilityIdentifierLabel, !label.isEmpty {
-            let sanitizedLabel = sanitizeLabelText(label)
-            identifierComponents.append(sanitizedLabel)
+            identifierComponents.append(sanitizeLabelText(label))
         }
         
         if config.includeElementTypes {
@@ -177,16 +191,6 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         return identifier
     }
     
-    /// Sanitize label text for use in accessibility identifiers
-    /// Converts to lowercase, replaces spaces and special chars with hyphens
-    private func sanitizeLabelText(_ label: String) -> String {
-        return label
-            .lowercased()
-            .replacingOccurrences(of: " ", with: "-")
-            .replacingOccurrences(of: "[^a-z0-9-]", with: "-", options: .regularExpression)
-            .replacingOccurrences(of: "-+", with: "-", options: .regularExpression) // Collapse multiple hyphens
-            .trimmingCharacters(in: CharacterSet(charactersIn: "-")) // Remove leading/trailing hyphens
-    }
 }
 
 // MARK: - Named Automatic Accessibility Identifiers Modifier
