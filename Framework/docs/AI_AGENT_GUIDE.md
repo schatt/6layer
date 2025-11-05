@@ -261,10 +261,62 @@ platformPresentFormData_L1(
 
 **📚 For complete field hints documentation, see:**
 - [Field Hints Complete Guide](FieldHintsCompleteGuide.md) - Comprehensive usage guide
-- [Field Hints Guide](FieldHintsGuide.md) - Quick start
+- [Field Hints Guide](FieldHintsGuide.md) - Quick start and layout hints
 - [Hints DRY Architecture](HintsDRYArchitecture.md) - DRY principles
 
-### **7. OCR Intelligence Features (NEW in v5.0.0):**
+### **7. Layout Hints and Section Grouping (NEW in v5.0.0+):**
+
+Layout hints extend field-level hints to include **structural organization** - defining how groups of fields should be displayed together.
+
+**Key principle**: Layout hints describe **data relationships** - which fields belong together and in what order. They're **hints, not commandments** - the framework adapts layouts responsively.
+
+```swift
+// ✅ NEW: Add _sections to your .hints file
+// User.hints:
+{
+  "username": { "displayWidth": "medium" },
+  "email": { "displayWidth": "wide" },
+  "bio": { "displayWidth": "wide" },
+  "_sections": [
+    {
+      "id": "account",
+      "title": "Account Information",
+      "fields": ["username", "email"],
+      "layoutStyle": "vertical"
+    },
+    {
+      "id": "profile",
+      "title": "Profile",
+      "fields": ["bio"],
+      "layoutStyle": "horizontal"
+    }
+  ]
+}
+
+// Usage (hints loaded automatically!)
+platformPresentFormData_L1(
+    fields: userFields,
+    hints: EnhancedPresentationHints(...),
+    modelName: "User"  // Loads User.hints with _sections!
+)
+```
+
+**Layout Styles** (all are hints - framework adapts):
+- `vertical`: Fields stacked vertically (default)
+- `horizontal`: Fields side-by-side (2 columns)
+- `grid`: Adaptive grid based on field count
+- `adaptive`: Framework chooses (vertical ≤4, horizontal ≤8, grid >8)
+
+**Precedence**:
+1. Explicit `LayoutSpec` (highest priority)
+2. Hints file `_sections`
+3. Framework defaults (lowest)
+
+**📚 For complete layout hints documentation, see:**
+- [Field Hints Guide](FieldHintsGuide.md#layout-hints-and-section-grouping) - Layout hints section
+- [Field Hints Complete Guide](FieldHintsCompleteGuide.md#layout-hints-and-section-grouping) - Comprehensive guide
+
+### **8. OCR Intelligence Features (NEW in v5.0.0):**
 
 #### **🎯 Calculation Groups - Intelligent Form Calculations**
 ```swift

@@ -4,8 +4,8 @@ import SwiftUI
 
 /// Base class for all tests following DRY principle
 /// Provides common setup and teardown functionality for all test classes
-    @MainActor
-    open class BaseTestClass {
+@MainActor
+open class BaseTestClass {
     
     // MARK: - Test Config (Isolated Instance)
     

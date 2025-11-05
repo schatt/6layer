@@ -7,14 +7,15 @@
 3. [Getting Started](#getting-started)
 4. [Usage Examples](#usage-examples)
 5. [Hints File Format](#hints-file-format)
-6. [Display Width System](#display-width-system)
-7. [Field Hints Properties](#field-hints-properties)
-8. [Storage and Organization](#storage-and-organization)
-9. [Caching and Performance](#caching-and-performance)
-10. [Testing](#testing)
-11. [Migration Guide](#migration-guide)
-12. [Best Practices](#best-practices)
-13. [Troubleshooting](#troubleshooting)
+6. [Layout Hints and Section Grouping](#layout-hints-and-section-grouping) (NEW in v5.0.0+)
+7. [Display Width System](#display-width-system)
+8. [Field Hints Properties](#field-hints-properties)
+9. [Storage and Organization](#storage-and-organization)
+10. [Caching and Performance](#caching-and-performance)
+11. [Testing](#testing)
+12. [Migration Guide](#migration-guide)
+13. [Best Practices](#best-practices)
+14. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -225,6 +226,202 @@ JSON doesn't support comments, but you can document in a separate file:
   }
 }
 ```
+
+---
+
+## Layout Hints and Section Grouping
+
+### Overview
+
+Layout hints extend the field-level hints system to include **structural organization** - defining how groups of fields should be displayed together and what layout style to use for each group.
+
+**Key principle**: Layout hints describe **data relationships** - which fields belong together and in what order. They're **hints, not commandments** - the framework adapts layouts responsively based on available space and platform capabilities.
+
+### Adding Sections to Hints Files
+
+Add a `_sections` array to your `.hints` file to define field groupings:
+
+**User.hints**:
+```json
+{
+  "username": {
+    "displayWidth": "medium",
+    "expectedLength": 20
+  },
+  "email": {
+    "displayWidth": "wide"
+  },
+  "bio": {
+    "displayWidth": "wide",
+    "showCharacterCounter": true
+  },
+  "postalCode": {
+    "displayWidth": "narrow"
+  },
+  "_sections": [
+    {
+      "id": "basic-info",
+      "title": "Basic Information",
+      "description": "Enter your account details",
+      "fields": ["username", "email"],
+      "layoutStyle": "vertical"
+    },
+    {
+      "id": "personal-info",
+      "title": "Personal Details",
+      "fields": ["bio", "postalCode"],
+      "layoutStyle": "horizontal"
+    }
+  ]
+}
+```
+
+### Section Properties
+
+Each section in `_sections` supports:
+
+| Property | Required | Type | Description |
+|----------|----------|------|-------------|
+| `id` | Yes | String | Unique identifier for the section |
+| `title` | Yes | String | Section title (used for accessibility) |
+| `description` | No | String | Optional section description text |
+| `fields` | No | Array[String] | Field IDs that belong to this section, in display order |
+| `layoutStyle` | No | String | Layout strategy (see below) |
+
+### Layout Styles
+
+The `layoutStyle` property supports the following values. **All are hints** - the framework adapts based on available space:
+
+- **`vertical`** (default): Fields stacked vertically
+- **`horizontal`**: Fields displayed side-by-side (2 columns)
+- **`grid`**: Adaptive grid layout based on field count
+- **`adaptive`**: Framework chooses layout based on field count:
+  - ≤4 fields: vertical
+  - 5-8 fields: horizontal (2 columns)
+  - >8 fields: grid
+- **`standard`**, **`compact`**, **`spacious`**: Vertical layouts with different spacing
+
+### Precedence Rules
+
+Layout resolution follows this precedence (highest to lowest):
+
+1. **Explicit LayoutSpec**: If you pass a `LayoutSpec` to `platformPresentFormData_L1`, it overrides hints
+2. **Hints file `_sections`**: Sections defined in `.hints` file
+3. **Framework defaults**: Single default section with all fields
+
+### Complete Example
+
+**User.hints**:
+```json
+{
+  "username": {
+    "displayWidth": "medium",
+    "expectedLength": 20
+  },
+  "email": {
+    "displayWidth": "wide"
+  },
+  "bio": {
+    "displayWidth": "wide",
+    "showCharacterCounter": true
+  },
+  "phone": {
+    "displayWidth": "medium"
+  },
+  "address": {
+    "displayWidth": "wide"
+  },
+  "postalCode": {
+    "displayWidth": "narrow"
+  },
+  "_sections": [
+    {
+      "id": "account",
+      "title": "Account Information",
+      "description": "Your login credentials",
+      "fields": ["username", "email"],
+      "layoutStyle": "vertical"
+    },
+    {
+      "id": "contact",
+      "title": "Contact Information",
+      "fields": ["phone", "address", "postalCode"],
+      "layoutStyle": "horizontal"
+    },
+    {
+      "id": "profile",
+      "title": "Profile",
+      "fields": ["bio"],
+      "layoutStyle": "vertical"
+    }
+  ]
+}
+```
+
+**Usage in Swift**:
+```swift
+let fields = [
+    DynamicFormField(id: "username", contentType: .text, label: "Username"),
+    DynamicFormField(id: "email", contentType: .email, label: "Email"),
+    DynamicFormField(id: "phone", contentType: .telephoneNumber, label: "Phone"),
+    DynamicFormField(id: "address", contentType: .text, label: "Address"),
+    DynamicFormField(id: "postalCode", textContentType: .postalCode, label: "Postal Code"),
+    DynamicFormField(id: "bio", contentType: .textarea, label: "Biography")
+]
+
+platformPresentFormData_L1(
+    fields: fields,
+    hints: EnhancedPresentationHints(
+        dataType: .form,
+        context: .create
+    ),
+    modelName: "User"  // Loads User.hints with _sections automatically!
+)
+```
+
+### Programmatic Override with LayoutSpec
+
+For special cases where you need to override hints programmatically:
+
+```swift
+let customLayout = LayoutSpec(sections: [
+    DynamicFormSection(
+        id: "custom-section",
+        title: "Custom Layout",
+        fields: [fields[0], fields[1]],
+        layoutStyle: .grid
+    )
+])
+
+platformPresentFormData_L1(
+    fields: fields,
+    hints: EnhancedPresentationHints(...),
+    modelName: "User",
+    layoutSpec: customLayout  // Overrides hints file sections
+)
+```
+
+### Missing Fields Handling
+
+If a section references a field ID that doesn't exist in your form fields:
+- A warning is logged to the console: `⚠️ Warning: Section '...' references fields that don't exist: ...`
+- The missing field is ignored
+- The section is created with the remaining valid fields
+
+This provides graceful degradation - your hints file can reference fields that aren't always present.
+
+### Field Order Preservation
+
+Fields within a section are displayed **in the order specified in the `fields` array** in your hints file. This gives you full control over field ordering within each section.
+
+### Benefits
+
+1. **Data-Driven Layout**: Layout structure defined with your data, not scattered in code
+2. **DRY**: Define layout once in hints, use everywhere
+3. **Responsive**: Framework adapts layouts based on available space
+4. **Accessible**: Section titles used for accessibility identifiers
+5. **Flexible**: Can override programmatically with `LayoutSpec` when needed
+6. **Backward Compatible**: Existing hints files without `_sections` continue to work
 
 ---
 

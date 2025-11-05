@@ -1,0 +1,60 @@
+{
+  "username": {
+    "expectedLength": 20,
+    "displayWidth": "medium",
+    "maxLength": 50,
+    "minLength": 3,
+    "showCharacterCounter": "false"
+  },
+  "email": {
+    "expectedLength": 30,
+    "displayWidth": "wide",
+    "maxLength": 255
+  },
+  "bio": {
+    "expectedLength": 500,
+    "displayWidth": "wide",
+    "maxLength": 1000,
+    "minLength": 10,
+    "showCharacterCounter": "true"
+  },
+  "phone": {
+    "expectedLength": 15,
+    "displayWidth": "medium",
+    "maxLength": 20
+  },
+  "address": {
+    "expectedLength": 100,
+    "displayWidth": "wide",
+    "maxLength": 200
+  },
+  "postalCode": {
+    "expectedLength": 10,
+    "displayWidth": "narrow",
+    "maxLength": 10
+  },
+  "_sections": [
+    {
+      "id": "account",
+      "title": "Account Information",
+      "description": "Your login credentials",
+      "fields": ["username", "email"],
+      "layoutStyle": "vertical"
+    },
+    {
+      "id": "contact",
+      "title": "Contact Information",
+      "description": "How we can reach you",
+      "fields": ["phone", "address", "postalCode"],
+      "layoutStyle": "horizontal"
+    },
+    {
+      "id": "profile",
+      "title": "Profile",
+      "description": "Tell us about yourself",
+      "fields": ["bio"],
+      "layoutStyle": "vertical"
+    }
+  ]
+}
+
