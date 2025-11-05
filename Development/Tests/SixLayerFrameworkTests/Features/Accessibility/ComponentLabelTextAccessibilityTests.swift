@@ -1921,5 +1921,45 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    /// Test that platformValidationMessage includes message in identifier
+    @Test func testPlatformValidationMessageIncludesMessageInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformValidationMessage should include message text in identifier
+        // Note: If used in ForEach loops with multiple errors, each should be unique
+        let message1 = VStack {
+            Text("Content")
+        }
+        .platformValidationMessage("Email is required", type: .error)
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let message2 = VStack {
+            Text("Content")
+        }
+        .platformValidationMessage("Password too short", type: .error)
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try message1.inspect()
+            let message1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try message2.inspect()
+            let message2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - messages with different text should have different IDs
+            #expect(message1ID != message2ID, 
+                   "platformValidationMessage with different messages should have different identifiers")
+            #expect(message1ID.contains("email") || message1ID.contains("required") || message1ID.contains("Email"), 
+                   "platformValidationMessage identifier should include message text")
+            
+            print("🔴 RED: Validation Message 1 ID: '\(message1ID)'")
+            print("🔴 RED: Validation Message 2 ID: '\(message2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformValidationMessage: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
