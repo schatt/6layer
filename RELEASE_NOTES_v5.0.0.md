@@ -142,12 +142,19 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Accessibility Configuration**: Review and update accessibility identifier configurations if using custom settings
 - **Test Updates**: Update any tests that may be affected by the new accessibility identifier patterns
 - **Platform Detection**: Verify that platform capability detection works as expected in your environment
+- **platformListRow Migration**: If using `platformListRow`, migrate to the new title-based API:
+  - **Old API**: `.platformListRow { Text("Item Title") }`
+  - **New API**: `.platformListRow(title: "Item Title") { }`
+  - **Migration Tool**: Use `scripts/migrate_platform_list_row.py` for automated migration
+  - **Benefits**: Automatic label text inclusion in accessibility identifiers
 
 ### New Features
 - **Calculation Groups**: Implement intelligent form calculations with `DynamicFormField.calculationGroups` for OCR-powered form filling
 - **OCR Field Hints**: Use `DynamicFormField.ocrHints` arrays to improve OCR recognition accuracy
 - **Advanced OCR Integration**: Leverage `DynamicFormState.calculateFieldFromGroups()` for complex form relationships
 - **Automatic Accessibility**: Enable `.automaticAccessibilityIdentifiers()` on components for enhanced accessibility
+- **Label Text in Identifiers**: All components with String labels automatically include sanitized label text in accessibility identifiers
+- **platformListRow Title API**: Use the new title-based API for automatic label extraction: `.platformListRow(title: "Item") { }`
 - **TDD Testing**: Leverage the comprehensive test suite for better development practices
 - **Platform Testing**: Use the enhanced platform testing capabilities for cross-platform validation
 
