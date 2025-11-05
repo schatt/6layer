@@ -23,8 +23,8 @@ AI agents need to understand:
 7. **[OCR Intelligence Features (v5.0.0)](#7-ocr-intelligence-features-new-in-v500)** - Advanced OCR form-filling with calculation groups and field hints
 8. **[Accessibility Improvements (v5.0.0)](#8-accessibility-improvements-new-in-v500)** - Label text inclusion and platformListRow API refactoring
 9. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
-9. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
-10. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
+10. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
+11. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
 
 ## 🏗️ **Framework Architecture (Correct Understanding)**
 
