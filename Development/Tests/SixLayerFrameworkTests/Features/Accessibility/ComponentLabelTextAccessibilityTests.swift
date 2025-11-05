@@ -1691,5 +1691,235 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - Platform Extension Functions with Title/Label Tests
+    
+    /// Test that platformListSectionHeader includes title in identifier
+    @Test func testPlatformListSectionHeaderIncludesTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformListSectionHeader should include title in identifier
+        let header1 = VStack {
+            Text("Content")
+        }
+        .platformListSectionHeader(title: "Section One", subtitle: "Subtitle")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let header2 = VStack {
+            Text("Content")
+        }
+        .platformListSectionHeader(title: "Section Two")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try header1.inspect()
+            let header1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try header2.inspect()
+            let header2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - headers with different titles should have different IDs
+            #expect(header1ID != header2ID, 
+                   "platformListSectionHeader with different titles should have different identifiers")
+            #expect(header1ID.contains("section") || header1ID.contains("one") || header1ID.contains("Section"), 
+                   "platformListSectionHeader identifier should include title")
+            
+            print("🔴 RED: Section Header 1 ID: '\(header1ID)'")
+            print("🔴 RED: Section Header 2 ID: '\(header2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformListSectionHeader: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that platformFormField includes label in identifier
+    @Test func testPlatformFormFieldIncludesLabelInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformFormField should include label in identifier
+        let field1 = VStack {
+            TextField("", text: .constant(""))
+        }
+        .platformFormField(label: "Email Address")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let field2 = VStack {
+            TextField("", text: .constant(""))
+        }
+        .platformFormField(label: "Phone Number")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try field1.inspect()
+            let field1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try field2.inspect()
+            let field2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - fields with different labels should have different IDs
+            #expect(field1ID != field2ID, 
+                   "platformFormField with different labels should have different identifiers")
+            #expect(field1ID.contains("email") || field1ID.contains("address") || field1ID.contains("Email"), 
+                   "platformFormField identifier should include label")
+            
+            print("🔴 RED: Form Field 1 ID: '\(field1ID)'")
+            print("🔴 RED: Form Field 2 ID: '\(field2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformFormField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that platformFormFieldGroup includes title in identifier
+    @Test func testPlatformFormFieldGroupIncludesTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformFormFieldGroup should include title in identifier
+        let group1 = VStack {
+            Text("Content")
+        }
+        .platformFormFieldGroup(title: "Personal Information")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let group2 = VStack {
+            Text("Content")
+        }
+        .platformFormFieldGroup(title: "Contact Details")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try group1.inspect()
+            let group1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try group2.inspect()
+            let group2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - groups with different titles should have different IDs
+            #expect(group1ID != group2ID, 
+                   "platformFormFieldGroup with different titles should have different identifiers")
+            #expect(group1ID.contains("personal") || group1ID.contains("information") || group1ID.contains("Personal"), 
+                   "platformFormFieldGroup identifier should include title")
+            
+            print("🔴 RED: Form Field Group 1 ID: '\(group1ID)'")
+            print("🔴 RED: Form Field Group 2 ID: '\(group2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformFormFieldGroup: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that platformListEmptyState includes title in identifier
+    @Test func testPlatformListEmptyStateIncludesTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformListEmptyState should include title in identifier
+        let emptyState1 = VStack {
+            Text("Content")
+        }
+        .platformListEmptyState(systemImage: "tray", title: "No Items", message: "Add items to get started")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let emptyState2 = VStack {
+            Text("Content")
+        }
+        .platformListEmptyState(systemImage: "tray", title: "No Results", message: "Try a different search")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try emptyState1.inspect()
+            let state1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try emptyState2.inspect()
+            let state2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - empty states with different titles should have different IDs
+            #expect(state1ID != state2ID, 
+                   "platformListEmptyState with different titles should have different identifiers")
+            #expect(state1ID.contains("no") || state1ID.contains("items") || state1ID.contains("No"), 
+                   "platformListEmptyState identifier should include title")
+            
+            print("🔴 RED: Empty State 1 ID: '\(state1ID)'")
+            print("🔴 RED: Empty State 2 ID: '\(state2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformListEmptyState: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that platformDetailPlaceholder includes title in identifier
+    @Test func testPlatformDetailPlaceholderIncludesTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: platformDetailPlaceholder should include title in identifier
+        let placeholder1 = VStack {
+            Text("Content")
+        }
+        .platformDetailPlaceholder(systemImage: "doc", title: "Select an Item", message: "Choose an item to view details")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let placeholder2 = VStack {
+            Text("Content")
+        }
+        .platformDetailPlaceholder(systemImage: "doc", title: "No Selection", message: "Please select an item")
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try placeholder1.inspect()
+            let placeholder1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try placeholder2.inspect()
+            let placeholder2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - placeholders with different titles should have different IDs
+            #expect(placeholder1ID != placeholder2ID, 
+                   "platformDetailPlaceholder with different titles should have different identifiers")
+            #expect(placeholder1ID.contains("select") || placeholder1ID.contains("item") || placeholder1ID.contains("Select"), 
+                   "platformDetailPlaceholder identifier should include title")
+            
+            print("🔴 RED: Detail Placeholder 1 ID: '\(placeholder1ID)'")
+            print("🔴 RED: Detail Placeholder 2 ID: '\(placeholder2ID)'")
+        } catch {
+            Issue.record("Failed to inspect platformDetailPlaceholder: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that ActionButton includes title in identifier
+    @Test func testActionButtonIncludesTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: ActionButton should include title in identifier
+        let button1 = ActionButton(title: "Save", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let button2 = ActionButton(title: "Delete", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try button1.inspect()
+            let button1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try button2.inspect()
+            let button2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - buttons with different titles should have different IDs
+            #expect(button1ID != button2ID, 
+                   "ActionButton with different titles should have different identifiers")
+            #expect(button1ID.contains("save") || button1ID.contains("Save"), 
+                   "ActionButton identifier should include title")
+            
+            print("🔴 RED: ActionButton 1 ID: '\(button1ID)'")
+            print("🔴 RED: ActionButton 2 ID: '\(button2ID)'")
+        } catch {
+            Issue.record("Failed to inspect ActionButton: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
