@@ -571,7 +571,7 @@ open class DynamicFormViewTests {
         let config = DynamicFormConfiguration(
             id: "receipt-form",
             title: "Fuel Receipt",
-            sections: [DynamicFormSection(fields: [gallonsField, priceField])]
+            sections: [DynamicFormSection(id: "section1", title: "Fuel Information", fields: [gallonsField, priceField])]
         )
 
         let formState = DynamicFormState(configuration: config)
@@ -642,13 +642,13 @@ open class DynamicFormViewTests {
         let configWithOCR = DynamicFormConfiguration(
             id: "form-with-ocr",
             title: "Form with OCR",
-            sections: [DynamicFormSection(fields: [ocrField])]
+            sections: [DynamicFormSection(id: "section1", title: "OCR Section", fields: [ocrField])]
         )
 
         let configWithoutOCR = DynamicFormConfiguration(
             id: "form-without-ocr",
             title: "Form without OCR",
-            sections: [DynamicFormSection(fields: [regularField])]
+            sections: [DynamicFormSection(id: "section1", title: "Regular Section", fields: [regularField])]
         )
 
         let viewWithOCR = DynamicFormView(configuration: configWithOCR, onSubmit: { _ in })
@@ -699,7 +699,7 @@ open class DynamicFormViewTests {
         let config = DynamicFormConfiguration(
             id: "multi-number-form",
             title: "Multiple Numbers",
-            sections: [DynamicFormSection(fields: [field1, field2])]
+            sections: [DynamicFormSection(id: "section1", title: "Numbers", fields: [field1, field2])]
         )
 
         let formState = DynamicFormState(configuration: config)
