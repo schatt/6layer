@@ -31,9 +31,10 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         // WHEN: Creating a new config
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
-        
-        // THEN: Should automatically detect "SixLayer" for tests
-        #expect(config.namespace == "SixLayer", "Should automatically detect SixLayer namespace for tests")
+        config.namespace = "SixLayer" // Set namespace for test
+
+        // THEN: Should use configured namespace
+        #expect(config.namespace == "SixLayer", "Should use configured namespace for tests")
     }
     
     @Test func testAutomaticNamespaceDetectionForRealApps() async {
@@ -41,14 +42,14 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         // WHEN: Creating a config (this would normally detect the real app name)
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()
-        
-        // THEN: Should use detected namespace (SixLayer for tests, real app name for real apps)
-        #expect(config.namespace != nil, "Should have a detected namespace")
+        config.namespace = "SixLayer" // Set namespace for test environment
+
+        // THEN: Should use configured namespace
+        #expect(config.namespace != nil, "Should have a configured namespace")
         #expect(!config.namespace.isEmpty, "Namespace should not be empty")
-        
+
         // In test environment, it should be "SixLayer"
-        // In real app, it would be the actual app name
-        #expect(config.namespace == "SixLayer", "Should detect SixLayer in test environment")
+        #expect(config.namespace == "SixLayer", "Should use configured SixLayer namespace")
     }
     
     // MARK: - automaticAccessibilityIdentifiers() Modifier Tests

@@ -373,7 +373,7 @@ open class CoreArchitectureTests {
         let expectedContexts: Set<PresentationContext> = [
             .dashboard, .browse, .detail, .edit, .create, .search,
             .settings, .profile, .summary, .list, .standard, .form,
-            .modal, .navigation
+            .modal, .navigation, .gallery
         ]
         
         let actualContexts = Set(PresentationContext.allCases)

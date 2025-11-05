@@ -125,7 +125,7 @@ public enum SixLayerTextContentType: String, CaseIterable, Hashable {
 // MARK: - Dynamic Form Field Types
 
 /// Represents a dynamic form field configuration
-public struct DynamicFormField: Identifiable, Hashable {
+public struct DynamicFormField: Identifiable {
     public let id: String
     public let textContentType: SixLayerTextContentType?  // Cross-platform text content type
     public let contentType: DynamicContentType?      // Our custom enum for UI components
@@ -143,7 +143,16 @@ public struct DynamicFormField: Identifiable, Hashable {
     public let ocrHint: String? // Hint for OCR processing (e.g., "expect phone number", "expect address")
     public let ocrValidationTypes: [TextType]? // Expected OCR text types for validation
     public let ocrFieldIdentifier: String? // Unique identifier for mapping OCR results to specific fields
-    
+    public let ocrValidationRules: [String: Any]? // Custom validation rules (e.g., ["min": 0, "max": 100])
+    public let ocrHints: [String]? // Keywords to help identify this field in OCR text (e.g., ["gallons", "gal", "fuel"])
+
+    // Calculation Configuration
+    public let isCalculated: Bool // Whether this field is calculated from other fields
+    public let calculationFormula: String? // Formula for calculated fields (e.g., "total_price / gallons")
+    public let calculationDependencies: [String]? // Field IDs this calculation depends on
+    public let calculationGroups: [CalculationGroup]? // Groups of calculations that can compute this field
+
+
     public init(
         id: String,
         textContentType: SixLayerTextContentType? = nil,
@@ -159,7 +168,13 @@ public struct DynamicFormField: Identifiable, Hashable {
         supportsOCR: Bool = false,
         ocrHint: String? = nil,
         ocrValidationTypes: [TextType]? = nil,
-        ocrFieldIdentifier: String? = nil
+        ocrFieldIdentifier: String? = nil,
+        ocrValidationRules: [String: Any]? = nil,
+        ocrHints: [String]? = nil,
+        isCalculated: Bool = false,
+        calculationFormula: String? = nil,
+        calculationDependencies: [String]? = nil,
+        calculationGroups: [CalculationGroup]? = nil
     ) {
         self.id = id
         self.textContentType = textContentType
@@ -176,6 +191,12 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.ocrHint = ocrHint
         self.ocrValidationTypes = ocrValidationTypes
         self.ocrFieldIdentifier = ocrFieldIdentifier
+        self.ocrValidationRules = ocrValidationRules
+        self.ocrHints = ocrHints
+        self.isCalculated = isCalculated
+        self.calculationFormula = calculationFormula
+        self.calculationDependencies = calculationDependencies
+        self.calculationGroups = calculationGroups
     }
     
     /// Convenience initializer for text fields using cross-platform text content type
@@ -258,6 +279,12 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.ocrHint = nil
         self.ocrValidationTypes = nil
         self.ocrFieldIdentifier = nil
+        self.ocrValidationRules = nil
+        self.ocrHints = nil
+        self.isCalculated = false
+        self.calculationFormula = nil
+        self.calculationDependencies = nil
+        self.calculationGroups = nil
     }
     
 
@@ -360,7 +387,7 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
 // MARK: - Dynamic Form Section
 
 /// Represents a section in a dynamic form
-public struct DynamicFormSection: Identifiable, Hashable {
+public struct DynamicFormSection: Identifiable {
     public let id: String
     public let title: String
     public let description: String?
@@ -391,7 +418,7 @@ public struct DynamicFormSection: Identifiable, Hashable {
 // MARK: - Dynamic Form Configuration
 
 /// Complete configuration for a dynamic form
-public struct DynamicFormConfiguration: Identifiable, Hashable {
+public struct DynamicFormConfiguration: Identifiable {
     public let id: String
     public let title: String
     public let description: String?
@@ -440,9 +467,58 @@ public struct DynamicFormConfiguration: Identifiable, Hashable {
     }
 }
 
+// MARK: - Calculation Groups
+
+/// Represents a group of fields that can be used to calculate a target field
+public struct CalculationGroup {
+    /// Unique identifier for this calculation group
+    public let id: String
+    /// Formula for calculating the target field (e.g., "total = price * quantity")
+    public let formula: String
+    /// Field IDs that this formula depends on
+    public let dependentFields: [String]
+    /// Priority for calculation order (lower numbers = higher priority)
+    public let priority: Int
+
+    public init(id: String, formula: String, dependentFields: [String], priority: Int) {
+        self.id = id
+        self.formula = formula
+        self.dependentFields = dependentFields
+        self.priority = priority
+    }
+}
+
+/// Confidence level for calculated field values
+public enum CalculationConfidence {
+    /// High confidence - all calculation groups agree or only one group calculated
+    case high
+    /// Medium confidence - some uncertainty but generally reliable
+    case medium
+    /// Very low confidence - calculation groups produced conflicting results
+    case veryLow
+}
+
+/// Result of calculating a field from calculation groups
+public struct GroupCalculationResult {
+    /// The calculated value
+    public let calculatedValue: Double
+    /// Confidence in the calculation result
+    public let confidence: CalculationConfidence
+    /// ID of the calculation group that was used (for high confidence single calculations)
+    public let usedGroupId: String?
+}
+
 // MARK: - Dynamic Form State
 
 /// State management for dynamic forms
+/// Result of calculating a missing field from OCR data
+public struct CalculatedFieldResult {
+    /// The ID of the calculated field
+    public let fieldId: String
+    /// The calculated value
+    public let calculatedValue: Double
+}
+
 public class DynamicFormState: ObservableObject {
     @Published public var fieldValues: [String: Any] = [:]
     @Published public var fieldErrors: [String: [String]] = [:]
@@ -528,7 +604,234 @@ public class DynamicFormState: ObservableObject {
             fieldValues[field.id] = defaultValue
         }
     }
-    
+
+    /// Calculate a field value from other field values using a formula
+    /// - Parameters:
+    ///   - formula: The calculation formula (e.g., "total_price / gallons")
+    ///   - dependencies: Array of field IDs that the formula depends on
+    /// - Returns: The calculated value as Double, or nil if calculation fails
+    public func calculateFieldValue(formula: String, dependencies: [String]) -> Double? {
+        // Parse the formula and evaluate it using current field values
+        // This is a basic implementation that supports simple arithmetic
+
+        var processedFormula = formula
+
+        // Replace field references with their current values
+        for dependency in dependencies {
+            if let value = fieldValues[dependency] {
+                // Convert to string for replacement
+                let stringValue = String(describing: value)
+                processedFormula = processedFormula.replacingOccurrences(of: dependency, with: stringValue)
+            } else {
+                // If any dependency is missing, can't calculate
+                return nil
+            }
+        }
+
+        // Evaluate the mathematical expression
+        return evaluateMathExpression(processedFormula)
+    }
+
+    /// Calculate missing fields from available OCR data
+    /// Given a set of available field values and possible calculation formulas,
+    /// determines which field is missing and calculates it
+    /// - Parameters:
+    ///   - availableFields: Array of field IDs that have values
+    ///   - possibleFormulas: Dictionary mapping field IDs to their calculation formulas
+    /// - Returns: A CalculatedFieldResult if a field can be calculated, nil otherwise
+    public func calculateMissingFieldFromOCR(
+        availableFields: [String],
+        possibleFormulas: [String: String]
+    ) -> CalculatedFieldResult? {
+        // Find which fields are missing from the available set
+        let allFields = Set(possibleFormulas.keys)
+        let availableSet = Set(availableFields)
+        let missingFields = allFields.subtracting(availableSet)
+
+        // If no fields are missing, nothing to calculate
+        if missingFields.isEmpty {
+            return nil
+        }
+
+        // If more than one field is missing, we can't determine which to calculate
+        if missingFields.count > 1 {
+            return nil
+        }
+
+        // There's exactly one missing field - try to calculate it
+        let missingField = missingFields.first!
+
+        if let formula = possibleFormulas[missingField] {
+            // Extract dependencies from the formula (simplified - assumes field names are used directly)
+            let dependencies = extractFieldDependencies(from: formula)
+
+            if let calculatedValue = calculateFieldValue(formula: formula, dependencies: dependencies) {
+                return CalculatedFieldResult(
+                    fieldId: missingField,
+                    calculatedValue: calculatedValue
+                )
+            }
+        }
+
+        return nil
+    }
+
+    /// Evaluate a simple mathematical expression
+    /// Supports basic arithmetic: +, -, *, /
+    private func evaluateMathExpression(_ expression: String) -> Double? {
+        // This is a very basic implementation for demonstration
+        // In a real implementation, you'd use a proper expression parser
+
+        let cleanedExpression = expression.replacingOccurrences(of: " ", with: "")
+
+        // Handle simple operations
+        if let result = evaluateSimpleExpression(cleanedExpression) {
+            return result
+        }
+
+        return nil
+    }
+
+    /// Evaluate simple expressions with one operator
+    private func evaluateSimpleExpression(_ expression: String) -> Double? {
+        // Look for operators in order of precedence
+        let operators: [(Character, (Double, Double) -> Double)] = [
+            ("/", { $0 / $1 }),
+            ("*", { $0 * $1 }),
+            ("-", { $0 - $1 }),
+            ("+", { $0 + $1 })
+        ]
+
+        for (opChar, operation) in operators {
+            if let opIndex = expression.firstIndex(of: opChar) {
+                let leftPart = String(expression[..<opIndex])
+                let rightPart = String(expression[expression.index(after: opIndex)...])
+
+                if let leftValue = Double(leftPart), let rightValue = Double(rightPart) {
+                    return operation(leftValue, rightValue)
+                }
+            }
+        }
+
+        // If no operators found, try to parse as a single number
+        return Double(expression)
+    }
+
+    /// Extract field dependencies from a formula
+    /// This is a simplified implementation that assumes field names are alphanumeric
+    private func extractFieldDependencies(from formula: String) -> [String] {
+        // Split by operators and extract field names
+        // This is very basic - a real implementation would need proper parsing
+
+        let operators: [Character] = ["+", "-", "*", "/", "(", ")"]
+        var currentWord = ""
+        var dependencies: [String] = []
+
+        for char in formula {
+            if operators.contains(char) || char.isWhitespace {
+                if !currentWord.isEmpty {
+                    dependencies.append(currentWord)
+                    currentWord = ""
+                }
+            } else {
+                currentWord.append(char)
+            }
+        }
+
+        if !currentWord.isEmpty {
+            dependencies.append(currentWord)
+        }
+
+        return dependencies
+    }
+
+    /// Calculate a field value using calculation groups with conflict resolution
+    /// - Parameters:
+    ///   - fieldId: The ID of the field to calculate
+    ///   - calculationGroups: Array of calculation groups that can compute this field
+    /// - Returns: GroupCalculationResult if calculation is possible, nil otherwise
+    public func calculateFieldFromGroups(
+        fieldId: String,
+        calculationGroups: [CalculationGroup]
+    ) -> GroupCalculationResult? {
+        // Sort groups by priority (lower number = higher priority)
+        let sortedGroups = calculationGroups.sorted { $0.priority < $1.priority }
+
+        var calculatedResults: [(value: Double, groupId: String)] = []
+
+        // Try to calculate using each group in priority order
+        for group in sortedGroups {
+            if canCalculateWithGroup(group) {
+                if let value = calculateWithGroup(group, targetFieldId: fieldId) {
+                    calculatedResults.append((value: value, groupId: group.id))
+                }
+            }
+        }
+
+        // No groups could calculate
+        if calculatedResults.isEmpty {
+            return nil
+        }
+
+        // Only one group calculated - high confidence
+        if calculatedResults.count == 1 {
+            let result = calculatedResults[0]
+            return GroupCalculationResult(
+                calculatedValue: result.value,
+                confidence: .high,
+                usedGroupId: result.groupId
+            )
+        }
+
+        // Multiple groups calculated - check for conflicts
+        let firstValue = calculatedResults[0].value
+        let allAgree = calculatedResults.allSatisfy { abs($0.value - firstValue) < 0.0001 }
+
+        if allAgree {
+            // All groups agree - high confidence
+            return GroupCalculationResult(
+                calculatedValue: firstValue,
+                confidence: .high,
+                usedGroupId: nil // Multiple groups agreed
+            )
+        } else {
+            // Groups disagree - very low confidence, use first (highest priority) result
+            return GroupCalculationResult(
+                calculatedValue: firstValue,
+                confidence: .veryLow,
+                usedGroupId: calculatedResults[0].groupId
+            )
+        }
+    }
+
+    /// Check if all dependent fields for a calculation group are available
+    private func canCalculateWithGroup(_ group: CalculationGroup) -> Bool {
+        return group.dependentFields.allSatisfy { fieldValues[$0] != nil }
+    }
+
+    /// Calculate a field value using a specific calculation group
+    private func calculateWithGroup(_ group: CalculationGroup, targetFieldId: String) -> Double? {
+        // Parse the formula: "target = expression"
+        let parts = group.formula.split(separator: "=", maxSplits: 1).map { $0.trimmingCharacters(in: .whitespaces) }
+
+        guard parts.count == 2 else { return nil }
+        let expression = parts[1]
+
+        // Replace field references with their values
+        var processedExpression = expression
+        for fieldId in group.dependentFields {
+            if let value = fieldValues[fieldId] {
+                let stringValue = String(describing: value)
+                processedExpression = processedExpression.replacingOccurrences(of: fieldId, with: stringValue)
+            } else {
+                return nil // Missing dependency
+            }
+        }
+
+        // Evaluate the mathematical expression
+        return evaluateMathExpression(processedExpression)
+    }
+
     /// Check if field has errors
     public func hasErrors(for fieldId: String) -> Bool {
         return !(fieldErrors[fieldId]?.isEmpty ?? true)

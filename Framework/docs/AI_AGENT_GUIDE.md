@@ -20,9 +20,10 @@ AI agents need to understand:
 4. **[Apple HIG Compliance](#-apple-hig-compliance-by-default)** - Automatic design compliance
 5. **[Settings Management](#️-settings-management)** - Centralized settings system
 6. **[Field-Level Display Hints (v4.8.0)](#6-field-level-display-hints-new-in-v480)** - Declarative data presentation hints
-7. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
-8. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
-9. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
+7. **[OCR Intelligence Features (v5.0.0)](#7-ocr-intelligence-features-new-in-v500)** - Advanced OCR form-filling with calculation groups and field hints
+8. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
+9. **[Image Processing Pipeline](#-image-processing-pipeline)** - Advanced image handling
+10. **[Generic Content Presentation](#-generic-content-presentation-runtime-unknown-content)** - Runtime content handling
 
 ## 🏗️ **Framework Architecture (Correct Understanding)**
 
@@ -261,6 +262,136 @@ platformPresentFormData_L1(
 - [Field Hints Complete Guide](FieldHintsCompleteGuide.md) - Comprehensive usage guide
 - [Field Hints Guide](FieldHintsGuide.md) - Quick start
 - [Hints DRY Architecture](HintsDRYArchitecture.md) - DRY principles
+
+### **7. OCR Intelligence Features (NEW in v5.0.0):**
+
+#### **🎯 Calculation Groups - Intelligent Form Calculations**
+```swift
+// ✅ NEW: Fields can belong to multiple calculation groups
+let totalField = DynamicFormField(
+    id: "total",
+    contentType: .number,
+    label: "Total Amount",
+    calculationGroups: [
+        CalculationGroup(
+            id: "price_times_quantity",
+            formula: "total = price * quantity",
+            dependentFields: ["price", "quantity"],
+            priority: 1
+        ),
+        CalculationGroup(
+            id: "subtotal_plus_tax",
+            formula: "total = subtotal + tax",
+            dependentFields: ["subtotal", "tax"],
+            priority: 2
+        )
+    ]
+)
+
+// Framework automatically:
+// 1. Calculates missing values from available OCR data
+// 2. Detects conflicts between different calculation paths
+// 3. Provides confidence scores for data quality
+```
+
+#### **🔍 OCR Field Hints - Enhanced Recognition**
+```swift
+// ✅ NEW: Keyword hints for better OCR field mapping
+let fuelField = DynamicFormField(
+    id: "gallons",
+    contentType: .number,
+    label: "Gallons",
+    supportsOCR: true,
+    ocrHints: ["gallons", "gal", "fuel quantity", "liters", "litres"]
+)
+
+// Framework uses hints to:
+// 1. Identify which OCR text regions belong to which fields
+// 2. Resolve ambiguity between similar numeric values
+// 3. Improve mapping accuracy for complex documents
+```
+
+#### **🤖 AI Agent Usage Patterns:**
+
+**Calculation Groups Pattern:**
+```swift
+// When creating forms with mathematical relationships
+let formFields = [
+    createCalculatedField("total", "price * quantity", ["price", "quantity"]),
+    createCalculatedField("tax", "subtotal * tax_rate", ["subtotal", "tax_rate"]),
+    createCalculatedField("grand_total", "total + tax", ["total", "tax"])
+]
+
+func createCalculatedField(_ id: String, _ formula: String, _ deps: [String]) -> DynamicFormField {
+    return DynamicFormField(
+        id: id,
+        contentType: .number,
+        label: id.capitalized,
+        calculationGroups: [
+            CalculationGroup(
+                id: "auto_calc",
+                formula: "\(id) = \(formula)",
+                dependentFields: deps,
+                priority: 1
+            )
+        ]
+    )
+}
+```
+
+**OCR Hints Pattern:**
+```swift
+// When creating OCR-enabled forms
+let receiptFields = [
+    createOCRField("total", ["total", "amount due", "grand total"]),
+    createOCRField("tax", ["tax", "sales tax", "VAT"]),
+    createOCRField("subtotal", ["subtotal", "before tax", "net"])
+]
+
+func createOCRField(_ id: String, _ hints: [String]) -> DynamicFormField {
+    return DynamicFormField(
+        id: id,
+        contentType: .number,
+        label: id.capitalized,
+        supportsOCR: true,
+        ocrHints: hints
+    )
+}
+```
+
+#### **Combined OCR + Calculations:**
+```swift
+// Most powerful: OCR hints + calculation groups
+let fuelFields = [
+    DynamicFormField(
+        id: "gallons",
+        contentType: .number,
+        label: "Gallons",
+        supportsOCR: true,
+        ocrHints: ["gallons", "gal", "fuel quantity"],
+        calculationGroups: [
+            CalculationGroup(
+                id: "from_price_total",
+                formula: "gallons = total_price / price_per_gallon",
+                dependentFields: ["total_price", "price_per_gallon"],
+                priority: 1
+            )
+        ]
+    ),
+    // ... other fields
+]
+
+// Framework workflow:
+// 1. OCR extracts text using hints for field identification
+// 2. Populates form with recognized values
+// 3. Runs calculation groups to fill missing fields
+// 4. Flags conflicts for user review
+```
+
+**📚 For complete OCR intelligence documentation, see:**
+- [Calculation Groups Guide](CalculationGroupsGuide.md) - Intelligent form calculations
+- [OCR Field Hints Guide](OCRFieldHintsGuide.md) - Enhanced OCR recognition
+- [Dynamic Forms Guide](DynamicFormsGuide.md) - Complete form configuration
 
 ## 🔧 **How to Actually Use the Framework**
 

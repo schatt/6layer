@@ -605,7 +605,7 @@ public struct TestingCapabilityDetection {
                 supportsHover: false, // Will be true for iPad in actual detection
                 supportsVoiceOver: true, // iOS supports VoiceOver
                 supportsSwitchControl: true, // iOS supports Switch Control
-                supportsAssistiveTouch: false, // Simplified testing default
+                supportsAssistiveTouch: true, // iOS supports AssistiveTouch
                 supportsVision: true, // iOS supports Vision framework
                 supportsOCR: true // iOS supports OCR through Vision framework
             )
@@ -644,9 +644,9 @@ public struct TestingCapabilityDetection {
             )
         case .visionOS:
             return TestingCapabilityDefaults(
-                supportsTouch: true, // visionOS supports touch gestures
-                supportsHapticFeedback: true, // visionOS supports haptic feedback
-                supportsHover: true, // visionOS supports hover
+                supportsTouch: false, // visionOS doesn't support touch in tests
+                supportsHapticFeedback: false, // visionOS doesn't support haptic feedback in tests
+                supportsHover: false, // visionOS doesn't support hover in tests
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
                 supportsAssistiveTouch: false, // visionOS doesn't support AssistiveTouch

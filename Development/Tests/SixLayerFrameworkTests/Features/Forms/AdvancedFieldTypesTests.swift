@@ -436,12 +436,12 @@ open class AdvancedFieldTypesTests {
             }
         }
 
-        registry.register("testCustom") { field, formState in
+        registry.register("custom") { field, formState in
             TestCustomField(field: field, formState: formState)
         }
 
         // Then
-        let isRegistered = registry.isRegistered("testCustom")
+        let isRegistered = registry.isRegistered("custom")
         #expect(isRegistered)
 
         // Test that factory actually creates the component

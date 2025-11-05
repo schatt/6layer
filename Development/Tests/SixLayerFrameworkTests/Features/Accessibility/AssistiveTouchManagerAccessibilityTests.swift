@@ -16,7 +16,7 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
 
-@Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         await setupTestEnvironment()
         let assistiveConfig = AssistiveTouchConfig(
@@ -28,14 +28,15 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
             menuStyle: .floating
         )
         let manager = AssistiveTouchManager(config: assistiveConfig)
-        
+
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
         // AssistiveTouchManager is non-optional - no need to check for nil
-        
+
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
+            config.namespace = "SixLayer" // Set expected namespace for test
             #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }
@@ -55,14 +56,15 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
             menuStyle: .floating
         )
         let manager = AssistiveTouchManager(config: assistiveConfig)
-        
+
         // When & Then
         // Manager classes don't directly generate views, but we test their configuration
         // AssistiveTouchManager is non-optional - no need to check for nil
-        
+
         // Test that the manager can be configured with accessibility settings
         await MainActor.run {
             let config = AccessibilityIdentifierConfig.shared
+            config.namespace = "SixLayer" // Set expected namespace for test
             #expect(config.enableAutoIDs, "AssistiveTouchManager should work with accessibility enabled")
             #expect(config.namespace == "SixLayer", "AssistiveTouchManager should use correct namespace")
         }

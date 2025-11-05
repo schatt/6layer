@@ -72,12 +72,31 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Modifier Logic**: Fixed .exactNamed() modifier logic and application
 - **Test Configuration**: Resolved accessibility test compilation errors
 
+## 🤖 **Advanced OCR Form-Filling Intelligence**
+
+### Calculation Groups with Conflict Resolution
+- **Shared Field Calculations**: Fields can belong to multiple calculation groups with priority-based conflict resolution
+- **Intelligent OCR Processing**: System calculates missing form values from partial OCR data using mathematical relationships
+- **Data Quality Assurance**: Conflicting calculations are marked as "very low confidence" to prevent silent data corruption
+- **Flexible Relationships**: Support for any mathematical relationships (A = B * C, D = E * F, etc.)
+
+### OCR Field Identification Hints
+- **Keyword-Based Mapping**: OCR fields can include keyword arrays to improve recognition accuracy
+- **Multiple Variations**: Support for field variations like `["gallons", "gal", "fuel quantity", "liters", "litres"]`
+- **Enhanced OCR Precision**: Better mapping of OCR-extracted text to specific form fields
+- **Backward Compatible**: Optional feature that doesn't affect existing implementations
+
 ## 📚 Documentation and Developer Experience
+
+### New Feature Documentation
+- **[Calculation Groups Guide](Framework/docs/CalculationGroupsGuide.md)**: Comprehensive guide for implementing intelligent form calculations
+- **[OCR Field Hints Guide](Framework/docs/OCRFieldHintsGuide.md)**: Documentation for improving OCR recognition with keyword hints
+- **Advanced OCR Integration**: Examples of complex form-filling scenarios with mathematical relationships
 
 ### Testing Documentation
 - **Platform Testing Guide**: Complete instructions for testing iOS paths when running on macOS
 - **Testing Commands**: Comprehensive documentation for iOS and macOS testing workflows
-- **Suite Naming**: Improved test suite structure and naming conventions
+- **Suite Naming**: Improved test suite structure and organization
 
 ### Code Quality Standards
 - **Commit Early and Often**: Added development practice for frequent, small commits
@@ -116,6 +135,9 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Platform Detection**: Verify that platform capability detection works as expected in your environment
 
 ### New Features
+- **Calculation Groups**: Implement intelligent form calculations with `DynamicFormField.calculationGroups` for OCR-powered form filling
+- **OCR Field Hints**: Use `DynamicFormField.ocrHints` arrays to improve OCR recognition accuracy
+- **Advanced OCR Integration**: Leverage `DynamicFormState.calculateFieldFromGroups()` for complex form relationships
 - **Automatic Accessibility**: Enable `.automaticAccessibilityIdentifiers()` on components for enhanced accessibility
 - **TDD Testing**: Leverage the comprehensive test suite for better development practices
 - **Platform Testing**: Use the enhanced platform testing capabilities for cross-platform validation

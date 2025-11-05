@@ -15,6 +15,13 @@
 - **Pattern Standardization**: Consistent accessibility identifier patterns across platforms
 - **Apple HIG Compliance**: Full compliance with Apple's Human Interface Guidelines
 
+### 🤖 **Advanced OCR Form-Filling Intelligence**
+- **Calculation Groups**: Fields can belong to multiple calculation groups with priority-based conflict resolution
+- **Intelligent OCR Processing**: System calculates missing form values from partial OCR data using mathematical relationships
+- **OCR Field Hints**: Keyword arrays improve OCR recognition accuracy for field identification
+- **Data Quality Assurance**: Conflicting calculations marked as "very low confidence" to prevent silent data corruption
+- **Flexible Relationships**: Support for any mathematical relationships (A = B * C, D = E * F, etc.)
+
 ### 🧪 **Testing Infrastructure Revolution**
 - **Suite Organization**: Added `@Suite` annotations for better Xcode test navigator integration
 - **Platform Test Coverage**: Complete iOS/macOS platform test branch coverage
@@ -41,6 +48,9 @@
 - **Test Helper Behavior**: Fixed automatic accessibility identifier application in tests
 
 ### 📚 **Documentation and Developer Experience**
+- **[Calculation Groups Guide](Framework/docs/CalculationGroupsGuide.md)**: Comprehensive guide for implementing intelligent form calculations
+- **[OCR Field Hints Guide](Framework/docs/OCRFieldHintsGuide.md)**: Documentation for improving OCR recognition with keyword hints
+- **[AI Agent Guide Updates](Framework/docs/AI_AGENT_GUIDE.md)**: Added OCR intelligence features for AI assistant usage
 - **Testing Commands**: Complete documentation for iOS and macOS testing workflows
 - **Platform Testing Guide**: Instructions for testing iOS paths on macOS
 - **Code Quality Standards**: Added "commit early and often" development practice

@@ -33,7 +33,7 @@ open class DynamicFormViewTests {
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
-
+    
     @Test func testDynamicFormViewRendersTitleAndSectionsAndSubmitButton() async {
         // TDD: DynamicFormView should render:
         // 1. Form title from configuration
@@ -253,30 +253,30 @@ open class DynamicFormViewTests {
                     title: "Test Section",
                     fields: [
                         DynamicFormField(
-                            id: "testField",
-                            contentType: .text,
-                            label: "Test Field",
-                            placeholder: "Enter text",
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text",
                             isRequired: true
                         )
                     ]
                 )
             ]
         )
-
+        
         let view = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in /* Test callback */ }
         )
-
+        
         // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
+            view, 
             expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
             platform: SixLayerPlatform.iOS,
             componentName: "DynamicFormView"
         )
-
+        
         // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on iOS")
     }
@@ -293,30 +293,30 @@ open class DynamicFormViewTests {
                     title: "Test Section",
                     fields: [
                         DynamicFormField(
-                            id: "testField",
-                            contentType: .text,
-                            label: "Test Field",
-                            placeholder: "Enter text",
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text",
                             isRequired: true
                         )
                     ]
                 )
             ]
         )
-
+        
         let view = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in /* Test callback */ }
         )
-
+        
         // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
+            view, 
             expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
             platform: SixLayerPlatform.macOS,
             componentName: "DynamicFormView"
         )
-
+        
         // Then: Should generate accessibility identifiers
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on macOS")
     }
@@ -723,6 +723,497 @@ open class DynamicFormViewTests {
 
         // Should not assign the lowest confidence value
         #expect(assignments.values.contains("5.1") == false, "Should not assign lowest confidence value")
+    }
+
+    // MARK: - Calculated Fields Tests
+
+    @Test func testDynamicFormFieldCanBeConfiguredAsCalculated() async {
+        // TDD: DynamicFormField should support calculated fields
+        // 1. Field should accept isCalculated, calculationFormula, calculationDependencies
+        // 2. Field should store these values correctly
+        // 3. Calculated fields should be identifiable and processed differently
+
+        let calculatedField = DynamicFormField(
+            id: "price_per_gallon",
+            contentType: .number,
+            label: "Price per Gallon",
+            isCalculated: true,
+            calculationFormula: "total_price / gallons",
+            calculationDependencies: ["total_price", "gallons"]
+        )
+
+        // Should store calculation configuration correctly
+        #expect(calculatedField.isCalculated == true, "Field should be marked as calculated")
+        #expect(calculatedField.calculationFormula == "total_price / gallons", "Field should store calculation formula")
+        #expect(calculatedField.calculationDependencies == ["total_price", "gallons"], "Field should store calculation dependencies")
+    }
+
+    @Test func testCalculatedFieldDefaultsToNotCalculated() async {
+        // TDD: DynamicFormField should default to not calculated
+        // 1. Regular fields should not be calculated by default
+        // 2. Calculation properties should be nil by default
+
+        let regularField = DynamicFormField(
+            id: "regular-field",
+            contentType: .text,
+            label: "Regular Field"
+        )
+
+        // Should default to not calculated
+        #expect(regularField.isCalculated == false, "Field should default to not calculated")
+        #expect(regularField.calculationFormula == nil, "Calculation formula should be nil by default")
+        #expect(regularField.calculationDependencies == nil, "Calculation dependencies should be nil by default")
+    }
+
+    @Test func testFormStateCanCalculateFieldFromOtherFields() async {
+        // TDD: DynamicFormState should calculate field values from other fields
+        // 1. Should evaluate calculation formulas using other field values
+        // 2. Should set calculated field values automatically
+        // 3. Should handle basic arithmetic operations
+
+        let config = DynamicFormConfiguration(
+            id: "fuel-calculation-test",
+            title: "Fuel Calculation Test",
+            sections: [DynamicFormSection(id: "section1", title: "Fuel Data", fields: [])]
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Set input values
+        formState.setValue("47.93", for: "total_price")
+        formState.setValue("15.5", for: "gallons")
+
+        // Test calculation: price_per_gallon = total_price / gallons
+        let result = formState.calculateFieldValue(
+            formula: "total_price / gallons",
+            dependencies: ["total_price", "gallons"]
+        )
+
+        // Should calculate: 47.93 ÷ 15.5 ≈ 3.092
+        #expect(result != nil, "Should return a calculated result")
+        if let calculatedValue = result {
+            #expect(abs(calculatedValue - 3.092258064516129) < 0.0001, "Should calculate price per gallon correctly")
+        }
+    }
+
+    @Test func testFormStateCanAutoCalculateFieldsWhenDependenciesChange() async {
+        // TDD: DynamicFormState should auto-calculate fields when dependencies change
+        // 1. When dependency fields are set, calculated fields should update automatically
+        // 2. Multiple calculations should work together
+        // 3. Calculations should be re-evaluated when dependencies change
+
+        let config = DynamicFormConfiguration(
+            id: "auto-calc-test",
+            title: "Auto Calculation Test",
+            sections: [DynamicFormSection(id: "section1", title: "Data", fields: [])]
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Set initial values
+        formState.setValue("15.5", for: "gallons")
+        formState.setValue("47.93", for: "total_price")
+
+        // Simulate calculated field update
+        let pricePerGallon = formState.calculateFieldValue(
+            formula: "total_price / gallons",
+            dependencies: ["total_price", "gallons"]
+        )
+
+        #expect(pricePerGallon != nil, "Should calculate price per gallon")
+        if let price = pricePerGallon {
+            #expect(abs(price - 3.092258064516129) < 0.0001, "Price per gallon should be calculated correctly")
+        }
+
+        // Change a dependency and recalculate
+        formState.setValue("20.0", for: "gallons")  // Changed from 15.5 to 20.0
+
+        let newPricePerGallon = formState.calculateFieldValue(
+            formula: "total_price / gallons",
+            dependencies: ["total_price", "gallons"]
+        )
+
+        #expect(newPricePerGallon != nil, "Should recalculate with new dependency value")
+        if let newPrice = newPricePerGallon {
+            #expect(abs(newPrice - 2.3965) < 0.0001, "Should recalculate price per gallon with new gallons value")
+        }
+    }
+
+    @Test func testOCRSystemCanDetermineMissingFieldAndCalculateIt() async {
+        // TDD: OCR system should identify missing fields and calculate them from available data
+        // 1. Given 2 of 3 related values, should calculate the third
+        // 2. Should handle different combinations (gallons+price→total, gallons+total→price, price+total→gallons)
+        // 3. Should prioritize OCR-extracted values over calculated ones
+
+        let config = DynamicFormConfiguration(
+            id: "ocr-calculation-test",
+            title: "OCR Calculation Test",
+            sections: [DynamicFormSection(id: "section1", title: "Fuel Data", fields: [])]
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Scenario 1: OCR finds gallons (15.5) and total price ($47.93), calculate price per gallon
+        formState.setValue("15.5", for: "gallons")    // From OCR
+        formState.setValue("47.93", for: "total_price") // From OCR
+
+        let scenario1Result = formState.calculateMissingFieldFromOCR(
+            availableFields: ["gallons", "total_price"],
+            possibleFormulas: [
+                "price_per_gallon": "total_price / gallons",
+                "total_price": "gallons * price_per_gallon",
+                "gallons": "total_price / price_per_gallon"
+            ]
+        )
+
+        #expect(scenario1Result != nil, "Should calculate missing field in scenario 1")
+        if let result = scenario1Result {
+            #expect(result.fieldId == "price_per_gallon", "Should identify price_per_gallon as missing")
+            #expect(abs(result.calculatedValue - 3.092258064516129) < 0.0001, "Should calculate correct price per gallon")
+        }
+
+        // Scenario 2: OCR finds gallons (15.5) and price per gallon (3.091), calculate total price
+        formState.setValue("15.5", for: "gallons")    // From OCR
+        formState.setValue("3.091", for: "price_per_gallon") // From OCR
+
+        let scenario2Result = formState.calculateMissingFieldFromOCR(
+            availableFields: ["gallons", "price_per_gallon"],
+            possibleFormulas: [
+                "price_per_gallon": "total_price / gallons",
+                "total_price": "gallons * price_per_gallon",
+                "gallons": "total_price / price_per_gallon"
+            ]
+        )
+
+        #expect(scenario2Result != nil, "Should calculate missing field in scenario 2")
+        if let result = scenario2Result {
+            #expect(result.fieldId == "total_price", "Should identify total_price as missing")
+            #expect(abs(result.calculatedValue - 47.9105) < 0.0001, "Should calculate correct total price")
+        }
+
+        // Scenario 3: OCR finds total price ($47.93) and price per gallon ($3.091), calculate gallons
+        formState.setValue("47.93", for: "total_price") // From OCR
+        formState.setValue("3.091", for: "price_per_gallon") // From OCR
+
+        let scenario3Result = formState.calculateMissingFieldFromOCR(
+            availableFields: ["total_price", "price_per_gallon"],
+            possibleFormulas: [
+                "price_per_gallon": "total_price / gallons",
+                "total_price": "gallons * price_per_gallon",
+                "gallons": "total_price / price_per_gallon"
+            ]
+        )
+
+        #expect(scenario3Result != nil, "Should calculate missing field in scenario 3")
+        if let result = scenario3Result {
+            #expect(result.fieldId == "gallons", "Should identify gallons as missing")
+            #expect(abs(result.calculatedValue - 15.506308637981235) < 0.0001, "Should calculate correct gallons")
+        }
+    }
+
+    @Test func testOCRCalculationHandlesAllThreeFieldsPresent() async {
+        // TDD: OCR system should handle when all three fields are present
+        // 1. Should not calculate when all fields are available
+        // 2. Could optionally validate consistency between calculated and OCR values
+
+        let config = DynamicFormConfiguration(
+            id: "all-present-test",
+            title: "All Fields Present Test",
+            sections: [DynamicFormSection(id: "section1", title: "Data", fields: [])]
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // All three fields present from OCR
+        formState.setValue("15.5", for: "gallons")
+        formState.setValue("47.93", for: "total_price")
+        formState.setValue("3.091", for: "price_per_gallon")
+
+        let result = formState.calculateMissingFieldFromOCR(
+            availableFields: ["gallons", "total_price", "price_per_gallon"],
+            possibleFormulas: [
+                "price_per_gallon": "total_price / gallons",
+                "total_price": "gallons * price_per_gallon",
+                "gallons": "total_price / price_per_gallon"
+            ]
+        )
+
+        // Should return nil when all fields are present (nothing to calculate)
+        #expect(result == nil, "Should not calculate when all fields are present")
+    }
+
+    // MARK: - Calculation Groups Tests
+
+    @Test func testDynamicFormFieldCanBelongToMultipleCalculationGroups() async {
+        // TDD: DynamicFormField should support belonging to multiple calculation groups
+        // 1. Field should store multiple calculation groups
+        // 2. Groups should have priorities for calculation order
+        // 3. Each group should specify its formula and dependent fields
+
+        let calculationGroups = [
+            CalculationGroup(
+                id: "group1",
+                formula: "total = price * quantity",
+                dependentFields: ["price", "quantity"],
+                priority: 1
+            ),
+            CalculationGroup(
+                id: "group2",
+                formula: "total = base_price + tax",
+                dependentFields: ["base_price", "tax"],
+                priority: 2
+            )
+        ]
+
+        let field = DynamicFormField(
+            id: "total",
+            contentType: .number,
+            label: "Total Amount",
+            calculationGroups: calculationGroups
+        )
+
+        // Should store multiple calculation groups
+        #expect(field.calculationGroups?.count == 2, "Field should have 2 calculation groups")
+
+        // Should maintain priority ordering
+        #expect(field.calculationGroups?[0].priority == 1, "First group should have priority 1")
+        #expect(field.calculationGroups?[1].priority == 2, "Second group should have priority 2")
+
+        // Should store formulas and dependencies correctly
+        #expect(field.calculationGroups?[0].formula == "total = price * quantity", "Group 1 should have correct formula")
+        #expect(field.calculationGroups?[0].dependentFields == ["price", "quantity"], "Group 1 should have correct dependencies")
+    }
+
+    @Test func testCalculationGroupsCanCalculateFieldWithNoConflicts() async {
+        // TDD: Calculation groups should calculate field values without conflicts
+        // 1. When multiple groups can calculate the same field and agree, use high confidence
+        // 2. When only one group can calculate the field, use that result
+
+        let config = DynamicFormConfiguration(
+            id: "calculation-groups-test",
+            title: "Calculation Groups Test",
+            sections: []
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Set up field with multiple calculation groups that should agree
+        let calculationGroups = [
+            CalculationGroup(
+                id: "multiply",
+                formula: "result = a * b",
+                dependentFields: ["a", "b"],
+                priority: 1
+            ),
+            CalculationGroup(
+                id: "add_multiply",
+                formula: "result = a + (a * (b - 1))",
+                dependentFields: ["a", "b"],
+                priority: 2
+            )
+        ]
+
+        // Set input values: a=2, b=3
+        // Group 1: result = 2 * 3 = 6
+        // Group 2: result = 2 + (2 * (3-1)) = 2 + (2*2) = 2 + 4 = 6 (same result)
+        formState.setValue("2", for: "a")
+        formState.setValue("3", for: "b")
+
+        let result = formState.calculateFieldFromGroups(
+            fieldId: "result",
+            calculationGroups: calculationGroups
+        )
+
+        // Should return a result with high confidence (groups agree)
+        #expect(result != nil, "Should calculate result when groups agree")
+        if let calcResult = result {
+            #expect(calcResult.calculatedValue == 6.0, "Should calculate correct result")
+            #expect(calcResult.confidence == .high, "Should have high confidence when groups agree")
+        }
+    }
+
+    @Test func testCalculationGroupsDetectConflictsAndMarkLowConfidence() async {
+        // TDD: Calculation groups should detect conflicting calculations and mark low confidence
+        // 1. When multiple groups calculate different values for the same field, mark as very low confidence
+        // 2. Should still provide the first (highest priority) calculated value
+
+        let config = DynamicFormConfiguration(
+            id: "conflict-test",
+            title: "Conflict Detection Test",
+            sections: []
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Set up conflicting calculation groups
+        let calculationGroups = [
+            CalculationGroup(
+                id: "multiply",
+                formula: "result = a * b",
+                dependentFields: ["a", "b"],
+                priority: 1
+            ),
+            CalculationGroup(
+                id: "divide",
+                formula: "result = a / b",
+                dependentFields: ["a", "b"],
+                priority: 2
+            )
+        ]
+
+        // Set input values: a=6, b=2
+        // Group 1 (priority 1): result = 6 * 2 = 12
+        // Group 2 (priority 2): result = 6 / 2 = 3
+        // Conflict: 12 vs 3
+        formState.setValue("6", for: "a")
+        formState.setValue("2", for: "b")
+
+        let result = formState.calculateFieldFromGroups(
+            fieldId: "result",
+            calculationGroups: calculationGroups
+        )
+
+        // Should return result but with very low confidence due to conflict
+        #expect(result != nil, "Should still return result even with conflicts")
+        if let calcResult = result {
+            #expect(calcResult.calculatedValue == 12.0, "Should return highest priority result (12)")
+            #expect(calcResult.confidence == .veryLow, "Should have very low confidence when groups conflict")
+        }
+    }
+
+    @Test func testCalculationGroupsRespectPriorityOrder() async {
+        // TDD: Calculation groups should calculate in priority order
+        // 1. Higher priority groups (lower number) should be calculated first
+        // 2. If multiple groups can calculate, use the highest priority result
+
+        let config = DynamicFormConfiguration(
+            id: "priority-test",
+            title: "Priority Order Test",
+            sections: []
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Set up groups with different priorities
+        let calculationGroups = [
+            CalculationGroup(
+                id: "low_priority",
+                formula: "result = a + b",
+                dependentFields: ["a", "b"],
+                priority: 1
+            ),
+            CalculationGroup(
+                id: "high_priority",
+                formula: "result = a * b",
+                dependentFields: ["a", "b"],
+                priority: 2
+            )
+        ]
+
+        // Set input values: a=3, b=2
+        // Low priority (1): result = 3 + 2 = 5
+        // High priority (2): result = 3 * 2 = 6
+        formState.setValue("3", for: "a")
+        formState.setValue("2", for: "b")
+
+        let result = formState.calculateFieldFromGroups(
+            fieldId: "result",
+            calculationGroups: calculationGroups
+        )
+
+        // Both groups can calculate (same dependencies), so should detect conflict
+        #expect(result != nil, "Should calculate result")
+        if let calcResult = result {
+            #expect(calcResult.calculatedValue == 5.0, "Should use highest priority calculation (5)")
+            #expect(calcResult.confidence == .veryLow, "Should have very low confidence (groups conflict)")
+        }
+    }
+
+    @Test func testCalculationGroupsHandlePartialDataAvailability() async {
+        // TDD: Calculation groups should only calculate when all dependent fields are available
+        // 1. If a group is missing required fields, skip that group
+        // 2. If no groups can calculate, return nil
+
+        let config = DynamicFormConfiguration(
+            id: "partial-data-test",
+            title: "Partial Data Test",
+            sections: []
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        let calculationGroups = [
+            CalculationGroup(
+                id: "needs_all_fields",
+                formula: "result = a * b * c",
+                dependentFields: ["a", "b", "c"],
+                priority: 1
+            ),
+            CalculationGroup(
+                id: "needs_two_fields",
+                formula: "result = a + b",
+                dependentFields: ["a", "b"],
+                priority: 2
+            )
+        ]
+
+        // Set only a and b (missing c)
+        formState.setValue("2", for: "a")
+        formState.setValue("3", for: "b")
+
+        let result = formState.calculateFieldFromGroups(
+            fieldId: "result",
+            calculationGroups: calculationGroups
+        )
+
+        // Should use the group that has all required fields (a + b = 5)
+        #expect(result != nil, "Should calculate using available group")
+        if let calcResult = result {
+            #expect(calcResult.calculatedValue == 5.0, "Should calculate a + b = 5")
+            #expect(calcResult.confidence == .high, "Should have high confidence")
+        }
+    }
+
+    // MARK: - OCR Field Hints Tests
+
+    @Test func testDynamicFormFieldCanHaveOCRFieldHints() async {
+        // TDD: DynamicFormField should support OCR field hints for better OCR mapping
+        // 1. Field should store OCR hints array
+        // 2. Hints should be used to identify fields in OCR text
+        // 3. Multiple hints per field should be supported
+
+        let ocrHints = ["gallons", "gal", "fuel quantity", "liters", "litres"]
+
+        let field = DynamicFormField(
+            id: "fuel_quantity",
+            contentType: .number,
+            label: "Fuel Quantity",
+            supportsOCR: true,
+            ocrHints: ocrHints
+        )
+
+        // Should store OCR hints correctly
+        #expect(field.ocrHints?.count == 5, "Field should have 5 OCR hints")
+        #expect(field.ocrHints?.contains("gallons") ?? false, "Should contain 'gallons' hint")
+        #expect(field.ocrHints?.contains("gal") ?? false, "Should contain 'gal' hint")
+        #expect(field.ocrHints?.contains("fuel quantity") ?? false, "Should contain 'fuel quantity' hint")
+        #expect(field.ocrHints?.contains("liters") ?? false, "Should contain 'liters' hint")
+        #expect(field.ocrHints?.contains("litres") ?? false, "Should contain 'litres' hint")
+    }
+
+    @Test func testOCRFieldHintsDefaultToNil() async {
+        // TDD: OCR hints should default to nil when not specified
+        // 1. Fields without OCR hints should have nil ocrHints
+        // 2. This ensures backward compatibility
+
+        let field = DynamicFormField(
+            id: "regular_field",
+            contentType: .text,
+            label: "Regular Field"
+        )
+
+        // Should default to nil
+        #expect(field.ocrHints == nil, "Field without OCR hints should have nil ocrHints")
     }
 }
 
