@@ -229,5 +229,182 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - DynamicFormField Components Tests
+    
+    @Test func testDynamicTextFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        // TDD RED: DynamicTextField should include field.label in identifier
+        let field = DynamicFormField(
+            id: "test-field",
+            contentType: .text,
+            label: "Email Address",
+            placeholder: "Enter email"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - should include sanitized label
+            #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email"), 
+                   "DynamicTextField identifier should include field label 'Email Address'")
+            
+            print("🔴 RED: DynamicTextField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicTextField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicEmailFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "email-field",
+            contentType: .email,
+            label: "User Email",
+            placeholder: "Enter email"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicEmailField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL
+            #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"), 
+                   "DynamicEmailField identifier should include field label 'User Email'")
+            
+            print("🔴 RED: DynamicEmailField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicEmailField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    @Test func testDynamicPasswordFieldIncludesFieldLabel() {
+        setupTestEnvironment()
+        
+        let field = DynamicFormField(
+            id: "password-field",
+            contentType: .password,
+            label: "Secure Password",
+            placeholder: "Enter password"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let fieldView = DynamicPasswordField(field: field, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try fieldView.inspect()
+            let fieldID = try inspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL
+            #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure"), 
+                   "DynamicPasswordField identifier should include field label 'Secure Password'")
+            
+            print("🔴 RED: DynamicPasswordField ID: '\(fieldID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicPasswordField: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    // MARK: - DynamicFormView Tests
+    
+    @Test func testDynamicFormViewIncludesConfigurationTitle() {
+        setupTestEnvironment()
+        
+        // TDD RED: DynamicFormView should include configuration.title in identifier
+        let config = DynamicFormConfiguration(
+            id: "user-profile-form",
+            title: "User Profile",
+            description: "Edit your profile",
+            sections: []
+        )
+        
+        let formView = DynamicFormView(configuration: config, onSubmit: { _ in })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try formView.inspect()
+            let formID = try inspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - should include title
+            #expect(formID.contains("user") || formID.contains("profile") || formID.contains("User"), 
+                   "DynamicFormView identifier should include configuration title 'User Profile'")
+            
+            print("🔴 RED: DynamicFormView ID: '\(formID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicFormView: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    // MARK: - DynamicFormSectionView Tests
+    
+    @Test func testDynamicFormSectionViewIncludesSectionTitle() {
+        setupTestEnvironment()
+        
+        // TDD RED: DynamicFormSectionView should include section.title in identifier
+        let section = DynamicFormSection(
+            id: "personal-info",
+            title: "Personal Information",
+            description: "Enter your personal details",
+            fields: []
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test",
+            sections: [section]
+        ))
+        
+        let sectionView = DynamicFormSectionView(section: section, formState: formState)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try sectionView.inspect()
+            let sectionID = try inspected.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - should include title
+            #expect(sectionID.contains("personal") || sectionID.contains("information") || sectionID.contains("Personal"), 
+                   "DynamicFormSectionView identifier should include section title 'Personal Information'")
+            
+            print("🔴 RED: DynamicFormSectionView ID: '\(sectionID)'")
+        } catch {
+            Issue.record("Failed to inspect DynamicFormSectionView: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
