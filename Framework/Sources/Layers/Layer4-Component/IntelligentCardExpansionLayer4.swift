@@ -793,7 +793,8 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         view = AnyView(view.animation(.easeInOut(duration: 0.3), value: config.supportsTouch))
         
         // Always apply automatic accessibility identifiers with component name
-        view = AnyView(view.environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
+        view = AnyView(view
+            .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
             .automaticAccessibilityIdentifiers(named: "SimpleCardComponent"))
         
         return view
