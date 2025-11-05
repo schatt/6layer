@@ -893,33 +893,49 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         let hints = PresentationHints()
         let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
             cardWidth: 200,
             cardHeight: 150,
-            spacing: 16,
-            columns: 2
+            padding: 8,
+            expansionScale: 1.15,
+            animationDuration: 0.3
+        )
+        
+        let strategy = CardExpansionStrategy(
+            supportedStrategies: [.scale, .contentReveal],
+            primaryStrategy: .scale,
+            expansionScale: 1.15,
+            animationDuration: 0.3
         )
         
         let card1 = ExpandableCardComponent(
             item: item1,
             layoutDecision: layoutDecision,
-            strategy: CardExpansionStrategy(),
+            strategy: strategy,
             isExpanded: false,
             isHovered: false,
             onExpand: { },
             onCollapse: { },
-            onHover: { _ in }
+            onHover: { _ in },
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
         )
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let card2 = ExpandableCardComponent(
             item: item2,
             layoutDecision: layoutDecision,
-            strategy: CardExpansionStrategy(),
+            strategy: strategy,
             isExpanded: false,
             isHovered: false,
             onExpand: { },
             onCollapse: { },
-            onHover: { _ in }
+            onHover: { _ in },
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
         )
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -1136,17 +1152,36 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         let hints = PresentationHints()
         let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
             cardWidth: 200,
             cardHeight: 150,
-            spacing: 16,
-            columns: 2
+            padding: 8,
+            expansionScale: 1.15,
+            animationDuration: 0.3
         )
         
         // Test that each SimpleCardComponent gets unique identifier
-        let card1 = SimpleCardComponent(item: items[0], layoutDecision: layoutDecision, hints: hints)
+        let card1 = SimpleCardComponent(
+            item: items[0],
+            layoutDecision: layoutDecision,
+            hints: hints,
+            platformConfig: nil,
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let card2 = SimpleCardComponent(item: items[1], layoutDecision: layoutDecision, hints: hints)
+        let card2 = SimpleCardComponent(
+            item: items[1],
+            layoutDecision: layoutDecision,
+            hints: hints,
+            platformConfig: nil,
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
