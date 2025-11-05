@@ -103,6 +103,7 @@ public extension View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
         .accessibilityAddTraits(.isButton)
+        .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers()
     }
 
@@ -110,12 +111,15 @@ public extension View {
     func platformNavigationTitle(_ title: String) -> some View {
         #if os(iOS)
         return self.navigationTitle(title)
+            .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
             .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
         #elseif os(macOS)
         return self.navigationTitle(title)
+            .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
             .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
         #else
         return self.navigationTitle(title)
+            .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
             .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
         #endif
     }
@@ -198,6 +202,7 @@ public extension View {
                 Label(title, systemImage: systemImage)
                     .foregroundColor(.primary)
             }
+            .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
             .navigationDestination(isPresented: isActive) {
                 destination()
             }
@@ -206,6 +211,7 @@ public extension View {
                 Label(title, systemImage: systemImage)
                     .foregroundColor(.primary)
             }
+            .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
             .background(
                 NavigationLink(destination: destination(), isActive: isActive) {
                     EmptyView()
@@ -231,6 +237,7 @@ public extension View {
             #endif
         }
         .buttonStyle(PlainButtonStyle())
+        .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
         #endif
     }
 
