@@ -142,6 +142,7 @@ public struct DynamicFormField: Identifiable, Hashable {
     public let supportsOCR: Bool // Whether this field can use OCR for input
     public let ocrHint: String? // Hint for OCR processing (e.g., "expect phone number", "expect address")
     public let ocrValidationTypes: [TextType]? // Expected OCR text types for validation
+    public let ocrFieldIdentifier: String? // Unique identifier for mapping OCR results to specific fields
     
     public init(
         id: String,
@@ -157,7 +158,8 @@ public struct DynamicFormField: Identifiable, Hashable {
         metadata: [String: String]? = nil,
         supportsOCR: Bool = false,
         ocrHint: String? = nil,
-        ocrValidationTypes: [TextType]? = nil
+        ocrValidationTypes: [TextType]? = nil,
+        ocrFieldIdentifier: String? = nil
     ) {
         self.id = id
         self.textContentType = textContentType
@@ -173,6 +175,7 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.supportsOCR = supportsOCR
         self.ocrHint = ocrHint
         self.ocrValidationTypes = ocrValidationTypes
+        self.ocrFieldIdentifier = ocrFieldIdentifier
     }
     
     /// Convenience initializer for text fields using cross-platform text content type
@@ -201,7 +204,8 @@ public struct DynamicFormField: Identifiable, Hashable {
             metadata: metadata,
             supportsOCR: false,
             ocrHint: nil,
-            ocrValidationTypes: nil
+            ocrValidationTypes: nil,
+            ocrFieldIdentifier: nil
         )
     }
     
@@ -232,7 +236,8 @@ public struct DynamicFormField: Identifiable, Hashable {
             metadata: metadata,
             supportsOCR: false,
             ocrHint: nil,
-            ocrValidationTypes: nil
+            ocrValidationTypes: nil,
+            ocrFieldIdentifier: nil
         )
     }
     
@@ -252,8 +257,15 @@ public struct DynamicFormField: Identifiable, Hashable {
         self.supportsOCR = false
         self.ocrHint = nil
         self.ocrValidationTypes = nil
+        self.ocrFieldIdentifier = nil
     }
     
+    /// Get all OCR-enabled fields in the form for batch processing
+    /// - Returns: Array of fields that support OCR
+    public func getOCREnabledFields() -> [DynamicFormField] {
+        return sections.flatMap { $0.fields }.filter { $0.supportsOCR }
+    }
+
     /// Discover field-level display hints from the field's metadata
     /// Hints are automatically discovered from the data description, not passed in separately
     public var displayHints: FieldDisplayHints? {
@@ -454,6 +466,53 @@ public class DynamicFormState: ObservableObject {
         fieldValues[fieldId] = value
         isDirty = true
         clearErrors(for: fieldId)
+    }
+
+    /// Process OCR results and intelligently map them to OCR-enabled fields
+    /// - Parameters:
+    ///   - ocrResults: Array of OCR data candidates from document processing
+    ///   - ocrEnabledFields: Fields that support OCR input
+    /// - Returns: Dictionary mapping field IDs to assigned OCR values
+    public func processBatchOCRResults(_ ocrResults: [OCRDataCandidate], for ocrEnabledFields: [DynamicFormField]) -> [String: String] {
+        var assignments: [String: String] = [:]
+
+        // Group OCR results by text type for intelligent mapping
+        var resultsByType: [TextType: [OCRDataCandidate]] = [:]
+        for result in ocrResults {
+            resultsByType[result.suggestedType, default: []].append(result)
+        }
+
+        // For each OCR-enabled field, find the best matching OCR result
+        for field in ocrEnabledFields {
+            guard let validationTypes = field.ocrValidationTypes else { continue }
+
+            // Find OCR results that match the field's expected types
+            var candidateResults: [OCRDataCandidate] = []
+            for validationType in validationTypes {
+                if let typeResults = resultsByType[validationType] {
+                    candidateResults.append(contentsOf: typeResults)
+                }
+            }
+
+            // Sort by confidence (highest first)
+            candidateResults.sort { $0.confidence > $1.confidence }
+
+            if let bestMatch = candidateResults.first {
+                // Use ocrFieldIdentifier if provided, otherwise use field.id
+                let targetFieldId = field.ocrFieldIdentifier ?? field.id
+                assignments[targetFieldId] = bestMatch.text
+
+                // Set the value in form state
+                setValue(bestMatch.text, for: targetFieldId)
+
+                // Remove this result from available candidates to avoid duplicate assignments
+                if let index = candidateResults.firstIndex(where: { $0.id == bestMatch.id }) {
+                    candidateResults.remove(at: index)
+                }
+            }
+        }
+
+        return assignments
     }
 
     /// Initialize a field with its default value

@@ -497,5 +497,232 @@ open class DynamicFormViewTests {
         // TODO: Test invalid OCR types are rejected
         // This will require implementing OCR type validation logic
     }
+
+    // MARK: - Batch OCR Tests
+
+    @Test func testDynamicFormConfigurationCanGetOCREnabledFields() async {
+        // TDD: DynamicFormConfiguration should provide access to OCR-enabled fields
+        // 1. Configuration should return all fields that support OCR
+        // 2. Should return empty array when no fields support OCR
+
+        let ocrField = DynamicFormField(
+            id: "ocr-field",
+            contentType: .text,
+            label: "OCR Field",
+            supportsOCR: true
+        )
+
+        let regularField = DynamicFormField(
+            id: "regular-field",
+            contentType: .text,
+            label: "Regular Field"
+        )
+
+        let configWithOCR = DynamicFormConfiguration(
+            id: "test-form-ocr",
+            title: "Form with OCR",
+            sections: [
+                DynamicFormSection(fields: [ocrField, regularField])
+            ]
+        )
+
+        let configWithoutOCR = DynamicFormConfiguration(
+            id: "test-form-no-ocr",
+            title: "Form without OCR",
+            sections: [
+                DynamicFormSection(fields: [regularField])
+            ]
+        )
+
+        // Should return OCR-enabled fields
+        let ocrFields = configWithOCR.getOCREnabledFields()
+        #expect(ocrFields.count == 1, "Should return exactly 1 OCR-enabled field")
+        #expect(ocrFields.first?.id == "ocr-field", "Should return the correct OCR field")
+
+        // Should return empty array for no OCR fields
+        let noOCRFields = configWithoutOCR.getOCREnabledFields()
+        #expect(noOCRFields.isEmpty, "Should return empty array when no OCR fields")
+    }
+
+    @Test func testDynamicFormStateCanProcessBatchOCRResults() async {
+        // TDD: DynamicFormState should intelligently map OCR results to fields
+        // 1. Should match OCR results to fields by text type
+        // 2. Should assign highest confidence results first
+        // 3. Should avoid duplicate assignments
+        // 4. Should use ocrFieldIdentifier when provided
+
+        let gallonsField = DynamicFormField(
+            id: "gallons",
+            contentType: .number,
+            label: "Gallons",
+            supportsOCR: true,
+            ocrValidationTypes: [.number],
+            ocrFieldIdentifier: "fuel-quantity"
+        )
+
+        let priceField = DynamicFormField(
+            id: "price",
+            contentType: .number,
+            label: "Price",
+            supportsOCR: true,
+            ocrValidationTypes: [.price]
+        )
+
+        let config = DynamicFormConfiguration(
+            id: "receipt-form",
+            title: "Fuel Receipt",
+            sections: [DynamicFormSection(fields: [gallonsField, priceField])]
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // Simulate OCR results from a receipt
+        let ocrResults: [OCRDataCandidate] = [
+            OCRDataCandidate(
+                text: "15.5",
+                boundingBox: CGRect(x: 10, y: 10, width: 50, height: 20),
+                confidence: 0.95,
+                suggestedType: .number,
+                alternativeTypes: [.number]
+            ),
+            OCRDataCandidate(
+                text: "$45.99",
+                boundingBox: CGRect(x: 10, y: 40, width: 60, height: 20),
+                confidence: 0.90,
+                suggestedType: .price,
+                alternativeTypes: [.price]
+            ),
+            OCRDataCandidate(
+                text: "10.2", // Lower confidence number
+                boundingBox: CGRect(x: 20, y: 20, width: 40, height: 20),
+                confidence: 0.80,
+                suggestedType: .number,
+                alternativeTypes: [.number]
+            )
+        ]
+
+        let ocrEnabledFields = config.getOCREnabledFields()
+
+        // Process batch OCR results
+        let assignments = formState.processBatchOCRResults(ocrResults, for: ocrEnabledFields)
+
+        // Should have assigned both fields
+        #expect(assignments.count == 2, "Should assign values to both OCR-enabled fields")
+
+        // Should use ocrFieldIdentifier for gallons field
+        #expect(assignments["fuel-quantity"] == "15.5", "Should assign highest confidence number to gallons using identifier")
+        #expect(assignments["price"] == "$45.99", "Should assign price to price field")
+
+        // Form state should contain the assigned values
+        let gallonsValue: String? = formState.getValue(for: "fuel-quantity")
+        let priceValue: String? = formState.getValue(for: "price")
+        #expect(gallonsValue == "15.5", "Form state should contain gallons value")
+        #expect(priceValue == "$45.99", "Form state should contain price value")
+    }
+
+    @Test func testDynamicFormViewShowsBatchOCRButtonWhenFieldsSupportOCR() async {
+        // TDD: DynamicFormView should show batch OCR button when form has OCR fields
+        // 1. Should show "Scan Document" button when any field supports OCR
+        // 2. Should not show button when no fields support OCR
+        // 3. Button should be properly accessible
+
+        let ocrField = DynamicFormField(
+            id: "ocr-field",
+            contentType: .text,
+            label: "OCR Field",
+            supportsOCR: true
+        )
+
+        let regularField = DynamicFormField(
+            id: "regular-field",
+            contentType: .text,
+            label: "Regular Field"
+        )
+
+        let configWithOCR = DynamicFormConfiguration(
+            id: "form-with-ocr",
+            title: "Form with OCR",
+            sections: [DynamicFormSection(fields: [ocrField])]
+        )
+
+        let configWithoutOCR = DynamicFormConfiguration(
+            id: "form-without-ocr",
+            title: "Form without OCR",
+            sections: [DynamicFormSection(fields: [regularField])]
+        )
+
+        let viewWithOCR = DynamicFormView(configuration: configWithOCR, onSubmit: { _ in })
+        let viewWithoutOCR = DynamicFormView(configuration: configWithoutOCR, onSubmit: { _ in })
+
+        // OCR form should show batch OCR button
+        do {
+            let inspected = try viewWithOCR.inspect()
+            // Should find the batch OCR button
+            let ocrButton = try inspected.find(button: "Scan Document")
+            #expect(true, "Form with OCR fields should show batch OCR button")
+        } catch {
+            Issue.record("Batch OCR button not found in OCR-enabled form: \(error)")
+        }
+
+        // Non-OCR form should not show batch OCR button
+        do {
+            let inspected = try viewWithoutOCR.inspect()
+            let ocrButton = try? inspected.find(button: "Scan Document")
+            #expect(ocrButton == nil, "Form without OCR fields should not show batch OCR button")
+        } catch {
+            // Expected - no OCR button should exist
+        }
+    }
+
+    @Test func testBatchOCRResultsHandleMultipleValuesOfSameType() async {
+        // TDD: Batch OCR should handle multiple values of the same type intelligently
+        // 1. Should assign highest confidence result first
+        // 2. Should not assign same result to multiple fields
+        // 3. Should handle cases where there are more results than fields
+
+        let field1 = DynamicFormField(
+            id: "field1",
+            contentType: .number,
+            label: "Field 1",
+            supportsOCR: true,
+            ocrValidationTypes: [.number]
+        )
+
+        let field2 = DynamicFormField(
+            id: "field2",
+            contentType: .number,
+            label: "Field 2",
+            supportsOCR: true,
+            ocrValidationTypes: [.number]
+        )
+
+        let config = DynamicFormConfiguration(
+            id: "multi-number-form",
+            title: "Multiple Numbers",
+            sections: [DynamicFormSection(fields: [field1, field2])]
+        )
+
+        let formState = DynamicFormState(configuration: config)
+
+        // OCR results with multiple numbers (different confidence levels)
+        let ocrResults: [OCRDataCandidate] = [
+            OCRDataCandidate(text: "10.5", confidence: 0.95, suggestedType: .number, alternativeTypes: [.number]),
+            OCRDataCandidate(text: "25.3", confidence: 0.90, suggestedType: .number, alternativeTypes: [.number]),
+            OCRDataCandidate(text: "5.1", confidence: 0.85, suggestedType: .number, alternativeTypes: [.number])
+        ]
+
+        let ocrEnabledFields = config.getOCREnabledFields()
+        let assignments = formState.processBatchOCRResults(ocrResults, for: ocrEnabledFields)
+
+        // Should assign to both fields
+        #expect(assignments.count == 2, "Should assign values to both number fields")
+
+        // Should assign highest confidence to first available field
+        #expect(assignments["field1"] == "10.5", "Should assign highest confidence number to field1")
+        #expect(assignments["field2"] == "25.3", "Should assign next highest confidence to field2")
+
+        // Should not assign the lowest confidence value
+        #expect(assignments.values.contains("5.1") == false, "Should not assign lowest confidence value")
+    }
 }
 

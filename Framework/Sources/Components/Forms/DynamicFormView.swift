@@ -18,16 +18,41 @@ public struct DynamicFormView: View {
     }
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text(configuration.title)
                 .font(.headline)
-            
-            Text("Dynamic Form View - TDD Red Phase Stub")
-                .foregroundColor(.secondary)
-            
+
+            // Show batch OCR button if any fields support OCR
+            if !configuration.getOCREnabledFields().isEmpty {
+                Button(action: {
+                    // TODO: Implement batch OCR workflow
+                    // This should trigger OCROverlayView and process all OCR-enabled fields
+                    print("Batch OCR scan requested for \(configuration.getOCREnabledFields().count) fields")
+                }) {
+                    HStack {
+                        Image(systemName: "doc.viewfinder")
+                        Text("Scan Document")
+                    }
+                    .foregroundColor(.blue)
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Scan document to fill multiple fields")
+                .accessibilityHint("Takes a photo and automatically fills all OCR-enabled fields")
+                .automaticAccessibilityIdentifiers(named: "BatchOCRButton")
+            }
+
+            // Render form sections
+            ForEach(configuration.sections) { section in
+                DynamicFormSectionView(section: section, formState: DynamicFormState(configuration: configuration))
+            }
+
+            Spacer()
+
             Button("Submit") {
                 onSubmit([:])
             }
+            .buttonStyle(.borderedProminent)
+            .automaticAccessibilityIdentifiers(named: "SubmitButton")
         }
         .padding()
         .automaticAccessibilityIdentifiers(named: "DynamicFormView")
@@ -49,14 +74,22 @@ public struct DynamicFormSectionView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading) {
-            Text(section.title)
-                .font(.headline)
-            
-            Text("Dynamic Form Section View - TDD Red Phase Stub")
-                .foregroundColor(.secondary)
+        VStack(alignment: .leading, spacing: 16) {
+            if let title = section.title {
+                Text(title)
+                    .font(.title3)
+                    .bold()
+                    .automaticAccessibilityIdentifiers(named: "SectionTitle")
+            }
+
+            // Render each field in the section
+            ForEach(section.fields) { field in
+                CustomFieldView(field: field, formState: formState)
+            }
         }
         .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(8)
         .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
     }
 }
