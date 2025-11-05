@@ -322,6 +322,7 @@ public struct DynamicIntegerField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicIntegerField")
     }
 }
@@ -352,6 +353,7 @@ public struct DynamicDateField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicDateField")
     }
 }
@@ -382,6 +384,7 @@ public struct DynamicTimeField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicTimeField")
     }
 }
@@ -411,6 +414,7 @@ public struct DynamicDateTimeField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicDateTimeField")
     }
 }
@@ -459,6 +463,7 @@ public struct DynamicMultiSelectField: View {
             }
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicMultiSelectField")
     }
 }
@@ -543,6 +548,7 @@ public struct DynamicCheckboxField: View {
             }
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicCheckboxField")
     }
 }
@@ -634,6 +640,7 @@ public struct DynamicFileField: View {
             }
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicFileField")
     }
 }
@@ -715,6 +722,7 @@ public struct DynamicRangeField: View {
             .automaticAccessibilityIdentifiers()
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicRangeField")
     }
 }
@@ -782,6 +790,7 @@ public struct DynamicArrayField: View {
             .automaticAccessibilityIdentifiers(named: "AddItem")
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicArrayField")
     }
 }
@@ -931,6 +940,7 @@ public struct DynamicEnumField: View {
             }
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicEnumField")
     }
 }
@@ -1075,6 +1085,7 @@ public struct DynamicTextAreaField: View {
             #endif
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "DynamicTextAreaField")
     }
 }
