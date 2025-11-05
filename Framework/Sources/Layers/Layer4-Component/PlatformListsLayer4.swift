@@ -8,7 +8,10 @@ public extension View {
     
     /// Platform-specific list row with consistent styling
     /// Provides standardized list row appearance across platforms
-        func platformListRow<Content: View>(
+    /// - Parameter label: Optional label text to include in accessibility identifier
+    /// - Parameter content: The view content to display in the row
+    func platformListRow<Content: View>(
+        label: String? = nil,
         @ViewBuilder content: () -> Content
     ) -> some View {
         HStack {
@@ -16,6 +19,7 @@ public extension View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 16)
+        .environment(\.accessibilityIdentifierLabel, label ?? "") // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "platformListRow")
     }
     
