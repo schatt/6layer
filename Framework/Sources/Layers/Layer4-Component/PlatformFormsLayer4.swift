@@ -26,6 +26,7 @@ public extension View {
             content()
         }
         .padding(.vertical, 4)
+        .environment(\.accessibilityIdentifierLabel, label ?? "") // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "platformFormField")
     }
     
@@ -51,6 +52,7 @@ public extension View {
             .background(Color.platformSecondaryBackground)
             .cornerRadius(8)
         }
+        .environment(\.accessibilityIdentifierLabel, title ?? "") // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "platformFormFieldGroup")
     }
     
@@ -73,6 +75,7 @@ public extension View {
         .padding(.vertical, 2)
         .background(type.color.opacity(0.1))
         .cornerRadius(4)
+        .environment(\.accessibilityIdentifierLabel, message) // TDD GREEN: Pass label to identifier generation
         .automaticAccessibilityIdentifiers(named: "platformValidationMessage")
     }
     

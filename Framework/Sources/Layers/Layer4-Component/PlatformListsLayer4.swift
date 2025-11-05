@@ -38,6 +38,8 @@ public extension View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
+        .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
+        .automaticAccessibilityIdentifiers(named: "platformListSectionHeader")
     }
     
     /// Platform-specific list empty state with consistent styling
@@ -78,6 +80,8 @@ public extension View {
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
+        .automaticAccessibilityIdentifiers(named: "platformListEmptyState")
     }
     
     // MARK: - List-Detail Implementation
@@ -157,6 +161,8 @@ public extension View {
             }
         }
         .padding()
+        .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
+        .automaticAccessibilityIdentifiers(named: "platformDetailPlaceholder")
     }
     
     // MARK: - Private Helper Functions
