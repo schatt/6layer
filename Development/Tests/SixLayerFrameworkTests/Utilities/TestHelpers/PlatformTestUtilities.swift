@@ -336,16 +336,12 @@ final class PlatformTestUtilities {
         )
         let platformName = "Vision Available Platform"
         // Vision-available platforms should have OCR
-        guard let config = testConfig else {
-            Issue.record("testConfig is nil")
-            return
-        }
 
-        #expect(config.ocrAvailable, 
+        #expect(testConfig.ocrAvailable, 
                      "\(platformName) should have OCR available")
         
         // Vision-available platforms should have Vision framework
-        #expect(config.visionAvailable, 
+        #expect(testConfig.visionAvailable, 
                      "\(platformName) should have Vision framework")
     }
     

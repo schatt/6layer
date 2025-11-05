@@ -138,36 +138,39 @@ struct FieldHintsLoaderTests {
         #expect(true) // Placeholder - will fail when we implement and test actual parsing
     }
     
-    /// BUSINESS PURPOSE: Validate hints parser handles missing fields in sections gracefully
-    /// TESTING SCOPE: Tests parsing _sections when referenced fields don't exist
-    /// METHODOLOGY: Create JSON with _sections referencing non-existent fields and verify warnings
-    @Test func testParseHintsWithMissingFields() {
+    /// BUSINESS PURPOSE: Validate SectionBuilder handles missing fields gracefully
+    /// TESTING SCOPE: Tests SectionBuilder when hints sections reference non-existent fields
+    /// METHODOLOGY: Create hints sections with missing field IDs and verify SectionBuilder warns and filters
+    @Test func testSectionBuilderWithMissingFields() {
         // TDD RED: Should warn when section references fields that don't exist
-        // This test documents expected behavior - will implement validation next
+        let fields = [
+            DynamicFormField(id: "name", contentType: .text, label: "Name"),
+            DynamicFormField(id: "email", contentType: .email, label: "Email")
+        ]
         
-        let jsonString = """
-        {
-            "_sections": [
-                {
-                    "id": "basic-info",
-                    "title": "Basic Information",
-                    "fields": ["name", "nonexistent", "email"],
-                    "layoutStyle": "horizontal"
-                }
-            ],
-            "name": {
-                "displayWidth": "medium"
-            },
-            "email": {
-                "displayWidth": "wide"
-            }
-        }
-        """
+        // Create hints section that references a non-existent field
+        var hintsSectionMetadata: [String: String] = [:]
+        hintsSectionMetadata["_fieldIds"] = "name,nonexistent,email"
         
-        // Expected: Should log warning about "nonexistent" field
-        // Expected: Should still create section with only valid fields ["name", "email"]
-        // Expected: Should ignore invalid field, not crash
-        #expect(true) // Placeholder - will implement validation next
+        let hintsSection = DynamicFormSection(
+            id: "basic-info",
+            title: "Basic Information",
+            fields: [],
+            metadata: hintsSectionMetadata,
+            layoutStyle: .horizontal
+        )
+        
+        // Build sections - should warn about missing field and only include valid ones
+        let builtSections = SectionBuilder.buildSections(
+            from: [hintsSection],
+            matching: fields
+        )
+        
+        // Should have one section with only valid fields
+        #expect(builtSections.count == 1)
+        #expect(builtSections[0].fields.count == 2) // name and email, not nonexistent
+        #expect(builtSections[0].fields[0].id == "name")
+        #expect(builtSections[0].fields[1].id == "email")
     }
     
     /// BUSINESS PURPOSE: Validate hints parser requires section titles

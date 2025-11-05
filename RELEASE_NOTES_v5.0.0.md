@@ -25,6 +25,9 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Component Integration**: Added `.automaticAccessibilityIdentifiers()` modifier to all framework components
 - **Global Configuration**: Unified accessibility settings across all architectural layers
 - **Pattern Standardization**: Consistent accessibility identifier patterns across all platforms
+- **Label Text Inclusion**: All components with String labels/titles now automatically include label text in accessibility identifiers
+- **Label Sanitization**: Automatic sanitization of label text (lowercase, hyphenated, alphanumeric) for identifier compatibility
+- **Environment-Based Label Passing**: Components pass label text via `accessibilityIdentifierLabel` environment key for automatic inclusion
 
 ### Apple HIG Compliance
 - **Human Interface Guidelines**: Full compliance with Apple's accessibility standards
@@ -57,6 +60,11 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Automatic Identifiers**: All components now support `.automaticAccessibilityIdentifiers()` modifier
 - **Platform Modifier Functions**: Added accessibility support to overloaded platform padding functions
 - **View Modifier Integration**: Integrated accessibility modifiers with platform modifier functions
+- **platformListRow API Refactoring**: New title-based API that automatically extracts label text for accessibility identifiers
+  - **New API**: `EmptyView().platformListRow(title: "Item Title") { trailingContent }`
+  - **Automatic Label Extraction**: Title parameter is automatically used for accessibility identifier generation
+  - **Legacy Support**: Maintains backward-compatible overload for custom content scenarios
+  - **Migration Tools**: Provided migration script and test suite for automated API updates
 
 ## 🐛 Critical Bug Fixes
 

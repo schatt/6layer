@@ -32,7 +32,10 @@ open class SwitchControlManagerAccessibilityTests: BaseTestClass {
         #expect(true, "Manager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let accessibilityConfig = testConfig
+        guard let accessibilityConfig = testConfig else {
+            Issue.record("testConfig is nil")
+            return
+        }
         #expect(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
         #expect(accessibilityConfig.namespace == "SixLayer", "SwitchControlManager should use correct namespace")
     }
@@ -57,7 +60,10 @@ open class SwitchControlManagerAccessibilityTests: BaseTestClass {
         #expect(true, "Manager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let accessibilityConfig = testConfig
+        guard let accessibilityConfig = testConfig else {
+            Issue.record("testConfig is nil")
+            return
+        }
         #expect(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
         #expect(accessibilityConfig.namespace == "SixLayer", "SwitchControlManager should use correct namespace")
     }

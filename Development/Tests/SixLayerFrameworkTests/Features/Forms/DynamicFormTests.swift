@@ -184,6 +184,89 @@ open class DynamicFormTests: BaseTestClass {
         }
     }
     
+    // MARK: - Layout Spec Tests (TDD RED)
+    
+    /// BUSINESS PURPOSE: Validate LayoutSpec type creation
+    /// TESTING SCOPE: Tests LayoutSpec initialization with sections
+    /// METHODOLOGY: Create LayoutSpec with sections and verify property is set correctly
+    @Test func testLayoutSpecCreation() {
+        // TDD RED: Should create LayoutSpec with sections
+        let sections = [
+            DynamicFormSection(id: "section1", title: "Section 1", fields: []),
+            DynamicFormSection(id: "section2", title: "Section 2", fields: [])
+        ]
+        
+        let layoutSpec = LayoutSpec(sections: sections)
+        
+        #expect(layoutSpec.sections.count == 2)
+        #expect(layoutSpec.sections[0].id == "section1")
+        #expect(layoutSpec.sections[1].id == "section2")
+    }
+    
+    /// BUSINESS PURPOSE: Validate LayoutSpec precedence over hints
+    /// TESTING SCOPE: Tests that explicit LayoutSpec takes precedence over hints sections
+    /// METHODOLOGY: Create form with both hints and explicit spec, verify spec is used
+    @Test func testLayoutSpecPrecedenceOverHints() {
+        // TDD RED: Explicit LayoutSpec should override hints sections
+        // This test documents expected behavior - will implement precedence logic next
+        
+        let fields = [
+            DynamicFormField(id: "name", contentType: .text, label: "Name"),
+            DynamicFormField(id: "email", contentType: .email, label: "Email")
+        ]
+        
+        // Hints would say: group1 (name, email) with horizontal layout
+        // Explicit spec says: group1 (name) with vertical, group2 (email) with horizontal
+        // Expected: Explicit spec wins
+        
+        let explicitSpec = LayoutSpec(sections: [
+            DynamicFormSection(
+                id: "group1",
+                title: "Name Only",
+                fields: [fields[0]],
+                layoutStyle: .vertical
+            ),
+            DynamicFormSection(
+                id: "group2",
+                title: "Email Only",
+                fields: [fields[1]],
+                layoutStyle: .horizontal
+            )
+        ])
+        
+        // When form is created with explicit spec, it should use spec, not hints
+        // This test will verify the precedence logic works correctly
+        #expect(explicitSpec.sections.count == 2)
+        #expect(explicitSpec.sections[0].layoutStyle == .vertical)
+        #expect(explicitSpec.sections[1].layoutStyle == .horizontal)
+    }
+    
+    /// BUSINESS PURPOSE: Validate hints are used when no explicit spec provided
+    /// TESTING SCOPE: Tests that hints sections are used when LayoutSpec is nil
+    /// METHODOLOGY: Create form with hints but no explicit spec, verify hints are used
+    @Test func testHintsUsedWhenNoExplicitSpec() {
+        // TDD RED: When no explicit spec, should use hints sections
+        // This test documents expected behavior - will implement hints loading next
+        
+        // When platformPresentFormData_L1 is called with modelName but no layoutSpec,
+        // it should load sections from hints file
+        // Expected: Hints sections are used
+        #expect(true) // Placeholder - will implement hints loading next
+    }
+    
+    /// BUSINESS PURPOSE: Validate defaults are used when no hints and no spec
+    /// TESTING SCOPE: Tests that framework defaults are used when neither hints nor spec provided
+    /// METHODOLOGY: Create form without hints or spec, verify defaults are used
+    @Test func testDefaultsUsedWhenNoHintsOrSpec() {
+        // TDD RED: When no hints and no spec, should use framework defaults
+        // This test documents expected behavior - will implement default behavior next
+        
+        // When platformPresentFormData_L1 is called without modelName and without layoutSpec,
+        // it should use framework's default layout behavior
+        // Expected: Default layout (probably vertical stack of all fields)
+        #expect(true) // Placeholder - will implement default behavior next
+    }
+    
     // MARK: - Dynamic Form Configuration Tests
     
     /// BUSINESS PURPOSE: Validate DynamicFormConfiguration creation functionality

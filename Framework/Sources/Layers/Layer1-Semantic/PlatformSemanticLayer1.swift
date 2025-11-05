@@ -223,8 +223,14 @@ public func platformPresentFormData_L1(
     // Set screen context for accessibility identifier generation
     AccessibilityIdentifierConfig.shared.setScreenContext("screen")
     
-    return platformPresentFormData_L1(fields: [field], hints: enhancedHints)
-        .automaticAccessibilityIdentifiers()
+    // Use async view helper
+    return AsyncFormView(
+        fields: [field],
+        hints: enhancedHints,
+        modelName: nil,
+        layoutSpec: nil
+    )
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Generic function for presenting modal forms
@@ -803,62 +809,115 @@ public func platformResponsiveCard_L1<Content: View>(
 
 /// Generic function for presenting form data with enhanced hints
 /// Automatically loads hints from .hints files that describe the data
+/// 
+/// Precedence order:
+/// 1. Explicit layoutSpec (if provided) - highest priority
+/// 2. Hints sections from modelName (if provided)
+/// 3. Framework defaults (vertical stack of all fields)
 @MainActor
 public func platformPresentFormData_L1(
     fields: [DynamicFormField],
     hints: EnhancedPresentationHints,
-    modelName: String? = nil
+    modelName: String? = nil,
+    layoutSpec: LayoutSpec? = nil
 ) -> some View {
-    let basicHints = PresentationHints(
-        dataType: hints.dataType,
-        presentationPreference: hints.presentationPreference,
-        complexity: hints.complexity,
-        context: hints.context,
-        customPreferences: hints.customPreferences,
-        fieldHints: hints.fieldHints
+    return AsyncFormView(
+        fields: fields,
+        hints: hints,
+        modelName: modelName,
+        layoutSpec: layoutSpec
     )
+}
+
+// MARK: - Async Form View Helper
+
+/// Helper view that handles async hints loading
+@MainActor
+private struct AsyncFormView: View {
+    let fields: [DynamicFormField]
+    let hints: EnhancedPresentationHints
+    let modelName: String?
+    let layoutSpec: LayoutSpec?
     
-    let _ = processExtensibleHints(hints, into: basicHints)
+    @State private var resolvedSections: [DynamicFormSection]?
+    @State private var isLoading = true
     
-    // If model name is provided, automatically load hints from the corresponding .hints file
-    // This allows 6Layer to automatically discover how to present the data
-    // Note: This is simplified for now - in a real async context, would properly await
-    let autoLoadHints: [String: FieldDisplayHints] = [:] // Hints loaded via cache
-    
-    // Merge loaded hints with any provided hints (provided hints take precedence)
-    var mergedFieldHints = autoLoadHints
-    for (fieldId, hint) in hints.fieldHints {
-        mergedFieldHints[fieldId] = hint
-    }
-    
-    // Return a simple form view with DynamicFormField
-    let formView = VStack(spacing: 16) {
-        // Form header
-        HStack {
-            Text("Form")
-                .font(.headline)
-                .foregroundColor(.primary)
-            Spacer()
-            Text("\(fields.count) fields")
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding(.horizontal)
-        
-        // Form fields
-        ScrollView {
-            VStack(spacing: 16) {
-                ForEach(fields, id: \.id) { field in
-                    createSimpleFieldView(for: field, hints: basicHints, loadedHints: mergedFieldHints)
-                }
+    var body: some View {
+        Group {
+            if isLoading {
+                ProgressView()
+                    .task {
+                        await loadSections()
+                    }
+            } else if let sections = resolvedSections {
+                createFormView(with: sections)
+            } else {
+                createFormView(with: createDefaultSections())
             }
-            .padding(.horizontal)
         }
     }
-    .padding()
-    .background(Color.platformBackground)
     
-    return AnyView(formView.environment(\.extensibleHints, hints.extensibleHints))
+    // MARK: - DRY: Default Section Creation
+    
+    private func createDefaultSections() -> [DynamicFormSection] {
+        [DynamicFormSection(
+            id: "default",
+            title: "Form Fields",
+            fields: fields
+        )]
+    }
+    
+    // MARK: - Section Resolution with Precedence (DRY)
+    
+    @MainActor
+    private func loadSections() async {
+        // Precedence 1: Explicit layoutSpec takes highest priority
+        if let explicitSpec = layoutSpec {
+            resolvedSections = explicitSpec.sections
+            isLoading = false
+            return
+        }
+        
+        // Precedence 2: Load hints from .hints file if modelName provided
+        if let modelName = modelName {
+            let hintsResult = await globalDataHintsRegistry.loadHintsResult(for: modelName)
+            
+            // Resolve sections from hints (field hints are merged automatically by framework)
+            if !hintsResult.sections.isEmpty {
+                resolvedSections = SectionBuilder.buildSections(
+                    from: hintsResult.sections,
+                    matching: fields
+                )
+            } else {
+                resolvedSections = createDefaultSections()
+            }
+        } else {
+            // Precedence 3: Default
+            resolvedSections = createDefaultSections()
+        }
+        
+        isLoading = false
+    }
+    
+    // MARK: - Form View Creation
+    
+    @ViewBuilder
+    private func createFormView(with sections: [DynamicFormSection]) -> some View {
+        let configuration = DynamicFormConfiguration(
+            id: "form-\(UUID().uuidString)",
+            title: hints.customPreferences["formTitle"] ?? "Form",
+            description: hints.customPreferences["formDescription"],
+            sections: sections,
+            submitButtonText: hints.customPreferences["submitButtonText"] ?? "Submit",
+            cancelButtonText: hints.customPreferences["cancelButtonText"]
+        )
+        
+        DynamicFormView(
+            configuration: configuration,
+            onSubmit: { _ in }
+        )
+        .environment(\.extensibleHints, hints.extensibleHints)
+    }
 }
 
 /// Helper function to create a simple field view for DynamicFormField

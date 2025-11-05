@@ -8,7 +8,8 @@ import ViewInspector
 /// Ensures AppleHIGComplianceManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @Suite("Apple HIG Compliance Manager Accessibility")
-open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {// MARK: - AppleHIGComplianceManager Tests
+open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
+    // MARK: - AppleHIGComplianceManager Tests
     
     /// BUSINESS PURPOSE: Validates that AppleHIGComplianceManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
@@ -22,7 +23,10 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {// MARK: 
         #expect(manager != nil, "AppleHIGComplianceManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
+        guard let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig else {
+            Issue.record("testConfig is nil")
+            return
+        }
         #expect(config.enableAutoIDs, "AppleHIGComplianceManager should work with accessibility enabled")
         #expect(config.namespace == "SixLayer", "AppleHIGComplianceManager should use correct namespace")
     }
@@ -39,7 +43,10 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {// MARK: 
         #expect(manager != nil, "AppleHIGComplianceManager should be instantiable")
         
         // Test that the manager can be configured with accessibility settings
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig
+        guard let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig else {
+            Issue.record("testConfig is nil")
+            return
+        }
         #expect(config.enableAutoIDs, "AppleHIGComplianceManager should work with accessibility enabled")
         #expect(config.namespace == "SixLayer", "AppleHIGComplianceManager should use correct namespace")
     }

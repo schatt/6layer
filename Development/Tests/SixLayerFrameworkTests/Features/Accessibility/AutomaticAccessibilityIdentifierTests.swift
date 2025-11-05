@@ -32,11 +32,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     private func testAccessibilityIdentifierConfiguration() -> Bool {
         try runWithTaskLocalConfig {
             guard let config = testConfig else {
-
                 Issue.record("testConfig is nil")
-
-                return
-
+                return false
             }
             return config.enableAutoIDs && !config.namespace.isEmpty
         }

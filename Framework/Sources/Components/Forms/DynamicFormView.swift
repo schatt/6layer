@@ -80,7 +80,7 @@ public struct DynamicFormView: View {
 // MARK: - Dynamic Form Section View
 
 /// Section view for dynamic forms
-/// GREEN PHASE: Full implementation of dynamic section rendering
+/// REFACTOR: Now uses layoutStyle from section to apply proper field layout
 @MainActor
 public struct DynamicFormSectionView: View {
     let section: DynamicFormSection
@@ -107,16 +107,77 @@ public struct DynamicFormSectionView: View {
                     .automaticAccessibilityIdentifiers(named: "SectionDescription")
             }
 
-            // Render each field in the section
-            ForEach(section.fields) { field in
-                DynamicFormFieldView(field: field, formState: formState)
-            }
+            // Render fields using section's layoutStyle (hint, not commandment - framework adapts)
+            fieldLayoutView
         }
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(8)
-        .environment(\.accessibilityIdentifierLabel, section.title) // TDD GREEN: Pass label to identifier generation
+        .environment(\.accessibilityIdentifierLabel, section.title)
         .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
+    }
+    
+    // MARK: - DRY: Field Layout Helper
+    
+    @ViewBuilder
+    private var fieldLayoutView: some View {
+        let layoutStyle = section.layoutStyle ?? .vertical // Default to vertical
+        
+        switch layoutStyle {
+        case .vertical, .standard, .compact, .spacious:
+            // Vertical stack (default)
+            VStack(spacing: 16) {
+                ForEach(section.fields) { field in
+                    DynamicFormFieldView(field: field, formState: formState)
+                }
+            }
+            
+        case .horizontal:
+            // Horizontal layout (2 columns)
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 16) {
+                ForEach(section.fields) { field in
+                    DynamicFormFieldView(field: field, formState: formState)
+                }
+            }
+            
+        case .grid:
+            // Grid layout (adaptive columns)
+            let columns = min(3, max(1, Int(sqrt(Double(section.fields.count)))))
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
+                ForEach(section.fields) { field in
+                    DynamicFormFieldView(field: field, formState: formState)
+                }
+            }
+            
+        case .adaptive:
+            // Adaptive: choose layout based on field count
+            if section.fields.count <= 4 {
+                VStack(spacing: 16) {
+                    ForEach(section.fields) { field in
+                        DynamicFormFieldView(field: field, formState: formState)
+                    }
+                }
+            } else if section.fields.count <= 8 {
+                LazyVGrid(columns: [
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ], spacing: 16) {
+                    ForEach(section.fields) { field in
+                        DynamicFormFieldView(field: field, formState: formState)
+                    }
+                }
+            } else {
+                let columns = min(3, max(1, Int(sqrt(Double(section.fields.count)))))
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
+                    ForEach(section.fields) { field in
+                        DynamicFormFieldView(field: field, formState: formState)
+                    }
+                }
+            }
+        }
     }
 }
 

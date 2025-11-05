@@ -387,6 +387,7 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
 // MARK: - Dynamic Form Section
 
 /// Represents a section in a dynamic form
+// TODO: Make Sendable once DynamicFormField is Sendable
 public struct DynamicFormSection: Identifiable {
     public let id: String
     public let title: String
@@ -395,6 +396,9 @@ public struct DynamicFormSection: Identifiable {
     public let isCollapsible: Bool
     public let isCollapsed: Bool
     public let metadata: [String: String]?
+    /// Optional layout style hint for this section (e.g., .horizontal, .vertical, .grid)
+    /// When nil, framework uses default layout behavior
+    public let layoutStyle: FieldLayout?
     
     public init(
         id: String,
@@ -403,7 +407,8 @@ public struct DynamicFormSection: Identifiable {
         fields: [DynamicFormField] = [],
         isCollapsible: Bool = false,
         isCollapsed: Bool = false,
-        metadata: [String: String]? = nil
+        metadata: [String: String]? = nil,
+        layoutStyle: FieldLayout? = nil
     ) {
         self.id = id
         self.title = title
@@ -412,6 +417,7 @@ public struct DynamicFormSection: Identifiable {
         self.isCollapsible = isCollapsible
         self.isCollapsed = isCollapsed
         self.metadata = metadata
+        self.layoutStyle = layoutStyle
     }
 }
 

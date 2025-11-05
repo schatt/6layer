@@ -271,7 +271,6 @@ extension CrossPlatformOptimizationManager {
     }
 }
 */
-}
 
 // MARK: - Test Result Types
 
