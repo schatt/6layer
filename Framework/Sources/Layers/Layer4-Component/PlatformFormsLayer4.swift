@@ -26,6 +26,7 @@ public extension View {
             content()
         }
         .padding(.vertical, 4)
+        .automaticAccessibilityIdentifiers(named: "platformFormField")
     }
     
     /// Platform-specific form field group for related fields
@@ -50,6 +51,7 @@ public extension View {
             .background(Color.platformSecondaryBackground)
             .cornerRadius(8)
         }
+        .automaticAccessibilityIdentifiers(named: "platformFormFieldGroup")
     }
     
     /// Platform-specific validation message with consistent styling
@@ -71,6 +73,7 @@ public extension View {
         .padding(.vertical, 2)
         .background(type.color.opacity(0.1))
         .cornerRadius(4)
+        .automaticAccessibilityIdentifiers(named: "platformValidationMessage")
     }
     
     /// Platform-specific form divider with consistent styling
@@ -80,6 +83,7 @@ public extension View {
             .fill(Color.platformSeparator)
             .frame(height: 1)
             .padding(.vertical, 8)
+            .automaticAccessibilityIdentifiers(named: "platformFormDivider")
     }
     
     /// Platform-specific form spacing with consistent sizing

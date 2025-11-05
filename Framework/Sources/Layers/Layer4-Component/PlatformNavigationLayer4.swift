@@ -16,15 +16,17 @@ public extension View {
     func platformNavigation<Content: View>(
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
-        #if os(iOS)
-        return NavigationView {
-            content()
-        }
-        #elseif os(macOS)
-        return content()
-        #else
-        return content()
-        #endif
+        let baseView: AnyView = {
+            #if os(iOS)
+            return AnyView(NavigationView {
+                content()
+            })
+            #else
+            return AnyView(content())
+            #endif
+        }()
+        return baseView
+            .automaticAccessibilityIdentifiers(named: "platformNavigation")
     }
 
     /// Wraps nested navigation in a platform-appropriate container
@@ -34,11 +36,14 @@ public extension View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             NavigationStack { content() }
+                .automaticAccessibilityIdentifiers(named: "platformNavigationContainer")
         } else {
             content()
+                .automaticAccessibilityIdentifiers(named: "platformNavigationContainer")
         }
         #else
         content()
+            .automaticAccessibilityIdentifiers(named: "platformNavigationContainer")
         #endif
     }
 
@@ -52,12 +57,13 @@ public extension View {
         #if os(iOS)
         if #available(iOS 17.0, *) {
             self.navigationDestination(item: item, destination: destination)
+                .automaticAccessibilityIdentifiers(named: "platformNavigationDestination")
         } else {
             // iOS 15-16 fallback: no navigation destination support
-            self
+            self.automaticAccessibilityIdentifiers(named: "platformNavigationDestination")
         }
         #else
-        self
+        self.automaticAccessibilityIdentifiers(named: "platformNavigationDestination")
         #endif
     }
 
@@ -104,10 +110,13 @@ public extension View {
     func platformNavigationTitle(_ title: String) -> some View {
         #if os(iOS)
         return self.navigationTitle(title)
+            .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
         #elseif os(macOS)
         return self.navigationTitle(title)
+            .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
         #else
         return self.navigationTitle(title)
+            .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
         #endif
     }
 
@@ -115,8 +124,10 @@ public extension View {
     func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
+            .automaticAccessibilityIdentifiers(named: "platformNavigationTitleDisplayMode")
         #else
         return self
+            .automaticAccessibilityIdentifiers(named: "platformNavigationTitleDisplayMode")
         #endif
     }
 
@@ -124,8 +135,10 @@ public extension View {
     func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
+            .automaticAccessibilityIdentifiers(named: "platformNavigationBarTitleDisplayMode")
         #else
         return self
+            .automaticAccessibilityIdentifiers(named: "platformNavigationBarTitleDisplayMode")
         #endif
     }
 

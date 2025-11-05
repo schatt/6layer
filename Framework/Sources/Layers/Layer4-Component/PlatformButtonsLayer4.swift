@@ -9,36 +9,44 @@ public extension View {
     /// Platform-specific primary button style
     /// Provides consistent primary button appearance across platforms
     func platformPrimaryButtonStyle() -> some View {
-        #if os(iOS)
-        return self.buttonStyle(.borderedProminent)
-        #elseif os(macOS)
-        if #available(macOS 12.0, *) {
-            return self.buttonStyle(.borderedProminent)
-        } else {
-            return self.buttonStyle(.bordered)
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-        }
-        #else
-        return self.buttonStyle(.borderedProminent)
-        #endif
+        let styledView: AnyView = {
+            #if os(iOS)
+            return AnyView(self.buttonStyle(.borderedProminent))
+            #elseif os(macOS)
+            if #available(macOS 12.0, *) {
+                return AnyView(self.buttonStyle(.borderedProminent))
+            } else {
+                return AnyView(self.buttonStyle(.bordered)
+                    .foregroundColor(.white)
+                    .background(Color.accentColor))
+            }
+            #else
+            return AnyView(self.buttonStyle(.borderedProminent))
+            #endif
+        }()
+        return styledView
+            .automaticAccessibilityIdentifiers(named: "platformPrimaryButtonStyle")
     }
     
     /// Platform-specific secondary button style
     /// Provides consistent secondary button appearance across platforms
     func platformSecondaryButtonStyle() -> some View {
-        #if os(iOS)
-        return self.buttonStyle(.bordered)
-        #elseif os(macOS)
-        if #available(macOS 12.0, *) {
-            return self.buttonStyle(.bordered)
-        } else {
-            return self.buttonStyle(.bordered)
-                .foregroundColor(.accentColor)
-        }
-        #else
-        return self.buttonStyle(.bordered)
-        #endif
+        let styledView: AnyView = {
+            #if os(iOS)
+            return AnyView(self.buttonStyle(.bordered))
+            #elseif os(macOS)
+            if #available(macOS 12.0, *) {
+                return AnyView(self.buttonStyle(.bordered))
+            } else {
+                return AnyView(self.buttonStyle(.bordered)
+                    .foregroundColor(.accentColor))
+            }
+            #else
+            return AnyView(self.buttonStyle(.bordered))
+            #endif
+        }()
+        return styledView
+            .automaticAccessibilityIdentifiers(named: "platformSecondaryButtonStyle")
     }
     
     /// Platform-specific destructive button style
@@ -89,5 +97,6 @@ public extension View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
         .accessibilityAddTraits(.isButton)
+        .automaticAccessibilityIdentifiers(named: "platformIconButton")
     }
 }

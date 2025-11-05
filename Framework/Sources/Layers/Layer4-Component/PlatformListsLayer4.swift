@@ -16,6 +16,7 @@ public extension View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 16)
+        .automaticAccessibilityIdentifiers(named: "platformListRow")
     }
     
     /// Platform-specific list section header with consistent styling

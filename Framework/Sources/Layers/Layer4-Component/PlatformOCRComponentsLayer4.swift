@@ -55,6 +55,7 @@ public func platformOCRImplementation_L4(
 /// **DEPRECATED**: Use `OCRService.processImage()` instead
 @available(*, deprecated, message: "Use OCRService.processImage() instead")
 @ViewBuilder
+@MainActor
 public func platformTextExtraction_L4(
     image: PlatformImage,
     context: OCRContext,
@@ -75,6 +76,7 @@ public func platformTextExtraction_L4(
             )
             onResult(fallbackResult)
         }
+        .automaticAccessibilityIdentifiers(named: "platformTextExtraction_L4")
 }
 
 /// Cross-platform text recognition implementation
@@ -82,6 +84,7 @@ public func platformTextExtraction_L4(
 /// **DEPRECATED**: Use `OCRService.processImage()` instead
 @available(*, deprecated, message: "Use OCRService.processImage() instead")
 @ViewBuilder
+@MainActor
 public func platformTextRecognition_L4(
     image: PlatformImage,
     options: TextRecognitionOptions,
@@ -100,6 +103,7 @@ public func platformTextRecognition_L4(
             )
             onResult(fallbackResult)
         }
+        .automaticAccessibilityIdentifiers(named: "platformTextRecognition_L4")
 }
 
 // MARK: - Migration Notice

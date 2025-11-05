@@ -14,20 +14,24 @@ public extension View {
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> SheetContent
     ) -> some View {
-        #if os(iOS)
-        return self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
-            content()
-        }
-        #elseif os(macOS)
-        return self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
-            content()
-                .frame(minWidth: 400, minHeight: 300)
-        }
-        #else
-        return self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
-            content()
-        }
-        #endif
+        let sheetView: AnyView = {
+            #if os(iOS)
+            return AnyView(self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
+                content()
+            })
+            #elseif os(macOS)
+            return AnyView(self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
+                content()
+                    .frame(minWidth: 400, minHeight: 300)
+            })
+            #else
+            return AnyView(self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
+                content()
+            })
+            #endif
+        }()
+        return sheetView
+            .automaticAccessibilityIdentifiers(named: "platformSheet")
     }
     
     /// Platform-specific alert presentation with consistent styling

@@ -60,6 +60,7 @@ public enum PlatformPhotoComponentsLayer4 {
                 PlaceholderPhotoView(style: style)
             }
         }
+        .automaticAccessibilityIdentifiers(named: "platformPhotoDisplay_L4")
     }
 }
 
