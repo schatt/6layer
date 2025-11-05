@@ -164,10 +164,10 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         
         // TDD: Define the behavior I want - labels from String parameters should be in identifiers
         // This test SHOULD FAIL initially - labels are not included in identifiers
-        let submitButton = AdaptiveButton("Submit", action: { })
+        let submitButton = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let cancelButton = AdaptiveButton("Cancel", action: { })
+        let cancelButton = AdaptiveUIPatterns.AdaptiveButton("Cancel", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -198,7 +198,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD: Labels should be sanitized (lowercase, spaces to hyphens, etc.)
-        let button = AdaptiveButton("Add New Item", action: { })
+        let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
