@@ -73,15 +73,12 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testPlatformListRowGeneratesAccessibilityIdentifiers() async {
-        // Given: A test list row content
-        let testContent = HStack {
-            Text("Test Item")
-            Spacer()
-        }
+        // Given: A test list row title
+        let title = "Test Item"
         
         // When: Applying platform list row wrapper
-        let listRow = testContent.platformListRow {
-            testContent
+        let listRow = EmptyView().platformListRow(title: title) {
+            Spacer()
         }
         
         // Then: Should generate accessibility identifiers

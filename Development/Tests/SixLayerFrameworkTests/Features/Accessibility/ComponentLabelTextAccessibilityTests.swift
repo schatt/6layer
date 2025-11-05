@@ -1647,12 +1647,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let item1 = TestItem(id: "1", title: "First Item")
         let item2 = TestItem(id: "2", title: "Second Item")
         
-        let row1 = Text(item1.title)
-            .platformListRow { Text(item1.title) }
+        let row1 = EmptyView()
+            .platformListRow(title: item1.title) { }
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        let row2 = Text(item2.title)
-            .platformListRow { Text(item2.title) }
+        let row2 = EmptyView()
+            .platformListRow(title: item2.title) { }
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
