@@ -759,6 +759,7 @@ public struct DynamicArrayField: View {
                         }
                     ))
                     .textFieldStyle(.roundedBorder)
+                    .environment(\.accessibilityIdentifierLabel, value) // TDD GREEN: Pass array item value to identifier generation
                     .automaticAccessibilityIdentifiers(named: "ArrayItem")
 
                     Button(action: {
