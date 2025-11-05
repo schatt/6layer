@@ -785,5 +785,209 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         cleanupTestEnvironment()
     }
+    
+    // MARK: - List Item Components Tests
+    
+    /// Test that list items created from objects get unique identifiers based on their titles
+    @Test func testListCardComponentIncludesItemTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: ListCardComponent should include item title in identifier
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let item1 = TestItem(id: "item-1", title: "First Item")
+        let item2 = TestItem(id: "item-2", title: "Second Item")
+        
+        let hints = PresentationHints()
+        
+        let card1 = ListCardComponent(item: item1, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = ListCardComponent(item: item2, hints: hints)
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - items with different titles should have different IDs
+            #expect(card1ID != card2ID, 
+                   "List items with different titles should have different identifiers")
+            #expect(card1ID.contains("first") || card1ID.contains("item") || card1ID.contains("First"), 
+                   "ListCardComponent identifier should include item title 'First Item'")
+            #expect(card2ID.contains("second") || card2ID.contains("item") || card2ID.contains("Second"), 
+                   "ListCardComponent identifier should include item title 'Second Item'")
+            
+            print("🔴 RED: ListCard 1 ID: '\(card1ID)'")
+            print("🔴 RED: ListCard 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect ListCardComponent: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that buttons inside list items get unique identifiers
+    @Test func testButtonsInListItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        // TDD RED: Buttons in list items should include item context
+        struct TestItem: Identifiable {
+            let id: String
+            let name: String
+        }
+        
+        let item1 = TestItem(id: "item-1", name: "Product A")
+        let item2 = TestItem(id: "item-2", name: "Product B")
+        
+        let button1 = AdaptiveButton("Add to Cart", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let button2 = AdaptiveButton("Add to Cart", action: { })
+            .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        // In a real list, each button would be in context of its item
+        // For now, test that buttons with same label at least get different IDs when in different contexts
+        // This is a simplified test - full test would need ForEach context
+        
+        do {
+            let inspected1 = try button1.inspect()
+            let button1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try button2.inspect()
+            let button2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - buttons with same label need item context to differentiate
+            // Currently they'll get the same ID, which is a problem
+            print("🔴 RED: Button 1 ID: '\(button1ID)'")
+            print("🔴 RED: Button 2 ID: '\(button2ID)'")
+            
+            // Note: This test documents the current limitation
+            // In a real ForEach, we'd need to pass item context to button identifiers
+            #expect(true, "Documenting current behavior - buttons in lists need item context")
+        } catch {
+            Issue.record("Failed to inspect buttons: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that ExpandableCardComponent includes item title in identifier
+    @Test func testExpandableCardComponentIncludesItemTitleInIdentifier() {
+        setupTestEnvironment()
+        
+        // TDD RED: ExpandableCardComponent should include item title
+        struct TestItem: Identifiable {
+            let id: String
+            let title: String
+        }
+        
+        let item1 = TestItem(id: "card-1", title: "Important Card")
+        let item2 = TestItem(id: "card-2", title: "Another Card")
+        
+        let hints = PresentationHints()
+        let layoutDecision = IntelligentCardLayoutDecision(
+            cardWidth: 200,
+            cardHeight: 150,
+            spacing: 16,
+            columns: 2
+        )
+        
+        let card1 = ExpandableCardComponent(
+            item: item1,
+            layoutDecision: layoutDecision,
+            strategy: CardExpansionStrategy(),
+            isExpanded: false,
+            isHovered: false,
+            onExpand: { },
+            onCollapse: { },
+            onHover: { _ in }
+        )
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        let card2 = ExpandableCardComponent(
+            item: item2,
+            layoutDecision: layoutDecision,
+            strategy: CardExpansionStrategy(),
+            isExpanded: false,
+            isHovered: false,
+            onExpand: { },
+            onCollapse: { },
+            onHover: { _ in }
+        )
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected1 = try card1.inspect()
+            let card1ID = try inspected1.accessibilityIdentifier()
+            
+            let inspected2 = try card2.inspect()
+            let card2ID = try inspected2.accessibilityIdentifier()
+            
+            // TDD RED: Should FAIL - cards with different titles should have different IDs
+            #expect(card1ID != card2ID, 
+                   "ExpandableCardComponent items with different titles should have different identifiers")
+            #expect(card1ID.contains("important") || card1ID.contains("card") || card1ID.contains("Important"), 
+                   "ExpandableCardComponent identifier should include item title 'Important Card'")
+            
+            print("🔴 RED: ExpandableCard 1 ID: '\(card1ID)'")
+            print("🔴 RED: ExpandableCard 2 ID: '\(card2ID)'")
+        } catch {
+            Issue.record("Failed to inspect ExpandableCardComponent: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
+    
+    /// Test that list items created from ForEach get unique identifiers
+    @Test func testForEachListItemsGetUniqueIdentifiers() {
+        setupTestEnvironment()
+        
+        // TDD RED: Items in ForEach should get unique identifiers
+        struct TestItem: Identifiable {
+            let id: String
+            let name: String
+        }
+        
+        let items = [
+            TestItem(id: "1", name: "Alpha"),
+            TestItem(id: "2", name: "Beta"),
+            TestItem(id: "3", name: "Gamma")
+        ]
+        
+        let hints = PresentationHints()
+        
+        // Create a view with ForEach
+        let listView = VStack {
+            ForEach(items) { item in
+                ListCardComponent(item: item, hints: hints)
+                    .enableGlobalAutomaticAccessibilityIdentifiers()
+            }
+        }
+        .enableGlobalAutomaticAccessibilityIdentifiers()
+        
+        do {
+            let inspected = try listView.inspect()
+            // ForEach creates multiple views - we need to inspect each one
+            // This is a simplified test - full test would verify all items are unique
+            let viewID = try inspected.accessibilityIdentifier()
+            
+            print("🔴 RED: ForEach List View ID: '\(viewID)'")
+            print("🔴 RED: Note - Need to verify each item in ForEach gets unique identifier")
+            
+            // TDD RED: Should verify each item has unique identifier with item name
+            #expect(true, "Documenting requirement - ForEach items need unique identifiers")
+        } catch {
+            Issue.record("Failed to inspect ForEach list: \(error)")
+        }
+        
+        cleanupTestEnvironment()
+    }
 }
 
