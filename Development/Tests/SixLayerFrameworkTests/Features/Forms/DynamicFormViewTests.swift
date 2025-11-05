@@ -406,20 +406,22 @@ open class DynamicFormViewTests {
         // OCR field should show OCR button (will fail until implemented)
         do {
             let inspected = try ocrFieldView.inspect()
-            // Look for OCR button - this will fail until we implement it
-            let ocrButton = try inspected.find(button: "Scan with OCR")
-            #expect(true, "OCR field should show OCR button") // Will fail until implemented
+            // Look for OCR button by finding the HStack that contains both TextField and Button
+            let hStack = try inspected.find(ViewType.HStack.self)
+            // The HStack should have 2 children: TextField and Button
+            #expect(hStack.count == 2, "OCR field HStack should contain TextField and OCR button")
         } catch {
             Issue.record("OCR button not implemented yet: \(error)")
         }
 
-        // Regular field should not show OCR button
+        // Regular field should not show OCR button (no HStack)
         do {
             let inspected = try regularFieldView.inspect()
-            let ocrButton = try? inspected.find(button: "Scan with OCR")
-            #expect(ocrButton == nil, "Regular field should not show OCR button")
+            // Regular field should not have HStack (just VStack with label and TextField)
+            let hStack = try? inspected.find(ViewType.HStack.self)
+            #expect(hStack == nil, "Regular field should not have HStack (no OCR button)")
         } catch {
-            // Expected - regular field shouldn't have OCR button
+            // Expected - regular field structure is different
         }
     }
 
