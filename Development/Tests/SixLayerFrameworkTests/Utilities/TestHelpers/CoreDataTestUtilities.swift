@@ -47,18 +47,24 @@ public enum CoreDataTestUtilities {
         
         // CRITICAL: Disable CloudKit and remote services to prevent XPC communication
         // This prevents attempts to contact Apple services (CloudKit, Account Services, Contacts, etc.)
-        desc.setOption(false as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        desc.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        // IMPORTANT: Use NSNumber(value: false) to ensure proper boolean conversion
+        desc.setOption(NSNumber(value: false), forKey: NSPersistentHistoryTrackingKey)
+        desc.setOption(NSNumber(value: false), forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        
+        // CRITICAL: Explicitly prevent XPC store connections (prevents Address Book/Contacts access)
+        // The log shows NSXPCStoreServerEndpointFactory being set, which triggers Contacts access
+        // Setting this to nil or false prevents CoreData from creating XPC connections
+        desc.setOption(nil, forKey: "NSXPCStoreServerEndpointFactory")
         
         // Disable CloudKit container options (prevents CloudKit sync)
         if #available(macOS 10.15, iOS 13.0, *) {
             desc.cloudKitContainerOptions = nil
         }
         
-        // CRITICAL: Prevent CoreData from attempting XPC connections to system services
-        // This includes Contacts (contactsd.persistence), Account Services, and other system services
-        // Setting these options explicitly prevents CoreData from probing for available services
-        desc.setOption(false as NSNumber, forKey: "NSXPCStoreServerEndpointFactory")
+        // CRITICAL: Ensure we're NOT using NSXPCStore type (which triggers system service access)
+        // Force in-memory store and prevent any XPC store creation
+        // The log shows storeType as NSXPCStore - we must ensure it's NSInMemoryStoreType
+        assert(desc.type == NSInMemoryStoreType, "Store type must be NSInMemoryStoreType for test isolation")
         
         // Additional isolation: prevent CoreData from accessing external account services
         // Note: In-memory stores should not trigger account access, but some CoreData versions
