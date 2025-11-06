@@ -16,7 +16,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
     
     @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             let service = OCRService()
             
@@ -25,24 +25,22 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
             #expect(true, "Service should be instantiable")
             
             // Test that the service can be configured with accessibility settings
-            await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
-        }
             }
+            #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
+        }
     }
     
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             let service = OCRService()
             
@@ -51,18 +49,16 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
             #expect(true, "Service should be instantiable")
             
             // Test that the service can be configured with accessibility settings
-            await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
-        }
             }
+            #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
+        }
     }
     
 }

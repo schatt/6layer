@@ -14,7 +14,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MAR
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-    runWithTaskLocalConfig {
+    await runWithTaskLocalConfig {
             // Given
             // MaterialAccessibilityManager is non-optional, so no need to check for nil
             
@@ -23,24 +23,22 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MAR
             // MaterialAccessibilityManager is non-optional, so no need to check for nil
             
             // Test that the manager can be configured with accessibility settings
-            await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "MaterialAccessibilityManager should use correct namespace")
-    }
             }
+            #expect(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+    }
     }
     
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             // MaterialAccessibilityManager is non-optional, so no need to check for nil
             
@@ -49,18 +47,16 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MAR
             // MaterialAccessibilityManager is non-optional, so no need to check for nil
             
             // Test that the manager can be configured with accessibility settings
-            await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "MaterialAccessibilityManager should use correct namespace")
-        }
             }
+            #expect(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+        }
     }
 }
 

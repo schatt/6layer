@@ -16,7 +16,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnIOS() async {
-    runWithTaskLocalConfig {
+    await runWithTaskLocalConfig {
             // Given
             let processor = ImageProcessor()
             
@@ -25,24 +25,22 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             #expect(true, "Processor should be instantiable")
             
             // Test that the processor can be configured with accessibility settings
-            await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "ImageProcessor should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
-    }
             }
+            #expect(config.enableAutoIDs, "ImageProcessor should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
+    }
     }
     
     /// BUSINESS PURPOSE: Validates that ImageProcessor generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             let processor = ImageProcessor()
             
@@ -51,17 +49,15 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             #expect(true, "Processor should be instantiable")
             
             // Test that the processor can be configured with accessibility settings
-            await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "ImageProcessor should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
-        }
             }
+            #expect(config.enableAutoIDs, "ImageProcessor should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "ImageProcessor should use correct namespace")
+        }
     }
 }
