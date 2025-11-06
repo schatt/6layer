@@ -180,7 +180,7 @@ open class Layer1CallbackFunctionalTests {
         )
         
         // Test structure - callbacks are documented
-        #expect(view != nil, "View with custom item view should be created")
+        // view is a non-optional View, so it exists if we reach here
     }
     
     // MARK: - platformPresentNumericData_L1 Tests
@@ -203,7 +203,7 @@ open class Layer1CallbackFunctionalTests {
             )
         )
         
-        #expect(view != nil, "Numeric data view should be created")
+        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformPresentMediaData_L1 Tests
@@ -226,7 +226,7 @@ open class Layer1CallbackFunctionalTests {
             )
         )
         
-        #expect(view != nil, "Media view should be created")
+        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformPresentHierarchicalData_L1 Tests
@@ -252,7 +252,7 @@ open class Layer1CallbackFunctionalTests {
             )
         )
         
-        #expect(view != nil, "Hierarchical view should be created")
+        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformPresentTemporalData_L1 Tests
@@ -275,7 +275,7 @@ open class Layer1CallbackFunctionalTests {
             )
         )
         
-        #expect(view != nil, "Temporal data view should be created")
+        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformResponsiveCard_L1 Tests
@@ -295,7 +295,7 @@ open class Layer1CallbackFunctionalTests {
             )
         )
         
-        #expect(view != nil, "Responsive card should be created")
+        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - External Integration Tests
@@ -315,7 +315,7 @@ open class Layer1CallbackFunctionalTests {
             onItemSelected: { _ in }
         )
         
-        #expect(view != nil, "L1 function should be externally accessible")
+        // view is non-optional and not used further, so no check needed
     }
 }
 

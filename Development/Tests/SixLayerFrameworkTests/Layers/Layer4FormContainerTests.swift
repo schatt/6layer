@@ -98,7 +98,7 @@ open class Layer4FormContainerTests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(view != nil, "Standard container should return a valid SwiftUI view")
+        // view is a non-optional View, so it exists if we reach here
         
         // 2. Does that structure contain what it should?
         do {
@@ -157,7 +157,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with ScrollView container
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
@@ -195,7 +195,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with custom VStack container
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -215,7 +215,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with adaptive VStack container
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -243,7 +243,7 @@ open class Layer4FormContainerTests {
             }
             
             // Then: Should return a view for each field layout
-            #expect(view != nil, "Should handle field layout: \(fieldLayout)")
+            // view is a non-optional View, so it exists if we reach here
             
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for layout: \(fieldLayout)")
@@ -264,7 +264,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with compact spacing
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -284,7 +284,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with spacious spacing
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -304,7 +304,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with grid spacing
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -331,8 +331,7 @@ open class Layer4FormContainerTests {
             }
             
             // Then: Should return a view for each validation strategy
-            #expect(view != nil, "Should handle validation: \(validation)")
-            
+            // view is non-optional, used below with Mirror
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for validation: \(validation)")
         }
@@ -362,7 +361,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view containing the complex content
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -384,7 +383,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view even with empty content
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -412,7 +411,7 @@ open class Layer4FormContainerTests {
         }
         
         // Then: Should return a view with platform adaptations
-        #expect(view != nil)
+        // view is non-optional, used below with Mirror
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AnyView")
@@ -439,8 +438,7 @@ open class Layer4FormContainerTests {
             }
             
             // Then: Should return a view for each container type
-            #expect(view != nil, "Should handle container type: \(containerType)")
-            
+            // view is non-optional, used below with Mirror
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for container: \(containerType)")
         }
@@ -466,7 +464,7 @@ open class Layer4FormContainerTests {
             }
             
             // Then: Should return a view for each field layout
-            #expect(view != nil, "Should handle field layout: \(fieldLayout)")
+            // view is a non-optional View, so it exists if we reach here
             
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for layout: \(fieldLayout)")
@@ -492,8 +490,7 @@ open class Layer4FormContainerTests {
             }
             
             // Then: Should return a view for each validation strategy
-            #expect(view != nil, "Should handle validation: \(validation)")
-            
+            // view is non-optional, used below with Mirror
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AnyView", "Should return AnyView for validation: \(validation)")
         }

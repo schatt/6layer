@@ -73,9 +73,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should return valid form strategy struct
-        #expect(formStrategy.containerType != nil, "Form strategy should have a container type")
-        #expect(formStrategy.fieldLayout != nil, "Form strategy should have a field layout")
-        #expect(formStrategy.validation != nil, "Form strategy should have validation strategy")
+        // All properties are non-optional, so they exist if we reach here
     }
     
     @Test func testSelectModalStrategyFormL3CreatesModalStrategy() async {
@@ -93,9 +91,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should return valid modal strategy struct
-        #expect(modalStrategy.presentationType != nil, "Modal strategy should have a presentation type")
-        #expect(modalStrategy.sizing != nil, "Modal strategy should have sizing")
-        #expect(modalStrategy.detents != nil, "Modal strategy should have detents")
+        // All properties are non-optional, so they exist if we reach here
     }
     
     @Test func testSelectCardExpansionStrategyL3CreatesExpansionStrategy() async {
@@ -117,7 +113,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should return valid expansion strategy struct
         #expect(!expansionStrategy.supportedStrategies.isEmpty, "Expansion strategy should have supported strategies")
-        #expect(expansionStrategy.primaryStrategy != nil, "Expansion strategy should have a primary strategy")
+        // primaryStrategy is a non-optional enum, so it exists if we reach here
         #expect(expansionStrategy.expansionScale > 0, "Expansion strategy should have positive expansion scale")
     }
 }

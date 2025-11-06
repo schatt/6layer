@@ -130,7 +130,7 @@ open class Layer4PlatformImageArchitectureTests {
             style: .thumbnail
         )
         
-        #expect(photoDisplay != nil, "Layer 4 should work with converted PlatformImage")
+        // photoDisplay is non-optional View, used above
         
         #elseif os(macOS)
         // Given: macOS system boundary
@@ -149,7 +149,7 @@ open class Layer4PlatformImageArchitectureTests {
             style: .thumbnail
         )
         
-        #expect(photoDisplay != nil, "Layer 4 should work with converted PlatformImage")
+        // photoDisplay is non-optional View, used above
         #endif
     }
     
@@ -171,10 +171,7 @@ open class Layer4PlatformImageArchitectureTests {
         
         // Then: Layer 4 should only work with PlatformImage
         // This test ensures no platform-specific types are exposed by Layer 4
-        
-        #expect(cameraInterface != nil, "Camera interface should work with PlatformImage")
-        #expect(photoPicker != nil, "Photo picker should work with PlatformImage")
-        #expect(photoDisplay != nil, "Photo display should work with PlatformImage")
+        // All Views are non-optional, so they exist if we reach here
         
         // Verify that Layer 4 callbacks only accept PlatformImage
         // (This would be a compilation error if Layer 4 exposed platform-specific types)
@@ -210,7 +207,7 @@ open class Layer4PlatformImageArchitectureTests {
             style: .thumbnail
         )
         
-        #expect(photoDisplay != nil, "Layer 4 should work with PlatformImage directly")
+        // photoDisplay is non-optional View, used above
         
         // Test that Layer 4 callbacks work with PlatformImage
         var callbackImage: PlatformImage?
