@@ -171,7 +171,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         
         // When: Verify display component is created
         // Then: Verify display component works with real image
-        #expect(photoDisplay != nil, "Photo display should be created")
+        // photoDisplay is a non-optional View, so it exists if we reach here
         
         // Test that the display component can actually render the image
         // This tests the integration between PlatformImage and display components
@@ -195,7 +195,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         // Test the exact pattern used in Layer 4 callbacks
         // This is the code that was broken: PlatformImage(image)
         let callbackResult = PlatformImage(uiImage)
-        #expect(callbackResult != nil, "Callback pattern should work with backward compatibility")
+        // callbackResult is a non-optional PlatformImage, so it exists if we reach here
         #expect(callbackResult.uiImage == uiImage, "Callback pattern should produce correct result")
         
         #elseif os(macOS)
@@ -203,7 +203,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         
         // Test the exact pattern used in Layer 4 callbacks
         let callbackResult = PlatformImage(nsImage)
-        #expect(callbackResult != nil, "Callback pattern should work with backward compatibility")
+        // callbackResult is a non-optional PlatformImage, so it exists if we reach here
         #expect(callbackResult.nsImage == nsImage, "Callback pattern should produce correct result")
         #endif
     }

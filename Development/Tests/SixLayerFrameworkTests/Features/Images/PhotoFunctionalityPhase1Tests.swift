@@ -122,7 +122,7 @@ open class PhotoFunctionalityPhase1Tests {
         let optimizedImage = originalImage.optimizedForOCR()
         
         // Then: Optimized image should be returned
-        #expect(optimizedImage != nil, "OCR optimized image should be returned")
+        // optimizedImage is a non-optional PlatformImage, so it exists if we reach here
     }
     
     @Test func testPlatformImageMetadata() {
@@ -255,7 +255,7 @@ open class PhotoFunctionalityPhase1Tests {
         let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
         
         // Then: Camera interface should be created and be hostable
-        #expect(cameraInterface != nil, "Camera interface should be created")
+        // cameraInterface is a non-optional View, so it exists if we reach here
         
         // Test that the camera interface can actually be hosted
         let hostingView = hostRootPlatformView(cameraInterface.withGlobalAutoIDsEnabled())
@@ -273,7 +273,7 @@ open class PhotoFunctionalityPhase1Tests {
         let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
         
         // Then: Photo picker should be created and be hostable
-        #expect(photoPicker != nil, "Photo picker should be created")
+        // photoPicker is a non-optional View, so it exists if we reach here
         
         // Test that the photo picker can actually be hosted
         let hostingView = hostRootPlatformView(photoPicker.withGlobalAutoIDsEnabled())
@@ -290,7 +290,7 @@ open class PhotoFunctionalityPhase1Tests {
         let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
         
         // Then: Photo display should be created and be hostable
-        #expect(photoDisplay != nil, "Photo display should be created")
+        // photoDisplay is a non-optional View, so it exists if we reach here
         
         // Test that the photo display can actually be hosted
         let hostingView = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
@@ -320,7 +320,7 @@ open class PhotoFunctionalityPhase1Tests {
         let modifiedView = testView.platformKeyboardType(keyboardType)
         
         // Then: Modified view should be created and be hostable
-        #expect(modifiedView != nil, "Modified view with keyboard type should be created")
+        // modifiedView is a non-optional View, so it exists if we reach here
         
         // Test that the modified view can actually be hosted
         let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
@@ -337,7 +337,7 @@ open class PhotoFunctionalityPhase1Tests {
         let modifiedView = testView.platformTextFieldStyle(style)
         
         // Then: Modified view should be created and be hostable
-        #expect(modifiedView != nil, "Modified view with text field style should be created")
+        // modifiedView is a non-optional View, so it exists if we reach here
         
         // Test that the modified view can actually be hosted
         let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
