@@ -63,8 +63,7 @@ open class Layer4PlatformImageArchitectureTests {
         #expect(selectedImage == nil, "Callback should not be called yet")
         
         // Verify interfaces were created successfully
-        #expect(cameraInterface != nil, "Camera interface should work with PlatformImage callback")
-        #expect(photoPicker != nil, "Photo picker should work with PlatformImage callback")
+        // cameraInterface and photoPicker are non-optional Views, so they exist if we reach here
     }
     
     /// BUSINESS PURPOSE: Verify Layer 4 delegate methods work with PlatformImage

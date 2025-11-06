@@ -31,10 +31,9 @@ final class Layer2ComponentAccessibilityTests {
         )
         
         // Then: Should have valid layout decision properties
-        #expect(layoutDecision.approach != nil, "Layer 2 should return valid layout approach")
+        // approach and performance are non-optional, so they exist if we reach here
         #expect(layoutDecision.columns > 0, "Layer 2 should return valid column count")
         #expect(layoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
-        #expect(layoutDecision.performance != nil, "Layer 2 should return valid performance strategy")
     }
     
     @Test func testDetermineOptimalFormLayoutL2ReturnsValidDecision() async {

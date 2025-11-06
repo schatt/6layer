@@ -37,7 +37,7 @@ open class Layer4FormContainerTests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(view != nil, "Form container should return a valid SwiftUI view")
+        // view is a non-optional View, so it exists if we reach here
         
         // 2. Does that structure contain what it should?
         do {

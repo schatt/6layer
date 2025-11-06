@@ -144,7 +144,7 @@ open class Layer1CallbackFunctionalTests {
         
         // View exists but we can't easily test settings callbacks without actual UI interaction
         // This documents expected behavior
-        #expect(view != nil, "Settings view should be created")
+        // view is a non-optional View, so it exists if we reach here
     }
     
     // MARK: - platformPresentItemCollection_L1 with Custom Views

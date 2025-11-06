@@ -492,7 +492,7 @@ open class Layer2LayoutDecisionTests {
             )
             
             // Then: Should return valid decision for each data type
-            #expect(decision != nil, "Should handle data type: \(dataType)")
+            // decision is a non-optional struct, so it exists if we reach here
             #expect(decision.columns > 0, "Should have positive columns for data type: \(dataType)")
             #expect(decision.spacing >= 0, "Should have non-negative spacing for data type: \(dataType)")
             #expect(!decision.reasoning.isEmpty, "Should have reasoning for data type: \(dataType)")

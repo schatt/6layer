@@ -39,7 +39,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let view = platformPresentNumericData_L1(data: singleNumericData, hints: testHints)
         
         // THEN: Should create a view successfully
-        #expect(view != nil, "Single numeric data should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())

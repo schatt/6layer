@@ -33,7 +33,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should return valid layout strategy struct
-        #expect(layoutStrategy.approach != nil, "Layout strategy should have an approach")
+        // approach is a non-optional enum, so it exists if we reach here
         #expect(layoutStrategy.columns > 0, "Layout strategy should have positive column count")
         #expect(layoutStrategy.spacing >= 0, "Layout strategy should have non-negative spacing")
         #expect(!layoutStrategy.reasoning.isEmpty, "Layout strategy should have reasoning")

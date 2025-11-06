@@ -49,7 +49,7 @@ open class Layer1AccessibilityTests {
         )
         
         // Then: View should be created
-        #expect(view != nil, "platformPresentItemCollection_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // TDD RED PHASE: Test accessibility identifiers across both platforms
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
