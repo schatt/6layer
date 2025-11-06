@@ -107,7 +107,7 @@ open class L2LayoutDecisionTests {
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(simpleDecision != nil, "Simple complexity should return a decision")
+        // simpleDecision is a non-optional struct, so it exists if we reach here
         
         // Test moderate complexity
         let moderateHints = PresentationHints(

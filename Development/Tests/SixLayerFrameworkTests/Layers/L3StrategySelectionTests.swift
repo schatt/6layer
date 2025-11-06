@@ -100,7 +100,7 @@ open class L3StrategySelectionTests {
         )
         // Test that the strategy can be used to create a functional view
         let phoneTestView = createTestViewWithCardLayoutStrategy(phoneStrategy)
-        #expect(phoneTestView != nil, "Should be able to create view with phone card layout strategy")
+        // phoneTestView is a non-optional View, so it exists if we reach here
         
         // Test pad
         let padStrategy = selectCardLayoutStrategy_L3(
@@ -111,7 +111,7 @@ open class L3StrategySelectionTests {
         )
         // Test that the strategy can be used to create a functional view
         let padTestView = createTestViewWithCardLayoutStrategy(padStrategy)
-        #expect(padTestView != nil, "Should be able to create view with pad card layout strategy")
+        // padTestView is a non-optional View, so it exists if we reach here
         
         // Test mac
         let macStrategy = selectCardLayoutStrategy_L3(

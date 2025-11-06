@@ -223,7 +223,7 @@ open class Layer1AccessibilityTests {
         )
         
         // Then: View should be created
-        #expect(view != nil, "platformPresentFormData_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // TDD RED PHASE: Test accessibility identifiers across both platforms (platform-dependent behavior)
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
@@ -252,7 +252,7 @@ open class Layer1AccessibilityTests {
         )
         
         // Then: View should be created
-        #expect(view != nil, "platformPresentNumericData_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // TDD RED PHASE: Test accessibility identifiers (representative sampling on iOS)
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -388,7 +388,7 @@ open class Layer1AccessibilityTests {
         )
         
         // Then: View should be created
-        #expect(view != nil, "platformPresentMediaData_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // TDD GREEN PHASE: platformPresentMediaData_L1 should generate accessibility identifiers
         let hasSpecificAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
