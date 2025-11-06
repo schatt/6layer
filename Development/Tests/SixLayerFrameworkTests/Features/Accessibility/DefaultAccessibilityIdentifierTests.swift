@@ -116,8 +116,8 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
 
             }
                 
-            // Verify config is properly configured
-            #expect(config != nil, "AccessibilityIdentifierConfig should be available")
+            // Verify config is properly configured (config is non-optional after guard let)
+            // Config is available if we reach here
                 
             // When: Using framework component with opt-out modifier
             let testView = PlatformInteractionButton(style: .primary, action: {}) {

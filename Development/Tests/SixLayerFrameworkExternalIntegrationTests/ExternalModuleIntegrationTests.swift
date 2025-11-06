@@ -40,10 +40,8 @@ struct ExternalModuleIntegrationTests {
     func testGlobalPhotoPickerAccessible() async throws {
         // Simulate how CarManager would call this
         await MainActor.run {
-            var selectedImage: PlatformImage?
-            
-            let view = platformPhotoPicker_L4(onImageSelected: { image in
-                selectedImage = image
+            let _ = platformPhotoPicker_L4(onImageSelected: { _ in
+                // Callback signature is accessible - in real usage, external modules would use this
             })
             
             // Test that it compiles and creates a view
@@ -59,10 +57,8 @@ struct ExternalModuleIntegrationTests {
     @Test("Global camera interface function accessible")
     func testGlobalCameraInterfaceAccessible() async throws {
         await MainActor.run {
-            var capturedImage: PlatformImage?
-            
-            let _ = platformCameraInterface_L4(onImageCaptured: { image in
-                capturedImage = image
+            let _ = platformCameraInterface_L4(onImageCaptured: { _ in
+                // Callback signature is accessible - in real usage, external modules would use this
             })
             
             // Test that it compiles and creates a view
@@ -115,16 +111,13 @@ struct ExternalModuleIntegrationTests {
             // Test that photo components apply accessibility identifiers
             // These should work from an external module perspective
             
-            var capturedImage: PlatformImage?
-            var selectedImage: PlatformImage?
-            
-            let cameraView = platformCameraInterface_L4(onImageCaptured: { image in
-                capturedImage = image
+            let _ = platformCameraInterface_L4(onImageCaptured: { _ in
+                // Callback signature is accessible
             })
-            let pickerView = platformPhotoPicker_L4(onImageSelected: { image in
-                selectedImage = image
+            let _ = platformPhotoPicker_L4(onImageSelected: { _ in
+                // Callback signature is accessible
             })
-            let displayView = platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
+            let _ = platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
             
             // If these compile and create views, the API is accessible
             #expect(true, "Photo components accessible and creating views")
@@ -136,9 +129,9 @@ struct ExternalModuleIntegrationTests {
     func testPhotoComponentsLayer4MethodsAccessible() async throws {
         await MainActor.run {
             // Test that we can use the enum methods
-            let cameraView = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: { _ in })
-            let pickerView = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: { _ in })
-            let displayView = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
+            let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: { _ in })
+            let _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: { _ in })
+            let _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
             
             // If these compile, the enum methods are accessible from external modules
             #expect(true, "Enum methods accessible")

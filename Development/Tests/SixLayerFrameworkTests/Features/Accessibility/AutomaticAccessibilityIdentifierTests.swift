@@ -336,7 +336,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 .appleHIGCompliant()
                 
             // Then: View should be created with both HIG compliance and automatic IDs
-            #expect(view != nil, "View with HIG compliance should include automatic IDs")
+            // View is non-optional, so if we reach here it was created successfully
         }
     }
     
@@ -370,7 +370,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             )
                 
             // Then: View should be created with automatic identifiers
-            #expect(view != nil, "Layer 1 function should include automatic identifiers")
+            // View is non-optional, so if we reach here it was created successfully
                 
             // Test that Layer 1 functions generate accessibility identifiers
             #expect(testAccessibilityIdentifiersSinglePlatform(

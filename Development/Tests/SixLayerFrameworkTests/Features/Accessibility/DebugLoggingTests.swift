@@ -13,7 +13,7 @@ import Foundation
 /// TDD Tests for Debug Logging Functionality
 /// Following Red-Green-Refactor cycle: Write failing tests first, then implement
 @MainActor
-@Suite("Debug Logging T D D")
+@Suite("Debug Logging TDD")
 open class DebugLoggingTDDTests: BaseTestClass {
     
     // MARK: - Test Setup// MARK: - AccessibilityIdentifierGenerator Tests
