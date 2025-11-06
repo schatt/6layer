@@ -110,7 +110,7 @@ public struct IntelligentFormView {
         let analysis = DataIntrospectionEngine.analyze(initialData)
         let formStrategy = determineFormStrategy(analysis: analysis)
         
-        return AnyView(withAnalysisContext(analysis) {
+        let content = withAnalysisContext(analysis) {
             Group {
             switch formStrategy.containerType {
             case .form:
@@ -158,8 +158,9 @@ public struct IntelligentFormView {
                 )
             }
             }
-            .automaticAccessibilityIdentifiers()
-        })
+        }
+        return AnyView(AnyView(content)
+            .automaticAccessibilityIdentifiers(named: "IntelligentFormView"))
     }
     
     /// Generate a form for updating existing data with data binding integration
