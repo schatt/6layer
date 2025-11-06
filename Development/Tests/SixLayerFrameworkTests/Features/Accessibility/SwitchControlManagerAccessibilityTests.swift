@@ -12,60 +12,46 @@ open class SwitchControlManagerAccessibilityTests: BaseTestClass {
     
     // MARK: - SwitchControlManager Tests
     
-    /// BUSINESS PURPOSE: Validates that SwitchControlManager generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on iOS
-    @Test @MainActor
-    func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-        // Given
-        let switchConfig = SwitchControlConfig(
-            enableNavigation: true,
-            enableCustomActions: true,
-            enableGestureSupport: true,
-            focusManagement: .automatic,
-            gestureSensitivity: .medium,
-            navigationSpeed: .normal
-        )
-        let manager = SwitchControlManager(config: switchConfig)
-        
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        #expect(true, "Manager should be instantiable")
-        
-        // Test that the manager can be configured with accessibility settings
-        guard let accessibilityConfig = testConfig else {
-            Issue.record("testConfig is nil")
-            return
+    /// BUSINESS PURPOSE: Validates that views using SwitchControlManager generate proper accessibility identifiers
+    /// Tests views with .switchControlEnabled() modifier which uses SwitchControlManager
+    @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() {
+        runWithTaskLocalConfig {
+            // Given: A view with .switchControlEnabled() modifier (which uses SwitchControlManager)
+            let view = Button("Test Button") { }
+                .switchControlEnabled()
+                .automaticAccessibilityIdentifiers()
+            
+            // When & Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "SwitchControlEnabled"
+            )
+            
+            #expect(hasAccessibilityID, "View with .switchControlEnabled() (using SwitchControlManager) should generate accessibility identifiers on iOS")
         }
-        #expect(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
-        #expect(accessibilityConfig.namespace == "SixLayer", "SwitchControlManager should use correct namespace")
     }
     
-    /// BUSINESS PURPOSE: Validates that SwitchControlManager generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on macOS
-    @Test @MainActor
-    func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        // Given
-        let switchConfig = SwitchControlConfig(
-            enableNavigation: true,
-            enableCustomActions: true,
-            enableGestureSupport: true,
-            focusManagement: .automatic,
-            gestureSensitivity: .medium,
-            navigationSpeed: .normal
-        )
-        let manager = SwitchControlManager(config: switchConfig)
-        
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        #expect(true, "Manager should be instantiable")
-        
-        // Test that the manager can be configured with accessibility settings
-        guard let accessibilityConfig = testConfig else {
-            Issue.record("testConfig is nil")
-            return
+    /// BUSINESS PURPOSE: Validates that views using SwitchControlManager generate proper accessibility identifiers
+    /// Tests views with .switchControlEnabled() modifier which uses SwitchControlManager
+    @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+        runWithTaskLocalConfig {
+            // Given: A view with .switchControlEnabled() modifier (which uses SwitchControlManager)
+            let view = Button("Test Button") { }
+                .switchControlEnabled()
+                .automaticAccessibilityIdentifiers()
+            
+            // When & Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.macOS,
+                componentName: "SwitchControlEnabled"
+            )
+            
+            #expect(hasAccessibilityID, "View with .switchControlEnabled() (using SwitchControlManager) should generate accessibility identifiers on macOS")
         }
-        #expect(accessibilityConfig.enableAutoIDs, "SwitchControlManager should work with accessibility enabled")
-        #expect(accessibilityConfig.namespace == "SixLayer", "SwitchControlManager should use correct namespace")
     }
 }
 

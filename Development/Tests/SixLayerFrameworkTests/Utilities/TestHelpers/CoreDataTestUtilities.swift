@@ -46,7 +46,7 @@ public enum CoreDataTestUtilities {
         desc.shouldInferMappingModelAutomatically = false
         
         // CRITICAL: Disable CloudKit and remote services to prevent XPC communication
-        // This prevents attempts to contact Apple services (CloudKit, Account Services, etc.)
+        // This prevents attempts to contact Apple services (CloudKit, Account Services, Contacts, etc.)
         desc.setOption(false as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         desc.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         
@@ -55,9 +55,15 @@ public enum CoreDataTestUtilities {
             desc.cloudKitContainerOptions = nil
         }
         
+        // CRITICAL: Prevent CoreData from attempting XPC connections to system services
+        // This includes Contacts (contactsd.persistence), Account Services, and other system services
+        // Setting these options explicitly prevents CoreData from probing for available services
+        desc.setOption(false as NSNumber, forKey: "NSXPCStoreServerEndpointFactory")
+        
         // Additional isolation: prevent CoreData from accessing external account services
-        // Note: In-memory stores should not trigger account access, but this provides extra isolation
-        // Some versions of CoreData may attempt to access account services even with in-memory stores
+        // Note: In-memory stores should not trigger account access, but some CoreData versions
+        // may attempt to access account services, Contacts, or other system services even with in-memory stores
+        // These errors are typically benign but can be suppressed with proper configuration
         
         container.persistentStoreDescriptions = [desc]
         

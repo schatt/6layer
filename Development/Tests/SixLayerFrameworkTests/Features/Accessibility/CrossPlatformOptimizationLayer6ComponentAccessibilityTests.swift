@@ -18,23 +18,27 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     // MARK: - CrossPlatformOptimizationManager Tests
     
     @Test func testCrossPlatformOptimizationManagerGeneratesAccessibilityIdentifiers() async {
-        // Given: CrossPlatformOptimizationManager
-        let manager = CrossPlatformOptimizationManager()
-        
-        // When: Creating a view with CrossPlatformOptimizationManager
-        let view = VStack {
-            Text("Cross Platform Optimization Manager Content")
+        await runWithTaskLocalConfig {
+            // Given: A view with CrossPlatformOptimizationManager
+            let manager = CrossPlatformOptimizationManager()
+            
+            // When: Creating a view with CrossPlatformOptimizationManager and applying accessibility identifiers
+            let view = VStack {
+                Text("Cross Platform Optimization Manager Content")
+            }
+            .environmentObject(manager)
+            .automaticAccessibilityIdentifiers()
+            
+            // Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "CrossPlatformOptimizationManager"
+            )
+            
+            #expect(hasAccessibilityID, "View with CrossPlatformOptimizationManager should generate accessibility identifiers")
         }
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "SixLayer.main.ui.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "CrossPlatformOptimizationManager"
-        )
-        
-        #expect(hasAccessibilityID, "CrossPlatformOptimizationManager should generate accessibility identifiers")
     }
     
     // MARK: - PlatformOptimizationSettings Tests
