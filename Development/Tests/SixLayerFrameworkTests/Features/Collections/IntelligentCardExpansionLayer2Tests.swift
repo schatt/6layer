@@ -41,7 +41,7 @@ open class IntelligentCardExpansionLayer2Tests {
         
         // Layer 2 functions return data structures, not views
         // So we test that the result is valid
-        #expect(result != nil, "determineOptimalCardLayout_L2 should return a valid result on iOS")
+        // result is a non-optional CardLayoutDecision struct, so it exists if we reach here
     }
     
     @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {

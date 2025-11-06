@@ -274,7 +274,7 @@ struct HintsDefaultValueTests {
         
         // Then: View should be created successfully
         // This test will FAIL because the framework doesn't support default values yet
-        #expect(view != nil, "platformPresentItemCollection_L1 should create a view with default values")
+        // view is a non-optional View, so it exists if we reach here
         
         // Note: We can't easily test the actual content display in unit tests,
         // but this test documents the expected behavior for integration testing

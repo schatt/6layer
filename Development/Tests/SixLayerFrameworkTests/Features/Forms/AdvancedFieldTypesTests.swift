@@ -903,7 +903,7 @@ open class AdvancedFieldTypesTests {
             #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
             
             // Test that form state is properly configured
-            #expect(formState != nil, "Form state should be created successfully")
+            // formState is a non-optional class instance, so it exists if we reach here
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -936,7 +936,7 @@ open class AdvancedFieldTypesTests {
             #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
             
             // Test that form state is properly configured
-            #expect(formState != nil, "Form state should be created successfully")
+            // formState is a non-optional class instance, so it exists if we reach here
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestSwitchControl(false)
@@ -969,7 +969,7 @@ open class AdvancedFieldTypesTests {
             #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
             
             // Test that form state is properly configured
-            #expect(formState != nil, "Form state should be created successfully")
+            // formState is a non-optional class instance, so it exists if we reach here
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestAssistiveTouch(false)

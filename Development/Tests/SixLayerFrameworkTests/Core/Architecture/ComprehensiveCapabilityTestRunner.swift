@@ -313,11 +313,11 @@ struct ComprehensiveCapabilityTestRunner {
         let platformConfig = createPlatformConfig(platform: platform)
         
         // Test that the platform configuration is consistent and functional
-        #expect(platformConfig != nil, "Platform configuration should be valid for \(platform)")
+        // platformConfig is a non-optional struct, so it exists if we reach here
         
         // Test that the configuration actually works by creating a test view
         let testView = createTestViewWithConfig(platformConfig)
-        #expect(testView != nil, "Should be able to create test view with platform config for \(platform)")
+        // testView is a non-optional View, so it exists if we reach here
         
         // Test platform-specific consistency and dependencies
         // Note: Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)

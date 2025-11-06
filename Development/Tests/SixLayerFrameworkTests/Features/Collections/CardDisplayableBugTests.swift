@@ -223,7 +223,7 @@ struct CardDisplayableBugTests {
         
         // Then: View should be created successfully
         // This test will FAIL because the framework currently shows generic object descriptions
-        #expect(view != nil, "platformPresentItemCollection_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // Note: We can't easily test the actual content display in unit tests,
         // but this test documents the expected behavior for integration testing

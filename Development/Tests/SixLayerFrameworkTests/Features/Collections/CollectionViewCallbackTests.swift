@@ -71,7 +71,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testPlatformPresentItemCollectionL1WithoutCallbacks() {
@@ -85,7 +85,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testPlatformPresentItemCollectionL1WithEnhancedHints() {
@@ -103,7 +103,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     // MARK: - Collection View Component Tests
@@ -123,7 +123,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testGridCollectionViewWithCallbacks() {
@@ -141,7 +141,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testListCollectionViewWithCallbacks() {
@@ -159,7 +159,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testListCollectionViewOnItemSelectedCallback() async throws {
@@ -226,7 +226,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testMasonryCollectionViewWithCallbacks() {
@@ -244,7 +244,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testListCollectionViewOnItemDeletedCallback() async throws {
@@ -310,7 +310,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     // MARK: - Card Component Tests
@@ -351,7 +351,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testSimpleCardComponentWithCallbacks() {
@@ -377,7 +377,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testCoverFlowCardComponentWithCallbacks() {
@@ -394,7 +394,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     // MARK: - Empty State Tests
@@ -411,7 +411,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testEmptyCollectionWithoutCreateCallback() {
@@ -425,7 +425,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     // MARK: - Backward Compatibility Tests
@@ -442,7 +442,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testBackwardCompatibilityWithEnhancedHints() {
@@ -457,7 +457,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     // MARK: - Edge Case Tests
@@ -477,7 +477,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testSingleItemCollection() {
@@ -496,7 +496,7 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
     
     @Test func testLargeCollection() {
@@ -517,6 +517,6 @@ open class CollectionViewCallbackTests {
         )
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        // view is a non-optional View struct, so it exists if we reach here
     }
 }

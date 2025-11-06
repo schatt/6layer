@@ -42,7 +42,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 should return a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())

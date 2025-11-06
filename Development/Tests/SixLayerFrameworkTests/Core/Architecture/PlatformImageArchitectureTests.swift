@@ -74,7 +74,7 @@ open class PlatformImageArchitectureTests {
         #endif
         
         // Verify the interface was created successfully
-        #expect(cameraInterface != nil, "Framework should work with PlatformImage")
+        // cameraInterface is a non-optional View, so it exists if we reach here
     }
     
     /// BUSINESS PURPOSE: Verify system boundary conversions work correctly

@@ -142,7 +142,7 @@ open class TestPatterns {
     /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
     static func verifyViewGeneration(_ view: some View, testName: String) {
         // 1. View created - The view can be instantiated successfully
-        #expect(view != nil, "Should generate view for \(testName)")
+        // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view has proper structure
         do {
@@ -160,7 +160,7 @@ open class TestPatterns {
     /// METHODOLOGY: Uses ViewInspector to find and verify text content
     static func verifyViewContainsText(_ view: some View, expectedText: String, testName: String) {
         // 1. View created - The view can be instantiated successfully
-        #expect(view != nil, "Should generate view for \(testName)")
+        // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain expected text
         do {
@@ -187,7 +187,7 @@ open class TestPatterns {
     /// METHODOLOGY: Uses ViewInspector to find and verify image content
     static func verifyViewContainsImage(_ view: some View, testName: String) {
         // 1. View created - The view can be instantiated successfully
-        #expect(view != nil, "Should generate view for \(testName)")
+        // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain image elements
         do {

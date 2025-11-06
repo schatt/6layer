@@ -24,7 +24,7 @@ open class FrameworkComponentIntegrationTests {
         let contentView = platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
         
         // Test that the component can be created and doesn't crash
-        #expect(contentView != nil, "platformPresentContent_L1 should be creatable")
+        // contentView is a non-optional View, so it exists if we reach here
         
         // Test that it can be used in a view hierarchy
         let testView = VStack {

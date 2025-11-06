@@ -723,7 +723,7 @@ open class ViewGenerationIntegrationTests {
         let mockConfig = createMockPlatformConfig(from: config.capabilities)
         
         // Test that the mock configuration is valid and functional
-        #expect(mockConfig != nil, "Mock configuration should be valid for \(config.name)")
+        // mockConfig is a non-optional struct, so it exists if we reach here
         
         // Test that the configuration actually works by creating a view with it
         let testView = createTestViewWithMockConfig(mockConfig)

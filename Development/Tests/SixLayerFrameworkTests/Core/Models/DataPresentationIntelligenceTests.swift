@@ -19,7 +19,7 @@ open class DataPresentationIntelligenceTests {
         let intelligence = DataPresentationIntelligence.shared
         
         // Then
-        #expect(intelligence != nil, "DataPresentationIntelligence should exist")
+        // intelligence is a non-optional singleton instance, so it exists if we reach here
     }
     
     @Test func testAnalyzeDataWithEmptyArray() {

@@ -80,13 +80,13 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                 let result = cameraView
                 
                 // Verify callback is properly configured
-                #expect(result != nil, "Camera interface should be created")
+                // result is a non-optional View, so it exists if we reach here
                 #expect(capturedImage == nil, "Captured image should be nil initially")
                 
                 // Then: Test the two critical aspects
                 
                 // 1. Does it return a valid structure of the kind it's supposed to?
-                #expect(result != nil, "Layer 4 camera interface should return a valid SwiftUI view")
+                // result is a non-optional View, so it exists if we reach here
                 
                 // 2. Does that structure contain what it should?
                 // Camera interface generates "SixLayer.main.ui" pattern (correct for basic UI component)

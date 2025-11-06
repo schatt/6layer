@@ -57,7 +57,7 @@ open class ViewGenerationTests: BaseTestClass {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(detailView != nil, "IntelligentDetailView should be created successfully")
+        // detailView is a non-optional View, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         do {

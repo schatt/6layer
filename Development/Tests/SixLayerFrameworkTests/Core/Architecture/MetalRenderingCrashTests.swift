@@ -47,12 +47,12 @@ open class MetalRenderingCrashTDDTests {
             onItemEdited: nil
         )
         
-        #expect(view != nil, "platformPresentItemCollection_L1 should not crash")
+        // view is a non-optional View, so it exists if we reach here
         
         // Try to inspect the view (should not crash)
         do {
             let inspectedView = try view.inspect()
-            #expect(inspectedView != nil, "View should be inspectable without crashing")
+            // inspectedView is a non-optional InspectableView, so it exists if we reach here
             print("✅ platformPresentItemCollection_L1 rendered successfully")
         } catch {
             Issue.record("platformPresentItemCollection_L1 should not crash during inspection: \(error)")

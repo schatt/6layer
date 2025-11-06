@@ -296,7 +296,7 @@ open class DynamicFormLabelTests {
             }
             
             // Then: View should be created successfully
-            #expect(view != nil, "Failed to create view for \(contentType.rawValue)")
+            // view is a non-optional AnyView, so it exists if we reach here
         }
     }
     

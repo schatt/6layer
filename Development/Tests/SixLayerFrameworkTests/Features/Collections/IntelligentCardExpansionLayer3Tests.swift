@@ -45,7 +45,7 @@ open class IntelligentCardExpansionLayer3Tests {
         
         // Layer 3 functions return strategy data structures, not views
         // So we test that the result is valid
-        #expect(result != nil, "selectCardExpansionStrategy_L3 should return a valid result on iOS")
+        // result is a non-optional CardExpansionStrategy struct, so it exists if we reach here
     }
     
     @Test func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {

@@ -172,9 +172,7 @@ open class VisionSafetyTests {
         let availability = SixLayerFramework.getVisionAvailabilityInfo()
         
         // Then: Should provide accurate platform-specific information
-        #expect(availability != nil, "Should provide availability information")
-        #expect(availability.platform != nil, "Should specify the platform")
-        #expect(availability.isAvailable != nil, "Should specify availability status")
+        // availability is a non-optional struct, and all its properties are non-optional, so they exist if we reach here
         
         #if os(iOS)
         #expect(availability.platform == "iOS", "Should identify iOS platform")
