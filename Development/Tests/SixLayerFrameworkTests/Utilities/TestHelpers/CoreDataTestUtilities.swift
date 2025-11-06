@@ -81,6 +81,18 @@ public enum CoreDataTestUtilities {
         container.loadPersistentStores { description, error in
             loadError = error
             loadCompleted = true
+            
+            // CRITICAL: Verify the actual loaded store type is NSInMemoryStoreType
+            // The log may show NSXPCStore from system-level containers, but OUR containers must be in-memory
+            if let storeType = description.type {
+                if storeType != NSInMemoryStoreType {
+                    print("⚠️ WARNING: Store type is \(storeType), expected NSInMemoryStoreType")
+                    print("⚠️ This may indicate a configuration issue or system override")
+                } else {
+                    // Store type is correct - this is our isolated test container
+                }
+            }
+            
             semaphore.signal()
         }
         
@@ -91,6 +103,18 @@ public enum CoreDataTestUtilities {
             print("⚠️ CoreData test store load timed out - system may be trying to access Contacts/Address Book")
             print("⚠️ This is a system-level issue, not a test issue. Store should still be usable.")
             // Don't fail - the store might still be usable even if load callback didn't complete
+        }
+        
+        // Verify the loaded store coordinator has the correct store type
+        if let coordinator = container.persistentStoreCoordinator,
+           let store = coordinator.persistentStores.first {
+            let actualStoreType = store.type
+            if actualStoreType != NSInMemoryStoreType {
+                print("⚠️ WARNING: Loaded store type is \(actualStoreType), expected NSInMemoryStoreType")
+                print("⚠️ Store URL: \(store.url?.absoluteString ?? "nil")")
+            } else {
+                // Verified: Our test container is using NSInMemoryStoreType correctly
+            }
         }
         
         // Log but don't fail on errors - in-memory test stores may have benign errors
