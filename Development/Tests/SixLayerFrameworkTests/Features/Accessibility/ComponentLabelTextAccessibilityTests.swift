@@ -19,7 +19,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: This should FAIL - AdaptiveButton should include "Submit" in identifier
-        let button = AdaptiveUIPatterns.AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
+        let button = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -100,13 +100,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: This should FAIL - platformNavigationLink_L4 with title should include title
         let view = VStack {
-            platformNavigationLink_L4(
-                title: "Next Page",
-                systemImage: "arrow.right",
-                isActive: .constant(false)
-            ) {
-                Text("Destination")
-            }
+            Text("Navigate")
+                .platformNavigationLink_L4(
+                    title: "Next Page",
+                    systemImage: "arrow.right",
+                    isActive: Binding<Bool>.constant(false),
+                    destination: {
+                        Text("Destination")
+                    }
+                )
         }
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -133,13 +135,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: This should FAIL - platformNavigationButton should include title
         let button = VStack {
-            platformNavigationButton(
-                title: "Save",
-                systemImage: "checkmark",
-                accessibilityLabel: "Save changes",
-                accessibilityHint: "Tap to save",
-                action: { }
-            )
+            EmptyView()
+                .platformNavigationButton(
+                    title: "Save",
+                    systemImage: "checkmark",
+                    accessibilityLabel: "Save changes",
+                    accessibilityHint: "Tap to save",
+                    action: { }
+                )
         }
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -1647,8 +1650,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             sections: []
         ))
         formState.initializeField(field)
-        formState.addValidationError("Email is required", for: field.id)
-        formState.addValidationError("Email format is invalid", for: field.id)
+        formState.addError("Email is required", for: field.id)
+        formState.addError("Email format is invalid", for: field.id)
         
         let fieldView = DynamicFormFieldView(field: field, formState: formState)
             .enableGlobalAutomaticAccessibilityIdentifiers()
@@ -1816,13 +1819,17 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let field1 = VStack {
             TextField("", text: .constant(""))
         }
-        .platformFormField(label: "Email Address")
+        .platformFormField(label: "Email Address") {
+            TextField("", text: .constant(""))
+        }
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let field2 = VStack {
             TextField("", text: .constant(""))
         }
-        .platformFormField(label: "Phone Number")
+        .platformFormField(label: "Phone Number") {
+            TextField("", text: .constant(""))
+        }
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
@@ -1855,13 +1862,17 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let group1 = VStack {
             Text("Content")
         }
-        .platformFormFieldGroup(title: "Personal Information")
+        .platformFormFieldGroup(title: "Personal Information") {
+            Text("Content")
+        }
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         let group2 = VStack {
             Text("Content")
         }
-        .platformFormFieldGroup(title: "Contact Details")
+        .platformFormFieldGroup(title: "Contact Details") {
+            Text("Content")
+        }
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
