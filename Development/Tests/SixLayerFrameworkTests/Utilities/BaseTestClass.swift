@@ -72,14 +72,21 @@ open class BaseTestClass {
         }
     }
     
-    // MARK: - Config Injection Helper
+    // MARK: - Config Injection Helper (DEPRECATED)
     
-    /// Helper to inject test config into a view (optional - task-local is automatic)
-    /// Task-local config is automatically available, but explicit injection can be useful for testing
-    /// Usage: `let viewWithConfig = withTestConfig(myView)` (usually not needed, task-local is automatic)
+    /// DEPRECATED: Use `runWithTaskLocalConfig` instead
+    /// Task-local config is automatically available to framework code
+    /// Tests should wrap their test body with `runWithTaskLocalConfig { ... }` 
+    /// instead of wrapping individual views with `withTestConfig`
+    /// 
+    /// This method is kept for backward compatibility but should not be used in new tests.
+    /// It was problematic because it wrapped views unnecessarily.
     @MainActor
-    public func withTestConfig<V: SwiftUI.View>(_ view: V) -> AnyView {
-        return AnyView(view.environment(\.accessibilityIdentifierConfig, testConfig))
+    @available(*, deprecated, message: "Use runWithTaskLocalConfig to wrap test execution instead")
+    public func withTestConfig<V: SwiftUI.View>(_ view: V) -> some View {
+        // Just return the view - task-local config is automatic
+        // Wrapping was unnecessary and caused issues with accessibility identifiers
+        return view
     }
     
     // MARK: - Common Test Data Creation

@@ -18,56 +18,60 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - IntelligentFormView Tests
     
     @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Sample data for form generation
-        struct SampleData {
-            let name: String
-            let email: String
+        try await runWithTaskLocalConfig {
+            // Given: Sample data for form generation
+            struct SampleData {
+                let name: String
+                let email: String
+            }
+            
+            let sampleData = SampleData(name: "Test User", email: "test@example.com")
+            
+            // When: Creating IntelligentFormView using static method
+            let view = IntelligentFormView.generateForm(
+                for: SampleData.self,
+                initialData: sampleData,
+                onSubmit: { _ in },
+                onCancel: { }
+            )
+            
+            // Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "IntelligentFormView"
+            )
+            
+            #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers")
         }
-        
-        let sampleData = SampleData(name: "Test User", email: "test@example.com")
-        
-        // When: Creating IntelligentFormView using static method
-        let view = withTestConfig(IntelligentFormView.generateForm(
-            for: SampleData.self,
-            initialData: sampleData,
-            onSubmit: { _ in },
-            onCancel: { }
-        ))
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "SixLayer.main.ui.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "IntelligentFormView"
-        )
-        
-        #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers")
     }
     
     // MARK: - IntelligentDetailView Tests
     
     @Test func testIntelligentDetailViewGeneratesAccessibilityIdentifiers() async {
-        // Given: Test detail data
-        let detailData = IntelligentDetailData(
-            id: "detail-1",
-            title: "Intelligent Detail",
-            content: "This is intelligent detail content",
-            metadata: ["key": "value"]
-        )
-        
-        // When: Creating IntelligentDetailView
-        let view = withTestConfig(IntelligentDetailView.platformDetailView(for: detailData))
-        
-        // Then: Should generate accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view,
-            expectedPattern: "SixLayer.main.ui.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "IntelligentDetailView"
-        )
-        
-        #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers")
+        try await runWithTaskLocalConfig {
+            // Given: Test detail data
+            let detailData = IntelligentDetailData(
+                id: "detail-1",
+                title: "Intelligent Detail",
+                content: "This is intelligent detail content",
+                metadata: ["key": "value"]
+            )
+            
+            // When: Creating IntelligentDetailView
+            let view = IntelligentDetailView.platformDetailView(for: detailData)
+            
+            // Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "IntelligentDetailView"
+            )
+            
+            #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers")
+        }
     }
 }
 
