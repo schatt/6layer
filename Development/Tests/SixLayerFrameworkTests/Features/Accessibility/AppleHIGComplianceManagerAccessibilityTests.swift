@@ -11,44 +11,50 @@ import ViewInspector
 open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
     // MARK: - AppleHIGComplianceManager Tests
     
-    /// BUSINESS PURPOSE: Validates that AppleHIGComplianceManager generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on iOS
-    @Test @MainActor
-    func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-        // Given
-        let manager = AppleHIGComplianceManager()
-        
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "AppleHIGComplianceManager should be instantiable")
-        
-        // Test that the manager can be configured with accessibility settings
-        guard let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig else {
-            Issue.record("testConfig is nil")
-            return
+    /// BUSINESS PURPOSE: Validates that views using AppleHIGComplianceManager generate proper accessibility identifiers
+    /// Tests views with .appleHIGCompliant() modifier which uses AppleHIGComplianceManager
+    @Test func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnIOS() {
+        runWithTaskLocalConfig {
+            // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
+            let view = VStack {
+                Text("HIG Compliant Content")
+            }
+            .appleHIGCompliant()
+            .automaticAccessibilityIdentifiers()
+            
+            // When & Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "AppleHIGCompliant"
+            )
+            
+            #expect(hasAccessibilityID, "View with .appleHIGCompliant() (using AppleHIGComplianceManager) should generate accessibility identifiers on iOS")
         }
-        #expect(config.enableAutoIDs, "AppleHIGComplianceManager should work with accessibility enabled")
-        #expect(config.namespace == "SixLayer", "AppleHIGComplianceManager should use correct namespace")
     }
     
-    /// BUSINESS PURPOSE: Validates that AppleHIGComplianceManager generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on macOS
-    @Test @MainActor
-    func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        // Given
-        let manager = AppleHIGComplianceManager()
-        
-        // When & Then
-        // Manager classes don't directly generate views, but we test their configuration
-        #expect(manager != nil, "AppleHIGComplianceManager should be instantiable")
-        
-        // Test that the manager can be configured with accessibility settings
-        guard let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? testConfig else {
-            Issue.record("testConfig is nil")
-            return
+    /// BUSINESS PURPOSE: Validates that views using AppleHIGComplianceManager generate proper accessibility identifiers
+    /// Tests views with .appleHIGCompliant() modifier which uses AppleHIGComplianceManager
+    @Test func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+        runWithTaskLocalConfig {
+            // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
+            let view = VStack {
+                Text("HIG Compliant Content")
+            }
+            .appleHIGCompliant()
+            .automaticAccessibilityIdentifiers()
+            
+            // When & Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.macOS,
+                componentName: "AppleHIGCompliant"
+            )
+            
+            #expect(hasAccessibilityID, "View with .appleHIGCompliant() (using AppleHIGComplianceManager) should generate accessibility identifiers on macOS")
         }
-        #expect(config.enableAutoIDs, "AppleHIGComplianceManager should work with accessibility enabled")
-        #expect(config.namespace == "SixLayer", "AppleHIGComplianceManager should use correct namespace")
     }
 }
 

@@ -8,54 +8,53 @@ import ViewInspector
 /// Ensures MaterialAccessibilityManager classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @Suite("Material Accessibility Manager Accessibility")
-open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MARK: - MaterialAccessibilityManager Tests
+open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     
-    /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on iOS
+    // MARK: - MaterialAccessibilityManager Tests
     
-@Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-    await runWithTaskLocalConfig {
-            // Given
-            // MaterialAccessibilityManager is non-optional, so no need to check for nil
-            
-            // When & Then
-            // Manager classes don't directly generate views, but we test their configuration
-            // MaterialAccessibilityManager is non-optional, so no need to check for nil
-            
-            // Test that the manager can be configured with accessibility settings
-            guard let config = testConfig else {
-
-                Issue.record("testConfig is nil")
-
-                return
-
+    /// BUSINESS PURPOSE: Validates that views using MaterialAccessibilityManager generate proper accessibility identifiers
+    /// Tests MaterialAccessibilityEnhancedView which uses MaterialAccessibilityManager internally
+    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() {
+        runWithTaskLocalConfig {
+            // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
+            let view = VStack {
+                Text("Material Accessibility Content")
             }
-            #expect(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "MaterialAccessibilityManager should use correct namespace")
-    }
+            .accessibilityMaterialEnhanced()
+            .automaticAccessibilityIdentifiers()
+            
+            // When & Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "MaterialAccessibilityEnhancedView"
+            )
+            
+            #expect(hasAccessibilityID, "View with MaterialAccessibilityManager should generate accessibility identifiers on iOS")
+        }
     }
     
-    /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on macOS
-    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        await runWithTaskLocalConfig {
-            // Given
-            // MaterialAccessibilityManager is non-optional, so no need to check for nil
-            
-            // When & Then
-            // Manager classes don't directly generate views, but we test their configuration
-            // MaterialAccessibilityManager is non-optional, so no need to check for nil
-            
-            // Test that the manager can be configured with accessibility settings
-            guard let config = testConfig else {
-
-                Issue.record("testConfig is nil")
-
-                return
-
+    /// BUSINESS PURPOSE: Validates that views using MaterialAccessibilityManager generate proper accessibility identifiers
+    /// Tests MaterialAccessibilityEnhancedView which uses MaterialAccessibilityManager internally
+    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+        runWithTaskLocalConfig {
+            // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
+            let view = VStack {
+                Text("Material Accessibility Content")
             }
-            #expect(config.enableAutoIDs, "MaterialAccessibilityManager should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "MaterialAccessibilityManager should use correct namespace")
+            .accessibilityMaterialEnhanced()
+            .automaticAccessibilityIdentifiers()
+            
+            // When & Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.macOS,
+                componentName: "MaterialAccessibilityEnhancedView"
+            )
+            
+            #expect(hasAccessibilityID, "View with MaterialAccessibilityManager should generate accessibility identifiers on macOS")
         }
     }
 }
