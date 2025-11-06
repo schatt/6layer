@@ -37,30 +37,11 @@ struct DataIntrospectionCoreDataTests {
         taskEntity.properties = [titleAttribute, statusAttribute]
         model.entities = [taskEntity]
         
-        let container = NSPersistentContainer(name: "TestModel", managedObjectModel: model)
-        let desc = NSPersistentStoreDescription()
-        desc.type = NSInMemoryStoreType
-        desc.url = URL(fileURLWithPath: "/dev/null") // Explicit in-memory URL
-        desc.shouldAddStoreAsynchronously = false
-        desc.shouldMigrateStoreAutomatically = false
-        desc.shouldInferMappingModelAutomatically = false
-        // Explicitly disable CloudKit and remote services to prevent XPC communication
-        desc.setOption(false as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        desc.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        // Disable automatic account/address book integration
-        if #available(macOS 10.15, iOS 13.0, *) {
-            desc.cloudKitContainerOptions = nil
-        }
-        // Additional isolation: prevent CoreData from accessing external account services
-        // Note: In-memory stores should not trigger account access, but this provides extra isolation
-        container.persistentStoreDescriptions = [desc]
-        container.loadPersistentStores { description, error in
-            // Ignore errors for in-memory test stores
-            if let error = error {
-                // Log but don't fail - this is just for testing
-                print("CoreData store load warning (expected for tests): \(error.localizedDescription)")
-            }
-        }
+        // Use isolated test container to prevent CloudKit sync and account service access
+        let container = CoreDataTestUtilities.createIsolatedTestContainer(
+            name: "TestModel",
+            managedObjectModel: model
+        )
         
         let context = container.viewContext
         let task = NSManagedObject(entity: taskEntity, insertInto: context)
@@ -101,30 +82,11 @@ struct DataIntrospectionCoreDataTests {
         productEntity.properties = [nameAttr, priceAttr, inStockAttr]
         model.entities = [productEntity]
         
-        let container = NSPersistentContainer(name: "TestModel", managedObjectModel: model)
-        let desc = NSPersistentStoreDescription()
-        desc.type = NSInMemoryStoreType
-        desc.url = URL(fileURLWithPath: "/dev/null") // Explicit in-memory URL
-        desc.shouldAddStoreAsynchronously = false
-        desc.shouldMigrateStoreAutomatically = false
-        desc.shouldInferMappingModelAutomatically = false
-        // Explicitly disable CloudKit and remote services to prevent XPC communication
-        desc.setOption(false as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        desc.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        // Disable automatic account/address book integration
-        if #available(macOS 10.15, iOS 13.0, *) {
-            desc.cloudKitContainerOptions = nil
-        }
-        // Additional isolation: prevent CoreData from accessing external account services
-        // Note: In-memory stores should not trigger account access, but this provides extra isolation
-        container.persistentStoreDescriptions = [desc]
-        container.loadPersistentStores { description, error in
-            // Ignore errors for in-memory test stores
-            if let error = error {
-                // Log but don't fail - this is just for testing
-                print("CoreData store load warning (expected for tests): \(error.localizedDescription)")
-            }
-        }
+        // Use isolated test container to prevent CloudKit sync and account service access
+        let container = CoreDataTestUtilities.createIsolatedTestContainer(
+            name: "TestModel",
+            managedObjectModel: model
+        )
         
         let product = NSManagedObject(entity: productEntity, insertInto: container.viewContext)
         
