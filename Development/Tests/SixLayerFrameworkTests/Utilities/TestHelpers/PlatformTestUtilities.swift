@@ -323,7 +323,7 @@ final class PlatformTestUtilities {
         
         // Test that the configuration reflects the actual platform capabilities
         // This tests the real business logic: does the config match what the platform actually supports?
-        #expect(capabilities != nil, "\(platformName) should have a valid accessibility configuration")
+        // Capabilities is non-optional, so it exists if we reach here
     }
     
     /// Test the behavioral implications of Vision framework availability

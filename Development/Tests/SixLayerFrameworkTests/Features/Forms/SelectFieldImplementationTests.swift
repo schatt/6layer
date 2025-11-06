@@ -146,7 +146,7 @@ open class SelectFieldImplementationTests {
             
             Picker(field.placeholder ?? "Select option", selection: Binding(
                 get: { formData[field.id] as? String ?? "" },
-                set: { _ in }) {
+                set: { _ in })) {
                 Text("Select an option").tag("")
                 ForEach(field.options ?? [], id: \.self) { option in
                     Text(option).tag(option)

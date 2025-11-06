@@ -416,9 +416,7 @@ struct LiquidGlassDesignSystemTests {
         )
         
         // Then
-        #expect(material != nil)
-        #expect(control != nil)
-        #expect(menu != nil)
+        // material, control, and menu are non-optional structs, so they exist if we reach here
         #expect(system.isLiquidGlassEnabled)
     }
     

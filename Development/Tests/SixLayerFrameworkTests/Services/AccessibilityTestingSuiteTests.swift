@@ -15,8 +15,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         // Given & When: Creating the testing suite
         let suite = AccessibilityTestingSuite()
         
-        // Then: Suite should be created successfully
-        #expect(suite != nil)
+        // Then: Suite should be created successfully (verified by using it below)
     }
     
     // MARK: - Accessibility Testing Tests
@@ -121,7 +120,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(!suite.isRunning, "Testing suite should start in non-running state")
         #expect(suite.progress == 0.0, "Testing suite should start with 0 progress")
         #expect(suite.testResults.isEmpty, "Testing suite should start with empty results")
-        #expect(suite.accessibilityManager != nil, "Testing suite should have accessibility manager")
+        // accessibilityManager is non-optional, so it exists if we reach here
     }
     
     @Test func testAccessibilityTestExecution_Comprehensive() async {
@@ -141,8 +140,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         for result in suite.testResults {
             // In red-phase, allow zero-duration for stubbed tests while keeping structure checks
             #expect(result.duration >= 0, "Test duration should be non-negative")
-            #expect(result.metrics != nil, "Test metrics should be available")
-            #expect(result.validation != nil, "Test validation should be available")
+            // metrics and validation are non-optional, so they exist if we reach here
         }
     }
     
@@ -178,16 +176,12 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         
         for result in results {
             // Test business logic: Validation should be comprehensive
-            #expect(result.validation.passed != nil, "Validation should have pass/fail status")
-            #expect(result.validation.score != nil, "Validation should have score")
+            // passed and score are non-optional Bool and Double, so they exist if we reach here
             #expect(result.validation.score >= 0.0, "Score should be non-negative")
             #expect(result.validation.score <= 100.0, "Score should not exceed 100")
             
             // Test business logic: Individual compliance checks should be present
-            #expect(result.validation.voiceOverValid != nil, "VoiceOver validation should be present")
-            #expect(result.validation.keyboardValid != nil, "Keyboard validation should be present")
-            #expect(result.validation.contrastValid != nil, "Contrast validation should be present")
-            #expect(result.validation.motionValid != nil, "Motion validation should be present")
+            // All validation properties are non-optional Bool, so they exist if we reach here
         }
     }
     
@@ -206,10 +200,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
             let metrics = result.metrics
             
             // Test business logic: Compliance levels should be valid
-            #expect(metrics.voiceOverCompliance != nil, "VoiceOver compliance should be calculated")
-            #expect(metrics.keyboardCompliance != nil, "Keyboard compliance should be calculated")
-            #expect(metrics.contrastCompliance != nil, "Contrast compliance should be calculated")
-            #expect(metrics.motionCompliance != nil, "Motion compliance should be calculated")
+            // All compliance properties are non-optional ComplianceLevel, so they exist if we reach here
             
             // Test business logic: Overall score should be calculated
             #expect(metrics.overallComplianceScore >= 0.0, "Overall score should be non-negative")
@@ -227,7 +218,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(suite.testResults.isEmpty, "Testing suite should start with empty results")
         
         // Test business logic: State should be consistent
-        #expect(suite.accessibilityManager != nil, "Accessibility manager should be available")
+        // accessibilityManager is non-optional, so it exists if we reach here
     }
     
     @Test func testAccessibilityTestingSuiteProgressTracking_Comprehensive() async {

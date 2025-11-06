@@ -22,8 +22,7 @@ open class macOSLocationServiceTests {
         // Given & When: Creating the service
         let service = macOSLocationService()
         
-        // Then: Service should be created successfully
-        #expect(service != nil)
+        // Then: Service should be created successfully (verified by using it below)
         
         // Initial authorization status should be notDetermined
         #expect(service.authorizationStatus == .notDetermined)
@@ -100,7 +99,7 @@ open class macOSLocationServiceTests {
         
         // Then: Should complete without crashing
         // This is a no-op if not currently updating
-        #expect(service != nil)
+        // Service is non-optional, so it exists if we reach here
     }
     
     // MARK: - Protocol Conformance Tests
@@ -182,7 +181,7 @@ open class macOSLocationServiceTests {
         
         // Then: Should conform without isolation errors
         // Delegate methods are nonisolated and bridge to MainActor internally
-        #expect(delegate != nil)
+        // Delegate is non-optional, so it exists if we reach here
         
         // Verify delegate can be called from nonisolated context (what CLLocationManager does)
         // This test ensures the nonisolated -> MainActor bridge works correctly
@@ -205,11 +204,11 @@ open class macOSLocationServiceTests {
         
         // Then: Should not have Sendable conformance conflicts
         // Protocol is @MainActor, removing the need for @unchecked Sendable
-        #expect(service != nil)
+        // Service is non-optional, so it exists if we reach here
         
         // Verify we can use it as LocationServiceProtocol without Sendable issues
         let protocolService: LocationServiceProtocol = service
-        #expect(protocolService != nil)
+        // ProtocolService is non-optional, so it exists if we reach here
     }
     
     @Test func testMacOSLocationServiceCompilesWithSwift6StrictConcurrency() async {
@@ -228,11 +227,11 @@ open class macOSLocationServiceTests {
         // 2. Properties are MainActor-isolated (no nonisolated requirement conflict)
         // 3. Delegate methods are nonisolated with MainActor bridging
         // 4. No @unchecked Sendable conflict
-        #expect(service != nil)
+        // Service is non-optional, so it exists if we reach here
         
         // Verify delegate conformance doesn't cause isolation issues
         let delegate: CLLocationManagerDelegate = service
-        #expect(delegate != nil)
+        // Delegate is non-optional, so it exists if we reach here
     }
 }
 

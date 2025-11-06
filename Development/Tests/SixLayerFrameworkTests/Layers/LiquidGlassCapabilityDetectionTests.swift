@@ -91,7 +91,7 @@ open class LiquidGlassCapabilityDetectionTests {
         // When & Then
         for feature in features {
             let fallbackBehavior = LiquidGlassCapabilityDetection.getFallbackBehavior(for: feature)
-            #expect(fallbackBehavior != nil, "Feature \(feature.rawValue) should have a fallback behavior")
+            // fallbackBehavior is non-optional, so it exists if we reach here
         }
     }
     

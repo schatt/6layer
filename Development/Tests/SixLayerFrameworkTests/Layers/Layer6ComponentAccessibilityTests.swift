@@ -129,8 +129,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         // When: Getting performance view
         let performanceView = performanceLayer.body
         
-        // Then: Should return valid view
-        #expect(performanceView != nil, "Should return a valid view")
+        // Then: Should return valid view (body always returns a non-optional View)
     }
     
     @Test func testPlatformPerformanceLayer6OptimizationSuggestions() async {
@@ -140,7 +139,6 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         // When: Getting performance view
         let performanceView = performanceLayer.body
         
-        // Then: Should return valid view
-        #expect(performanceView != nil, "Should return a valid view")
+        // Then: Should return valid view (body always returns a non-optional View)
     }
 }
