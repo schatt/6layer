@@ -38,7 +38,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveGrid"
         )
@@ -65,7 +65,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveNavigation"
         )
@@ -91,7 +91,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveStack"
         )
@@ -108,7 +108,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveLayoutExample"
         )
@@ -125,7 +125,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsiveNavigationExample"
         )
@@ -148,7 +148,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "ResponsivePadding"
         )

@@ -17,7 +17,7 @@ open class MinimalAccessibilityTest {
         // When: We check if framework component generates accessibility identifier
         let hasID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )

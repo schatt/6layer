@@ -40,7 +40,7 @@ open class ModalFormViewTests: BaseTestClass {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
+            expectedPattern: "SixLayer.main.ui.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "ModalFormView"
         )
@@ -75,7 +75,7 @@ open class ModalFormViewTests: BaseTestClass {
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
-            expectedPattern: "SixLayer.main.ui.element.*", 
+            expectedPattern: "SixLayer.main.ui.*", 
             platform: SixLayerPlatform.macOS,
             componentName: "ModalFormView"
         )

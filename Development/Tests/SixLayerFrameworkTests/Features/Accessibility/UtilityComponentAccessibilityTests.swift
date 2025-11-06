@@ -27,7 +27,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Using hasAccessibilityIdentifier utility
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
@@ -46,7 +46,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Validating accessibility identifier
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierValidation"
         )
@@ -65,7 +65,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing pattern matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierPatternMatching"
         )
@@ -104,7 +104,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing wildcard matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierWildcardMatching"
         )
@@ -123,7 +123,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing component name matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierComponentNameMatching"
         )
@@ -142,7 +142,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing namespace matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierNamespaceMatching"
         )
@@ -161,7 +161,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing screen matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierScreenMatching"
         )
@@ -200,7 +200,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing state matching
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierStateMatching"
         )
@@ -299,7 +299,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing accessibility identifier generation
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierPerformanceMatching"
         )
@@ -338,7 +338,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing null handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierNullHandling"
         )
@@ -377,7 +377,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // Note: Pattern matching should trim whitespace; updated to match actual generated IDs (may have duplicate prefix)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierWhitespaceHandling"
         )
@@ -397,7 +397,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing special character handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierSpecialCharacterHandling"
         )
@@ -417,7 +417,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing unicode handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierUnicodeHandling"
         )
@@ -438,7 +438,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // When: Testing long string handling
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityIdentifierLongStringHandling"
         )

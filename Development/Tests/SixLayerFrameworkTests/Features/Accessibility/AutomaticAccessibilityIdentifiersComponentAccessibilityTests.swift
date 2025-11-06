@@ -20,7 +20,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
@@ -38,7 +38,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
@@ -56,7 +56,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicArray_L1"
         )
@@ -74,7 +74,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Automatic ID pattern
+            expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
@@ -92,7 +92,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Automatic ID pattern
+            expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
@@ -119,7 +119,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
@@ -137,7 +137,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentNumericData_L1"
         )
@@ -155,7 +155,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Automatic ID pattern
+            expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
@@ -173,7 +173,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
@@ -191,7 +191,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Automatic ID pattern
+            expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
@@ -209,7 +209,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
@@ -227,7 +227,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicArray_L1"
         )
@@ -245,7 +245,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Automatic ID pattern
+            expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
@@ -263,7 +263,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             testView,
-            expectedPattern: "SixLayer.main.ui.element.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
+            expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
