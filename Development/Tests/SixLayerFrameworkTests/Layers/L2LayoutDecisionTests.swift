@@ -60,7 +60,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(decision != nil, "determineOptimalLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(decision.columns > 0, "Should have at least 1 column")
         #expect(decision.spacing > 0, "Should have positive spacing")
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
@@ -87,7 +87,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(decision != nil, "determineOptimalLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(decision.columns > 1, "Should have multiple columns for large item count")
         #expect(decision.spacing > 0, "Should have positive spacing")
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
@@ -187,7 +187,7 @@ open class L2LayoutDecisionTests {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then
-        #expect(decision != nil, "determineOptimalFormLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
@@ -205,7 +205,7 @@ open class L2LayoutDecisionTests {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then
-        #expect(decision != nil, "determineOptimalFormLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
@@ -227,7 +227,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(decision != nil, "determineOptimalCardLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(decision.columns > 0, "Should have at least 1 column")
         #expect(decision.spacing > 0, "Should have positive spacing")
     }
@@ -248,7 +248,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(decision != nil, "determineOptimalCardLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(decision.columns > 1, "Should have multiple columns for large content")
         #expect(decision.spacing > 0, "Should have positive spacing")
     }
@@ -303,7 +303,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(decision != nil, "determineIntelligentCardLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(decision.columns > 0, "Should have at least 1 column")
         #expect(decision.cardWidth > 0, "Should have positive card width")
         #expect(decision.cardHeight > 0, "Should have positive card height")
@@ -329,7 +329,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(decision != nil, "determineIntelligentCardLayout_L2 should return a decision")
+        // decision is a non-optional struct, so it exists if we reach here
         #expect(decision.columns > 1, "Should have multiple columns for large content")
         #expect(decision.cardWidth > 0, "Should have positive card width")
         #expect(decision.cardHeight > 0, "Should have positive card height")

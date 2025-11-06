@@ -66,12 +66,12 @@ open class PlatformColorEncodeTests {
                 let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
-                #expect(encodedData != nil, "Should encode \(color) successfully")
+                // encodedData is non-optional Data, so it exists if we reach here
                 #expect(!encodedData.isEmpty, "Encoded data should not be empty")
                 
                 // Verify data can be decoded back
                 let decodedColor = try platformColorDecode(encodedData)
-                #expect(decodedColor != nil, "Should decode \(color) successfully")
+                // decodedColor is non-optional Color, so it exists if we reach here
                 
             } catch {
                 Issue.record("Failed to encode \(color): \(error)")

@@ -49,11 +49,11 @@ open class L3StrategySelectionTests {
         )
         
         // Then: Should return a strategy that can be used functionally
-        #expect(strategy != nil, "selectCardLayoutStrategy_L3 should return a strategy")
+        // strategy is a non-optional struct, so it exists if we reach here
         
         // Test that the strategy can be used to create a functional view
         let testView = createTestViewWithCardLayoutStrategy(strategy)
-        #expect(testView != nil, "Should be able to create view with card layout strategy")
+        // testView is a non-optional View, so it exists if we reach here
         
         #expect(strategy.columns > 0, "Should have at least 1 column")
         #expect(strategy.spacing > 0, "Should have positive spacing")

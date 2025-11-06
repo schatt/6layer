@@ -41,6 +41,12 @@ struct DataIntrospectionCoreDataTests {
         let desc = NSPersistentStoreDescription()
         desc.type = NSInMemoryStoreType
         desc.shouldAddStoreAsynchronously = false
+        // Explicitly disable CloudKit and remote services to prevent XPC communication
+        desc.setOption(false as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        desc.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        if #available(macOS 10.15, iOS 13.0, *) {
+            desc.cloudKitContainerOptions = nil
+        }
         container.persistentStoreDescriptions = [desc]
         container.loadPersistentStores { _, _ in }
         
@@ -87,6 +93,12 @@ struct DataIntrospectionCoreDataTests {
         let desc = NSPersistentStoreDescription()
         desc.type = NSInMemoryStoreType
         desc.shouldAddStoreAsynchronously = false
+        // Explicitly disable CloudKit and remote services to prevent XPC communication
+        desc.setOption(false as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        desc.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        if #available(macOS 10.15, iOS 13.0, *) {
+            desc.cloudKitContainerOptions = nil
+        }
         container.persistentStoreDescriptions = [desc]
         container.loadPersistentStores { _, _ in }
         

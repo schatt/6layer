@@ -87,7 +87,7 @@ open class OCRServiceTests {
             let result = try await service.processStructuredExtraction(testImage, context: context)
             // If we get here, structured extraction succeeded
             #expect(result.extractedText.count >= 0, "Structured extraction result should have extracted text")
-            #expect(result.structuredData != nil, "Structured extraction should provide structured data")
+            // structuredData is a non-optional dictionary, so it exists if we reach here
         } catch {
             // Structured extraction failed - this is expected in test environment
             #expect(error is OCRError, "OCR errors should be OCRError types")
