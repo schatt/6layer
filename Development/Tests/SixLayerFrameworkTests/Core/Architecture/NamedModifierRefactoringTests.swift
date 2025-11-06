@@ -25,7 +25,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named replaces current hierarchy level
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testNamedModifierReplacesCurrentHierarchyLevel() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: A button with .named modifier
                 let testView = Button("Save") { }
@@ -46,7 +46,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named generates full hierarchy path
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testNamedModifierGeneratesFullHierarchyPath() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Nested components with .named modifiers
                 let testView = VStack {
@@ -70,7 +70,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that multiple nested .named modifiers build hierarchy
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testMultipleNestedNamedModifiersBuildHierarchy() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Multiple levels of .named modifiers
                 let testView = VStack {
@@ -97,7 +97,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named prevents collision with same names
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testNamedModifierPreventsCollisionWithSameNames() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Two buttons with same name in different contexts
                 let view1 = VStack {
@@ -134,7 +134,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named works independently of global settings
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testNamedModifierWorksIndependentlyOfGlobalSettings() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Global automatic accessibility disabled
                 guard let config = self.testConfig else {
@@ -164,7 +164,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that subcomponents inherit modified hierarchy
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testSubcomponentsInheritModifiedHierarchy() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: A container with .named and subcomponent with automatic accessibility
                 let testView = VStack {
@@ -188,7 +188,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named handles empty string gracefully
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testNamedModifierWithEmptyString() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: A button with empty string in .named
                 let testView = Button("Test") { }
@@ -209,7 +209,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named doesn't change global environment settings
     /// THIS TEST SHOULD FAIL - proving current implementation doesn't match desired behavior
     @Test func testNamedModifierDoesNotChangeGlobalEnvironmentSettings() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Global settings are disabled
                 guard let config = self.testConfig else {
@@ -248,7 +248,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .exactNamed applies exact name only
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't exist yet (compilation error)
     @Test func testExactNamedModifierAppliesExactNameOnly() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: A button with .exactNamed modifier
                 let testView = Button("Save") { }
@@ -269,7 +269,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .exactNamed doesn't modify hierarchy
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't exist yet
     @Test func testExactNamedModifierDoesNotModifyHierarchy() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Nested components with .exactNamed modifier
                 let testView = VStack {
@@ -293,7 +293,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .exactNamed works independently of global settings
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't exist yet
     @Test func testExactNamedModifierWorksIndependentlyOfGlobalSettings() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Global automatic accessibility disabled
                 guard let config = self.testConfig else {
@@ -325,7 +325,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .named and .exactNamed work together
     /// THIS TEST SHOULD FAIL - proving both modifiers don't work as expected yet
     @Test func testNamedAndExactNamedWorkTogether() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Nested components with both modifiers
                 let testView = VStack {
@@ -351,7 +351,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test collision prevention with .exactNamed
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't prevent collisions
     @Test func testExactNamedModifierDoesNotPreventCollisions() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Two buttons with same exact name
                 let view1 = Button("Save") { }
@@ -382,7 +382,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     /// TDD RED PHASE: Test that .exactNamed handles empty string
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't exist yet
     @Test func testExactNamedModifierWithEmptyString() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: A button with empty string in .exactNamed
                 let testView = Button("Test") { }

@@ -17,7 +17,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// TESTING SCOPE: Tests that no explicit enabling is required
     /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticAccessibilityIdentifiers()
     @Test func testAutomaticIdentifiersWorkByDefault() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Explicitly set configuration for this test
                 guard let config = testConfig else {
@@ -53,7 +53,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers work by default
     /// TESTING SCOPE: Tests that automatic accessibility identifiers work without explicit enabling
     @Test func testAutomaticAccessibilityIdentifiersWorkByDefault() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Default configuration
                 guard let config = testConfig else {
@@ -86,7 +86,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// TESTING SCOPE: Tests that manual identifiers continue to work with new defaults
     /// METHODOLOGY: Tests that manual identifiers take precedence
     @Test func testManualIdentifiersStillWork() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Default configuration
                 // config is non-optional, so no need to check for nil
@@ -112,7 +112,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// TESTING SCOPE: Tests that .disableAutomaticAccessibilityIdentifiers() still works
     /// METHODOLOGY: Tests that opt-out functionality is preserved
     @Test func testOptOutStillWorks() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             await MainActor.run {
                 // Given: Default configuration
                 guard let config = testConfig else {

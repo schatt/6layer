@@ -714,7 +714,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnIOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             guard let config = testConfig else {
 
@@ -748,7 +748,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnMacOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let view = PlatformInteractionButton(style: .primary, action: {}) {
                 Text("Test Button")

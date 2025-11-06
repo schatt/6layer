@@ -16,7 +16,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnIOS() async {
-    await runWithTaskLocalConfig {
+    runWithTaskLocalConfig {
             // Given
             let processor = ImageProcessor()
             
@@ -42,7 +42,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that ImageProcessor generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnMacOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let processor = ImageProcessor()
             

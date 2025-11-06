@@ -14,7 +14,7 @@ import ViewInspector
 open class GenericItemCollectionViewTests: BaseTestClass {
     
     @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let testItems = [
                 GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
@@ -39,7 +39,7 @@ open class GenericItemCollectionViewTests: BaseTestClass {
 
     
     @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let testItems = [
                 GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),

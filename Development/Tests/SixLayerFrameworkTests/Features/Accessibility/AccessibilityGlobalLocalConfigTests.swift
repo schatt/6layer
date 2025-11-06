@@ -19,7 +19,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
         // Test that automatic accessibility functions don't generate IDs when global config is disabled
         
         // Disable global config - use testConfig from BaseTestClass
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             guard let config = testConfig else {
                 Issue.record("testConfig is nil")
                 return

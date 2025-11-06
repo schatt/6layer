@@ -16,7 +16,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
     
     @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let service = OCRService()
             
@@ -42,7 +42,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let service = OCRService()
             
