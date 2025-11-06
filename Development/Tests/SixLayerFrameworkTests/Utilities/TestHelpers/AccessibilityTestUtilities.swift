@@ -605,11 +605,16 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     
     // Configure the test-specific settings
+    // Preserve existing debug logging setting (don't override - tests control this)
+    let wasDebugLoggingEnabled = config.enableDebugLogging
+    
     config.enableAutoIDs = true
     config.namespace = "SixLayer"
     config.globalPrefix = ""
     config.mode = .automatic
-    config.enableDebugLogging = true  // Enable to debug identifier generation
+    // Don't enable debug logging by default - too verbose for normal test runs
+    // Tests that need debug logging should enable it explicitly before calling this function
+    config.enableDebugLogging = wasDebugLoggingEnabled  // Preserve existing setting
     config.includeComponentNames = true  // Required for component name to appear in identifiers
     config.includeElementTypes = true   // Required for element type to appear in identifiers
     
