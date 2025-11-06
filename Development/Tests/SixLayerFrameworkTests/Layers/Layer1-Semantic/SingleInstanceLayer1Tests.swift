@@ -60,8 +60,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let arrayView = platformPresentNumericData_L1(data: [singleNumericData], hints: testHints)
         
         // THEN: Both should create views successfully
-        #expect(singleView != nil, "Single instance should create a view")
-        #expect(arrayView != nil, "Array version should create a view")
+        // singleView and arrayView are non-optional Views, so they exist if we reach here
         
         // Both should be hostable
         let singleHostingView = hostRootPlatformView(singleView.withGlobalAutoIDsEnabled())
@@ -85,7 +84,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let view = platformPresentMediaData_L1(media: singleMediaItem, hints: testHints)
         
         // THEN: Should create a view successfully
-        #expect(view != nil, "Single media item should create a view")
+        // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
@@ -107,7 +106,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let view = platformPresentHierarchicalData_L1(item: singleHierarchicalItem, hints: testHints)
         
         // THEN: Should create a view successfully
-        #expect(view != nil, "Single hierarchical item should create a view")
+        // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
@@ -129,7 +128,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let view = platformPresentTemporalData_L1(item: singleTemporalItem, hints: testHints)
         
         // THEN: Should create a view successfully
-        #expect(view != nil, "Single temporal item should create a view")
+        // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
@@ -154,7 +153,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let view = platformPresentFormData_L1(field: singleFormField, hints: testHints)
         
         // THEN: Should create a view successfully (even if deprecated)
-        #expect(view != nil, "Single form field should create a view")
+        // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
@@ -192,8 +191,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         let listView = platformPresentNumericData_L1(data: singleNumericData, hints: listHints)
         
         // THEN: Both should create views successfully
-        #expect(cardView != nil, "Card presentation should create a view")
-        #expect(listView != nil, "List presentation should create a view")
+        // cardView and listView are non-optional Views, so they exist if we reach here
         
         // Both should be hostable
         let cardHostingView = hostRootPlatformView(cardView.withGlobalAutoIDsEnabled())

@@ -218,7 +218,7 @@ open class Layer1PresentationTests {
             let view = platformPresentModalForm_L1(formType: formType, context: context)
             
             // Then: Should return a ModalFormView for each type
-            #expect(view != nil, "Should handle form type: \(formType)")
+            // view is non-optional, not used further
             
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>", "Should return ModalFormView with accessibility modifiers for type: \(formType)")

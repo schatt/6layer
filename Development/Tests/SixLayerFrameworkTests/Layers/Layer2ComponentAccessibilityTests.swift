@@ -46,9 +46,7 @@ final class Layer2ComponentAccessibilityTests {
         )
         
         // Then: Should have valid form layout decision properties
-        #expect(formLayoutDecision.preferredContainer != nil, "Layer 2 should return valid container type")
-        #expect(formLayoutDecision.fieldLayout != nil, "Layer 2 should return valid field layout")
-        #expect(formLayoutDecision.validation != nil, "Layer 2 should return valid validation strategy")
+        // All properties are non-optional, so they exist if we reach here
     }
     
     @Test func testDetermineOptimalCardLayoutL2ReturnsValidDecision() async {
@@ -69,7 +67,7 @@ final class Layer2ComponentAccessibilityTests {
         )
         
         // Then: Should have valid card layout decision properties
-        #expect(cardLayoutDecision.layout != nil, "Layer 2 should return valid card layout")
+        // layout is non-optional, so it exists if we reach here
         #expect(cardLayoutDecision.columns > 0, "Layer 2 should return valid column count")
         #expect(cardLayoutDecision.spacing >= 0, "Layer 2 should return valid spacing")
     }
