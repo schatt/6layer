@@ -46,8 +46,9 @@ let package = Package(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                // Temporarily include macOS to verify 0.10.4 branch macOS compatibility
-                .product(name: "ViewInspector", package: "ViewInspector", condition: .when(platforms: [.iOS, .macOS]))
+                // ViewInspector excluded from macOS due to GitHub Issue #405
+                // iOS-only SwiftUI types (VideoPlayer, SignInWithAppleButton, Map) not available on macOS SDK 26
+                .product(name: "ViewInspector", package: "ViewInspector", condition: .when(platforms: [.iOS]))
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
