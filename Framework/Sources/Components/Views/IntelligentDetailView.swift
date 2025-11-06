@@ -39,8 +39,8 @@ public struct IntelligentDetailView {
                 showEditButton: showEditButton,
                 onEdit: onEdit,
                 customFieldView: customFieldView
-            )
-            .automaticAccessibilityIdentifiers())
+            ))
+            .automaticAccessibilityIdentifiers()
         case .standard:
             return AnyView(platformStandardDetailView(
                 data: data,
@@ -48,8 +48,8 @@ public struct IntelligentDetailView {
                 showEditButton: showEditButton,
                 onEdit: onEdit,
                 customFieldView: customFieldView
-            )
-            .automaticAccessibilityIdentifiers())
+            ))
+            .automaticAccessibilityIdentifiers()
         case .detailed:
             return AnyView(platformDetailedDetailView(
                 data: data,
@@ -57,8 +57,8 @@ public struct IntelligentDetailView {
                 showEditButton: showEditButton,
                 onEdit: onEdit,
                 customFieldView: customFieldView
-            )
-            .automaticAccessibilityIdentifiers())
+            ))
+            .automaticAccessibilityIdentifiers()
         case .tabbed:
             return AnyView(platformTabbedDetailView(
                 data: data,
@@ -66,8 +66,8 @@ public struct IntelligentDetailView {
                 showEditButton: showEditButton,
                 onEdit: onEdit,
                 customFieldView: customFieldView
-            )
-            .automaticAccessibilityIdentifiers())
+            ))
+            .automaticAccessibilityIdentifiers()
         case .adaptive:
             return AnyView(platformAdaptiveDetailView(
                 data: data,
@@ -75,8 +75,8 @@ public struct IntelligentDetailView {
                 showEditButton: showEditButton,
                 onEdit: onEdit,
                 customFieldView: customFieldView
-            )
-            .automaticAccessibilityIdentifiers())
+            ))
+            .automaticAccessibilityIdentifiers()
         }
     }
     
@@ -463,6 +463,7 @@ public extension IntelligentDetailView {
                 onEdit: onEdit,
                 customFieldView: customFieldView
             ))
+            .automaticAccessibilityIdentifiers(named: "platformAdaptiveDetailView")
         case .detailed:
             return AnyView(platformDetailedDetailView(
                 data: data,
@@ -471,6 +472,7 @@ public extension IntelligentDetailView {
                 onEdit: onEdit,
                 customFieldView: customFieldView
             ))
+            .automaticAccessibilityIdentifiers(named: "platformAdaptiveDetailView")
         }
     }
     

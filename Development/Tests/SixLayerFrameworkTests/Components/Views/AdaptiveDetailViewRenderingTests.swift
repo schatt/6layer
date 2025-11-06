@@ -110,7 +110,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         // Then: Test that the ACTUAL framework code generates accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view,
-            expectedPattern: "*.main.ui.element.*",
+            expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "platformAdaptiveDetailView"
         )
