@@ -190,16 +190,18 @@ struct ExternalModuleIntegrationTests {
             
             let testItems = [TestItem(title: "Test Item")]
             let hints = PresentationHints()
-            var selectedItem: TestItem?
-            var deletedItem: TestItem?
             
             // Test ListCollectionView with callbacks
-            let listView = ListCollectionView(
+            let _ = ListCollectionView(
                 items: testItems,
                 hints: hints,
                 onCreateItem: nil,
-                onItemSelected: { item in selectedItem = item },
-                onItemDeleted: { item in deletedItem = item }
+                onItemSelected: { _ in
+                    // Callback signature is accessible - in real usage, external modules would use this
+                },
+                onItemDeleted: { _ in
+                    // Callback signature is accessible - in real usage, external modules would use this
+                }
             )
             
             // If this compiles and creates a view, the API is accessible
@@ -221,7 +223,7 @@ struct ExternalModuleIntegrationTests {
             let testData = TestFormData(name: "Test", email: "test@example.com")
             
             // Test that generateForm for creating new data is accessible
-            let createForm = IntelligentFormView.generateForm(
+            let _ = IntelligentFormView.generateForm(
                 for: TestFormData.self,
                 initialData: testData,
                 onSubmit: { _ in },
@@ -229,7 +231,7 @@ struct ExternalModuleIntegrationTests {
             )
             
             // Test that generateForm for updating existing data is accessible
-            let updateForm = IntelligentFormView.generateForm(
+            let _ = IntelligentFormView.generateForm(
                 for: testData,
                 onUpdate: { _ in },
                 onCancel: { }
@@ -253,7 +255,7 @@ struct ExternalModuleIntegrationTests {
             let testData = TestDetailData(name: "Test", status: "Active")
             
             // Test that platformDetailView can be called from external modules
-            let detailView = IntelligentDetailView.platformDetailView(for: testData)
+            let _ = IntelligentDetailView.platformDetailView(for: testData)
             
             // If this compiles and creates a view, the API is accessible
             #expect(true, "IntelligentDetailView.platformDetailView is accessible from external modules")
