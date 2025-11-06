@@ -72,7 +72,7 @@ open class PlatformPresentContentL1Tests {
         do {
             // The view should be wrapped in AnyView
             let anyView = try view.inspect().anyView()
-            #expect(anyView != nil, "String content should be wrapped in AnyView")
+            // anyView is non-optional InspectableView (throws on failure), so it exists if we reach here
             
             // The view should contain text elements with our string content
             let viewText = try view.inspect().findAll(ViewType.Text.self)

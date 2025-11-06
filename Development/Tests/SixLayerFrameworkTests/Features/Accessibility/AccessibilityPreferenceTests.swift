@@ -72,7 +72,7 @@ open class AccessibilityPreferenceTests {
         // Then: Test actual business logic
         // Each platform should return a valid configuration
         for (platform, config) in configurations {
-            #expect(config != nil, "\(platform) should return a valid accessibility configuration")
+            // config is non-optional (we just set it above), so it exists if we reach here
             
             // Test that the configuration has valid values
             #expect(config.supportsVoiceOver == true || config.supportsVoiceOver == false, 

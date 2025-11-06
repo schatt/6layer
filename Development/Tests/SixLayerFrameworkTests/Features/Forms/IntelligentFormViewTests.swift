@@ -13,8 +13,8 @@ import ViewInspector
 @MainActor
 open class IntelligentFormViewTests: BaseTestClass {
     
-@Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        try await runWithTaskLocalConfig {
+@Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() {
+        runWithTaskLocalConfig {
 
             let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
@@ -34,8 +34,8 @@ open class IntelligentFormViewTests: BaseTestClass {
     }
 
     
-    @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+    @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() {
+        runWithTaskLocalConfig {
 
             let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
@@ -46,7 +46,7 @@ open class IntelligentFormViewTests: BaseTestClass {
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
+                platform: SixLayerPlatform.macOS,
                 componentName: "IntelligentFormView"
             )
         
@@ -63,3 +63,4 @@ struct TestFormDataModel {
     let name: String
     let email: String
 }
+

@@ -435,9 +435,6 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         // When: Creating form with validation scenarios
         let view = platformPresentFormData_L1(fields: validationFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
-        // Then: Should handle validation appropriately
-        #expect(view != nil)
-
         // Verify field requirements
         let requiredFields = validationFields.filter { $0.isRequired }
         let optionalFields = validationFields.filter { !$0.isRequired }
@@ -473,9 +470,6 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // When: Creating form with edge case values
         let view = platformPresentFormData_L1(fields: edgeCaseFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
-
-        // Then: Should handle edge cases gracefully
-        #expect(view != nil)
 
         // Verify edge case handling
         let emptyValueFields = edgeCaseFields.filter { $0.defaultValue?.isEmpty == true }

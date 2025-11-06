@@ -61,7 +61,7 @@ open class AutomaticHIGComplianceTests {
             )
             
             // Then: View should automatically have HIG compliance applied
-            #expect(view != nil, "Layer 1 function should create a valid view")
+            // view is non-optional, not used further
             
             // Verify that automatic HIG compliance is applied
             // The fact that this compiles and runs successfully means the modifiers

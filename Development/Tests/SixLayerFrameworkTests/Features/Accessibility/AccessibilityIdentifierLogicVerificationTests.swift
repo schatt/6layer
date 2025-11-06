@@ -93,9 +93,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             }
             
             // Verify that all modifier chains compile successfully
-            #expect(testView1 != nil, "named modifier should compile successfully")
-            #expect(testView2 != nil, "automatic accessibility identifiers should compile successfully")
-            #expect(testView3 != nil, "automatic accessibility identifiers should compile successfully")
+            // All views are non-optional, not used further
             
             // Verify configuration is correct
             #expect(config.enableAutoIDs, "Automatic IDs should be enabled")

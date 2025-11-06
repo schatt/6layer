@@ -337,7 +337,7 @@ open class AccessibilityFeaturesLayer5Tests {
         let enhancedView = testView.accessibilityEnhanced(config: config)
         
         // THEN: Should return modified view with accessibility identifier
-        #expect(enhancedView != nil, "Should return accessibility enhanced view")
+        // enhancedView is non-optional View, used below
         #expect(testAccessibilityIdentifiersSinglePlatform(
             enhancedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
@@ -391,7 +391,7 @@ open class AccessibilityFeaturesLayer5Tests {
         let voiceOverView = testView.voiceOverEnabled()
         
         // THEN: Should return modified view
-        #expect(voiceOverView != nil, "Should return VoiceOver enabled view")
+        // voiceOverView is non-optional View, not used further
     }
     
     /**
@@ -412,7 +412,7 @@ open class AccessibilityFeaturesLayer5Tests {
         let keyboardView = testView.keyboardNavigable()
         
         // THEN: Should return modified view
-        #expect(keyboardView != nil, "Should return keyboard navigable view")
+        // keyboardView is non-optional View, not used further
     }
     
     /**
@@ -433,7 +433,7 @@ open class AccessibilityFeaturesLayer5Tests {
         let highContrastView = testView.highContrastEnabled()
         
         // THEN: Should return modified view
-        #expect(highContrastView != nil, "Should return high contrast enabled view")
+        // highContrastView is non-optional View, not used further
     }
     
     /**
@@ -458,7 +458,7 @@ open class AccessibilityFeaturesLayer5Tests {
             .highContrastEnabled()
         
         // THEN: Should return modified view with accessibility identifier
-        #expect(integratedView != nil, "Should return integrated accessibility view")
+        // integratedView is non-optional View, used below
         #expect(testAccessibilityIdentifiersSinglePlatform(
             integratedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
