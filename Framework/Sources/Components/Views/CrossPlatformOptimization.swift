@@ -13,12 +13,12 @@ public struct CrossPlatformOptimization: View {
         VStack(spacing: 12) {
             Text("Cross-Platform Layout Optimization")
                 .font(.headline)
-                .accessibilityIdentifier("SixLayer.main.element.crossplatform.title")
+                .automaticAccessibilityIdentifiers(named: "Title")
             
             Text("Optimal layouts for \(SixLayerPlatform.currentPlatform.rawValue)")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .accessibilityIdentifier("SixLayer.main.element.crossplatform.description")
+                .automaticAccessibilityIdentifiers(named: "Description")
             
             // Show platform-specific optimization examples
             VStack(alignment: .leading, spacing: 8) {
@@ -27,12 +27,12 @@ public struct CrossPlatformOptimization: View {
                 Text("• Optimal component sizing")
             }
             .font(.caption)
-            .accessibilityIdentifier("SixLayer.main.element.crossplatform.features")
+            .automaticAccessibilityIdentifiers(named: "FeaturesList")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .accessibilityIdentifier("SixLayer.main.element.crossplatform.container")
+        .automaticAccessibilityIdentifiers(named: "CrossPlatformOptimization")
     }
 }
 

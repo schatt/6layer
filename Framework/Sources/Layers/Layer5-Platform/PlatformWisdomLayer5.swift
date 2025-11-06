@@ -13,22 +13,22 @@ public struct PlatformWisdomLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Wisdom")
                 .font(.headline)
-                .accessibilityIdentifier("SixLayer.main.element.wisdom.title")
+                .automaticAccessibilityIdentifiers(named: "Title")
             
             Text("Intelligent platform-specific recommendations")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .accessibilityIdentifier("SixLayer.main.element.wisdom.description")
+                .automaticAccessibilityIdentifiers(named: "Description")
             
             Button("Get Recommendations") {
                 // Platform-specific wisdom logic
             }
-            .accessibilityIdentifier("SixLayer.main.element.wisdom.recommendations")
+            .automaticAccessibilityIdentifiers(named: "RecommendationsButton")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .accessibilityIdentifier("SixLayer.main.element.wisdom.container")
+        .automaticAccessibilityIdentifiers(named: "PlatformWisdomLayer5")
     }
 }
 

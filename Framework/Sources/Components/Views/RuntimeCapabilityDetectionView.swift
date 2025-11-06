@@ -14,12 +14,12 @@ public struct RuntimeCapabilityDetectionView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Runtime Capabilities")
                 .font(.headline)
-                .accessibilityIdentifier("SixLayer.main.element.capabilities.title")
+                .automaticAccessibilityIdentifiers(named: "Title")
             
             if capabilities.isEmpty {
                 Text("Detecting capabilities...")
                     .foregroundColor(.secondary)
-                    .accessibilityIdentifier("SixLayer.main.element.capabilities.loading")
+                    .automaticAccessibilityIdentifiers(named: "Loading")
             } else {
                 ForEach(capabilities, id: \.self) { capability in
                     HStack {
@@ -28,19 +28,19 @@ public struct RuntimeCapabilityDetectionView: View {
                         Text(capability)
                             .font(.body)
                     }
-                    .accessibilityIdentifier("SixLayer.main.element.capabilities.item.\(capability)")
+                    .automaticAccessibilityIdentifiers(named: "CapabilityItem")
                 }
             }
             
             Button("Refresh Detection") {
                 detectCapabilities()
             }
-            .accessibilityIdentifier("SixLayer.main.element.capabilities.refresh")
+            .automaticAccessibilityIdentifiers(named: "RefreshButton")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .accessibilityIdentifier("SixLayer.main.element.capabilities.container")
+        .automaticAccessibilityIdentifiers(named: "RuntimeCapabilityDetectionView")
         .onAppear {
             detectCapabilities()
         }
