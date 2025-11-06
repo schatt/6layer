@@ -14,9 +14,8 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-    runWithTaskLocalConfig {
+    await runWithTaskLocalConfig {
             // Given
-            let manager = await MainActor.run { EyeTrackingManager() }
             
             // When & Then
             // Manager classes don't directly generate views, but we test their configuration
@@ -24,25 +23,23 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
             
             // Test that the manager can be configured with accessibility settings
             await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
-    }
             }
+            #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
+    }
     }
     
     /// BUSINESS PURPOSE: Validates that EyeTrackingManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
-            let manager = await MainActor.run { EyeTrackingManager() }
             
             // When & Then
             // Manager classes don't directly generate views, but we test their configuration
@@ -50,16 +47,15 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
             
             // Test that the manager can be configured with accessibility settings
             await MainActor.run {
-                guard let config = testConfig else {
+            guard let config = testConfig else {
 
-                    Issue.record("testConfig is nil")
+                Issue.record("testConfig is nil")
 
-                    return
+                return
 
-                }
-                #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
-                #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
-        }
             }
+            #expect(config.enableAutoIDs, "EyeTrackingManager should work with accessibility enabled")
+            #expect(config.namespace == "SixLayer", "EyeTrackingManager should use correct namespace")
+        }
     }
 }
