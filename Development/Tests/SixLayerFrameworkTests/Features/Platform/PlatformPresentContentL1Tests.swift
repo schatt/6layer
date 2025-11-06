@@ -66,7 +66,7 @@ open class PlatformPresentContentL1Tests {
         // Then: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(view != nil, "platformPresentContent_L1 should return a view for string content")
+        // view is a non-optional View, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain the actual string content
         do {

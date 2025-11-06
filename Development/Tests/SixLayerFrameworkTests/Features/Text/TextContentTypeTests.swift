@@ -58,7 +58,7 @@ open class TextContentTypeTests {
             let textField = DynamicFormFieldView(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
-            #expect(textField != nil, "Should create text field for \(textContentType.rawValue)")
+            // textField is a non-optional View, so it exists if we reach here
             
             // Test specific content types using exhaustive switch
             switch textContentType {

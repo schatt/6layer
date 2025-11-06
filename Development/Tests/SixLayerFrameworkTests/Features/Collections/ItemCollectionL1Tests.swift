@@ -29,7 +29,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 should return a view")
+        // view is a non-optional View, so it exists if we reach here
     }
     
     @Test func testPlatformPresentItemCollection_L1_WithEmptyItems() {

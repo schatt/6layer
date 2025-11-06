@@ -40,7 +40,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(cardView != nil, "NativeExpandableCardView should be created successfully")
+        // cardView is a non-optional View, so it exists if we reach here
         
         // 2. Does that structure contain what it should?
         do {

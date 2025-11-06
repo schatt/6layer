@@ -62,12 +62,10 @@ open class PlatformSimulationTests {
                      "Platform \(platform.rawValue) should have consistent haptic feedback support")
         
         // Test platform-specific constraints
-        #expect(PlatformDeviceCapabilities.deviceType != nil, 
-                     "Platform \(platform.rawValue) should have a valid device type")
+        // deviceType is non-optional, so it exists if we reach here
         
         // Test screen size appropriateness
-        #expect(PlatformDeviceCapabilities.deviceType != nil, 
-                     "Platform \(platform.rawValue) should have valid device type")
+        // deviceType is non-optional, so it exists if we reach here
         
         // Test touch target size appropriateness
         if RuntimeCapabilityDetection.supportsTouch {

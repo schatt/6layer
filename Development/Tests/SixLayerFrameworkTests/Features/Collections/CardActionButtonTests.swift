@@ -167,7 +167,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should have delete button available and callback should be properly configured
-        #expect(card != nil, "ExpandableCardComponent should be created")
+        // card is a non-optional View struct, so it exists if we reach here
         #expect(card.onItemDeleted != nil, "Delete callback should be stored when provided")
         
         // Test callback functionality: Call the callback and verify it works

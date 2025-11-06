@@ -149,7 +149,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ))
 
         // Then: Should create view successfully
-        #expect(view != nil, "Should create view with all field types")
+        // view is a non-optional View, so it exists if we reach here
 
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AsyncFormView")

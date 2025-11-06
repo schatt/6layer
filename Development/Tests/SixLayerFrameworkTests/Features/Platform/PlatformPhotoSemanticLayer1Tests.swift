@@ -48,7 +48,7 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPhotoDisplay_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // Test accessibility identifier generation
         let hasAccessibilityID = await MainActor.run {
@@ -93,7 +93,7 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPhotoDisplay_L1 should create a view")
+        // view is a non-optional View, so it exists if we reach here
         
         // Test accessibility identifier generation
         let hasAccessibilityID = await MainActor.run {

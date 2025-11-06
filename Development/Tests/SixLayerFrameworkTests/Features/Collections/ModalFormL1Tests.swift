@@ -35,7 +35,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 should return a view")
+        // view is a non-optional View, so it exists if we reach here
     }
     
     @Test func testPlatformPresentModalForm_L1_WithDifferentFormType() {
@@ -50,7 +50,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with different form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with different form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithDifferentContext() {
@@ -65,7 +65,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with different context should return a view")
+        // view is a non-optional View, so it exists if we reach here with different context should return a view")
     }
     
     // MARK: - Different Form Types
@@ -82,7 +82,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with user form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with user form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithTransactionFormType() {
@@ -97,7 +97,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with transaction form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with transaction form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithActionFormType() {
@@ -112,7 +112,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with action form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with action form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithProductFormType() {
@@ -127,7 +127,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with product form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with product form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithCommunicationFormType() {
@@ -142,7 +142,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with communication form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with communication form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithLocationFormType() {
@@ -157,7 +157,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with location form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with location form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithNavigationFormType() {
@@ -172,7 +172,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with navigation form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with navigation form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithCardFormType() {
@@ -187,7 +187,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with card form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with card form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithDetailFormType() {
@@ -202,7 +202,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with detail form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with detail form type should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithSheetFormType() {
@@ -217,7 +217,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with sheet form type should return a view")
+        // view is a non-optional View, so it exists if we reach here with sheet form type should return a view")
     }
     
     // MARK: - Different Contexts
@@ -234,7 +234,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with create context should return a view")
+        // view is a non-optional View, so it exists if we reach here with create context should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithEditContext() {
@@ -249,7 +249,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with edit context should return a view")
+        // view is a non-optional View, so it exists if we reach here with edit context should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithSettingsContext() {
@@ -264,7 +264,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with settings context should return a view")
+        // view is a non-optional View, so it exists if we reach here with settings context should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithProfileContext() {
@@ -279,7 +279,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with profile context should return a view")
+        // view is a non-optional View, so it exists if we reach here with profile context should return a view")
     }
     
     @Test func testPlatformPresentModalForm_L1_WithSearchContext() {
@@ -294,7 +294,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentModalForm_L1 with search context should return a view")
+        // view is a non-optional View, so it exists if we reach here with search context should return a view")
     }
     
     // MARK: - Performance Tests

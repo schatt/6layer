@@ -57,7 +57,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid modal container
-        #expect(container != nil, "Modal container should be created successfully")
+        // container is a non-optional View, so it exists if we reach here
     }
     
     @Test func testPlatformModalContainer_Form_L4_Popover() {
