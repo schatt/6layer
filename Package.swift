@@ -58,7 +58,9 @@ let package = Package(
                 "BugReports/ButtonStyle_v4.6.3/README.md",
                 "BugReports/PlatformTypes_v4.6.4/README.md",
                 "BugReports/PlatformPhotoPicker_v4.6.5/README.md",
-                "BugReports/PlatformTypes_v4.6.6/README.md"
+                "BugReports/PlatformTypes_v4.6.6/README.md",
+                // Documentation files
+                "Utilities/TestHelpers/CoreDataTestingGuide.md"
             ]
         ),
         
@@ -69,7 +71,11 @@ let package = Package(
             dependencies: [
                 "SixLayerFramework"
             ],
-            path: "Development/Tests/SixLayerFrameworkExternalIntegrationTests"
+            path: "Development/Tests/SixLayerFrameworkExternalIntegrationTests",
+            exclude: [
+                // Documentation files
+                "README.md"
+            ]
         ),
         
     ]
