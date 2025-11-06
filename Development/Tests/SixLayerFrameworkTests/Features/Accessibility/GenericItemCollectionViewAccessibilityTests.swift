@@ -42,8 +42,8 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
             onItemDeleted: nil,
             onItemEdited: nil
         )
-        
-        #expect(collectionView != nil, "ExpandableCardCollectionView should be creatable")
+
+        // collectionView is non-optional View, used below for accessibility testing
         
         // MANDATORY: Test that accessibility identifiers are applied
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"
@@ -88,8 +88,8 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
             onItemDeleted: nil,
             onItemEdited: nil
         )
-        
-        #expect(collectionView != nil, "ExpandableCardCollectionView should be creatable")
+
+        // collectionView is non-optional View, used below for accessibility testing
         
         // MANDATORY: Test that accessibility identifiers are applied
         // Should look for collection-specific accessibility identifier: "TDDTest.collection.item.task1"

@@ -57,6 +57,7 @@ open class PlatformColorsTests {
             // Test that iOS colors can actually be used in views
             let iosView = createTestViewWithPlatformColors()
             let iosHostingView = hostRootPlatformView(iosView.withGlobalAutoIDsEnabled())
+            // iosHostingView is optional (Any?), valid check
             #expect(iosHostingView != nil, "iOS colors should work in actual views")
             
         case .macOS:

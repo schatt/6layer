@@ -197,7 +197,7 @@ open class IntelligentDetailViewTests {
 
         // Verify the view is created successfully and callback isn't called yet
         #expect(editCalled == false, "Edit should not be called yet")
-        #expect(view != nil, "IntelligentDetailView should be created successfully with edit callback")
+        // view is non-optional, not used further
     }
 
     @Test func testIntelligentDetailViewCanDisableEditButton() async {
@@ -210,7 +210,7 @@ open class IntelligentDetailViewTests {
             onEdit: { /* should not be called */ }
         )
 
-        #expect(view != nil, "IntelligentDetailView should work with edit button disabled")
+        // view is non-optional, not used further
     }
 
     @Test func testIntelligentDetailViewEditButtonAccessibility() async {
