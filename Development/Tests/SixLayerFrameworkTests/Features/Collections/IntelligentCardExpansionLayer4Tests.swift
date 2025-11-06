@@ -13,82 +13,94 @@ import ViewInspector
 @MainActor
 open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     
-@Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let testItems = [
-            IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
-            IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
-        ]
+    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        try await runWithTaskLocalConfig {
+
+            let testItems = [
+                IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
+                IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
+            ]
         
-        let view = withTestConfig(ExpandableCardCollectionView(
-            items: testItems,
-            hints: PresentationHints(
-                dataType: .generic,
-                presentationPreference: .automatic,
-                complexity: .moderate,
-                context: .modal,
-                customPreferences: [:]
+            let view = ExpandableCardCollectionView(
+                items: testItems,
+                hints: PresentationHints(
+                    dataType: .generic,
+                    presentationPreference: .automatic,
+                    complexity: .moderate,
+                    context: .modal,
+                    customPreferences: [:]
+                )
             )
-        ))
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "ExpandableCardCollectionView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.main.ui.*", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "ExpandableCardCollectionView"
+            )
         
-        #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on iOS")
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on iOS")
+        }
     }
+
     
     @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testItems = [
-            IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
-            IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
-        ]
+        try await runWithTaskLocalConfig {
+
+            let testItems = [
+                IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
+                IntelligentCardExpansionLayer4TestItem(id: "item2", title: "Test Item 2")
+            ]
         
-        let view = withTestConfig(ExpandableCardCollectionView(
-            items: testItems,
-            hints: PresentationHints(
-                dataType: .generic,
-                presentationPreference: .automatic,
-                complexity: .moderate,
-                context: .modal,
-                customPreferences: [:]
+            let view = ExpandableCardCollectionView(
+                items: testItems,
+                hints: PresentationHints(
+                    dataType: .generic,
+                    presentationPreference: .automatic,
+                    complexity: .moderate,
+                    context: .modal,
+                    customPreferences: [:]
+                )
             )
-        ))
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*", 
-            platform: .macOS,
-            componentName: "ExpandableCardCollectionView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.main.ui.*", 
+                platform: .macOS,
+                componentName: "ExpandableCardCollectionView"
+            )
         
-        #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS")
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS")
+        }
     }
+
     
     @Test func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
-        // Test empty state
-        let view = withTestConfig(ExpandableCardCollectionView(
-            items: [] as [IntelligentCardExpansionLayer4TestItem],
-            hints: PresentationHints(
-                dataType: .generic,
-                presentationPreference: .automatic,
-                complexity: .moderate,
-                context: .modal,
-                customPreferences: [:]
+        try await runWithTaskLocalConfig {
+
+            // Test empty state
+            let view = ExpandableCardCollectionView(
+                items: [] as [IntelligentCardExpansionLayer4TestItem],
+                hints: PresentationHints(
+                    dataType: .generic,
+                    presentationPreference: .automatic,
+                    complexity: .moderate,
+                    context: .modal,
+                    customPreferences: [:]
+                )
             )
-        ))
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "ExpandableCardCollectionView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.main.ui.*", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "ExpandableCardCollectionView"
+            )
         
-        #expect(hasAccessibilityID, "ExpandableCardCollectionView empty state should generate accessibility identifiers")
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView empty state should generate accessibility identifiers")
+        }
     }
+
 }
 
 // MARK: - Test Support Types

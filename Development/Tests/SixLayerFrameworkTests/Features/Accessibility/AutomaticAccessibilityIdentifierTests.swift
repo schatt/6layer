@@ -272,12 +272,12 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 
                 // When: Creating view with manual identifier
                 let manualID = "manual-custom-id"
-                let view = withTestConfig(platformPresentContent_L1(
+                let view = platformPresentContent_L1(
                     content: "Test",
                     hints: PresentationHints()
                 )
                     .accessibilityIdentifier(manualID)
-                    .automaticAccessibilityIdentifiers())
+                    .automaticAccessibilityIdentifiers()
                 
                 // Then: Manual identifier should be used
                 // We test this by verifying the view has the manual identifier
@@ -308,11 +308,11 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 config.enableAutoIDs = false
                 
                 // When: Creating view with automatic accessibility identifiers modifier
-                let view = withTestConfig(platformPresentContent_L1(
+                let view = platformPresentContent_L1(
                     content: "Test",
                     hints: PresentationHints()
                 )
-                    .automaticAccessibilityIdentifiers())
+                    .automaticAccessibilityIdentifiers()
                 
                 // Then: No automatic identifier should be generated
                 // We test this by verifying the view does NOT have an automatic identifier

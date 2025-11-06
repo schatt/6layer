@@ -14,72 +14,80 @@ import ViewInspector
 open class ModalFormViewTests: BaseTestClass {
     
     @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let testFields = [
-            DynamicFormField(
-                id: "field1",
-                contentType: .text,
-                label: "Test Field 1",
-                placeholder: "Enter text",
-                isRequired: true,
-                validationRules: [:]
-            )
-        ]
+        try await runWithTaskLocalConfig {
+
+            let testFields = [
+                DynamicFormField(
+                    id: "field1",
+                    contentType: .text,
+                    label: "Test Field 1",
+                    placeholder: "Enter text",
+                    isRequired: true,
+                    validationRules: [:]
+                )
+            ]
         
-        let view = withTestConfig(ModalFormView(
-            fields: testFields,
-            formType: .generic,
-            context: .modal,
-            hints: PresentationHints(
-                dataType: .generic,
-                presentationPreference: .automatic,
-                complexity: .moderate,
+            let view = ModalFormView(
+                fields: testFields,
+                formType: .generic,
                 context: .modal,
-                customPreferences: [:]
+                hints: PresentationHints(
+                    dataType: .generic,
+                    presentationPreference: .automatic,
+                    complexity: .moderate,
+                    context: .modal,
+                    customPreferences: [:]
+                )
             )
-        ))
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "ModalFormView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.main.ui.*", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "ModalFormView"
+            )
         
-        #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on iOS")
+            #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on iOS")
+        }
     }
+
     
     @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testFields = [
-            DynamicFormField(
-                id: "field1",
-                contentType: .text,
-                label: "Test Field 1",
-                placeholder: "Enter text",
-                isRequired: true,
-                validationRules: [:]
-            )
-        ]
+        try await runWithTaskLocalConfig {
+
+            let testFields = [
+                DynamicFormField(
+                    id: "field1",
+                    contentType: .text,
+                    label: "Test Field 1",
+                    placeholder: "Enter text",
+                    isRequired: true,
+                    validationRules: [:]
+                )
+            ]
         
-        let view = withTestConfig(ModalFormView(
-            fields: testFields,
-            formType: .generic,
-            context: .modal,
-            hints: PresentationHints(
-                dataType: .generic,
-                presentationPreference: .automatic,
-                complexity: .moderate,
+            let view = ModalFormView(
+                fields: testFields,
+                formType: .generic,
                 context: .modal,
-                customPreferences: [:]
+                hints: PresentationHints(
+                    dataType: .generic,
+                    presentationPreference: .automatic,
+                    complexity: .moderate,
+                    context: .modal,
+                    customPreferences: [:]
+                )
             )
-        ))
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*", 
-            platform: SixLayerPlatform.macOS,
-            componentName: "ModalFormView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.main.ui.*", 
+                platform: SixLayerPlatform.macOS,
+                componentName: "ModalFormView"
+            )
         
-        #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on macOS")
+            #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on macOS")
+        }
     }
+
 }

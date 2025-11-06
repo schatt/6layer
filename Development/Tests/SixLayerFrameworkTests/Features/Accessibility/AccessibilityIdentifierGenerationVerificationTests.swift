@@ -30,10 +30,10 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 let testPassed = testComponentAccessibility(
                     componentName: "AutomaticAccessibilityIdentifiers",
                     createComponent: {
-                        withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
+                        PlatformInteractionButton(style: .primary, action: {}) {
                             platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
                         }
-                        .automaticAccessibilityIdentifiers())
+                        .automaticAccessibilityIdentifiers()
                     }
                 )
                 
@@ -64,10 +64,10 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 let testPassed = testComponentAccessibility(
                     componentName: "NamedModifier",
                     createComponent: {
-                        withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
+                        PlatformInteractionButton(style: .primary, action: {}) {
                             platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
                         }
-                        .named("AddFuelButton"))
+                        .named("AddFuelButton")
                     }
                 )
                 
@@ -137,12 +137,12 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 
                 // When: Creating view with manual identifier
                 let manualID = "manual-custom-id"
-                let testView = withTestConfig(platformPresentContent_L1(
+                let testView = platformPresentContent_L1(
                     content: "Test",
                     hints: PresentationHints()
                 )
                     .accessibilityIdentifier(manualID)
-                    .automaticAccessibilityIdentifiers())
+                    .automaticAccessibilityIdentifiers()
                 
                 // Then: Test the two critical aspects
                 
@@ -177,10 +177,10 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 // Test Case 1: When automatic IDs are disabled
                 config.enableAutoIDs = false
                 
-                let testView1 = withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
+                let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
                     platformPresentContent_L1(content: "Test", hints: PresentationHints())
                 }
-                .automaticAccessibilityIdentifiers())
+                .automaticAccessibilityIdentifiers()
                 
                 // 1. View created - The view can be instantiated successfully
                 #expect(testView1 != nil, "View should be created even when automatic IDs are disabled")
@@ -198,10 +198,10 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 // Test Case 2: When automatic IDs are enabled
                 testConfig.enableAutoIDs = true
                 
-                let testView2 = withTestConfig(PlatformInteractionButton(style: .primary, action: {}) {
+                let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
                     platformPresentContent_L1(content: "Test", hints: PresentationHints())
                 }
-                .automaticAccessibilityIdentifiers())
+                .automaticAccessibilityIdentifiers()
                 
                 // 1. View created - The view can be instantiated successfully
                 #expect(testView2 != nil, "View should be created when automatic IDs are enabled")

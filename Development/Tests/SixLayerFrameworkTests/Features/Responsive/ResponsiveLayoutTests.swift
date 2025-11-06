@@ -14,33 +14,41 @@ import ViewInspector
 open class ResponsiveLayoutTests: BaseTestClass {
     
 @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
-        let view = withTestConfig(ResponsiveLayout.adaptiveGrid {
-            platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
-        })
+        try await runWithTaskLocalConfig {
+
+            let view = ResponsiveLayout.adaptiveGrid {
+                platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
+            }
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: .iOS,
-            componentName: "ResponsiveLayout"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: .iOS,
+                componentName: "ResponsiveLayout"
+            )
         
-        #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on iOS")
+            #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on iOS")
+        }
     }
+
     
     @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let view = withTestConfig(ResponsiveLayout.adaptiveGrid {
-            platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
-        })
+        try await runWithTaskLocalConfig {
+
+            let view = ResponsiveLayout.adaptiveGrid {
+                platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
+            }
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: .macOS,
-            componentName: "ResponsiveLayout"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: .macOS,
+                componentName: "ResponsiveLayout"
+            )
         
-        #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on macOS")
+            #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on macOS")
+        }
     }
+
 }
 

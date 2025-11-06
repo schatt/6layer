@@ -13,47 +13,55 @@ import ViewInspector
 @MainActor
 open class GenericItemCollectionViewTests: BaseTestClass {
     
-@Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let testItems = [
-            GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
-            GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
-        ]
+    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        try await runWithTaskLocalConfig {
+
+            let testItems = [
+                GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
+                GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
+            ]
         
-        let view = withTestConfig(GenericItemCollectionView(
-            items: testItems,
-            hints: PresentationHints()
-        ))
+            let view = GenericItemCollectionView(
+                items: testItems,
+                hints: PresentationHints()
+            )
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "GenericItemCollectionView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "GenericItemCollectionView"
+            )
         
-        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
+            #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS")
+        }
     }
+
     
     @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testItems = [
-            GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
-            GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
-        ]
+        try await runWithTaskLocalConfig {
+
+            let testItems = [
+                GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
+                GenericItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
+            ]
         
-        let view = withTestConfig(GenericItemCollectionView(
-            items: testItems,
-            hints: PresentationHints()
-        ))
+            let view = GenericItemCollectionView(
+                items: testItems,
+                hints: PresentationHints()
+            )
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "GenericItemCollectionView"
-        )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "GenericItemCollectionView"
+            )
         
-        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
+            #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS")
+        }
     }
+
 }
 
 // MARK: - Test Support Types

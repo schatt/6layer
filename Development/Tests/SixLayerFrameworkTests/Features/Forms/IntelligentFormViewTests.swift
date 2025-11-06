@@ -14,40 +14,46 @@ import ViewInspector
 open class IntelligentFormViewTests: BaseTestClass {
     
 @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
+        try await runWithTaskLocalConfig {
+
+            let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
-        let view = withTestConfig(IntelligentFormView.generateForm(
-            for: TestFormDataModel.self,
-            initialData: testData
-        ))
+            let view = IntelligentFormView.generateForm(
+                for: TestFormDataModel.self,
+                initialData: testData
+            )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "IntelligentFormView"
+            )
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "IntelligentFormView"
-        )
-        
-        #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers on iOS")
+            #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers on iOS")
+        }
     }
+
     
     @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
+        try await runWithTaskLocalConfig {
+
+            let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
         
-        let view = withTestConfig(IntelligentFormView.generateForm(
-            for: TestFormDataModel.self,
-            initialData: testData
-        ))
+            let view = IntelligentFormView.generateForm(
+                for: TestFormDataModel.self,
+                initialData: testData
+            )
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view, 
+                expectedPattern: "SixLayer.*ui", 
+                platform: SixLayerPlatform.iOS,
+                componentName: "IntelligentFormView"
+            )
         
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.*ui", 
-            platform: SixLayerPlatform.iOS,
-            componentName: "IntelligentFormView"
-        )
-        
-        #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers on macOS")
+            #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers on macOS")
+        }
     }
+
 }
 
 // MARK: - Test Support Types

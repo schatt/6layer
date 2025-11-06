@@ -77,7 +77,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                 )
                 
                 // Wrap with test config to ensure namespace is set
-                let result = withTestConfig(cameraView)
+                let result = cameraView
                 
                 // Verify callback is properly configured
                 #expect(result != nil, "Camera interface should be created")

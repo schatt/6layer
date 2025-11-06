@@ -196,8 +196,7 @@ open class FormFieldInteractionTests {
                 set: { newValue in
                     selectedOption = newValue
                     self.fieldValueChanges[selectField.label] = newValue
-                }
-            )) {
+                })) {
                 ForEach(options, id: \.self) { option in
                     Text(option).tag(option)
                 }

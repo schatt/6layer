@@ -40,7 +40,8 @@ public struct CardExpansionPlatformConfig: Sendable {
 /// Get platform-specific configuration for card expansion
 @MainActor
 public func getCardExpansionPlatformConfig() -> CardExpansionPlatformConfig {
-    let platform = SixLayerPlatform.currentPlatform
+    // Use RuntimeCapabilityDetection.currentPlatform to respect test platform settings
+    let platform = RuntimeCapabilityDetection.currentPlatform
     let deviceType = SixLayerPlatform.deviceType
     
     switch platform {

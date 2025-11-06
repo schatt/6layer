@@ -146,8 +146,7 @@ open class SelectFieldImplementationTests {
             
             Picker(field.placeholder ?? "Select option", selection: Binding(
                 get: { formData[field.id] as? String ?? "" },
-                set: { _ in }
-            )) {
+                set: { _ in }) {
                 Text("Select an option").tag("")
                 ForEach(field.options ?? [], id: \.self) { option in
                     Text(option).tag(option)
@@ -295,8 +294,7 @@ open class SelectFieldImplementationTests {
         // When: Creating select field with binding
         let view = Picker(field.label, selection: Binding(
             get: { selectedValue },
-            set: { selectedValue = $0 }
-        )) {
+            set: { selectedValue = $0 })) {
             Text("Select an option").tag("")
             ForEach(field.options ?? [], id: \.self) { option in
                 Text(option).tag(option)

@@ -23,13 +23,11 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         )
         
         // Test the ACTUAL OCROverlayView component on iOS
-        let ocrView = withTestConfig(OCROverlayView(
+        let ocrView = OCROverlayView(
             image: mockImage,
             result: mockResult,
             onTextEdit: { _, _ in },
-            onTextDelete: { _ in }
-        ))
-        
+            onTextDelete: { _ in })
         // MANDATORY: Test that accessibility identifiers are applied on iOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
         #expect(testAccessibilityIdentifiersSinglePlatform(
@@ -56,13 +54,11 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         )
         
         // Test the ACTUAL OCROverlayView component on macOS
-        let ocrView = withTestConfig(OCROverlayView(
+        let ocrView = OCROverlayView(
             image: mockImage,
             result: mockResult,
             onTextEdit: { _, _ in },
-            onTextDelete: { _ in }
-        ))
-        
+            onTextDelete: { _ in })
         // MANDATORY: Test that accessibility identifiers are applied on macOS
         // Should look for OCR-specific accessibility identifier: "TDDTest.ocr.overlay.Test OCR Text"
         #expect(testAccessibilityIdentifiersSinglePlatform(
