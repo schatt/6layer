@@ -20,7 +20,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - ExpandableCardCollectionView Tests
     
     @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test items
             let testItems = [
                 CardTestItem(id: "1", title: "Card 1"),
@@ -46,7 +46,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - ExpandableCardComponent Tests
     
     @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item
             let testItem = CardTestItem(id: "1", title: "Test Card")
             
@@ -91,7 +91,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - CoverFlowCollectionView Tests
     
     @Test func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test items
             let testItems = [
                 CardTestItem(id: "1", title: "CoverFlow Card 1"),
@@ -123,7 +123,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - CoverFlowCardComponent Tests
     
     @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item
             let testItem = CardTestItem(id: "1", title: "CoverFlow Card")
             
@@ -150,7 +150,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - GridCollectionView Tests
     
     @Test func testGridCollectionViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test items
             let testItems = [
                 CardTestItem(id: "1", title: "Grid Card 1"),
@@ -176,7 +176,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - ListCollectionView Tests
     
     @Test func testListCollectionViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test items
             let testItems = [
                 CardTestItem(id: "1", title: "List Card 1"),
@@ -202,7 +202,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - MasonryCollectionView Tests
     
     @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test items
             let testItems = [
                 CardTestItem(id: "1", title: "Masonry Card 1"),
@@ -228,7 +228,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - AdaptiveCollectionView Tests
     
     @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test items
             let testItems = [
                 CardTestItem(id: "1", title: "Adaptive Card 1"),
@@ -257,7 +257,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - SimpleCardComponent Tests
     
     @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item
             let testItem = CardTestItem(id: "1", title: "Simple Card")
             
@@ -292,7 +292,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - ListCardComponent Tests
     
     @Test func testListCardComponentGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item
             let testItem = CardTestItem(id: "1", title: "List Card")
             
@@ -314,7 +314,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - MasonryCardComponent Tests
     
     @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item
             let testItem = CardTestItem(id: "1", title: "Masonry Card")
             
@@ -338,7 +338,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - NativeExpandableCardView Tests
     
     @Test func testNativeExpandableCardViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item and configurations
             let testItem = CardTestItem(id: "1", title: "Native Card")
             let expansionStrategy = ExpansionStrategy.hoverExpand
@@ -364,7 +364,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - iOSExpandableCardView Tests
     
     @Test func testIOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item and configurations
             let testItem = CardTestItem(id: "1", title: "iOS Card")
             let expansionStrategy = ExpansionStrategy.hoverExpand
@@ -390,7 +390,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - macOSExpandableCardView Tests
     
     @Test func testMacOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item and configurations
             let testItem = CardTestItem(id: "1", title: "macOS Card")
             let expansionStrategy = ExpansionStrategy.hoverExpand
@@ -416,7 +416,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - visionOSExpandableCardView Tests
     
     @Test func testVisionOSExpandableCardViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item and configurations
             let testItem = CardTestItem(id: "1", title: "visionOS Card")
             let expansionStrategy = ExpansionStrategy.hoverExpand
@@ -442,7 +442,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
     // MARK: - PlatformAwareExpandableCardView Tests
     
     @Test func testPlatformAwareExpandableCardViewGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Test item and configurations
             let testItem = CardTestItem(id: "1", title: "Platform Aware Card")
             let expansionStrategy = ExpansionStrategy.hoverExpand

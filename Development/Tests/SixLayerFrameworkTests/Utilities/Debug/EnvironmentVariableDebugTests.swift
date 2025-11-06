@@ -12,7 +12,7 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
     // BaseTestClass handles setup automatically - no need for custom init
     
     @Test func testEnvironmentVariablePropagation() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             
             // Test: Does the environment variable get set properly?
             
@@ -51,7 +51,7 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
     }
     
     @Test func testDirectEnvironmentVariableSetting() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Test: Does setting the environment variable directly work?
             
             // 1. Disable global config

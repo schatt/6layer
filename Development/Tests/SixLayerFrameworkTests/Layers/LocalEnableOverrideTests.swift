@@ -12,7 +12,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
     // BaseTestClass handles setup automatically - no need for custom init
     
     @Test func testGlobalDisableLocalEnable() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Configure test environment
             guard let config = testConfig else {
                 Issue.record("testConfig is nil")
@@ -54,7 +54,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
     }
     
     @Test func testNamedModifierAlwaysWorksRegardlessOfGlobalSettings() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Test that .named() always works regardless of global settings
             // This is the correct behavior - explicit naming should not be affected by global config
 
@@ -100,7 +100,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
     }
     
     @Test func testNamedModifierAlwaysWorksEvenWhenGlobalConfigDisabled() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Configure test environment
             guard let config = testConfig else {
                 Issue.record("testConfig is nil")

@@ -12,7 +12,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 1: Empty String Parameters
     
     @Test func testEmptyStringParameters() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             let view = PlatformInteractionButton(style: .primary, action: {}) {
@@ -39,7 +39,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 2: Special Characters in Names
     
     @Test func testSpecialCharactersInNames() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: How are special characters handled in names?
@@ -68,7 +68,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 3: Very Long Names
     
     @Test func testVeryLongNames() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: Does it handle extremely long names gracefully?
@@ -105,7 +105,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 4: Manual ID Override
     
     @Test func testManualIDOverride() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: Does manual ID override automatic ID?
@@ -134,7 +134,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 5: Disable/Enable Mid-Hierarchy
     
     @Test func testDisableEnableMidHierarchy() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: Does disable work mid-hierarchy?
@@ -174,7 +174,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 6: Multiple Screen Contexts
     
     @Test func testMultipleScreenContexts() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             let view = VStack {
@@ -201,7 +201,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 7: Exact Named Behavior (Red Phase Tests)
     
     @Test func testExactNamedBehavior() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: Does exactNamed() use exact names without hierarchy?
@@ -239,7 +239,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     }
     
     @Test func testExactNamedVsNamedDifference() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: exactNamed() should produce different identifiers than named()
@@ -275,7 +275,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     }
     
     @Test func testExactNamedIgnoresHierarchy() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: exactNamed() should ignore view hierarchy context
@@ -312,7 +312,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     }
     
     @Test func testExactNamedMinimalIdentifier() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: exactNamed() should produce minimal identifiers
@@ -340,7 +340,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 8: Configuration Changes Mid-Test
     
     @Test func testConfigurationChangesMidTest() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: What happens if configuration changes during view creation?
@@ -380,7 +380,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 9: Nested .named() Calls
     
     @Test func testNestedNamedCalls() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: What happens with deeply nested .named() calls?
@@ -416,7 +416,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 10: Unicode Characters
     
     @Test func testUnicodeCharacters() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test: How are Unicode characters handled?

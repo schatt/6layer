@@ -14,7 +14,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-    try await runWithTaskLocalConfig {
+    await runWithTaskLocalConfig {
             // Given
             let manager = await MainActor.run { EyeTrackingManager() }
             
@@ -40,7 +40,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {// MARK: - EyeTr
     /// BUSINESS PURPOSE: Validates that EyeTrackingManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             let manager = await MainActor.run { EyeTrackingManager() }
             

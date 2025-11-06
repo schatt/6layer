@@ -18,7 +18,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     // MARK: - Core Framework Component Tests
     
     @Test func testAccessibilityIdentifierConfigGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: AccessibilityIdentifierConfig singleton
             guard let config = testConfig else {
 
@@ -38,7 +38,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testGlobalAutomaticAccessibilityIdentifiersKeyGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: GlobalAutomaticAccessibilityIdentifiersKey
             let key = GlobalAutomaticAccessibilityIdentifiersKey()
             
@@ -51,7 +51,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with ComprehensiveAccessibilityModifier
             let testView = VStack {
                 Text("Test Content")
@@ -72,7 +72,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with SystemAccessibilityModifier
             let testView = VStack {
                 Text("Test Content")
@@ -96,7 +96,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with AccessibilityIdentifierAssignmentModifier
             let testView = VStack {
                 Text("Test Content")
@@ -120,7 +120,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testNamedModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with .named() modifier
             let testView = VStack {
                 Text("Test Content")
@@ -141,7 +141,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testExactNamedModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with .exactNamed() modifier
             let testView = VStack {
                 Text("Test Content")
@@ -162,7 +162,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             let testView = VStack {
                 Text("Test Content")
                 Button("Test Button") { }
@@ -180,7 +180,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             let testView = VStack {
                 Text("Test Content")
                 Button("Test Button") { }
@@ -198,7 +198,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with .automaticAccessibilityIdentifiers() modifier
             let testView = VStack {
                 Text("Test Content")
@@ -219,7 +219,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAutomaticAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: A view with .automaticAccessibility() modifier
             let testView = VStack {
                 Text("Test Content")
@@ -240,7 +240,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testDetectAppNamespaceGeneratesCorrectNamespace() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: detectAppNamespace function
             let namespace = "SixLayerFramework" // Use real namespace
             
@@ -250,7 +250,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilitySystemStateGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: AccessibilitySystemState
             let state = AccessibilitySystemState()
             
@@ -260,7 +260,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testPlatformDetectionGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Platform detection
             let platform = "iOS" // Use real platform
             
@@ -270,7 +270,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierPatternsGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Various accessibility identifier patterns
             let patterns = [
                 "*.main.element.*",
@@ -289,7 +289,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierGenerationGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Accessibility identifier generation
             let testView = VStack {
                 Text("Test Content")
@@ -311,7 +311,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Accessibility identifier validation
             let testView = VStack {
                 Text("Test Content")
@@ -333,7 +333,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierHierarchyGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Accessibility identifier hierarchy
             let testView = VStack {
                 Text("Test Content")
@@ -356,7 +356,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierCollisionPreventionGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Accessibility identifier collision prevention
             let testView = VStack {
                 Text("Test Content")
@@ -380,7 +380,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifierDebugLoggingGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given: Accessibility identifier debug logging
             guard let config = testConfig else {
 

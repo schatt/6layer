@@ -14,7 +14,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MAR
     /// for automated testing and accessibility tools compliance on iOS
     
 @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-    try await runWithTaskLocalConfig {
+    await runWithTaskLocalConfig {
             // Given
             // MaterialAccessibilityManager is non-optional, so no need to check for nil
             
@@ -40,7 +40,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {// MAR
     /// BUSINESS PURPOSE: Validates that MaterialAccessibilityManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             // MaterialAccessibilityManager is non-optional, so no need to check for nil
             

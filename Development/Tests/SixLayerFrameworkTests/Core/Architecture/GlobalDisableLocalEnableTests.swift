@@ -13,7 +13,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     // BaseTestClass handles setup automatically - no need for custom init    // MARK: - TDD Red Phase: Tests That Should Fail Initially
     
     @Test func testFrameworkComponentGlobalDisableLocalEnableGeneratesID() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // TDD: Test with actual framework component - this should work
             
             // 1. Disable global config
@@ -46,7 +46,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     }
     
     @Test func testGlobalEnableLocalDisableDoesNotGenerateID() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // TDD: This test SHOULD FAIL initially - .named() always works regardless of global settings
             
             // 1. Enable global config
@@ -76,7 +76,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     }
     
     @Test func testFrameworkComponentsRespectGlobalConfig() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // TDD: This test SHOULD PASS - .named() always works regardless of global config
             
             // 1. Disable global config
@@ -105,7 +105,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     }
     
     @Test func testPlainSwiftUIRequiresExplicitEnable() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // TDD: This test SHOULD PASS - .named() always works regardless of global config
             
             // 1. Disable global config

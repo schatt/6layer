@@ -18,7 +18,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     // MARK: - ResponsiveGrid Tests
     
     @Test func testResponsiveGridGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             // Given: Test grid items
             let gridItems = [
@@ -53,7 +53,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     // MARK: - ResponsiveNavigation Tests
     
     @Test func testResponsiveNavigationGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             // Given: Test navigation content
             let navigationContent = { (isHorizontal: Bool) in
@@ -83,7 +83,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     // MARK: - ResponsiveStack Tests
     
     @Test func testResponsiveStackGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             // Given: Test stack content
             let stackContent = {
@@ -112,7 +112,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     // MARK: - ResponsiveLayoutExample Tests
     
     @Test func testResponsiveLayoutExampleGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             // When: Creating ResponsiveLayoutExample
             let view = ResponsiveLayoutExample()
@@ -133,7 +133,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     // MARK: - ResponsiveNavigationExample Tests
     
     @Test func testResponsiveNavigationExampleGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             // When: Creating ResponsiveNavigationExample
             let view = ResponsiveNavigationExample()
@@ -154,7 +154,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
     // MARK: - ResponsivePadding Modifier Tests
     
     @Test func testResponsivePaddingModifierGeneratesAccessibilityIdentifiers() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             // Given: Test content
             let testContent = platformPresentContent_L1(

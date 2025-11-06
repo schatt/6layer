@@ -50,7 +50,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests InputHandlingManager initialization and setup
     /// METHODOLOGY: Initialize InputHandlingManager and verify initial state properties
     @Test func testInputHandlingManagerInitialization() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Test across all platforms
             for platform in SixLayerPlatform.allCases {
                 RuntimeCapabilityDetection.setTestPlatform(platform)
@@ -76,7 +76,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests InputHandlingManager default platform initialization
     /// METHODOLOGY: Initialize InputHandlingManager with default platform and verify functionality
     @Test func testInputHandlingManagerDefaultPlatform() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given & When
             let manager = InputHandlingManager()
             
@@ -91,7 +91,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests interaction behavior for supported gestures
     /// METHODOLOGY: Test supported gesture interaction and verify behavior functionality
     @Test func testInteractionBehaviorForSupportedGesture() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = InputHandlingManager(platform: .iOS)
             let gesture = SixLayerFramework.GestureType.tap
@@ -112,7 +112,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests interaction behavior for unsupported gestures
     /// METHODOLOGY: Test unsupported gesture interaction and verify behavior functionality
     @Test func testInteractionBehaviorForUnsupportedGesture() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = InputHandlingManager(platform: .iOS)
             let gesture = SixLayerFramework.GestureType.rightClick // Not supported on iOS
@@ -133,7 +133,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests interaction behavior specific to macOS
     /// METHODOLOGY: Test macOS interaction behavior and verify platform-specific functionality
     @Test func testInteractionBehaviorForMacOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = InputHandlingManager(platform: .macOS)
             let gesture = SixLayerFramework.GestureType.click
@@ -156,7 +156,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests KeyboardShortcutManager initialization and setup
     /// METHODOLOGY: Initialize KeyboardShortcutManager and verify initial state properties
     @Test func testKeyboardShortcutManagerInitialization() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let platform = SixLayerPlatform.macOS
             
@@ -172,7 +172,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut creation for macOS
     /// METHODOLOGY: Create macOS keyboard shortcut and verify creation functionality
     @Test func testCreateKeyboardShortcutForMacOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .macOS)
             let key = KeyEquivalent("s")
@@ -193,7 +193,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut creation for iOS
     /// METHODOLOGY: Create iOS keyboard shortcut and verify creation functionality
     @Test func testCreateKeyboardShortcutForIOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .iOS)
             let key = KeyEquivalent("s")
@@ -214,7 +214,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut description for macOS
     /// METHODOLOGY: Get macOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForMacOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .macOS)
             let key = KeyEquivalent("s")
@@ -232,7 +232,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut description for iOS
     /// METHODOLOGY: Get iOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForIOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .iOS)
             let key = KeyEquivalent("s")
@@ -250,7 +250,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut description for watchOS
     /// METHODOLOGY: Get watchOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForWatchOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .watchOS)
             let key = KeyEquivalent("s")
@@ -268,7 +268,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut description for tvOS
     /// METHODOLOGY: Get tvOS shortcut description and verify description functionality
     @Test func testGetShortcutDescriptionForTVOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .tvOS)
             let key = KeyEquivalent("s")
@@ -288,7 +288,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests HapticFeedbackManager initialization and setup
     /// METHODOLOGY: Initialize HapticFeedbackManager and verify initial state properties
     @Test func testHapticFeedbackManagerInitialization() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let platform = SixLayerPlatform.iOS
             
@@ -304,7 +304,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests haptic feedback triggering for iOS
     /// METHODOLOGY: Trigger iOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForIOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = HapticFeedbackManager(for: .iOS)
             let feedback = PlatformHapticFeedback.light
@@ -319,7 +319,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests haptic feedback triggering for macOS
     /// METHODOLOGY: Trigger macOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForMacOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = HapticFeedbackManager(for: .macOS)
             let feedback = PlatformHapticFeedback.light
@@ -334,7 +334,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests haptic feedback triggering for watchOS
     /// METHODOLOGY: Trigger watchOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForWatchOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = HapticFeedbackManager(for: .watchOS)
             let feedback = PlatformHapticFeedback.light
@@ -349,7 +349,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests haptic feedback triggering for tvOS
     /// METHODOLOGY: Trigger tvOS haptic feedback and verify feedback functionality
     @Test func testTriggerFeedbackForTVOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = HapticFeedbackManager(for: .tvOS)
             let feedback = PlatformHapticFeedback.light
@@ -366,7 +366,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests DragDropManager initialization and setup
     /// METHODOLOGY: Initialize DragDropManager and verify initial state properties
     @Test func testDragDropManagerInitialization() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let platform = SixLayerPlatform.iOS
             
@@ -382,7 +382,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests drag behavior for iOS
     /// METHODOLOGY: Get iOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForIOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = DragDropManager(for: .iOS)
             
@@ -401,7 +401,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests drag behavior for macOS
     /// METHODOLOGY: Get macOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForMacOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = DragDropManager(for: .macOS)
             
@@ -420,7 +420,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests drag behavior for watchOS
     /// METHODOLOGY: Get watchOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForWatchOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = DragDropManager(for: .watchOS)
             
@@ -439,7 +439,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests drag behavior for tvOS
     /// METHODOLOGY: Get tvOS drag behavior and verify behavior functionality
     @Test func testGetDragBehaviorForTVOS() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = DragDropManager(for: .tvOS)
             
@@ -460,7 +460,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests swipe direction detection from left drag
     /// METHODOLOGY: Test left drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragLeft() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given - Test the SwipeDirection enum values directly
             let direction = SwipeDirection.left
             
@@ -477,7 +477,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests swipe direction detection from right drag
     /// METHODOLOGY: Test right drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragRight() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given - Test the SwipeDirection enum values directly
             let direction = SwipeDirection.right
             
@@ -494,7 +494,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests swipe direction detection from up drag
     /// METHODOLOGY: Test up drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragUp() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given - Test the SwipeDirection enum values directly
             let direction = SwipeDirection.up
             
@@ -511,7 +511,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests swipe direction detection from down drag
     /// METHODOLOGY: Test down drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragDown() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given - Test the SwipeDirection enum values directly
             let direction = SwipeDirection.down
             
@@ -528,7 +528,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests swipe direction detection from diagonal drag
     /// METHODOLOGY: Test diagonal drag and verify swipe direction functionality
     @Test func testSwipeDirectionFromDragDiagonal() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given - Test that SwipeDirection enum supports all directions
             let directions: [SwipeDirection] = [.left, .right, .up, .down]
             
@@ -547,7 +547,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests PlatformInteractionButton initialization and setup
     /// METHODOLOGY: Initialize PlatformInteractionButton and verify initial state properties
     @Test func testPlatformInteractionButtonInitialization() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let action = {}
             let label = Text("Test Button")
@@ -567,7 +567,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests PlatformInteractionButton with different styles
     /// METHODOLOGY: Create PlatformInteractionButton with different styles and verify functionality
     @Test func testPlatformInteractionButtonWithDifferentStyles() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let styles: [InteractionButtonStyle] = [.adaptive, .primary, .secondary, .destructive]
             
@@ -587,7 +587,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests input handling integration and end-to-end workflow
     /// METHODOLOGY: Test complete input handling integration and verify integration functionality
     @Test func testInputHandlingIntegration() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = InputHandlingManager(platform: .iOS)
             
@@ -605,7 +605,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests cross-platform consistency across all platforms
     /// METHODOLOGY: Test consistency across platforms and verify consistency functionality
     @Test func testCrossPlatformConsistency() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
             
@@ -629,7 +629,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests interaction behavior with all gesture types
     /// METHODOLOGY: Test all gesture types and verify behavior functionality
     @Test func testInteractionBehaviorWithAllGestureTypes() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = InputHandlingManager(platform: .iOS)
             let allGestures = SixLayerFramework.GestureType.allCases
@@ -647,7 +647,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests keyboard shortcut with all modifier combinations
     /// METHODOLOGY: Test all modifier combinations and verify shortcut functionality
     @Test func testKeyboardShortcutWithAllModifiers() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = KeyboardShortcutManager(for: .macOS)
             let key = KeyEquivalent("s")
@@ -677,7 +677,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests haptic feedback with all feedback types
     /// METHODOLOGY: Test all haptic feedback types and verify feedback functionality
     @Test func testHapticFeedbackWithAllTypes() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let manager = HapticFeedbackManager(for: .iOS)
             let allFeedbackTypes = PlatformHapticFeedback.allCases
@@ -693,7 +693,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// TESTING SCOPE: Tests drag behavior across all platforms
     /// METHODOLOGY: Test drag behavior on all platforms and verify platform-specific functionality
     @Test func testDragBehaviorWithAllPlatforms() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given
             let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS]
             
@@ -714,7 +714,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnIOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             guard let config = testConfig else {
 
@@ -748,7 +748,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that PlatformInteractionButton generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             let view = PlatformInteractionButton(style: .primary, action: {}) {
                 Text("Test Button")

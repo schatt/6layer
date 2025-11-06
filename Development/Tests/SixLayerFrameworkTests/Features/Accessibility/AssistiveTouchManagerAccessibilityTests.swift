@@ -16,7 +16,7 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     /// for automated testing and accessibility tools compliance on iOS
 
     @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             await setupTestEnvironment()
             let assistiveConfig = AssistiveTouchConfig(
@@ -49,7 +49,7 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that AssistiveTouchManager generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
     @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // Given
             await setupTestEnvironment()
             let assistiveConfig = AssistiveTouchConfig(

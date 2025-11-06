@@ -84,7 +84,7 @@ open class BaseTestClass {
     /// 
     /// Migration: Replace `let view = withTestConfig(myView)` with:
     /// ```
-    /// try await runWithTaskLocalConfig {
+    /// await runWithTaskLocalConfig {
     ///     let view = myView
     ///     // ... rest of test
     /// }

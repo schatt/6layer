@@ -14,7 +14,7 @@ import ViewInspector
 open class ResponsiveLayoutTests: BaseTestClass {
     
 @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             let view = ResponsiveLayout.adaptiveGrid {
                 platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
@@ -33,7 +33,7 @@ open class ResponsiveLayoutTests: BaseTestClass {
 
     
     @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             let view = ResponsiveLayout.adaptiveGrid {
                 platformPresentContent_L1(content: "Test Content", hints: PresentationHints())

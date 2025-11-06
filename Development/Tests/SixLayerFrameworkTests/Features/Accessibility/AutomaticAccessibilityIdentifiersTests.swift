@@ -24,7 +24,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     // MARK: - Namespace Detection Tests
     
     @Test func testAutomaticNamespaceDetectionForTests() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // GIVEN: We're running in a test environment
             // WHEN: Using test config (isolated per test)
             // THEN: Should use configured namespace from BaseTestClass
@@ -38,7 +38,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     }
     
     @Test func testAutomaticNamespaceDetectionForRealApps() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // GIVEN: We're simulating a real app environment (not in tests)
             // WHEN: Using test config
             // THEN: Should use configured namespace

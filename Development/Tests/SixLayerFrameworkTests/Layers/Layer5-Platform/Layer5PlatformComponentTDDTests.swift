@@ -23,7 +23,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
     // MARK: - Platform Recognition Layer 5
 
     @Test func testPlatformRecognitionLayer5ProvidesAIIntelligence() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             // TDD: PlatformRecognitionLayer5 should provide:
             // 1. AI/ML-powered content recognition capabilities
             // 2. Image analysis and text recognition services

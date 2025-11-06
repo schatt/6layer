@@ -12,7 +12,7 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
     // BaseTestClass handles setup automatically - no need for custom init
     
     @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test that framework components don't generate IDs when global config is disabled
@@ -50,7 +50,7 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
     }
     
     @Test func testFrameworkComponentsGenerateIDsWhenGlobalConfigEnabled() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Test that framework components DO generate IDs when global config is enabled

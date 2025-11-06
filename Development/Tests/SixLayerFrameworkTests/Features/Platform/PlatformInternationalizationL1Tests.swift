@@ -14,7 +14,7 @@ import ViewInspector
 open class PlatformInternationalizationL1Tests: BaseTestClass {
     
 @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -36,7 +36,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
 
     
     @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -60,7 +60,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     // MARK: - platformPresentLocalizedText_L1 Tests
     
     @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -78,7 +78,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
 
     
     @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
-        try await runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         

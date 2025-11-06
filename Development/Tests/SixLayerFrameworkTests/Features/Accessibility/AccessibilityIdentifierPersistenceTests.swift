@@ -11,7 +11,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     // MARK: - TDD Red Phase: Tests That Should Fail
     
     @Test func testAccessibilityIdentifiersArePersistentAcrossSessions() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
@@ -60,7 +60,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifiersAreDeterministicForSameView() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
@@ -95,7 +95,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifiersDontContainTimestamps() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
@@ -132,7 +132,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifiersAreStableForUITesting() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
@@ -195,7 +195,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifiersAreBasedOnViewStructure() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
@@ -232,7 +232,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
@@ -273,7 +273,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     }
     
     @Test func testAccessibilityIdentifiersPersistAcrossConfigResets() {
-        try runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
             
