@@ -84,13 +84,12 @@ public enum CoreDataTestUtilities {
             
             // CRITICAL: Verify the actual loaded store type is NSInMemoryStoreType
             // The log may show NSXPCStore from system-level containers, but OUR containers must be in-memory
-            if let storeType = description.type {
-                if storeType != NSInMemoryStoreType {
-                    print("⚠️ WARNING: Store type is \(storeType), expected NSInMemoryStoreType")
-                    print("⚠️ This may indicate a configuration issue or system override")
-                } else {
-                    // Store type is correct - this is our isolated test container
-                }
+            let storeType = description.type
+            if storeType != NSInMemoryStoreType {
+                print("⚠️ WARNING: Store type is \(storeType), expected NSInMemoryStoreType")
+                print("⚠️ This may indicate a configuration issue or system override")
+            } else {
+                // Store type is correct - this is our isolated test container
             }
             
             semaphore.signal()
@@ -106,8 +105,8 @@ public enum CoreDataTestUtilities {
         }
         
         // Verify the loaded store coordinator has the correct store type
-        if let coordinator = container.persistentStoreCoordinator,
-           let store = coordinator.persistentStores.first {
+        let coordinator = container.persistentStoreCoordinator
+        if let store = coordinator.persistentStores.first {
             let actualStoreType = store.type
             if actualStoreType != NSInMemoryStoreType {
                 print("⚠️ WARNING: Loaded store type is \(actualStoreType), expected NSInMemoryStoreType")
