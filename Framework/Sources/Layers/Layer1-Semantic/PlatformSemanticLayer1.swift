@@ -1784,6 +1784,7 @@ public struct GenericFormView: View {
                 }
             }
         )
+        .automaticAccessibilityIdentifiers(named: "GenericFormView")
     }
 }
 
