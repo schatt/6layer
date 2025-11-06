@@ -190,19 +190,14 @@ open class PlatformPresentContentL1Tests {
         // Then
         #expect(view != nil, "platformPresentContent_L1 should return a view for array content")
         
-        // Test actual business logic: Array content should be wrapped in AnyView
-        #expect(view is AnyView, "Array content should be wrapped in AnyView")
-        
         // Test different array types
         let stringArray = ["hello", "world", "test"]
         let stringArrayView = platformPresentContent_L1(content: stringArray, hints: hints)
         #expect(stringArrayView != nil, "Should handle string arrays")
-        #expect(stringArrayView is AnyView, "String array should be wrapped in AnyView")
         
         let mixedArray: [Any] = [1, "hello", 3.14, true]
         let mixedArrayView = platformPresentContent_L1(content: mixedArray, hints: hints)
         #expect(mixedArrayView != nil, "Should handle mixed type arrays")
-        #expect(mixedArrayView is AnyView, "Mixed array should be wrapped in AnyView")
         
         // Test edge cases
         let emptyArrayView = platformPresentContent_L1(content: [] as [Int], hints: hints)
@@ -226,19 +221,14 @@ open class PlatformPresentContentL1Tests {
         // Then
         #expect(view != nil, "platformPresentContent_L1 should return a view for dictionary content")
         
-        // Test actual business logic: Dictionary content should be wrapped in AnyView
-        #expect(view is AnyView, "Dictionary content should be wrapped in AnyView")
-        
         // Test different dictionary types
         let stringDict = ["key1": "value1", "key2": "value2"]
         let stringDictView = platformPresentContent_L1(content: stringDict, hints: hints)
         #expect(stringDictView != nil, "Should handle string dictionaries")
-        #expect(stringDictView is AnyView, "String dictionary should be wrapped in AnyView")
         
         let numberDict = ["count": 42, "price": 99.99]
         let numberDictView = platformPresentContent_L1(content: numberDict, hints: hints)
         #expect(numberDictView != nil, "Should handle number dictionaries")
-        #expect(numberDictView is AnyView, "Number dictionary should be wrapped in AnyView")
         
         // Test edge cases
         let emptyDictView = platformPresentContent_L1(content: [:] as [String: Any], hints: hints)

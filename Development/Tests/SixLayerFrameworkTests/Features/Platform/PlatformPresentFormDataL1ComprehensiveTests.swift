@@ -152,7 +152,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         #expect(view != nil, "Should create view with all field types")
 
         let mirror = Mirror(reflecting: view)
-        #expect(String(describing: mirror.subjectType) == "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AsyncFormView")
 
         // Verify field count matches
         #expect(fields.count == 21, "Should have 21 fields for all types")
@@ -261,9 +261,8 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
-        // Enhanced hints create an AnyView with environment modifier
-        #expect(viewType.contains("AnyView"), "Should contain AnyView, got: \(viewType)")
-        // Note: AnyView type-erases the internal ModifiedContent, so we can't check for it directly
+        // Enhanced hints create an AsyncFormView
+        #expect(viewType.contains("AsyncFormView"), "Should contain AsyncFormView, got: \(viewType)")
     }
 
     @Test @MainActor func testPlatformPresentFormData_L1_ExtensibleHintsProcessing() {
@@ -349,7 +348,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             #expect(view != nil, "Should work with context: \(context)")
 
             let mirror = Mirror(reflecting: view)
-            #expect(String(describing: mirror.subjectType) == "AnyView")
+            #expect(String(describing: mirror.subjectType) == "AsyncFormView")
         }
     }
 
@@ -407,7 +406,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
         // Verify view type
         let mirror = Mirror(reflecting: view)
-        #expect(String(describing: mirror.subjectType) == "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AsyncFormView")
     }
 
     // MARK: - Validation and Edge Cases
@@ -665,7 +664,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         #expect(view != nil, "Should handle problematic data gracefully")
 
         let mirror = Mirror(reflecting: view)
-        #expect(String(describing: mirror.subjectType) == "AnyView")
+        #expect(String(describing: mirror.subjectType) == "AsyncFormView")
     }
 
     // MARK: - Helper Methods
