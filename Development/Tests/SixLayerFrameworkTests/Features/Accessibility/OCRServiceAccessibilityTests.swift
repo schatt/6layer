@@ -1,51 +1,85 @@
 import Testing
 
-
 import SwiftUI
 @testable import SixLayerFramework
 import ViewInspector
-/// BUSINESS PURPOSE: Accessibility tests for OCRService.swift classes
-/// Ensures OCRService classes generate proper accessibility identifiers
-/// for automated testing and accessibility tools compliance
+/// BUSINESS PURPOSE: Accessibility tests for OCRService integration
+/// Tests that views using OCRService generate proper accessibility identifiers
+/// OCRService itself is a service class and doesn't generate views, but views that use it should
 @Suite("O C R Service Accessibility")
 open class OCRServiceAccessibilityTests: BaseTestClass {
         
-    // MARK: - OCRService Tests
+    // MARK: - OCRService Integration Tests
     
-    /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on iOS
-    
-    @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnIOS() {
+    /// BUSINESS PURPOSE: Validates that views using OCRService generate proper accessibility identifiers
+    /// Tests OCROverlayView which uses OCRService internally
+    @Test func testOCROverlayViewWithOCRServiceGeneratesAccessibilityIdentifiersOnIOS() {
         runWithTaskLocalConfig {
-            // Given & When
-            // Service classes don't directly generate views, but we test their configuration
-            // OCRService() is non-optional, so instantiation succeeds if we reach here
+            // Given: OCROverlayView that uses OCRService internally
+            let testImage = PlatformImage()
+            let testResult = OCRResult(
+                extractedText: "Test OCR Text",
+                confidence: 0.95,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 1.0,
+                language: .english
+            )
             
-            // Test that the service can be configured with accessibility settings
-            guard let config = testConfig else {
-                Issue.record("testConfig is nil")
-                return
-            }
-            #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
+            // When: Creating OCROverlayView (which uses OCRService)
+            let view = OCROverlayView(
+                image: testImage,
+                result: testResult,
+                configuration: OCROverlayConfiguration(),
+                onTextEdit: { _, _ in },
+                onTextDelete: { _ in }
+            )
+            
+            // Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*OCROverlayView.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "OCROverlayView"
+            )
+            
+            #expect(hasAccessibilityID, "OCROverlayView (using OCRService) should generate accessibility identifiers on iOS")
         }
     }
     
-    /// BUSINESS PURPOSE: Validates that OCRService generates proper accessibility identifiers
-    /// for automated testing and accessibility tools compliance on macOS
-    @Test func testOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() {
+    /// BUSINESS PURPOSE: Validates that views using OCRService generate proper accessibility identifiers
+    /// Tests OCROverlayView which uses OCRService internally
+    @Test func testOCROverlayViewWithOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() {
         runWithTaskLocalConfig {
-            // Given & When
-            // Service classes don't directly generate views, but we test their configuration
-            // OCRService() is non-optional, so instantiation succeeds if we reach here
+            // Given: OCROverlayView that uses OCRService internally
+            let testImage = PlatformImage()
+            let testResult = OCRResult(
+                extractedText: "Test OCR Text",
+                confidence: 0.95,
+                boundingBoxes: [],
+                textTypes: [:],
+                processingTime: 1.0,
+                language: .english
+            )
             
-            // Test that the service can be configured with accessibility settings
-            guard let config = testConfig else {
-                Issue.record("testConfig is nil")
-                return
-            }
-            #expect(config.enableAutoIDs, "OCRService should work with accessibility enabled")
-            #expect(config.namespace == "SixLayer", "OCRService should use correct namespace")
+            // When: Creating OCROverlayView (which uses OCRService)
+            let view = OCROverlayView(
+                image: testImage,
+                result: testResult,
+                configuration: OCROverlayConfiguration(),
+                onTextEdit: { _, _ in },
+                onTextDelete: { _ in }
+            )
+            
+            // Then: Should generate accessibility identifiers
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*OCROverlayView.*",
+                platform: SixLayerPlatform.macOS,
+                componentName: "OCROverlayView"
+            )
+            
+            #expect(hasAccessibilityID, "OCROverlayView (using OCRService) should generate accessibility identifiers on macOS")
         }
     }
     
