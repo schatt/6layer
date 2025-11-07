@@ -32,26 +32,27 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         )
         
         // Then: Verify the actual platform-specific implementation
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
         await MainActor.run {
-            do {
-                let inspection = try view.inspect()
-                
-                #if os(iOS)
-                // On iOS, we should get UIKit components
-                if platform == .iOS {
-                    // Look for UIImagePickerController or UIViewControllerRepresentable
-                    let hasUIKitComponent = inspection.find(ViewType.UIViewControllerRepresentable.self) != nil
-                    #expect(hasUIKitComponent, "iOS platform should return UIKit-based photo picker")
-                } else {
-                    // On iOS compiled code, macOS test should still get UIKit (compile-time detection)
-                    let hasUIKitComponent = inspection.find(ViewType.UIViewControllerRepresentable.self) != nil
-                    #expect(hasUIKitComponent, "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
-                }
-                #endif
-                
-            } catch {
-                #expect(Bool(false), "Failed to inspect view: \(error)")
+            guard let inspection = view.tryInspect() else {
+                #expect(Bool(false), "Failed to inspect view")
+                return
             }
+            
+            #if !os(macOS)
+            #if os(iOS)
+            // On iOS, we should get UIKit components
+            if platform == .iOS {
+                // Look for UIImagePickerController or UIViewControllerRepresentable
+                let hasUIKitComponent = inspection.tryFind(ViewType.UIViewControllerRepresentable.self) != nil
+                #expect(hasUIKitComponent, "iOS platform should return UIKit-based photo picker")
+            } else {
+                // On iOS compiled code, macOS test should still get UIKit (compile-time detection)
+                let hasUIKitComponent = inspection.tryFind(ViewType.UIViewControllerRepresentable.self) != nil
+                #expect(hasUIKitComponent, "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
+            }
+            #endif
+            #endif
         }
     }
     #endif
