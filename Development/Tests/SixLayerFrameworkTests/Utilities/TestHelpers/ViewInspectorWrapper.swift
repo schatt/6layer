@@ -25,14 +25,17 @@
 
 import SwiftUI
 @testable import SixLayerFramework
+#if canImport(ViewInspector)
 import ViewInspector
+#endif
 
 // MARK: - View Extension for Inspection
 
+#if canImport(ViewInspector)
 extension View {
     /// Safely inspect a view using ViewInspector
-    /// Returns nil on inspection failure (platform or other issues)
-    /// When ViewInspector has issues on any platform, this gracefully returns nil
+    /// Returns nil on inspection failure
+    /// When ViewInspector works on macOS, remove the canImport condition
     @MainActor
     func tryInspect() -> InspectableView<ViewType.ClassifiedView>? {
         return try? self.inspect()
@@ -45,9 +48,27 @@ extension View {
         return try self.inspect()
     }
 }
+#else
+extension View {
+    /// ViewInspector not available on this platform
+    /// When ViewInspector works on this platform, remove the canImport condition above
+    @MainActor
+    func tryInspect() -> InspectableView<ViewType.ClassifiedView>? {
+        return nil
+    }
+
+    /// ViewInspector not available on this platform
+    @MainActor
+    func inspectView() throws -> InspectableView<ViewType.ClassifiedView> {
+        struct ViewInspectorNotAvailable: Error {}
+        throw ViewInspectorNotAvailable()
+    }
+}
+#endif
 
 // MARK: - InspectableView Extension for Common Operations
 
+#if canImport(ViewInspector)
 extension InspectableView {
     /// Safely find a view type, returning nil if not found
     func tryFind<T>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
@@ -59,12 +80,14 @@ extension InspectableView {
         return (try? self.findAll(type)) ?? []
     }
 }
+#endif
 
 // MARK: - Helper Functions for Common Patterns
 
+#if canImport(ViewInspector)
 /// Safely inspect a view and execute a closure if inspection succeeds
 /// Returns nil on inspection failure
-/// Handles all platform differences internally
+/// When ViewInspector works on all platforms, remove the canImport condition
 @MainActor
 public func withInspectedView<V: View, R>(
     _ view: V,
@@ -75,9 +98,22 @@ public func withInspectedView<V: View, R>(
     }
     return try? perform(inspected)
 }
+#else
+/// ViewInspector not available on this platform
+/// When ViewInspector works on this platform, remove the canImport condition above
+@MainActor
+public func withInspectedView<V: View, R>(
+    _ view: V,
+    perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
+) -> R? {
+    return nil
+}
+#endif
 
+#if canImport(ViewInspector)
 /// Safely inspect a view and execute a throwing closure
 /// Throws when ViewInspector cannot inspect the view
+/// When ViewInspector works on all platforms, remove the canImport condition
 @MainActor
 public func withInspectedViewThrowing<V: View, R>(
     _ view: V,
@@ -86,3 +122,15 @@ public func withInspectedViewThrowing<V: View, R>(
     let inspected = try view.inspect()
     return try perform(inspected)
 }
+#else
+/// ViewInspector not available on this platform
+/// When ViewInspector works on this platform, remove the canImport condition above
+@MainActor
+public func withInspectedViewThrowing<V: View, R>(
+    _ view: V,
+    perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
+) throws -> R {
+    struct ViewInspectorNotAvailable: Error {}
+    throw ViewInspectorNotAvailable()
+}
+#endif
