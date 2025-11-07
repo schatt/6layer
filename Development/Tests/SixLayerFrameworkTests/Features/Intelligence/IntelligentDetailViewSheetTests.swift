@@ -192,4 +192,4 @@ struct IntelligentDetailViewSheetTests {
         
         #expect(hasAccessibilityID, "platformDetailView should generate accessibility identifiers in sheet")
     }
-
+}

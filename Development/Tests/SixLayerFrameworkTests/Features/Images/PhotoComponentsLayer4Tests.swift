@@ -199,3 +199,5 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // so it doesn't need platform-specific testing - it's platform-agnostic
             // This is an example of a function that does NOT need platform mocking
         }
+    }
+}
