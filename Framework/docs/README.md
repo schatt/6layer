@@ -12,7 +12,8 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[AI Agent Guides](AI_AGENT_GUIDE.md)** - AI agent guides for helping developers USE the framework
   - **[AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md)** - Main guide for AI agents
   - **[AI_AGENT_GUIDE_v4.6.0.md](AI_AGENT_GUIDE_v4.6.0.md)** - Version-specific guide for v4.6.0
-  - **[AI_AGENT_v5.0.0.md](../../Development/AI_AGENT_v5.0.0.md)** - Version-specific guide for v5.0.0 (in Development for version history)
+  - **[AI_AGENT_v5.0.0.md](AI_AGENT_v5.0.0.md)** - Version-specific guide for v5.0.0
+  - Other version-specific guides available in this directory
 
 ### 🏗️ Architecture Details
 - **[README_Layer1_Semantic.md](README_Layer1_Semantic.md)** - Semantic intent layer

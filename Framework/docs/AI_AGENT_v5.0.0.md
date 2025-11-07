@@ -159,7 +159,7 @@ All layout hints are **hints, not commandments** - the framework adapts layouts 
 - **[Field Hints Complete Guide](../Framework/docs/FieldHintsCompleteGuide.md)** - Comprehensive usage guide
 - **[Field Hints Guide](../Framework/docs/FieldHintsGuide.md)** - Quick start and layout hints
 - **[Hints DRY Architecture](../Framework/docs/HintsDRYArchitecture.md)** - DRY principles
-- **[AI Agent Guide](AI_AGENT_GUIDE.md)** - General AI agent guidance
+- **[AI Agent Guide](../Framework/docs/AI_AGENT_GUIDE.md)** - General AI agent guidance
 
 ## 🎯 Key Takeaways for AI Agents
 
@@ -196,8 +196,7 @@ AI Agent: "Yes! Field hints work seamlessly with both CoreData AND/OR
 
 **Version**: SixLayer Framework v5.0.0  
 **Last Updated**: January 2025  
-**Related**: [AI Agent Guide](AI_AGENT_GUIDE.md), [Field Hints Complete Guide](FieldHintsCompleteGuide.md)
+**Related**: [AI Agent Guide](../Framework/docs/AI_AGENT_GUIDE.md), [Field Hints Complete Guide](../Framework/docs/FieldHintsCompleteGuide.md)
 
 **Remember**: Field hints are a **major new capability** in v5.0.0 that provides developers with declarative data presentation. Help developers understand and use this powerful feature effectively.
-
 
