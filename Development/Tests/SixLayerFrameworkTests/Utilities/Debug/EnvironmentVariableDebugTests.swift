@@ -31,11 +31,10 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
                 .automaticAccessibilityIdentifiers()  // ← This should set autoIDsEnabled = true
             
             // 3. Try to inspect for accessibility identifier
-            do {
-                let inspectedView = try view.inspect()
-                let button = try inspectedView.button()
-                let accessibilityID = try button.accessibilityIdentifier()
-                
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let button = try? inspectedView.button(),
+               let accessibilityID = try? button.accessibilityIdentifier() {
                 print("🔍 Generated ID: '\(accessibilityID)'")
                 
                 if accessibilityID.isEmpty {
@@ -44,10 +43,9 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
                 } else {
                     print("✅ SUCCESS: Environment variable working - ID generated")
                 }
-                
-            } catch {
-                print("❌ FAILED: Could not inspect view: \(error)")
-                Issue.record("Could not inspect view: \(error)")
+            } else {
+                print("❌ FAILED: Could not inspect view")
+                Issue.record("Could not inspect view")
             }
         }
     }
@@ -70,8 +68,8 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
                 .modifier(AutomaticAccessibilityIdentifierModifier())
             
             // 3. Try to inspect for accessibility identifier
-            do {
-                let inspectedView = try view.inspect()
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
                 let button = try inspectedView.button()
                 let accessibilityID = try button.accessibilityIdentifier()
                 

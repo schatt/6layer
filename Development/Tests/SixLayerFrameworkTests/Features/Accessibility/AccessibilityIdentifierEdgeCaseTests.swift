@@ -22,20 +22,18 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
                 .named("")  // ← Empty string
             
-            do {
-                let inspectedView = try view.inspect()
-                let buttonID = try inspectedView.accessibilityIdentifier()
-                
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let buttonID = try? inspectedView.accessibilityIdentifier() {
                 // Should handle empty strings gracefully
                 #expect(!buttonID.isEmpty, "Should generate ID even with empty parameters")
                 #expect(buttonID.contains("SixLayer"), "Should contain namespace")
                 
                 print("✅ Empty string ID: '\(buttonID)' (\(buttonID.count) chars)")
-                
-            } catch {
-                Issue.record("Failed to inspect view with empty strings: \(error)")
-        }
+            } else {
+                Issue.record("Failed to inspect view with empty strings")
             }
+        }
     }
     
     // MARK: - Edge Case 2: Special Characters in Names
@@ -50,20 +48,18 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
                 .named("Button@#$%^&*()")  // ← Special characters
             
-            do {
-                let inspectedView = try view.inspect()
-                let buttonID = try inspectedView.accessibilityIdentifier()
-                
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let buttonID = try? inspectedView.accessibilityIdentifier() {
                 // Should preserve special characters (no sanitization)
                 #expect(!buttonID.isEmpty, "Should generate ID with special characters")
                 #expect(buttonID.contains("SixLayer"), "Should contain namespace")
                 #expect(buttonID.contains("@#$%^&*()"), "Should preserve special characters")
                 
                 print("✅ Special chars ID: '\(buttonID)' (\(buttonID.count) chars)")
-                
-            } catch {
-                Issue.record("Failed to inspect view with special characters: \(error)")
-        }
+            } else {
+                Issue.record("Failed to inspect view with special characters")
+            }
             }
     }
     
