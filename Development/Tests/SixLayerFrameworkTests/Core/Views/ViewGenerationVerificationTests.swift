@@ -94,6 +94,7 @@ struct ViewGenerationVerificationTests {
         } catch {
             Issue.record("Failed to inspect detail view structure: \(error)")
         }
+        #endif
     }
     
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles different layout strategies
@@ -334,5 +335,4 @@ struct ViewGenerationVerificationTests {
         #expect([DetailLayoutStrategy.detailed, DetailLayoutStrategy.tabbed].contains(complexStrategy), 
                      "Complex data should get detailed or tabbed layout")
     }
-}
 }
