@@ -31,11 +31,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect AdaptiveButton")
         }
-        
+}        
         cleanupTestEnvironment()
     }
     
-    @Test func testAdaptiveButtonDifferentLabelsDifferentIdentifiers() {
+    @MainActor @Test func testAdaptiveButtonDifferentLabelsDifferentIdentifiers() {
         setupTestEnvironment()
         
         let submitButton = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
@@ -58,13 +58,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect buttons")
         }
-        
+
         cleanupTestEnvironment()
     }
     
     // MARK: - Platform Navigation Title Tests
     
-    @Test func testPlatformNavigationTitleIncludesTitleText() {
+    @MainActor @Test func testPlatformNavigationTitleIncludesTitleText() {
         setupTestEnvironment()
         
         // TDD RED: This should FAIL - platformNavigationTitle should include title in identifier
@@ -84,13 +84,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect platformNavigationTitle")
         }
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     // MARK: - Platform Navigation Link Tests
     
-    @Test func testPlatformNavigationLinkWithTitleIncludesTitleText() {
+    @MainActor @Test func testPlatformNavigationLinkWithTitleIncludesTitleText() {
         setupTestEnvironment()
         
         // TDD RED: This should FAIL - platformNavigationLink_L4 with title should include title
@@ -118,13 +119,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect platformNavigationLink_L4")
         }
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     // MARK: - Platform Navigation Button Tests
     
-    @Test func testPlatformNavigationButtonIncludesTitleText() {
+    @MainActor @Test func testPlatformNavigationButtonIncludesTitleText() {
         setupTestEnvironment()
         
         // TDD RED: This should FAIL - platformNavigationButton should include title
@@ -149,13 +151,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Navigation Button ID: '\(buttonID)'")
         }
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     // MARK: - Label Sanitization Tests
     
-    @Test func testLabelTextSanitizationHandlesSpaces() {
+    @MainActor @Test func testLabelTextSanitizationHandlesSpaces() {
         setupTestEnvironment()
         
         let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
@@ -177,7 +180,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testLabelTextSanitizationHandlesSpecialCharacters() {
+    @MainActor @Test func testLabelTextSanitizationHandlesSpecialCharacters() {
         setupTestEnvironment()
         
         let button = AdaptiveUIPatterns.AdaptiveButton("Save & Close!", action: { })
@@ -197,7 +200,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testLabelTextSanitizationHandlesCase() {
+    @MainActor @Test func testLabelTextSanitizationHandlesCase() {
         setupTestEnvironment()
         
         let button = AdaptiveUIPatterns.AdaptiveButton("CamelCaseLabel", action: { })
@@ -221,7 +224,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFormField Components Tests
     
-    @Test func testDynamicTextFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicTextFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         // TDD RED: DynamicTextField should include field.label in identifier
@@ -254,7 +257,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicEmailFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicEmailFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -278,7 +281,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let fieldID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL
-            #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"), 
+            #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"),
                     "DynamicEmailField identifier should include field label 'User Email'")
             
             print("🔴 RED: DynamicEmailField ID: '\(fieldID)'")
@@ -286,7 +289,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicPasswordFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicPasswordFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -310,17 +313,17 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let fieldID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL
-            #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure"), 
+            #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure"),
                    "DynamicPasswordField identifier should include field label 'Secure Password'")
             
             print("🔴 RED: DynamicPasswordField ID: '\(fieldID)'")
-        
+        }
         cleanupTestEnvironment()
     }
     
     // MARK: - DynamicFormView Tests
     
-    @Test func testDynamicFormViewIncludesConfigurationTitle() {
+    @MainActor @Test func testDynamicFormViewIncludesConfigurationTitle() {
         setupTestEnvironment()
         
         // TDD RED: DynamicFormView should include configuration.title in identifier
@@ -343,13 +346,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicFormView identifier should include configuration title 'User Profile'")
             
             print("🔴 RED: DynamicFormView ID: '\(formID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
     // MARK: - DynamicFormSectionView Tests
     
-    @Test func testDynamicFormSectionViewIncludesSectionTitle() {
+    @MainActor @Test func testDynamicFormSectionViewIncludesSectionTitle() {
         setupTestEnvironment()
         
         // TDD RED: DynamicFormSectionView should include section.title in identifier
@@ -377,13 +381,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicFormSectionView identifier should include section title 'Personal Information'")
             
             print("🔴 RED: DynamicFormSectionView ID: '\(sectionID)'")
-        
+        }
         cleanupTestEnvironment()
     }
     
     // MARK: - Additional DynamicField Components Tests
     
-    @Test func testDynamicPhoneFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicPhoneFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -410,11 +414,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicPhoneField identifier should include field label 'Mobile Phone'")
             
             print("🔴 RED: DynamicPhoneField ID: '\(fieldID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicURLFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicURLFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -441,11 +446,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicURLField identifier should include field label 'Website URL'")
             
             print("🔴 RED: DynamicURLField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicNumberFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicNumberFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -472,11 +478,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicNumberField identifier should include field label 'Total Amount'")
             
             print("🔴 RED: DynamicNumberField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicDateFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicDateFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -503,11 +510,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicDateField identifier should include field label 'Birth Date'")
             
             print("🔴 RED: DynamicDateField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicToggleFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicToggleFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -534,11 +542,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicToggleField identifier should include field label 'Enable Notifications'")
             
             print("🔴 RED: DynamicToggleField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicMultiSelectFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicMultiSelectFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -566,11 +575,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicMultiSelectField identifier should include field label 'Favorite Colors'")
             
             print("🔴 RED: DynamicMultiSelectField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicCheckboxFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicCheckboxFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -598,11 +608,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicCheckboxField identifier should include field label 'Agree to Terms'")
             
             print("🔴 RED: DynamicCheckboxField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicFileFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicFileFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -629,11 +640,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicFileField identifier should include field label 'Upload Document'")
             
             print("🔴 RED: DynamicFileField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicEnumFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicEnumFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -661,11 +673,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicEnumField identifier should include field label 'Priority Level'")
             
             print("🔴 RED: DynamicEnumField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicIntegerFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicIntegerFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -692,11 +705,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicIntegerField identifier should include field label 'Quantity'")
             
             print("🔴 RED: DynamicIntegerField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
-    @Test func testDynamicTextAreaFieldIncludesFieldLabel() {
+    @MainActor @Test func testDynamicTextAreaFieldIncludesFieldLabel() {
         setupTestEnvironment()
         
         let field = DynamicFormField(
@@ -723,14 +737,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "DynamicTextAreaField identifier should include field label 'Comments'")
             
             print("🔴 RED: DynamicTextAreaField ID: '\(fieldID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     // MARK: - List Item Components Tests
     
     /// Test that list items created from objects get unique identifiers based on their titles
-    @Test func testListCardComponentIncludesItemTitleInIdentifier() {
+    @MainActor @Test func testListCardComponentIncludesItemTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: ListCardComponent should include item title in identifier
@@ -768,12 +783,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect ListCardComponent")
         }
-        
+
         cleanupTestEnvironment()
     }
     
     /// Test that buttons inside list items get unique identifiers
-    @Test func testButtonsInListItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testButtonsInListItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         // TDD RED: Buttons in list items should include item context
@@ -811,12 +826,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect buttons")
         }
-        
+
         cleanupTestEnvironment()
     }
     
     /// Test that ExpandableCardComponent includes item title in identifier
-    @Test func testExpandableCardComponentIncludesItemTitleInIdentifier() {
+    @MainActor @Test func testExpandableCardComponentIncludesItemTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: ExpandableCardComponent should include item title
@@ -892,12 +907,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect ExpandableCardComponent")
         }
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     /// Test that list items created from ForEach get unique identifiers
-    @Test func testForEachListItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testForEachListItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         // TDD RED: Items in ForEach should get unique identifiers
@@ -933,14 +949,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify each item has unique identifier with item name
             #expect(true, "Documenting requirement - ForEach items need unique identifiers")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     // MARK: - Additional Card Component Tests
     
     /// Test that CoverFlowCardComponent includes item title in identifier
-    @Test func testCoverFlowCardComponentIncludesItemTitleInIdentifier() {
+    @MainActor @Test func testCoverFlowCardComponentIncludesItemTitleInIdentifier() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -971,12 +988,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: CoverFlowCard 1 ID: '\(card1ID)'")
             print("🔴 RED: CoverFlowCard 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that SimpleCardComponent includes item title in identifier
-    @Test func testSimpleCardComponentIncludesItemTitleInIdentifier() {
+    @MainActor @Test func testSimpleCardComponentIncludesItemTitleInIdentifier() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -1034,12 +1052,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: SimpleCard 1 ID: '\(card1ID)'")
             print("🔴 RED: SimpleCard 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that MasonryCardComponent includes item title in identifier
-    @Test func testMasonryCardComponentIncludesItemTitleInIdentifier() {
+    @MainActor @Test func testMasonryCardComponentIncludesItemTitleInIdentifier() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -1072,12 +1091,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: MasonryCard 1 ID: '\(card1ID)'")
             print("🔴 RED: MasonryCard 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that all card components in a grid get unique identifiers
-    @Test func testGridCollectionItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testGridCollectionItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -1141,12 +1161,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Grid Card 1 ID: '\(card1ID)'")
             print("🔴 RED: Grid Card 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that cover flow items get unique identifiers
-    @Test func testCoverFlowCollectionItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testCoverFlowCollectionItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -1178,12 +1199,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: CoverFlow Card 1 ID: '\(card1ID)'")
             print("🔴 RED: CoverFlow Card 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that masonry collection items get unique identifiers
-    @Test func testMasonryCollectionItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testMasonryCollectionItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -1216,12 +1238,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Masonry Card 1 ID: '\(card1ID)'")
             print("🔴 RED: Masonry Card 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test comprehensive: all card types in mixed collections
-    @Test func testAllCardTypesGetUniqueIdentifiersInCollections() {
+    @MainActor @Test func testAllCardTypesGetUniqueIdentifiersInCollections() {
         setupTestEnvironment()
         
         struct TestItem: Identifiable {
@@ -1316,14 +1339,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect card components")
         }
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     // MARK: - ResponsiveCardView Tests
     
     /// Test that ResponsiveCardView includes card title in identifier
-    @Test func testResponsiveCardViewIncludesCardTitleInIdentifier() {
+    @MainActor @Test func testResponsiveCardViewIncludesCardTitleInIdentifier() {
         setupTestEnvironment()
         
         let card1 = ResponsiveCardData(
@@ -1365,12 +1389,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: ResponsiveCard 1 ID: '\(card1ID)'")
             print("🔴 RED: ResponsiveCard 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that ResponsiveCardView cards in a collection get unique identifiers
-    @Test func testResponsiveCardViewCollectionItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testResponsiveCardViewCollectionItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         let cards = [
@@ -1419,14 +1444,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: ResponsiveCard Collection 1 ID: '\(card1ID)'")
             print("🔴 RED: ResponsiveCard Collection 2 ID: '\(card2ID)'")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     // MARK: - PlatformTabStrip Tests
     
     /// Test that PlatformTabStrip buttons include item titles in identifiers
-    @Test func testPlatformTabStripButtonsIncludeItemTitlesInIdentifiers() {
+    @MainActor @Test func testPlatformTabStripButtonsIncludeItemTitlesInIdentifiers() {
         setupTestEnvironment()
         
         // TDD RED: PlatformTabStrip buttons should include item.title in identifier
@@ -1456,7 +1482,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that buttons in PlatformTabStrip get different identifiers for different tabs
-    @Test func testPlatformTabStripButtonsGetDifferentIdentifiers() {
+    @MainActor @Test func testPlatformTabStripButtonsGetDifferentIdentifiers() {
         setupTestEnvironment()
         
         // Create individual buttons as they would appear in the tab strip
@@ -1511,7 +1537,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     // MARK: - Row and Non-Button Item Component Tests
     
     /// Test that FileRow includes file name in identifier
-    @Test func testFileRowIncludesFileNameInIdentifier() {
+    @MainActor @Test func testFileRowIncludesFileNameInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: FileRow should include file.name in identifier
@@ -1531,12 +1557,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: Should verify FileRow includes file.name in identifier
         #expect(true, "Documenting requirement - FileRow needs file.name in identifier for unique rows")
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     /// Test that validation error rows in DynamicFormFieldView get unique identifiers
-    @Test func testValidationErrorRowsGetUniqueIdentifiers() {
+    @MainActor @Test func testValidationErrorRowsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         // TDD RED: Validation error Text views in ForEach should include error text in identifier
@@ -1568,12 +1595,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify error Text views include error text in identifiers
             #expect(true, "Documenting requirement - Validation error rows need unique identifiers with error text")
-        
+}
+
         cleanupTestEnvironment()
     }
     
     /// Test that array field items in DynamicArrayField get unique identifiers
-    @Test func testDynamicArrayFieldItemsGetUniqueIdentifiers() {
+    @MainActor @Test func testDynamicArrayFieldItemsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         // TDD RED: Array items in DynamicArrayField ForEach should get unique identifiers
@@ -1610,7 +1638,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that platformListRow includes content in identifier when used in lists
-    @Test func testPlatformListRowIncludesContentInIdentifier() {
+    @MainActor @Test func testPlatformListRowIncludesContentInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformListRow when used in ForEach should include item-specific content
@@ -1651,7 +1679,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that settings item views get unique identifiers
-    @Test func testSettingsItemViewsGetUniqueIdentifiers() {
+    @MainActor @Test func testSettingsItemViewsGetUniqueIdentifiers() {
         setupTestEnvironment()
         
         // TDD RED: SettingsItemView or GenericSettingsItemView should include item.title
@@ -1661,14 +1689,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: Should verify settings items include titles in identifiers
         #expect(true, "Documenting requirement - Settings item views need item.title in identifier")
-        
+}
+
         cleanupTestEnvironment()
-    }
+    
     
     // MARK: - Platform Extension Functions with Title/Label Tests
     
     /// Test that platformListSectionHeader includes title in identifier
-    @Test func testPlatformListSectionHeaderIncludesTitleInIdentifier() {
+    @MainActor @Test func testPlatformListSectionHeaderIncludesTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformListSectionHeader should include title in identifier
@@ -1705,7 +1734,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that platformFormField includes label in identifier
-    @Test func testPlatformFormFieldIncludesLabelInIdentifier() {
+    @MainActor @Test func testPlatformFormFieldIncludesLabelInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformFormField should include label in identifier
@@ -1746,7 +1775,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that platformFormFieldGroup includes title in identifier
-    @Test func testPlatformFormFieldGroupIncludesTitleInIdentifier() {
+    @MainActor @Test func testPlatformFormFieldGroupIncludesTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformFormFieldGroup should include title in identifier
@@ -1787,7 +1816,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that platformListEmptyState includes title in identifier
-    @Test func testPlatformListEmptyStateIncludesTitleInIdentifier() {
+    @MainActor @Test func testPlatformListEmptyStateIncludesTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformListEmptyState should include title in identifier
@@ -1824,7 +1853,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     }
     
     /// Test that platformDetailPlaceholder includes title in identifier
-    @Test func testPlatformDetailPlaceholderIncludesTitleInIdentifier() {
+    @MainActor @Test func testPlatformDetailPlaceholderIncludesTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformDetailPlaceholder should include title in identifier
@@ -1842,11 +1871,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = placeholder1.tryInspect(),
-           let placeholder1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = placeholder2.tryInspect(),
-           let placeholder2ID = try? inspected2.accessibilityIdentifier()
-            
+           let placeholder1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = placeholder2.tryInspect(),
+           let placeholder2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - placeholders with different titles should have different IDs
             #expect(placeholder1ID != placeholder2ID, 
                    "platformDetailPlaceholder with different titles should have different identifiers")
@@ -1855,12 +1884,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Detail Placeholder 1 ID: '\(placeholder1ID)'")
             print("🔴 RED: Detail Placeholder 2 ID: '\(placeholder2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
-    }
+    
     
     /// Test that ActionButton includes title in identifier
-    @Test func testActionButtonIncludesTitleInIdentifier() {
+    @MainActor @Test func testActionButtonIncludesTitleInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: ActionButton should include title in identifier
@@ -1872,11 +1902,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = button1.tryInspect(),
-           let button1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = button2.tryInspect(),
-           let button2ID = try? inspected2.accessibilityIdentifier()
-            
+           let button1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = button2.tryInspect(),
+           let button2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - buttons with different titles should have different IDs
             #expect(button1ID != button2ID, 
                    "ActionButton with different titles should have different identifiers")
@@ -1885,12 +1915,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: ActionButton 1 ID: '\(button1ID)'")
             print("🔴 RED: ActionButton 2 ID: '\(button2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
-    }
+    
     
     /// Test that platformValidationMessage includes message in identifier
-    @Test func testPlatformValidationMessageIncludesMessageInIdentifier() {
+    @MainActor @Test func testPlatformValidationMessageIncludesMessageInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: platformValidationMessage should include message text in identifier
@@ -1909,11 +1940,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = message1.tryInspect(),
-           let message1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = message2.tryInspect(),
-           let message2ID = try? inspected2.accessibilityIdentifier()
-            
+           let message1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = message2.tryInspect(),
+           let message2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - messages with different text should have different IDs
             #expect(message1ID != message2ID, 
                    "platformValidationMessage with different messages should have different identifiers")
@@ -1922,16 +1953,17 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Validation Message 1 ID: '\(message1ID)'")
             print("🔴 RED: Validation Message 2 ID: '\(message2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
-    }
+    
     
     // MARK: - Recommendation Row Tests
     
     // NOTE: PlatformRecommendation tests have been moved to possible-features/PlatformRecommendationEngineTests.swift
     
     /// Test that VisualizationRecommendationRow includes recommendation data in identifier
-    @Test func testVisualizationRecommendationRowIncludesDataInIdentifier() {
+    @MainActor @Test func testVisualizationRecommendationRowIncludesDataInIdentifier() {
         setupTestEnvironment()
         
         // TDD RED: VisualizationRecommendationRow should include recommendation chartType or title in identifier
@@ -1941,8 +1973,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: Should verify VisualizationRecommendationRow includes chartType in identifier
         #expect(true, "Documenting requirement - VisualizationRecommendationRow needs chartType in identifier for unique rows")
-        
-        cleanupTestEnvironment()
-    }
 }
+
+        cleanupTestEnvironment()
+    
+
 
