@@ -498,3 +498,4 @@ open class ViewGenerationTests: BaseTestClass {
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
         // with complex view hierarchies. The view creation itself is the test.
     }
+}
