@@ -47,9 +47,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 )
                 #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformRecognitionLayer5 inspection failed - AI recognition features not implemented: \(error)")")
-            }
+        } else {
+            Issue.record("PlatformRecognitionLayer5 inspection failed - AI recognition features not implemented: \(error)")
         }
     }
 
@@ -80,9 +79,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformPrivacyLayer5 inspection failed - privacy management not implemented: \(error)")")
-            }
+        } else {
+            Issue.record("PlatformPrivacyLayer5 inspection failed - privacy management not implemented: \(error)")
         }
     }
 
@@ -98,8 +96,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         let view = PlatformPerformanceLayer6()
 
         // Should render performance monitoring interface
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
 
             // Should have proper UI structure for performance metrics
             let vStack = try inspected.vStack()
@@ -115,7 +112,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformPerformanceLayer6 inspection failed - performance monitoring not implemented: \(error)")")
+            Issue.record("PlatformPerformanceLayer6 inspection failed - performance monitoring not implemented: \(error)")
         }
     }
 
@@ -131,8 +128,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         let view = PlatformProfilingLayer5()
 
         // Should render user profiling interface
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
 
             // Should have proper UI structure for profiling features
             let vStack = try inspected.vStack()
@@ -147,9 +143,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformProfilingLayer5 inspection failed - user profiling not implemented: \(error)")")
-            }
+        } else {
+            Issue.record("PlatformProfilingLayer5 inspection failed - user profiling not implemented: \(error)")
         }
     }
 
@@ -165,8 +160,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         let view = PlatformSafetyLayer5()
 
         // Should render safety features interface
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
 
             // Should have proper UI structure for safety features
             let vStack = try inspected.vStack()
@@ -181,9 +175,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformSafetyLayer5 inspection failed - safety features not implemented: \(error)")")
-            }
+        } else {
+            Issue.record("PlatformSafetyLayer5 inspection failed - safety features not implemented: \(error)")
         }
     }
 
@@ -199,8 +192,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         let view = PlatformRoutingLayer5()
 
         // Should render navigation interface
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
 
             // Should have proper UI structure for routing features
             let vStack = try inspected.vStack()
@@ -215,9 +207,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformRoutingLayer5 inspection failed - navigation routing not implemented: \(error)")")
-            }
+        } else {
+            Issue.record("PlatformRoutingLayer5 inspection failed - navigation routing not implemented: \(error)")
         }
     }
 
@@ -248,8 +239,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformOrchestrationLayer5 inspection failed - service orchestration not implemented: \(error)")")
+        } else {
+            Issue.record("PlatformOrchestrationLayer5 inspection failed - service orchestration not implemented: \(error)")
             }
         }
     }
@@ -281,8 +272,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformOptimizationLayer5 inspection failed - optimization features not implemented: \(error)")")
+        } else {
+            Issue.record("PlatformOptimizationLayer5 inspection failed - optimization features not implemented: \(error)")
             }
         }
     }
@@ -314,8 +305,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformOrganizationLayer5 inspection failed - data organization not implemented: \(error)")")
+        } else {
+            Issue.record("PlatformOrganizationLayer5 inspection failed - data organization not implemented: \(error)")
             }
         }
     }
@@ -347,8 +338,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformNotificationLayer5 inspection failed - notification management not implemented: \(error)")")
+        } else {
+            Issue.record("PlatformNotificationLayer5 inspection failed - notification management not implemented: \(error)")
             }
         }
     }
@@ -380,8 +371,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            } else {
-                Issue.record("PlatformInterpretationLayer5 inspection failed - context interpretation not implemented: \(error)")")
+        } else {
+            Issue.record("PlatformInterpretationLayer5 inspection failed - context interpretation not implemented: \(error)")
             }
         }
     }

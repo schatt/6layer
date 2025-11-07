@@ -50,13 +50,12 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should render overlay interface
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should have overlay interface
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should provide overlay interface")
         } else {
-            Issue.record("OCROverlayView interface not found: \(error)")")
+            Issue.record("OCROverlayView interface not found: \(error)")
         }
 
         // Should generate accessibility identifier
@@ -90,13 +89,12 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should process OCR result when provided
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should have OCR processing interface
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should have OCR processing interface")
         } else {
-            Issue.record("OCROverlayView interface not found: \(error)")")
+            Issue.record("OCROverlayView interface not found: \(error)")
         }
     }
 
@@ -149,15 +147,14 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should render disambiguation options
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should display candidate alternatives
             let foundCandidate1 = (try? inspected.find(text: "123.45")) != nil
             let foundCandidate2 = (try? inspected.find(text: "123-45")) != nil
             let foundCandidate3 = (try? inspected.find(text: "123/45")) != nil
             #expect(foundCandidate1 || foundCandidate2 || foundCandidate3, "Should display candidate alternatives")
         } else {
-            Issue.record("OCRDisambiguationView candidates not found: \(error)")")
+            Issue.record("OCRDisambiguationView candidates not found: \(error)")
         }
 
         // Should generate accessibility identifier
@@ -217,8 +214,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should display all candidates
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should find all candidate texts
             let foundA = (try? inspected.find(text: "Option A")) != nil
             let foundB = (try? inspected.find(text: "Option B")) != nil
@@ -227,7 +223,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // At least some candidates should be visible
             #expect(foundA || foundB || foundC, "Should display candidate alternatives")
         } else {
-            Issue.record("OCRDisambiguationView candidates not found: \(error)")")
+            Issue.record("OCRDisambiguationView candidates not found: \(error)")
         }
     }
 
@@ -264,13 +260,12 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should handle non-disambiguation case
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should have some UI structure
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should handle non-disambiguation case")
         } else {
-            Issue.record("OCRDisambiguationView interface not found: \(error)")")
+            Issue.record("OCRDisambiguationView interface not found: \(error)")
         }
     }
 }

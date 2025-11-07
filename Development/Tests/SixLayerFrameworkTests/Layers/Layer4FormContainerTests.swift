@@ -102,48 +102,42 @@ open class Layer4FormContainerTests {
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let viewText = view.tryInspect()            #expect(!viewText.isEmpty, "Standard container should contain text elements")
-            
+        if let viewText = view.tryInspect() {
+            #expect(!viewText.isEmpty, "Standard container should contain text elements")
+
             // Should contain the test content
             let hasTestContent = viewText.contains { text in
                 do {
                     let textContent = try? text.string()
-                    return textContent.contains("Test Form Content")
+                    return textContent?.contains("Test Form Content") ?? false
                 } catch {
                     return false
-        } else {
-            Issue.record("Failed to inspect")
-        }
                 }
             }
             #expect(hasTestContent, "Standard container should contain the test content")
-            
-        } catch {
-            Issue.record("Failed to inspect standard container structure: \(error)")
+        } else {
+            Issue.record("Failed to inspect standard container structure")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
         // iOS: Should contain VStack structure with iOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let vStack = view.tryInspect()            // VStack found - this is correct for iOS
+        if let vStack = view.tryInspect() {
+            // VStack found - this is correct for iOS
             // Note: iOS uses Color(.secondarySystemBackground) for standard container backgrounds
-        } catch {
-            Issue.record("iOS standard container should contain VStack structure")
         } else {
             Issue.record("iOS standard container should contain VStack structure")
         }
-        }
+        #endif
         #elseif os(macOS)
         // macOS: Should contain VStack structure with macOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let vStack = view.tryInspect()            // VStack found - this is correct for macOS
+        if let vStack = view.tryInspect() {
+            // VStack found - this is correct for macOS
             // Note: macOS uses Color(.controlBackgroundColor) for standard container backgrounds
-        } catch {
-            Issue.record("macOS standard container should contain VStack structure")
         } else {
             Issue.record("macOS standard container should contain VStack structure")
-        }
         }
         #endif
     }
@@ -168,24 +162,21 @@ open class Layer4FormContainerTests {
         #if os(iOS)
         // iOS: Should contain ScrollView structure with iOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let scrollView = view.tryInspect()            // ScrollView found - this is correct for iOS
+        if let scrollView = view.tryInspect() {
+            // ScrollView found - this is correct for iOS
             // Note: iOS uses Color(.systemGroupedBackground) for scroll view backgrounds
-        } catch {
-            Issue.record("iOS scroll view container should contain ScrollView structure")
         } else {
             Issue.record("iOS scroll view container should contain ScrollView structure")
         }
-        }
+        #endif
         #elseif os(macOS)
         // macOS: Should contain ScrollView structure with macOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let scrollView = view.tryInspect()            // ScrollView found - this is correct for macOS
+        if let scrollView = view.tryInspect() {
+            // ScrollView found - this is correct for macOS
             // Note: macOS uses Color(.controlBackgroundColor) for scroll view backgrounds
-        } catch {
-            Issue.record("macOS scroll view container should contain ScrollView structure")
         } else {
             Issue.record("macOS scroll view container should contain ScrollView structure")
-        }
         }
         #endif
     }

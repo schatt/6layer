@@ -163,16 +163,17 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = button.tryInspect() {
-           let buttonID = try? inspected.accessibilityIdentifier()
-
+            let buttonID = try? inspected.accessibilityIdentifier()
+            
             // TDD RED: Should FAIL - spaces should be converted to hyphens
-            #expect(!buttonID.contains("Add New Item"), 
-                   "Identifier should not contain raw label with spaces")
-            #expect(buttonID.contains("add-new-item") || buttonID.contains("add") && buttonID.contains("new"), 
-                   "Identifier should contain sanitized label (hyphens)")
+            #expect(!buttonID.contains("Add New Item"),
+                    "Identifier should not contain raw label with spaces")
+            #expect(buttonID.contains("add-new-item") || buttonID.contains("add") && buttonID.contains("new"),
+                    "Identifier should contain sanitized label (hyphens)")
             
             print("🔴 RED: Sanitized ID: '\(buttonID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -191,7 +192,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             #expect(!buttonID.contains("!"), "Identifier should not contain '!'")
             
             print("🔴 RED: Special chars ID: '\(buttonID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -212,7 +214,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "Identifier should contain lowercase version")
             
             print("🔴 RED: Case sanitized ID: '\(buttonID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -243,11 +246,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let fieldID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL - should include sanitized label
-            #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email"), 
-                   "DynamicTextField identifier should include field label 'Email Address'")
+            #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email"),
+                    "DynamicTextField identifier should include field label 'Email Address'")
             
             print("🔴 RED: DynamicTextField ID: '\(fieldID)'")
-        
+        }
         cleanupTestEnvironment()
     }
     
@@ -276,10 +279,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should FAIL
             #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"), 
-                   "DynamicEmailField identifier should include field label 'User Email'")
+                    "DynamicEmailField identifier should include field label 'User Email'")
             
             print("🔴 RED: DynamicEmailField ID: '\(fieldID)'")
-        
+        }
         cleanupTestEnvironment()
     }
     
@@ -1348,10 +1351,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = cardView1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier(),
-            
-            let inspected2 = cardView2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
-            
+
+           let inspected2 = cardView2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - cards with different titles should have different IDs
             #expect(card1ID != card2ID, 
                    "ResponsiveCardView items with different titles should have different identifiers")
@@ -1438,7 +1441,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = tabStrip.tryInspect()            // The tab strip contains buttons - we need to verify buttons have unique IDs
+        if let inspected = tabStrip.tryInspect() {            // The tab strip contains buttons - we need to verify buttons have unique IDs
             // This is a simplified test - full test would inspect nested buttons
             let stripID = try? inspected.accessibilityIdentifier()
             
@@ -1447,7 +1450,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify buttons have unique identifiers with titles
             #expect(true, "Documenting requirement - PlatformTabStrip buttons need unique identifiers with item.title")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1485,11 +1489,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let homeInspected = homeButton.tryInspect(),
-           let homeID = try? homeInspected.accessibilityIdentifier()
-            
-            let settingsInspected = settingsButton.tryInspect(),
-           let settingsID = try? settingsInspected.accessibilityIdentifier()
-            
+           let homeID = try? homeInspected.accessibilityIdentifier(),
+           let settingsInspected = settingsButton.tryInspect(),
+           let settingsID = try? settingsInspected.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - buttons with different titles should have different IDs
             #expect(homeID != settingsID, 
                    "PlatformTabStrip buttons with different titles should have different identifiers")
@@ -1500,7 +1503,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Tab Button Home ID: '\(homeID)'")
             print("🔴 RED: Tab Button Settings ID: '\(settingsID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1592,15 +1596,16 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = arrayField.tryInspect(),
-           let arrayID = try? inspected.accessibilityIdentifier()
-            
+           let arrayID = try? inspected.accessibilityIdentifier() {
+
             print("🔴 RED: DynamicArrayField ID: '\(arrayID)'")
             print("🔴 RED: Note - Array items in ForEach should get unique identifiers")
             print("🔴 RED: Each array item (Tag1, Tag2, Tag3) should have unique identifier")
             
             // TDD RED: Should verify array items have unique identifiers
             #expect(true, "Documenting requirement - Array field items need unique identifiers")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1627,11 +1632,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = row1.tryInspect(),
-           let row1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = row2.tryInspect(),
-           let row2ID = try? inspected2.accessibilityIdentifier()
-            
+           let row1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = row2.tryInspect(),
+           let row2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - rows with different content should have different IDs
             #expect(row1ID != row2ID, 
                    "platformListRow items with different content should have different identifiers")
@@ -1640,7 +1645,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: PlatformListRow 1 ID: '\(row1ID)'")
             print("🔴 RED: PlatformListRow 2 ID: '\(row2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1680,11 +1686,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = header1.tryInspect(),
-           let header1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = header2.tryInspect(),
-           let header2ID = try? inspected2.accessibilityIdentifier()
-            
+           let header1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = header2.tryInspect(),
+           let header2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - headers with different titles should have different IDs
             #expect(header1ID != header2ID, 
                    "platformListSectionHeader with different titles should have different identifiers")
@@ -1693,7 +1699,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Section Header 1 ID: '\(header1ID)'")
             print("🔴 RED: Section Header 2 ID: '\(header2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1720,11 +1727,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = field1.tryInspect(),
-           let field1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = field2.tryInspect(),
-           let field2ID = try? inspected2.accessibilityIdentifier()
-            
+           let field1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = field2.tryInspect(),
+           let field2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - fields with different labels should have different IDs
             #expect(field1ID != field2ID, 
                    "platformFormField with different labels should have different identifiers")
@@ -1733,7 +1740,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Form Field 1 ID: '\(field1ID)'")
             print("🔴 RED: Form Field 2 ID: '\(field2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1760,11 +1768,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = group1.tryInspect(),
-           let group1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = group2.tryInspect(),
-           let group2ID = try? inspected2.accessibilityIdentifier()
-            
+           let group1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = group2.tryInspect(),
+           let group2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - groups with different titles should have different IDs
             #expect(group1ID != group2ID, 
                    "platformFormFieldGroup with different titles should have different identifiers")
@@ -1773,7 +1781,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Form Field Group 1 ID: '\(group1ID)'")
             print("🔴 RED: Form Field Group 2 ID: '\(group2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
@@ -1796,11 +1805,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = emptyState1.tryInspect(),
-           let state1ID = try? inspected1.accessibilityIdentifier()
-            
-            let inspected2 = emptyState2.tryInspect(),
-           let state2ID = try? inspected2.accessibilityIdentifier()
-            
+           let state1ID = try? inspected1.accessibilityIdentifier(),
+
+           let inspected2 = emptyState2.tryInspect(),
+           let state2ID = try? inspected2.accessibilityIdentifier() {
+
             // TDD RED: Should FAIL - empty states with different titles should have different IDs
             #expect(state1ID != state2ID, 
                    "platformListEmptyState with different titles should have different identifiers")
@@ -1809,7 +1818,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Empty State 1 ID: '\(state1ID)'")
             print("🔴 RED: Empty State 2 ID: '\(state2ID)'")
-        
+        }
+
         cleanupTestEnvironment()
     }
     
