@@ -30,13 +30,13 @@ import SwiftUI
 /// All conditional logic in this file is controlled by this flag
 let viewInspectorMacFixed = false
 
-#if canImport(ViewInspector) && viewInspectorMacFixed
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
 import ViewInspector
 #endif
 
 // MARK: - View Extension for Inspection
 
-#if canImport(ViewInspector) && viewInspectorMacFixed
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
 extension View {
     /// Safely inspect a view using ViewInspector
     /// Returns nil on inspection failure
@@ -73,7 +73,7 @@ extension View {
 
 // MARK: - InspectableView Extension for Common Operations
 
-#if canImport(ViewInspector) && viewInspectorMacFixed
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
 extension InspectableView {
     /// Safely find a view type, returning nil if not found
     func tryFind<T>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
@@ -89,7 +89,7 @@ extension InspectableView {
 
 // MARK: - Helper Functions for Common Patterns
 
-#if canImport(ViewInspector) && viewInspectorMacFixed
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
 /// Safely inspect a view and execute a closure if inspection succeeds
 /// Returns nil on inspection failure
 /// When ViewInspector works on all platforms, remove the canImport condition
@@ -115,7 +115,7 @@ public func withInspectedView<V: View, R>(
 }
 #endif
 
-#if canImport(ViewInspector) && viewInspectorMacFixed
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
 /// Safely inspect a view and execute a throwing closure
 /// Throws when ViewInspector cannot inspect the view
 /// When ViewInspector works on all platforms, remove the canImport condition
