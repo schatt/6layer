@@ -143,6 +143,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 
             // 2. Contains what it needs to contain - The view has the manual accessibility identifier assigned
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let inspected = testView.tryInspect(),
                let text = try? inspected.text(),
                let accessibilityIdentifier = try? text.accessibilityIdentifier() {
@@ -150,6 +151,9 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             } else {
                 Issue.record("Failed to inspect accessibility identifier")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -179,6 +183,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 
             // 2. Contains what it needs to contain - The view should NOT have an automatic accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let inspected1 = testView1.tryInspect(),
                let button1 = try? inspected1.button(),
                let accessibilityIdentifier1 = try? button1.accessibilityIdentifier() {

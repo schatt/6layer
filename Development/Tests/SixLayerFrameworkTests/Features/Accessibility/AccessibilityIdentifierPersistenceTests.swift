@@ -318,6 +318,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     
     private func generateIDForView(_ view: some View) -> String {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         if let inspectedView = view.tryInspect(),
            let button = try? inspectedView.button(),
            let id = try? button.accessibilityIdentifier() {
@@ -326,5 +327,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             Issue.record("Failed to generate ID for view")
             return ""
         }
+        #else
+        return ""
+        #endif
     }
 }

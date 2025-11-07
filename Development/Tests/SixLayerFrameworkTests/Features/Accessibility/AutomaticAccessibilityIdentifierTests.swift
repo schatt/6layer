@@ -881,6 +881,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 
             // When: Inspecting the view's accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let inspected = view.tryInspect(),
                let identifier = try? inspected.accessibilityIdentifier() {
                 // Then: The identifier should include the component name
@@ -893,6 +894,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             } else {
                 Issue.record("Failed to inspect view")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     

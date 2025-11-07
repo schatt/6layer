@@ -39,6 +39,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
         
         // Check if accessibility identifier is present
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         if let inspectedView = testView.tryInspect(),
            let accessibilityID = try? inspectedView.accessibilityIdentifier() {
             print("🔍 Found accessibility ID: '\(accessibilityID)'")
@@ -47,6 +48,9 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
             print("🔍 Error inspecting view")
             Issue.record("Should be able to inspect framework component")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - Helper Methods
