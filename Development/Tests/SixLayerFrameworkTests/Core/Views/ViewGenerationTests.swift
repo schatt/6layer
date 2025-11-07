@@ -164,13 +164,20 @@ open class ViewGenerationTests: BaseTestClass {
         #expect(detailView != nil, "IntelligentDetailView with hints should be created successfully")
         
         // 2. Contains what it needs to contain - The view should respect the hints
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspected = detailView.tryInspect() else {
+            Issue.record("Failed to inspect detail view structure")
+            return
+        }
+        
+        #if !os(macOS)
         do {
             // The view is wrapped in AnyView
-            let anyView = try detailView.inspect().anyView()
+            let anyView = try inspected.anyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
             
             // The view should contain text elements
-            let viewText = try detailView.inspect().findAll(ViewType.Text.self)
+            let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
             
             // Should contain field content from our test data
