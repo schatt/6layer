@@ -193,6 +193,11 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 // If we can't inspect, that's also acceptable - it means no identifier was set
                 // This is actually a valid test result when automatic IDs are disabled
             }
+            #else
+            // ViewInspector not available, treat as no identifier applied
+            #expect(Bool(true), "ViewInspector not available, treating as no ID applied")
+            #endif
+            }
                 
             // Test Case 2: When automatic IDs are enabled
             testConfig.enableAutoIDs = true

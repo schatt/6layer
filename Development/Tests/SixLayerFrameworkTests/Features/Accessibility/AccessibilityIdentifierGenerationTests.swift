@@ -68,6 +68,9 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect view")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // Cleanup
         cleanupTestEnvironment()
@@ -91,6 +94,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are not semantic
@@ -102,6 +106,9 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect view")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // Cleanup
         cleanupTestEnvironment()
@@ -134,6 +141,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
@@ -215,8 +223,11 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             print("✅ Sanitized ID: '\(buttonID)'")
             
         } catch {
-            Issue.record("Failed to inspect view: \(error)")
+            Issue.record("Failed to inspect view")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // Cleanup
         cleanupTestEnvironment()
