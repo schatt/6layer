@@ -10,6 +10,11 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
+
 @MainActor
 @Suite("Layer Form Container")
 open class Layer4FormContainerTests {

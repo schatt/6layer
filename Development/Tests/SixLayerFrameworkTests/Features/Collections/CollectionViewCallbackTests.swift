@@ -3,6 +3,10 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
 /// Tests for Collection View Callback Functionality
 /// Tests that collection views properly handle item selection, deletion, and editing callbacks
 @MainActor

@@ -1,5 +1,9 @@
 import Testing
 
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
+
 //
 //  NavigationLayer4Tests.swift
 //  SixLayerFrameworkTests
