@@ -84,15 +84,13 @@ open class ViewGenerationTests: BaseTestClass {
                     let textContent = try text.string()
                     return textContent.contains("Title") || textContent.contains("title")
                 } catch {
-        #endif
                     return false
                 }
             }
             #expect(hasTitleField, "Detail view should contain title field")
             
-            } catch {
-                Issue.record("Failed to inspect detail view structure: \(error)")
-            }
+        } catch {
+            Issue.record("Failed to inspect detail view structure: \(error)")
         }
         #endif
     
@@ -136,16 +134,15 @@ open class ViewGenerationTests: BaseTestClass {
                     let textContent = try text.string()
                     return textContent.contains(": ") && textContent.contains("Item 1")
                 } catch {
-        #endif
                     return false
                 }
-        #endif
             }
             #expect(hasCustomFieldContent, "Detail view should contain custom field content")
             
         } catch {
             Issue.record("Failed to inspect detail view with custom field view: \(error)")
         }
+        #endif
     }
     
     @Test @MainActor func testIntelligentDetailViewWithHints() {
