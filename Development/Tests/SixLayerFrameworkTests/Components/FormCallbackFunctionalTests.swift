@@ -40,6 +40,7 @@ open class FormCallbackFunctionalTests {
 
         // When: Simulating Cancel button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
             let buttons = try inspector.findAll(ViewType.Button.self)
@@ -72,6 +73,9 @@ open class FormCallbackFunctionalTests {
                 Issue.record("Could not find Cancel button in form or failed to tap it")
             }
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -104,6 +108,7 @@ open class FormCallbackFunctionalTests {
         
         // When: Simulating Update button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
             let buttons = try inspector.findAll(ViewType.Button.self)
@@ -138,6 +143,9 @@ open class FormCallbackFunctionalTests {
                 Issue.record("Could not find Update button in form or failed to tap it")
             }
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -171,6 +179,7 @@ open class FormCallbackFunctionalTests {
         
         // When: Simulating Submit button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button
             let buttons = try inspector.findAll(ViewType.Button.self)
@@ -204,6 +213,9 @@ open class FormCallbackFunctionalTests {
                 Issue.record("Could not find Submit button in form or failed to tap it")
             }
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")

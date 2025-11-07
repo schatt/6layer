@@ -30,6 +30,9 @@ import SwiftUI
 /// All conditional logic in this file is controlled by this flag
 let viewInspectorMacFixed = false
 
+/// Error type for when ViewInspector is not available
+struct ViewInspectorNotAvailableError: Error {}
+
 #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
 import ViewInspector
 #endif
@@ -65,8 +68,7 @@ extension View {
     /// ViewInspector not available on this platform
     @MainActor
     func inspectView() throws -> Any {
-        struct ViewInspectorNotAvailable: Error {}
-        throw ViewInspectorNotAvailable()
+        throw ViewInspectorNotAvailableError()
     }
 }
 #endif
@@ -135,7 +137,6 @@ public func withInspectedViewThrowing<V: View, R>(
     _ view: V,
     perform: (Any) throws -> R
 ) throws -> R {
-    struct ViewInspectorNotAvailable: Error {}
-    throw ViewInspectorNotAvailable()
+    throw ViewInspectorNotAvailableError()
 }
 #endif

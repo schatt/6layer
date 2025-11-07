@@ -74,6 +74,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         )
 
         // Then: View should be created successfully and contain expected elements
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
             let viewText = inspected.tryFindAll(ViewType.Text.self)
@@ -105,6 +106,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         )
 
         // Then: View should be created successfully and contain expected elements
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
             let viewText = inspected.tryFindAll(ViewType.Text.self)
@@ -205,8 +207,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         
         // Given: Track if callbacks are invoked
         resetCallbacks()
-        var _callbackInvoked = false
-        var _receivedItem: TestItem?
+        var callbackInvoked = false
+        var receivedItem: TestItem?
         
         let view = ListCollectionView(
             items: sampleItems,
@@ -220,6 +222,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         
         // When: Simulating a tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspector in
             // Find the ListCardComponent instances
             let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
@@ -242,6 +245,9 @@ open class CollectionViewCallbackTests: BaseTestClass {
                 #expect(self.selectedItems.count == 1, "Selected items should contain tapped item")
             }
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -287,8 +293,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     @Test func testListCollectionViewOnItemDeletedCallback() async throws {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
-        var _callbackInvoked = false
-        var _receivedItem: TestItem?
+        var callbackInvoked = false
+        var receivedItem: TestItem?
         
         let view = ListCollectionView(
             items: sampleItems,
@@ -310,8 +316,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     @Test func testListCollectionViewOnItemEditedCallback() async throws {
         // Rule 6.2 & 7.4: Functional testing
         
-        var _callbackInvoked = false
-        var _receivedItem: TestItem?
+        var callbackInvoked = false
+        var receivedItem: TestItem?
         
         let view = ListCollectionView(
             items: sampleItems,
