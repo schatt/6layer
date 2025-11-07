@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Layer 1 Function Callback Functional Tests
 /// Tests that Layer 1 functions ACTUALLY INVOKE callbacks when expected (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
@@ -95,18 +92,12 @@ open class Layer1CallbackFunctionalTests {
         
         // Use ViewInspector to simulate tap
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspector = view.tryInspect() else {
-            Issue.record("Failed to inspect view")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspector in
             let listViews = try inspector.findAll(ListCollectionView<TestItem>.self)
-            
+
             if let firstList = listViews.first {
                 #expect(listViews.count > 0, "Should have list view")
-                
+
                 // Try to find and tap a card
                 let listCards = try firstList.findAll(ListCardComponent<TestItem>.self)
                 if let firstCard = listCards.first {
@@ -114,16 +105,16 @@ open class Layer1CallbackFunctionalTests {
                     let vStack = try firstCard.vStack()
                     let hStack = try vStack.hStack(0)
                     try hStack.callOnTapGesture()
-                    
+
                     // Verify callback was invoked
                     #expect(callbackInvoked, "Callback should be invoked when tapped")
                     #expect(self.selectedItems.count > 0, "Should have selected items")
                 }
             }
-        } catch {
-            Issue.record("ViewInspector failed: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
         }
     }
     

@@ -10,9 +10,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 @MainActor
 @Suite("Layer Form Container")
 open class Layer4FormContainerTests {
@@ -43,17 +40,11 @@ open class Layer4FormContainerTests {
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect form container")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspected in
             // The form container should contain the test content
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Form container should contain text elements")
-            
+
             // Should contain the test content
             let hasTestContent = viewText.contains { text in
                 if let textContent = try? text.string() {
@@ -62,10 +53,11 @@ open class Layer4FormContainerTests {
                 return false
             }
             #expect(hasTestContent, "Form container should contain the test content")
-        } catch {
-            Issue.record("Failed to inspect form container structure: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)

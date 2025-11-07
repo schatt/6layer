@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 @MainActor
@@ -143,16 +140,15 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             return ""
         }
         
-        #if !os(macOS)
         print("🔍 Inspected view type: \(type(of: inspectedView))")
-        
+
         // Try to find a button in the hierarchy
         if let button = inspectedView.tryFind(Button<Text>.self),
            let id = try? button.accessibilityIdentifier() {
             print("🔍 Found button, trying to get accessibility identifier")
             return id
         }
-        
+
         // Try to find any view with accessibility identifier by looking deeper
         if let anyView = inspectedView.tryFind(ViewType.AnyView.self) {
             print("🔍 Found AnyView, trying to inspect its contents")
@@ -168,13 +164,12 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             }
             print("🔍 AnyView inspection error")
         }
-        
+
         // Try the root view
         print("🔍 Trying root view accessibility identifier")
         if let id = try? inspectedView.accessibilityIdentifier() {
             return id
         }
-        #endif
         
         return ""
     }
