@@ -186,10 +186,8 @@ open class ViewGenerationTests: BaseTestClass {
                     let textContent = try text.string()
                     return textContent.contains("Item 1") || textContent.contains("Subtitle 1")
                 } catch {
-        #endif
                     return false
                 }
-        #endif
             }
             #expect(hasFieldContent, "Detail view should contain field content from test data")
             
