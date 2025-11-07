@@ -10,7 +10,7 @@ import ViewInspector
 /// Tests that collection views properly handle item selection, deletion, and editing callbacks
 @MainActor
 @Suite("Collection View Callback")
-open class CollectionViewCallbackTests {
+open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Test Data
     
@@ -71,9 +71,31 @@ open class CollectionViewCallbackTests {
             onItemDeleted: { item in self.deletedItems.append(item) },
             onItemEdited: { item in self.editedItems.append(item) }
         )
-        
-        // Then: View should be created successfully
-        // view is a non-optional View struct, so it exists if we reach here
+
+        // Then: View should be created successfully and contain expected elements
+        guard let inspected = view.tryInspect() else {
+            Issue.record("Failed to inspect collection view with callbacks")
+            return
+        }
+
+        #if !os(macOS)
+        do {
+            // The view should contain the collection items
+            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
+
+            // Should contain text from our sample items
+            let textContents = viewText.compactMap { try? $0.string() }
+            #expect(textContents.contains(where: { $0.contains("Item 1") }),
+                   "Should contain text from first sample item")
+            #expect(textContents.contains(where: { $0.contains("Item 2") }),
+                   "Should contain text from second sample item")
+
+            print("✅ Collection view with callbacks contains expected content")
+        } catch {
+            Issue.record("Failed to inspect view content: \(error)")
+        }
+        #endif
     }
     
     @Test func testPlatformPresentItemCollectionL1WithoutCallbacks() {
@@ -85,9 +107,31 @@ open class CollectionViewCallbackTests {
             items: sampleItems,
             hints: basicHints
         )
-        
-        // Then: View should be created successfully
-        // view is a non-optional View struct, so it exists if we reach here
+
+        // Then: View should be created successfully and contain expected elements
+        guard let inspected = view.tryInspect() else {
+            Issue.record("Failed to inspect collection view without callbacks")
+            return
+        }
+
+        #if !os(macOS)
+        do {
+            // The view should contain the collection items
+            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
+
+            // Should contain text from our sample items
+            let textContents = viewText.compactMap { try? $0.string() }
+            #expect(textContents.contains(where: { $0.contains("Item 1") }),
+                   "Should contain text from first sample item")
+            #expect(textContents.contains(where: { $0.contains("Item 2") }),
+                   "Should contain text from second sample item")
+
+            print("✅ Collection view without callbacks contains expected content")
+        } catch {
+            Issue.record("Failed to inspect view content: \(error)")
+        }
+        #endif
     }
     
     @Test func testPlatformPresentItemCollectionL1WithEnhancedHints() {
@@ -170,8 +214,8 @@ open class CollectionViewCallbackTests {
         
         // Given: Track if callbacks are invoked
         resetCallbacks()
-        var callbackInvoked = false
-        var receivedItem: TestItem?
+        var _callbackInvoked = false
+        var _receivedItem: TestItem?
         
         let view = ListCollectionView(
             items: sampleItems,
@@ -258,8 +302,8 @@ open class CollectionViewCallbackTests {
     @Test func testListCollectionViewOnItemDeletedCallback() async throws {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
-        var callbackInvoked = false
-        var receivedItem: TestItem?
+        var _callbackInvoked = false
+        var _receivedItem: TestItem?
         
         let view = ListCollectionView(
             items: sampleItems,
@@ -275,15 +319,14 @@ open class CollectionViewCallbackTests {
         // ViewInspector can't simulate context menu actions
         // We verify that callbacks are provided and accessible
         
-        #expect(true, "Delete callback is accessible via context menu")
-        #expect(true, "View renders without errors")
+        // Delete callback test completed - actual callback verification needs implementation
     }
     
     @Test func testListCollectionViewOnItemEditedCallback() async throws {
         // Rule 6.2 & 7.4: Functional testing
         
-        var callbackInvoked = false
-        var receivedItem: TestItem?
+        var _callbackInvoked = false
+        var _receivedItem: TestItem?
         
         let view = ListCollectionView(
             items: sampleItems,

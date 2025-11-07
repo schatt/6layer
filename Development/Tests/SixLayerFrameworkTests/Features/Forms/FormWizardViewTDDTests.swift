@@ -61,13 +61,12 @@ open class FormWizardViewTDDTests: BaseTestClass {
         )
 
         // Should render step content
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should display current step content
             let foundStep1 = (try? inspected.find(text: "Step 1")) != nil
             #expect(foundStep1, "Should display current step content")
         } else {
-            Issue.record("FormWizardView step content not found: \(error)")")
+            Issue.record("FormWizardView step content not found: \(error)")
         }
 
         // Should generate accessibility identifier
@@ -157,8 +156,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
         )
 
         // Should provide navigation controls
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should find navigation buttons
             let hasNextButton = (try? inspected.find(button: "Next")) != nil
             let hasFinishButton = (try? inspected.find(button: "Finish")) != nil
@@ -167,7 +165,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
             // At least one navigation control should exist
             #expect(hasNextButton || hasFinishButton || hasPreviousButton, "Should provide navigation controls")
         } else {
-            Issue.record("FormWizardView navigation controls not found: \(error)")")
+            Issue.record("FormWizardView navigation controls not found: \(error)")
         }
     }
 
@@ -209,13 +207,12 @@ open class FormWizardViewTDDTests: BaseTestClass {
         )
 
         // Should show step information
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
             // Should display step information
             let hasStepInfo = inspected.count > 0
             #expect(hasStepInfo, "Should display step information")
         } else {
-            Issue.record("FormWizardView step information not found: \(error)")")
+            Issue.record("FormWizardView step information not found: \(error)")
         }
     }
 }

@@ -428,7 +428,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 
             } catch {
                 Issue.record("Failed to inspect view with Unicode characters: \(error)")
-        }
             }
+        }
+        }
     }
-}

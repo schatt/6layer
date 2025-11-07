@@ -13,7 +13,7 @@ import ViewInspector
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Card Expansion Layer")
 @MainActor
-open class IntelligentCardExpansionLayer2Tests {
+open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
@@ -34,29 +34,27 @@ open class IntelligentCardExpansionLayer2Tests {
     }
     
     @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
-        let result = determineOptimalCardLayout_L2(
+        _ = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 375,
             deviceType: .phone,
             contentComplexity: .moderate
         )
-        
+
         // Layer 2 functions return data structures, not views
-        // So we test that the result is valid
-        // result is a non-optional CardLayoutDecision struct, so it exists if we reach here
+        // So we test that the functions execute without crashing
     }
     
     @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let result = determineOptimalCardLayout_L2(
+        _ = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 1920,
             deviceType: .mac,
             contentComplexity: .moderate
         )
-        
+
         // Layer 2 functions return data structures, not views
-        // So we test that the result is valid
-        #expect(result != nil, "determineOptimalCardLayout_L2 should return a valid result on macOS")
+        // So we test that the functions execute without crashing
     }
 }
 

@@ -53,7 +53,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
     }
     
     @Test func testPlatformPresentItemCollectionL1WithEmptyItems() {
@@ -71,7 +71,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: emptyHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
         // The view should render an empty state, not crash or show blank content
     }
     
@@ -102,7 +102,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
                 hints: hints
             )
             
-            #expect(view != nil)
+            // View creation succeeded (non-optional result)
             // In a real test environment, we would verify the empty state title matches expectedTitle
         }
     }
@@ -131,7 +131,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
                 hints: hints
             )
             
-            #expect(view != nil)
+            // View creation succeeded (non-optional result)
             // In a real test environment, we would verify the context-specific messaging
         }
     }
@@ -150,7 +150,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: hints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
     }
     
     // MARK: - Layer 2 Tests: Layout Decision Engine
@@ -164,7 +164,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: .moderate
         )
         
-        #expect(layout != nil)
+        // Layout decision creation succeeded (non-optional result)
         #expect(layout.cardWidth > 0)
         #expect(layout.cardHeight > 0)
         #expect(layout.columns > 0)
@@ -263,8 +263,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: .moderate
         )
         
-        #expect(zeroContentLayout != nil)
-        #expect(verySmallScreenLayout != nil)
+        // Zero content layout creation succeeded (non-optional result)
+        // Very small screen layout creation succeeded (non-optional result)
     }
     
     // MARK: - Layer 3 Tests: Strategy Selection
@@ -279,7 +279,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        #expect(strategy != nil)
+        // Strategy creation succeeded (non-optional result)
         #expect(!strategy.supportedStrategies.isEmpty)
     }
     
@@ -309,9 +309,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        #expect(phoneStrategy != nil)
-        #expect(tabletStrategy != nil)
-        #expect(desktopStrategy != nil)
+        // Platform strategies creation succeeded (non-optional results)
     }
     
     @Test func testSelectCardExpansionStrategyL3WithDifferentInteractionStyles() {
@@ -332,8 +330,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        #expect(expandableStrategy != nil)
-        #expect(staticStrategy != nil)
+        // Interaction style strategies creation succeeded (non-optional results)
     }
     
     @Test func testSelectCardExpansionStrategyL3WithDifferentContentDensities() {
@@ -354,8 +351,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .spacious
         )
         
-        #expect(denseStrategy != nil)
-        #expect(spaciousStrategy != nil)
+        // Content density strategies creation succeeded (non-optional results)
     }
     
     // MARK: - Layer 4 Tests: Component Implementation
@@ -391,7 +387,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             onItemEdited: nil
         )
         
-        #expect(card != nil)
+        // Card component creation succeeded (non-optional result)
     }
     
     @Test func testExpandableCardComponentWithDifferentStrategies() {
@@ -446,8 +442,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             onItemEdited: nil
         )
         
-        #expect(hoverCard != nil)
-        #expect(contentRevealCard != nil)
+        // Different strategy cards creation succeeded (non-optional results)
     }
     
     // MARK: - Layer 5 Tests: Platform Optimization
@@ -456,7 +451,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test iOS platform configuration
         RuntimeCapabilityDetection.setTestPlatform(.iOS)
         var config = getCardExpansionPlatformConfig()
-        #expect(config != nil)
+        // Platform config creation succeeded (non-optional result)
         TestSetupUtilities.shared.assertCardExpansionConfig(
             config,
             touch: true,
@@ -470,7 +465,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test macOS platform configuration
         RuntimeCapabilityDetection.setTestPlatform(.macOS)
         config = getCardExpansionPlatformConfig()
-        #expect(config != nil)
+        // Platform config creation succeeded (non-optional result)
         TestSetupUtilities.shared.assertCardExpansionConfig(
             config,
             touch: false,
@@ -484,7 +479,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test watchOS platform configuration
         RuntimeCapabilityDetection.setTestPlatform(.watchOS)
         config = getCardExpansionPlatformConfig()
-        #expect(config != nil)
+        // Platform config creation succeeded (non-optional result)
         TestSetupUtilities.shared.assertCardExpansionConfig(
             config,
             touch: true,
@@ -498,7 +493,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test tvOS platform configuration
         RuntimeCapabilityDetection.setTestPlatform(.tvOS)
         config = getCardExpansionPlatformConfig()
-        #expect(config != nil)
+        // Platform config creation succeeded (non-optional result)
         TestSetupUtilities.shared.assertCardExpansionConfig(
             config,
             touch: false,
@@ -512,7 +507,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test visionOS platform configuration
         TestSetupUtilities.shared.simulatePlatform(.visionOS)
         config = getCardExpansionPlatformConfig()
-        #expect(config != nil)
+        // Platform config creation succeeded (non-optional result)
         TestSetupUtilities.shared.assertCardExpansionConfig(
             config,
             touch: true,
@@ -531,7 +526,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test performance configuration
         let config = getCardExpansionPerformanceConfig()
         
-        #expect(config != nil)
+        // Platform config creation succeeded (non-optional result)
     }
     
     @Test func testPlatformFeatureMatrix() {
@@ -599,7 +594,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        #expect(cardView != nil)
+        // Card view creation succeeded (non-optional result)
     }
     
     @Test func testNativeExpandableCardViewWithDifferentStrategies() {
@@ -640,10 +635,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        #expect(hoverCardView != nil)
-        #expect(contentRevealCardView != nil)
-        #expect(gridReorganizeCardView != nil)
-        #expect(focusModeCardView != nil)
+        // Multiple strategy card views creation succeeded (non-optional results)
     }
     
     // MARK: - Integration Tests
@@ -655,7 +647,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
         
         // Test Layer 2
         let layoutDecision = determineIntelligentCardLayout_L2(
@@ -665,7 +657,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: .moderate
         )
         
-        #expect(layoutDecision != nil)
+        // Layout decision creation succeeded (non-optional result)
         
         // Test Layer 3
         let strategy = selectCardExpansionStrategy_L3(
@@ -676,14 +668,13 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        #expect(strategy != nil)
+        // Strategy creation succeeded (non-optional result)
         
         // Test Layer 5
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
         
-        #expect(platformConfig != nil)
-        #expect(performanceConfig != nil)
+        // Platform and performance configs creation succeeded (non-optional results)
         
         // Test Layer 6
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -695,7 +686,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        #expect(platformView != nil)
+        // Platform view creation succeeded (non-optional result)
     }
     
     @Test func testCrossLayerDataFlow() {
@@ -710,7 +701,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: hints.complexity
         )
         
-        #expect(layoutDecision != nil)
+        // Layout decision creation succeeded (non-optional result)
         
         // Layer 2 -> Layer 3
         let strategy = selectCardExpansionStrategy_L3(
@@ -721,23 +712,14 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        #expect(strategy != nil)
+        // Strategy creation succeeded (non-optional result)
     }
     
     // MARK: - Performance Tests
     
     @Test func testCardExpansionPerformance() {
-        // Test performance with large dataset
-        let largeDataSet = (1...1000).map { index in
-            MenuItem(
-                id: "\(index)",
-                title: "Item \(index)",
-                icon: "star",
-                color: .blue
-            )
-        }
-        
         // Performance test removed - performance monitoring was removed from framework
+        // Large dataset creation was removed as it was unused
     }
     
     @Test func testLayoutDecisionPerformance() {
@@ -766,7 +748,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: invalidHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
     }
     
     @Test func testErrorHandlingWithExtremeValues() {
@@ -778,7 +760,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: .complex
         )
         
-        #expect(extremeLayout != nil)
+        // Extreme layout creation succeeded (non-optional result)
     }
     
     // MARK: - Accessibility Tests
@@ -797,7 +779,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        #expect(cardView != nil)
+        // Card view creation succeeded (non-optional result)
         
         // Test that accessibility features are properly configured
         #expect(platformConfig.supportsVoiceOver)
@@ -816,7 +798,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
     }
     
     @Test func testCollectionEmptyStateView() {
@@ -829,7 +811,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         let emptyStateView = CollectionEmptyStateView(hints: hints)
-        #expect(emptyStateView != nil)
+        // Empty state view creation succeeded (non-optional result)
     }
     
     @Test func testCollectionEmptyStateViewWithDifferentDataTypes() {
@@ -847,7 +829,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyStateView = CollectionEmptyStateView(hints: hints)
-            #expect(emptyStateView != nil)
+            // Empty state view creation succeeded (non-optional result)
         }
     }
     
@@ -866,7 +848,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyStateView = CollectionEmptyStateView(hints: hints)
-            #expect(emptyStateView != nil)
+            // Empty state view creation succeeded (non-optional result)
         }
     }
     
@@ -883,7 +865,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyStateView = CollectionEmptyStateView(hints: hints)
-            #expect(emptyStateView != nil)
+            // Empty state view creation succeeded (non-optional result)
         }
     }
     
@@ -910,7 +892,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             onCreateItem: createAction
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
         // Note: In a real test environment, we would verify the create button is present
         // and that calling it triggers the createAction
     }
@@ -931,7 +913,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             // No onCreateItem parameter
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
         // Note: In a real test environment, we would verify no create button is shown
     }
     
@@ -950,7 +932,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         let emptyStateView = CollectionEmptyStateView(hints: hints, onCreateItem: createAction)
-        #expect(emptyStateView != nil)
+        // Empty state view creation succeeded (non-optional result)
         // Note: In a real test environment, we would verify the create button is present
     }
     
@@ -964,7 +946,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         let emptyStateView = CollectionEmptyStateView(hints: hints)
-        #expect(emptyStateView != nil)
+        // Empty state view creation succeeded (non-optional result)
         // Note: In a real test environment, we would verify no create button is shown
     }
     
@@ -1005,7 +987,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyStateView = CollectionEmptyStateView(hints: hints, onCreateItem: {})
-            #expect(emptyStateView != nil)
+            // Empty state view creation succeeded (non-optional result)
             // Note: In a real test environment, we would verify the button title matches expectedTitle
         }
     }
@@ -1018,7 +1000,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
     }
     
     @Test func testEdgeCaseVeryLargeDataset() {
@@ -1037,7 +1019,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        // View creation succeeded (non-optional result)
     }
     
     @Test func testEdgeCaseVerySmallScreen() {
@@ -1049,7 +1031,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: .moderate
         )
         
-        #expect(layout != nil)
+        // Layout decision creation succeeded (non-optional result)
     }
     
     @Test func testEdgeCaseVeryLargeScreen() {
@@ -1061,7 +1043,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentComplexity: .moderate
         )
         
-        #expect(layout != nil)
+        // Layout decision creation succeeded (non-optional result)
     }
     
     // MARK: - Enum Tests

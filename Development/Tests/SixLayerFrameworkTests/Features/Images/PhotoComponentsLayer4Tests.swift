@@ -108,7 +108,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                 // but we can verify the view structure is valid
                     print("✅ macOS camera interface structure is valid")
                 } else {
-            Issue.record("Failed to verify macOS camera interface structure: \(error)")")
+            Issue.record("Failed to verify macOS camera interface structure: \(error)")
                 }
                 #elseif os(iOS)
                 // iOS should return a CameraView (UIImagePickerController wrapper)
@@ -119,7 +119,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                     // Note: We can't easily test the underlying UIImagePickerController type
                     // but we can verify the view structure is valid
                 } else {
-            Issue.record("Failed to verify iOS camera interface structure: \(error)")")
+            Issue.record("Failed to verify iOS camera interface structure: \(error)")
                 }
                 #endif
         }
@@ -159,7 +159,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                 let _ = result.tryInspect()
                 
             } else {
-            Issue.record("Failed to inspect photo picker structure: \(error)")")
+            Issue.record("Failed to inspect photo picker structure: \(error)")
             }
             
             // 3. Platform-specific implementation verification (REQUIRED)
@@ -200,7 +200,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                 let _ = result.tryInspect()
                 
             } else {
-            Issue.record("Failed to inspect photo display structure: \(error)")")
+            Issue.record("Failed to inspect photo display structure: \(error)")
             }
             
             // 3. Platform-specific implementation verification
@@ -209,4 +209,3 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // This is an example of a function that does NOT need platform mocking
         }
     }
-}

@@ -25,8 +25,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect(),
-           let buttonID = try? inspected.accessibilityIdentifier() {
+        if let inspected = button.tryInspect() {
+           let buttonID = try? inspected.accessibilityIdentifier()
             #expect(buttonID.contains("submit") || buttonID.contains("Submit"), 
                    "AdaptiveButton identifier should include label text 'Submit'")
             
@@ -144,15 +144,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect(),
+        if let inspected = button.tryInspect() {
            let buttonID = try? inspected.accessibilityIdentifier()
-            
+
             #expect(buttonID.contains("save") || buttonID.contains("Save"), 
                    "platformNavigationButton identifier should include title text 'Save'")
             
             print("🔴 RED: Navigation Button ID: '\(buttonID)'")
-        } catch {
-            Issue.record("Failed to inspect platformNavigationButton: \(error)")
         }
         
         cleanupTestEnvironment()
@@ -167,9 +165,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect(),
+        if let inspected = button.tryInspect() {
            let buttonID = try? inspected.accessibilityIdentifier()
-            
+
             // TDD RED: Should FAIL - spaces should be converted to hyphens
             #expect(!buttonID.contains("Add New Item"), 
                    "Identifier should not contain raw label with spaces")
@@ -177,9 +175,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "Identifier should contain sanitized label (hyphens)")
             
             print("🔴 RED: Sanitized ID: '\(buttonID)'")
-        } catch {
-            Issue.record("Failed to inspect button: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -191,17 +186,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect(),
+        if let inspected = button.tryInspect() {
            let buttonID = try? inspected.accessibilityIdentifier()
-            
+
             // TDD RED: Should FAIL - special chars should be sanitized
             #expect(!buttonID.contains("&"), "Identifier should not contain '&'")
             #expect(!buttonID.contains("!"), "Identifier should not contain '!'")
             
             print("🔴 RED: Special chars ID: '\(buttonID)'")
-        } catch {
-            Issue.record("Failed to inspect button: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -213,9 +205,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect(),
+        if let inspected = button.tryInspect() {
            let buttonID = try? inspected.accessibilityIdentifier()
-            
+
             // TDD RED: Should FAIL - should be lowercase
             #expect(!buttonID.contains("CamelCaseLabel"), 
                    "Identifier should not contain mixed case label")
@@ -223,9 +215,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                    "Identifier should contain lowercase version")
             
             print("🔴 RED: Case sanitized ID: '\(buttonID)'")
-        } catch {
-            Issue.record("Failed to inspect button: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -254,16 +243,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL - should include sanitized label
             #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email"), 
                    "DynamicTextField identifier should include field label 'Email Address'")
             
             print("🔴 RED: DynamicTextField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicTextField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -289,16 +275,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL
             #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"), 
                    "DynamicEmailField identifier should include field label 'User Email'")
             
             print("🔴 RED: DynamicEmailField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicEmailField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -324,16 +307,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL
             #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure"), 
                    "DynamicPasswordField identifier should include field label 'Secure Password'")
             
             print("🔴 RED: DynamicPasswordField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicPasswordField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -356,16 +336,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = formView.tryInspect(),
-           let formID = try? inspected.accessibilityIdentifier()
+           let formID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL - should include title
             #expect(formID.contains("user") || formID.contains("profile") || formID.contains("User"), 
                    "DynamicFormView identifier should include configuration title 'User Profile'")
             
             print("🔴 RED: DynamicFormView ID: '\(formID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicFormView: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -393,16 +370,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = sectionView.tryInspect(),
-           let sectionID = try? inspected.accessibilityIdentifier()
+           let sectionID = try? inspected.accessibilityIdentifier() {
             
             // TDD RED: Should FAIL - should include title
             #expect(sectionID.contains("personal") || sectionID.contains("information") || sectionID.contains("Personal"), 
                    "DynamicFormSectionView identifier should include section title 'Personal Information'")
             
             print("🔴 RED: DynamicFormSectionView ID: '\(sectionID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicFormSectionView: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -430,15 +404,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("mobile") || fieldID.contains("phone") || fieldID.contains("Mobile"), 
                    "DynamicPhoneField identifier should include field label 'Mobile Phone'")
             
             print("🔴 RED: DynamicPhoneField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicPhoneField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -464,15 +435,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("website") || fieldID.contains("url") || fieldID.contains("Website"), 
                    "DynamicURLField identifier should include field label 'Website URL'")
             
             print("🔴 RED: DynamicURLField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicURLField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -498,15 +466,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("total") || fieldID.contains("amount") || fieldID.contains("Total"), 
                    "DynamicNumberField identifier should include field label 'Total Amount'")
             
             print("🔴 RED: DynamicNumberField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicNumberField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -532,15 +497,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("birth") || fieldID.contains("date") || fieldID.contains("Birth"), 
                    "DynamicDateField identifier should include field label 'Birth Date'")
             
             print("🔴 RED: DynamicDateField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicDateField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -566,15 +528,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("enable") || fieldID.contains("notifications") || fieldID.contains("Enable"), 
                    "DynamicToggleField identifier should include field label 'Enable Notifications'")
             
             print("🔴 RED: DynamicToggleField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicToggleField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -601,15 +560,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("favorite") || fieldID.contains("colors") || fieldID.contains("Favorite"), 
                    "DynamicMultiSelectField identifier should include field label 'Favorite Colors'")
             
             print("🔴 RED: DynamicMultiSelectField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicMultiSelectField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -636,15 +592,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("agree") || fieldID.contains("terms") || fieldID.contains("Agree"), 
                    "DynamicCheckboxField identifier should include field label 'Agree to Terms'")
             
             print("🔴 RED: DynamicCheckboxField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicCheckboxField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -670,15 +623,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("upload") || fieldID.contains("document") || fieldID.contains("Upload"), 
                    "DynamicFileField identifier should include field label 'Upload Document'")
             
             print("🔴 RED: DynamicFileField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicFileField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -705,15 +655,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("priority") || fieldID.contains("level") || fieldID.contains("Priority"), 
                    "DynamicEnumField identifier should include field label 'Priority Level'")
             
             print("🔴 RED: DynamicEnumField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicEnumField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -739,15 +686,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("quantity") || fieldID.contains("Quantity"), 
                    "DynamicIntegerField identifier should include field label 'Quantity'")
             
             print("🔴 RED: DynamicIntegerField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicIntegerField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -773,15 +717,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             #expect(fieldID.contains("comments") || fieldID.contains("Comments"), 
                    "DynamicTextAreaField identifier should include field label 'Comments'")
             
             print("🔴 RED: DynamicTextAreaField ID: '\(fieldID)'")
-        } catch {
-            Issue.record("Failed to inspect DynamicTextAreaField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -983,7 +924,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = listView.tryInspect()            // ForEach creates multiple views - we need to inspect each one
+        if let inspected = listView.tryInspect() { // ForEach creates multiple views - we need to inspect each one
             // This is a simplified test - full test would verify all items are unique
             let viewID = try? inspected.accessibilityIdentifier()
             
@@ -992,9 +933,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify each item has unique identifier with item name
             #expect(true, "Documenting requirement - ForEach items need unique identifiers")
-        } catch {
-            Issue.record("Failed to inspect ForEach list: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1023,8 +961,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "CoverFlowCardComponent items with different titles should have different identifiers")
@@ -1033,9 +971,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: CoverFlowCard 1 ID: '\(card1ID)'")
             print("🔴 RED: CoverFlowCard 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect CoverFlowCardComponent: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1089,8 +1024,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "SimpleCardComponent items with different titles should have different identifiers")
@@ -1099,9 +1034,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: SimpleCard 1 ID: '\(card1ID)'")
             print("🔴 RED: SimpleCard 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect SimpleCardComponent: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1130,8 +1062,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "MasonryCardComponent items with different titles should have different identifiers")
@@ -1140,9 +1072,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: MasonryCard 1 ID: '\(card1ID)'")
             print("🔴 RED: MasonryCard 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect MasonryCardComponent: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1200,8 +1129,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "Grid items should have different identifiers based on their titles")
@@ -1212,9 +1141,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Grid Card 1 ID: '\(card1ID)'")
             print("🔴 RED: Grid Card 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect grid items: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1244,17 +1170,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "Cover flow items should have different identifiers")
             
             print("🔴 RED: CoverFlow Card 1 ID: '\(card1ID)'")
             print("🔴 RED: CoverFlow Card 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect cover flow items: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1285,17 +1208,14 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "Masonry collection items should have different identifiers")
             
             print("🔴 RED: Masonry Card 1 ID: '\(card1ID)'")
             print("🔴 RED: Masonry Card 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect masonry items: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1445,9 +1365,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: ResponsiveCard 1 ID: '\(card1ID)'")
             print("🔴 RED: ResponsiveCard 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect ResponsiveCardView: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1490,8 +1407,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         if let inspected1 = card1.tryInspect(),
            let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect(),
-           let card2ID = try? inspected2.accessibilityIdentifier()
+           let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier() {
             
             #expect(card1ID != card2ID, 
                    "ResponsiveCardView items in collections should have different identifiers")
@@ -1502,9 +1419,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: ResponsiveCard Collection 1 ID: '\(card1ID)'")
             print("🔴 RED: ResponsiveCard Collection 2 ID: '\(card2ID)'")
-        } catch {
-            Issue.record("Failed to inspect ResponsiveCardView collection items: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1536,9 +1450,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify buttons have unique identifiers with titles
             #expect(true, "Documenting requirement - PlatformTabStrip buttons need unique identifiers with item.title")
-        } catch {
-            Issue.record("Failed to inspect PlatformTabStrip: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1592,9 +1503,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Tab Button Home ID: '\(homeID)'")
             print("🔴 RED: Tab Button Settings ID: '\(settingsID)'")
-        } catch {
-            Issue.record("Failed to inspect PlatformTabStrip buttons: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1651,7 +1559,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
-           let fieldID = try? inspected.accessibilityIdentifier()
+           let fieldID = try? inspected.accessibilityIdentifier() {
             
             print("🔴 RED: DynamicFormFieldView ID: '\(fieldID)'")
             print("🔴 RED: Note - Validation error Text views in ForEach should include error text in identifier")
@@ -1659,9 +1567,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify error Text views include error text in identifiers
             #expect(true, "Documenting requirement - Validation error rows need unique identifiers with error text")
-        } catch {
-            Issue.record("Failed to inspect DynamicFormFieldView: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1698,9 +1603,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             // TDD RED: Should verify array items have unique identifiers
             #expect(true, "Documenting requirement - Array field items need unique identifiers")
-        } catch {
-            Issue.record("Failed to inspect DynamicArrayField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1741,9 +1643,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: PlatformListRow 1 ID: '\(row1ID)'")
             print("🔴 RED: PlatformListRow 2 ID: '\(row2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformListRow: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1797,9 +1696,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Section Header 1 ID: '\(header1ID)'")
             print("🔴 RED: Section Header 2 ID: '\(header2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformListSectionHeader: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1840,9 +1736,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Form Field 1 ID: '\(field1ID)'")
             print("🔴 RED: Form Field 2 ID: '\(field2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformFormField: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1883,9 +1776,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Form Field Group 1 ID: '\(group1ID)'")
             print("🔴 RED: Form Field Group 2 ID: '\(group2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformFormFieldGroup: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1922,9 +1812,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Empty State 1 ID: '\(state1ID)'")
             print("🔴 RED: Empty State 2 ID: '\(state2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformListEmptyState: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1961,9 +1848,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Detail Placeholder 1 ID: '\(placeholder1ID)'")
             print("🔴 RED: Detail Placeholder 2 ID: '\(placeholder2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformDetailPlaceholder: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -1994,9 +1878,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: ActionButton 1 ID: '\(button1ID)'")
             print("🔴 RED: ActionButton 2 ID: '\(button2ID)'")
-        } catch {
-            Issue.record("Failed to inspect ActionButton: \(error)")
-        }
         
         cleanupTestEnvironment()
     }
@@ -2034,9 +1915,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Validation Message 1 ID: '\(message1ID)'")
             print("🔴 RED: Validation Message 2 ID: '\(message2ID)'")
-        } catch {
-            Issue.record("Failed to inspect platformValidationMessage: \(error)")
-        }
         
         cleanupTestEnvironment()
     }

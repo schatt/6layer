@@ -13,7 +13,7 @@ import ViewInspector
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Card Expansion Layer")
 @MainActor
-open class IntelligentCardExpansionLayer3Tests {
+open class IntelligentCardExpansionLayer3Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
@@ -37,31 +37,29 @@ open class IntelligentCardExpansionLayer3Tests {
     }
     
 @Test func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnIOS() async {
-        let result = selectCardExpansionStrategy_L3(
+        _ = selectCardExpansionStrategy_L3(
             contentCount: 5,
             screenWidth: 375,
             deviceType: .phone,
             interactionStyle: .interactive,
             contentDensity: .balanced
         )
-        
+
         // Layer 3 functions return strategy data structures, not views
-        // So we test that the result is valid
-        // result is a non-optional CardExpansionStrategy struct, so it exists if we reach here
+        // So we test that the functions execute without crashing
     }
     
     @Test func testSelectCardExpansionStrategyL3GeneratesAccessibilityIdentifiersOnMacOS() async {
-        let result = selectCardExpansionStrategy_L3(
+        _ = selectCardExpansionStrategy_L3(
             contentCount: 5,
             screenWidth: 1920,
             deviceType: .mac,
             interactionStyle: .interactive,
             contentDensity: .balanced
         )
-        
+
         // Layer 3 functions return strategy data structures, not views
-        // So we test that the result is valid
-        #expect(result != nil, "selectCardExpansionStrategy_L3 should return a valid result on macOS")
+        // So we test that the functions execute without crashing
     }
 }
 

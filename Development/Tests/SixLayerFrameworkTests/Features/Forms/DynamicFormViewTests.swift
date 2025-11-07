@@ -230,8 +230,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should render proper wizard structure
-        if let inspected = 
-            let inspected = view.tryInspect()
+        if let inspected = view.tryInspect() {
 
             // Should have a VStack
             let vStack = try inspected.vStack()
@@ -247,7 +246,7 @@ open class DynamicFormViewTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("FormWizardView inspection failed - component not properly implemented: \(error)")")
+            Issue.record("FormWizardView inspection failed - component not properly implemented: \(error)")
         }
     }
 
@@ -414,14 +413,14 @@ open class DynamicFormViewTests: BaseTestClass {
         let regularFieldView = CustomFieldView(field: regularField, formState: formState)
 
         // OCR field should show OCR button (will fail until implemented)
-        if let inspected = 
+        if let inspected = view.tryInspect() {
             let inspected = ocrFieldView.tryInspect()
             // Look for OCR button by finding the HStack that contains both TextField and Button
             let hStack = inspected.tryFind(ViewType.HStack.self)
             // The HStack should have 2 children: TextField and Button
             #expect(hStack.count == 2, "OCR field HStack should contain TextField and OCR button")
         } else {
-            Issue.record("OCR button not implemented yet: \(error)")")
+            Issue.record("OCR button not implemented yet: \(error)")
         }
 
         // Regular field should not show OCR button (no HStack)
@@ -665,13 +664,13 @@ open class DynamicFormViewTests: BaseTestClass {
         let viewWithoutOCR = DynamicFormView(configuration: configWithoutOCR, onSubmit: { _ in })
 
         // OCR form should show batch OCR button
-        if let inspected = 
+        if let inspected = view.tryInspect() {
             let inspected = viewWithOCR.tryInspect()
             // Should find the batch OCR button
             let ocrButton = inspected.tryFind(button: "Scan Document")
-            #expect(true, "Form with OCR fields should show batch OCR button")
+            // Batch OCR button check - implementation pending
         } else {
-            Issue.record("Batch OCR button not found in OCR-enabled form: \(error)")")
+            Issue.record("Batch OCR button not found in OCR-enabled form: \(error)")
         }
 
         // Non-OCR form should not show batch OCR button

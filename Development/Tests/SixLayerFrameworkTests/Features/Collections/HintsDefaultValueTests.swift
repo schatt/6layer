@@ -267,7 +267,7 @@ struct HintsDefaultValueTests {
         )
         
         // When: Create view using platformPresentItemCollection_L1
-        let view = platformPresentItemCollection_L1(
+        let _view = platformPresentItemCollection_L1(
             items: tasks,
             hints: hints
         )
