@@ -956,4 +956,3 @@ struct AccessibilityTestItem: Identifiable {
         self.subtitle = subtitle
     }
 }
-}
