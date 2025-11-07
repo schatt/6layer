@@ -101,6 +101,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     print("✅ Long name ID: '\(buttonID)' (\(buttonID.count) chars)")
                 }
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -127,6 +130,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 
                 print("✅ Manual override ID: '\(buttonID)'")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -166,8 +172,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     print("✅ Mid-hierarchy disable works")
                 }
             } catch {
-                Issue.record("Failed to inspect view with mid-hierarchy disable: \(error)")
+                Issue.record("Failed to inspect view with mid-hierarchy disable")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -219,9 +228,10 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view1) { inspectedView1 in
                     let button1ID = try inspectedView1.accessibilityIdentifier()
-                    
+                }
                     try withInspectedViewThrowing(view2) { inspectedView2 in
                         let button2ID = try inspectedView2.accessibilityIdentifier()
                         
@@ -235,8 +245,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     }
                 }
             } catch {
-                Issue.record("Failed to inspect exactNamed views: \(error)")
+                Issue.record("Failed to inspect exactNamed views")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
