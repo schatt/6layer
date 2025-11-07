@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// View Generation Verification Tests
 /// Tests that the actual SwiftUI views are generated correctly with the right properties and modifiers
 /// This verifies the view structure using the new testing pattern: view created + contains expected content
@@ -126,22 +123,12 @@ struct ViewGenerationVerificationTests {
         
         // 2. Contains what it needs to contain - Both views should contain our data
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let compactInspected = compactView.tryInspect(),
-              let detailedInspected = detailedView.tryInspect() else {
-            Issue.record("Failed to inspect view structures")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
-            // Both views should contain our test data
+        let compactInspectionResult = withInspectedView(compactView) { compactInspected in
+            // Compact view should contain our test data
             let compactText = compactInspected.tryFindAll(ViewType.Text.self)
-            let detailedText = detailedInspected.tryFindAll(ViewType.Text.self)
-            
             #expect(!compactText.isEmpty, "Compact view should contain text elements")
-            #expect(!detailedText.isEmpty, "Detailed view should contain text elements")
-            
-            // Both should contain the title
+
+            // Should contain the title
             let compactHasTitle = compactText.contains { text in
                 do {
                     let textContent = try text.string()
@@ -150,6 +137,15 @@ struct ViewGenerationVerificationTests {
                     return false
                 }
             }
+            #expect(compactHasTitle, "Compact view should contain the title")
+        }
+
+        let detailedInspectionResult = withInspectedView(detailedView) { detailedInspected in
+            // Detailed view should contain our test data
+            let detailedText = detailedInspected.tryFindAll(ViewType.Text.self)
+            #expect(!detailedText.isEmpty, "Detailed view should contain text elements")
+
+            // Should contain the title
             let detailedHasTitle = detailedText.contains { text in
                 do {
                     let textContent = try text.string()
@@ -158,14 +154,12 @@ struct ViewGenerationVerificationTests {
                     return false
                 }
             }
-            
-            #expect(compactHasTitle, "Compact view should contain the title")
             #expect(detailedHasTitle, "Detailed view should contain the title")
-            
-        } catch {
-            Issue.record("Failed to inspect views with different hints: \(error)")
         }
-        #endif
+
+        if compactInspectionResult == nil || detailedInspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
 
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles custom field views

@@ -25,90 +25,64 @@
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
 import ViewInspector
-#endif
 
 // MARK: - View Extension for Inspection
 
 extension View {
     /// Safely inspect a view using ViewInspector
-    /// Returns nil on macOS or on inspection failure
-    /// When ViewInspector works on macOS, remove the #if !os(macOS) condition
+    /// Returns nil on inspection failure (platform or other issues)
+    /// When ViewInspector has issues on any platform, this gracefully returns nil
     @MainActor
     func tryInspect() -> InspectableView<ViewType.ClassifiedView>? {
-        #if !os(macOS)
         return try? self.inspect()
-        #else
-        // TODO: When ViewInspector works on macOS, remove this return nil and use self.inspect() directly
-        return nil
-        #endif
     }
     
     /// Inspect a view using ViewInspector, throwing on failure
-    /// When ViewInspector works on macOS, remove the #if !os(macOS) condition
+    /// Throws when ViewInspector cannot inspect the view
     @MainActor
     func inspectView() throws -> InspectableView<ViewType.ClassifiedView> {
-        #if !os(macOS)
         return try self.inspect()
-        #else
-        // TODO: When ViewInspector works on macOS, remove this throw and use self.inspect() directly
-        struct ViewInspectorNotAvailableOnMacOS: Error {}
-        throw ViewInspectorNotAvailableOnMacOS()
-        #endif
     }
 }
 
 // MARK: - InspectableView Extension for Common Operations
 
-#if !os(macOS)
 extension InspectableView {
     /// Safely find a view type, returning nil if not found
     func tryFind<T>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
         return try? self.find(type)
     }
-    
+
     /// Safely find all views of a type, returning empty array if none found
     func tryFindAll<T>(_ type: T.Type) -> [InspectableView<ViewType.View<T>>] {
         return (try? self.findAll(type)) ?? []
     }
 }
-#endif
 
 // MARK: - Helper Functions for Common Patterns
 
 /// Safely inspect a view and execute a closure if inspection succeeds
-/// Returns nil on macOS or on inspection failure
-/// When ViewInspector works on macOS, remove the #if !os(macOS) condition
+/// Returns nil on inspection failure
+/// Handles all platform differences internally
 @MainActor
 public func withInspectedView<V: View, R>(
     _ view: V,
     perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
 ) -> R? {
-    #if !os(macOS)
     guard let inspected = try? view.inspect() else {
         return nil
     }
     return try? perform(inspected)
-    #else
-    // TODO: When ViewInspector works on macOS, remove this return nil
-    return nil
-    #endif
 }
 
 /// Safely inspect a view and execute a throwing closure
-/// When ViewInspector works on macOS, remove the #if !os(macOS) condition
+/// Throws when ViewInspector cannot inspect the view
 @MainActor
 public func withInspectedViewThrowing<V: View, R>(
     _ view: V,
     perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
 ) throws -> R {
-    #if !os(macOS)
     let inspected = try view.inspect()
     return try perform(inspected)
-    #else
-    // TODO: When ViewInspector works on macOS, remove this throw
-    struct ViewInspectorNotAvailableOnMacOS: Error {}
-    throw ViewInspectorNotAvailableOnMacOS()
-    #endif
 }
