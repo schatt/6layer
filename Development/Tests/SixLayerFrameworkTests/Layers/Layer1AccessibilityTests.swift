@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Layer 1 Accessibility Tests
 /// 
 /// BUSINESS PURPOSE: Test that Layer 1 functions generate proper accessibility identifiers

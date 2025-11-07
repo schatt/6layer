@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /**
  * BUSINESS PURPOSE: Layer 5 platform components provide high-level platform intelligence

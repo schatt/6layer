@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Tests for PlatformPhotoComponentsLayer4.swift
 /// 
 /// BUSINESS PURPOSE: Ensure all photo Layer 4 components generate proper accessibility identifiers

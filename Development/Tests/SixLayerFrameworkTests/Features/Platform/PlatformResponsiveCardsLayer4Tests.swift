@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 // MARK: - Test Helper Types
 
 struct PlatformResponsiveCardsTestItem: Identifiable {

@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /**
  * BUSINESS PURPOSE: FormWizardView provides a multi-step wizard interface for complex forms.

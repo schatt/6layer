@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Tests for GenericItemCollectionView component
 /// 
 /// BUSINESS PURPOSE: Ensure GenericItemCollectionView generates proper accessibility identifiers

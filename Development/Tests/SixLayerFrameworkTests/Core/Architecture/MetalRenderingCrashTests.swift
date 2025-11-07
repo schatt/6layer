@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// TDD Tests for Metal Rendering Crash Bug Fix
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 /// 

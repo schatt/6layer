@@ -34,9 +34,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 @MainActor
 @Suite("Platform Present Content L")
 open class PlatformPresentContentL1Tests {

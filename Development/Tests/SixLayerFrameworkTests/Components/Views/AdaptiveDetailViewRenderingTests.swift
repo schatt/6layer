@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /// Integration tests for platformAdaptiveDetailView rendering
 /// These test the ACTUAL framework behavior - that the view renders correctly

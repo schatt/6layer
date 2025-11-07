@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// DRY Test Patterns
 /// Provides reusable patterns to eliminate duplication in tests
 @MainActor
@@ -162,23 +159,22 @@ open class TestPatterns {
         // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain expected text
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect view for \(testName)")
-            return
-        }
-        
-        #if !os(macOS)
-        let viewText = inspected.tryFindAll(ViewType.Text.self)
-        #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
-        
-        let hasExpectedText = viewText.contains { text in
-            if let textContent = try? text.string() {
-                return textContent.contains(expectedText)
+        let inspectionResult = withInspectedView(view) { inspected in
+            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
+
+            let hasExpectedText = viewText.contains { text in
+                if let textContent = try? text.string() {
+                    return textContent.contains(expectedText)
+                }
+                return false
             }
-            return false
+            #expect(hasExpectedText, "View should contain text '\(expectedText)' for \(testName)")
         }
-        #expect(hasExpectedText, "View should contain text '\(expectedText)' for \(testName)")
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS) for \(testName)")
+        }
     }
     
     /// BUSINESS PURPOSE: Verify that a view contains specific image elements
@@ -190,15 +186,14 @@ open class TestPatterns {
         
         // 2. Contains what it needs to contain - The view should contain image elements
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect view for \(testName)")
-            return
+        let inspectionResult = withInspectedView(view) { inspected in
+            let viewImages = inspected.tryFindAll(ViewType.Image.self)
+            #expect(!viewImages.isEmpty, "View should contain image elements for \(testName)")
         }
-        
-        #if !os(macOS)
-        let viewImages = inspected.tryFindAll(ViewType.Image.self)
-        #expect(!viewImages.isEmpty, "View should contain image elements for \(testName)")
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS) for \(testName)")
+        }
     }
     
     static func verifyPlatformProperties(viewInfo: ViewInfo, testName: String) {

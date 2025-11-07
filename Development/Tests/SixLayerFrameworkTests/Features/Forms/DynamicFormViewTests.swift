@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Tests for DynamicFormView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure DynamicFormView generates proper accessibility identifiers
@@ -69,13 +66,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
         // Should render proper form structure
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect DynamicFormView")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspected in
             // Should have a VStack as root
             let vStack = try inspected.vStack()
             #expect(vStack.count >= 3, "Should have title, sections, and submit button")
@@ -88,10 +79,11 @@ open class DynamicFormViewTests: BaseTestClass {
                 componentName: "DynamicFormView"
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
-        } catch {
-            Issue.record("Failed to inspect DynamicFormView structure: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
 
     @Test func testDynamicFormSectionViewRendersSectionTitleAndFields() async {
@@ -118,13 +110,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
         // Should render proper section structure
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect DynamicFormSectionView")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspected in
             // Should have a VStack with leading alignment
             let vStack = try inspected.vStack()
             #expect(vStack.count >= 3, "Should have section title and field views")
@@ -141,10 +127,11 @@ open class DynamicFormViewTests: BaseTestClass {
                 componentName: "DynamicFormSectionView"
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
-        } catch {
-            Issue.record("Failed to inspect DynamicFormSectionView structure: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
 
     @Test func testDynamicFormFieldViewRendersFieldUsingCustomFieldView() async {
@@ -170,13 +157,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
         // Should render proper field structure
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect DynamicFormFieldView")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspected in
             // Should have a VStack with leading alignment
             let vStack = try inspected.vStack()
             #expect(vStack.count >= 2, "Should have field label and field control")
@@ -193,10 +174,11 @@ open class DynamicFormViewTests: BaseTestClass {
                 componentName: "DynamicFormFieldView"
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
-        } catch {
-            Issue.record("Failed to inspect DynamicFormFieldView structure: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
 
     @Test func testFormWizardViewRendersStepsAndNavigation() async {

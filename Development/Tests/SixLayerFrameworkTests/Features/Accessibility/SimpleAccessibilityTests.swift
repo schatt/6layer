@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
 @Suite("Simple Accessibility")

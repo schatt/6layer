@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /**
  * BUSINESS PURPOSE: OCR components provide document scanning, text extraction, and

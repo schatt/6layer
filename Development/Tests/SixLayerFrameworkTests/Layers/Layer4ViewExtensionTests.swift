@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /// Comprehensive tests for Layer 4 View extension functions
 /// Ensures all View extension functions in Layer 4 are tested

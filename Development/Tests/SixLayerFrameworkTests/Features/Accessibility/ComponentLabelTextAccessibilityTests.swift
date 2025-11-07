@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /// TDD RED PHASE: Tests for label text inclusion in accessibility identifiers
 /// These tests SHOULD FAIL until components are updated to include label text

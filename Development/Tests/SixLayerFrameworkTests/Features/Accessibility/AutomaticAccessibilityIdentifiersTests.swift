@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Tests for AutomaticAccessibilityIdentifiers.swift
 /// 
 /// BUSINESS PURPOSE: Ensure automatic accessibility identifier system functions correctly

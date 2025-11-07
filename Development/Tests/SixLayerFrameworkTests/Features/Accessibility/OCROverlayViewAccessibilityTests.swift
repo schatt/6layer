@@ -4,9 +4,6 @@ import Testing
 import SwiftUI
 import AppKit
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
 @MainActor

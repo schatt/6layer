@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Tests for ModalFormView component
 /// 
 /// BUSINESS PURPOSE: Ensure ModalFormView generates proper accessibility identifiers

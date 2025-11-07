@@ -1,9 +1,6 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /**
  * BUSINESS PURPOSE: Verify that accessibility identifier generation actually works end-to-end
  * and that the Enhanced Breadcrumb System modifiers properly trigger identifier generation.

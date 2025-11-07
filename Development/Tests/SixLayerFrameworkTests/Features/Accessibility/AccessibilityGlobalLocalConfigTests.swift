@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Test that accessibility functions respect both global and local configuration options
 @MainActor
 @Suite("Accessibility Global Local Config")
