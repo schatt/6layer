@@ -890,10 +890,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                        "Identifier should contain namespace 'SixLayer', got: '\(identifier)'")
                     
                 print("✅ Generated identifier with named component: '\(identifier)'")
-            } catch {
-                Issue.record("Failed to inspect view: \(error)")
+        } else {
+            Issue.record("Failed to inspect view")
         }
-            }
     }
     
     /// BUSINESS PURPOSE: Test that automaticAccessibilityIdentifiers(named:) is equivalent to setting environment manually

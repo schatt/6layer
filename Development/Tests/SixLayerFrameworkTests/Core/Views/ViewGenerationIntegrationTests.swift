@@ -1106,4 +1106,5 @@ open class ViewGenerationIntegrationTests {
         // Clean up
         RuntimeCapabilityDetection.setTestPlatform(nil)
     }
+    }
 }

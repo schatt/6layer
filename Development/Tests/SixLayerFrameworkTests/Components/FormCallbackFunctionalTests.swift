@@ -80,6 +80,7 @@ open class FormCallbackFunctionalTests {
         } catch {
             Issue.record("ViewInspector failed to inspect form: \(error)")
         }
+        #endif
     }
     #endif
     
