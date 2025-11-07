@@ -26,6 +26,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("")  // ← Empty string
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Should handle empty strings gracefully
@@ -34,6 +35,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
 
                 print("✅ Empty string ID: '\(buttonID)' (\(buttonID.count) chars)")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -50,6 +54,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("Button@#$%^&*()")  // ← Special characters
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Should preserve special characters (no sanitization)
@@ -59,6 +64,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
 
                 print("✅ Special chars ID: '\(buttonID)' (\(buttonID.count) chars)")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -77,6 +85,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Should handle long names gracefully
@@ -110,6 +119,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .accessibilityIdentifier("manual-override")  // ← Manual override
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Manual ID should override automatic ID
@@ -138,6 +148,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttons = try inspectedView.findAll(ViewType.Button.self)
                     
@@ -172,6 +183,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("TestView")
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let vStackID = try inspectedView.accessibilityIdentifier()
                     
@@ -242,9 +254,10 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
-                    
+                }
                     try withInspectedViewThrowing(namedView) { namedInspected in
                         let namedID = try namedInspected.accessibilityIdentifier()
                         
@@ -260,8 +273,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     }
                 }
             } catch {
-                Issue.record("Failed to inspect exactNamed vs named views: \(error)")
+                Issue.record("Failed to inspect exactNamed vs named views")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -283,22 +299,26 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
                 
-                // exactNamed() should NOT include hierarchy components
-                // This test will FAIL until exactNamed() is properly implemented
-                #expect(!exactID.contains("NavigationView"), "exactNamed() should ignore NavigationView hierarchy")
-                #expect(!exactID.contains("ProfileSection"), "exactNamed() should ignore ProfileSection hierarchy")
-                #expect(!exactID.contains("UserProfile"), "exactNamed() should ignore UserProfile screen context")
-                #expect(exactID.contains("SaveButton"), "exactNamed() should contain the exact name")
-                #expect(exactID == "SaveButton", "exactNamed() should produce exact identifier 'SaveButton', got '\(exactID)'")
-                
-                print("✅ Exact named ignores hierarchy - ID: '\(exactID)'")
+                    // exactNamed() should NOT include hierarchy components
+                    // This test will FAIL until exactNamed() is properly implemented
+                    #expect(!exactID.contains("NavigationView"), "exactNamed() should ignore NavigationView hierarchy")
+                    #expect(!exactID.contains("ProfileSection"), "exactNamed() should ignore ProfileSection hierarchy")
+                    #expect(!exactID.contains("UserProfile"), "exactNamed() should ignore UserProfile screen context")
+                    #expect(exactID.contains("SaveButton"), "exactNamed() should contain the exact name")
+                    #expect(exactID == "SaveButton", "exactNamed() should produce exact identifier 'SaveButton', got '\(exactID)'")
+                    
+                    print("✅ Exact named ignores hierarchy - ID: '\(exactID)'")
                 }
             } catch {
-                Issue.record("Failed to inspect exactNamed with hierarchy: \(error)")
+                Issue.record("Failed to inspect exactNamed with hierarchy")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -312,12 +332,13 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
                 
-                // exactNamed() should produce minimal identifiers (just the exact name)
-                // This test will FAIL until exactNamed() is properly implemented
-                let expectedMinimalPattern = "MinimalButton"
+                    // exactNamed() should produce minimal identifiers (just the exact name)
+                    // This test will FAIL until exactNamed() is properly implemented
+                    let expectedMinimalPattern = "MinimalButton"
                 #expect(exactID == expectedMinimalPattern, "exactNamed() should produce exact identifier '\(expectedMinimalPattern)', got '\(exactID)'")
                 
                 print("✅ Exact named minimal - ID: '\(exactID)'")
@@ -354,17 +375,21 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             config.mode = .semantic
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttonID = try inspectedView.accessibilityIdentifier()
                 
-                // Should use configuration at time of ID generation
-                #expect(!buttonID.isEmpty, "Should generate ID with changed config")
+                    // Should use configuration at time of ID generation
+                    #expect(!buttonID.isEmpty, "Should generate ID with changed config")
                 
                 print("✅ Config change ID: '\(buttonID)' (\(buttonID.count) chars)")
                 }
             } catch {
-                Issue.record("Failed to inspect view with config changes: \(error)")
+                Issue.record("Failed to inspect view with config changes")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -387,6 +412,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("VeryOuter")  // ← Multiple .named() calls
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let button = try inspectedView.find(ViewType.Button.self)
                     let buttonID = try button.accessibilityIdentifier()
@@ -399,8 +425,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     print("✅ Nested calls ID: '\(buttonID)' (\(buttonID.count) chars)")
                 }
             } catch {
-                Issue.record("Failed to inspect view with nested .named() calls: \(error)")
+                Issue.record("Failed to inspect view with nested .named() calls")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -417,18 +446,22 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("按钮")  // ← Chinese characters
             
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttonID = try inspectedView.accessibilityIdentifier()
                 
-                // Should handle Unicode gracefully
-                #expect(!buttonID.isEmpty, "Should generate ID with Unicode characters")
-                #expect(buttonID.contains("SixLayer"), "Should contain namespace")
+                    // Should handle Unicode gracefully
+                    #expect(!buttonID.isEmpty, "Should generate ID with Unicode characters")
+                    #expect(buttonID.contains("SixLayer"), "Should contain namespace")
                 
-                print("✅ Unicode ID: '\(buttonID)' (\(buttonID.count) chars)")
+                    print("✅ Unicode ID: '\(buttonID)' (\(buttonID.count) chars)")
                 }
             } catch {
-                Issue.record("Failed to inspect view with Unicode characters: \(error)")
+                Issue.record("Failed to inspect view with Unicode characters")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
 }
