@@ -78,18 +78,18 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
-        do {
-            let _ = try optimizedView.inspect()
-        } catch {
-            Issue.record("Failed to inspect optimized view structure: \(error)")
+        if let _ = 
+            let _ = optimizedView.tryInspect()
+        } else {
+            Issue.record("Failed to inspect optimized view structure: \(error)")")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Optimized view should be inspectable and contain platform-specific optimizations
-        do {
-            let _ = try optimizedView.inspect()
+        if let _ = 
+            let _ = optimizedView.tryInspect()
             // Platform-specific optimizations verified
-        } catch {
+        } else {
             Issue.record("Optimized view should be inspectable on current platform")
         }
     }
@@ -352,18 +352,18 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
-        do {
-            let _ = try optimizedView.inspect()
-        } catch {
-            Issue.record("Failed to inspect platform-optimized view structure: \(error)")
+        if let _ = 
+            let _ = optimizedView.tryInspect()
+        } else {
+            Issue.record("Failed to inspect platform-optimized view structure: \(error)")")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Optimized view should be inspectable and contain platform-specific optimizations
-        do {
-            let _ = try optimizedView.inspect()
+        if let _ = 
+            let _ = optimizedView.tryInspect()
             // Platform-specific optimizations verified
-        } catch {
+        } else {
             Issue.record("Platform-optimized view should be inspectable on current platform")
         }
     }
@@ -382,18 +382,18 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
-        do {
-            let _ = try optimizedView.inspect()
-        } catch {
-            Issue.record("Failed to inspect performance-optimized view structure: \(error)")
+        if let _ = 
+            let _ = optimizedView.tryInspect()
+        } else {
+            Issue.record("Failed to inspect performance-optimized view structure: \(error)")")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // Performance-optimized view should be inspectable
-        do {
-            let _ = try optimizedView.inspect()
+        if let _ = 
+            let _ = optimizedView.tryInspect()
             // Performance optimizations verified
-        } catch {
+        } else {
             Issue.record("Performance-optimized view should be inspectable on current platform")
         }
     }
@@ -412,18 +412,18 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Note: optimizedView is a View, so it cannot be nil
         
         // 2. Does that structure contain what it should?
-        do {
-            let _ = try optimizedView.inspect()
-        } catch {
-            Issue.record("Failed to inspect UI pattern-optimized view structure: \(error)")
+        if let _ = 
+            let _ = optimizedView.tryInspect()
+        } else {
+            Issue.record("Failed to inspect UI pattern-optimized view structure: \(error)")")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
         // UI pattern-optimized view should be inspectable
-        do {
-            let _ = try optimizedView.inspect()
+        if let _ = 
+            let _ = optimizedView.tryInspect()
             // UI pattern optimizations verified
-        } catch {
+        } else {
             Issue.record("UI pattern-optimized view should be inspectable on current platform")
         }
     }
@@ -459,10 +459,10 @@ open class CrossPlatformOptimizationLayer6Tests {
         // Then: Fully optimized view should be created successfully
         // Note: fullyOptimizedView is a View, so it cannot be nil
         
-        do {
-            let _ = try fullyOptimizedView.inspect()
-        } catch {
-            Issue.record("Fully optimized view should be inspectable: \(error)")
+        if let _ = 
+            let _ = fullyOptimizedView.tryInspect()
+        } else {
+            Issue.record("Fully optimized view should be inspectable: \(error)")")
         }
     }
     

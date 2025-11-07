@@ -49,7 +49,7 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
 
         // Should render all options from field
         do {
-            let inspected = try view.inspect()
+            let inspected = view.tryInspect()
             let foundOption1 = (try? inspected.find(text: "Option 1")) != nil
             let foundOption2 = (try? inspected.find(text: "Option 2")) != nil
             let foundOption3 = (try? inspected.find(text: "Option 3")) != nil
@@ -57,7 +57,7 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
             
             // Additional check: should NOT show stub text (supplementary verification)
             do {
-                _ = try inspected.find(text: "Multi-select - TDD Red Phase Stub")
+                _ = inspected.tryFind(text: "Multi-select - TDD Red Phase Stub")
                 Issue.record("DynamicMultiSelectField still shows stub text - needs implementation")
             } catch {
                 // Good - stub text not found
@@ -109,14 +109,14 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicRadioField(field: field, formState: formState)
 
         // Should render all radio options
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             let foundChoiceA = (try? inspected.find(text: "Choice A")) != nil
             let foundChoiceB = (try? inspected.find(text: "Choice B")) != nil
             let foundChoiceC = (try? inspected.find(text: "Choice C")) != nil
             #expect(foundChoiceA || foundChoiceB || foundChoiceC, "Should display radio options")
-        } catch {
-            Issue.record("DynamicRadioField options not found: \(error)")
+        } else {
+            Issue.record("DynamicRadioField options not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -161,14 +161,14 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicCheckboxField(field: field, formState: formState)
 
         // Should render checkbox options
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             let foundCheck1 = (try? inspected.find(text: "Check 1")) != nil
             let foundCheck2 = (try? inspected.find(text: "Check 2")) != nil
             let foundCheck3 = (try? inspected.find(text: "Check 3")) != nil
             #expect(foundCheck1 || foundCheck2 || foundCheck3, "Should display checkbox options")
-        } catch {
-            Issue.record("DynamicCheckboxField options not found: \(error)")
+        } else {
+            Issue.record("DynamicCheckboxField options not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -207,13 +207,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicRichTextField(field: field, formState: formState)
 
         // Should render text input interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have text input capability
             let hasTextInput = inspected.count > 0
             #expect(hasTextInput, "Should provide text input interface")
-        } catch {
-            Issue.record("DynamicRichTextField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicRichTextField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -252,13 +252,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicFileField(field: field, formState: formState)
 
         // Should render file picker interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have file selection capability
             let hasFilePicker = inspected.count > 0
             #expect(hasFilePicker, "Should provide file picker interface")
-        } catch {
-            Issue.record("DynamicFileField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicFileField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -297,13 +297,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicImageField(field: field, formState: formState)
 
         // Should render image picker interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have image selection capability
             let hasImagePicker = inspected.count > 0
             #expect(hasImagePicker, "Should provide image picker interface")
-        } catch {
-            Issue.record("DynamicImageField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicImageField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -342,13 +342,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicArrayField(field: field, formState: formState)
 
         // Should render array input interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have array manipulation capability
             let hasArrayInput = inspected.count > 0
             #expect(hasArrayInput, "Should provide array input interface")
-        } catch {
-            Issue.record("DynamicArrayField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicArrayField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -387,13 +387,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicDataField(field: field, formState: formState)
 
         // Should render data input interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have data input capability
             let hasDataInput = inspected.count > 0
             #expect(hasDataInput, "Should provide data input interface")
-        } catch {
-            Issue.record("DynamicDataField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicDataField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -433,13 +433,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicAutocompleteField(field: field, formState: formState)
 
         // Should render autocomplete interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have text input with suggestions
             let hasAutocomplete = inspected.count > 0
             #expect(hasAutocomplete, "Should provide autocomplete interface")
-        } catch {
-            Issue.record("DynamicAutocompleteField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicAutocompleteField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -479,14 +479,14 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicEnumField(field: field, formState: formState)
 
         // Should render enum options
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             let foundValue1 = (try? inspected.find(text: "Value1")) != nil
             let foundValue2 = (try? inspected.find(text: "Value2")) != nil
             let foundValue3 = (try? inspected.find(text: "Value3")) != nil
             #expect(foundValue1 || foundValue2 || foundValue3, "Should display enum options")
-        } catch {
-            Issue.record("DynamicEnumField options not found: \(error)")
+        } else {
+            Issue.record("DynamicEnumField options not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -525,13 +525,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicCustomField(field: field, formState: formState)
 
         // Should render custom component or error
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have some UI (either custom component or error message)
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should render custom component or error message")
-        } catch {
-            Issue.record("DynamicCustomField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicCustomField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -570,13 +570,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicColorField(field: field, formState: formState)
 
         // Should render color picker interface
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have color selection capability
             let hasColorPicker = inspected.count > 0
             #expect(hasColorPicker, "Should provide color picker interface")
-        } catch {
-            Issue.record("DynamicColorField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicColorField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -615,13 +615,13 @@ open class DynamicFieldComponentsTDDTests: BaseTestClass {
         let view = DynamicTextAreaField(field: field, formState: formState)
 
         // Should render multi-line text editor
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should have text input capability
             let hasTextArea = inspected.count > 0
             #expect(hasTextArea, "Should provide multi-line text editor")
-        } catch {
-            Issue.record("DynamicTextAreaField interface not found: \(error)")
+        } else {
+            Issue.record("DynamicTextAreaField interface not found: \(error)")")
         }
 
         // Should generate accessibility identifier

@@ -57,18 +57,18 @@ struct IntelligentDetailViewSheetTests {
         
         // Verify the view can be inspected with ViewInspector
         do {
-            let inspector = try sheetContent.inspect()
+            let inspector = sheetContent.tryInspect()
             
             // Try to find VStack (standard layout structure)
             // This proves the view has actual content structure, not blank
             do {
-                let _ = try inspector.find(ViewType.VStack.self)
+                let _ = inspector.tryFind(ViewType.VStack.self)
                 // If we found a VStack, the view has structure and content
                 #expect(true, "platformDetailView should have view structure (proves it's not blank)")
             } catch {
                 // Try finding any structural view
                 do {
-                    let _ = try inspector.find(ViewType.HStack.self)
+                    let _ = inspector.tryFind(ViewType.HStack.self)
                     #expect(true, "platformDetailView should have view structure (proves it's not blank)")
                 } catch {
                     // Any view structure is acceptable
@@ -97,11 +97,11 @@ struct IntelligentDetailViewSheetTests {
         
         // Verify the view can be inspected (proves it's not blank)
         do {
-            let inspector = try detailView.inspect()
+            let inspector = detailView.tryInspect()
             
             // Try to find Text views (which would contain the field values)
             do {
-                let texts = try inspector.findAll(ViewType.Text.self)
+                let texts = inspector.tryFindAll(ViewType.Text.self)
                 // If we found text views, the view is displaying content
                 #expect(texts.count > 0, "platformDetailView should display model properties as text")
             } catch {
@@ -124,12 +124,12 @@ struct IntelligentDetailViewSheetTests {
             .frame(idealWidth: 600, idealHeight: 700)
         
         // Verify the view compiles and can be inspected with frame constraints
-        do {
-            let inspector = try detailView.inspect()
+        if let inspector = 
+            let inspector = detailView.tryInspect()
             // If we can inspect with frame constraints, the view respects them
             #expect(true, "platformDetailView should accept frame constraints for sheet sizing")
-        } catch {
-            Issue.record("platformDetailView should accept frame constraints: \(error)")
+        } else {
+            Issue.record("platformDetailView should accept frame constraints: \(error)")")
         }
     }
     
@@ -148,11 +148,11 @@ struct IntelligentDetailViewSheetTests {
         }
         
         // Verify NavigationStack + platformDetailView works
-        do {
-            let inspector = try sheetContent.inspect()
+        if let inspector = 
+            let inspector = sheetContent.tryInspect()
             #expect(true, "platformDetailView should work with NavigationStack in sheets")
-        } catch {
-            Issue.record("platformDetailView should work in NavigationStack: \(error)")
+        } else {
+            Issue.record("platformDetailView should work in NavigationStack: \(error)")")
         }
     }
     
@@ -164,19 +164,19 @@ struct IntelligentDetailViewSheetTests {
         let textData: [String: String] = ["name": "Test"]
         
         // All should work in sheet context - verify they can be inspected
-        do {
+        if let _ = 
             let taskDetail = IntelligentDetailView.platformDetailView(for: task)
-            let _ = try taskDetail.inspect()
+            let _ = taskDetail.tryInspect()
             
             let numericDetail = IntelligentDetailView.platformDetailView(for: numericData)
-            let _ = try numericDetail.inspect()
+            let _ = numericDetail.tryInspect()
             
             let textDetail = IntelligentDetailView.platformDetailView(for: textData)
-            let _ = try textDetail.inspect()
+            let _ = textDetail.tryInspect()
             
             #expect(true, "platformDetailView should work with different data types in sheets")
-        } catch {
-            Issue.record("platformDetailView should work with different data types: \(error)")
+        } else {
+            Issue.record("platformDetailView should work with different data types: \(error)")")
         }
     }
     

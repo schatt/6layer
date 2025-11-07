@@ -190,8 +190,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicTextField(field: field, formState: formState)
 
         // Should render proper UI structure
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and TextField
             let vStack = try inspected.vStack()
@@ -219,8 +219,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let fieldValue: String? = formState.getValue(for: "test-text-field")
             #expect(fieldValue == "John Doe", "Form state should contain initial value")
 
-        } catch {
-            Issue.record("DynamicTextField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicTextField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -248,8 +248,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicNumberField(field: field, formState: formState)
 
         // Should render proper numeric input UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and TextField
             let vStack = try inspected.vStack()
@@ -283,8 +283,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let numberValue: String? = formState.getValue(for: "test-number-field")
             #expect(numberValue == "25", "Form state should contain numeric value")
 
-        } catch {
-            Issue.record("DynamicNumberField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicNumberField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -312,8 +312,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicTextAreaField(field: field, formState: formState)
 
         // Should render proper multiline text input UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and TextEditor
             let vStack = try inspected.vStack()
@@ -336,8 +336,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let storedValue: String? = formState.getValue(for: "test-textarea-field")
             #expect(storedValue == "This is a\nmultiline description\nwith line breaks", "Form state should contain multiline text")
 
-        } catch {
-            Issue.record("DynamicTextAreaField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicTextAreaField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -366,8 +366,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicSelectField(field: field, formState: formState)
 
         // Should render proper selection UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and Picker
             let vStack = try inspected.vStack()
@@ -390,8 +390,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let selectValue: String? = formState.getValue(for: "test-select-field")
             #expect(selectValue == "USA", "Form state should contain selected value")
 
-        } catch {
-            Issue.record("DynamicSelectField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicSelectField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -420,8 +420,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicMultiSelectField(field: field, formState: formState)
 
         // Should render proper multiple selection UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and selection controls
             let vStack = try inspected.vStack()
@@ -444,8 +444,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let storedValue: [String]? = formState.getValue(for: "test-multiselect-field")
             #expect(storedValue == ["Reading", "Music"], "Form state should contain selected values array")
 
-        } catch {
-            Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -474,8 +474,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicRadioField(field: field, formState: formState)
 
         // Should render proper radio button group UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and radio controls
             let vStack = try inspected.vStack()
@@ -498,8 +498,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let radioValue: String? = formState.getValue(for: "test-radio-field")
             #expect(radioValue == "Female", "Form state should contain selected radio value")
 
-        } catch {
-            Issue.record("DynamicRadioField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicRadioField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -527,8 +527,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicCheckboxField(field: field, formState: formState)
 
         // Should render proper toggle/checkbox UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and Toggle
             let vStack = try inspected.vStack()
@@ -551,8 +551,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let checkboxValue: Bool? = formState.getValue(for: "test-checkbox-field")
             #expect(checkboxValue == true, "Form state should contain boolean checkbox value")
 
-        } catch {
-            Issue.record("DynamicCheckboxField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicCheckboxField inspection failed - component not properly implemented: \(error)")")
         }
     }
     
@@ -580,8 +580,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicToggleField(field: field, formState: formState)
 
         // Should render proper toggle UI
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack containing label and Toggle
             let vStack = try inspected.vStack()
@@ -604,8 +604,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             let toggleValue: Bool? = formState.getValue(for: "test-toggle-field")
             #expect(toggleValue == false, "Form state should contain boolean toggle value")
 
-        } catch {
-            Issue.record("DynamicToggleField inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicToggleField inspection failed - component not properly implemented: \(error)")")
         }
     }
 }

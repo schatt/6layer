@@ -68,8 +68,8 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should render proper form structure
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack as root
             let vStack = try inspected.vStack()
@@ -84,8 +84,8 @@ open class DynamicFormViewTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-        } catch {
-            Issue.record("DynamicFormView inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicFormView inspection failed - component not properly implemented: \(error)")")
         }
     }
 
@@ -112,8 +112,8 @@ open class DynamicFormViewTests: BaseTestClass {
         let view = DynamicFormSectionView(section: section, formState: formState)
 
         // Should render proper section structure
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack with leading alignment
             let vStack = try inspected.vStack()
@@ -132,8 +132,8 @@ open class DynamicFormViewTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-        } catch {
-            Issue.record("DynamicFormSectionView inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicFormSectionView inspection failed - component not properly implemented: \(error)")")
         }
     }
 
@@ -159,8 +159,8 @@ open class DynamicFormViewTests: BaseTestClass {
         let view = DynamicFormFieldView(field: field, formState: formState)
 
         // Should render proper field structure
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack with leading alignment
             let vStack = try inspected.vStack()
@@ -179,8 +179,8 @@ open class DynamicFormViewTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-        } catch {
-            Issue.record("DynamicFormFieldView inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("DynamicFormFieldView inspection failed - component not properly implemented: \(error)")")
         }
     }
 
@@ -215,8 +215,8 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should render proper wizard structure
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
 
             // Should have a VStack
             let vStack = try inspected.vStack()
@@ -231,8 +231,8 @@ open class DynamicFormViewTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-        } catch {
-            Issue.record("FormWizardView inspection failed - component not properly implemented: \(error)")
+        } else {
+            Issue.record("FormWizardView inspection failed - component not properly implemented: \(error)")")
         }
     }
 
@@ -399,19 +399,19 @@ open class DynamicFormViewTests: BaseTestClass {
         let regularFieldView = CustomFieldView(field: regularField, formState: formState)
 
         // OCR field should show OCR button (will fail until implemented)
-        do {
-            let inspected = try ocrFieldView.inspect()
+        if let inspected = 
+            let inspected = ocrFieldView.tryInspect()
             // Look for OCR button by finding the HStack that contains both TextField and Button
-            let hStack = try inspected.find(ViewType.HStack.self)
+            let hStack = inspected.tryFind(ViewType.HStack.self)
             // The HStack should have 2 children: TextField and Button
             #expect(hStack.count == 2, "OCR field HStack should contain TextField and OCR button")
-        } catch {
-            Issue.record("OCR button not implemented yet: \(error)")
+        } else {
+            Issue.record("OCR button not implemented yet: \(error)")")
         }
 
         // Regular field should not show OCR button (no HStack)
         do {
-            let inspected = try regularFieldView.inspect()
+            let inspected = regularFieldView.tryInspect()
             // Regular field should not have HStack (just VStack with label and TextField)
             let hStack = try? inspected.find(ViewType.HStack.self)
             #expect(hStack == nil, "Regular field should not have HStack (no OCR button)")
@@ -650,18 +650,18 @@ open class DynamicFormViewTests: BaseTestClass {
         let viewWithoutOCR = DynamicFormView(configuration: configWithoutOCR, onSubmit: { _ in })
 
         // OCR form should show batch OCR button
-        do {
-            let inspected = try viewWithOCR.inspect()
+        if let inspected = 
+            let inspected = viewWithOCR.tryInspect()
             // Should find the batch OCR button
-            let ocrButton = try inspected.find(button: "Scan Document")
+            let ocrButton = inspected.tryFind(button: "Scan Document")
             #expect(true, "Form with OCR fields should show batch OCR button")
-        } catch {
-            Issue.record("Batch OCR button not found in OCR-enabled form: \(error)")
+        } else {
+            Issue.record("Batch OCR button not found in OCR-enabled form: \(error)")")
         }
 
         // Non-OCR form should not show batch OCR button
         do {
-            let inspected = try viewWithoutOCR.inspect()
+            let inspected = viewWithoutOCR.tryInspect()
             let ocrButton = try? inspected.find(button: "Scan Document")
             #expect(ocrButton == nil, "Form without OCR fields should not show batch OCR button")
         } catch {

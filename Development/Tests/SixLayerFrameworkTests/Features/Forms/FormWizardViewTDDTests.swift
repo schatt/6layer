@@ -61,13 +61,13 @@ open class FormWizardViewTDDTests: BaseTestClass {
         )
 
         // Should render step content
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should display current step content
             let foundStep1 = (try? inspected.find(text: "Step 1")) != nil
             #expect(foundStep1, "Should display current step content")
-        } catch {
-            Issue.record("FormWizardView step content not found: \(error)")
+        } else {
+            Issue.record("FormWizardView step content not found: \(error)")")
         }
 
         // Should generate accessibility identifier
@@ -157,8 +157,8 @@ open class FormWizardViewTDDTests: BaseTestClass {
         )
 
         // Should provide navigation controls
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should find navigation buttons
             let hasNextButton = (try? inspected.find(button: "Next")) != nil
             let hasFinishButton = (try? inspected.find(button: "Finish")) != nil
@@ -166,8 +166,8 @@ open class FormWizardViewTDDTests: BaseTestClass {
 
             // At least one navigation control should exist
             #expect(hasNextButton || hasFinishButton || hasPreviousButton, "Should provide navigation controls")
-        } catch {
-            Issue.record("FormWizardView navigation controls not found: \(error)")
+        } else {
+            Issue.record("FormWizardView navigation controls not found: \(error)")")
         }
     }
 
@@ -209,13 +209,13 @@ open class FormWizardViewTDDTests: BaseTestClass {
         )
 
         // Should show step information
-        do {
-            let inspected = try view.inspect()
+        if let inspected = 
+            let inspected = view.tryInspect()
             // Should display step information
             let hasStepInfo = inspected.count > 0
             #expect(hasStepInfo, "Should display step information")
-        } catch {
-            Issue.record("FormWizardView step information not found: \(error)")
+        } else {
+            Issue.record("FormWizardView step information not found: \(error)")")
         }
     }
 }

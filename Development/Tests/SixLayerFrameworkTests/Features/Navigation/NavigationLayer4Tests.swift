@@ -37,7 +37,7 @@ open class NavigationLayer4Tests {
         // 2. Does that structure contain what it should?
         do {
             // The navigation link should contain text elements
-            let viewText = try link.inspect().findAll(ViewType.Text.self)
+            let viewText = link.tryInspect().findAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Navigation link should contain text elements")
             
             // Should contain the label text
@@ -58,18 +58,18 @@ open class NavigationLayer4Tests {
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
         // iOS: Should contain NavigationLink structure
-        do {
-            let _ = try link.inspect().find(ViewType.NavigationLink.self)
+        if let _ = 
+            let _ = link.tryInspect().find(ViewType.NavigationLink.self)
             // NavigationLink found - this is correct for iOS
-        } catch {
+        } else {
             Issue.record("iOS navigation link should contain NavigationLink structure")
         }
         #elseif os(macOS)
         // macOS: Should contain the content directly (no NavigationLink wrapper)
-        do {
-            let _ = try link.inspect()
+        if let _ = 
+            let _ = link.tryInspect()
             // Direct content inspection works - this is correct for macOS
-        } catch {
+        } else {
             Issue.record("macOS navigation link should be inspectable directly")
         }
         #endif
@@ -242,23 +242,23 @@ open class NavigationLayer4Tests {
         // iOS: Should contain NavigationStack structure (iOS 16+) or direct content (iOS 15-)
         do {
             // Try to find NavigationStack first (iOS 16+)
-            let _ = try container.inspect().find(ViewType.NavigationStack.self)
+            let _ = container.tryInspect().find(ViewType.NavigationStack.self)
             // NavigationStack found - this is correct for iOS 16+
         } catch {
             // Fallback: direct content inspection (iOS 15-)
-            do {
-                let _ = try container.inspect()
+            if let _ = 
+                let _ = container.tryInspect()
                 // Direct content inspection works - this is correct for iOS 15-
-            } catch {
-                Issue.record("iOS platform navigation container should be inspectable")
+            } else {
+            Issue.record("iOS platform navigation container should be inspectable")
             }
         }
         #elseif os(macOS)
         // macOS: Should contain the content directly (no NavigationStack wrapper)
-        do {
-            let _ = try container.inspect()
+        if let _ = 
+            let _ = container.tryInspect()
             // Direct content inspection works - this is correct for macOS
-        } catch {
+        } else {
             Issue.record("macOS platform navigation container should be inspectable directly")
         }
         #endif
@@ -357,18 +357,18 @@ open class NavigationLayer4Tests {
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
         // iOS: Should contain NavigationView structure
-        do {
-            let _ = try navigation.inspect().find(ViewType.NavigationView.self)
+        if let _ = 
+            let _ = navigation.tryInspect().find(ViewType.NavigationView.self)
             // NavigationView found - this is correct for iOS
-        } catch {
+        } else {
             Issue.record("iOS platform navigation should contain NavigationView structure")
         }
         #elseif os(macOS)
         // macOS: Should contain the content directly (no NavigationView wrapper)
-        do {
-            let _ = try navigation.inspect()
+        if let _ = 
+            let _ = navigation.tryInspect()
             // Direct content inspection works - this is correct for macOS
-        } catch {
+        } else {
             Issue.record("macOS platform navigation should be inspectable directly")
         }
         #endif

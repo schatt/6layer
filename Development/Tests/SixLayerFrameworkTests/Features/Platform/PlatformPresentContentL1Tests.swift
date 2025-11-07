@@ -73,11 +73,11 @@ open class PlatformPresentContentL1Tests {
         // 2. Contains what it needs to contain - The view should contain the actual string content
         do {
             // The view should be wrapped in AnyView
-            let anyView = try view.inspect().anyView()
+            let anyView = view.tryInspect().anyView()
             // anyView is non-optional InspectableView (throws on failure), so it exists if we reach here
             
             // The view should contain text elements with our string content
-            let viewText = try view.inspect().findAll(ViewType.Text.self)
+            let viewText = view.tryInspect().findAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "String content view should contain text elements")
             
             // Should contain our actual string content
@@ -139,11 +139,11 @@ open class PlatformPresentContentL1Tests {
         // 2. Contains what it needs to contain - The view should contain the actual number content
         do {
             // The view should be wrapped in AnyView
-            let anyView = try view.inspect().anyView()
+            let anyView = view.tryInspect().anyView()
             #expect(anyView != nil, "Number content should be wrapped in AnyView")
             
             // The view should contain text elements with our number content
-            let viewText = try view.inspect().findAll(ViewType.Text.self)
+            let viewText = view.tryInspect().findAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Number content view should contain text elements")
             
             // Should contain our actual number content
