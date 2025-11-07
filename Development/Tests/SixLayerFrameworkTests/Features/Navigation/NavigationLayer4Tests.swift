@@ -55,16 +55,14 @@ open class NavigationLayer4Tests {
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
         // iOS: Should contain NavigationLink structure
-        if let _ = 
-            let _ = link.tryInspect().find(ViewType.NavigationLink.self)
+        if let _ = link.tryInspect().find(ViewType.NavigationLink.self) {
             // NavigationLink found - this is correct for iOS
         } else {
             Issue.record("iOS navigation link should contain NavigationLink structure")
         }
         #elseif os(macOS)
         // macOS: Should contain the content directly (no NavigationLink wrapper)
-        if let _ = 
-            let _ = link.tryInspect()
+        if let _ = link.tryInspect() {
             // Direct content inspection works - this is correct for macOS
         } else {
             Issue.record("macOS navigation link should be inspectable directly")
@@ -243,17 +241,15 @@ open class NavigationLayer4Tests {
             // NavigationStack found - this is correct for iOS 16+
         } catch {
             // Fallback: direct content inspection (iOS 15-)
-            if let _ = 
-                let _ = container.tryInspect()
+            if let _ = container.tryInspect() {
                 // Direct content inspection works - this is correct for iOS 15-
             } else {
-            Issue.record("iOS platform navigation container should be inspectable")
+                Issue.record("iOS platform navigation container should be inspectable")
             }
         }
         #elseif os(macOS)
         // macOS: Should contain the content directly (no NavigationStack wrapper)
-        if let _ = 
-            let _ = container.tryInspect()
+        if let _ = container.tryInspect() {
             // Direct content inspection works - this is correct for macOS
         } else {
             Issue.record("macOS platform navigation container should be inspectable directly")
@@ -354,16 +350,14 @@ open class NavigationLayer4Tests {
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
         // iOS: Should contain NavigationView structure
-        if let _ = 
-            let _ = navigation.tryInspect().find(ViewType.NavigationView.self)
+        if let _ = navigation.tryInspect().find(ViewType.NavigationView.self) {
             // NavigationView found - this is correct for iOS
         } else {
             Issue.record("iOS platform navigation should contain NavigationView structure")
         }
         #elseif os(macOS)
         // macOS: Should contain the content directly (no NavigationView wrapper)
-        if let _ = 
-            let _ = navigation.tryInspect()
+        if let _ = navigation.tryInspect() {
             // Direct content inspection works - this is correct for macOS
         } else {
             Issue.record("macOS platform navigation should be inspectable directly")
