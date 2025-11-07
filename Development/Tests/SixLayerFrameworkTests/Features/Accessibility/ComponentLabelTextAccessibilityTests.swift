@@ -959,7 +959,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {
@@ -1022,7 +1022,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {
@@ -1060,7 +1060,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {
@@ -1127,7 +1127,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {
@@ -1168,7 +1168,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {
@@ -1206,7 +1206,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {
@@ -1350,7 +1350,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = cardView1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
             let inspected2 = cardView2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier()
@@ -1405,7 +1405,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
-           let card1ID = try? inspected1.accessibilityIdentifier()
+           let card1ID = try? inspected1.accessibilityIdentifier(),
             
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.accessibilityIdentifier() {

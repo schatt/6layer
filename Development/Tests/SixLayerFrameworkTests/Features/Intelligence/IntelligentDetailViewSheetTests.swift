@@ -148,8 +148,7 @@ struct IntelligentDetailViewSheetTests {
         }
         
         // Verify NavigationStack + platformDetailView works
-        if let inspector = 
-            let inspector = sheetContent.tryInspect()
+        if let inspector = sheetContent.tryInspect() {
             #expect(true, "platformDetailView should work with NavigationStack in sheets")
         } else {
             Issue.record("platformDetailView should work in NavigationStack: \(error)")
@@ -164,18 +163,18 @@ struct IntelligentDetailViewSheetTests {
         let textData: [String: String] = ["name": "Test"]
         
         // All should work in sheet context - verify they can be inspected
-        if let _ = 
+        do {
             let taskDetail = IntelligentDetailView.platformDetailView(for: task)
             let _ = taskDetail.tryInspect()
-            
+
             let numericDetail = IntelligentDetailView.platformDetailView(for: numericData)
             let _ = numericDetail.tryInspect()
-            
+
             let textDetail = IntelligentDetailView.platformDetailView(for: textData)
             let _ = textDetail.tryInspect()
-            
+
             #expect(true, "platformDetailView should work with different data types in sheets")
-        } else {
+        } catch {
             Issue.record("platformDetailView should work with different data types: \(error)")
         }
     }
