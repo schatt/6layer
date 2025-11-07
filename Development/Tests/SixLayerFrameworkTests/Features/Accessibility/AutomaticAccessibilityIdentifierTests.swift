@@ -933,10 +933,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                     
                 print("✅ Helper identifier: '\(id1)'")
                 print("✅ Manual identifier: '\(id2)'")
-            } catch {
-                Issue.record("Failed to inspect views: \(error)")
+        } else {
+            Issue.record("Failed to inspect views")
         }
-            }
     }
     
     // MARK: - Performance Tests

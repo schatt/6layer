@@ -84,6 +84,7 @@ open class ViewGenerationTests: BaseTestClass {
                     let textContent = try text.string()
                     return textContent.contains("Title") || textContent.contains("title")
                 } catch {
+        #endif
                     return false
                 }
             }
@@ -135,8 +136,10 @@ open class ViewGenerationTests: BaseTestClass {
                     let textContent = try text.string()
                     return textContent.contains(": ") && textContent.contains("Item 1")
                 } catch {
+        #endif
                     return false
                 }
+        #endif
             }
             #expect(hasCustomFieldContent, "Detail view should contain custom field content")
             
@@ -186,13 +189,16 @@ open class ViewGenerationTests: BaseTestClass {
                     let textContent = try text.string()
                     return textContent.contains("Item 1") || textContent.contains("Subtitle 1")
                 } catch {
+        #endif
                     return false
                 }
+        #endif
             }
             #expect(hasFieldContent, "Detail view should contain field content from test data")
             
         } catch {
             Issue.record("Failed to inspect detail view with hints: \(error)")
+        #endif
         }
     }
     
