@@ -55,6 +55,7 @@ struct ViewGenerationVerificationTests {
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view should be wrapped in AnyView
             let anyView = try inspected.anyView()
@@ -87,6 +88,9 @@ struct ViewGenerationVerificationTests {
             #expect(hasSubtitleContent, "Detail view should contain the subtitle 'Subtitle 1'")
             
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -127,6 +131,7 @@ struct ViewGenerationVerificationTests {
         
         // 2. Contains what it needs to contain - Both views should contain our data
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let compactInspectionResult = withInspectedView(compactView) { compactInspected in
             // Compact view should contain our test data
             let compactText = compactInspected.tryFindAll(ViewType.Text.self)
@@ -160,6 +165,10 @@ struct ViewGenerationVerificationTests {
             }
             #expect(detailedHasTitle, "Detailed view should contain the title")
         }
+        #else
+        let compactInspectionResult: Bool? = nil
+        let detailedInspectionResult: Bool? = nil
+        #endif
 
         if compactInspectionResult == nil || detailedInspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -187,6 +196,7 @@ struct ViewGenerationVerificationTests {
         // Detail view with custom field view creation succeeded (non-optional result)
         
         // 2. Contains what it needs to contain - The view should contain custom field content
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             // The view should contain text elements
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)
@@ -204,8 +214,11 @@ struct ViewGenerationVerificationTests {
             #expect(hasCustomContent, "Detail view should contain custom field content")
             
         } catch {
-            Issue.record("Failed to inspect detail view with custom field view: \(error)")
+            Issue.record("Failed to inspect detail view with custom field view")
         }
+        #else
+        Issue.record("View inspection not available on this platform (likely macOS)")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles nil values gracefully
@@ -224,6 +237,7 @@ struct ViewGenerationVerificationTests {
         // Detail view with nil values creation succeeded (non-optional result)
         
         // 2. Contains what it needs to contain - The view should contain available data
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             // The view should contain text elements
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)

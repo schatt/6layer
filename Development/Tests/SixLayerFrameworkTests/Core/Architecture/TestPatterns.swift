@@ -163,6 +163,7 @@ open class TestPatterns {
         // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain expected text
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspected in
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
@@ -175,6 +176,9 @@ open class TestPatterns {
             }
             #expect(hasExpectedText, "View should contain text '\(expectedText)' for \(testName)")
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS) for \(testName)")
@@ -190,10 +194,14 @@ open class TestPatterns {
         
         // 2. Contains what it needs to contain - The view should contain image elements
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspected in
             let viewImages = inspected.tryFindAll(ViewType.Image.self)
             #expect(!viewImages.isEmpty, "View should contain image elements for \(testName)")
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS) for \(testName)")

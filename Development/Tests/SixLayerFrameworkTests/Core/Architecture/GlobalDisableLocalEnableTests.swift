@@ -146,6 +146,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
         
         print("🔍 Inspected view type: \(type(of: inspectedView))")
 
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         // Try to find a button in the hierarchy
         if let button = inspectedView.tryFind(Button<Text>.self),
            let id = try? button.accessibilityIdentifier() {
@@ -174,6 +175,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
         if let id = try? inspectedView.accessibilityIdentifier() {
             return id
         }
+        #endif
         
         return ""
     }
