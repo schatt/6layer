@@ -73,13 +73,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         )
 
         // Then: View should be created successfully and contain expected elements
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect collection view with callbacks")
-            return
-        }
-
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
@@ -92,10 +86,11 @@ open class CollectionViewCallbackTests: BaseTestClass {
                    "Should contain text from second sample item")
 
             print("✅ Collection view with callbacks contains expected content")
-        } catch {
-            Issue.record("Failed to inspect view content: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     @Test func testPlatformPresentItemCollectionL1WithoutCallbacks() {
@@ -109,13 +104,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         )
 
         // Then: View should be created successfully and contain expected elements
-        guard let inspected = view.tryInspect() else {
-            Issue.record("Failed to inspect collection view without callbacks")
-            return
-        }
-
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
@@ -128,10 +117,11 @@ open class CollectionViewCallbackTests: BaseTestClass {
                    "Should contain text from second sample item")
 
             print("✅ Collection view without callbacks contains expected content")
-        } catch {
-            Issue.record("Failed to inspect view content: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     @Test func testPlatformPresentItemCollectionL1WithEnhancedHints() {

@@ -54,21 +54,15 @@ struct ViewGenerationVerificationTests {
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = detailView.tryInspect() else {
-            Issue.record("Failed to inspect detail view structure")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(detailView) { inspected in
             // The view should be wrapped in AnyView
             let anyView = try inspected.anyView()
             // Detail view creation succeeded (non-optional result)
-            
+
             // The view should contain text elements with our data
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
-            
+
             // Should contain the title from our test data
             let hasTitleContent = viewText.contains { text in
                 do {
@@ -79,7 +73,7 @@ struct ViewGenerationVerificationTests {
                 }
             }
             #expect(hasTitleContent, "Detail view should contain the title 'Item 1'")
-            
+
             // Should contain the subtitle from our test data
             let hasSubtitleContent = viewText.contains { text in
                 do {
@@ -91,10 +85,11 @@ struct ViewGenerationVerificationTests {
             }
             #expect(hasSubtitleContent, "Detail view should contain the subtitle 'Subtitle 1'")
             
-        } catch {
-            Issue.record("Failed to inspect detail view structure: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     /// BUSINESS PURPOSE: Verify that IntelligentDetailView handles different layout strategies
