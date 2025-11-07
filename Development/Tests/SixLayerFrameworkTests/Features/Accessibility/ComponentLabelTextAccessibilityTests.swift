@@ -31,7 +31,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect AdaptiveButton")
         }
-}        
+        
         cleanupTestEnvironment()
     }
     
@@ -84,9 +84,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect platformNavigationTitle")
         }
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     // MARK: - Platform Navigation Link Tests
@@ -119,9 +119,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect platformNavigationLink_L4")
         }
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     // MARK: - Platform Navigation Button Tests
@@ -151,9 +151,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             
             print("🔴 RED: Navigation Button ID: '\(buttonID)'")
         }
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     // MARK: - Label Sanitization Tests
@@ -907,9 +907,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect ExpandableCardComponent")
         }
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     /// Test that list items created from ForEach get unique identifiers
@@ -1339,9 +1339,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         } else {
             Issue.record("Failed to inspect card components")
         }
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     // MARK: - ResponsiveCardView Tests
@@ -1557,9 +1557,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: Should verify FileRow includes file.name in identifier
         #expect(true, "Documenting requirement - FileRow needs file.name in identifier for unique rows")
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     /// Test that validation error rows in DynamicFormFieldView get unique identifiers
@@ -1689,9 +1689,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: Should verify settings items include titles in identifiers
         #expect(true, "Documenting requirement - Settings item views need item.title in identifier")
-}
-
+        
         cleanupTestEnvironment()
+    }
     
     
     // MARK: - Platform Extension Functions with Title/Label Tests
@@ -1973,9 +1973,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: Should verify VisualizationRecommendationRow includes chartType in identifier
         #expect(true, "Documenting requirement - VisualizationRecommendationRow needs chartType in identifier for unique rows")
-}
-
+        
         cleanupTestEnvironment()
-    
-
-
+    }
+}

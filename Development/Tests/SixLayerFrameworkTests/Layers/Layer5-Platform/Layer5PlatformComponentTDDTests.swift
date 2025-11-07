@@ -47,8 +47,9 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 )
                 #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-        } else {
-            Issue.record("PlatformRecognitionLayer5 inspection failed - AI recognition features not implemented: \(error)")
+            } else {
+                Issue.record("PlatformRecognitionLayer5 inspection failed - AI recognition features not implemented")
+            }
         }
     }
 
@@ -80,7 +81,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformPrivacyLayer5 inspection failed - privacy management not implemented: \(error)")
+            Issue.record("PlatformPrivacyLayer5 inspection failed - privacy management not implemented")
         }
     }
 
@@ -112,7 +113,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformPerformanceLayer6 inspection failed - performance monitoring not implemented: \(error)")
+            Issue.record("PlatformPerformanceLayer6 inspection failed - performance monitoring not implemented")
         }
     }
 
@@ -144,7 +145,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformProfilingLayer5 inspection failed - user profiling not implemented: \(error)")
+            Issue.record("PlatformProfilingLayer5 inspection failed - user profiling not implemented")
         }
     }
 
@@ -176,7 +177,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformSafetyLayer5 inspection failed - safety features not implemented: \(error)")
+            Issue.record("PlatformSafetyLayer5 inspection failed - safety features not implemented")
         }
     }
 
@@ -208,7 +209,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformRoutingLayer5 inspection failed - navigation routing not implemented: \(error)")
+            Issue.record("PlatformRoutingLayer5 inspection failed - navigation routing not implemented")
         }
     }
 
@@ -240,8 +241,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformOrchestrationLayer5 inspection failed - service orchestration not implemented: \(error)")
-            }
+            Issue.record("PlatformOrchestrationLayer5 inspection failed - service orchestration not implemented")
         }
     }
 
@@ -273,8 +273,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformOptimizationLayer5 inspection failed - optimization features not implemented: \(error)")
-            }
+            Issue.record("PlatformOptimizationLayer5 inspection failed - optimization features not implemented")
         }
     }
 
@@ -297,16 +296,18 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(vStack.count >= 1, "Should have organization interface elements")
 
             // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*PlatformOrganizationLayer5.*",
-                platform: .iOS,
-                componentName: "PlatformOrganizationLayer5"
-            )
+            let hasAccessibilityID = await MainActor.run {
+                testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformOrganizationLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformOrganizationLayer5"
+                )
+            }
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformOrganizationLayer5 inspection failed - data organization not implemented: \(error)")
+            Issue.record("PlatformOrganizationLayer5 inspection failed - data organization not implemented")
         }
     }
 
@@ -329,16 +330,18 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(vStack.count >= 1, "Should have notification interface elements")
 
             // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*PlatformNotificationLayer5.*",
-                platform: .iOS,
-                componentName: "PlatformNotificationLayer5"
-            )
+            let hasAccessibilityID = await MainActor.run {
+                testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformNotificationLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformNotificationLayer5"
+                )
+            }
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformNotificationLayer5 inspection failed - notification management not implemented: \(error)")
+            Issue.record("PlatformNotificationLayer5 inspection failed - notification management not implemented")
         }
     }
 
@@ -361,16 +364,18 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             #expect(vStack.count >= 1, "Should have interpretation interface elements")
 
             // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*PlatformInterpretationLayer5.*",
-                platform: .iOS,
-                componentName: "PlatformInterpretationLayer5"
-            )
+            let hasAccessibilityID = await MainActor.run {
+                testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformInterpretationLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformInterpretationLayer5"
+                )
+            }
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
         } else {
-            Issue.record("PlatformInterpretationLayer5 inspection failed - context interpretation not implemented: \(error)")
+            Issue.record("PlatformInterpretationLayer5 inspection failed - context interpretation not implemented")
         }
     }
 }
