@@ -3,6 +3,10 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
 /// Form Callback Functional Tests
 /// Tests that forms with callbacks ACTUALLY INVOKE them when buttons are tapped (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor

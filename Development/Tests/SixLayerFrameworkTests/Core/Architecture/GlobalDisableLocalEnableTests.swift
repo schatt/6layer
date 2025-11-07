@@ -3,6 +3,10 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 @MainActor

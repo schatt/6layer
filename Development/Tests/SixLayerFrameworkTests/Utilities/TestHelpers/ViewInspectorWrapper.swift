@@ -58,13 +58,13 @@ extension View {
     /// ViewInspector not available on this platform
     /// When ViewInspector works on this platform, remove the canImport condition above
     @MainActor
-    func tryInspect() -> InspectableView<ViewType.ClassifiedView>? {
+    func tryInspect() -> Any? {
         return nil
     }
 
     /// ViewInspector not available on this platform
     @MainActor
-    func inspectView() throws -> InspectableView<ViewType.ClassifiedView> {
+    func inspectView() throws -> Any {
         struct ViewInspectorNotAvailable: Error {}
         throw ViewInspectorNotAvailable()
     }
@@ -109,7 +109,7 @@ public func withInspectedView<V: View, R>(
 @MainActor
 public func withInspectedView<V: View, R>(
     _ view: V,
-    perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
+    perform: (Any) throws -> R
 ) -> R? {
     return nil
 }
@@ -133,7 +133,7 @@ public func withInspectedViewThrowing<V: View, R>(
 @MainActor
 public func withInspectedViewThrowing<V: View, R>(
     _ view: V,
-    perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
+    perform: (Any) throws -> R
 ) throws -> R {
     struct ViewInspectorNotAvailable: Error {}
     throw ViewInspectorNotAvailable()

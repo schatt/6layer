@@ -2,6 +2,10 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
 /// View Generation Tests
 /// Tests that the framework correctly generates SwiftUI views with proper structure and properties
 /// These tests focus on what we can actually verify when running on macOS
@@ -84,6 +88,7 @@ open class ViewGenerationTests: BaseTestClass {
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
         }
+    }
     
     @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: A test data item and custom field view

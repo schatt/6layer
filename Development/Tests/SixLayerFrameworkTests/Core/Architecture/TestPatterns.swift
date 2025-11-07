@@ -1,6 +1,10 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+import ViewInspector
+#endif
 /// DRY Test Patterns
 /// Provides reusable patterns to eliminate duplication in tests
 @MainActor
