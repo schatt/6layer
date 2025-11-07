@@ -76,10 +76,9 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named(longName)
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
-            do {
-                let inspectedView = try view.inspect()
-                let buttonID = try inspectedView.accessibilityIdentifier()
-                
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let buttonID = try? inspectedView.accessibilityIdentifier() {
                 // Should handle long names gracefully
                 #expect(!buttonID.isEmpty, "Should generate ID with very long names")
                 #expect(buttonID.contains("SixLayer"), "Should contain namespace")
@@ -92,10 +91,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 } else {
                     print("✅ Long name ID: '\(buttonID)' (\(buttonID.count) chars)")
                 }
-                
-            } catch {
-                Issue.record("Failed to inspect view with very long names: \(error)")
-        }
+            } else {
+                Issue.record("Failed to inspect view with very long names")
             }
     }
     
@@ -113,18 +110,15 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
             .accessibilityIdentifier("manual-override")  // ← Manual override
             
-            do {
-                let inspectedView = try view.inspect()
-                let buttonID = try inspectedView.accessibilityIdentifier()
-                
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let buttonID = try? inspectedView.accessibilityIdentifier() {
                 // Manual ID should override automatic ID
                 #expect(buttonID == "manual-override", "Manual ID should override automatic ID")
                 
                 print("✅ Manual override ID: '\(buttonID)'")
-                
-            } catch {
-                Issue.record("Failed to inspect view with manual override: \(error)")
-        }
+            } else {
+                Issue.record("Failed to inspect view with manual override")
             }
     }
     
