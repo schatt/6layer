@@ -64,6 +64,7 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView, so we need to inspect it differently
             let anyView = try inspected.anyView()
@@ -84,6 +85,9 @@ open class ViewGenerationTests: BaseTestClass {
             }
             #expect(hasTitleField, "Detail view should contain title field")
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -109,6 +113,7 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view should contain custom field content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.anyView()
@@ -129,6 +134,9 @@ open class ViewGenerationTests: BaseTestClass {
             }
             #expect(hasCustomFieldContent, "Detail view should contain custom field content")
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -155,6 +163,7 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view should respect the hints
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.anyView()
@@ -175,6 +184,9 @@ open class ViewGenerationTests: BaseTestClass {
             }
             #expect(hasFieldContent, "Detail view should contain field content from test data")
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -364,8 +376,6 @@ open class ViewGenerationTests: BaseTestClass {
     }
     
     // MARK: - Performance Tests
-    
-    }
     
     // MARK: - Error Handling Tests
     
