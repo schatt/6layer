@@ -64,9 +64,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             #expect(vStackID.count < 80, "Should be reasonable length even with multiple .named() calls")
             
             print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
-            
-        } catch {
-            Issue.record("Failed to inspect view: \(error)")
+        } else {
+            Issue.record("Failed to inspect view")
         }
         
         // Cleanup
