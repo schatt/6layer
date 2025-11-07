@@ -307,7 +307,6 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
         } else {
             Issue.record("PlatformOrganizationLayer5 inspection failed - data organization not implemented: \(error)")
-            }
         }
     }
 
@@ -340,7 +339,6 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
         } else {
             Issue.record("PlatformNotificationLayer5 inspection failed - notification management not implemented: \(error)")
-            }
         }
     }
 
@@ -373,7 +371,6 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
         } else {
             Issue.record("PlatformInterpretationLayer5 inspection failed - context interpretation not implemented: \(error)")
-            }
         }
     }
 }
