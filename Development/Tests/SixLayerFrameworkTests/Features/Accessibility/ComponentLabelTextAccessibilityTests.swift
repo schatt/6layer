@@ -1887,7 +1887,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         }
 
         cleanupTestEnvironment()
-    
+    }
     
     /// Test that ActionButton includes title in identifier
     @MainActor @Test func testActionButtonIncludesTitleInIdentifier() {
@@ -1918,7 +1918,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         }
 
         cleanupTestEnvironment()
-    
+    }
     
     /// Test that platformValidationMessage includes message in identifier
     @MainActor @Test func testPlatformValidationMessageIncludesMessageInIdentifier() {
@@ -1956,7 +1956,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         }
 
         cleanupTestEnvironment()
-    
+    }
     
     // MARK: - Recommendation Row Tests
     
