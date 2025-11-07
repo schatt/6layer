@@ -136,12 +136,12 @@ open class MetalRenderingCrashTDDTests {
         #expect(view != nil, "Metal rendering should not crash")
         
         // Try to inspect the view (should not crash)
-        do {
-            let inspectedView = view.tryInspect()
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect() {
             #expect(inspectedView != nil, "View should be inspectable without crashing")
             print("✅ Metal rendering crash reproduction test passed")
-        } catch {
-            Issue.record("Metal rendering should not crash during inspection: \(error)")
+        } else {
+            Issue.record("Metal rendering should not crash during inspection")
         }
         
         print("🟢 TDD Green Phase: Metal rendering crash fixed - performance layer removed")
@@ -172,12 +172,12 @@ open class MetalRenderingCrashTDDTests {
         #expect(view != nil, "SimpleCardComponent should not crash")
         
         // Try to inspect the view (should not crash)
-        do {
-            let inspectedView = view.tryInspect()
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect() {
             #expect(inspectedView != nil, "SimpleCardComponent should be inspectable without crashing")
             print("✅ SimpleCardComponent rendered successfully")
-        } catch {
-            Issue.record("SimpleCardComponent should not crash during inspection: \(error)")
+        } else {
+            Issue.record("SimpleCardComponent should not crash during inspection")
         }
         
         print("🟢 TDD Green Phase: SimpleCardComponent no longer crashes - performance layer removed")

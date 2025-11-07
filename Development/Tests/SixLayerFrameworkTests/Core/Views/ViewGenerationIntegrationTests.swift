@@ -1071,11 +1071,15 @@ open class ViewGenerationIntegrationTests {
         #expect(macOSView != nil, "macOS platform should generate a valid view")
         
         // 2. Does that structure contain what it should?
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let iOSInspection = iOSView.tryInspect(),
+              let macOSInspection = macOSView.tryInspect() else {
+            Issue.record("Failed to inspect view structures")
+            return
+        }
+        
+        #if !os(macOS)
         do {
-            // Both views should be inspectable
-            let iOSInspection = iOSView.tryInspect()
-            let macOSInspection = macOSView.tryInspect()
-            
             // Verify platform-specific capabilities
             #expect(iOSConfig.supportsTouch, "iOS should support touch")
             #expect(!macOSConfig.supportsTouch, "macOS should not support touch")

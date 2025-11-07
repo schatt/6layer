@@ -89,19 +89,17 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .named("ProfileView")
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        do {
-            let inspectedView = view.tryInspect()
-            let vStackID = try? inspectedView.accessibilityIdentifier()
-            
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect(),
+           let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are not semantic
             #expect(vStackID.contains("UserProfile"), "Should contain screen context")
             #expect(vStackID.contains("ProfileView") || vStackID.contains("UserProfile"), "Should contain view name")
             #expect(vStackID.count < 80, "Should be concise and semantic")
             
             print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
-            
-        } catch {
-            Issue.record("Failed to inspect view: \(error)")
+        } else {
+            Issue.record("Failed to inspect view")
         }
         
         // Cleanup
@@ -134,10 +132,9 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .named("ComplexContainer")
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        do {
-            let inspectedView = view.tryInspect()
-            let vStackID = try? inspectedView.accessibilityIdentifier()
-            
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect(),
+           let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
             #expect(vStackID.count < 100, "Should handle complex hierarchies gracefully")
             #expect(vStackID.contains("ComplexView"), "Should contain screen context")
@@ -145,9 +142,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             #expect(!vStackID.contains("item0-item1-item2"), "Should not contain all nested item names")
             
             print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
-            
-        } catch {
-            Issue.record("Failed to inspect view: \(error)")
+        } else {
+            Issue.record("Failed to inspect view")
         }
         
         // Cleanup
