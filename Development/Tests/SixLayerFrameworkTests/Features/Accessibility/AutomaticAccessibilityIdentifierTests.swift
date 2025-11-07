@@ -941,7 +941,6 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     // MARK: - Performance Tests
     // Performance tests removed - performance monitoring was removed from framework
 }
-}
 
 // MARK: - Test Support Types
 

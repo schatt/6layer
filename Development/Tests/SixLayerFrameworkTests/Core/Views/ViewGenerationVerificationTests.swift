@@ -336,4 +336,3 @@ struct ViewGenerationVerificationTests {
                      "Complex data should get detailed or tabbed layout")
     }
 }
-}
