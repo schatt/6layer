@@ -184,12 +184,15 @@ open class CollectionViewCallbackTests {
         )
         
         // When: Simulating a tap using ViewInspector
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspector = view.tryInspect() else {
+            Issue.record("ViewInspector failed to inspect ListCollectionView")
+            return
+        }
+        
         #if !os(macOS)
         do {
-            let inspector = try view.inspect()
-            
             // Find the ListCardComponent instances
-            // NOTE: ViewInspector is iOS-only, so this only runs on iOS
             let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
             
             // Then: Verify the view structure

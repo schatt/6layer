@@ -75,18 +75,18 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
         )
 
         // Should render disambiguation interface
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspected = view.tryInspect() else {
+            Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
+            return
+        }
+        
         #if !os(macOS)
-        do {
-            let inspected = try view.inspect()
-
-            // Should have proper UI structure for disambiguation
-            // Currently this will fail because it's a stub
-            // NOTE: ViewInspector is iOS-only, so this only runs on iOS
-            let textElement = try inspected.text()
-            #expect(try textElement.string() == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
-
-        } catch {
-            Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented: \(error)")
+        if let textElement = try? inspected.text(),
+           let text = try? textElement.string() {
+            #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
+        } else {
+            Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
         }
         #endif
     }
@@ -127,17 +127,18 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
         )
 
         // Should render confidence-based interface
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspected = view.tryInspect() else {
+            Issue.record("OCRDisambiguationView confidence display not implemented")
+            return
+        }
+        
         #if !os(macOS)
-        do {
-            let inspected = try view.inspect()
-
-            // Currently this will fail because it's a stub
-            // NOTE: ViewInspector is iOS-only, so this only runs on iOS
-            let textElement = try inspected.text()
-            #expect(try textElement.string() == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
-
-        } catch {
-            Issue.record("OCRDisambiguationView confidence display not implemented: \(error)")
+        if let textElement = try? inspected.text(),
+           let text = try? textElement.string() {
+            #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
+        } else {
+            Issue.record("OCRDisambiguationView confidence display not implemented")
         }
         #endif
     }

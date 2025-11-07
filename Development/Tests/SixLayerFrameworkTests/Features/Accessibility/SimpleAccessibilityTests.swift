@@ -41,17 +41,15 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
         ), "Framework component should automatically generate accessibility identifiers")
         
         // Check if accessibility identifier is present
-        #if !os(macOS)
-        do {
-            let inspectedView = try testView.inspect()
-            let accessibilityID = try inspectedView.accessibilityIdentifier()
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = testView.tryInspect(),
+           let accessibilityID = try? inspectedView.accessibilityIdentifier() {
             print("🔍 Found accessibility ID: '\(accessibilityID)'")
             #expect(accessibilityID != "", "Framework component should have accessibility identifier")
-        } catch {
-            print("🔍 Error inspecting view: \(error)")
-            Issue.record("Should be able to inspect framework component: \(error)")
+        } else {
+            print("🔍 Error inspecting view")
+            Issue.record("Should be able to inspect framework component")
         }
-        #endif
     }
     
     // MARK: - Helper Methods

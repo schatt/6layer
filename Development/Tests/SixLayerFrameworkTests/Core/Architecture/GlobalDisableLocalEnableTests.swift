@@ -138,44 +138,44 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     // MARK: - Helper Methods
     
     private func generateIDForView(_ view: some View) -> String {
-        #if !os(macOS)
-        do {
-            // NOTE: ViewInspector is iOS-only, so this only runs on iOS
-            let inspectedView = try view.inspect()
-            print("🔍 Inspected view type: \(type(of: inspectedView))")
-            
-            // Try to find a button in the hierarchy
-            if let button = try? inspectedView.find(Button<Text>.self) {
-                print("🔍 Found button, trying to get accessibility identifier")
-                return try button.accessibilityIdentifier()
-            }
-            
-            // Try to find any view with accessibility identifier by looking deeper
-            if let anyView = try? inspectedView.find(ViewType.AnyView.self) {
-                print("🔍 Found AnyView, trying to inspect its contents")
-                // Try to find a button inside the AnyView
-                if let innerButton = try? anyView.find(Button<Text>.self) {
-                    print("🔍 Found button inside AnyView")
-                    return try innerButton.accessibilityIdentifier()
-                }
-                // Try to get accessibility identifier from the AnyView itself
-                do {
-                    return try anyView.accessibilityIdentifier()
-                } catch {
-                    print("🔍 AnyView inspection error: \(error)")
-                }
-            }
-            
-            // Try the root view
-            print("🔍 Trying root view accessibility identifier")
-            return try inspectedView.accessibilityIdentifier()
-        } catch {
-            print("🔍 Inspection error: \(error)")
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspectedView = view.tryInspect() else {
             return ""
         }
-        #else
-        // On macOS, ViewInspector is not available
-        return ""
+        
+        #if !os(macOS)
+        print("🔍 Inspected view type: \(type(of: inspectedView))")
+        
+        // Try to find a button in the hierarchy
+        if let button = inspectedView.tryFind(Button<Text>.self),
+           let id = try? button.accessibilityIdentifier() {
+            print("🔍 Found button, trying to get accessibility identifier")
+            return id
+        }
+        
+        // Try to find any view with accessibility identifier by looking deeper
+        if let anyView = inspectedView.tryFind(ViewType.AnyView.self) {
+            print("🔍 Found AnyView, trying to inspect its contents")
+            // Try to find a button inside the AnyView
+            if let innerButton = anyView.tryFind(Button<Text>.self),
+               let id = try? innerButton.accessibilityIdentifier() {
+                print("🔍 Found button inside AnyView")
+                return id
+            }
+            // Try to get accessibility identifier from the AnyView itself
+            if let id = try? anyView.accessibilityIdentifier() {
+                return id
+            }
+            print("🔍 AnyView inspection error")
+        }
+        
+        // Try the root view
+        print("🔍 Trying root view accessibility identifier")
+        if let id = try? inspectedView.accessibilityIdentifier() {
+            return id
+        }
         #endif
+        
+        return ""
     }
 }
