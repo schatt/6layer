@@ -121,8 +121,7 @@ struct IntelligentDetailViewSheetTests {
             .frame(idealWidth: 600, idealHeight: 700)
         
         // Verify the view compiles and can be inspected with frame constraints
-        if let inspector = 
-            let inspector = detailView.tryInspect()
+        if let inspector = detailView.tryInspect() {
             // If we can inspect with frame constraints, the view respects them
             #expect(true, "platformDetailView should accept frame constraints for sheet sizing")
         } else {
