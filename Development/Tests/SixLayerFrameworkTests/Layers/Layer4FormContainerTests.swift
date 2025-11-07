@@ -69,7 +69,6 @@ open class Layer4FormContainerTests {
         } else {
             Issue.record("iOS form container should contain Form structure")
         }
-        #endif
         #elseif os(macOS)
         // macOS: Should contain Form structure with macOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -129,7 +128,6 @@ open class Layer4FormContainerTests {
         } else {
             Issue.record("iOS standard container should contain VStack structure")
         }
-        #endif
         #elseif os(macOS)
         // macOS: Should contain VStack structure with macOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -168,7 +166,6 @@ open class Layer4FormContainerTests {
         } else {
             Issue.record("iOS scroll view container should contain ScrollView structure")
         }
-        #endif
         #elseif os(macOS)
         // macOS: Should contain ScrollView structure with macOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
