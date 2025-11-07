@@ -1045,6 +1045,7 @@ open class ViewGenerationIntegrationTests {
         } catch {
             Issue.record("Failed to inspect platform-specific view structures: \(error)")
         }
+        #endif
     }
     
     /// Test that platform mocking actually creates different underlying view types
@@ -1105,6 +1106,5 @@ open class ViewGenerationIntegrationTests {
         
         // Clean up
         RuntimeCapabilityDetection.setTestPlatform(nil)
-    }
     }
 }

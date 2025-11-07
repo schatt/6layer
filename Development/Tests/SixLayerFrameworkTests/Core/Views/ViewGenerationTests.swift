@@ -195,8 +195,8 @@ open class ViewGenerationTests: BaseTestClass {
             
         } catch {
             Issue.record("Failed to inspect detail view with hints: \(error)")
-        #endif
         }
+        #endif
     }
     
     // MARK: - Layout Strategy Tests
