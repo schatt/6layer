@@ -266,8 +266,11 @@ struct ViewGenerationVerificationTests {
             #expect(hasDescriptionContent, "Detail view should contain the description 'Description 2'")
             
         } catch {
-            Issue.record("Failed to inspect detail view with nil values: \(error)")
+            Issue.record("Failed to inspect detail view with nil values")
         }
+        #else
+        Issue.record("View inspection not available on this platform (likely macOS)")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Verify that DataIntrospectionEngine actually analyzes data correctly
