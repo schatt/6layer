@@ -144,7 +144,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect()            let buttonID = try? inspected.accessibilityIdentifier()
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier()
             
             #expect(buttonID.contains("save") || buttonID.contains("Save"), 
                    "platformNavigationButton identifier should include title text 'Save'")
@@ -166,7 +167,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect()            let buttonID = try? inspected.accessibilityIdentifier()
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - spaces should be converted to hyphens
             #expect(!buttonID.contains("Add New Item"), 
@@ -189,7 +191,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect()            let buttonID = try? inspected.accessibilityIdentifier()
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - special chars should be sanitized
             #expect(!buttonID.contains("&"), "Identifier should not contain '&'")
@@ -210,7 +213,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect()            let buttonID = try? inspected.accessibilityIdentifier()
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - should be lowercase
             #expect(!buttonID.contains("CamelCaseLabel"), 
@@ -249,7 +253,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - should include sanitized label
             #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email"), 
@@ -283,7 +288,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL
             #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"), 
@@ -317,7 +323,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL
             #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure"), 
@@ -348,7 +355,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = formView.tryInspect()            let formID = try? inspected.accessibilityIdentifier()
+        if let inspected = formView.tryInspect(),
+           let formID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - should include title
             #expect(formID.contains("user") || formID.contains("profile") || formID.contains("User"), 
@@ -384,7 +392,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = sectionView.tryInspect()            let sectionID = try? inspected.accessibilityIdentifier()
+        if let inspected = sectionView.tryInspect(),
+           let sectionID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - should include title
             #expect(sectionID.contains("personal") || sectionID.contains("information") || sectionID.contains("Personal"), 
@@ -420,7 +429,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("mobile") || fieldID.contains("phone") || fieldID.contains("Mobile"), 
                    "DynamicPhoneField identifier should include field label 'Mobile Phone'")
@@ -453,7 +463,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("website") || fieldID.contains("url") || fieldID.contains("Website"), 
                    "DynamicURLField identifier should include field label 'Website URL'")
@@ -486,7 +497,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("total") || fieldID.contains("amount") || fieldID.contains("Total"), 
                    "DynamicNumberField identifier should include field label 'Total Amount'")
@@ -519,7 +531,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("birth") || fieldID.contains("date") || fieldID.contains("Birth"), 
                    "DynamicDateField identifier should include field label 'Birth Date'")
@@ -552,7 +565,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("enable") || fieldID.contains("notifications") || fieldID.contains("Enable"), 
                    "DynamicToggleField identifier should include field label 'Enable Notifications'")
@@ -586,7 +600,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("favorite") || fieldID.contains("colors") || fieldID.contains("Favorite"), 
                    "DynamicMultiSelectField identifier should include field label 'Favorite Colors'")
@@ -620,7 +635,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("agree") || fieldID.contains("terms") || fieldID.contains("Agree"), 
                    "DynamicCheckboxField identifier should include field label 'Agree to Terms'")
@@ -653,7 +669,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("upload") || fieldID.contains("document") || fieldID.contains("Upload"), 
                    "DynamicFileField identifier should include field label 'Upload Document'")
@@ -687,7 +704,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("priority") || fieldID.contains("level") || fieldID.contains("Priority"), 
                    "DynamicEnumField identifier should include field label 'Priority Level'")
@@ -720,7 +738,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("quantity") || fieldID.contains("Quantity"), 
                    "DynamicIntegerField identifier should include field label 'Quantity'")
@@ -753,7 +772,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             #expect(fieldID.contains("comments") || fieldID.contains("Comments"), 
                    "DynamicTextAreaField identifier should include field label 'Comments'")
@@ -1000,10 +1020,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "CoverFlowCardComponent items with different titles should have different identifiers")
@@ -1065,10 +1086,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "SimpleCardComponent items with different titles should have different identifiers")
@@ -1105,10 +1127,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "MasonryCardComponent items with different titles should have different identifiers")
@@ -1174,10 +1197,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "Grid items should have different identifiers based on their titles")
@@ -1217,10 +1241,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "Cover flow items should have different identifiers")
@@ -1257,10 +1282,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "Masonry collection items should have different identifiers")
@@ -1403,10 +1429,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = cardView1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = cardView1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = cardView2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = cardView2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - cards with different titles should have different IDs
             #expect(card1ID != card2ID, 
@@ -1460,10 +1487,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = card1.tryInspect()            let card1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = card1.tryInspect(),
+           let card1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = card2.tryInspect()
-            let card2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = card2.tryInspect(),
+           let card2ID = try? inspected2.accessibilityIdentifier()
             
             #expect(card1ID != card2ID, 
                    "ResponsiveCardView items in collections should have different identifiers")
@@ -1548,10 +1576,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let homeInspected = homeButton.tryInspect()            let homeID = try? homeInspected.accessibilityIdentifier()
+        if let homeInspected = homeButton.tryInspect(),
+           let homeID = try? homeInspected.accessibilityIdentifier()
             
-            let settingsInspected = settingsButton.tryInspect()
-            let settingsID = try try? settingsInspected.accessibilityIdentifier()
+            let settingsInspected = settingsButton.tryInspect(),
+           let settingsID = try? settingsInspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - buttons with different titles should have different IDs
             #expect(homeID != settingsID, 
@@ -1621,7 +1650,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = fieldView.tryInspect()            let fieldID = try? inspected.accessibilityIdentifier()
+        if let inspected = fieldView.tryInspect(),
+           let fieldID = try? inspected.accessibilityIdentifier()
             
             print("🔴 RED: DynamicFormFieldView ID: '\(fieldID)'")
             print("🔴 RED: Note - Validation error Text views in ForEach should include error text in identifier")
@@ -1659,7 +1689,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = arrayField.tryInspect()            let arrayID = try? inspected.accessibilityIdentifier()
+        if let inspected = arrayField.tryInspect(),
+           let arrayID = try? inspected.accessibilityIdentifier()
             
             print("🔴 RED: DynamicArrayField ID: '\(arrayID)'")
             print("🔴 RED: Note - Array items in ForEach should get unique identifiers")
@@ -1696,10 +1727,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = row1.tryInspect()            let row1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = row1.tryInspect(),
+           let row1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = row2.tryInspect()
-            let row2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = row2.tryInspect(),
+           let row2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - rows with different content should have different IDs
             #expect(row1ID != row2ID, 
@@ -1751,10 +1783,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = header1.tryInspect()            let header1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = header1.tryInspect(),
+           let header1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = header2.tryInspect()
-            let header2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = header2.tryInspect(),
+           let header2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - headers with different titles should have different IDs
             #expect(header1ID != header2ID, 
@@ -1793,10 +1826,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = field1.tryInspect()            let field1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = field1.tryInspect(),
+           let field1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = field2.tryInspect()
-            let field2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = field2.tryInspect(),
+           let field2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - fields with different labels should have different IDs
             #expect(field1ID != field2ID, 
@@ -1835,10 +1869,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = group1.tryInspect()            let group1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = group1.tryInspect(),
+           let group1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = group2.tryInspect()
-            let group2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = group2.tryInspect(),
+           let group2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - groups with different titles should have different IDs
             #expect(group1ID != group2ID, 
@@ -1873,10 +1908,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = emptyState1.tryInspect()            let state1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = emptyState1.tryInspect(),
+           let state1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = emptyState2.tryInspect()
-            let state2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = emptyState2.tryInspect(),
+           let state2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - empty states with different titles should have different IDs
             #expect(state1ID != state2ID, 
@@ -1911,10 +1947,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = placeholder1.tryInspect()            let placeholder1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = placeholder1.tryInspect(),
+           let placeholder1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = placeholder2.tryInspect()
-            let placeholder2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = placeholder2.tryInspect(),
+           let placeholder2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - placeholders with different titles should have different IDs
             #expect(placeholder1ID != placeholder2ID, 
@@ -1943,10 +1980,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = button1.tryInspect()            let button1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = button1.tryInspect(),
+           let button1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = button2.tryInspect()
-            let button2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = button2.tryInspect(),
+           let button2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - buttons with different titles should have different IDs
             #expect(button1ID != button2ID, 
@@ -1982,10 +2020,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected1 = message1.tryInspect()            let message1ID = try? inspected1.accessibilityIdentifier()
+        if let inspected1 = message1.tryInspect(),
+           let message1ID = try? inspected1.accessibilityIdentifier()
             
-            let inspected2 = message2.tryInspect()
-            let message2ID = try try? inspected2.accessibilityIdentifier()
+            let inspected2 = message2.tryInspect(),
+           let message2ID = try? inspected2.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - messages with different text should have different IDs
             #expect(message1ID != message2ID, 
