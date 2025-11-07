@@ -1,6 +1,8 @@
 # 🤖 AI Agent Guide for SixLayer Framework
 
-*This document is specifically designed for AI agents (like Claude, GPT, etc.) to understand how to work with the SixLayer Framework's generic core + extensible business logic architecture.*
+*This document is specifically designed for AI agents (like Claude, GPT, etc.) that are helping developers USE the SixLayer Framework. This guide helps AI assistants understand how to work with the framework's generic core + extensible business logic architecture when assisting developers who are building applications with SixLayer.*
+
+**Note**: This guide is for AI agents helping developers USE the framework, not for AI agents working ON the framework itself.
 
 ## 🎯 **Purpose of This Guide**
 
@@ -19,7 +21,7 @@ AI agents need to understand:
 3. **[Working with Developers](#-working-with-developers)** - AI agent best practices
 4. **[Apple HIG Compliance](#-apple-hig-compliance-by-default)** - Automatic design compliance
 5. **[Settings Management](#️-settings-management)** - Centralized settings system
-6. **[Field-Level Display Hints (v4.8.0)](#6-field-level-display-hints-new-in-v480)** - Declarative data presentation hints
+6. **[Field-Level Display Hints (v5.0.0)](#6-field-level-display-hints-new-in-v500)** - Declarative data presentation hints
 7. **[OCR Intelligence Features (v5.0.0)](#7-ocr-intelligence-features-new-in-v500)** - Advanced OCR form-filling with calculation groups and field hints
 8. **[Accessibility Improvements (v5.0.0)](#8-accessibility-improvements-new-in-v500)** - Label text inclusion and platformListRow API refactoring
 9. **[Best Practices Summary](#-best-practices-summary)** - Key guidelines for AI agents
@@ -34,11 +36,15 @@ The SixLayer Framework is built on a **6-layer architecture** where **Layer 1 (S
 
 **🎯 Core Principle: Apps express WHAT they want to present, not HOW to implement it.**
 
-```
-Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Selection → Layer 4: Component Implementation → Layer 5: Platform Optimization → Layer 6: Platform System
-```
-
 **📚 For complete architecture details, see [6-Layer Architecture Overview](README_6LayerArchitecture.md)**
+
+The correct six-layer architecture is:
+- **Layer 1 (Semantic)**: Express WHAT you want to achieve, not how
+- **Layer 2 (Decision)**: Intelligent layout analysis and decision making
+- **Layer 3 (Strategy)**: Optimal layout strategy selection
+- **Layer 4 (Implementation)**: Platform-agnostic component implementation
+- **Layer 5 (Optimization)**: Platform-specific enhancements and optimizations
+- **Layer 6 (System)**: Direct platform system calls and native implementations
 
 ### **Layer 1 Philosophy in Practice:**
 
@@ -224,7 +230,7 @@ let hints = PresentationHints(
 
 **📚 For complete default values documentation, see [Hints Default Values Guide](HintsDefaultValuesGuide.md)**
 
-### **6. Field-Level Display Hints (NEW in v4.8.0):**
+### **6. Field-Level Display Hints (NEW in v5.0.0):**
 ```swift
 // ✅ NEW: Field-level hints that describe the DATA, not the view
 
@@ -257,7 +263,15 @@ platformPresentFormData_L1(
 // ✅ DRY: Define hints once, use everywhere
 // ✅ Cached: Hints loaded once, reused for performance
 // ✅ Organized: All hints in Hints/ folder
+// ✅ Works with CoreData AND/OR Swift Data: Hints describe your data models regardless of persistence layer
 ```
+
+**Data Persistence Support**: Field hints work seamlessly with both CoreData and Swift Data. The hints describe your data models, not the persistence layer, so you can use the same hints whether your models are CoreData entities or Swift Data models.
+
+**Xcode Project Integration**: Hints files should be added to your Xcode project target:
+- **Via Xcode**: Drag `.hints` files into your project and ensure they're included in your app target
+- **Via xcodegen**: Add hints files to your `project.yml` resources section
+- **Via Package.swift**: For Swift Package projects, include hints in your package resources
 
 **📚 For complete field hints documentation, see:**
 - [Field Hints Complete Guide](FieldHintsCompleteGuide.md) - Comprehensive usage guide

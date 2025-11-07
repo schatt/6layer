@@ -21,7 +21,9 @@
 
 ## Overview
 
-The Field Hints System in SixLayer Framework v4.8.0 allows you to **declaratively describe** how your data models should be presented. Instead of manually configuring each field in code, you define hints once in `.hints` files and 6Layer automatically applies them everywhere your data is presented.
+The Field Hints System in SixLayer Framework v5.0.0 allows you to **declaratively describe** how your data models should be presented. Instead of manually configuring each field in code, you define hints once in `.hints` files and 6Layer automatically applies them everywhere your data is presented.
+
+**Data Persistence Support**: Field hints work seamlessly with both **CoreData AND/OR Swift Data**. The hints describe your data models, not the persistence layer, so you can use the same hints whether your models are CoreData entities or Swift Data models.
 
 ### Core Principle
 
@@ -87,6 +89,11 @@ struct User: Identifiable {
 ### Step 2: Create the Hints File
 
 Create `Hints/User.hints`:
+
+**Note**: After creating the hints file, you need to add it to your Xcode project:
+- **Via Xcode**: Drag the `.hints` file into your project navigator and ensure it's included in your app target
+- **Via xcodegen**: Add the hints file to your `project.yml` resources section
+- **Via Package.swift**: For Swift Package projects, include hints in your package resources
 
 ```json
 {
@@ -725,11 +732,11 @@ Hints/
 
 ## Additional Resources
 
-- `Framework/docs/FieldHintsGuide.md` - Quick start guide
-- `Framework/docs/HintsDRYArchitecture.md` - DRY principles
-- `Framework/docs/HintsFolderStructure.md` - File organization
-- `Framework/Examples/AutoLoadHintsExample.swift` - Complete example
-- `Development/RELEASE_v4.8.0.md` - Release notes
+- [Field Hints Guide](FieldHintsGuide.md) - Quick start guide
+- [Hints DRY Architecture](HintsDRYArchitecture.md) - DRY principles
+- [Hints Folder Structure](HintsFolderStructure.md) - File organization
+- [AutoLoad Hints Example](../../Examples/AutoLoadHintsExample.swift) - Complete example
+- [Release Notes v5.0.0](../../../Development/RELEASE_v5.0.0.md) - Release notes
 
 ---
 

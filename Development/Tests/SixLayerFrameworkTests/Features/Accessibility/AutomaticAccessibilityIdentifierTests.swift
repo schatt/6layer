@@ -880,9 +880,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 .automaticAccessibilityIdentifiers(named: "TestComponent")
                 
             // When: Inspecting the view's accessibility identifier
-            do {
-                let identifier = try view.inspect().accessibilityIdentifier()
-                    
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspected = view.tryInspect(),
+               let identifier = try? inspected.accessibilityIdentifier() {
                 // Then: The identifier should include the component name
                 #expect(identifier.contains("TestComponent"), 
                        "Identifier should contain component name 'TestComponent', got: '\(identifier)'")
@@ -910,10 +910,11 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 .automaticAccessibilityIdentifiers()
                 
             // When: Inspecting both identifiers
-            do {
-                let id1 = try view1.inspect().accessibilityIdentifier()
-                let id2 = try view2.inspect().accessibilityIdentifier()
-                    
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspected1 = view1.tryInspect(),
+               let id1 = try? inspected1.accessibilityIdentifier(),
+               let inspected2 = view2.tryInspect(),
+               let id2 = try? inspected2.accessibilityIdentifier() {
                 // Then: They should produce the same identifier (or at least same component name)
                 #expect(id1.contains("TestComponent"), 
                        "Helper function should include component name, got: '\(id1)'")

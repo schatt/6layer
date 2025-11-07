@@ -1,6 +1,13 @@
 SixLayer Framework API Reference
 
-## Current API Functions (v2.6.0+)
+## Current API Functions (v5.0.0+)
+
+### Field Hints System (v5.0.0)
+- **Field-Level Display Hints**: Declarative `.hints` files for data presentation
+- **Layout Hints and Section Grouping**: Structural organization with `_sections` in hints files
+- **CoreData and Swift Data Support**: Hints work with both CoreData and Swift Data models
+- **DynamicFormView Integration**: Field hints automatically applied to DynamicFormView
+- **Xcode Project Integration**: Hints files can be added via Xcode, xcodegen, or Package.swift
 
 ## ⚠️ Deprecated APIs
 

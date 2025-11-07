@@ -6,7 +6,7 @@
 
 A modern, intelligent UI framework that provides a six-layer abstraction architecture for cross-platform Swift development. This framework eliminates platform-specific UI code while maintaining native performance and user experience.
 
-> **🤖 For AI Assistants**: This framework has a specific architecture that requires careful understanding. **Please read the [AI Agent Guide](docs/AI_AGENT_GUIDE.md) first** before attempting to help with this framework. It contains critical information about the Layer 1 Semantic Intent philosophy and common mistakes to avoid.
+> **🤖 For AI Assistants**: This framework has a specific architecture that requires careful understanding. **Please read the [AI Agent Guide](../Development/docs/AI_AGENT_GUIDE.md) first** before attempting to help with this framework. It contains critical information about the Layer 1 Semantic Intent philosophy and common mistakes to avoid.
 
 ## 🏗️ Architecture Overview
 
