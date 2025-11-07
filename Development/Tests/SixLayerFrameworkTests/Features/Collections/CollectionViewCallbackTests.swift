@@ -124,6 +124,9 @@ open class CollectionViewCallbackTests: BaseTestClass {
 
             print("✅ Collection view without callbacks contains expected content")
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
