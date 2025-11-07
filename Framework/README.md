@@ -711,7 +711,7 @@ xcodebuild test -scheme SixLayerFramework -destination 'platform=iOS Simulator,n
 ## 📚 Documentation
 
 ### 🤖 **AI Agent Guide** (For AI Assistants)
-- **[AI Agent Guide](docs/AI_AGENT_GUIDE.md)** - **Essential for AI assistants** working with the framework. Contains complete architecture understanding, correct usage patterns, and common mistakes to avoid.
+- **[AI Agent Guide](../Development/docs/AI_AGENT_GUIDE.md)** - **Essential for AI assistants** working with the framework. Contains complete architecture understanding, correct usage patterns, and common mistakes to avoid.
 - **NEW in v4.8.0**: [Field-Level Display Hints](docs/FieldHintsCompleteGuide.md) - Declarative data presentation system
 
 ### 📖 **Developer Documentation**

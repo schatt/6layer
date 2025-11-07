@@ -94,8 +94,14 @@ open class Layer1CallbackFunctionalTests {
         )
         
         // Use ViewInspector to simulate tap
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspector = view.tryInspect() else {
+            Issue.record("Failed to inspect view")
+            return
+        }
+        
+        #if !os(macOS)
         do {
-            let inspector = try view.inspect()
             let listViews = try inspector.findAll(ListCollectionView<TestItem>.self)
             
             if let firstList = listViews.first {
@@ -116,6 +122,8 @@ open class Layer1CallbackFunctionalTests {
             }
         } catch {
             Issue.record("ViewInspector failed: \(error)")
+        }
+        #endif
         }
     }
     
