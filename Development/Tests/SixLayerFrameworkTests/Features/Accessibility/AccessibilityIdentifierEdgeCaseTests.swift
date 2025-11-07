@@ -60,7 +60,6 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             } else {
                 Issue.record("Failed to inspect view with special characters")
             }
-            }
     }
     
     // MARK: - Edge Case 3: Very Long Names

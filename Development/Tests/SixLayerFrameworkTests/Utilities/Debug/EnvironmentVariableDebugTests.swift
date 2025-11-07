@@ -70,9 +70,8 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             // 3. Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             if let inspectedView = view.tryInspect(),
-                let button = try inspectedView.button()
-                let accessibilityID = try button.accessibilityIdentifier()
-                
+               let button = try? inspectedView.button(),
+               let accessibilityID = try? button.accessibilityIdentifier() {
                 print("🔍 Generated ID: '\(accessibilityID)'")
                 
                 if accessibilityID.isEmpty {
@@ -81,10 +80,9 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
                 } else {
                     print("✅ SUCCESS: Direct environment variable working - ID generated")
                 }
-                
-            } catch {
-                print("❌ FAILED: Could not inspect view: \(error)")
-                Issue.record("Could not inspect view: \(error)")
+            } else {
+                print("❌ FAILED: Could not inspect view")
+                Issue.record("Could not inspect view")
             }
         }
     }
