@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for GenericNumericDataView component
 /// 
 /// BUSINESS PURPOSE: Ensure GenericNumericDataView generates proper accessibility identifiers

@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Test the "global disable, local enable" functionality
 @MainActor
 @Suite("Local Enable Override")

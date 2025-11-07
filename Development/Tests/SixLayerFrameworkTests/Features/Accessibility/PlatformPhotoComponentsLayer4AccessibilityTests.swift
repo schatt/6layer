@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
@@ -15,6 +17,8 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 returns the correct platform-specific implementation
     /// This test actually verifies that the compile-time platform detection works correctly
+    /// NOTE: ViewInspector is iOS-only, so this test only runs on iOS
+    #if !os(macOS)
     @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
     func testPlatformPhotoPickerL4ReturnsCorrectPlatformImplementation(
         platform: SixLayerPlatform
@@ -43,17 +47,6 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                     let hasUIKitComponent = inspection.find(ViewType.UIViewControllerRepresentable.self) != nil
                     #expect(hasUIKitComponent, "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
                 }
-                #elseif os(macOS)
-                // On macOS, we should get AppKit components
-                if platform == .macOS {
-                    // Look for any view that might be AppKit-based (simplified check)
-                    let hasAppKitComponent = inspection.findAll(ViewType.Text.self).count > 0
-                    #expect(hasAppKitComponent, "macOS platform should return AppKit-based photo picker")
-                } else {
-                    // On macOS compiled code, iOS test should still get AppKit (compile-time detection)
-                    let hasAppKitComponent = inspection.findAll(ViewType.Text.self).count > 0
-                    #expect(hasAppKitComponent, "Compile-time detection: macOS-compiled code returns AppKit even when testing iOS")
-                }
                 #endif
                 
             } catch {
@@ -61,6 +54,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             }
         }
     }
+    #endif
     
     // MARK: - Photo Display Tests
     

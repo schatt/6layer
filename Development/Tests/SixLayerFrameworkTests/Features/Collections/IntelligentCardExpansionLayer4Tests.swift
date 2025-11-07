@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for IntelligentCardExpansionLayer4.swift
 /// 
 /// BUSINESS PURPOSE: Ensure Layer 4 card expansion components generate proper accessibility identifiers

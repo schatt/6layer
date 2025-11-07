@@ -2,7 +2,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// BUSINESS PURPOSE: Accessibility tests for OCRService integration
 /// Tests that views using OCRService generate proper accessibility identifiers
 /// OCRService itself is a service class and doesn't generate views, but views that use it should

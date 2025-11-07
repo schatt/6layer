@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// UI Generation Verification Tests
 /// Tests that the correct UI components are generated based on capabilities
 @MainActor

@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// TDD Tests for Metal Rendering Crash Bug Fix
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 /// 
@@ -50,12 +52,11 @@ open class MetalRenderingCrashTDDTests {
         // view is a non-optional View, so it exists if we reach here
         
         // Try to inspect the view (should not crash)
-        do {
-            let inspectedView = try view.inspect()
-            // inspectedView is a non-optional InspectableView, so it exists if we reach here
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let _ = view.tryInspect() {
             print("✅ platformPresentItemCollection_L1 rendered successfully")
-        } catch {
-            Issue.record("platformPresentItemCollection_L1 should not crash during inspection: \(error)")
+        } else {
+            Issue.record("platformPresentItemCollection_L1 should not crash during inspection")
         }
         
         print("🟢 TDD Green Phase: platformPresentItemCollection_L1 no longer crashes - performance layer removed")
@@ -89,12 +90,12 @@ open class MetalRenderingCrashTDDTests {
         #expect(view != nil, "GenericItemCollectionView should not crash")
         
         // Try to inspect the view (should not crash)
-        do {
-            let inspectedView = try view.inspect()
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect() {
             #expect(inspectedView != nil, "View should be inspectable without crashing")
             print("✅ GenericItemCollectionView rendered successfully")
-        } catch {
-            Issue.record("GenericItemCollectionView should not crash during inspection: \(error)")
+        } else {
+            Issue.record("GenericItemCollectionView should not crash during inspection")
         }
         
         print("🟢 TDD Green Phase: GenericItemCollectionView no longer crashes - performance layer removed")

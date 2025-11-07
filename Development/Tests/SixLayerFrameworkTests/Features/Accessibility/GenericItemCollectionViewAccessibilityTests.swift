@@ -2,7 +2,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 #if os(macOS)
 import AppKit
 #endif

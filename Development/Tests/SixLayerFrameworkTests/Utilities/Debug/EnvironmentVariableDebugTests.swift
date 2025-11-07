@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Debug test to understand environment variable propagation
 @MainActor
 @Suite("Environment Variable Debug")

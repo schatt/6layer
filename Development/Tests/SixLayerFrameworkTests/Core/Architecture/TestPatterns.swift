@@ -1,7 +1,9 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// DRY Test Patterns
 /// Provides reusable patterns to eliminate duplication in tests
 @MainActor
@@ -145,41 +147,38 @@ open class TestPatterns {
         // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view has proper structure
-        do {
-            // Try to inspect the view structure
-            let _ = try view.inspect()
-            // If we can inspect it, the view structure is valid
-            
-        } catch {
-            Issue.record("Failed to inspect view structure for \(testName): \(error)")
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if view.tryInspect() == nil {
+            Issue.record("Failed to inspect view structure for \(testName)")
         }
     }
     
     /// BUSINESS PURPOSE: Verify that a view contains specific text content
     /// TESTING SCOPE: Tests that views contain expected text elements
     /// METHODOLOGY: Uses ViewInspector to find and verify text content
+    /// Using wrapper - when ViewInspector works on macOS, no changes needed here
     static func verifyViewContainsText(_ view: some View, expectedText: String, testName: String) {
         // 1. View created - The view can be instantiated successfully
         // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain expected text
-        do {
-            let viewText = try view.inspect().findAll(ViewType.Text.self)
-            #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
-            
-            let hasExpectedText = viewText.contains { text in
-                do {
-                    let textContent = try text.string()
-                    return textContent.contains(expectedText)
-                } catch {
-                    return false
-                }
-            }
-            #expect(hasExpectedText, "View should contain text '\(expectedText)' for \(testName)")
-            
-        } catch {
-            Issue.record("Failed to inspect view text content for \(testName): \(error)")
+        guard let inspected = view.tryInspect() else {
+            Issue.record("Failed to inspect view for \(testName)")
+            return
         }
+        
+        #if !os(macOS)
+        let viewText = inspected.tryFindAll(ViewType.Text.self)
+        #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
+        
+        let hasExpectedText = viewText.contains { text in
+            if let textContent = try? text.string() {
+                return textContent.contains(expectedText)
+            }
+            return false
+        }
+        #expect(hasExpectedText, "View should contain text '\(expectedText)' for \(testName)")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Verify that a view contains specific image elements

@@ -1,7 +1,9 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 
 /// Integration tests for platformAdaptiveDetailView rendering
 /// These test the ACTUAL framework behavior - that the view renders correctly
@@ -35,11 +37,11 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         
         // Then: The view should exist and be renderable
         // This proves the framework code (platformAdaptiveDetailView) actually works
-        do {
-            let _ = try view.inspect()
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let _ = view.tryInspect() {
             #expect(true, "platformAdaptiveDetailView should be inspectable (proves it rendered)")
-        } catch {
-            Issue.record("platformAdaptiveDetailView should be inspectable: \(error)")
+        } else {
+            Issue.record("platformAdaptiveDetailView should be inspectable")
         }
     }
     
@@ -67,11 +69,11 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         )
         
         // Then: View should be renderable (proves it called the right rendering function)
-        do {
-            let _ = try view.inspect()
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let _ = view.tryInspect() {
             #expect(true, "platformAdaptiveDetailView on phone should render (proves it called platformStandardDetailView)")
-        } catch {
-            Issue.record("platformAdaptiveDetailView should render on phone: \(error)")
+        } else {
+            Issue.record("platformAdaptiveDetailView should render on phone")
         }
     }
     

@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
 @MainActor
 @Suite("Simple Accessibility")
@@ -39,6 +41,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
         ), "Framework component should automatically generate accessibility identifiers")
         
         // Check if accessibility identifier is present
+        #if !os(macOS)
         do {
             let inspectedView = try testView.inspect()
             let accessibilityID = try inspectedView.accessibilityIdentifier()
@@ -48,6 +51,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
             print("🔍 Error inspecting view: \(error)")
             Issue.record("Should be able to inspect framework component: \(error)")
         }
+        #endif
     }
     
     // MARK: - Helper Methods

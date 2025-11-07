@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for IntelligentDetailView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure IntelligentDetailView generates proper accessibility identifiers

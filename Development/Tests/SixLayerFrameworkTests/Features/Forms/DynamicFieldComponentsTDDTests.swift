@@ -1,7 +1,9 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 
 /**
  * BUSINESS PURPOSE: Dynamic field components provide specialized form field rendering

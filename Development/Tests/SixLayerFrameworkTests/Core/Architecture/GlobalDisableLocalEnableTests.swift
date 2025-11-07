@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 @MainActor
@@ -136,7 +138,9 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     // MARK: - Helper Methods
     
     private func generateIDForView(_ view: some View) -> String {
+        #if !os(macOS)
         do {
+            // NOTE: ViewInspector is iOS-only, so this only runs on iOS
             let inspectedView = try view.inspect()
             print("🔍 Inspected view type: \(type(of: inspectedView))")
             
@@ -169,5 +173,9 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             print("🔍 Inspection error: \(error)")
             return ""
         }
+        #else
+        // On macOS, ViewInspector is not available
+        return ""
+        #endif
     }
 }

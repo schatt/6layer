@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for PlatformInternationalizationL1.swift
 /// 
 /// BUSINESS PURPOSE: Ensure all internationalization Layer 1 functions generate proper accessibility identifiers

@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Form Callback Functional Tests
 /// Tests that forms with callbacks ACTUALLY INVOKE them when buttons are tapped (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
@@ -11,8 +13,10 @@ open class FormCallbackFunctionalTests {
     
     // MARK: - IntelligentFormView Callback Tests
     
+    #if !os(macOS)
     @Test func testIntelligentFormViewOnCancelCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
+        // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
         var callbackInvoked = false
         
@@ -72,9 +76,12 @@ open class FormCallbackFunctionalTests {
             Issue.record("ViewInspector failed to inspect form: \(error)")
         }
     }
+    #endif
     
+    #if !os(macOS)
     @Test func testIntelligentFormViewOnUpdateCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
+        // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
         var callbackInvoked = false
         var receivedData: String?
@@ -135,11 +142,14 @@ open class FormCallbackFunctionalTests {
             Issue.record("ViewInspector failed to inspect form: \(error)")
         }
     }
+    #endif
     
     // MARK: - DynamicFormView Callback Tests
     
+    #if !os(macOS)
     @Test func testDynamicFormViewOnSubmitCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
+        // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
         var callbackInvoked = false
         var receivedValues: [String: Any]?
@@ -196,6 +206,7 @@ open class FormCallbackFunctionalTests {
             Issue.record("ViewInspector failed to inspect DynamicFormView: \(error)")
         }
     }
+    #endif
     
     // MARK: - External Integration Tests
     

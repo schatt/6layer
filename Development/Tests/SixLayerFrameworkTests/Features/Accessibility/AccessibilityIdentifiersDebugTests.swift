@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
 @MainActor
 @Suite("Accessibility Identifiers Debug")

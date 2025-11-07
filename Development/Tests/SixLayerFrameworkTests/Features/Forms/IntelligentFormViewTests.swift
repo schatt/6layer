@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for IntelligentFormView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure IntelligentFormView generates proper accessibility identifiers

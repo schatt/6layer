@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for Collection View Callback Functionality
 /// Tests that collection views properly handle item selection, deletion, and editing callbacks
 @MainActor
@@ -182,10 +184,12 @@ open class CollectionViewCallbackTests {
         )
         
         // When: Simulating a tap using ViewInspector
+        #if !os(macOS)
         do {
             let inspector = try view.inspect()
             
             // Find the ListCardComponent instances
+            // NOTE: ViewInspector is iOS-only, so this only runs on iOS
             let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
             
             // Then: Verify the view structure
@@ -209,6 +213,7 @@ open class CollectionViewCallbackTests {
             // If ViewInspector fails, that's a test infrastructure issue
             Issue.record("ViewInspector failed to inspect ListCollectionView: \(error)")
         }
+        #endif
     }
     
     @Test func testCoverFlowCollectionViewWithCallbacks() {

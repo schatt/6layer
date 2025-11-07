@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// View Generation Integration Tests
 /// Tests the actual view generation pipeline with different capability states
 @MainActor
@@ -734,15 +736,12 @@ open class ViewGenerationIntegrationTests {
         #expect(testView != nil, "Should be able to create view with mock config for \(config.name)")
         
         // 2. Does that structure contain what it should?
-        do {
-            // Verify the view is inspectable (meaning it's properly constructed)
-            let _ = try testView.inspect()
-            
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let _ = testView.tryInspect() {
             // Test that the configuration produces the expected view behavior
             testViewGenerationBehavior(mockConfig, configName: config.name)
-            
-        } catch {
-            Issue.record("Failed to inspect view structure for \(config.name): \(error)")
+        } else {
+            Issue.record("Failed to inspect view structure for \(config.name)")
         }
     }
     
@@ -1021,10 +1020,16 @@ open class ViewGenerationIntegrationTests {
         #expect(hoverView != nil, "Hover platform should generate a valid view")
         
         // 2. Does that structure contain what it should?
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let touchInspection = touchView.tryInspect(),
+              let hoverInspection = hoverView.tryInspect() else {
+            Issue.record("Failed to inspect platform-specific view structures")
+            return
+        }
+        
+        #if !os(macOS)
         do {
             // Both views should be inspectable
-            let touchInspection = try touchView.inspect()
-            let hoverInspection = try hoverView.inspect()
             
             // The views should be different because they represent different platforms
             // This is the key test - platform mocking should generate different views
@@ -1092,6 +1097,7 @@ open class ViewGenerationIntegrationTests {
         } catch {
             Issue.record("Failed to inspect platform-specific view structures: \(error)")
         }
+        #endif
         
         // Clean up
         RuntimeCapabilityDetection.setTestPlatform(nil)

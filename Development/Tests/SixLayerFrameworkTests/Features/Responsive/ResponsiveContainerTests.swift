@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for ResponsiveContainer.swift
 /// 
 /// BUSINESS PURPOSE: Ensure ResponsiveContainer generates proper accessibility identifiers

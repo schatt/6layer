@@ -11,7 +11,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 @MainActor
 @Suite("Intelligent Card Expansion Layer")
 open class IntelligentCardExpansionLayer6Tests: BaseTestClass {

@@ -19,7 +19,9 @@
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -202,9 +204,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     let viewWithEnvironment = view
         .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
     
+    #if !os(macOS)
     do {
         // Use ViewInspector to directly inspect the SwiftUI view
         // This will find identifiers that the COMPONENT applied, not the test helper
+        // NOTE: ViewInspector is iOS-only, so this code only runs on iOS
         if config.enableDebugLogging {
             print("🔍 SWIFTUI DEBUG: Attempting to inspect view of type: \(type(of: viewWithEnvironment))")
         }
@@ -389,6 +393,15 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         let platformId = firstAccessibilityIdentifier(inHosted: hosted)
         return platformId
     }
+    #else
+    // On macOS, ViewInspector is not available, so use platform view hosting
+    if config.enableDebugLogging {
+        print("🔍 SWIFTUI DEBUG: macOS - using platform view inspection (ViewInspector not available)")
+    }
+    let hosted = hostRootPlatformView(viewWithEnvironment)
+    let platformId = firstAccessibilityIdentifier(inHosted: hosted)
+    return platformId
+    #endif
 }
 
 // MARK: - Platform Mocking for Accessibility Tests

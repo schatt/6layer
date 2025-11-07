@@ -10,7 +10,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 @MainActor
 @Suite("Navigation Layer")
 open class NavigationLayer4Tests {

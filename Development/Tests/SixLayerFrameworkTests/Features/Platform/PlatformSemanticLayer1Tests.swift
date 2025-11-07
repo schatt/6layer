@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for PlatformSemanticLayer1.swift
 /// 
 /// BUSINESS PURPOSE: Ensure all Layer 1 semantic presentation functions generate proper accessibility identifiers

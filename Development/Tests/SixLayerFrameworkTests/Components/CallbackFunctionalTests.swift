@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 @Suite("Callback Functional")
 /// Component Callback Functional Tests
 /// Tests that components with callbacks ACTUALLY INVOKE them when expected (Rules 6.1, 6.2, 7.3, 7.4)

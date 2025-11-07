@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// BUSINESS PURPOSE: Accessibility tests for ImageProcessingPipeline.swift classes
 /// Ensures ImageProcessingPipeline classes generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance

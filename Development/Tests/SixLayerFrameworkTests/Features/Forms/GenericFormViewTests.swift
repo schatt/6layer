@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for GenericFormView component
 /// 
 /// BUSINESS PURPOSE: Ensure GenericFormView generates proper accessibility identifiers

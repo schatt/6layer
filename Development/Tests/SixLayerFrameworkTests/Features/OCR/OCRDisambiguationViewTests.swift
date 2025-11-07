@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Tests for OCRDisambiguationView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure OCRDisambiguationView generates proper accessibility identifiers

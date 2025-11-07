@@ -3,7 +3,9 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+#if !os(macOS)
 import ViewInspector
+#endif
 /// Integration Tests for Framework Component Accessibility
 /// Tests that components can be created and work in real view hierarchies
 @MainActor
