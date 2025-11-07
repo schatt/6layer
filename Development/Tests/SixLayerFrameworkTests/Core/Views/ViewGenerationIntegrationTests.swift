@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// View Generation Integration Tests
 /// Tests the actual view generation pipeline with different capability states
 @MainActor
@@ -1021,31 +1018,26 @@ open class ViewGenerationIntegrationTests {
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let touchInspection = touchView.tryInspect(),
-              let hoverInspection = hoverView.tryInspect() else {
-            Issue.record("Failed to inspect platform-specific view structures")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
-            // Both views should be inspectable
-            
-            // The views should be different because they represent different platforms
-            // This is the key test - platform mocking should generate different views
-            // We can verify this by checking that the views have different capabilities
-            // Touch view should have touch target size, hover view should not
-            #expect(touchConfig.minTouchTarget == 44, "Touch platform should have proper touch target size")
-            #expect(hoverConfig.minTouchTarget == 0, "Hover platform should not have touch target size")
-            
-            // Both views should be valid SwiftUI views
+        let touchInspectionResult = withInspectedView(touchView) { touchInspection in
+            // Touch view should be inspectable
             #expect(touchInspection != nil, "Touch view should be inspectable")
-            #expect(hoverInspection != nil, "Hover view should be inspectable")
-            
-        } catch {
-            Issue.record("Failed to inspect platform-specific view structures: \(error)")
         }
-        #endif
+
+        let hoverInspectionResult = withInspectedView(hoverView) { hoverInspection in
+            // Hover view should be inspectable
+            #expect(hoverInspection != nil, "Hover view should be inspectable")
+        }
+
+        // The views should be different because they represent different platforms
+        // This is the key test - platform mocking should generate different views
+        // We can verify this by checking that the views have different capabilities
+        // Touch view should have touch target size, hover view should not
+        #expect(touchConfig.minTouchTarget == 44, "Touch platform should have proper touch target size")
+        #expect(hoverConfig.minTouchTarget == 0, "Hover platform should not have touch target size")
+
+        if touchInspectionResult == nil || hoverInspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     /// Test that platform mocking actually creates different underlying view types
@@ -1073,36 +1065,33 @@ open class ViewGenerationIntegrationTests {
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let iOSInspection = iOSView.tryInspect(),
-              let macOSInspection = macOSView.tryInspect() else {
-            Issue.record("Failed to inspect view structures")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
-            // Verify platform-specific capabilities
-            #expect(iOSConfig.supportsTouch, "iOS should support touch")
-            #expect(!macOSConfig.supportsTouch, "macOS should not support touch")
-            #expect(macOSConfig.supportsHover, "macOS should support hover")
-            #expect(!iOSConfig.supportsHover, "iOS should not support hover")
-            
-            // Both views should be valid SwiftUI views
+        let iOSInspectionResult = withInspectedView(iOSView) { iOSInspection in
+            // iOS view should be valid SwiftUI view
             #expect(iOSInspection != nil, "iOS view should be inspectable")
-            #expect(macOSInspection != nil, "macOS view should be inspectable")
-            
-            // The key test: different platforms should generate different view configurations
-            // This verifies that platform mocking is working correctly
-            // Note: iOS and macOS both use 44pt touch targets per Apple HIG
-            #expect(iOSConfig.supportsTouch != macOSConfig.supportsTouch, 
-                            "Different platforms should have different touch support")
-            #expect(iOSConfig.supportsHover != macOSConfig.supportsHover, 
-                            "Different platforms should have different hover support")
-            
-        } catch {
-            Issue.record("Failed to inspect platform-specific view structures: \(error)")
         }
-        #endif
+
+        let macOSInspectionResult = withInspectedView(macOSView) { macOSInspection in
+            // macOS view should be valid SwiftUI view
+            #expect(macOSInspection != nil, "macOS view should be inspectable")
+        }
+
+        // Verify platform-specific capabilities
+        #expect(iOSConfig.supportsTouch, "iOS should support touch")
+        #expect(!macOSConfig.supportsTouch, "macOS should not support touch")
+        #expect(macOSConfig.supportsHover, "macOS should support hover")
+        #expect(!iOSConfig.supportsHover, "iOS should not support hover")
+
+        // The key test: different platforms should generate different view configurations
+        // This verifies that platform mocking is working correctly
+        // Note: iOS and macOS both use 44pt touch targets per Apple HIG
+        #expect(iOSConfig.supportsTouch != macOSConfig.supportsTouch,
+                        "Different platforms should have different touch support")
+        #expect(iOSConfig.supportsHover != macOSConfig.supportsHover,
+                        "Different platforms should have different hover support")
+
+        if iOSInspectionResult == nil || macOSInspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
         
         // Clean up
         RuntimeCapabilityDetection.setTestPlatform(nil)
