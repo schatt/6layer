@@ -145,13 +145,15 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             #expect(testView != nil, "View with manual identifier should be created successfully")
                 
             // 2. Contains what it needs to contain - The view has the manual accessibility identifier assigned
-            do {
-                let accessibilityIdentifier = try testView.inspect().text().accessibilityIdentifier()
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspected = testView.tryInspect(),
+               let text = try? inspected.text(),
+               let accessibilityIdentifier = try? text.accessibilityIdentifier() {
                 #expect(accessibilityIdentifier == manualID, "Manual identifier should override automatic generation")
-            } catch {
-                Issue.record("Failed to inspect accessibility identifier: \(error)")
-        }
+            } else {
+                Issue.record("Failed to inspect accessibility identifier")
             }
+        }
     }
     
     /// BUSINESS PURPOSE: Verify that global configuration actually controls identifier generation
@@ -179,11 +181,13 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             #expect(testView1 != nil, "View should be created even when automatic IDs are disabled")
                 
             // 2. Contains what it needs to contain - The view should NOT have an automatic accessibility identifier
-            do {
-                let accessibilityIdentifier1 = try testView1.inspect().button().accessibilityIdentifier()
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspected1 = testView1.tryInspect(),
+               let button1 = try? inspected1.button(),
+               let accessibilityIdentifier1 = try? button1.accessibilityIdentifier() {
                 #expect(accessibilityIdentifier1.isEmpty || !accessibilityIdentifier1.hasPrefix("test"), 
                              "No automatic identifier should be generated when disabled")
-            } catch {
+            } else {
                 // If we can't inspect, that's also acceptable - it means no identifier was set
                 // This is actually a valid test result when automatic IDs are disabled
             }

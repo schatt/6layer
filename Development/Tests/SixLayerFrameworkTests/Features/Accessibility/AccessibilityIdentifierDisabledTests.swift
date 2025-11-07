@@ -31,15 +31,15 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
                 .named("TestButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
-            do {
-                let inspectedView = try view.inspect()
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let _ = try? inspectedView.button() {
                 // When automatic IDs are disabled, the view should not have an accessibility identifier modifier
                 // This means we can't inspect for accessibility identifiers
-                let _ = try inspectedView.button() // Just verify the view is inspectable
+                // Just verify the view is inspectable
                 print("✅ View is inspectable when automatic IDs disabled (no accessibility modifier applied)")
-                
-            } catch {
-                Issue.record("Failed to inspect view: \(error)")
+            } else {
+                Issue.record("Failed to inspect view")
             }
         }
     }
@@ -58,8 +58,8 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
             }
                 .accessibilityIdentifier("manual-test-button")
             
-            do {
-                let inspectedView = try view.inspect()
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect() {
                 let buttonID = try inspectedView.accessibilityIdentifier()
                 
                 // Manual ID should work regardless of automatic setting

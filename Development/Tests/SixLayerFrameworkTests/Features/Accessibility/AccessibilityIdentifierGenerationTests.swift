@@ -23,19 +23,17 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .named("AddFuelButton")
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        do {
-            let inspectedView = try view.inspect()
-            let buttonID = try inspectedView.accessibilityIdentifier()
-            
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect(),
+           let buttonID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are currently 400+ chars
             #expect(buttonID.count < 80, "Accessibility ID should be reasonable length")
             #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             #expect(buttonID.contains("AddFuelButton"), "Should contain view name")
             
             print("✅ Generated ID: '\(buttonID)' (\(buttonID.count) chars)")
-            
-        } catch {
-            Issue.record("Failed to inspect view: \(error)")
+        } else {
+            Issue.record("Failed to inspect view")
         }
         
         // Cleanup
@@ -57,10 +55,9 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .named("OuterContainer") // Multiple .named() calls
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        do {
-            let inspectedView = try view.inspect()
-            let vStackID = try inspectedView.accessibilityIdentifier()
-            
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect(),
+           let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - contains duplicates like "container-container"
             #expect(!vStackID.contains("container-container"), "Should not contain duplicated hierarchy")
             #expect(!vStackID.contains("outercontainer-outercontainer"), "Should not contain duplicated hierarchy")

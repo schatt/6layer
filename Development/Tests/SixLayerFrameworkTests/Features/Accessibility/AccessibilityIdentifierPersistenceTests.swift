@@ -320,12 +320,13 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     // MARK: - Helper Methods
     
     private func generateIDForView(_ view: some View) -> String {
-        do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            return try button.accessibilityIdentifier()
-        } catch {
-            Issue.record("Failed to generate ID for view: \(error)")
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        if let inspectedView = view.tryInspect(),
+           let button = try? inspectedView.button(),
+           let id = try? button.accessibilityIdentifier() {
+            return id
+        } else {
+            Issue.record("Failed to generate ID for view")
             return ""
         }
     }

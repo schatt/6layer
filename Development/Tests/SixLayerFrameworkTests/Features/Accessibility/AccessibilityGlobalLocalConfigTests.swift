@@ -40,12 +40,12 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             #expect(config.enableAutoIDs == false, "Config should be disabled")
             
             // Expect NO identifier when global config is disabled and no local enable is present
-            do {
-                let inspectedView = try view.inspect()
-                let text = try inspectedView.text()
-                let accessibilityID = try text.accessibilityIdentifier()
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            if let inspectedView = view.tryInspect(),
+               let text = try? inspectedView.text(),
+               let accessibilityID = try? text.accessibilityIdentifier() {
                 #expect(accessibilityID.isEmpty, "Global disable without local enable should result in no accessibility identifier, got: '\(accessibilityID)'")
-            } catch {
+            } else {
                 // If inspection fails, treat as no identifier applied
                 #expect(Bool(true), "Inspection failed, treating as no ID applied")
             }
