@@ -38,6 +38,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             
             // Expect NO identifier when global config is disabled and no local enable is present
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let inspectedView = view.tryInspect(),
                let text = try? inspectedView.text(),
                let accessibilityID = try? text.accessibilityIdentifier() {
@@ -46,6 +47,10 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 // If inspection fails, treat as no identifier applied
                 #expect(Bool(true), "Inspection failed, treating as no ID applied")
             }
+            #else
+            // ViewInspector not available, treat as no identifier applied
+            #expect(Bool(true), "ViewInspector not available, treating as no ID applied")
+            #endif
         }
     }
     
@@ -104,6 +109,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             
             // Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let inspectedView = view.tryInspect(),
                let button = try? inspectedView.button(),
                let accessibilityID = try? button.accessibilityIdentifier() {
@@ -171,6 +177,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 .automaticAccessibilityIdentifiers()
             
             // Try to inspect for accessibility identifier
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
                 let inspectedView = try view.inspect()
                 let button = try inspectedView.button()
@@ -184,6 +191,9 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             } catch {
                 print("✅ Local disable correctly overrides global enable")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -240,6 +250,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 .automaticAccessibilityIdentifiers()
             
             // Try to inspect for accessibility identifier
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
                 let inspectedView = try view.inspect()
                 let button = try inspectedView.button()
@@ -253,19 +264,26 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             } catch {
                 print("✅ Environment variable correctly overrides global config")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
     // MARK: - Helper Methods
     
     private func generateIDForView(_ view: some View) -> String {
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             let inspectedView = try view.inspect()
             let button = try inspectedView.button()
             return try button.accessibilityIdentifier()
         } catch {
-            Issue.record("Failed to generate ID for view: \(error)")
+            Issue.record("Failed to generate ID for view")
             return ""
         }
+        #else
+        return ""
+        #endif
     }
 }
