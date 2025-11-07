@@ -117,9 +117,14 @@ open class DynamicFormViewTests: BaseTestClass {
         let view = DynamicFormSectionView(section: section, formState: formState)
 
         // Should render proper section structure
-        if let inspected = 
-            let inspected = view.tryInspect()
-
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspected = view.tryInspect() else {
+            Issue.record("Failed to inspect DynamicFormSectionView")
+            return
+        }
+        
+        #if !os(macOS)
+        do {
             // Should have a VStack with leading alignment
             let vStack = try inspected.vStack()
             #expect(vStack.count >= 3, "Should have section title and field views")
@@ -136,10 +141,10 @@ open class DynamicFormViewTests: BaseTestClass {
                 componentName: "DynamicFormSectionView"
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-        } else {
-            Issue.record("DynamicFormSectionView inspection failed - component not properly implemented: \(error)")")
+        } catch {
+            Issue.record("Failed to inspect DynamicFormSectionView structure: \(error)")
         }
+        #endif
     }
 
     @Test func testDynamicFormFieldViewRendersFieldUsingCustomFieldView() async {
@@ -164,9 +169,14 @@ open class DynamicFormViewTests: BaseTestClass {
         let view = DynamicFormFieldView(field: field, formState: formState)
 
         // Should render proper field structure
-        if let inspected = 
-            let inspected = view.tryInspect()
-
+        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        guard let inspected = view.tryInspect() else {
+            Issue.record("Failed to inspect DynamicFormFieldView")
+            return
+        }
+        
+        #if !os(macOS)
+        do {
             // Should have a VStack with leading alignment
             let vStack = try inspected.vStack()
             #expect(vStack.count >= 2, "Should have field label and field control")
@@ -183,10 +193,10 @@ open class DynamicFormViewTests: BaseTestClass {
                 componentName: "DynamicFormFieldView"
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-        } else {
-            Issue.record("DynamicFormFieldView inspection failed - component not properly implemented: \(error)")")
+        } catch {
+            Issue.record("Failed to inspect DynamicFormFieldView structure: \(error)")
         }
+        #endif
     }
 
     @Test func testFormWizardViewRendersStepsAndNavigation() async {
