@@ -19,19 +19,24 @@
 //
 //  MIGRATION PATH:
 //  When ViewInspector works on macOS:
-//  1. Remove all #if !os(macOS) conditions in this file
-//  2. Change #if !os(macOS) to #if true (or remove entirely)
-//  3. All test files will automatically work without changes
+//  1. Change viewInspectorMacFixed = true
+//  2. All test files will automatically work without changes
 
 import SwiftUI
 @testable import SixLayerFramework
-#if canImport(ViewInspector)
+
+/// Flag to control ViewInspector availability on macOS
+/// When ViewInspector fixes GitHub issue #405, change this to true
+/// All conditional logic in this file is controlled by this flag
+let viewInspectorMacFixed = false
+
+#if canImport(ViewInspector) && viewInspectorMacFixed
 import ViewInspector
 #endif
 
 // MARK: - View Extension for Inspection
 
-#if canImport(ViewInspector)
+#if canImport(ViewInspector) && viewInspectorMacFixed
 extension View {
     /// Safely inspect a view using ViewInspector
     /// Returns nil on inspection failure
@@ -68,7 +73,7 @@ extension View {
 
 // MARK: - InspectableView Extension for Common Operations
 
-#if canImport(ViewInspector)
+#if canImport(ViewInspector) && viewInspectorMacFixed
 extension InspectableView {
     /// Safely find a view type, returning nil if not found
     func tryFind<T>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
@@ -84,7 +89,7 @@ extension InspectableView {
 
 // MARK: - Helper Functions for Common Patterns
 
-#if canImport(ViewInspector)
+#if canImport(ViewInspector) && viewInspectorMacFixed
 /// Safely inspect a view and execute a closure if inspection succeeds
 /// Returns nil on inspection failure
 /// When ViewInspector works on all platforms, remove the canImport condition
@@ -110,7 +115,7 @@ public func withInspectedView<V: View, R>(
 }
 #endif
 
-#if canImport(ViewInspector)
+#if canImport(ViewInspector) && viewInspectorMacFixed
 /// Safely inspect a view and execute a throwing closure
 /// Throws when ViewInspector cannot inspect the view
 /// When ViewInspector works on all platforms, remove the canImport condition
