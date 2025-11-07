@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Tests for Collection View Callback Functionality
 /// Tests that collection views properly handle item selection, deletion, and editing callbacks
 @MainActor
@@ -219,19 +216,13 @@ open class CollectionViewCallbackTests: BaseTestClass {
         
         // When: Simulating a tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspector = view.tryInspect() else {
-            Issue.record("ViewInspector failed to inspect ListCollectionView")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(view) { inspector in
             // Find the ListCardComponent instances
             let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
-            
+
             // Then: Verify the view structure
             #expect(listCardComponents.count == sampleItems.count, "Should have cards for each item")
-            
+
             // Get the first card - it's now a VStack, find the HStack child (where onTapGesture is applied)
             if let firstCard = listCardComponents.first {
                 let vStack = try firstCard.vStack()
@@ -239,18 +230,18 @@ open class CollectionViewCallbackTests: BaseTestClass {
                 // Find the first HStack which has the onTapGesture
                 let hStack = try vStack.hStack(0)
                 try hStack.callOnTapGesture()
-                
+
                 // Verify callback was ACTUALLY invoked
                 #expect(callbackInvoked, "Callback should be invoked when card is tapped")
                 #expect(receivedItem != nil, "Received item should not be nil")
                 #expect(receivedItem?.id == sampleItems.first?.id, "Should receive correct item")
                 #expect(self.selectedItems.count == 1, "Selected items should contain tapped item")
             }
-        } catch {
-            // If ViewInspector fails, that's a test infrastructure issue
-            Issue.record("ViewInspector failed to inspect ListCollectionView: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     @Test func testCoverFlowCollectionViewWithCallbacks() {

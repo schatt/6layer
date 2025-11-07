@@ -2,9 +2,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// View Generation Tests
 /// Tests that the framework correctly generates SwiftUI views with proper structure and properties
 /// These tests focus on what we can actually verify when running on macOS
@@ -63,21 +60,15 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = detailView.tryInspect() else {
-            Issue.record("Failed to inspect detail view structure")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView, so we need to inspect it differently
             let anyView = try inspected.anyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
-            
+
             // Try to find text elements within the AnyView
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
-            
+
             // Should contain field names from our test data
             let hasTitleField = viewText.contains { text in
                 do {
@@ -88,11 +79,11 @@ open class ViewGenerationTests: BaseTestClass {
                 }
             }
             #expect(hasTitleField, "Detail view should contain title field")
-            
-        } catch {
-            Issue.record("Failed to inspect detail view structure: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     
     @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: A test data item and custom field view
@@ -113,21 +104,15 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view should contain custom field content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = detailView.tryInspect() else {
-            Issue.record("Failed to inspect detail view structure")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.anyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
-            
+
             // The view should contain text elements with our custom format
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
-            
+
             // Should contain custom field content in the format "fieldName: value"
             let hasCustomFieldContent = viewText.contains { text in
                 do {
@@ -138,11 +123,11 @@ open class ViewGenerationTests: BaseTestClass {
                 }
             }
             #expect(hasCustomFieldContent, "Detail view should contain custom field content")
-            
-        } catch {
-            Issue.record("Failed to inspect detail view with custom field view: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     @Test @MainActor func testIntelligentDetailViewWithHints() {
@@ -165,21 +150,15 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view should respect the hints
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = detailView.tryInspect() else {
-            Issue.record("Failed to inspect detail view structure")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.anyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
-            
+
             // The view should contain text elements
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
-            
+
             // Should contain field content from our test data
             let hasFieldContent = viewText.contains { text in
                 do {
@@ -190,11 +169,11 @@ open class ViewGenerationTests: BaseTestClass {
                 }
             }
             #expect(hasFieldContent, "Detail view should contain field content from test data")
-            
-        } catch {
-            Issue.record("Failed to inspect detail view with hints: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
     
     // MARK: - Layout Strategy Tests
