@@ -197,7 +197,6 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             // ViewInspector not available, treat as no identifier applied
             #expect(Bool(true), "ViewInspector not available, treating as no ID applied")
             #endif
-            }
                 
             // Test Case 2: When automatic IDs are enabled
             testConfig.enableAutoIDs = true
@@ -211,14 +210,18 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             #expect(testView2 != nil, "View should be created when automatic IDs are enabled")
                 
             // 2. Contains what it needs to contain - The view should have an automatic accessibility identifier
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
                 let accessibilityIdentifier2 = try testView2.inspect().button().accessibilityIdentifier()
                 #expect(!accessibilityIdentifier2.isEmpty, "An identifier should be generated when enabled")
                 // ID format: test.main.ui.element.View (namespace is first)
                 #expect(accessibilityIdentifier2.hasPrefix("test."), "Generated ID should start with namespace 'test.'")
             } catch {
-                Issue.record("Failed to inspect accessibility identifier: \(error)")
-        }
+                Issue.record("Failed to inspect accessibility identifier")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
+        }
     }
 }
