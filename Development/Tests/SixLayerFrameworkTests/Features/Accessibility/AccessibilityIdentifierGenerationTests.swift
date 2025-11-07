@@ -90,8 +90,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
-            let inspectedView = try view.inspect()
-            let vStackID = try inspectedView.accessibilityIdentifier()
+            let inspectedView = view.tryInspect()
+            let vStackID = try? inspectedView.accessibilityIdentifier()
             
             // This test SHOULD FAIL initially - IDs are not semantic
             #expect(vStackID.contains("UserProfile"), "Should contain screen context")
@@ -135,8 +135,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
-            let inspectedView = try view.inspect()
-            let vStackID = try inspectedView.accessibilityIdentifier()
+            let inspectedView = view.tryInspect()
+            let vStackID = try? inspectedView.accessibilityIdentifier()
             
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
             #expect(vStackID.count < 100, "Should handle complex hierarchies gracefully")
@@ -169,11 +169,11 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
-            let submitInspected = try submitButton.inspect()
-            let submitID = try submitInspected.accessibilityIdentifier()
+            let submitInspected = submitButton.tryInspect()
+            let submitID = try? submitInspected.accessibilityIdentifier()
             
-            let cancelInspected = try cancelButton.inspect()
-            let cancelID = try cancelInspected.accessibilityIdentifier()
+            let cancelInspected = cancelButton.tryInspect()
+            let cancelID = try? cancelInspected.accessibilityIdentifier()
             
             // TDD RED: These should FAIL - labels not currently included
             #expect(submitID.contains("Submit"), "Submit button identifier should include 'Submit' label")
@@ -200,8 +200,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         do {
-            let inspected = try button.inspect()
-            let buttonID = try inspected.accessibilityIdentifier()
+            let inspected = button.tryInspect()
+            let buttonID = try? inspected.accessibilityIdentifier()
             
             // TDD RED: Should FAIL - labels not sanitized
             // Should contain sanitized version: "add-new-item" or similar

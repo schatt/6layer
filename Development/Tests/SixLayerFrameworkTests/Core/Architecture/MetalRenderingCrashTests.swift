@@ -137,7 +137,7 @@ open class MetalRenderingCrashTDDTests {
         
         // Try to inspect the view (should not crash)
         do {
-            let inspectedView = try view.inspect()
+            let inspectedView = view.tryInspect()
             #expect(inspectedView != nil, "View should be inspectable without crashing")
             print("✅ Metal rendering crash reproduction test passed")
         } catch {
@@ -173,7 +173,7 @@ open class MetalRenderingCrashTDDTests {
         
         // Try to inspect the view (should not crash)
         do {
-            let inspectedView = try view.inspect()
+            let inspectedView = view.tryInspect()
             #expect(inspectedView != nil, "SimpleCardComponent should be inspectable without crashing")
             print("✅ SimpleCardComponent rendered successfully")
         } catch {

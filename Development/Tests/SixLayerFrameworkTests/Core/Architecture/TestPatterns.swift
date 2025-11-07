@@ -190,7 +190,7 @@ open class TestPatterns {
         
         // 2. Contains what it needs to contain - The view should contain image elements
         do {
-            let viewImages = try view.inspect().findAll(ViewType.Image.self)
+            let viewImages = view.tryInspect().findAll(ViewType.Image.self)
             #expect(!viewImages.isEmpty, "View should contain image elements for \(testName)")
             
         } catch {

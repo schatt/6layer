@@ -1073,8 +1073,8 @@ open class ViewGenerationIntegrationTests {
         // 2. Does that structure contain what it should?
         do {
             // Both views should be inspectable
-            let iOSInspection = try iOSView.inspect()
-            let macOSInspection = try macOSView.inspect()
+            let iOSInspection = iOSView.tryInspect()
+            let macOSInspection = macOSView.tryInspect()
             
             // Verify platform-specific capabilities
             #expect(iOSConfig.supportsTouch, "iOS should support touch")
