@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// BUSINESS PURPOSE: Accessibility tests for PlatformPhotoComponentsLayer4.swift functions
 /// Ensures Photo components Layer 4 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
@@ -17,45 +14,45 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
     
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 returns the correct platform-specific implementation
     /// This test actually verifies that the compile-time platform detection works correctly
-    /// NOTE: ViewInspector is iOS-only, so this test only runs on iOS
-    #if !os(macOS)
+    /// NOTE: ViewInspector may not be available on all platforms
     @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
     func testPlatformPhotoPickerL4ReturnsCorrectPlatformImplementation(
         platform: SixLayerPlatform
     ) async {
         // Given
-        
-        
+
+
         // When
         let view = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(
             onImageSelected: { _ in }
         )
-        
+
         // Then: Verify the actual platform-specific implementation
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        await MainActor.run {
-            guard let inspection = view.tryInspect() else {
-                #expect(Bool(false), "Failed to inspect view")
-                return
+        let inspectionResult = await MainActor.run {
+            withInspectedView(view) { inspection in
+                #if os(iOS)
+                // On iOS, we should get UIKit components
+                if platform == .iOS {
+                    // Look for UIImagePickerController or UIViewControllerRepresentable
+                    let hasUIKitComponent = inspection.tryFind(ViewType.UIViewControllerRepresentable.self) != nil
+                    #expect(hasUIKitComponent, "iOS platform should return UIKit-based photo picker")
+                } else {
+                    // On iOS compiled code, macOS test should still get UIKit (compile-time detection)
+                    let hasUIKitComponent = inspection.tryFind(ViewType.UIViewControllerRepresentable.self) != nil
+                    #expect(hasUIKitComponent, "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
+                }
+                #else
+                // On platforms without ViewInspector, we can't inspect but the view should still be created
+                #expect(true, "View should be created even when inspection is not available")
+                #endif
             }
-            
-            #if !os(macOS)
-            #if os(iOS)
-            // On iOS, we should get UIKit components
-            if platform == .iOS {
-                // Look for UIImagePickerController or UIViewControllerRepresentable
-                let hasUIKitComponent = inspection.tryFind(ViewType.UIViewControllerRepresentable.self) != nil
-                #expect(hasUIKitComponent, "iOS platform should return UIKit-based photo picker")
-            } else {
-                // On iOS compiled code, macOS test should still get UIKit (compile-time detection)
-                let hasUIKitComponent = inspection.tryFind(ViewType.UIViewControllerRepresentable.self) != nil
-                #expect(hasUIKitComponent, "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
-            }
-            #endif
-            #endif
+        }
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
         }
     }
-    #endif
     
     // MARK: - Photo Display Tests
     

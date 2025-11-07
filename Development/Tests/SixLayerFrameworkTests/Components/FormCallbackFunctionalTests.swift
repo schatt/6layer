@@ -3,9 +3,6 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 /// Form Callback Functional Tests
 /// Tests that forms with callbacks ACTUALLY INVOKE them when buttons are tapped (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
@@ -13,20 +10,19 @@ open class FormCallbackFunctionalTests {
     
     // MARK: - IntelligentFormView Callback Tests
     
-    #if !os(macOS)
     @Test func testIntelligentFormViewOnCancelCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
-        // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
-        
+        // NOTE: ViewInspector may not be available on all platforms
+
         var callbackInvoked = false
-        
+
         struct TestFormData {
             let name: String
             let email: String
         }
-        
+
         let testData = TestFormData(name: "Test User", email: "test@example.com")
-        
+
         // Generate form with callback that sets flag when invoked
         let formView = IntelligentFormView.generateForm(
             for: testData,
@@ -37,32 +33,26 @@ open class FormCallbackFunctionalTests {
                 callbackInvoked = true
             }
         )
-        
+
         // When: Simulating Cancel button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspector = formView.tryInspect() else {
-            Issue.record("ViewInspector failed to inspect form")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
             let buttons = try inspector.findAll(ViewType.Button.self)
-            
+
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
-            
+
             // Find the Cancel button by inspecting its label text
             for button in buttons {
                 do {
                     let labelView = try button.labelView()
                     let labelText = try labelView.text().string()
-                    
+
                     if labelText == "Cancel" {
                         // Tap the button to invoke its action
                         try button.tap()
-                        
+
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Cancel callback should be invoked when Cancel button is tapped")
                         break
@@ -72,19 +62,19 @@ open class FormCallbackFunctionalTests {
                     continue
                 }
             }
-            
+
             // If we couldn't find and tap the Cancel button, that's an issue
             if !callbackInvoked {
                 Issue.record("Could not find Cancel button in form or failed to tap it")
             }
-        } catch {
-            Issue.record("ViewInspector failed to inspect form: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
     }
-    #endif
     
-    #if !os(macOS)
+    
     @Test func testIntelligentFormViewOnUpdateCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
         // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
@@ -110,30 +100,24 @@ open class FormCallbackFunctionalTests {
         
         // When: Simulating Update button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspector = formView.tryInspect() else {
-            Issue.record("ViewInspector failed to inspect form")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
             let buttons = try inspector.findAll(ViewType.Button.self)
-            
+
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
-            
+
             // Find the Update button by inspecting its label text
             for button in buttons {
                 do {
                     let labelView = try button.labelView()
                     let labelText = try labelView.text().string()
-                    
+
                     // Button text could be "Update" or "Create" depending on whether initialData exists
                     if labelText == "Update" || labelText == "Create" {
                         // Tap the button to invoke its action
                         try button.tap()
-                        
+
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Update callback should be invoked when Update button is tapped")
                         #expect(receivedData != nil, "Should receive form data")
@@ -144,21 +128,23 @@ open class FormCallbackFunctionalTests {
                     continue
                 }
             }
-            
+
             // If we couldn't find and tap the Update button, that's an issue
             if !callbackInvoked {
                 Issue.record("Could not find Update button in form or failed to tap it")
             }
-        } catch {
-            Issue.record("ViewInspector failed to inspect form: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
+        
     }
-    #endif
+    
     
     // MARK: - DynamicFormView Callback Tests
     
-    #if !os(macOS)
+    
     @Test func testDynamicFormViewOnSubmitCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
         // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
@@ -181,29 +167,23 @@ open class FormCallbackFunctionalTests {
         
         // When: Simulating Submit button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspector = formView.tryInspect() else {
-            Issue.record("ViewInspector failed to inspect DynamicFormView")
-            return
-        }
-        
-        #if !os(macOS)
-        do {
+        let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button
             let buttons = try inspector.findAll(ViewType.Button.self)
-            
+
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
-            
+
             // Find the Submit button by inspecting its label text
             for button in buttons {
                 do {
                     let labelView = try button.labelView()
                     let labelText = try labelView.text().string()
-                    
+
                     if labelText == "Submit" {
                         // Tap the button to invoke its action
                         try button.tap()
-                        
+
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Submit callback should be invoked when Submit button is tapped")
                         #expect(receivedValues != nil, "Should receive form values")
@@ -214,17 +194,19 @@ open class FormCallbackFunctionalTests {
                     continue
                 }
             }
-            
+
             // If we couldn't find and tap the Submit button, that's an issue
             if !callbackInvoked {
                 Issue.record("Could not find Submit button in form or failed to tap it")
             }
-        } catch {
-            Issue.record("ViewInspector failed to inspect DynamicFormView: \(error)")
         }
-        #endif
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
+        }
+        
     }
-    #endif
+    
     
     // MARK: - External Integration Tests
     

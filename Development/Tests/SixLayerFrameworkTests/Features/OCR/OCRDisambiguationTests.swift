@@ -26,9 +26,6 @@
 import SwiftUI
 import Testing
 @testable import SixLayerFramework
-#if !os(macOS)
-import ViewInspector
-#endif
 
 /// Tests for OCR disambiguation functionality
 @Suite("OCR Disambiguation TDD")
@@ -76,19 +73,18 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 
         // Should render disambiguation interface
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
-            return
+        let inspectionResult = withInspectedView(view) { inspected in
+            if let textElement = try? inspected.text(),
+               let text = try? textElement.string() {
+                #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
+            } else {
+                Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
+            }
         }
-        
-        #if !os(macOS)
-        if let textElement = try? inspected.text(),
-           let text = try? textElement.string() {
-            #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
-        } else {
-            Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
         }
-        #endif
     }
 
     @Test func testOCRDisambiguationViewShowsConfidenceLevels() async {
@@ -128,19 +124,18 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 
         // Should render confidence-based interface
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        guard let inspected = view.tryInspect() else {
-            Issue.record("OCRDisambiguationView confidence display not implemented")
-            return
+        let inspectionResult = withInspectedView(view) { inspected in
+            if let textElement = try? inspected.text(),
+               let text = try? textElement.string() {
+                #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
+            } else {
+                Issue.record("OCRDisambiguationView confidence display not implemented")
+            }
         }
-        
-        #if !os(macOS)
-        if let textElement = try? inspected.text(),
-           let text = try? textElement.string() {
-            #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
-        } else {
-            Issue.record("OCRDisambiguationView confidence display not implemented")
+
+        if inspectionResult == nil {
+            Issue.record("View inspection not available on this platform (likely macOS)")
         }
-        #endif
     }
 }
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
