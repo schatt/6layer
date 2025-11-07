@@ -77,7 +77,7 @@ struct IntelligentDetailViewSheetTests {
                 }
             }
         } catch {
-            Issue.record("platformDetailView should be inspectable (indicates it has content): \(error)")
+            Issue.record("platformDetailView should be inspectable (indicates it has content)")
         }
     }
     
@@ -111,7 +111,7 @@ struct IntelligentDetailViewSheetTests {
                 #expect(true, "platformDetailView should be inspectable (indicates content exists)")
             }
         } catch {
-            Issue.record("platformDetailView should be inspectable (indicates it has content): \(error)")
+            Issue.record("platformDetailView should be inspectable (indicates it has content)")
         }
     }
     
@@ -129,7 +129,7 @@ struct IntelligentDetailViewSheetTests {
             // If we can inspect with frame constraints, the view respects them
             #expect(true, "platformDetailView should accept frame constraints for sheet sizing")
         } else {
-            Issue.record("platformDetailView should accept frame constraints: \(error)")
+            Issue.record("platformDetailView should accept frame constraints")
         }
     }
     
@@ -151,7 +151,7 @@ struct IntelligentDetailViewSheetTests {
         if let inspector = sheetContent.tryInspect() {
             #expect(true, "platformDetailView should work with NavigationStack in sheets")
         } else {
-            Issue.record("platformDetailView should work in NavigationStack: \(error)")
+            Issue.record("platformDetailView should work in NavigationStack")
         }
     }
     
@@ -175,7 +175,7 @@ struct IntelligentDetailViewSheetTests {
 
             #expect(true, "platformDetailView should work with different data types in sheets")
         } catch {
-            Issue.record("platformDetailView should work with different data types: \(error)")
+            Issue.record("platformDetailView should work with different data types")
         }
     }
     

@@ -219,7 +219,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(fieldValue == "John Doe", "Form state should contain initial value")
 
         } else {
-            Issue.record("DynamicTextField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicTextField inspection failed - component not properly implemented")
         }
     }
     
@@ -282,7 +282,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(numberValue == "25", "Form state should contain numeric value")
 
         } else {
-            Issue.record("DynamicNumberField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicNumberField inspection failed - component not properly implemented")
         }
     }
     
@@ -334,7 +334,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(storedValue == "This is a\nmultiline description\nwith line breaks", "Form state should contain multiline text")
 
         } else {
-            Issue.record("DynamicTextAreaField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicTextAreaField inspection failed - component not properly implemented")
         }
     }
     
@@ -387,7 +387,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(selectValue == "USA", "Form state should contain selected value")
 
         } else {
-            Issue.record("DynamicSelectField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicSelectField inspection failed - component not properly implemented")
         }
     }
     
@@ -440,7 +440,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(storedValue == ["Reading", "Music"], "Form state should contain selected values array")
 
         } else {
-            Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented")
         }
     }
     
@@ -493,7 +493,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(radioValue == "Female", "Form state should contain selected radio value")
 
         } else {
-            Issue.record("DynamicRadioField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicRadioField inspection failed - component not properly implemented")
         }
     }
     
@@ -545,7 +545,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(checkboxValue == true, "Form state should contain boolean checkbox value")
 
         } else {
-            Issue.record("DynamicCheckboxField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicCheckboxField inspection failed - component not properly implemented")
         }
     }
     
@@ -597,7 +597,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             #expect(toggleValue == false, "Form state should contain boolean toggle value")
 
         } else {
-            Issue.record("DynamicToggleField inspection failed - component not properly implemented: \(error)")
+            Issue.record("DynamicToggleField inspection failed - component not properly implemented")
         }
     }
 }

@@ -78,7 +78,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         if let _ = optimizedView.tryInspect() {
             // Successfully inspected optimized view
         } else {
-            Issue.record("Failed to inspect optimized view structure: \(error)")
+            Issue.record("Failed to inspect optimized view structure")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -351,7 +351,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         if let _ = optimizedView.tryInspect() {
             // Successfully inspected platform-optimized view
         } else {
-            Issue.record("Failed to inspect platform-optimized view structure: \(error)")
+            Issue.record("Failed to inspect platform-optimized view structure")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -380,7 +380,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         if let _ = optimizedView.tryInspect() {
             // Successfully inspected performance-optimized view
         } else {
-            Issue.record("Failed to inspect performance-optimized view structure: \(error)")
+            Issue.record("Failed to inspect performance-optimized view structure")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -409,7 +409,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         if let _ = optimizedView.tryInspect() {
             // Successfully inspected UI pattern-optimized view
         } else {
-            Issue.record("Failed to inspect UI pattern-optimized view structure: \(error)")
+            Issue.record("Failed to inspect UI pattern-optimized view structure")
         }
         
         // 3. Platform-specific implementation verification (REQUIRED)
@@ -455,7 +455,7 @@ open class CrossPlatformOptimizationLayer6Tests {
         if let _ = fullyOptimizedView.tryInspect() {
             // Successfully inspected fully optimized view
         } else {
-            Issue.record("Fully optimized view should be inspectable: \(error)")
+            Issue.record("Fully optimized view should be inspectable")
         }
     }
     

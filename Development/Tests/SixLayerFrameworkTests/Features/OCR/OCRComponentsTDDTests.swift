@@ -55,7 +55,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should provide overlay interface")
         } else {
-            Issue.record("OCROverlayView interface not found: \(error)")
+            Issue.record("OCROverlayView interface not found")
         }
 
         // Should generate accessibility identifier
@@ -94,7 +94,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should have OCR processing interface")
         } else {
-            Issue.record("OCROverlayView interface not found: \(error)")
+            Issue.record("OCROverlayView interface not found")
         }
     }
 
@@ -154,7 +154,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             let foundCandidate3 = (try? inspected.find(text: "123/45")) != nil
             #expect(foundCandidate1 || foundCandidate2 || foundCandidate3, "Should display candidate alternatives")
         } else {
-            Issue.record("OCRDisambiguationView candidates not found: \(error)")
+            Issue.record("OCRDisambiguationView candidates not found")
         }
 
         // Should generate accessibility identifier
@@ -223,7 +223,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // At least some candidates should be visible
             #expect(foundA || foundB || foundC, "Should display candidate alternatives")
         } else {
-            Issue.record("OCRDisambiguationView candidates not found: \(error)")
+            Issue.record("OCRDisambiguationView candidates not found")
         }
     }
 
@@ -265,7 +265,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             let hasInterface = inspected.count > 0
             #expect(hasInterface, "Should handle non-disambiguation case")
         } else {
-            Issue.record("OCRDisambiguationView interface not found: \(error)")
+            Issue.record("OCRDisambiguationView interface not found")
         }
     }
 }

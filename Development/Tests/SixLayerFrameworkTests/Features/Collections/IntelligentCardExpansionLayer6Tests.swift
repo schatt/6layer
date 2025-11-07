@@ -46,7 +46,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
             // The card view should be inspectable
             // If we get here, the view is properly structured
         } else {
-            Issue.record("Failed to inspect NativeExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect NativeExpandableCardView structure")
         }
         
         // 3. Configuration should be valid (L6 function responsibility)
@@ -120,14 +120,14 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         // 2. Does that structure contain what it should?
         if let _ = cardView.tryInspect() {
         } else {
-            Issue.record("Failed to inspect iOSExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect iOSExpandableCardView structure")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
         if let _ = cardView.tryInspect() {
             // L6 function successfully created inspectable view
         } else {
-            Issue.record("iOS card view should be inspectable: \(error)")
+            Issue.record("iOS card view should be inspectable")
         }
     }
     
@@ -146,14 +146,14 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         // 2. Does that structure contain what it should?
         if let _ = cardView.tryInspect() {
         } else {
-            Issue.record("Failed to inspect macOSExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect macOSExpandableCardView structure")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
         if let _ = cardView.tryInspect() {
             // L6 function successfully created inspectable view
         } else {
-            Issue.record("macOS card view should be inspectable: \(error)")
+            Issue.record("macOS card view should be inspectable")
         }
     }
     
@@ -172,14 +172,14 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         // 2. Does that structure contain what it should?
         if let _ = cardView.tryInspect() {
         } else {
-            Issue.record("Failed to inspect visionOSExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect visionOSExpandableCardView structure")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
         if let _ = cardView.tryInspect() {
             // L6 function successfully created inspectable view
         } else {
-            Issue.record("visionOS card view should be inspectable: \(error)")
+            Issue.record("visionOS card view should be inspectable")
         }
     }
     
@@ -200,14 +200,14 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         // 2. Does that structure contain what it should?
         if let _ = cardView.tryInspect() {
         } else {
-            Issue.record("Failed to inspect PlatformAwareExpandableCardView structure: \(error)")
+            Issue.record("Failed to inspect PlatformAwareExpandableCardView structure")
         }
         
         // 3. L6 function should create valid view (no platform mocking needed)
         if let _ = cardView.tryInspect() {
             // L6 function successfully created inspectable view
         } else {
-            Issue.record("Platform-aware card view should be inspectable: \(error)")
+            Issue.record("Platform-aware card view should be inspectable")
         }
     }
     
@@ -223,7 +223,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         if let _ = cardView.tryInspect() {
             // L6 function successfully created inspectable view
         } else {
-            Issue.record("Platform-aware card view should be inspectable: \(error)")
+            Issue.record("Platform-aware card view should be inspectable")
         }
     }
     
@@ -302,7 +302,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
             let _ = nativeCard.tryInspect()
             let _ = platformAwareCard.tryInspect()
         } else {
-            Issue.record("All card types should be inspectable: \(error)")
+            Issue.record("All card types should be inspectable")
         }
     }
     
