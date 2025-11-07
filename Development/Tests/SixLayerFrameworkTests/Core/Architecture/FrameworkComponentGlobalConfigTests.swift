@@ -32,6 +32,7 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             
             // Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let inspectedView = view.tryInspect(),
                let button = try? inspectedView.button(),
                let accessibilityID = try? button.accessibilityIdentifier() {
