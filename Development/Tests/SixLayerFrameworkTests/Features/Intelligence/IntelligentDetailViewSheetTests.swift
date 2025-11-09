@@ -118,6 +118,9 @@ struct IntelligentDetailViewSheetTests {
         } catch {
             Issue.record("platformDetailView should be inspectable (indicates it has content)")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     /// Verify that platformDetailView accepts and respects frame constraints
