@@ -14,15 +14,8 @@ open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
+    // Note: BaseTestClass handles setup automatically via setupTestEnvironment()
+    // No need for custom init - setup happens in each test via runWithTaskLocalConfig
     
     // MARK: - determineOptimalCardLayout_L2 Tests
     

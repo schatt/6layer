@@ -14,15 +14,10 @@ open class IntelligentCardExpansionLayer3Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - selectCardExpansionStrategy_L3 Tests
+    // Note: BaseTestClass handles setup automatically via setupTestEnvironment()
+    // No need for custom init - setup happens in each test via runWithTaskLocalConfig
+    
+    // MARK: - selectCardExpansionStrategy_L3 Tests
     
     
     private func setupTestEnvironment() async {
