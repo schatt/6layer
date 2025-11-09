@@ -464,8 +464,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
                 .named("按钮")  // ← Chinese characters
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttonID = try inspectedView.accessibilityIdentifier()
                 

@@ -69,6 +69,9 @@ open class NavigationLayer4Tests {
         } else {
             Issue.record("iOS navigation link should contain NavigationLink structure")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform")
+        #endif
         #elseif os(macOS)
         #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         // macOS: Should contain the content directly (no NavigationLink wrapper)
