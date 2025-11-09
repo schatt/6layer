@@ -26,9 +26,11 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Flag to control ViewInspector availability on macOS
-/// When ViewInspector fixes GitHub issue #405, change VIEW_INSPECTOR_MAC_FIXED in Package.swift from "0" to "1"
+/// When ViewInspector fixes GitHub issue #405, uncomment .define("VIEW_INSPECTOR_MAC_FIXED") in Package.swift
 /// All conditional logic in this file is controlled by this compile-time flag
 /// The flag is defined in Package.swift as a swiftSettings define
+/// When flag is defined, VIEW_INSPECTOR_MAC_FIXED is true
+/// When flag is not defined, VIEW_INSPECTOR_MAC_FIXED is false (current state)
 #if VIEW_INSPECTOR_MAC_FIXED
 let viewInspectorMacFixed = true
 #else
