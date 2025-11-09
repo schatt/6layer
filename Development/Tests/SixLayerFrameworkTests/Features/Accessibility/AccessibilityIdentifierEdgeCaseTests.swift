@@ -399,7 +399,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     // Should use configuration at time of ID generation
                     #expect(!buttonID.isEmpty, "Should generate ID with changed config")
                 
-                print("✅ Config change ID: '\(buttonID)' (\(buttonID.count) chars)")
+                    print("✅ Config change ID: '\(buttonID)' (\(buttonID.count) chars)")
                 }
             } catch {
                 Issue.record("Failed to inspect view with config changes")
