@@ -75,7 +75,25 @@ Add `#if !os(macOS)` guards around the affected files or code sections:
 - Blocks cross-platform testing workflows
 - Affects CI/CD pipelines targeting macOS
 
-## Workaround
+## Workaround Implementation
+
+We've implemented a comprehensive workaround that allows our test suite to work around this issue:
+
+### Our Solution
+1. **Created `ViewInspectorWrapper.swift`**: A centralized wrapper that abstracts ViewInspector usage
+2. **Added compile-time flag**: `VIEW_INSPECTOR_MAC_FIXED` in `Package.swift` for single-point control
+3. **Updated 38 test files**: All test files now use the wrapper with conditional compilation
+4. **Migration path**: When ViewInspector fixes issue #405, uncomment one line in `Package.swift`
+
+### Files Updated
+See [FIXED_FILES.md](./FIXED_FILES.md) for a complete list of all 38 test files that have been updated.
+
+### Implementation Details
+- **Wrapper location**: `Development/Tests/SixLayerFrameworkTests/Utilities/TestHelpers/ViewInspectorWrapper.swift`
+- **Pattern used**: `#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)`
+- **Benefits**: Single point of control, no manual file updates needed when ViewInspector is fixed
+
+### Previous Workarounds (Not Used)
 1. Use iOS-only test targets
 2. Disable tests that require ViewInspector on macOS
 3. Use a different testing framework for macOS-specific tests
