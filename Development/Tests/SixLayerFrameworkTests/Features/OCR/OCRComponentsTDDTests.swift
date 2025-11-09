@@ -1,5 +1,8 @@
 import Testing
 import SwiftUI
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+import ViewInspector
+#endif
 @testable import SixLayerFramework
 
 /**
@@ -53,7 +56,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have overlay interface
-            let hasInterface = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
+            let anyViews = try? inspected.findAll(ViewType.AnyView.self)
+            let hasInterface = (anyViews?.count ?? 0) > 0
             #expect(hasInterface, "Should provide overlay interface")
         } else {
             Issue.record("OCROverlayView interface not found")
@@ -96,7 +100,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have OCR processing interface
-            let hasInterface = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
+            let anyViews = try? inspected.findAll(ViewType.AnyView.self)
+            let hasInterface = (anyViews?.count ?? 0) > 0
             #expect(hasInterface, "Should have OCR processing interface")
         } else {
             Issue.record("OCROverlayView interface not found")
@@ -159,7 +164,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             // Should display candidate alternatives
             // Note: ViewInspector doesn't have a find(text:) method, so we check for any view structure
-            let hasStructure = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
+            let anyViews = try? inspected.findAll(ViewType.AnyView.self)
+            let hasStructure = (anyViews?.count ?? 0) > 0
             #expect(hasStructure, "Should display candidate alternatives")
         } else {
             Issue.record("OCRDisambiguationView candidates not found")
@@ -229,7 +235,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             // Should find all candidate texts
             // Note: ViewInspector doesn't have a find(text:) method, so we check for any view structure
-            let hasStructure = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
+            let anyViews = try? inspected.findAll(ViewType.AnyView.self)
+            let hasStructure = (anyViews?.count ?? 0) > 0
             #expect(hasStructure, "Should display candidate alternatives")
         } else {
             Issue.record("OCRDisambiguationView candidates not found")
@@ -275,7 +282,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have some UI structure
-            let hasInterface = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
+            let anyViews = try? inspected.findAll(ViewType.AnyView.self)
+            let hasInterface = (anyViews?.count ?? 0) > 0
             #expect(hasInterface, "Should handle non-disambiguation case")
         } else {
             Issue.record("OCRDisambiguationView interface not found")

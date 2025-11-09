@@ -287,12 +287,12 @@ extension View {
 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 extension InspectableView {
     /// Safely find a view type, returning nil if not found
-    func tryFind<T: View>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
+    func tryFind<T: SwiftUI.View>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
         return try? self.find(type)
     }
 
     /// Safely find all views of a type, returning empty array if none found
-    func tryFindAll<T: View>(_ type: T.Type) -> [InspectableView<ViewType.View<T>>] {
+    func tryFindAll<T: SwiftUI.View>(_ type: T.Type) -> [InspectableView<ViewType.View<T>>] {
         return (try? self.findAll(type)) ?? []
     }
 }
