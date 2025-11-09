@@ -29,6 +29,7 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             
             // 3. Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
                let button = try? inspectedView.button(),
                let accessibilityID = try? button.accessibilityIdentifier() {
@@ -44,6 +45,9 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
                 print("❌ FAILED: Could not inspect view")
                 Issue.record("Could not inspect view")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
@@ -66,6 +70,7 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             
             // 3. Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
                let button = try? inspectedView.button(),
                let accessibilityID = try? button.accessibilityIdentifier() {
@@ -81,6 +86,9 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
                 print("❌ FAILED: Could not inspect view")
                 Issue.record("Could not inspect view")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
 }

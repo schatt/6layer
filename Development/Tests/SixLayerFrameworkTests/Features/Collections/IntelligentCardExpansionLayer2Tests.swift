@@ -30,7 +30,7 @@ open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
             deviceType: .phone,
             contentComplexity: .moderate
         )
-
+        
         // Layer 2 functions return data structures, not views
         // So we test that the functions execute without crashing
     }
@@ -42,7 +42,7 @@ open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
             deviceType: .mac,
             contentComplexity: .moderate
         )
-
+        
         // Layer 2 functions return data structures, not views
         // So we test that the functions execute without crashing
     }

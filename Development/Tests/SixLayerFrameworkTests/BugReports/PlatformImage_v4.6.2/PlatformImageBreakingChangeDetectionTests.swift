@@ -43,7 +43,7 @@ open class PlatformImageBreakingChangeDetectionTests {
         #if os(iOS)
         // Given: The exact delegate method that was broken
         var capturedImage: PlatformImage?
-        let parent = MockCameraView { image in
+        let parent = CameraView { image in
             capturedImage = image
         }
         
@@ -86,7 +86,7 @@ open class PlatformImageBreakingChangeDetectionTests {
         #if os(iOS)
         // Given: The exact delegate method that was broken
         var selectedImage: PlatformImage?
-        let parent = MockPhotoPickerView { image in
+        let parent = PhotoPickerView { image in
             selectedImage = image
         }
         

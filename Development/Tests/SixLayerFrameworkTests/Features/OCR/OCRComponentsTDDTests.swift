@@ -50,7 +50,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should render overlay interface
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have overlay interface
             let hasInterface = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
@@ -93,7 +93,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should process OCR result when provided
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have OCR processing interface
             let hasInterface = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0
@@ -155,7 +155,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should render disambiguation options
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should display candidate alternatives
             // Note: ViewInspector doesn't have a find(text:) method, so we check for any view structure
@@ -225,7 +225,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should display all candidates
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should find all candidate texts
             // Note: ViewInspector doesn't have a find(text:) method, so we check for any view structure
@@ -272,7 +272,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
         )
 
         // Should handle non-disambiguation case
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have some UI structure
             let hasInterface = (try? inspected.findAll(ViewType.AnyView.self).count ?? 0) > 0

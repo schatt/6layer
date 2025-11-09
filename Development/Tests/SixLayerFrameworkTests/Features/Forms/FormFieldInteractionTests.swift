@@ -459,7 +459,7 @@ open class FormFieldInteractionTests {
                 }
             )
         )
-        .onChange(of: isFocused) { _, focused in
+        .onChange(of: isFocused) { focused in
             self.fieldFocusChanges[textField.label] = focused
         }
         

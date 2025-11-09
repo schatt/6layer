@@ -36,7 +36,7 @@ open class IntelligentCardExpansionLayer3Tests: BaseTestClass {
             interactionStyle: .interactive,
             contentDensity: .balanced
         )
-
+        
         // Layer 3 functions return strategy data structures, not views
         // So we test that the functions execute without crashing
     }
@@ -49,7 +49,7 @@ open class IntelligentCardExpansionLayer3Tests: BaseTestClass {
             interactionStyle: .interactive,
             contentDensity: .balanced
         )
-
+        
         // Layer 3 functions return strategy data structures, not views
         // So we test that the functions execute without crashing
     }

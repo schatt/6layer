@@ -46,7 +46,9 @@ open class TextContentTypeTests {
             .familyName, .middleName, .namePrefix, .nameSuffix
         ]
         
-        for textContentType in textContentTypes {
+        for uiTextContentType in textContentTypes {
+            // Convert UITextContentType to SixLayerTextContentType
+            let textContentType = SixLayerTextContentType(uiTextContentType)
             let field = DynamicFormField(
                 id: "test_\(textContentType.rawValue)",
                 textContentType: textContentType,

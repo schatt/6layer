@@ -26,8 +26,8 @@ import SwiftUI
 import UIKit
 #elseif os(macOS)
 import AppKit
-@testable import SixLayerFramework
 #endif
+@testable import SixLayerFramework
 
 
 @MainActor
@@ -88,10 +88,11 @@ open class TestingFailureDemonstrationTests {
         
         // Execute the delegate method that contains the broken code
         // This would have caught the breaking change
-        let coordinator = CameraView.Coordinator(MockCameraView { image in
+        let cameraView = CameraView { image in
             callbackExecuted = true
             capturedImage = image
-        })
+        }
+        let coordinator = CameraView.Coordinator(cameraView)
         
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         

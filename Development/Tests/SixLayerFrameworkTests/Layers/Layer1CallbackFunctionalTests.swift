@@ -103,8 +103,11 @@ open class Layer1CallbackFunctionalTests {
                 if let firstCard = listCards.first {
                     // ListCardComponent is now a VStack, find the HStack child
                     let vStack = try firstCard.vStack()
-                    let hStack = try vStack.hStack(0)
-                    try hStack.callOnTapGesture()
+                    // Get the first HStack from the VStack
+                    let hStacks = try vStack.findAll(HStack<Text>.self)
+                    if let hStack = hStacks.first {
+                        try hStack.callOnTapGesture()
+                    }
 
                     // Verify callback was invoked
                     #expect(callbackInvoked, "Callback should be invoked when tapped")

@@ -488,6 +488,7 @@ public struct DynamicRadioField: View {
                 .automaticAccessibilityIdentifiers(named: "FieldLabel")
 
             if let options = field.options {
+                #if os(macOS)
                 Picker(field.label, selection: Binding(
                     get: { formState.fieldValues[field.id] as? String ?? "" },
                     set: { formState.setValue($0, for: field.id) }
@@ -498,6 +499,28 @@ public struct DynamicRadioField: View {
                 }
                 .pickerStyle(.radioGroup)
                 .automaticAccessibilityIdentifiers(named: "RadioGroup")
+                #else
+                // iOS: Use custom radio button implementation
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(options, id: \.self) { option in
+                        HStack {
+                            Button(action: {
+                                formState.setValue(option, for: field.id)
+                            }) {
+                                HStack {
+                                    Image(systemName: (formState.fieldValues[field.id] as? String ?? "") == option ? "largecircle.fill.circle" : "circle")
+                                        .foregroundColor(.accentColor)
+                                    Text(option)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                            .automaticAccessibilityIdentifiers(named: "RadioOption")
+                            Spacer()
+                        }
+                    }
+                }
+                .automaticAccessibilityIdentifiers(named: "RadioGroup")
+                #endif
             }
         }
         .padding()

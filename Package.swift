@@ -68,8 +68,8 @@ let package = Package(
                 // This allows us to update all #if directives by removing one line
                 // When flag is present, VIEW_INSPECTOR_MAC_FIXED is defined (true)
                 // When flag is absent, VIEW_INSPECTOR_MAC_FIXED is undefined (false)
-                // Currently commented out because ViewInspector doesn't work on macOS yet
-                // .define("VIEW_INSPECTOR_MAC_FIXED")
+                // TEMPORARILY ENABLED FOR TESTING - will disable if it causes compilation errors
+                .define("VIEW_INSPECTOR_MAC_FIXED")
             ]
         ),
         

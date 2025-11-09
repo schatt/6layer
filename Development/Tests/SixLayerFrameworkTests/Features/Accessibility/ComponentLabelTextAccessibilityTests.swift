@@ -2,6 +2,10 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+import ViewInspector
+#endif
+
 /// TDD RED PHASE: Tests for label text inclusion in accessibility identifiers
 /// These tests SHOULD FAIL until components are updated to include label text
 /// 
@@ -22,15 +26,19 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = button.tryInspect() {
            let buttonID = try? inspected.accessibilityIdentifier()
-            #expect(buttonID.contains("submit") || buttonID.contains("Submit"), 
+            #expect((buttonID?.contains("submit") ?? false) || (buttonID?.contains("Submit") ?? false), 
                    "AdaptiveButton identifier should include label text 'Submit'")
             
             print("🔴 RED: AdaptiveButton ID: '\(buttonID)'")
         } else {
             Issue.record("Failed to inspect AdaptiveButton")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         cleanupTestEnvironment()
     }
@@ -143,9 +151,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect() {
-           let buttonID = try? inspected.accessibilityIdentifier()
-
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier() {
             #expect(buttonID.contains("save") || buttonID.contains("Save"), 
                    "platformNavigationButton identifier should include title text 'Save'")
             
@@ -165,13 +172,12 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect() {
-            let buttonID = try? inspected.accessibilityIdentifier()
-            
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier() {
             // TDD RED: Should FAIL - spaces should be converted to hyphens
             #expect(!buttonID.contains("Add New Item"),
                     "Identifier should not contain raw label with spaces")
-            #expect(buttonID.contains("add-new-item") || buttonID.contains("add") && buttonID.contains("new"),
+            #expect(buttonID.contains("add-new-item") || (buttonID.contains("add") && buttonID.contains("new")),
                     "Identifier should contain sanitized label (hyphens)")
             
             print("🔴 RED: Sanitized ID: '\(buttonID)'")
@@ -187,9 +193,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect() {
-           let buttonID = try? inspected.accessibilityIdentifier()
-
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier() {
             // TDD RED: Should FAIL - special chars should be sanitized
             #expect(!buttonID.contains("&"), "Identifier should not contain '&'")
             #expect(!buttonID.contains("!"), "Identifier should not contain '!'")
@@ -207,9 +212,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspected = button.tryInspect() {
-           let buttonID = try? inspected.accessibilityIdentifier()
-
+        if let inspected = button.tryInspect(),
+           let buttonID = try? inspected.accessibilityIdentifier() {
             // TDD RED: Should FAIL - should be lowercase
             #expect(!buttonID.contains("CamelCaseLabel"), 
                    "Identifier should not contain mixed case label")

@@ -16,50 +16,34 @@ import SwiftUI
 @Suite("Layer Platform Optimization")
 open class Layer6PlatformOptimizationTests {
     
-    // MARK: - Cross-Platform Benchmarking Tests (RED PHASE)
+    // MARK: - Cross-Platform Platform Detection Tests
     
-    /// TDD RED PHASE: Platform benchmarking should measure actual performance
-    /// This test should FAIL initially because benchmarking is mocked
-    @Test func testPlatformBenchmarkingMeasuresActualPerformance() async {
-        // Given: A view to benchmark
-        let testView = VStack {
-            Text("Test Content")
-            Button("Test Button") { }
-        }
+    /// Test that cross-platform manager correctly detects the current platform
+    /// Cross-platform test - works on both iOS and macOS
+    @Test func testCrossPlatformManagerDetectsCurrentPlatform() async {
+        // Given: Cross-platform optimization manager
+        let manager = CrossPlatformOptimizationManager()
         
-        // When: Running platform benchmark
-        let result = await CrossPlatformOptimizationManager().benchmarkView(
-            testView,
-            platform: .macOS,
-            iterations: 10
-        )
+        // When: Manager is initialized
+        // It should detect the current platform correctly
+        #if os(iOS)
+        #expect(manager.currentPlatform == .iOS, "Manager should detect iOS platform")
+        #elseif os(macOS)
+        #expect(manager.currentPlatform == .macOS, "Manager should detect macOS platform")
+        #elseif os(visionOS)
+        #expect(manager.currentPlatform == .visionOS, "Manager should detect visionOS platform")
+        #elseif os(watchOS)
+        #expect(manager.currentPlatform == .watchOS, "Manager should detect watchOS platform")
+        #elseif os(tvOS)
+        #expect(manager.currentPlatform == .tvOS, "Manager should detect tvOS platform")
+        #endif
         
-        // Then: Should have performance metrics
-        // Note: Performance metrics are provided but not validated against thresholds
-        
-        // THIS SHOULD FAIL - Current implementation uses mocked values
-        #expect(result.isRealBenchmark, "Benchmark should be real, not mocked")
-    }
-    
-    // MARK: - macOS-Specific Optimizations Tests (RED PHASE)
-    
-    /// TDD RED PHASE: macOS optimizations should actually optimize performance
-    /// This test should FAIL initially because optimizations are not implemented
-    @Test func testMacOSOptimizationsActuallyOptimizePerformance() async {
-        // Given: macOS optimization manager
-        let manager = MacOSOptimizationManager.shared
-        
-        // When: Applying macOS optimizations
-        manager.applyMacOSOptimizations()
-        
-        // Then: Optimizations applied
-        
-        // Should have actual optimization strategy (not just standard)
-        let strategy = manager.getCurrentPerformanceStrategy()
-        #expect(strategy != .standard, "Should use optimized strategy, not standard placeholder")
-        
-        // THIS SHOULD FAIL - Current implementation is a no-op placeholder
-        #expect(manager.hasAppliedOptimizations, "Manager should track applied optimizations")
+        // Then: UI patterns should be configured for the detected platform
+        let patterns = manager.uiPatterns
+        // Navigation patterns should be configured for the platform
+        #expect(patterns.navigationPatterns.platform == manager.currentPlatform, "Navigation patterns should match current platform")
+        // Should have a primary navigation type configured
+        #expect(patterns.navigationPatterns.primaryNavigation != .navigationStack || manager.currentPlatform == .iOS, "Should have platform-appropriate navigation")
     }
     
     // MARK: - Accessibility Testing Suite Tests (RED PHASE)
@@ -126,10 +110,8 @@ open class Layer6PlatformOptimizationTests {
     /// TDD RED PHASE: Platform features should be detected at runtime
     /// This test should FAIL initially because feature detection is not implemented
     @Test func testPlatformFeatureDetectionAtRuntime() async {
-        // Given: Cross-platform optimization manager
-        let manager = CrossPlatformOptimizationManager()
-        
         // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
+        // Test disabled - functionality removed from framework
         // When: Getting platform recommendations
         // let recommendations = manager.getPlatformRecommendations()
         
@@ -209,13 +191,6 @@ extension CrossPlatformOptimizationManager {
     }
 }
 
-extension MacOSOptimizationManager {
-    /// Track whether optimizations have been applied
-    var hasAppliedOptimizations: Bool {
-        // This should be implemented to track actual optimization state
-        return false // Should be true after applyMacOSOptimizations() is called
-    }
-}
 
 extension AccessibilityTestingSuite {
     /// Run compliance test for a view

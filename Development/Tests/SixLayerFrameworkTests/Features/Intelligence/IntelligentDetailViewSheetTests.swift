@@ -2,7 +2,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
 /// TDD Tests for IntelligentDetailView Sheet Presentation Bug
@@ -57,27 +57,21 @@ struct IntelligentDetailViewSheetTests {
         .frame(minWidth: 400, minHeight: 500)
         
         // Verify the view can be inspected with ViewInspector
-        #if canImport(ViewInspector) && !os(macOS)
-        do {
-            let inspector = sheetContent.tryInspect()
-            
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let inspector = sheetContent.tryInspect() {
             // Try to find VStack (standard layout structure)
             // This proves the view has actual content structure, not blank
-            do {
-                let _ = inspector.tryFind(ViewType.VStack.self)
+            if let _ = inspector.tryFind(ViewType.VStack.self) {
                 // If we found a VStack, the view has structure and content
                 #expect(true, "platformDetailView should have view structure (proves it's not blank)")
-            } catch {
+            } else if let _ = inspector.tryFind(ViewType.HStack.self) {
                 // Try finding any structural view
-                do {
-                    let _ = inspector.tryFind(ViewType.HStack.self)
-                    #expect(true, "platformDetailView should have view structure (proves it's not blank)")
-                } catch {
-                    // Any view structure is acceptable
-                    #expect(true, "platformDetailView should render in sheet (not blank)")
-                }
+                #expect(true, "platformDetailView should have view structure (proves it's not blank)")
+            } else {
+                // Any view structure is acceptable
+                #expect(true, "platformDetailView should render in sheet (not blank)")
             }
-        } catch {
+        } else {
             Issue.record("platformDetailView should be inspectable (indicates it has content)")
         }
         #else
@@ -101,13 +95,13 @@ struct IntelligentDetailViewSheetTests {
         )
         
         // Verify the view can be inspected (proves it's not blank)
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
             let inspector = detailView.tryInspect()
             
             // Try to find Text views (which would contain the field values)
             do {
-                let texts = inspector.tryFindAll(ViewType.Text.self)
+                let texts = try inspector.findAll(ViewType.Text.self)
                 // If we found text views, the view is displaying content
                 #expect(texts.count > 0, "platformDetailView should display model properties as text")
             } catch {

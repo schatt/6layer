@@ -2,7 +2,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
 /// DRY Test Patterns
@@ -163,7 +163,7 @@ open class TestPatterns {
         // view is a non-optional View parameter, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain expected text
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
@@ -194,7 +194,7 @@ open class TestPatterns {
         
         // 2. Contains what it needs to contain - The view should contain image elements
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             let viewImages = inspected.tryFindAll(ViewType.Image.self)
             #expect(!viewImages.isEmpty, "View should contain image elements for \(testName)")

@@ -201,11 +201,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     let viewWithEnvironment = view
         .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
     
-    #if !os(macOS)
+    #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
     do {
         // Use ViewInspector to directly inspect the SwiftUI view
         // This will find identifiers that the COMPONENT applied, not the test helper
-        // NOTE: ViewInspector is iOS-only, so this code only runs on iOS
+        // NOTE: ViewInspector works on iOS and macOS (when VIEW_INSPECTOR_MAC_FIXED is defined)
         if config.enableDebugLogging {
             print("🔍 SWIFTUI DEBUG: Attempting to inspect view of type: \(type(of: viewWithEnvironment))")
         }
@@ -374,6 +374,29 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             }
         }
         
+        // ENHANCED: Search through all VStacks, HStacks, ZStacks, and AnyViews in the hierarchy
+        // This finds identifiers that might be on nested views or modified views
+        // Use findAll to get all instances of each container type and check their identifiers
+        let containerTypes: [(String, Any.Type)] = [
+            ("VStack", ViewType.VStack.self),
+            ("HStack", ViewType.HStack.self),
+            ("ZStack", ViewType.ZStack.self),
+            ("AnyView", ViewType.AnyView.self)
+        ]
+        
+        for (typeName, viewType) in containerTypes {
+            if let containers = try? inspected.findAll(viewType) {
+                for container in containers {
+                    if let identifier = try? container.accessibilityIdentifier(), !identifier.isEmpty {
+                        if config.enableDebugLogging {
+                            print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' in \(typeName) via findAll search")
+                        }
+                        return identifier
+                    }
+                }
+            }
+        }
+        
         // Fallback: host platform view and search for identifier
         if config.enableDebugLogging {
             print("🔍 SWIFTUI DEBUG: ViewInspector couldn't find identifier, falling back to platform view inspection")
@@ -391,15 +414,16 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         return platformId
     }
     #else
-    // On macOS, ViewInspector is not available, so use platform view hosting
+    // On macOS without VIEW_INSPECTOR_MAC_FIXED, ViewInspector is not available, so use platform view hosting
     if config.enableDebugLogging {
-        print("🔍 SWIFTUI DEBUG: macOS - using platform view inspection (ViewInspector not available)")
+        print("🔍 SWIFTUI DEBUG: macOS - using platform view inspection (ViewInspector not available or VIEW_INSPECTOR_MAC_FIXED not defined)")
     }
     let hosted = hostRootPlatformView(viewWithEnvironment)
     let platformId = firstAccessibilityIdentifier(inHosted: hosted)
     return platformId
     #endif
 }
+
 
 // MARK: - Platform Mocking for Accessibility Tests
 

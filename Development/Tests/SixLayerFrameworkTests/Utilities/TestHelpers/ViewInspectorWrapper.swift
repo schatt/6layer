@@ -45,41 +45,240 @@ struct ViewInspectorNotAvailableError: Error {}
 import ViewInspector
 #endif
 
-// MARK: - View Extension for Inspection
+// MARK: - Type-Erased Inspectable Protocol
+
+/// Protocol that abstracts ViewInspector's InspectableView
+/// This allows the wrapper to return a consistent type regardless of platform
+public protocol Inspectable {
+    func button() throws -> Inspectable
+    func text() throws -> Inspectable
+    func text(_ index: Int) throws -> Inspectable
+    func vStack() throws -> Inspectable
+    func vStack(_ index: Int) throws -> Inspectable
+    func hStack() throws -> Inspectable
+    func hStack(_ index: Int) throws -> Inspectable
+    func textField() throws -> Inspectable
+    func textField(_ index: Int) throws -> Inspectable
+    func accessibilityIdentifier() throws -> String
+    func findAll<T>(_ type: T.Type) throws -> [Inspectable]
+    func find<T>(_ type: T.Type) throws -> Inspectable
+    func tryFind<T>(_ type: T.Type) -> Inspectable?
+    func tryFindAll<T>(_ type: T.Type) -> [Inspectable]
+    func anyView() throws -> Inspectable
+    func string() throws -> String
+    func callOnTapGesture() throws
+    func labelView() throws -> Inspectable
+    func tap() throws
+    var count: Int { get }
+    var isEmpty: Bool { get }
+    func contains(_ element: Inspectable) -> Bool
+}
 
 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+// Make InspectableView conform to our protocol
+extension InspectableView: Inspectable {
+    public func button() throws -> Inspectable {
+        return try self.button() as Inspectable
+    }
+    
+    public func text() throws -> Inspectable {
+        return try self.text() as Inspectable
+    }
+    
+    public func text(_ index: Int) throws -> Inspectable {
+        // This works on VStack/HStack which have indexed access
+        // Try to get the vStack first, then access text at index
+        if let vStack = try? self.vStack() as InspectableView<ViewType.VStack> {
+            return try vStack.text(index) as Inspectable
+        }
+        // Fallback: try direct access (might work on some view types)
+        return try self.text() as Inspectable
+    }
+    
+    public func vStack() throws -> Inspectable {
+        return try self.vStack() as Inspectable
+    }
+    
+    public func vStack(_ index: Int) throws -> Inspectable {
+        // VStack from MultipleViewContent parent (like another VStack) supports indexed access
+        if let vStackSelf = self as? InspectableView<ViewType.VStack> {
+            return try vStackSelf.vStack(index) as Inspectable
+        }
+        // Fallback: try direct access
+        return try self.vStack() as Inspectable
+    }
+    
+    public func hStack() throws -> Inspectable {
+        return try self.hStack() as Inspectable
+    }
+    
+    public func hStack(_ index: Int) throws -> Inspectable {
+        // HStack from MultipleViewContent parent (like VStack) supports indexed access
+        if let vStackSelf = self as? InspectableView<ViewType.VStack> {
+            return try vStackSelf.hStack(index) as Inspectable
+        }
+        // Fallback: try direct access
+        return try self.hStack() as Inspectable
+    }
+    
+    public func textField() throws -> Inspectable {
+        return try self.textField() as Inspectable
+    }
+    
+    public func textField(_ index: Int) throws -> Inspectable {
+        // This works on VStack/HStack which have indexed access
+        // Try to get the vStack first, then access textField at index
+        if let vStack = try? self.vStack() as InspectableView<ViewType.VStack> {
+            return try vStack.textField(index) as Inspectable
+        }
+        // Fallback: try direct access
+        return try self.textField() as Inspectable
+    }
+    
+    public func accessibilityIdentifier() throws -> String {
+        return try self.accessibilityIdentifier()
+    }
+    
+    public func findAll<T>(_ type: T.Type) throws -> [Inspectable] {
+        return try self.findAll(type).map { $0 as Inspectable }
+    }
+    
+    public func find<T>(_ type: T.Type) throws -> Inspectable {
+        return try self.find(type) as Inspectable
+    }
+    
+    public func tryFind<T>(_ type: T.Type) -> Inspectable? {
+        return try? self.find(type) as Inspectable?
+    }
+    
+    public func tryFindAll<T>(_ type: T.Type) -> [Inspectable] {
+        return (try? self.findAll(type) ?? []).map { $0 as Inspectable }
+    }
+    
+    public func anyView() throws -> Inspectable {
+        return try self.anyView() as Inspectable
+    }
+    
+    public func string() throws -> String {
+        return try self.string()
+    }
+    
+    public func callOnTapGesture() throws {
+        return try self.callOnTapGesture()
+    }
+    
+    public func labelView() throws -> Inspectable {
+        // ViewInspector's Button has a labelView() method that returns the label
+        // This is typically used to get the text content of a button
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        // Try to cast to button type and get labelView
+        if let buttonSelf = self as? InspectableView<ViewType.Button<Text>> {
+            return try buttonSelf.labelView() as Inspectable
+        }
+        // For other button types, try generic approach
+        return try self.anyView() as Inspectable
+        #else
+        throw ViewInspectorNotAvailableError()
+        #endif
+    }
+    
+    public func tap() throws {
+        // ViewInspector's Button has a tap() method
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let buttonSelf = self as? InspectableView<ViewType.Button<Text>> {
+            try buttonSelf.tap()
+            return
+        }
+        // For other button types, try callOnTapGesture
+        try self.callOnTapGesture()
+        #else
+        throw ViewInspectorNotAvailableError()
+        #endif
+    }
+    
+    public var count: Int {
+        // VStack and HStack have count property
+        // Since self is already an InspectableView, we need to check if it's a VStack or HStack
+        // and access count directly if possible
+        // This is a type-erased access, so we try to get the underlying count
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        // Try to access count if this is a VStack
+        if let vStackSelf = self as? InspectableView<ViewType.VStack> {
+            return vStackSelf.count
+        }
+        // Try to access count if this is an HStack
+        if let hStackSelf = self as? InspectableView<ViewType.HStack> {
+            return hStackSelf.count
+        }
+        #endif
+        // For other types, return 0
+        return 0
+    }
+    
+    public var isEmpty: Bool {
+        // InspectableView doesn't have isEmpty directly
+        return false
+    }
+    
+    public func contains(_ element: Inspectable) -> Bool {
+        // InspectableView doesn't have contains directly
+        return false
+    }
+}
+#endif
+
+// Dummy implementation for when ViewInspector is not available
+struct DummyInspectable: Inspectable {
+    func button() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func text() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func vStack() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func vStack(_ index: Int) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func hStack() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func hStack(_ index: Int) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func accessibilityIdentifier() throws -> String { throw ViewInspectorNotAvailableError() }
+    func findAll<T>(_ type: T.Type) throws -> [Inspectable] { throw ViewInspectorNotAvailableError() }
+    func find<T>(_ type: T.Type) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func tryFind<T>(_ type: T.Type) -> Inspectable? { return nil }
+    func tryFindAll<T>(_ type: T.Type) -> [Inspectable] { return [] }
+    func anyView() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func string() throws -> String { throw ViewInspectorNotAvailableError() }
+    func callOnTapGesture() throws { throw ViewInspectorNotAvailableError() }
+    func labelView() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func tap() throws { throw ViewInspectorNotAvailableError() }
+    func textField() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func text(_ index: Int) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func textField(_ index: Int) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    var count: Int { return 0 }
+    var isEmpty: Bool { return true }
+    func contains(_ element: Inspectable) -> Bool { return false }
+}
+
+// MARK: - View Extension for Inspection
+
 extension View {
     /// Safely inspect a view using ViewInspector
     /// Returns nil on inspection failure
-    /// When ViewInspector works on macOS, remove the canImport condition
+    /// Returns a consistent Inspectable type regardless of platform
     @MainActor
-    func tryInspect() -> InspectableView<ViewType.ClassifiedView>? {
-        return try? self.inspect()
+    func tryInspect() -> Inspectable? {
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        return try? self.inspect() as Inspectable?
+        #else
+        return nil
+        #endif
     }
     
     /// Inspect a view using ViewInspector, throwing on failure
     /// Throws when ViewInspector cannot inspect the view
     @MainActor
-    func inspectView() throws -> InspectableView<ViewType.ClassifiedView> {
-        return try self.inspect()
-    }
-}
-#else
-extension View {
-    /// ViewInspector not available on this platform
-    /// When ViewInspector works on this platform, remove the canImport condition above
-    @MainActor
-    func tryInspect() -> Any? {
-        return nil
-    }
-
-    /// ViewInspector not available on this platform
-    @MainActor
-    func inspectView() throws -> Any {
+    func inspectView() throws -> Inspectable {
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        return try self.inspect() as Inspectable
+        #else
         throw ViewInspectorNotAvailableError()
+        #endif
     }
 }
-#endif
 
 // MARK: - InspectableView Extension for Common Operations
 
@@ -99,52 +298,28 @@ extension InspectableView {
 
 // MARK: - Helper Functions for Common Patterns
 
-#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 /// Safely inspect a view and execute a closure if inspection succeeds
 /// Returns nil on inspection failure
-/// When ViewInspector works on all platforms, remove the canImport condition
+/// Uses Inspectable protocol for consistent type across platforms
 @MainActor
 public func withInspectedView<V: View, R>(
     _ view: V,
-    perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
+    perform: (Inspectable) throws -> R
 ) -> R? {
-    guard let inspected = try? view.inspect() else {
+    guard let inspected = view.tryInspect() else {
         return nil
     }
     return try? perform(inspected)
 }
-#else
-/// ViewInspector not available on this platform
-/// When ViewInspector works on this platform, remove the canImport condition above
-@MainActor
-public func withInspectedView<V: View, R>(
-    _ view: V,
-    perform: (Any) throws -> R
-) -> R? {
-    return nil
-}
-#endif
 
-#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 /// Safely inspect a view and execute a throwing closure
 /// Throws when ViewInspector cannot inspect the view
-/// When ViewInspector works on all platforms, remove the canImport condition
+/// Uses Inspectable protocol for consistent type across platforms
 @MainActor
 public func withInspectedViewThrowing<V: View, R>(
     _ view: V,
-    perform: (InspectableView<ViewType.ClassifiedView>) throws -> R
+    perform: (Inspectable) throws -> R
 ) throws -> R {
-    let inspected = try view.inspect()
+    let inspected = try view.inspectView()
     return try perform(inspected)
 }
-#else
-/// ViewInspector not available on this platform
-/// When ViewInspector works on this platform, remove the canImport condition above
-@MainActor
-public func withInspectedViewThrowing<V: View, R>(
-    _ view: V,
-    perform: (Any) throws -> R
-) throws -> R {
-    throw ViewInspectorNotAvailableError()
-}
-#endif

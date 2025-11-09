@@ -1,6 +1,7 @@
 import Testing
-
-
+#if os(iOS)
+import UIKit
+#endif
 import SixLayerFramework
 
 /// Tests to verify that SixLayerTextContentType covers all UITextContentType cases

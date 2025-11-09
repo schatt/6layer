@@ -298,12 +298,17 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         #expect(nativeCard != nil, "Native card should be created")
         #expect(platformAwareCard != nil, "Platform-aware card should be created")
         
-        if let _ = cardView.tryInspect() {
-            let _ = nativeCard.tryInspect()
-            let _ = platformAwareCard.tryInspect()
+        // Test that all card types are inspectable
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let _ = nativeCard.tryInspect(),
+           let _ = platformAwareCard.tryInspect() {
+            // All card types are inspectable
         } else {
             Issue.record("All card types should be inspectable")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     @Test func testCardExpansionPerformance() {

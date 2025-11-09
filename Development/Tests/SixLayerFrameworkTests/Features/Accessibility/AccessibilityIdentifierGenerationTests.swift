@@ -21,7 +21,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
            let buttonID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are currently 400+ chars
@@ -57,7 +57,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - contains duplicates like "container-container"
@@ -95,7 +95,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are not semantic
@@ -142,7 +142,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
@@ -177,22 +177,21 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         let cancelButton = AdaptiveUIPatterns.AdaptiveButton("Cancel", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
-            let submitInspected = submitButton.tryInspect()
-            let submitID = try? submitInspected.accessibilityIdentifier()
+            if let submitInspected = submitButton.tryInspect(),
+               let cancelInspected = cancelButton.tryInspect() {
+                let submitID = try? submitInspected.accessibilityIdentifier()
+                let cancelID = try? cancelInspected.accessibilityIdentifier()
+                
+                // TDD RED: These should FAIL - labels not currently included
+                #expect((submitID?.contains("Submit") ?? false), "Submit button identifier should include 'Submit' label")
+                #expect((cancelID?.contains("Cancel") ?? false), "Cancel button identifier should include 'Cancel' label")
+                #expect(submitID != cancelID, "Buttons with different labels should have different identifiers")
             
-            let cancelInspected = cancelButton.tryInspect()
-            let cancelID = try? cancelInspected.accessibilityIdentifier()
-            
-            // TDD RED: These should FAIL - labels not currently included
-            #expect(submitID.contains("Submit"), "Submit button identifier should include 'Submit' label")
-            #expect(cancelID.contains("Cancel"), "Cancel button identifier should include 'Cancel' label")
-            #expect(submitID != cancelID, "Buttons with different labels should have different identifiers")
-            
-            print("✅ Submit ID: '\(submitID)'")
-            print("✅ Cancel ID: '\(cancelID)'")
-            
+                print("✅ Submit ID: '\(submitID ?? "nil")'")
+                print("✅ Cancel ID: '\(cancelID ?? "nil")'")
+            }
         } catch {
             Issue.record("Failed to inspect views")
         }
@@ -212,20 +211,20 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
-            let inspected = button.tryInspect()
-            let buttonID = try? inspected.accessibilityIdentifier()
+            if let inspected = button.tryInspect() {
+                let buttonID = try? inspected.accessibilityIdentifier()
+                
+                // TDD RED: Should FAIL - labels not sanitized
+                // Should contain sanitized version: "add-new-item" or similar
+                #expect((buttonID?.contains("add") ?? false) || (buttonID?.contains("new") ?? false) || (buttonID?.contains("item") ?? false), 
+                       "Identifier should include sanitized label text")
+                #expect(!(buttonID?.contains("Add New Item") ?? false), 
+                       "Identifier should not contain raw label with spaces")
             
-            // TDD RED: Should FAIL - labels not sanitized
-            // Should contain sanitized version: "add-new-item" or similar
-            #expect(buttonID.contains("add") || buttonID.contains("new") || buttonID.contains("item"), 
-                   "Identifier should include sanitized label text")
-            #expect(!buttonID.contains("Add New Item"), 
-                   "Identifier should not contain raw label with spaces")
-            
-            print("✅ Sanitized ID: '\(buttonID)'")
-            
+                print("✅ Sanitized ID: '\(buttonID ?? "nil")'")
+            }
         } catch {
             Issue.record("Failed to inspect view")
         }

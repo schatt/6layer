@@ -50,11 +50,15 @@ open class MetalRenderingCrashTDDTests {
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let _ = view.tryInspect() {
             print("✅ platformPresentItemCollection_L1 rendered successfully")
         } else {
             Issue.record("platformPresentItemCollection_L1 should not crash during inspection")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         print("🟢 TDD Green Phase: platformPresentItemCollection_L1 no longer crashes - performance layer removed")
     }
@@ -88,12 +92,15 @@ open class MetalRenderingCrashTDDTests {
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspectedView = view.tryInspect() {
-            #expect(inspectedView != nil, "View should be inspectable without crashing")
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let _ = view.tryInspect() {
             print("✅ GenericItemCollectionView rendered successfully")
         } else {
             Issue.record("GenericItemCollectionView should not crash during inspection")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         print("🟢 TDD Green Phase: GenericItemCollectionView no longer crashes - performance layer removed")
     }
@@ -134,12 +141,15 @@ open class MetalRenderingCrashTDDTests {
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspectedView = view.tryInspect() {
-            #expect(inspectedView != nil, "View should be inspectable without crashing")
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let _ = view.tryInspect() {
             print("✅ Metal rendering crash reproduction test passed")
         } else {
             Issue.record("Metal rendering should not crash during inspection")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         print("🟢 TDD Green Phase: Metal rendering crash fixed - performance layer removed")
     }
@@ -170,12 +180,15 @@ open class MetalRenderingCrashTDDTests {
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let inspectedView = view.tryInspect() {
-            #expect(inspectedView != nil, "SimpleCardComponent should be inspectable without crashing")
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let _ = view.tryInspect() {
             print("✅ SimpleCardComponent rendered successfully")
         } else {
             Issue.record("SimpleCardComponent should not crash during inspection")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         print("🟢 TDD Green Phase: SimpleCardComponent no longer crashes - performance layer removed")
     }

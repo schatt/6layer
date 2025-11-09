@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
 /// Form Callback Functional Tests
@@ -40,7 +40,7 @@ open class FormCallbackFunctionalTests {
 
         // When: Simulating Cancel button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
             let buttons = try inspector.findAll(ViewType.Button.self)
@@ -108,7 +108,7 @@ open class FormCallbackFunctionalTests {
         
         // When: Simulating Update button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
             let buttons = try inspector.findAll(ViewType.Button.self)
@@ -179,7 +179,7 @@ open class FormCallbackFunctionalTests {
         
         // When: Simulating Submit button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button
             let buttons = try inspector.findAll(ViewType.Button.self)

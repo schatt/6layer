@@ -40,7 +40,8 @@ open class GreenPhaseTest: BaseTestClass {
         let title = item.title
 
         // Then: Properties should be accessible
-        #expect(id == "test", "ID should be accessible")
+        // id is AnyHashable, so convert to String for comparison
+        #expect(String(describing: id) == "test" || (id as? String) == "test", "ID should be accessible")
         #expect(title == "Test", "Title should be accessible")
         #expect(true, "Basic data structure access should work")
     }

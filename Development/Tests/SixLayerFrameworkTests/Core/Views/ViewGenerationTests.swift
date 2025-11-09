@@ -3,7 +3,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
 /// View Generation Tests
@@ -64,7 +64,7 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView, so we need to inspect it differently
             let anyView = try inspected.anyView()
@@ -113,7 +113,7 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view should contain custom field content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.anyView()
@@ -163,7 +163,7 @@ open class ViewGenerationTests: BaseTestClass {
         
         // 2. Contains what it needs to contain - The view should respect the hints
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && !os(macOS)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.anyView()

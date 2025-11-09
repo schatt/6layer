@@ -11,7 +11,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
 
@@ -45,6 +45,7 @@ open class Layer4FormContainerTests {
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             // The form container should contain the test content
             let viewText = inspected.tryFindAll(ViewType.Text.self)
@@ -63,26 +64,37 @@ open class Layer4FormContainerTests {
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // 3. Platform-specific implementation verification (REQUIRED)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #if os(iOS)
         // iOS: Should contain Form structure with iOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let formView = inspected.tryFind(ViewType.Form.self) {
-            // Form found - this is correct for iOS
-            // Note: iOS uses Color(.systemGroupedBackground) for form backgrounds
-        } else {
-            Issue.record("iOS form container should contain Form structure")
+        withInspectedView(view) { inspected in
+            if let _ = inspected.tryFind(ViewType.Form.self) {
+                // Form found - this is correct for iOS
+                // Note: iOS uses Color(.systemGroupedBackground) for form backgrounds
+            } else {
+                Issue.record("iOS form container should contain Form structure")
+            }
         }
         #elseif os(macOS)
         // macOS: Should contain Form structure with macOS-specific background color
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let formView = inspected.tryFind(ViewType.Form.self) {
-            // Form found - this is correct for macOS
-            // Note: macOS uses Color(.controlBackgroundColor) for form backgrounds
-        } else {
-            Issue.record("macOS form container should contain Form structure")
+        withInspectedView(view) { inspected in
+            if let _ = inspected.tryFind(ViewType.Form.self) {
+                // Form found - this is correct for macOS
+                // Note: macOS uses Color(.controlBackgroundColor) for form backgrounds
+            } else {
+                Issue.record("macOS form container should contain Form structure")
+            }
         }
+        #endif
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
         #endif
     }
     
@@ -106,22 +118,23 @@ open class Layer4FormContainerTests {
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        if let viewText = view.tryInspect() {
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let viewText = inspected.tryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Standard container should contain text elements")
 
             // Should contain the test content
             let hasTestContent = viewText.contains { text in
-                do {
-                    let textContent = try? text.string()
-                    return textContent?.contains("Test Form Content") ?? false
-                } catch {
-                    return false
+                if let textContent = try? text.string() {
+                    return textContent.contains("Test Form Content")
                 }
+                return false
             }
             #expect(hasTestContent, "Standard container should contain the test content")
-        } else {
-            Issue.record("Failed to inspect standard container structure")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)

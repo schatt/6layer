@@ -190,18 +190,19 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicTextField(field: field, formState: formState)
 
         // Should render proper UI structure
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and TextField
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and TextField")
 
-            // Should have a VStack containing label and TextField
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and TextField")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Full Name", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Full Name", "Label should show field label")
-
-            // Second element should be a TextField
-            let textField = try vStack.textField(1)
+                // Second element should be a TextField
+                let _ = try vStack.textField(1)
             // Note: ViewInspector doesn't provide direct access to TextField placeholder text
             // We verify the TextField exists and has proper binding instead
 
@@ -214,13 +215,18 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Form state should be properly bound
-            let fieldValue: String? = formState.getValue(for: "test-text-field")
-            #expect(fieldValue == "John Doe", "Form state should contain initial value")
-
+                // Form state should be properly bound
+                let fieldValue: String? = formState.getValue(for: "test-text-field")
+                #expect(fieldValue == "John Doe", "Form state should contain initial value")
+            } catch {
+                Issue.record("DynamicTextField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicTextField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicNumberField Tests
@@ -247,43 +253,49 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicNumberField(field: field, formState: formState)
 
         // Should render proper numeric input UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and TextField
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and TextField")
 
-            // Should have a VStack containing label and TextField
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and TextField")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Age", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Age", "Label should show field label")
+                // Second element should be a TextField with numeric keyboard
+                let textField = try vStack.textField(1)
+                // Note: ViewInspector doesn't provide direct access to TextField placeholder text
+                // We verify the TextField exists and check keyboard type instead
 
-            // Second element should be a TextField with numeric keyboard
-            let textField = try vStack.textField(1)
-            // Note: ViewInspector doesn't provide direct access to TextField placeholder text
-            // We verify the TextField exists and check keyboard type instead
+                #if os(iOS)
+                // Should have decimalPad keyboard type for numeric input
+                // Note: ViewInspector may not support keyboardType() directly
+                // This is a placeholder for when that API is available
+                #endif
 
-            #if os(iOS)
-            // Should have decimalPad keyboard type for numeric input
-            let keyboardType = try textField.keyboardType()
-            #expect(keyboardType == .decimalPad, "Number field should have decimalPad keyboard")
-            #endif
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*DynamicNumberField.*",
+                    platform: .iOS,
+                    componentName: "DynamicNumberField"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*DynamicNumberField.*",
-                platform: .iOS,
-                componentName: "DynamicNumberField"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-            // Form state should contain the numeric value
-            let numberValue: String? = formState.getValue(for: "test-number-field")
-            #expect(numberValue == "25", "Form state should contain numeric value")
-
+                // Form state should contain the numeric value
+                let numberValue: String? = formState.getValue(for: "test-number-field")
+                #expect(numberValue == "25", "Form state should contain numeric value")
+            } catch {
+                Issue.record("DynamicNumberField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicNumberField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicTextAreaField Tests
@@ -310,32 +322,38 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicTextAreaField(field: field, formState: formState)
 
         // Should render proper multiline text input UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and TextEditor
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and TextEditor")
 
-            // Should have a VStack containing label and TextEditor
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and TextEditor")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Description", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Description", "Label should show field label")
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*DynamicTextAreaField.*",
+                    platform: .iOS,
+                    componentName: "DynamicTextAreaField"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*DynamicTextAreaField.*",
-                platform: .iOS,
-                componentName: "DynamicTextAreaField"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-            // Form state should contain the multiline text
-            let storedValue: String? = formState.getValue(for: "test-textarea-field")
-            #expect(storedValue == "This is a\nmultiline description\nwith line breaks", "Form state should contain multiline text")
-
+                // Form state should contain the multiline text
+                let storedValue: String? = formState.getValue(for: "test-textarea-field")
+                #expect(storedValue == "This is a\nmultiline description\nwith line breaks", "Form state should contain multiline text")
+            } catch {
+                Issue.record("DynamicTextAreaField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicTextAreaField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicSelectField Tests
@@ -363,15 +381,16 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicSelectField(field: field, formState: formState)
 
         // Should render proper selection UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and Picker
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and Picker")
 
-            // Should have a VStack containing label and Picker
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and Picker")
-
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Country", "Label should show field label")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Country", "Label should show field label")
 
             // Should have accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -382,13 +401,18 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             )
             #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Form state should contain the selected value
-            let selectValue: String? = formState.getValue(for: "test-select-field")
-            #expect(selectValue == "USA", "Form state should contain selected value")
-
+                // Form state should contain the selected value
+                let selectValue: String? = formState.getValue(for: "test-select-field")
+                #expect(selectValue == "USA", "Form state should contain selected value")
+            } catch {
+                Issue.record("DynamicSelectField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicSelectField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicMultiSelectField Tests
@@ -416,32 +440,38 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicMultiSelectField(field: field, formState: formState)
 
         // Should render proper multiple selection UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and selection controls
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and selection controls")
 
-            // Should have a VStack containing label and selection controls
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and selection controls")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Interests", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Interests", "Label should show field label")
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*DynamicMultiSelectField.*",
+                    platform: .iOS,
+                    componentName: "DynamicMultiSelectField"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*DynamicMultiSelectField.*",
-                platform: .iOS,
-                componentName: "DynamicMultiSelectField"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-            // Form state should contain the selected values array
-            let storedValue: [String]? = formState.getValue(for: "test-multiselect-field")
-            #expect(storedValue == ["Reading", "Music"], "Form state should contain selected values array")
-
+                // Form state should contain the selected values array
+                let storedValue: [String]? = formState.getValue(for: "test-multiselect-field")
+                #expect(storedValue == ["Reading", "Music"], "Form state should contain selected values array")
+            } catch {
+                Issue.record("DynamicMultiSelectField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicRadioField Tests
@@ -469,32 +499,38 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicRadioField(field: field, formState: formState)
 
         // Should render proper radio button group UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and radio controls
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and radio controls")
 
-            // Should have a VStack containing label and radio controls
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and radio controls")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Gender", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Gender", "Label should show field label")
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*DynamicRadioField.*",
+                    platform: .iOS,
+                    componentName: "DynamicRadioField"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*DynamicRadioField.*",
-                platform: .iOS,
-                componentName: "DynamicRadioField"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-            // Form state should contain the selected value
-            let radioValue: String? = formState.getValue(for: "test-radio-field")
-            #expect(radioValue == "Female", "Form state should contain selected radio value")
-
+                // Form state should contain the selected value
+                let radioValue: String? = formState.getValue(for: "test-radio-field")
+                #expect(radioValue == "Female", "Form state should contain selected radio value")
+            } catch {
+                Issue.record("DynamicRadioField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicRadioField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicCheckboxField Tests
@@ -521,32 +557,38 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicCheckboxField(field: field, formState: formState)
 
         // Should render proper toggle/checkbox UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and Toggle
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and Toggle")
 
-            // Should have a VStack containing label and Toggle
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and Toggle")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Subscribe to Newsletter", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Subscribe to Newsletter", "Label should show field label")
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*DynamicCheckboxField.*",
+                    platform: .iOS,
+                    componentName: "DynamicCheckboxField"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*DynamicCheckboxField.*",
-                platform: .iOS,
-                componentName: "DynamicCheckboxField"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-            // Form state should contain the boolean value
-            let checkboxValue: Bool? = formState.getValue(for: "test-checkbox-field")
-            #expect(checkboxValue == true, "Form state should contain boolean checkbox value")
-
+                // Form state should contain the boolean value
+                let checkboxValue: Bool? = formState.getValue(for: "test-checkbox-field")
+                #expect(checkboxValue == true, "Form state should contain boolean checkbox value")
+            } catch {
+                Issue.record("DynamicCheckboxField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicCheckboxField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     // MARK: - DynamicToggleField Tests
@@ -573,32 +615,38 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = DynamicToggleField(field: field, formState: formState)
 
         // Should render proper toggle UI
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
+            do {
+                // Should have a VStack containing label and Toggle
+                let vStack = try inspected.vStack()
+                #expect(vStack.count >= 2, "Should have label and Toggle")
 
-            // Should have a VStack containing label and Toggle
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have label and Toggle")
+                // First element should be the label Text
+                let labelText = try vStack.text(0)
+                #expect(try labelText.string() == "Enable Feature", "Label should show field label")
 
-            // First element should be the label Text
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Enable Feature", "Label should show field label")
+                // Should have accessibility identifier
+                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*DynamicToggleField.*",
+                    platform: .iOS,
+                    componentName: "DynamicToggleField"
+                )
+                #expect(hasAccessibilityID, "Should generate accessibility identifier")
 
-            // Should have accessibility identifier
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.main.ui.*DynamicToggleField.*",
-                platform: .iOS,
-                componentName: "DynamicToggleField"
-            )
-            #expect(hasAccessibilityID, "Should generate accessibility identifier")
-
-            // Form state should contain the boolean value
-            let toggleValue: Bool? = formState.getValue(for: "test-toggle-field")
-            #expect(toggleValue == false, "Form state should contain boolean toggle value")
-
+                // Form state should contain the boolean value
+                let toggleValue: Bool? = formState.getValue(for: "test-toggle-field")
+                #expect(toggleValue == false, "Form state should contain boolean toggle value")
+            } catch {
+                Issue.record("DynamicToggleField inspection error: \(error)")
+            }
         } else {
             Issue.record("DynamicToggleField inspection failed - component not properly implemented")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
 }
 

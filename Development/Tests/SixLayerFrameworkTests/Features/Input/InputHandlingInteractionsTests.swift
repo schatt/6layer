@@ -183,7 +183,12 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             }
             
             // Then
+            #if swift(>=5.9) && (os(iOS) && swift(>=17.0) || os(macOS))
             #expect(shortcut.key == key)
+            #else
+            // KeyEquivalent Equatable conformance requires iOS 17+, use character comparison instead
+            #expect(shortcut.key.character == key.character)
+            #endif
             #expect(shortcut.modifiers == modifiers)
         }
     }
@@ -204,7 +209,12 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             }
             
             // Then
+            #if swift(>=5.9) && (os(iOS) && swift(>=17.0) || os(macOS))
             #expect(shortcut.key == key)
+            #else
+            // KeyEquivalent Equatable conformance requires iOS 17+, use character comparison instead
+            #expect(shortcut.key.character == key.character)
+            #endif
             #expect(shortcut.modifiers == []) // iOS should have empty modifiers
         }
     }
@@ -666,7 +676,12 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             // When & Then
             for modifier in modifiers {
                 let shortcut = manager.createShortcut(key: key, modifiers: modifier) {}
+                #if swift(>=5.9) && (os(iOS) && swift(>=17.0) || os(macOS))
                 #expect(shortcut.key == key)
+                #else
+                // KeyEquivalent Equatable conformance requires iOS 17+, use character comparison instead
+                #expect(shortcut.key.character == key.character)
+                #endif
                 #expect(shortcut.modifiers == modifier)
         }
             }

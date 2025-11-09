@@ -1027,14 +1027,14 @@ open class ViewGenerationIntegrationTests {
             // Hover view should be inspectable
             #expect(hoverInspection != nil, "Hover view should be inspectable")
         }
-
-        // The views should be different because they represent different platforms
-        // This is the key test - platform mocking should generate different views
-        // We can verify this by checking that the views have different capabilities
-        // Touch view should have touch target size, hover view should not
-        #expect(touchConfig.minTouchTarget == 44, "Touch platform should have proper touch target size")
-        #expect(hoverConfig.minTouchTarget == 0, "Hover platform should not have touch target size")
-
+            
+            // The views should be different because they represent different platforms
+            // This is the key test - platform mocking should generate different views
+            // We can verify this by checking that the views have different capabilities
+            // Touch view should have touch target size, hover view should not
+            #expect(touchConfig.minTouchTarget == 44, "Touch platform should have proper touch target size")
+            #expect(hoverConfig.minTouchTarget == 0, "Hover platform should not have touch target size")
+            
         if touchInspectionResult == nil || hoverInspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
         }
@@ -1075,20 +1075,20 @@ open class ViewGenerationIntegrationTests {
             #expect(macOSInspection != nil, "macOS view should be inspectable")
         }
 
-        // Verify platform-specific capabilities
-        #expect(iOSConfig.supportsTouch, "iOS should support touch")
-        #expect(!macOSConfig.supportsTouch, "macOS should not support touch")
-        #expect(macOSConfig.supportsHover, "macOS should support hover")
-        #expect(!iOSConfig.supportsHover, "iOS should not support hover")
-
-        // The key test: different platforms should generate different view configurations
-        // This verifies that platform mocking is working correctly
-        // Note: iOS and macOS both use 44pt touch targets per Apple HIG
-        #expect(iOSConfig.supportsTouch != macOSConfig.supportsTouch,
-                        "Different platforms should have different touch support")
-        #expect(iOSConfig.supportsHover != macOSConfig.supportsHover,
-                        "Different platforms should have different hover support")
-
+            // Verify platform-specific capabilities
+            #expect(iOSConfig.supportsTouch, "iOS should support touch")
+            #expect(!macOSConfig.supportsTouch, "macOS should not support touch")
+            #expect(macOSConfig.supportsHover, "macOS should support hover")
+            #expect(!iOSConfig.supportsHover, "iOS should not support hover")
+            
+            // The key test: different platforms should generate different view configurations
+            // This verifies that platform mocking is working correctly
+            // Note: iOS and macOS both use 44pt touch targets per Apple HIG
+            #expect(iOSConfig.supportsTouch != macOSConfig.supportsTouch, 
+                            "Different platforms should have different touch support")
+            #expect(iOSConfig.supportsHover != macOSConfig.supportsHover, 
+                            "Different platforms should have different hover support")
+            
         if iOSInspectionResult == nil || macOSInspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
         }
