@@ -72,6 +72,7 @@ open class PlatformPresentContentL1Tests {
         // view is a non-optional View, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain the actual string content
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             // The view should be wrapped in AnyView
             let anyView = view.tryInspect().anyView()
@@ -138,6 +139,7 @@ open class PlatformPresentContentL1Tests {
         #expect(view != nil, "platformPresentContent_L1 should return a view for number content")
         
         // 2. Contains what it needs to contain - The view should contain the actual number content
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             // The view should be wrapped in AnyView
             let anyView = view.tryInspect().anyView()
@@ -159,8 +161,11 @@ open class PlatformPresentContentL1Tests {
             #expect(hasNumberContent, "View should contain the actual number content '42'")
             
         } catch {
-            Issue.record("Failed to inspect number content view: \(error)")
+            Issue.record("Failed to inspect number content view")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // Test different number types
         let doubleContent = 42.5
