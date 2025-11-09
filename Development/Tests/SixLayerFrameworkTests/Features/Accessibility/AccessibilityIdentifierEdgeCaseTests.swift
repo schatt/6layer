@@ -232,21 +232,20 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             
             #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                try withInspectedViewThrowing(view1) { inspectedView1 in
-                    let button1ID = try inspectedView1.accessibilityIdentifier()
+                let button1ID = try withInspectedViewThrowing(view1) { inspectedView1 in
+                    try inspectedView1.accessibilityIdentifier()
                 }
-                    try withInspectedViewThrowing(view2) { inspectedView2 in
-                        let button2ID = try inspectedView2.accessibilityIdentifier()
-                        
-                        // exactNamed() should respect the exact name (no hierarchy, no collision detection)
-                        #expect(button1ID == button2ID, "exactNamed() should use exact names without modification")
-                        #expect(button1ID == "SameName", "exactNamed() should produce exact identifier 'SameName', got '\(button1ID)'")
-                        #expect(button2ID == "SameName", "exactNamed() should produce exact identifier 'SameName', got '\(button2ID)'")
-                        
-                        print("✅ Exact named test - ID1: '\(button1ID)'")
-                        print("✅ Exact named test - ID2: '\(button2ID)'")
-                    }
+                let button2ID = try withInspectedViewThrowing(view2) { inspectedView2 in
+                    try inspectedView2.accessibilityIdentifier()
                 }
+                
+                // exactNamed() should respect the exact name (no hierarchy, no collision detection)
+                #expect(button1ID == button2ID, "exactNamed() should use exact names without modification")
+                #expect(button1ID == "SameName", "exactNamed() should produce exact identifier 'SameName', got '\(button1ID)'")
+                #expect(button2ID == "SameName", "exactNamed() should produce exact identifier 'SameName', got '\(button2ID)'")
+                
+                print("✅ Exact named test - ID1: '\(button1ID)'")
+                print("✅ Exact named test - ID2: '\(button2ID)'")
             } catch {
                 Issue.record("Failed to inspect exactNamed views")
             }
@@ -271,23 +270,22 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             
             #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                try withInspectedViewThrowing(exactView) { exactInspected in
-                    let exactID = try exactInspected.accessibilityIdentifier()
+                let exactID = try withInspectedViewThrowing(exactView) { exactInspected in
+                    try exactInspected.accessibilityIdentifier()
                 }
-                    try withInspectedViewThrowing(namedView) { namedInspected in
-                        let namedID = try namedInspected.accessibilityIdentifier()
-                        
-                        // exactNamed() should produce different identifiers than named()
-                        // This test will FAIL until exactNamed() is properly implemented
-                        #expect(exactID != namedID, "exactNamed() should produce different identifiers than named()")
-                        #expect(exactID.contains("TestButton"), "exactNamed() should contain the exact name")
-                        #expect(namedID.contains("TestButton"), "named() should contain the name")
-                        #expect(exactID == "TestButton", "exactNamed() should produce exact identifier 'TestButton', got '\(exactID)'")
-                        
-                        print("✅ Exact vs Named - Exact: '\(exactID)'")
-                        print("✅ Exact vs Named - Named: '\(namedID)'")
-                    }
+                let namedID = try withInspectedViewThrowing(namedView) { namedInspected in
+                    try namedInspected.accessibilityIdentifier()
                 }
+                
+                // exactNamed() should produce different identifiers than named()
+                // This test will FAIL until exactNamed() is properly implemented
+                #expect(exactID != namedID, "exactNamed() should produce different identifiers than named()")
+                #expect(exactID.contains("TestButton"), "exactNamed() should contain the exact name")
+                #expect(namedID.contains("TestButton"), "named() should contain the name")
+                #expect(exactID == "TestButton", "exactNamed() should produce exact identifier 'TestButton', got '\(exactID)'")
+                
+                print("✅ Exact vs Named - Exact: '\(exactID)'")
+                print("✅ Exact vs Named - Named: '\(namedID)'")
             } catch {
                 Issue.record("Failed to inspect exactNamed vs named views")
             }
