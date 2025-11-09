@@ -64,9 +64,12 @@ let package = Package(
             ],
             swiftSettings: [
                 // Compile-time flag to control ViewInspector macOS support
-                // When ViewInspector fixes GitHub issue #405, change this to 1
-                // This allows us to update all #if directives by changing one value
-                .define("VIEW_INSPECTOR_MAC_FIXED", to: "0")
+                // When ViewInspector fixes GitHub issue #405, remove this line
+                // This allows us to update all #if directives by removing one line
+                // When flag is present, VIEW_INSPECTOR_MAC_FIXED is defined (true)
+                // When flag is absent, VIEW_INSPECTOR_MAC_FIXED is undefined (false)
+                // Currently commented out because ViewInspector doesn't work on macOS yet
+                // .define("VIEW_INSPECTOR_MAC_FIXED")
             ]
         ),
         
