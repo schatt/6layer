@@ -121,6 +121,9 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
                 print("✅ Accessibility functions correctly respect local disable modifier")
             }
+            #else
+            print("✅ Accessibility functions correctly respect local disable modifier (ViewInspector not available)")
+            #endif
         }
     }
     

@@ -153,8 +153,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     .disableAutomaticAccessibilityIdentifiers()  // ← Disable mid-hierarchy
             }
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttons = try inspectedView.findAll(ViewType.Button.self)
                     
@@ -191,8 +191,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
                 .named("TestView")
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let vStackID = try inspectedView.accessibilityIdentifier()
                     
@@ -203,8 +203,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     print("✅ Multiple contexts ID: '\(vStackID)' (\(vStackID.count) chars)")
                 }
             } catch {
-                Issue.record("Failed to inspect view with multiple contexts: \(error)")
+                Issue.record("Failed to inspect view with multiple contexts")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
