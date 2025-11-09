@@ -118,8 +118,11 @@ open class PlatformPresentContentL1Tests {
             // XCTAssertTrue(hasStringContent, "View should contain the actual string content 'Hello, World!'")
             
         } catch {
-            Issue.record("Failed to inspect string content view: \(error)")
+            Issue.record("Failed to inspect string content view")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     @Test func testPlatformPresentContent_L1_WithNumber() {
