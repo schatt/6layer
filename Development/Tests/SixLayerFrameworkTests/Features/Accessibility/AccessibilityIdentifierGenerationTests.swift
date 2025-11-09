@@ -21,7 +21,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         if let inspectedView = view.tryInspect(),
            let buttonID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are currently 400+ chars
@@ -57,7 +57,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - contains duplicates like "container-container"
@@ -95,7 +95,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are not semantic
@@ -142,7 +142,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         .enableGlobalAutomaticAccessibilityIdentifiers()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         if let inspectedView = view.tryInspect(),
            let vStackID = try? inspectedView.accessibilityIdentifier() {
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
@@ -177,7 +177,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         let cancelButton = AdaptiveUIPatterns.AdaptiveButton("Cancel", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             let submitInspected = submitButton.tryInspect()
             let submitID = try? submitInspected.accessibilityIdentifier()
@@ -212,7 +212,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             let inspected = button.tryInspect()
             let buttonID = try? inspected.accessibilityIdentifier()

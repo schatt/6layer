@@ -1,6 +1,6 @@
 import Testing
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 
@@ -36,7 +36,7 @@ open class NavigationLayer4Tests {
         // link is a non-optional View, so it exists if we reach here
         
         // 2. Does that structure contain what it should?
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             // The navigation link should contain text elements
             let viewText = link.tryInspect().findAll(ViewType.Text.self)
@@ -62,7 +62,7 @@ open class NavigationLayer4Tests {
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // iOS: Should contain NavigationLink structure
         if let _ = link.tryInspect().find(ViewType.NavigationLink.self) {
             // NavigationLink found - this is correct for iOS
@@ -73,7 +73,7 @@ open class NavigationLayer4Tests {
         Issue.record("ViewInspector not available on this platform")
         #endif
         #elseif os(macOS)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // macOS: Should contain the content directly (no NavigationLink wrapper)
         if let _ = link.tryInspect() {
             // Direct content inspection works - this is correct for macOS
@@ -250,7 +250,7 @@ open class NavigationLayer4Tests {
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // iOS: Should contain NavigationStack structure (iOS 16+) or direct content (iOS 15-)
         do {
             // Try to find NavigationStack first (iOS 16+)
@@ -268,7 +268,7 @@ open class NavigationLayer4Tests {
         Issue.record("ViewInspector not available on this platform")
         #endif
         #elseif os(macOS)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // macOS: Should contain the content directly (no NavigationStack wrapper)
         if let _ = container.tryInspect() {
             // Direct content inspection works - this is correct for macOS
@@ -373,7 +373,7 @@ open class NavigationLayer4Tests {
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // iOS: Should contain NavigationView structure
         if let _ = navigation.tryInspect().find(ViewType.NavigationView.self) {
             // NavigationView found - this is correct for iOS
@@ -384,7 +384,7 @@ open class NavigationLayer4Tests {
         Issue.record("ViewInspector not available on this platform")
         #endif
         #elseif os(macOS)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // macOS: Should contain the content directly (no NavigationView wrapper)
         if let _ = navigation.tryInspect() {
             // Direct content inspection works - this is correct for macOS

@@ -29,7 +29,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             if let inspectedView = view.tryInspect(),
                let _ = try? inspectedView.button() {
                 // When automatic IDs are disabled, the view should not have an accessibility identifier modifier
@@ -60,7 +60,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
                 .accessibilityIdentifier("manual-test-button")
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             if let inspectedView = view.tryInspect(),
                let buttonID = try? inspectedView.accessibilityIdentifier() {
                 // Manual ID should work regardless of automatic setting
@@ -84,7 +84,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
         .named("TestView")
         
         // Even with automatic IDs disabled, the modifiers should not crash
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             let _ = try view.inspect()
             print("✅ Breadcrumb modifiers work when automatic IDs disabled")

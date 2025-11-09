@@ -31,8 +31,9 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 .automaticAccessibilityIdentifiers()  // ← Local enable should override global disable
             
             // 3. Try to inspect for accessibility identifier
+            #if canImport(ViewInspector) && !os(macOS)
             do {
-                let inspectedView = try view.inspect()
+                let inspectedView = try view.inspectView()
                 let button = try inspectedView.button()
                 let accessibilityID = try button.accessibilityIdentifier()
                 
@@ -45,8 +46,11 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 print("   Generated ID: '\(accessibilityID)'")
                 
             } catch {
-                Issue.record("Failed to inspect view with local enable: \(error)")
+                Issue.record("Failed to inspect view with local enable")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
             
             cleanupTestEnvironment()
         }
@@ -78,6 +82,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
             
             // 3. Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && !os(macOS)
             if let inspectedView = view.tryInspect(),
                let button = try? inspectedView.button(),
                let accessibilityID = try? button.accessibilityIdentifier() {
@@ -91,6 +96,9 @@ open class LocalEnableOverrideTests: BaseTestClass {
             } else {
                 Issue.record("Failed to inspect view with explicit naming")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
             
             cleanupTestEnvironment()
         }
@@ -117,8 +125,9 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 .named("FrameworkButton")
             
             // 3. Try to inspect for accessibility identifier
+            #if canImport(ViewInspector) && !os(macOS)
             do {
-                let inspectedView = try view.inspect()
+                let inspectedView = try view.inspectView()
                 let button = try inspectedView.button()
                 let accessibilityID = try button.accessibilityIdentifier()
                 
@@ -134,6 +143,9 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
                 print("✅ SUCCESS: Framework component respected global config (no modifier applied)")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
             
             cleanupTestEnvironment()
         }

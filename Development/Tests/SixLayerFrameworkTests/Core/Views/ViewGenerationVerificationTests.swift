@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 /// View Generation Verification Tests
@@ -55,7 +55,7 @@ struct ViewGenerationVerificationTests {
         
         // 2. Contains what it needs to contain - The view has the expected structure and content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view should be wrapped in AnyView
             let anyView = try inspected.anyView()
@@ -131,7 +131,7 @@ struct ViewGenerationVerificationTests {
         
         // 2. Contains what it needs to contain - Both views should contain our data
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let compactInspectionResult = withInspectedView(compactView) { compactInspected in
             // Compact view should contain our test data
             let compactText = compactInspected.tryFindAll(ViewType.Text.self)
@@ -196,7 +196,7 @@ struct ViewGenerationVerificationTests {
         // Detail view with custom field view creation succeeded (non-optional result)
         
         // 2. Contains what it needs to contain - The view should contain custom field content
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             // The view should contain text elements
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)
@@ -237,7 +237,7 @@ struct ViewGenerationVerificationTests {
         // Detail view with nil values creation succeeded (non-optional result)
         
         // 2. Contains what it needs to contain - The view should contain available data
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             // The view should contain text elements
             let viewText = try detailView.inspect().findAll(ViewType.Text.self)

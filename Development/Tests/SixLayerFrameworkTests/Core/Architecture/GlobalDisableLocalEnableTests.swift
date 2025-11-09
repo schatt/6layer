@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 /// TDD Tests for "Global Disable, Local Enable" Functionality
@@ -146,7 +146,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
         
         print("🔍 Inspected view type: \(type(of: inspectedView))")
 
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         // Try to find a button in the hierarchy
         if let button = inspectedView.tryFind(Button<Text>.self),
            let id = try? button.accessibilityIdentifier() {

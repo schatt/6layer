@@ -2,7 +2,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 /// TDD Tests for IntelligentDetailView Sheet Presentation Bug
@@ -57,7 +57,7 @@ struct IntelligentDetailViewSheetTests {
         .frame(minWidth: 400, minHeight: 500)
         
         // Verify the view can be inspected with ViewInspector
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             let inspector = sheetContent.tryInspect()
             
@@ -101,7 +101,7 @@ struct IntelligentDetailViewSheetTests {
         )
         
         // Verify the view can be inspected (proves it's not blank)
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             let inspector = detailView.tryInspect()
             

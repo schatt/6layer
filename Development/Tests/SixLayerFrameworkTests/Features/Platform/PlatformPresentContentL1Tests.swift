@@ -1,6 +1,6 @@
 import Testing
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 
@@ -72,7 +72,7 @@ open class PlatformPresentContentL1Tests {
         // view is a non-optional View, so it exists if we reach here
         
         // 2. Contains what it needs to contain - The view should contain the actual string content
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             // The view should be wrapped in AnyView
             let anyView = view.tryInspect().anyView()
@@ -142,7 +142,7 @@ open class PlatformPresentContentL1Tests {
         #expect(view != nil, "platformPresentContent_L1 should return a view for number content")
         
         // 2. Contains what it needs to contain - The view should contain the actual number content
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         do {
             // The view should be wrapped in AnyView
             let anyView = view.tryInspect().anyView()

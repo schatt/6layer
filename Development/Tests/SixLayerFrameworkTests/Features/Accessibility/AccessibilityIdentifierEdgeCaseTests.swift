@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 
@@ -26,7 +26,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("")  // ← Empty string
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Should handle empty strings gracefully
@@ -54,7 +54,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("Button@#$%^&*()")  // ← Special characters
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Should preserve special characters (no sanitization)
@@ -85,7 +85,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Should handle long names gracefully
@@ -122,7 +122,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .accessibilityIdentifier("manual-override")  // ← Manual override
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             withInspectedView(view) { inspected in
                 let buttonID = inspected.accessibilityIdentifier()
                 // Manual ID should override automatic ID
@@ -153,7 +153,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     .disableAutomaticAccessibilityIdentifiers()  // ← Disable mid-hierarchy
             }
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttons = try inspectedView.findAll(ViewType.Button.self)
@@ -191,7 +191,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
                 .named("TestView")
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
                     let vStackID = try inspectedView.accessibilityIdentifier()
@@ -230,7 +230,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .exactNamed("SameName")  // ← Same exact name
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 let button1ID = try withInspectedViewThrowing(view1) { inspectedView1 in
                     try inspectedView1.accessibilityIdentifier()
@@ -268,7 +268,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("TestButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 let exactID = try withInspectedViewThrowing(exactView) { exactInspected in
                     try exactInspected.accessibilityIdentifier()
@@ -312,7 +312,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .exactNamed("SaveButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
@@ -345,7 +345,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .exactNamed("MinimalButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
@@ -391,7 +391,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             config.namespace = "ChangedNamespace"
             config.mode = .semantic
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttonID = try inspectedView.accessibilityIdentifier()
@@ -428,7 +428,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("Outer")
                 .named("VeryOuter")  // ← Multiple .named() calls
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
                     let button = try inspectedView.find(ViewType.Button.self)
@@ -462,7 +462,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             }
                 .named("按钮")  // ← Chinese characters
             
-            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            #if canImport(ViewInspector) && !os(macOS)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttonID = try inspectedView.accessibilityIdentifier()

@@ -73,7 +73,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 
         // Should render disambiguation interface
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let inspectionResult = withInspectedView(view) { inspected in
             if let textElement = try? inspected.text(),
                let text = try? textElement.string() {
@@ -128,7 +128,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 
         // Should render confidence-based interface
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let inspectionResult = withInspectedView(view) { inspected in
             if let textElement = try? inspected.text(),
                let text = try? textElement.string() {

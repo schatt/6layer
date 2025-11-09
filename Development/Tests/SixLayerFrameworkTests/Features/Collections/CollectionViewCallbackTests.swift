@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-#if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+#if canImport(ViewInspector) && !os(macOS)
 import ViewInspector
 #endif
 /// Tests for Collection View Callback Functionality
@@ -74,7 +74,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         )
 
         // Then: View should be created successfully and contain expected elements
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
             let viewText = inspected.tryFindAll(ViewType.Text.self)
@@ -109,7 +109,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         )
 
         // Then: View should be created successfully and contain expected elements
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
             let viewText = inspected.tryFindAll(ViewType.Text.self)
@@ -228,7 +228,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         
         // When: Simulating a tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+        #if canImport(ViewInspector) && !os(macOS)
         let inspectionResult = withInspectedView(view) { inspector in
             // Find the ListCardComponent instances
             let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
