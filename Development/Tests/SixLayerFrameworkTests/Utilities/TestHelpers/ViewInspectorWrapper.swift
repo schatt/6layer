@@ -26,24 +26,26 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Flag to control ViewInspector availability on macOS
-/// When ViewInspector fixes GitHub issue #405, change this to true
-/// All conditional logic in this file is controlled by this flag
-/// NOTE: This is a runtime constant. For compile-time conditionals, we use !os(macOS)
-/// When the flag is true, we can remove the !os(macOS) checks
+/// When ViewInspector fixes GitHub issue #405, change VIEW_INSPECTOR_MAC_FIXED in Package.swift from "0" to "1"
+/// All conditional logic in this file is controlled by this compile-time flag
+/// The flag is defined in Package.swift as a swiftSettings define
+#if VIEW_INSPECTOR_MAC_FIXED
+let viewInspectorMacFixed = true
+#else
 let viewInspectorMacFixed = false
+#endif
 
 /// Error type for when ViewInspector is not available
 struct ViewInspectorNotAvailableError: Error {}
 
-// Import ViewInspector when available (iOS always, macOS only when fixed)
-// The wrapper functions handle the platform differences at runtime
-#if canImport(ViewInspector) && !os(macOS)
+// Import ViewInspector when available (iOS always, macOS only when VIEW_INSPECTOR_MAC_FIXED is 1)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
 
 // MARK: - View Extension for Inspection
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 extension View {
     /// Safely inspect a view using ViewInspector
     /// Returns nil on inspection failure
@@ -79,7 +81,7 @@ extension View {
 
 // MARK: - InspectableView Extension for Common Operations
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 extension InspectableView {
     /// Safely find a view type, returning nil if not found
     func tryFind<T>(_ type: T.Type) -> InspectableView<ViewType.View<T>>? {
@@ -95,7 +97,7 @@ extension InspectableView {
 
 // MARK: - Helper Functions for Common Patterns
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 /// Safely inspect a view and execute a closure if inspection succeeds
 /// Returns nil on inspection failure
 /// When ViewInspector works on all platforms, remove the canImport condition
@@ -121,7 +123,7 @@ public func withInspectedView<V: View, R>(
 }
 #endif
 
-#if canImport(ViewInspector) && !os(macOS)
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 /// Safely inspect a view and execute a throwing closure
 /// Throws when ViewInspector cannot inspect the view
 /// When ViewInspector works on all platforms, remove the canImport condition
