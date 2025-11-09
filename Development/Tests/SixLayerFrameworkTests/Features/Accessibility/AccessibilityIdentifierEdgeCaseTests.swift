@@ -428,8 +428,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("Outer")
                 .named("VeryOuter")  // ← Multiple .named() calls
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let button = try inspectedView.find(ViewType.Button.self)
                     let buttonID = try button.accessibilityIdentifier()
