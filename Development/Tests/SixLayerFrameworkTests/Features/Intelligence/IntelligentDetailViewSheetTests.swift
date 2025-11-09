@@ -97,7 +97,10 @@ struct IntelligentDetailViewSheetTests {
         // Verify the view can be inspected (proves it's not blank)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
-            let inspector = detailView.tryInspect()
+            guard let inspector = detailView.tryInspect() else {
+                Issue.record("platformDetailView should be inspectable (indicates it has content)")
+                return
+            }
             
             // Try to find Text views (which would contain the field values)
             do {

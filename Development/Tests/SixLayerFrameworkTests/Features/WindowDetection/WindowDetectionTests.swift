@@ -446,7 +446,7 @@ open class WindowDetectionTests {
         // WHEN: iOS screen size class is calculated
         // THEN: Should return expected values
         for (size, expected) in testCases {
-            let result = ScreenSizeClass.from(iOSWindowSize: size)
+            let result = ScreenSizeClass.from(screenSize: size)
             #expect(result == expected, "iOS size \(size) should be \(expected)")
         }
     }

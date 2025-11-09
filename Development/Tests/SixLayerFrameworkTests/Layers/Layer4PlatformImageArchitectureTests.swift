@@ -73,7 +73,7 @@ open class Layer4PlatformImageArchitectureTests {
         #if os(iOS)
         // Given: iOS delegate method setup
         var capturedImage: PlatformImage?
-        let parent = MockCameraView { image in
+        let parent = CameraView { image in
             capturedImage = image
         }
         

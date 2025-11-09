@@ -29,8 +29,8 @@ import SwiftUI
 import UIKit
 #elseif os(macOS)
 import AppKit
-@testable import SixLayerFramework
 #endif
+@testable import SixLayerFramework
 
 
 @MainActor

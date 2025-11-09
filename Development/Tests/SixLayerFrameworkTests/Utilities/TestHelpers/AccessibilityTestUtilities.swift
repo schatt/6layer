@@ -18,6 +18,9 @@
 //
 
 import SwiftUI
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+import ViewInspector
+#endif
 @testable import SixLayerFramework
 #if canImport(UIKit)
 import UIKit
