@@ -98,25 +98,33 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // 3. Platform-specific implementation verification (REQUIRED)
             #if os(macOS)
             // macOS should return a MacOSCameraView (AVCaptureSession wrapper)
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let _ = result.tryInspect() {
                 // macOS camera interface should be inspectable (MacOSCameraView)
                 // Note: We can't easily test the underlying AVCaptureSession type
                 // but we can verify the view structure is valid
                 print("✅ macOS camera interface structure is valid")
             } else {
-                Issue.record("Failed to verify macOS camera interface structure: \(error)")
+                Issue.record("Failed to verify macOS camera interface structure")
             }
-                #elseif os(iOS)
-                // iOS should return a CameraView (UIImagePickerController wrapper)
-                // This will be wrapped in UIHostingView by SwiftUI
-                if let _ = result.tryInspect() {
-                    // iOS camera interface should be inspectable (CameraView)
-                    // Note: We can't easily test the underlying UIImagePickerController type
-                    // but we can verify the view structure is valid
-                } else {
-                    Issue.record("Failed to verify iOS camera interface structure: \(error)")
-                }
-                #endif
+            #else
+            Issue.record("ViewInspector not available on this platform")
+            #endif
+            #elseif os(iOS)
+            // iOS should return a CameraView (UIImagePickerController wrapper)
+            // This will be wrapped in UIHostingView by SwiftUI
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            if let _ = result.tryInspect() {
+                // iOS camera interface should be inspectable (CameraView)
+                // Note: We can't easily test the underlying UIImagePickerController type
+                // but we can verify the view structure is valid
+            } else {
+                Issue.record("Failed to verify iOS camera interface structure")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform")
+            #endif
+            #endif
         }
     }
     
@@ -149,11 +157,15 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // Note: PhotoPickerView is a UIViewControllerRepresentable, so it wraps UIKit
             // components that may not be inspectable through ViewInspector. We verify
             // that the view structure is valid and the accessibility identifier is applied.
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             if let _ = result.tryInspect() {
                 // Verify the view structure is inspectable
             } else {
-                Issue.record("Failed to inspect photo picker structure: \(error)")
+                Issue.record("Failed to inspect photo picker structure")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
             
             // 3. Platform-specific implementation verification (REQUIRED)
             // Since photo picker uses native UIKit components that may not be inspectable,
@@ -184,15 +196,20 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // result is non-optional View, so it exists if we reach here
             
             // 2. Does that structure contain what it should?
-            if let viewImages = result.tryInspect().findAll(ViewType.Image.self) {
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
+            if let inspected = result.tryInspect(),
+               let viewImages = try? inspected.findAll(ViewType.Image.self) {
                 // The photo display should contain an image
                 #expect(!viewImages.isEmpty, "Photo display should contain an image")
 
                 // Verify the view structure is inspectable
                 let _ = result.tryInspect()
             } else {
-                Issue.record("Failed to inspect photo display structure: \(error)")
+                Issue.record("Failed to inspect photo display structure")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
             
             // 3. Platform-specific implementation verification
             // Note: platformPhotoDisplay_L4 uses the same PhotoDisplayView on all platforms

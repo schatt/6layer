@@ -57,6 +57,7 @@ struct IntelligentDetailViewSheetTests {
         .frame(minWidth: 400, minHeight: 500)
         
         // Verify the view can be inspected with ViewInspector
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             let inspector = sheetContent.tryInspect()
             
@@ -79,6 +80,9 @@ struct IntelligentDetailViewSheetTests {
         } catch {
             Issue.record("platformDetailView should be inspectable (indicates it has content)")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
     }
     
     /// Verify that platformDetailView extracts and displays data model properties
@@ -97,6 +101,7 @@ struct IntelligentDetailViewSheetTests {
         )
         
         // Verify the view can be inspected (proves it's not blank)
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             let inspector = detailView.tryInspect()
             

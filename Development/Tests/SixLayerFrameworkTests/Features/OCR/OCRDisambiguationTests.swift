@@ -73,6 +73,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 
         // Should render disambiguation interface
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspected in
             if let textElement = try? inspected.text(),
                let text = try? textElement.string() {
@@ -81,6 +82,9 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
                 Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
             }
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")
@@ -124,6 +128,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 
         // Should render confidence-based interface
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         let inspectionResult = withInspectedView(view) { inspected in
             if let textElement = try? inspected.text(),
                let text = try? textElement.string() {
@@ -132,6 +137,9 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
                 Issue.record("OCRDisambiguationView confidence display not implemented")
             }
         }
+        #else
+        let inspectionResult: Bool? = nil
+        #endif
 
         if inspectionResult == nil {
             Issue.record("View inspection not available on this platform (likely macOS)")

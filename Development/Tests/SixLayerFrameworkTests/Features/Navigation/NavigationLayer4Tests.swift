@@ -36,6 +36,7 @@ open class NavigationLayer4Tests {
         // link is a non-optional View, so it exists if we reach here
         
         // 2. Does that structure contain what it should?
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         do {
             // The navigation link should contain text elements
             let viewText = link.tryInspect().findAll(ViewType.Text.self)
@@ -53,11 +54,15 @@ open class NavigationLayer4Tests {
             #expect(hasLabelText, "Navigation link should contain the label text 'Label'")
             
         } catch {
-            Issue.record("Failed to inspect navigation link structure: \(error)")
+            Issue.record("Failed to inspect navigation link structure")
         }
+        #else
+        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        #endif
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
+        #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
         // iOS: Should contain NavigationLink structure
         if let _ = link.tryInspect().find(ViewType.NavigationLink.self) {
             // NavigationLink found - this is correct for iOS
