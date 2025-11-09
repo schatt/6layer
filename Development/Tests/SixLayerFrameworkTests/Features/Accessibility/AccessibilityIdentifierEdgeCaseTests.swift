@@ -230,8 +230,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .exactNamed("SameName")  // ← Same exact name
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view1) { inspectedView1 in
                     let button1ID = try inspectedView1.accessibilityIdentifier()
                 }
@@ -269,8 +269,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .named("TestButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
                 }
@@ -314,8 +314,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .exactNamed("SaveButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
                 
@@ -347,8 +347,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 .exactNamed("MinimalButton")
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(exactView) { exactInspected in
                     let exactID = try exactInspected.accessibilityIdentifier()
                 
@@ -360,8 +360,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 print("✅ Exact named minimal - ID: '\(exactID)'")
                 }
             } catch {
-                Issue.record("Failed to inspect exactNamed minimal: \(error)")
+                Issue.record("Failed to inspect exactNamed minimal")
             }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
         }
     }
     
