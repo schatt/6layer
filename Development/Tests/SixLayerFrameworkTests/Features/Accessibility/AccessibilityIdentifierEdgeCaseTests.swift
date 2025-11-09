@@ -391,8 +391,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             config.namespace = "ChangedNamespace"
             config.mode = .semantic
             
+            #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
             do {
-                #if canImport(ViewInspector) && (!os(macOS) || viewInspectorMacFixed)
                 try withInspectedViewThrowing(view) { inspectedView in
                     let buttonID = try inspectedView.accessibilityIdentifier()
                 
